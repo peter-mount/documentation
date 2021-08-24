@@ -1,0 +1,93 @@
+---
+type: "6502opcode"
+title: "LDY"
+linkTitle: "LDY"
+weight: 3
+description: "Load Index Register Y from Memory"
+tags:
+  - 6502 instruction
+op: "LDY"
+flags:
+  "n": Set if most-significant bit of result is set
+  z: Set if result is zero
+codes:
+  - code: A0
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: AC
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: A4
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+  - code: BC
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: B4
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "Add 1 cycle if adding index crosses a page boundary"
+---
+
+<p>
+  Load index register Y with data from memory.
+</p>
+<p>
+  On all processors, the data loaded from memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

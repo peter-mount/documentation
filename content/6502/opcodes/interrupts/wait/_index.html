@@ -1,0 +1,48 @@
+---
+type: "6502opcode"
+title: "WAI - Wait for Interrupt"
+linkTitle: "WAI"
+weight: 20
+description: "Put the processor to sleep until a hardware interrupt occurs"
+tags:
+  - 6502 instruction
+flags:
+codes:
+  - code: "CB"
+    op: WAI
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+      notes:
+    cycles:
+      value: 3
+      notes:
+        - 1
+notes:
+  1: "Uses 3 cycles to shut down the processor. Additional cycles required by interrupt to restart it"
+---
+<p>
+  WAI pulls the RDY pin low.
+  Power consumption reduced to a minimum and RDY is kept low until an external hardware interrupt
+  (NMI, IRQ, ABORT or RESET) is received.
+</p>
+<h2>When an interrupt is received</h2>
+<h3>Interrupts enabled i=0</h3>
+<p>
+  When a hardware interrupt is received, control is vectored though one of the hardware interrupt vectors.
+  An RTI instruction in the invoked handler will return control back to the instruction immediately after the WAI.
+</p>
+<h3>Interrupts disabled i=1</h3>
+<p>
+  If interrupts were disabled at the time WAI was invoked then when the interrupt is received then the
+  relevant interrupt handler is not called and execution resumes immediately with the instruction after the WAI.
+  This allows for processing to be synchronized with the interrupt.
+</p>
+
+<h2>The data bus</h2>
+<p>
+  As WAI pulls RDY low it frees up the bus.
+  If BE is also pulled low, the processor can be disconnected from the bus.
+</p>

@@ -1,0 +1,23 @@
+---
+type: "6502opcode"
+title: "OSRDRM"
+linkTitle: "Read byte from ROM"
+weight: 10
+categories:
+  - bbc
+api:
+  - name: OSRDRM
+    addr: "FFB9"
+    title: "Read byte from paged ROM"
+    exit:
+      "A": Read character
+---
+<p>
+  This call returns a byte read from a paged ROM.
+  The ROM number is in Y.
+  The address to read is in &F6 and &F7
+</p>
+<p>
+  This routine was included for the implementation of ROM filing system software in paged ROM and is not recommended for
+  general use.
+</p>

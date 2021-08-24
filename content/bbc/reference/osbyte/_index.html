@@ -1,0 +1,300 @@
+---
+# This file is generated.
+# To edit, change the files under content then run the generator.
+type: "6502opcode"
+title: "OSByte calls"
+linkTitle: "OSByte calls"
+weight: 10
+description: "OSByte &FFF4 calls"
+notitle: "don't show instructions header in table"
+nometa: true
+osbyte:
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    x: 0 execute BRK with message of OS version, <>0 RTS with OS version in X
+  exit:
+    true: Preserved
+    a: Preserved
+    c: Undefined
+    x: OS version
+  hex: 0
+  int: 0
+  title: Get OS version
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    x: The new value of the user flag
+  exit:
+    x: Old value
+  hex: 1
+  int: 1
+  title: Set the user flag
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    x: The input device
+  exit:
+    true: undefined
+    a: preserved
+    c: undefined
+    x: Old value
+  hex: 2
+  int: 2
+  title: Select input stream
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    x: The output device(s)
+  exit:
+    x: Old value
+  hex: 3
+  int: 3
+  title: Select output stream
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    x: Status of the editiing keys
+  exit:
+    true: undefined
+    a: preserved
+    c: undefined
+    x: Previous status of keys
+  hex: 4
+  int: 4
+  title: Enable/Disable cursor editing
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    true: 0
+    x: Event code
+  exit:
+    true: undefined
+    a: preserved
+    c: undefined
+    x: 'Old disable state: 0=disabled, >0 enabled'
+  hex: 0D
+  int: 13
+  title: Disable events
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: 0E
+  int: 14
+  title: Enable events
+- compatibility:
+    bbc: true
+    master: true
+  hex: 72
+  int: 114
+  title: Set shadow ram
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    true: option value
+    x: file option number
+  exit:
+    a: preserved
+    c: undefined
+  hex: 8B
+  int: 139
+  title: Select file options
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  exit:
+    a: preserved
+    c: undefined
+  hex: 8C
+  int: 140
+  title: Select tape filesystem
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  exit:
+    a: preserved
+    c: undefined
+  hex: 8D
+  int: 141
+  title: Select ROM filesystem
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    x: Page rom id to enter
+  hex: 8E
+  int: 142
+  title: Enter language ROM
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    true: parameter passed with service call
+    x: reason code
+  exit:
+    true: return argument dependent on the call
+    a: preserved
+    c: undefined
+    x: 0 if a pages ROM claimed the service call
+  hex: 8F
+  int: 143
+  title: Issue paged ROM service call
+- compatibility:
+    bbc: true
+    master: true
+  hex: 90
+  int: 144
+  title: Alter display parameters
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  entry:
+    true: value to write on write calls
+    x: Address within specified page for the call
+  exit:
+    true: value read for read calls
+    a: preserved
+    c: undefined
+    x: undefined
+  hex: 92
+  int: 146
+  title: Read IO in &FCxx FRED
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: 93
+  int: 147
+  title: Write IO in &FCxx FRED
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: 94
+  int: 148
+  title: Read IO in &FDxx JIM
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: 95
+  int: 149
+  title: Write IO in &FDxx JIM
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: 96
+  int: 150
+  title: Read IO in &FExx SHEILA
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: 97
+  int: 151
+  title: Write IO in &FExx SHEILA
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  exit:
+    true: Contents of next location
+    a: preserved
+    c: undefined
+    x: Old value
+  hex: A6
+  int: 166
+  title: Read start address of OS variables low byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: A7
+  int: 167
+  title: Read start address of OS variables high byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: A8
+  int: 168
+  title: Read address of ROM pointer table low byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: A9
+  int: 169
+  title: Read address of ROM pointer table high byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: AA
+  int: 170
+  title: Read address of ROM information table low byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: AB
+  int: 171
+  title: Read address of ROM information table high byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: AC
+  int: 172
+  title: Read address of keyboard translation table low byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: AD
+  int: 173
+  title: Read address of keyboard translation table high byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: AE
+  int: 174
+  title: Read VDU variables origin low byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: AF
+  int: 175
+  title: Read VDU variables origin high byte
+- compatibility:
+    bbc: true
+    electron: true
+    master: true
+  hex: B0
+  int: 176
+  title: Read/Write CFS timeout counter
+
+---

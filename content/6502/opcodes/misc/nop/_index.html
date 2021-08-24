@@ -1,0 +1,28 @@
+---
+type: "6502opcode"
+title: "NOP"
+linkTitle: "NOP"
+weight: 3
+description: "No Operation"
+tags:
+  - 6502 instruction
+flags:
+codes:
+  - code: EA
+    op: "NOP"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+---
+<p>
+  A NOP takes no action and does not effect any registers except the program counter.
+</p>
+<p>
+    NOP's are usually used for timing loops as each NOP takes 2 cycles.
+</p>

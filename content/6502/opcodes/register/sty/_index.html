@@ -1,0 +1,62 @@
+---
+type: "6502opcode"
+title: "STY"
+linkTitle: "STY"
+weight: 3
+description: "Store Index Register X to Memory"
+tags:
+  - 6502 instruction
+op: "STY"
+flags:
+codes:
+  - code: 8C
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 1
+  - code: 84
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 1
+        - 2
+  - code: 94
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 1
+        - 2
+notes:
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+---
+
+<p>
+  Stores the index register Y into memory.
+</p>
+<p>
+  On all processors, the data written to memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data written is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

@@ -1,0 +1,20 @@
+---
+type: "6502opcode"
+title: "OSEVEN"
+linkTitle: "Generate an event"
+weight: 10
+categories:
+  - bbc
+api:
+  - name: OSEVEN
+    addr: "FFBF"
+    title: "Generate an event"
+    entry:
+      "Y": Event number
+    exit:
+      "C": "C=0 if & only if the event was enabled"
+---
+<p>
+    The user event may be generated using this routine. Software replacing OS routines should generate the appropriate
+    events by making this call.
+</p>

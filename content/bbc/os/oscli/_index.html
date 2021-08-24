@@ -1,0 +1,178 @@
+---
+type: "6502opcode"
+title: "OSCLI"
+linkTitle: "Pass string to the CLI"
+weight: 10
+categories:
+  - bbc
+api:
+  - name: OSCLI
+    addr: "FFF7"
+    indirect: "208"
+    title: "Pass string to the CLI"
+---
+<p>
+    This call provides the machine code user with a convenient method of performing any of the * commands that the
+    system provides from Basic.
+</p>
+<p>
+    The command required is placed in a string as normal text terminated by a CR character and this call is made with the address in X & Y.
+</p>
+<p>
+    If the string passed to the CLI is not terminated by a carriage return within 255 bytes this routine has undefined
+    effects.
+</p>
+<p>
+    The OS provides a default set of commands:
+    <em>(Note these have * in them but that is not necessary when passing the command to OSCLI)</em>
+</p>
+<table>
+    <thead>
+    <tr>
+        <th rowspan="2">Command</th>
+        <th rowspan="2">Action</th>
+        <th colspan="3">Available on</th>
+    </tr>
+    <tr>
+        <th>BBC</th>
+        <th>Master</th>
+        <th>Electron</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>*.</td>
+        <td>treated as *CAT command</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*/</td>
+        <td>treated as *RUN command</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*BASIC</td>
+        <td>Select BASIC as current language</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*CAT</td>
+        <td>issue catalogue request to filing system</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*CODE</td>
+        <td>passed to user vector</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*EXEC</td>
+        <td>select text file as input stream</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*FX</td>
+        <td>issue OSBYTE call, no returns possible</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*HELP</td>
+        <td>issue page ROM service call 9</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*KEY</td>
+        <td>take rest of line as text for soft key</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*LINE</td>
+        <td>passed to user vector</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*LOAD</td>
+        <td>issue load request to filing system</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*MOTOR</td>
+        <td>open/close cassette motor relay</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*OPT</td>
+        <td>issue option request to filing system</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*ROM</td>
+        <td>select ROM filing system</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*SAVE</td>
+        <td>issue save request to filing system</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*SPOOL</td>
+        <td>include text file in output stream</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*TAPE</td>
+        <td>select tape filing system</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>*TV</td>
+        <td>TV configuration</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    These commands may be abbreviated by taking the first few letters and terminating with a ‘.’ character. Parameters
+    may be passed in the text following the command.
+</p>
+<p>
+    Other unrecognised commands are first offered to paged ROMs and are then offered to the currently
+    selected filing system via the filing system control vector.
+</p>

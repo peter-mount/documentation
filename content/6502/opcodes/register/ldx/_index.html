@@ -1,0 +1,93 @@
+---
+type: "6502opcode"
+title: "LDX"
+linkTitle: "LDX"
+weight: 3
+description: "Load Index Register X from Memory"
+tags:
+  - 6502 instruction
+op: "LDX"
+flags:
+  "n": Set if most-significant bit of result is set
+  z: Set if result is zero
+codes:
+  - code: A2
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: AE
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: A6
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+  - code: BE
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: B6
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "Add 1 cycle if adding index crosses a page boundary"
+---
+
+<p>
+  Load index register X with data from memory.
+</p>
+<p>
+  On all processors, the data loaded from memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

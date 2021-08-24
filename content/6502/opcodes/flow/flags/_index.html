@@ -1,0 +1,288 @@
+---
+type: "6502opcode"
+title: "Flags"
+linkTitle: "Flags"
+weight: 2
+description: "Flag manipulation"
+tags:
+  - 6502 instruction
+alt: Action
+codes:
+  - code: 18
+    op: CLC
+    alt: Clear Carry
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 38
+    op: SEC
+    alt: Set Carry
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: D8
+    op: CLD
+    alt: Clear Decimal
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: F8
+    op: SED
+    alt: Set Decimal
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 58
+    op: CLI
+    alt: Enable hardware interrupts
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 78
+    op: SEI
+    alt: Disable hardware interrupts
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: B8
+    op: CLV
+    alt: Clear Overflow
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: C2
+    op: REP
+    alt: Reset status bits
+    addressing: imm
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+  - code: E2
+    op: SEP
+    alt: Set status bits
+    addressing: imm
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+---
+
+<p>The flag instructions manipulate some of the flags in the status register.</p>
+
+<div style="break-inside: avoid">
+  <h3>CLC - Clear Carry Flag</h3>
+  <p>
+    CLC is used prior to addition with the ADC instruction to keep the carry flag affecting the result.
+  </p>
+  <p>
+    On the 6502 a CLC before a BCC instruction can be used to implement a branch always, which is relocatable.
+    This is unnecessary since the 65C02 with it's BRA instruction.
+  </p>
+  <p>
+    On the 16-bit processors a CLC followed by XCE instruction is used to switch the 65802 & 65816 processors into
+    native mode.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>SEC - Set Carry Flag</h3>
+  <p>
+    SEC is used prior to subtraction using the SBC instruction to keep the carry flag affecting the result.
+  </p>
+  <p>
+    On the 16-bit processors a SEC followed by XCE instruction is used to switch the 65802 & 65816 processors into 6502
+    emulation mode.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>CLD - Clear Decimal Mode</h3>
+  <p>
+    CLD is used to switch the processors into binary mode so that the ADC & SBC instructions will perform binary not BCD
+    arithmetic.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>SED - Set Decimal Mode</h3>
+  <p>
+    SED is used to switch the processors into decimal mode so that the ADC & SBC instructions will perform BCD not
+    binary arithmetic.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>CLI - Clear Interrupt Disable Flag</h3>
+  <p>
+    CLI is used to re-enable hardware interrupts.
+  </p>
+  <p>
+    When the processor starts the interrupt handler it sets the i flag to prevent another interrupt to occur during that
+    handler.
+    If the handler want's to allow interrupts to happen whilst it's handling a previous one it can use CLI to re-enable
+    them.
+    The handler doesn't need to use CLI as the RTI (ReTurn from Interrupt) instruction will clear the i flag
+    automatically.
+  </p>
+  <p>
+    In user code, CLI can be used to re-enable interrupts after an SEI instruction.
+    This is usually used during time-critical code or code that cannot be interrupted.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>SEI - Clear Interrupt Disable Flag</h3>
+  <p>
+    SEI is used to disable hardware interrupts.
+  </p>
+  <p>
+    When the i bit is set, maskable hardware interrupts are ignored.
+    When the processor starts the interrupt handler it sets the i flag to prevent another interrupt to occur during that
+    handler.
+    If the handler want's to allow interrupts to happen whilst it's handling a previous one it can use CLI to re-enable
+    them.
+    The handler doesn't need to use CLI as the RTI (ReTurn from Interrupt) instruction will clear the i flag
+    automatically.
+  </p>
+  <p>
+    In user code, SEI can be used to disable interrupts when it needs to run time-critical code or code that cannot be
+    interrupted.
+    It should then use CLI once it's finished that time-critical code.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>CLV - Clear Overflow Flag</h3>
+  <p>
+    CLV clears the overflow flag.
+  </p>
+  <p>
+    Unlike other clear flag instructions, there is no set overflow flag available.
+    The only way the overflow flag can be set is either:
+  </p>
+  <ul>
+    <li>The BIT instruction will set overflow if bit 6 of the mask & memory is set</li>
+    <li>The 65816 REP instruction can clear the overflow</li>
+    <li>Use the Overflow pin on the processor. This is rarely used & is often not even connected.</li>
+  </ul>
+  <p>
+    On the 6502 a CLC before a BVC instruction can be used to implement a branch always, which is relocatable.
+    This is unnecessary since the 65C02 with it's BRA instruction.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>REP - Reset Status Bits</h3>
+  <p>
+    For each bit set in the operand byte, reset the corresponding bit in the status register.
+    For each bit not set in the operand byte leaves the corresponding bit unchanged.
+  </p>
+  <p>
+    This instruction lets you clear any flag or flags in a single instruction.
+    It is the only direct means of resetting the m & x flags.
+  </p>
+  <p>
+    In 6502 emulation mode (e=1) neither the b flag or bit 5 (the 6502's non-flag bit) is affected by this instruction.
+  </p>
+  <table class="table table-borderless">
+    <caption>Flags Affected</caption>
+    <tr>
+      <th></th>
+      <th>7</th>
+      <th>6</th>
+      <th>5</th>
+      <th>4</th>
+      <th>3</th>
+      <th>2</th>
+      <th>1</th>
+      <th>0</th>
+    </tr>
+    <tr>
+      <td>6502 emulation mode e=1</td>
+      <td>n</td>
+      <td>v</td>
+      <td></td>
+      <td></td>
+      <td>d</td>
+      <td>i</td>
+      <td>z</td>
+      <td>c</td>
+    </tr>
+    <tr>
+      <td>65816 native mode e=0</td>
+      <td>n</td>
+      <td>v</td>
+      <td>m</td>
+      <td>x</td>
+      <td>d</td>
+      <td>i</td>
+      <td>z</td>
+      <td>c</td>
+    </tr>
+  </table>
+</div>
+
+<div style="break-inside: avoid">
+  <h3>SEP - Set Status Bits</h3>
+  <p>
+    For each bit set in the operand byte, set the corresponding bit in the status register.
+    For each bit not set in the operand byte leaves the corresponding bit unchanged.
+  </p>
+  <p>
+    This instruction lets you set any flag or flags in a single instruction.
+    It is the only direct means of setting the m & x flags.
+  </p>
+  <p>
+    In 6502 emulation mode (e=1) neither the b flag or bit 5 (the 6502's non-flag bit) is affected by this instruction.
+  </p>
+  <p>
+    The bit's in the operand & their relationship with the status register is the same as the REP instruction.
+  </p>
+</div>

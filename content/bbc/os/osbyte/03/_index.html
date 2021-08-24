@@ -1,0 +1,88 @@
+---
+type: "6502opcode"
+title: "&03 (3) select output stream"
+linkTitle: "3 select output stream"
+weight: 3
+categories:
+    - bbc
+osbyte:
+  - hex: 03
+    int: 3
+    title: Select output stream
+    entry:
+      x: The output device(s)
+    exit:
+      x: Old value
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+
+<p>
+    This call selects the output streams to be used.
+    The X register contains the streams to use, one per bit:
+</p>
+<table>
+    <thead>
+    <tr>
+        <th>Bit</th>
+        <th>Output selected if bit is set</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>0</th>
+        <td>Enables RS423 driver</td>
+    </tr>
+    <tr>
+        <th>1</th>
+        <td>Disabled VDU driver</td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <td>Disabled printer driver</td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <td>Enables printer, independent on CTRL B/C or VDU 2,3</td>
+    </tr>
+    <tr>
+        <th>4</th>
+        <td>Disables spooled output</td>
+    </tr>
+    <tr>
+        <th>5</th>
+        <td>Not used</td>
+    </tr>
+    <tr>
+        <th>6</th>
+        <td>Disables printer driver unless char is preceded by VDU 1</td>
+    </tr>
+    <tr>
+        <th>7</th>
+        <td>Not used</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>
+    *FX 3,0 selects the default output:
+</p>
+<ul>
+    <li>RS423 disabled</li>
+    <li>VDU enabled</li>
+    <li>Printer enabled if selected by VDU 2</li>
+    <li>Spooled output enabled if selected by *SPOOL</li>
+</ul>
+
+<h4>Econet</h4>
+<p>
+    Bit 3 should not be used to enable the printer as it might conflict with Econet claiming the printer.
+</p>
+
+<h4>Electron</h4>
+<p>
+    If RS423 or printer output is selected on the Electron a paged ROM service call is issued.
+    If no suitable response is received the output is thrown away.
+</p>

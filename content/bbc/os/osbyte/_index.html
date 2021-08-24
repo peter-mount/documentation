@@ -1,0 +1,32 @@
+
+---
+type: "6502opcode"
+title: "OSBYTE"
+linkTitle: "OSBYTE"
+weight: 20
+categories:
+    - bbc
+#menu:
+#  main:
+#    weight: 20
+api:
+  - name: OSBYTE
+    addr: "FFF4"
+    indirect: "20A"
+    title: "Misc OS functions specified by accumulator"
+---
+<div style="break-inside: avoid">
+    <p>
+        OSBYTE calls are a powerful and flexible way of invoking many of the available operating system facilities.
+    </p>
+    <p>
+        OSBYTE calls are specified by the contents of the accumulator (A register) in the 6502. This means that up to
+        256 different calls can be made.
+    </p>
+    <p>
+        The command line interpreter (see section 2.11) performs OSBYTE calls in response to *FX commands. This enables
+        the user to make OSBYTE calls from the keyboard or within BASIC programs. It should be noted however that no
+        results are returned by a *FX call and so it is inappropriate to use certain OSBYTEs in this way.
+    </p>
+</div>
+

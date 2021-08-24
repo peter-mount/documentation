@@ -1,0 +1,63 @@
+---
+type: "6502opcode"
+title: "COP - Co-Processor Enable"
+linkTitle: "COP"
+weight: 20
+description: "Perform a software interrupt with optional co-processor"
+tags:
+  - 6502 instruction
+flags:
+  d: reset to 0
+  i: set to disable hardware IRQ interrupts
+codes:
+  - code: "02"
+    op: COP
+    addressing: sic
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+      notes:
+    cycles:
+      value: 7
+      notes:
+        - 1
+notes:
+  1: "65816: Add 1 cycle in 65816 native mode (e=0)"
+---
+<p>
+  COP causes a software interrupt similar to BRK but through a separate vector.
+  Unlike BRK, it is possible for it to be trapped by an optional co-processor like a floating point processor or a
+  graphics processor.
+  It is unaffected by the i interrupt disable flag.
+</p>
+<p>
+  Like BRK, COP increments the Program Counter by 2. However assemblers require the second byte to be provided as part
+  of the instruction.
+</p>
+<p>
+  Values &00-&7F are free for use by software handlers.
+</p>
+<p>
+  Values &80-&FF are reserved for hardware implementations.
+</p>
+
+<h3>65802/65816 in 6502 emulation mode (e=1)</h3>
+<p>
+  The program counter is incremented by two & pushed onto the stack.
+  The status register is pushed onto the stack.
+  The interrupt disable flag is then set, disabling interrupts.
+  The program counter is loaded with the interrupt vector at &FFF4-&FFF5.
+  The d flag is reset to 0 after the instruction is executed.
+</p>
+
+<h3>65802/65816 in native mode (e=0)</h3>
+<p>
+  The program bank register is pushed onto the stack.
+  The program counter is incremented by two & pushed onto the stack.
+  The status register is pushed onto the stack.
+  The interrupt disable flag is then set, disabling interrupts.
+  The program bank register is set to 0.
+  The program counter is loaded with the break vector at &00FFE4-&00FFE5.
+  The d flag is reset to 0 after the instruction is executed.
+</p>

@@ -1,0 +1,118 @@
+---
+type: "6502opcode"
+title: "Compare Index Register"
+linkTitle: "Compare Index Register"
+weight: 3
+description: "Compare Index Register with Memory"
+tags:
+  - 6502 instruction
+flags:
+  "n": Set if most-significant bit of result is set
+  z: Set if result is zero
+  c: Set if register value greater than or equal or Cleared if less than memory value
+codes:
+  - code: E0
+    op: CPX
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: EC
+    op: CPX
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: E4
+    op: CPX
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+  - code: C0
+    op: CPY
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: CC
+    op: CPY
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: C4
+    op: CPY
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+---
+
+<p>
+  The CPX & CPY instructions subtracts the data at the address in the operand from the contents of the relevant index register,
+  setting the n, z & c flags based on the result.
+  The register & Memory are unaffected by this operation.
+</p>
+<p>
+  The primary use of the CPX or CPY instructions is to test the value of the index register against loop boundaries.
+</p>
+
+<h3>Data size</h3>
+<p>
+  On all processors, the data added from memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

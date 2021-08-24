@@ -1,0 +1,23 @@
+---
+type: "6502opcode"
+title: "&8B (139) Select file options"
+linkTitle: "139 select file options"
+description: "*OPT equivalent"
+weight: 139
+categories:
+  - bbc
+osbyte:
+  - hex: 8B
+    int: 139
+    title: Select file options
+    entry:
+      x: file option number
+      y: option value
+    exit:
+      a: preserved
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---

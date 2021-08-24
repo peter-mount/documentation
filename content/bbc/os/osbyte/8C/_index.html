@@ -1,0 +1,20 @@
+---
+type: "6502opcode"
+title: "&8C (140) Select tape filesystem"
+linkTitle: "140 select tape filesystem"
+description: "*TAPE equivalent"
+weight: 140
+categories:
+  - bbc
+osbyte:
+  - hex: 8C
+    int: 140
+    title: Select tape filesystem
+    exit:
+      a: preserved
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---

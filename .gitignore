@@ -1,0 +1,18 @@
+/area51.dev/node_modules/
+
+/area51.dev/themes/docsy/public/
+/area51.dev/themes/docsy/resources/
+/area51.dev/themes/docsy/node_modules/
+/area51.dev/themes/docsy/tech-doc-hugo
+
+# vim temporary files
+*~
+*.sw?
+
+# system files
+.DS_Store
+
+# IDE files
+.idea
+.vscode
+/go_build_newsite_main_go

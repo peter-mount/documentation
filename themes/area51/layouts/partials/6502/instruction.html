@@ -1,0 +1,24 @@
+{{.op}} {{if eq .mode "abs" }}<em>addr</em>{{ end -}}
+{{- if eq .mode "absi" }}(<em>addr</em>){{ end -}}
+{{- if eq .mode "absii" }}(<em>addr</em>,X){{ end -}}
+{{- if eq .mode "absix" }}<em>addr</em>,X{{ end -}}
+{{- if eq .mode "absiy" }}<em>addr</em>,Y{{ end -}}
+{{- if eq .mode "abslix" }}<em>long</em>,X{{ end -}}
+{{- if eq .mode "absl" }}<em>long</em>{{ end -}}
+{{- if eq .mode "absil" }}[<em>addr</em>]{{ end -}}
+{{- if eq .mode "acc" }}A{{ end -}}
+{{- if eq .mode "bm" }}<em>srcbk</em>, <em>dstbk</em>{{ end -}}
+{{- if eq .mode "dp" }}<em>dp</em>{{ end -}}
+{{- if eq .mode "dpi" }}(<em>dp</em>){{ end -}}
+{{- if eq .mode "dpil" }}[<em>dp</em>]{{ end -}}
+{{- if eq .mode "dpix" }}<em>dp</em>,X{{ end -}}
+{{- if eq .mode "dpiix" }}(<em>dp</em>,X){{ end -}}
+{{- if eq .mode "dpiy" }}<em>dp</em>,Y{{ end -}}
+{{- if eq .mode "dpiiy" }}(<em>dp</em>),Y{{ end -}}
+{{- if eq .mode "dpiliy" }}[<em>dp</em>],Y{{ end -}}
+{{- if eq .mode "imm" }}#<em>const</em>{{ end -}}
+{{- if eq .mode "pcr" }}<em>nearlabel</em>{{ end -}}
+{{- if eq .mode "pcrl" }}<em>label</em>{{ end -}}
+{{- if eq .mode "sic" }}<em>const</em>{{ end -}}
+{{- if eq .mode "sr" }}<em>sr</em>,S{{ end -}}
+{{- if eq .mode "sriiy" }}(<em>sr</em>,S),Y{{ end -}}

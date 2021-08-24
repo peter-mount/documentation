@@ -1,0 +1,84 @@
+---
+type: "6502opcode"
+title: "BRK - Software Break"
+linkTitle: "BRK"
+weight: 20
+description: "Perform a software break"
+tags:
+  - 6502 instruction
+flags:
+  b: Value of P register on the stack is set
+  d: On 65C02, 65816 in emulation mode (e=1) reset to 0 for binary arithmetic, unchanged on 6502
+  i: set to disable hardware IRQ interrupts
+codes:
+  - code: "00"
+    op: BRK
+    addressing: si
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 7
+      notes:
+        - 2
+notes:
+  1: "BRK is 1 byte but program counter is incremented by 2 allowing for an optional parameter"
+  2: "65816: Add 1 cycle in 6502 emulation mode (e=1)"
+---
+<p>
+  BRK forces a software interrupt. It is unaffected by the i interrupt disable flag.
+</p>
+<p>
+  The BRK instruction is a single byte instruction. However, when it is invoked the Program Counter is incremented by 2.
+  This allows for a one-byte signature value indicating which break caused the interrupt.
+</p>
+<p>
+  Even if the signature byte is not required, it must either be there or the RTI instruction which returns control
+  to the caller must manually decrement the return address.
+  As this can be tricky, most operating systems require BRK to take up 2 bytes in memory.
+</p>
+
+<h3>6502, 65C02 & Emulation Mode (e=1)</h3>
+<p>
+  The program counter is incremented by two & pushed onto the stack.
+  The status register (with b break flag set) is pushed onto the stack.
+  The interrupt disable flag is then set, disabling interrupts.
+  The program counter is loaded with the interrupt vector at &FFFE-&FFFF.
+</p>
+<p>
+  It's up to the interrupt handler pointed to by (&FFFE) to test the b flag to determine if the interrupt was from
+  a software (BRK) rather than a hardware (IRQ) interrupt.
+</p>
+{{< highlight go "linenos=table" >}}
+.handler PLA       ; copy status from stack
+         PHA       ; but don't remove it else RTI will break
+
+         AND #&10  ; check B flag
+         BNE isBrk ; call break handler
+
+.isIRQ             ; hardware handler here
+         RTI       ; exit hardware handler
+
+.isBrk             ; break handler here
+         RTI       ; exit BRK handler
+{{< / highlight >}}
+
+<h3>65802/65816 Native Mode (e=0)</h3>
+<p>
+  The program bank register is pushed onto the stack.
+  The program counter is incremented by two & pushed onto the stack.
+  The status register is pushed onto the stack.
+  The interrupt disable flag is then set, disabling interrupts.
+  The program counter is loaded with the break vector at &00FFE6-&00FFE7.
+</p>
+
+<h3>Decimal Mode</h3>
+<p>
+  On the 6502 the decimal d flag is not modified after a BRK is executed.
+  On the 65C02 & 65816 the decimal d flag is reset to 0.
+</p>

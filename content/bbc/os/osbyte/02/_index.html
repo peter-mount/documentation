@@ -1,0 +1,43 @@
+---
+type: "6502opcode"
+title: "&02 (2) select input stream"
+linkTitle: "2 select input stream"
+weight: 2
+categories:
+    - bbc
+osbyte:
+  - hex: 02
+    int: 2
+    title: Select input stream
+    entry:
+      x: The input device
+    exit:
+      a: preserved
+      x: Old value
+      y: undefined
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+
+<h4>Examples</h4>
+<p>
+    *FX 2,0 X=0 keyboard selected, RS423 disabled
+</p>
+
+<p>
+    *FX 2,1 X=1 RS423 selected & enabled
+</p>
+
+<p>
+    *FX 2,2 X=2 keyboard selected, RS423 enabled
+</p>
+<p>Default: *FX2,0</p>
+
+<h4>Electron</h4>
+<p>
+    Any call with X<>0 will result in an unknown OSBYTE service call being made
+    to paged ROMs unless a previous call was recognised & changed the input source.
+</p>

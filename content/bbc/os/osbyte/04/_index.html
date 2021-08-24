@@ -1,0 +1,67 @@
+---
+type: "6502opcode"
+title: "&04 (4) enable/disable cursor editing"
+linkTitle: "4 enable/disable cursor editing"
+weight: 4
+categories:
+  - bbc
+osbyte:
+  - hex: 04
+    int: 4
+    title: Enable/Disable cursor editing
+    entry:
+      x: Status of the editiing keys
+    exit:
+      a: preserved
+      x: Previous status of keys
+      y: undefined
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+
+<p>X=0 Enable cursor editing (default).</p>
+<p>X=1 Disable editing, cursor keys return ASCII values like other keys.</p>
+<p>X=2 Disable editing, cursor keys act as soft keys.</p>
+<table>
+    <thead>
+    <tr>
+        <th rowspan="2">Key</th>
+        <th>X=1</th>
+        <th>X=2</th>
+    </tr>
+    <tr>
+        <th>Hex Decimal</th>
+        <th>Soft key</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>COPY</td>
+        <td>&87 135</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>LEFT</td>
+        <td>&88 136</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>RIGHT</td>
+        <td>&89 137</td>
+        <td>13</td>
+    </tr>
+    <tr>
+        <td>DOWN</td>
+        <td>&8A 138</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>UP</td>
+        <td>&8B 139</td>
+        <td>15</td>
+    </tr>
+    </tbody>
+</table>

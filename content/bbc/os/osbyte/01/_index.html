@@ -1,0 +1,24 @@
+---
+type: "6502opcode"
+title: "&01 (1) set user flag"
+linkTitle: "1 set user flag"
+weight: 1
+categories:
+  - bbc
+osbyte:
+  - hex: 01
+    int: 1
+    title: Set the user flag
+    entry:
+      x: The new value of the user flag
+    exit:
+      x: Old value
+    compatibility:
+      electron: true
+      bbc: true
+      master: true
+---
+<p>
+    This OSBYTE call is left free for user applications and is not used by the operating system.
+    The user flag defaults to 0.
+</p>

@@ -1,0 +1,94 @@
+---
+type: "6502opcode"
+title: "TRB & TSB"
+linkTitle: "TRB, TSB"
+weight: 3
+description: "Test & Set/Reset Memory Bits against Accumulator"
+tags:
+  - 6502 instruction
+flags:
+  z: Set if logical AND of memory & accumulator is zero, otherwise clear
+codes:
+  - code: 1C
+    op: "TRB"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 6
+      notes:
+        - 1
+  - code: 14
+    op: "TRB"
+    addressing: dp
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 1
+        - 2
+  - code: "0C"
+    op: "TSB"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 6
+      notes:
+        - 1
+  - code: "04"
+    op: "TSB"
+    addressing: dp
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 1
+        - 2
+notes:
+    1: "65816: Add 2 cycles if m=0 (16-bit memory/accumulator)"
+    2: "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+---
+<div style="break-inside: avoid">
+  <h2>TRB - Test & Reset memory against Accumulator</h2>
+  <p>
+    TRB logically AND's the <em>complement</em> of the accumulator with the data at an address and stores the result in
+    that address.
+  </p>
+  <p>
+    This has the effect of clearing each memory bit which is set in the accumulator, leaving the other bits unchanged.
+  </p>
+
+  <p>
+    The z flag is set based on a different operation. It's set if the memory location once set logically AND the
+    accumulator (not it's compliment) is zero.
+  </p>
+
+  <p>
+    For 8-bit processors or when m=1, the values in the accumulator & memory are 8-bit.
+  </p>
+  <p>
+    For 16-bit processors, when m=0, the values in the accumulator & memory are 16-bit.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h2>TSB - Test & Set memory against Accumulator</h2>
+  <p>
+    TSB is identical to TRB except it sets the bits defined in the Accumulator not reset them.
+  </p>
+</div>

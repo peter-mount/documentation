@@ -1,0 +1,107 @@
+---
+type: "6502opcode"
+title: "BIT"
+linkTitle: "BIT"
+weight: 3
+description: "Test Memory Bits against Accumulator"
+tags:
+  - 6502 instruction
+flags:
+  "n": Takes value of most significant bit of memory data, not in immediate addressing
+  v: Takes value of the next-to-highest bit of memory data, not in immediate addressing
+  z: Set if logical AND of memory & accumulator is zero, otherwise clear
+codes:
+  - code: 89
+    op: "BIT"
+    addressing: imm
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: 2C
+    op: "BIT"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: 24
+    op: "BIT"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+  - code: 3C
+    op: "BIT"
+    addressing: absix
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: 34
+    op: "BIT"
+    addressing: dpix
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+notes:
+    1: "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+    2: "658116: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+    3: "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+    4: "Add 1 cycle if adding index crosses a page boundary"
+---
+<p>
+  Bit is a dual-purpose instruction which performs operations against the accumulator and memory.
+  It is usually used immediately preceding a conditional branch instruction
+</p>
+<p>
+  First it set's the n flag to reflect the value of the high bit of the data in memory
+  and the v flag to the next-to-highest bit of that data.
+</p>
+<p>
+  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
+</p>
+<p>
+  For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
+</p>
+<p>
+  Second it performs a logical AND of the memory and the accumulator.
+  If the result is zero the z flag is set.
+</p>
+<p>
+  In both operations, the contents of the accumulator and memory are not modified.
+</p>

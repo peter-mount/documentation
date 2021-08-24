@@ -1,0 +1,226 @@
+---
+type: "6502opcode"
+title: "EOR - Exclusive OR"
+linkTitle: "Exclusive OR"
+weight: 3
+description: "Exclusive-OR Accumulator with Memory"
+tags:
+  - 6502 instruction
+flags:
+  "n": Set if most significant bit of result is set
+  z: Set if result is zero, otherwise clear
+op: EOR
+codes:
+  - code: 49
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: 4D
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: 4F
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+  - code: 45
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+  - code: 52
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+  - code: 47
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: 5D
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: 5F
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+  - code: 59
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: 55
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+  - code: 41
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: 51
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+        - 4
+  - code: 57
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: 43
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: 53
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 7
+      notes:
+        - 2
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "Add 1 cycle if adding index crosses a page boundary"
+---
+<p>
+  EOR performs a bitwise logical Exclusive-OR of the value in the accumulator with that of the memory location with the result stored
+  in the accumulator.
+</p>
+<p>
+  The result will be each bit in the accumulator will be set ONLY if that same bit in the original accumulator
+  value and the memory differ. If the bits were the same then the resultant bit will be 0.
+</p>
+<table>
+  <caption>Exclusive OR truth table</caption>
+  <tr><th colspan="2"></th><th colspan="2">Second Operand</th></tr>
+    <tr><th rowspan="3" style="writing-mode: vertical-lr;">First Operand</th><th></th><th>0</th><th>1</th></tr>
+  <tr><th>0</th><td>0</td><td>1</td></tr>
+  <tr><th>1</th><td>1</td><td>0</td></tr>
+</table>
+<p>
+  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
+</p>
+<p>
+  For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
+</p>
+<p>
+  Second it performs a logical AND of the memory and the accumulator.
+  If the result is zero the z flag is set.
+</p>
+<p>
+  In both operations, the contents of the accumulator and memory are not modified.
+</p>

@@ -1,0 +1,77 @@
+{{- if isset .Params "flags" }}{{ partial "6502/flags.html" .Params.flags }}{{end -}}
+{{- if isset .Params "codes" -}}
+{{- $opcode := $.Params.codes -}}
+{{- if isset .Params "notitle" | not -}}
+    <h3>Instructions</h3>
+    {{- end -}}
+    <table class="table table-striped table-hover table-sm table-borderless">
+        <thead>
+        <tr>
+            {{- if isset .Params "src" -}}
+            <th scope="col" rowspan="2">{{.Params.src}}</th>
+            {{- end -}}
+            {{- if isset .Params "dest" -}}
+            <th scope="col" rowspan="2">{{.Params.dest}}</th>
+            {{- end -}}
+            <th scope="col" rowspan="2">Syntax</th>
+            {{- if isset .Params "alt" -}}
+            <th scope="col" rowspan="2">{{.Params.alt}}</th>
+            {{- end -}}
+            <th scope="col">Opcode</th>
+            <th scope="col" colspan="3">Available on:</th>
+            <th scope="col"># of</th>
+            <th scope="col"># of</th>
+            <th scope="col" rowspan="2">Addressing Mode</th>
+            {{- if isset .Params "altright" -}}
+            <th scope="col" rowspan="2">{{.Params.altright}}</th>
+            {{- end -}}
+        </tr>
+        <tr>
+            <th><em>(hex)</em></th>
+            <th>6502</th>
+            <th>65C02</th>
+            <th>65816</th>
+            <th>bytes</th>
+            <th>cycles</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{- range $.Params.codes -}}
+        {{- if isset $.Params "op" }}{{ $.Scratch.Set "op" $.Params.op }}{{end -}}
+        {{- if isset . "op" }}{{ $.Scratch.Set "op" .op }}{{end -}}
+        {{- $op := $.Scratch.Get "op" -}}
+        <tr>
+            {{- if isset $.Params "src" }}
+            <td>{{.src}}</td>
+            {{end -}}
+            {{- if isset $.Params "dest" }}
+            <td>{{.dest}}</td>
+            {{end -}}
+            <td>{{ partial "6502/instruction.html" (dict "op" $op "mode" .addressing "val" "addr") }}</td>
+            {{- if isset $.Params "alt" }}
+            <td>{{.alt}}</td>
+            {{end -}}
+            <td>{{.code}}</td>
+            <td>{{ if isset .compatibility "6502" }}x{{end }}</td>
+            <td>{{ if isset .compatibility "65c02" }}x{{end }}</td>
+            <td>{{ if isset .compatibility "65816" }}x{{end }}</td>
+            <td>{{ partial "6502/notablevalue.html" .bytes }}</td>
+            <td>{{ partial "6502/notablevalue.html" .cycles }}</td>
+            <td>{{ partial "6502/addressmode.html" .addressing }}</td>
+            {{- if isset $.Params "altright" }}
+            <td>{{.altright}}</td>
+            {{end -}}
+        </tr>
+        {{- end -}}
+        </tbody>
+    </table>
+    {{end}}
+
+    {{- if isset $.Params "notes" -}}
+    <h3>Notes:</h3>
+    <ol>
+        {{- range $.Params.notes }}
+        <li>{{.}}</li>
+        {{end -}}
+    </ol>
+    {{- end -}}

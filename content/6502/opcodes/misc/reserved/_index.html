@@ -1,0 +1,44 @@
+---
+type: "6502opcode"
+title: "Reserved"
+linkTitle: "Reserved"
+weight: 3
+description: "WDM Reserved for future expansion"
+tags:
+  - 6502 instruction
+codes:
+  - code: 42
+    op: "WDM"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: "?"
+      notes:
+        - 1
+notes:
+    - byte & cycle count subject to change in future processors
+---
+{{% pageinfo %}}
+Do not use this instruction. It will break if/when a future processor is released with additional instructions.
+{{% /pageinfo %}}
+<p>
+    The 65802 & 654816 processors use 255 out of the possible 256 8-bit opcodes.
+    The remaining opcode is this one, labeled WDM which happens to be the initials of William D. Mensch who designed the processors.
+</p>
+<p>
+    To allow additional instructions to be added later this instruction act's as a prefix allowing an additonal 256 opcodes.
+    This is a similar technique to the Z80 & 8080 processors which have 2-byte extension opcodes.
+</p>
+<p>
+    The actual number of bytes and cycles involved will be depended on those extensions, however the byte size will be
+    a minimum of 2 bytes.
+</p>
+
+<p>
+    On the 65802 & 65816 this instruction will execute as a 2-byte NOP.
+</p>

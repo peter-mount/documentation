@@ -1,0 +1,23 @@
+<h3>Flags Affected</h3>
+<div>
+    <div>
+        {{- if isset . "n" }}<strong>n</strong>{{else}}-{{end -}}
+        {{- if isset . "v" }}<strong>v</strong>{{else}}-{{end -}}
+        {{- if isset . "m" }}<strong>m</strong>{{else}}-{{end -}}
+        {{- if isset . "b" }}<strong>b</strong>{{else}}{{ if isset . "x" }}<strong>x</strong>{{else}}-{{end}}{{end -}}
+        {{- if isset . "d" }}<strong>d</strong>{{else}}-{{end -}}
+        {{- if isset . "i" }}<strong>i</strong>{{else}}-{{end -}}
+        {{- if isset . "z" }}<strong>z</strong>{{else}}-{{end -}}
+        {{- if isset . "c" }}<strong>c</strong>{{else}}-{{end -}}
+    </div>
+    {{- if isset . "n" }}<div><span>n</span> <span>{{.n}}</span></div>{{end -}}
+    {{- if isset . "v" }}<div><span>v</span> <span>{{.v}}</span></div>{{end -}}
+    {{- if isset . "m" }}<div><span>m</span> <span>{{.m}}</span></div>{{end -}}
+    {{- if isset . "b" }}<div><span>b</span> <span>{{.b}}</span></div>{{end -}}
+    {{- if isset . "x" }}<div><span>x</span> <span>{{.x}}</span></div>{{end -}}
+    {{- if isset . "d" }}<div><span>d</span> <span>{{.d}}</span></div>{{end -}}
+    {{- if isset . "i" }}<div><span>i</span> <span>{{.i}}</span></div>{{end -}}
+    {{- if isset . "z" }}<div><span>z</span> <span>{{.z}}</span></div>{{end -}}
+    {{- if isset . "c" }}<div><span>c</span> <span>{{.c}}</span></div>{{end -}}
+    </tbody>
+</div>

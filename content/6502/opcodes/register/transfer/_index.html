@@ -1,0 +1,415 @@
+---
+type: "6502opcode"
+title: "Transfer"
+linkTitle: "Transfer"
+weight: 3
+description: "Transfer data between registers"
+tags:
+  - 6502 instruction
+flags:
+  "n": Set if most significant bit of the transferred value is set
+  z: Set if value transferred is zero
+src: Src
+dest: Dest
+altright: Notes
+codes:
+  - code: AA
+    op: "TAX"
+    src: A
+    dest: X
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: A8
+    op: "TAY"
+    src: A
+    dest: "Y"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 5B
+    op: "TCD"
+    src: C
+    dest: "D"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 1B
+    op: "TCS"
+    src: C
+    dest: "S"
+    altright: "Flags are unaffected"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 7B
+    op: "TDC"
+    src: "D"
+    dest: "C"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 3B
+    op: "TSC"
+    src: "S"
+    dest: "C"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: BA
+    op: "TSX"
+    src: "S"
+    dest: "X"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 8A
+    op: "TXA"
+    src: "X"
+    dest: "A"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 9A
+    op: "TXS"
+    src: "X"
+    dest: "S"
+    altright: "Flags are unaffected"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 9B
+    op: "TXY"
+    src: "X"
+    dest: "Y"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: 98
+    op: "TYA"
+    src: "Y"
+    dest: "A"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: BB
+    op: "TYX"
+    src: "Y"
+    dest: "X"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: EB
+    op: "XBA"
+    src: "B"
+    dest: "A"
+    altright: "Exchanges both registers, flags based on A post exchange"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+---
+
+<p>
+    The transfer register set of instructions allows for data to be passed between different registers.
+</p>
+<p>
+    In all of these transfer instructions, the source register is unchanged.
+</p>
+<p>
+    For example, on the 6502 to save the X register on the stack you would need to use the following:
+</p>
+{{< highlight go "linenos=table" >}}
+TXA      ; Transfer X into A
+PHA      ; Push A to the stack
+{{< / highlight >}}
+<p>
+    Note: On the 65C02 and later this is replaced by the PHX instruction which doesn't touch the accumulator.
+</p>
+
+<div style="break-inside: avoid">
+    <h2>TAX - Transfer Accumulator to Index Register X</h2>
+    <p>
+        Transfers the Accumulator to X.
+        On the 8-bit processors the registers are all the same size, however on the 16-bit processors the registers can
+        be
+        of different sizes. The following table describes how the data is transferred when a size mismatch occurs:
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>Source Size</th>
+            <th>Dest Size</th>
+            <th>m</th>
+            <th>x</th>
+            <th>Action performed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>8</td>
+            <td>8</td>
+            <td colspan="2">All&nbsp;types</td>
+            <td>Value transferred is 8-bit</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>16</td>
+            <td>1</td>
+            <td>0</td>
+            <td>
+                Value transferred is 16-bit.<br/>
+                The 8-bit A becomes the low byte of the index register.<br/>
+                The 8-bit hidden B register becomes the high byte of the index register.
+            </td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>8</td>
+            <td>0</td>
+            <td>1</td>
+            <td>The low byte of A is transferred to the index register</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>16</td>
+            <td>0</td>
+            <td>0</td>
+            <td>The full 16-bit A is transferred to the index register</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TAY - Transfer Accumulator to Index Register Y</h2>
+    <p>Transfers the Accumulator to Y. It follows the same rules as TAX.</p>
+
+    <h2>TCD - Transfer 16-bit accumulator to Direct Page Register</h2>
+    <p>
+        TCD transfers the 16-bit accumulator C to the direct page register D, regardless of the accumulator/memory flag.
+    </p>
+    <p>
+        The C accumulator is used to indicate that 16-bits are transferred regardless of the m flag.
+        If the A accumulator is 8-bit due to m=1 or in 6502 emulation mode then C = A as the low 8-bits and the hidden B
+        accumulator as the high 8-bits.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TCS - Transfer Accumulator to Stack Pointer</h2>
+    <p>
+        TCS transfers the 16-bit accumulator C to the stack pointer S, regardless of the accumulator/memory flag.
+        The C register is defined above for TCD.
+        An alternate mnemonic for TCS is TAS.
+    </p>
+    <p>
+        Note: Unlike most transfer instructions, TCS does not affect any flags.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TDC - Transfer Direct Page Register tp 16-bit Accumulator</h2>
+    <p>
+        TDC transfers the Direct Page Register to the 16-bit accumulator C.
+        The C register is defined above for TCD.
+        An alternate mnemonic for TDC is TDA.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TSC - Transfer Stack Pointer to Accumulator</h2>
+    <p>
+        TSC transfers the stack pointer S to the 16-bit accumulator C, regardless of the accumulator/memory flag.
+        The C register is defined above for TCD.
+        An alternate mnemonic for TCS is TSA.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TSX - Transfer Stack Pointer to Index Register X</h2>
+    <p>
+        TSX transfers the stack pointer to X.
+        The stack pointer is unchanged.
+        On 8-bit processors only the low byte is transferred to X.
+        On 16-bit processors (x=0) the full 16-bit value is tranferred to X.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TXA - Transfer Index Register X to Accumulator</h2>
+    <p>
+        TXA transfers X into the accumulator.
+        On the 8-bit processors the registers are all the same size, however on the 16-bit processors the registers can
+        be
+        of different sizes. The following table describes how the data is transferred when a size mismatch occurs:
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>Source Size</th>
+            <th>Dest Size</th>
+            <th>m</th>
+            <th>x</th>
+            <th>Action performed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>8</td>
+            <td>8</td>
+            <td colspan="2">All&nbsp;types</td>
+            <td>Value transferred is 8-bit</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>16</td>
+            <td>1</td>
+            <td>0</td>
+            <td>
+                Value transferred is 16-bit.<br/>
+                The 8-bit index register becomes the low byte of the accumulator.<br/>
+                The high-byte of the accumulator is set to 0.
+            </td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>8</td>
+            <td>0</td>
+            <td>1</td>
+            <td>
+                Value transferred is 8-bit.<br/>
+                The low 8-bits of the index register becomes the low byte of the accumulator.<br/>
+                The high-byte of the hidden accumulator B is not affected by the transfer.
+            </td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>16</td>
+            <td>0</td>
+            <td>0</td>
+            <td>The full 16-bit index register is transferred to the accumulator</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>TXS - Transfer Index Register X to the Stack Pointer</h2>
+    <p>
+        TXS transfers X to the stack pointer to.
+        The X is unchanged.
+        On 8-bit processors only the low byte is transferred to S.
+        On 16-bit processors (x=1) the low 8-bits of X is transferred to S. The high 8-bits of S are zeroed.
+        On 16-bit processors (x=0) the full 16-bit value of X is transferred to S.
+    </p>
+    <p>
+        Note: Unlike most transfer instructions, TXS does not affect any flags.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TXY - Transfer index register X to Y</h2>
+    <p>
+        TXY transfers X to Y.
+        X is unchanged.
+        The registers are always the same size, so when 8-bit then that's what's transferred.
+        When 16-bit (x=0) then 16-bits are transferred.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TYA - Transfer Index Register Y to Accumulator</h2>
+    <p>
+        TYA transfers Y into the accumulator.
+        It follows the same rules as TXA above.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>TYX - Transfer index register Y to X</h2>
+    <p>
+        TYX transfers Y to X.
+        Y is unchanged.
+        The registers are always the same size, so when 8-bit then that's what's transferred.
+        When 16-bit (x=0) then 16-bits are transferred.
+    </p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>XBA - Exchange the B & A accumulators</h2>
+    <p>
+        On the 16-bit processors the 16-bit C accumulator is formed of two 8-bit accumulators,
+        A for the low 8-bits and B for the upper 8-bits.
+        XBA swaps the contents of the A & B registers.
+    </p>
+    <p>
+        In 8-bit memory mode, B is usually referred to as the hidden B accumulator, so the XBA instruction
+        can be used to swap the accessible A with B, providing an in-processor scratch accumulator rather than pushing a
+        value to the stack.
+    </p>
+    <p>
+        The flags are based on the value of the 8-bit A accumulator
+    </p>
+</div>

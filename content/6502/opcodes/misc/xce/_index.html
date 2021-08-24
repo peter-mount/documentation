@@ -1,0 +1,60 @@
+---
+type: "6502opcode"
+title: "XCE"
+linkTitle: "Emulation Mode"
+weight: 3
+description: "Exchange Carry & Emulation Bits"
+tags:
+  - 6502 instruction
+flags:
+  c: "Takes emulations previous value"
+  m: "Set to 1 when switching to native mode, otherwise clear"
+codes:
+  - code: FB
+    op: "XCE"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+---
+<p>
+  This instruction is the only means to shift a 65802 or 65812 processor between 6502 emulation mode and full 16-bit native mode.
+</p>
+<h2>Switch to native 16-bit mode</h2>
+<p>To switch into native mode, clear the carry bit then invoke XCE</p>
+{{< highlight go "linenos=table" >}}
+.goNative
+    CLC      ; Clear Carry to indicate native mode
+    XCE      ; Processor will be in 16-bit native mode once this completes
+    RTS      ; Carry will now set if we were originally in emulation or clear if already native.
+{{< / highlight >}}
+<p>
+  Once XCE has completed and the processor is in native mode, the following would have occurred.
+</p>
+<ul>
+  <li>bit 5 of the flags stops being the b break flag. It's now the x mode select flag</li>
+  <li>bit 6 is now the m memory mode flag (it's unused in 6502 emulation mode)</li>
+  <li>Both x & m are set to 1</li>
+</ul>
+
+<h2>Switch to 6502 emulation mode</h2>
+<p>To switch into 6502 emulation mode, set the carry bit then invoke XCE</p>
+{{< highlight go "linenos=table" >}}
+.goEmulation
+    SEC      ; Set Carry to indicate native mode
+    XCE      ; Processor will be in 16-bit native mode once this completes
+    RTS      ; Carry will now set if we were already in emulation or clear if we were originally native.
+{{< / highlight >}}
+<p>
+  Once XCE has completed and the processor is in 6502 emulation mode, the following would have occurred.
+</p>
+<ul>
+    <li>The x & m flags are lost from the status register.</li>
+    <li>bit 6 is unavailable as it's unused in 6502 emulation mode</li>
+    <li>The accumulator is forced into 8-bit's, the high 8 bits are in the hidden B accumulator</li>
+    <li>The index registers are forced into 8-bits. The high 8-bits are lost.</li>
+    <li>The stack pointer is forced into page 1, losing the high byte of the address.</li>
+</ul>

@@ -1,0 +1,25 @@
+---
+type: "6502opcode"
+title: "&8E (142) Enter language ROM"
+linkTitle: "142 enter language ROM"
+weight: 142
+categories:
+  - bbc
+osbyte:
+  - hex: 8E
+    int: 142
+    title: Enter language ROM
+    entry:
+      x: Page rom id to enter
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  The language ROM is entered via its entry point with A=1.
+  Locations &FD and &FE in zero page are set to point to the copyright message in the ROM.
+</p>
+<p>
+  This call does not return as the new Language will take over the machine.
+</p>

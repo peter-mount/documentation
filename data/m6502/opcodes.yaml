@@ -1,0 +1,75 @@
+addressing:
+  abs:
+    title: "Absolute"
+    format: "<em>addr</em>"
+  absi:
+    title: "Absolute Indirect"
+    format: "(<em>addr</em>)"
+  absii:
+    title: "Absolute Indexed Indirect"
+    format: "(<em>addr</em>,X)"
+  absl:
+    title: "Absolute Long"
+    format: "<em>long</em>"
+  absil:
+    title: "Absolute Indirect Long"
+    format: "[<em>addr</em>]"
+opcodes:
+  JMP:
+    op: "JMP"
+    description:
+      - "Transfer control to the address specified by the operand field."
+      - >
+        The program counter is loaded with the target address. If a long JMP is executed the bank is loaded from the third byte of the address.
+        Some assemblers accept <strong>JML</strong> as an alternate mnemonic for <strong>JMP long</strong>.
+    flags:
+    codes:
+      - code: 4D
+        addressing: abs
+        compatibility:
+          6502: true
+          65c02: true
+          65816: true
+        bytes:
+          value: 3
+        cycles:
+          value: 3
+      - code: 6C
+        addressing: absi
+        compatibility:
+          6502: true
+          65c02: true
+          65816: true
+        bytes:
+          value: 3
+        cycles:
+          value: 5
+          notes:
+            - 1
+            - 2
+      - code: 7C
+        addressing: absii
+        compatibility:
+          65c02: true
+          65816: true
+        bytes: 3
+        cycles: 6
+      - code: 5C
+        addressing: absl
+        compatibility:
+          65816: true
+        bytes:
+          value: 4
+        cycles:
+          value: 4
+      - code: DC
+        addressing: absil
+        compatibility:
+          65816: true
+        bytes:
+          value: 3
+        cycles:
+          value: 6
+    notes:
+      1: "Add 1 cycle if 65C02"
+      2: "6502: If low byte of address is 0xFF yields incorrect result"

@@ -1,0 +1,30 @@
+---
+type: "6502opcode"
+title: "OSWRCH"
+linkTitle: "Write char to screen"
+weight: 10
+categories:
+  - bbc
+#menu:
+#  main:
+#    weight: 20
+api:
+  - name: OSWRCH
+    addr: "FFEE"
+    indirect: "20E"
+    title: "Write character to screen or output stream"
+    entry:
+      "A": "Character to write"
+    exit:
+      "A": Preserved
+      "X": Preserved
+      "Y": Preserved
+  - name: OSNEWL
+    addr: "FFE7"
+    title: "Write a newline"
+  - name: OSASCI
+    addr: "FFE3"
+    title: "Write character, call OSNEWL if A=&0D"
+---
+<div style="break-inside: avoid">
+</div>

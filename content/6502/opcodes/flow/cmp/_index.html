@@ -1,0 +1,212 @@
+---
+type: "6502opcode"
+title: "Compare Accumulator"
+linkTitle: "Compare Accumulator"
+weight: 3
+description: "Compare Accumulator with Memory"
+tags:
+  - 6502 instruction
+flags:
+  "n": Set if most-significant bit of result is set
+  z: Set if result is zero
+  c: Set if register value greater than or equal or Cleared if less than memory value
+op: CMP
+codes:
+  - code: C9
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: CD
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: CF
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+  - code: C5
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+  - code: D2
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+  - code: C7
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: DD
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: DF
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+  - code: D9
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: D5
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+  - code: C1
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: D1
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+        - 4
+  - code: D7
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: C3
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: D3
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 7
+      notes:
+        - 2
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "Add 1 cycle if adding index crosses a page boundary"
+---
+
+<p>
+  CMP subtracts the data at the address in the operand from the contents of the accumulator,
+  setting the n, z & c flags based on the result.
+  The Accumulator & Memory are unaffected by this operation.
+</p>
+
+<h3>Data size</h3>
+<p>
+  On all processors, the data added from memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

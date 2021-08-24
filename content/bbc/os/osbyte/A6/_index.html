@@ -1,0 +1,146 @@
+---
+type: "6502opcode"
+title: "MOS Variables"
+linkTitle: "168-255 read/write MOS Variables"
+weight: 168
+categories:
+  - bbc
+osbyte:
+  - hex: A6
+    int: 166
+    title: Read start address of OS variables low byte
+    exit:
+      a: preserved
+      x: Old value
+      y: Contents of next location
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: A7
+    int: 167
+    title: Read start address of OS variables high byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: A8
+    int: 168
+    title: Read address of ROM pointer table low byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: A9
+    int: 169
+    title: Read address of ROM pointer table high byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: AA
+    int: 170
+    title: Read address of ROM information table low byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: AB
+    int: 171
+    title: Read address of ROM information table high byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: AC
+    int: 172
+    title: Read address of keyboard translation table low byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: AD
+    int: 173
+    title: Read address of keyboard translation table high byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: AE
+    int: 174
+    title: Read VDU variables origin low byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: AF
+    int: 175
+    title: Read VDU variables origin high byte
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: B0
+    int: 176
+    title: Read/Write CFS timeout counter
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+    The OSBYTE calls &A6 to &FF (166-255) read and write the MOS variables.
+</p>
+<p>
+    Reading & writing the variables are handled by the formula:
+</p>
+<p>
+    <code><em>newValue</em> = (<em>oldValue</em> AND Y) EOR X</code>
+</p>
+<p>
+    The all return the old value in X and the next location in Y.
+</p>
+<h3>MOS Variables</h3>
+<p>
+    The MOS variables start in memory from address &0236.
+    Each variable is accessible via OSBYTE calls 166..255.
+    The internal label <code>.mosVariablesMinus166</code> refers to the address &0190 (= &0236-166) so that the lookup
+    is done by simply adding the accumulator to that address.
+</p>
+<table>
+    <thead>
+    <tr>
+        <th>OSBYTE</th>
+        <th>Variable</th>
+        <th>Address</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>166/167</td>
+        <td>mosVariables</td>
+        <td>0236</td>
+        <td>Constant value .mosVariablesMinus166</td>
+    </tr>
+    <tr>
+        <td>168/169</td>
+        <td>romPointerTable</td>
+        <td>0238</td>
+        <td>Constant value .extendedVectorSpace</td>
+    </tr>
+    <tr>
+        <td>170/171</td>
+        <td>romPointerTable</td>
+        <td>023A</td>
+        <td>Constant value .extendedVectorSpace</td>
+    </tr>
+    <tr>
+        <td>172/173</td>
+        <td>key translation table</td>
+        <td>023C</td>
+        <td>Constant value .extendedVectorSpace</td>
+    </tr>
+    </tbody>
+</table>

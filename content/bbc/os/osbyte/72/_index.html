@@ -1,0 +1,32 @@
+---
+type: "6502opcode"
+title: "&72 (114) Shadow ram"
+linkTitle: "114 shadow ram"
+description: "*SHADOW equivalent"
+weight: 114
+categories:
+  - bbc
+osbyte:
+  - hex: 72
+    int: 114
+    title: Set shadow ram
+    compatibility:
+      bbc: true
+      master: true
+---
+<h3>Shadow mode</h3>
+<p>
+  Shadow mode is the option to force all screen's to use Shadow memory.
+  By default it is disabled so that mode's 0..7 on the BBC Micro will use system memory whilst modes 128..135 will use
+  shadow memory.
+</p>
+<p>
+  When shadow mode is enabled all modes use shadow memory.
+  e.g. 0..7 will have 128 added to give 128..135.
+</p>
+<p>
+  *FX114 or *FX114,0 is the equivalent of *SHADOW.
+</p>
+<p>
+  *FX114,1 is the equivalent of *SHADOW 1 .
+</p>

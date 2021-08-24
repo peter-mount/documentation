@@ -1,0 +1,3048 @@
+---
+# This file is generated.
+# To edit, change the files under content then run the generator.
+type: "6502opcode"
+title: "Instruction List by opcode"
+linkTitle: "Instruction List by opcode"
+weight: 10
+description: "6502 instructions by hex opcode"
+notitle: "don't show instructions header in table"
+codes:
+  - code: "00"
+    op: "BRK"
+    addressing: si
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 16
+    cycles:
+      value: "7"
+      notes:
+        - 6
+  - code: "01"
+    op: "ORA"
+    addressing: dpiix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "02"
+    op: "COP"
+    addressing: sic
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 7
+  - code: "03"
+    op: "ORA"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "04"
+    op: "TSB"
+    addressing: dp
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "05"
+    op: "ORA"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "06"
+    op: "ASL"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "07"
+    op: "ORA"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "09"
+    op: "ORA"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "0A"
+    op: "ASL"
+    addressing: acc
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "0C"
+    op: "TSB"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+      notes:
+        - 8
+  - code: "0D"
+    op: "ORA"
+    addressing: abs
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "0E"
+    op: "ASL"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "0F"
+    op: "ORA"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "10"
+    op: "BPL"
+    addressing: pcr
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "11"
+    op: "ORA"
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 13
+  - code: "12"
+    op: "ORA"
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "13"
+    op: "ORA"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+  - code: "14"
+    op: "TRB"
+    addressing: dp
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "15"
+    op: "ORA"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "16"
+    op: "ASL"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 8
+  - code: "17"
+    op: "ORA"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "18"
+    op: "CLC"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "19"
+    op: "ORA"
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "1A"
+    op: "INC"
+    addressing: acc
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "1B"
+    op: "TCS"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "1C"
+    op: "TRB"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+      notes:
+        - 8
+  - code: "1D"
+    op: "ORA"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "1E"
+    op: "ASL"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "7"
+      notes:
+        - 8
+        - 10
+  - code: "1F"
+    op: "ORA"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "20"
+    op: "JSR"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "21"
+    op: "AND"
+    addressing: dpiix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "22"
+    op: "JSL"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "8"
+  - code: "23"
+    op: "AND"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "24"
+    op: "BIT"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 2
+        - 4
+  - code: "25"
+    op: "AND"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "26"
+    op: "ROL"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "27"
+    op: "AND"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "29"
+    op: "AND"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "2A"
+    op: "ROL"
+    addressing: acc
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "2C"
+    op: "BIT"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 2
+  - code: "2D"
+    op: "AND"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "2E"
+    op: "ROL"
+    addressing: abs
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "2F"
+    op: "AND"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "30"
+    op: "BMI"
+    addressing: pcr
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "31"
+    op: "AND"
+    addressing: dpiiy
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 13
+  - code: "32"
+    op: "AND"
+    addressing: dpi
+    compatibility:
+      65816: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "33"
+    op: "AND"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+  - code: "34"
+    op: "BIT"
+    addressing: dpix
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 2
+        - 4
+  - code: "35"
+    op: "AND"
+    addressing: dpix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "36"
+    op: "ROL"
+    addressing: dpix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 8
+  - code: "37"
+    op: "AND"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "38"
+    op: "SEC"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "39"
+    op: "AND"
+    addressing: absiy
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "3A"
+    op: "DEC"
+    addressing: acc
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "3B"
+    op: "TSC"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "3C"
+    op: "BIT"
+    addressing: absix
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 2
+        - 13
+  - code: "3D"
+    op: "AND"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "3E"
+    op: "ROL"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "7"
+      notes:
+        - 8
+        - 10
+  - code: "3F"
+    op: "AND"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "41"
+    op: "EOR"
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "42"
+    op: "WDM"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 17
+    cycles:
+      value: "?"
+      notes:
+        - 17
+  - code: "43"
+    op: "EOR"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "44"
+    op: "MVP"
+    addressing: bm
+    compatibility:
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "*"
+      notes:
+        - 11
+  - code: "45"
+    op: "EOR"
+    addressing: dp
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "46"
+    op: "LSR"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "47"
+    op: "EOR"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "49"
+    op: "EOR"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "4A"
+    op: "LSR"
+    addressing: acc
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "4C"
+    op: "JMP"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "3"
+  - code: "4D"
+    op: "EOR"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "4E"
+    op: "LSR"
+    addressing: abs
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "4F"
+    op: "EOR"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "50"
+    op: "BVC"
+    addressing: pcr
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "51"
+    op: "EOR"
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 13
+  - code: "52"
+    op: "EOR"
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "53"
+    op: "EOR"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+  - code: "54"
+    op: "MVN"
+    addressing: bm
+    compatibility:
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "*"
+      notes:
+        - 11
+  - code: "55"
+    op: "EOR"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "56"
+    op: "LSR"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 8
+  - code: "57"
+    op: "EOR"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "58"
+    op: "CLI"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "59"
+    op: "EOR"
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "5B"
+    op: "TCD"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "5C"
+    op: "JMP"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "4"
+  - code: "5D"
+    op: "EOR"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "5E"
+    op: "LSR"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "7"
+      notes:
+        - 8
+        - 10
+  - code: "5F"
+    op: "EOR"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "60"
+    op: "RTS"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "6"
+  - code: "61"
+    op: "ADC"
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "63"
+    op: "ADC"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+  - code: "64"
+    op: "STZ"
+    addressing: dp
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "65"
+    op: "ADC"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "66"
+    op: "ROR"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "67"
+    op: "ADC"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "69"
+    op: "ADC"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+        - 9
+  - code: "6A"
+    op: "ROR"
+    addressing: acc
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "6B"
+    op: "RTL"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "6"
+  - code: "6C"
+    op: "JMP"
+    addressing: absi
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "5"
+      notes:
+        - 1
+        - 12
+  - code: "6D"
+    op: "ADC"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+  - code: "6E"
+    op: "ROR"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "6F"
+    op: "ADC"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+        - 9
+  - code: "70"
+    op: "BVS"
+    addressing: pcr
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "71"
+    op: "ADC"
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 9
+        - 13
+  - code: "72"
+    op: "ADC"
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "73"
+    op: "ADC"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+        - 9
+  - code: "74"
+    op: "STZ"
+    addressing: dpix
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "75"
+    op: "ADC"
+    addressing: dpix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "76"
+    op: "ROR"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 8
+  - code: "77"
+    op: "ADC"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "78"
+    op: "SEI"
+    addressing: imp
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "79"
+    op: "ADC"
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+        - 13
+  - code: "7B"
+    op: "TDC"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "7C"
+    op: "JMP"
+    addressing: absii
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "7D"
+    op: "ADC"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+        - 13
+  - code: "7E"
+    op: "ROR"
+    addressing: absix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "7"
+      notes:
+        - 8
+        - 10
+  - code: "7F"
+    op: "ADC"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+        - 9
+  - code: "80"
+    op: "BRA"
+    addressing: pcr
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 15
+  - code: "81"
+    op: "STA"
+    addressing: dpiix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "82"
+    op: "BRL"
+    addressing: pcrl
+    compatibility:
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+  - code: "83"
+    op: "STA"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "84"
+    op: "STY"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "85"
+    op: "STA"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "86"
+    op: "STX"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "87"
+    op: "STA"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "88"
+    op: "DEY"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "89"
+    op: "BIT"
+    addressing: imm
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 2
+  - code: "8A"
+    op: "TXA"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "8C"
+    op: "STY"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "8D"
+    op: "STA"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "8E"
+    op: "STX"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "8F"
+    op: "STA"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "90"
+    op: "BCC"
+    addressing: pcr
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "91"
+    op: "STA"
+    addressing: dpiiy
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "92"
+    op: "STA"
+    addressing: dpi
+    compatibility:
+      65816: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "93"
+    op: "STA"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+  - code: "94"
+    op: "STY"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "95"
+    op: "STA"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "96"
+    op: "STX"
+    addressing: dpiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "97"
+    op: "STA"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "98"
+    op: "TYA"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "99"
+    op: "STA"
+    addressing: absiy
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "9A"
+    op: "TXS"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "9B"
+    op: "TXY"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "9C"
+    op: "STZ"
+    addressing: abs
+    compatibility:
+      65816: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "9D"
+    op: "STA"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "9E"
+    op: "STZ"
+    addressing: absix
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "9F"
+    op: "STA"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "A0"
+    op: "LDY"
+    addressing: imm
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "A1"
+    op: "LDA"
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "A2"
+    op: "LDX"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "A3"
+    op: "LDA"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "A4"
+    op: "LDY"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "A5"
+    op: "LDA"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "A6"
+    op: "LDX"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "A7"
+    op: "LDA"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "A8"
+    op: "TAY"
+    addressing: imp
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "A9"
+    op: "LDA"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "AA"
+    op: "TAX"
+    addressing: imp
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "AC"
+    op: "LDY"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "AD"
+    op: "LDA"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "AE"
+    op: "LDX"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "AF"
+    op: "LDA"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "B0"
+    op: "BCS"
+    addressing: pcr
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "B1"
+    op: "LDA"
+    addressing: dpiiy
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 13
+  - code: "B2"
+    op: "LDA"
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "B3"
+    op: "LDA"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+  - code: "B4"
+    op: "LDY"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "B5"
+    op: "LDA"
+    addressing: dpix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "B6"
+    op: "LDX"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "B7"
+    op: "LDA"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "B8"
+    op: "CLV"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "B9"
+    op: "LDA"
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "BA"
+    op: "TSX"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "BB"
+    op: "TYX"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "BC"
+    op: "LDY"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "BD"
+    op: "LDA"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "BE"
+    op: "LDX"
+    addressing: absix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "BF"
+    op: "LDA"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "C0"
+    op: "CPY"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "C1"
+    op: "CMP"
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "C2"
+    op: "REP"
+    addressing: imm
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+  - code: "C3"
+    op: "CMP"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "C4"
+    op: "CPY"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "C5"
+    op: "CMP"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "C6"
+    op: "DEC"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 8
+        - 10
+  - code: "C7"
+    op: "CMP"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "C8"
+    op: "INY"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "C9"
+    op: "CMP"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "CA"
+    op: "DEX"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "CB"
+    op: "WAI"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "3"
+      notes:
+        - 18
+  - code: "CC"
+    op: "CPY"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "CD"
+    op: "CMP"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "CE"
+    op: "DEC"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+      notes:
+        - 10
+  - code: "CF"
+    op: "CMP"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "D0"
+    op: "BNE"
+    addressing: pcr
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "D1"
+    op: "CMP"
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 13
+  - code: "D2"
+    op: "CMP"
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+  - code: "D3"
+    op: "CMP"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+  - code: "D5"
+    op: "CMP"
+    addressing: dpix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+  - code: "D6"
+    op: "DEC"
+    addressing: dpix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 8
+        - 10
+  - code: "D7"
+    op: "CMP"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+  - code: "D8"
+    op: "CLD"
+    addressing: imp
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "D9"
+    op: "CMP"
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "DC"
+    op: "JMP"
+    addressing: absil
+    compatibility:
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+  - code: "DD"
+    op: "CMP"
+    addressing: absix
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 13
+  - code: "DE"
+    op: "DEC"
+    addressing: absix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "7"
+      notes:
+        - 4
+        - 10
+  - code: "DF"
+    op: "CMP"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+  - code: "E0"
+    op: "CPX"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+  - code: "E1"
+    op: "SBC"
+    addressing: dpiix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "E2"
+    op: "SEP"
+    addressing: imm
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+  - code: "E3"
+    op: "SBC"
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+  - code: "E4"
+    op: "CPX"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+  - code: "E5"
+    op: "SBC"
+    addressing: dp
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "3"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "E6"
+    op: "INC"
+    addressing: dp
+    compatibility:
+      65816: true
+      6502: true
+      65c02: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 8
+  - code: "E7"
+    op: "SBC"
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "E8"
+    op: "INX"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "E9"
+    op: "SBC"
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+      notes:
+        - 3
+    cycles:
+      value: "2"
+      notes:
+        - 5
+        - 9
+  - code: "EA"
+    op: "NOP"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "EB"
+    op: "XBA"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "EC"
+    op: "CPX"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+  - code: "ED"
+    op: "SBC"
+    addressing: abs
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+  - code: "EE"
+    op: "INC"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "6"
+      notes:
+        - 8
+  - code: "EF"
+    op: "SBC"
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+        - 9
+  - code: "F0"
+    op: "BEQ"
+    addressing: pcr
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "2"
+      notes:
+        - 14
+        - 15
+  - code: "F1"
+    op: "SBC"
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 9
+        - 13
+  - code: "F2"
+    op: "SBC"
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "5"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "F3"
+    op: "SBC"
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "7"
+      notes:
+        - 5
+        - 9
+  - code: "F5"
+    op: "SBC"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "4"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "F6"
+    op: "INC"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 8
+  - code: "F7"
+    op: "SBC"
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: "2"
+    cycles:
+      value: "6"
+      notes:
+        - 4
+        - 5
+        - 9
+  - code: "F8"
+    op: "SED"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "F9"
+    op: "SBC"
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+        - 13
+  - code: "FB"
+    op: "XCE"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: "1"
+    cycles:
+      value: "2"
+  - code: "FC"
+    op: "JSR"
+    addressing: absii
+    compatibility:
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "8"
+  - code: "FD"
+    op: "SBC"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "4"
+      notes:
+        - 5
+        - 9
+        - 13
+  - code: "FE"
+    op: "INC"
+    addressing: absix
+    compatibility:
+      65c02: true
+      65816: true
+      6502: true
+    bytes:
+      value: "3"
+    cycles:
+      value: "7"
+      notes:
+        - 8
+        - 10
+  - code: "FF"
+    op: "SBC"
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: "4"
+    cycles:
+      value: "5"
+      notes:
+        - 5
+        - 9
+notes:
+  - "6502: If low byte of address is 0xFF yields incorrect result"
+  - "658116: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle in 6502 emulation mode (e=1)"
+  - "65816: Add 1 cycle in 65816 native mode (e=0)"
+  - "65816: Add 2 cycles if m=0 (16-bit memory/accumulator)"
+  - "65C02: Add 1 cycle if d=1"
+  - "65C02: Subtract 1 cycle if no page boundary is crossed"
+  - "7 cycles per byte moved"
+  - "Add 1 cycle if 65C02"
+  - "Add 1 cycle if adding index crosses a page boundary"
+  - "Add 1 cycle if branch taken"
+  - "Add 1 more cycle if branch taken crosses page boundary on a 6502, 65C02 or a 65816 in 6502 emulation mode (e=1)"
+  - "BRK is 1 byte but program counter is incremented by 2 allowing for an optional parameter"
+  - "byte & cycle count subject to change in future processors"
+  - "Uses 3 cycles to shut down the processor. Additional cycles required by interrupt to restart it"
+---

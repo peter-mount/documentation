@@ -1,0 +1,122 @@
+---
+type: "6502opcode"
+title: "Subroutines"
+linkTitle: "Subroutines"
+weight: 3
+description: "Calling subroutines"
+tags:
+  - 6502 instruction
+flags:
+codes:
+  - code: 22
+    op: JSL
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 8
+  - code: 20
+    op: JSR
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 6
+  - code: FC
+    op: "JSR"
+    addressing: absii
+    compatibility:
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 8
+  - code: 6B
+    op: "RTL"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 6
+  - code: 60
+    op: "RTS"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 6
+---
+<p>
+  The JSR & RTS instructions allows for subroutines to be implemented.
+  The work by utilising 2 bytes on the stack consisting of the address before the next instruction to execute when the
+  subroutine returns - not the actual address of that instruction.
+</p>
+
+<p>
+  On the 16-bit 65816 there are the JSL & RTL instructions.
+  These use 3 bytes on the stack. The extra byte is the return bank address.
+  Like RTS the address on the stack is the address before the next instruction not the actual instruction
+</p>
+
+<p>
+  For Interrupt routines there's the RTI instruction. That instruction is on the Interrupt page.
+</p>
+
+<div style="break-inside: avoid">
+  <h2 id="JSR">JSR - Jump to Subroutine</h2>
+  <p>
+    Transfer control to a subroutine, pushing the return address onto the stack.
+    The 16-bit address placed on the stack is the address of the 3rd byte of the instruction, not the address of the
+    next instruction.
+  </p>
+  <p>
+    Subroutines called by JSR must return using the RTS instruction.
+  </p>
+  <p>
+    Some assemblers recognise JSR as an alternate to the 65816 JSL instruction where if the address is greater than
+    &FFFF
+    then the 24 bit JSL instruction is used instead.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h2 id="RTS">RTS - Return from Subroutine</h2>
+  <p>
+    Returns from a subroutine called by JSR.
+    It pulls the 16-bit program counter from the stack, incrementing it by one so that the next instruction is the one
+    immediately after the calling JSR instruction.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h2 id="JSL">JSL - Jump to Subroutine Long</h2>
+  <p>
+    Transfer control to a subroutine, pushing the return address onto the stack.
+    The 24-bit address placed on the stack is the address of the 4th byte of the instruction, not the address of the
+    next instruction.
+  </p>
+  <p>
+    Subroutines called by JSL must return using the RTL instruction.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h2 id="RTL">RTL - Return from Subroutine Long</h2>
+  <p>
+    Returns from a subroutine called by JSL.
+    It pulls the 24-bit program counter from the stack, incrementing it by one so that the next instruction is the one
+    immediately after the calling JSL instruction.
+  </p>
+</div>

@@ -1,0 +1,20 @@
+---
+type: "6502opcode"
+title: "&8D (141) Select ROM filesystem"
+linkTitle: "141 select ROM filesystem"
+description: "*TAPE equivalent"
+weight: 141
+categories:
+  - bbc
+osbyte:
+  - hex: 8D
+    int: 141
+    title: Select ROM filesystem
+    exit:
+      a: preserved
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---

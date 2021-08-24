@@ -1,0 +1,86 @@
+---
+type: "6502opcode"
+title: "Enable/Disable events"
+linkTitle: "13/14 enable/disable events"
+weight: 14
+categories:
+  - bbc
+osbyte:
+  - hex: 0D
+    int: 13
+    title: Disable events
+    entry:
+      x: Event code
+      y: 0
+    exit:
+      a: preserved
+      x: "Old disable state: 0=disabled, >0 enabled"
+      y: undefined
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: 0E
+    int: 14
+    title: Enable events
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+    OSBYTE 13 is used to disable specific events.
+    OSBYTE 14 is used th enable specific events.
+</p>
+<h3>Event type passed in X</h3>
+<table>
+    <thead>
+    <tr>
+        <th>X</th>
+        <th>Event</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>0</td>
+        <td>output buffer empty</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>input buffer full</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>character entering buffer</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>ADC conversion complete</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>start of vertical sync</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>interval timer crossing 0</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>ESCAPE pressed</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>RS423 RX error</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>network error</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>user</td>
+    </tr>
+    </tbody>
+</table>

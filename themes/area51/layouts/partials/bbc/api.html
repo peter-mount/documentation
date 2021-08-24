@@ -1,0 +1,22 @@
+{{- if isset .Params "api" -}}
+<table class="table table-striped table-hover table-sm table-borderless">
+    <thead>
+    <tr>
+        <th scope="col">Function</th>
+        <th scope="col">Address</th>
+        <th scope="col">Vector</th>
+        <th scope="col">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{- range $.Params.api -}}
+    <tr>
+        <td>{{.name}}</td>
+        <td>{{.addr}}</td>
+        <td>{{.indirect}}</td>
+        <td>{{.title}}</td>
+    </tr>
+    {{- end -}}
+    </tbody>
+</table>
+{{- end -}}

@@ -1,0 +1,9 @@
+{{- if isset . "value" }}{{.value}}{{ end -}}
+{{- if isset . "notes" -}}
+<sup>
+    {{- range $index, $nid := .notes -}}
+    {{- if $index}}, {{end -}}
+    {{- $nid -}}
+    {{- end -}}
+</sup>
+{{- end -}}

@@ -1,0 +1,251 @@
+---
+type: "6502opcode"
+title: "ADC Add With Carry"
+linkTitle: "Addition"
+weight: 3
+description: "Add With Carry"
+tags:
+  - 6502 instruction
+op: "ADC"
+flags:
+  "n": Set if most-significant bit of result is set
+  v: Set if signed overflow
+  z: Set if result is zero
+  c: Set if unsigned overflow, clear if valid unsigned result
+codes:
+  - code: 69
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+        - 5
+  - code: 6D
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 5
+  - code: 6F
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 5
+  - code: 65
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+        - 5
+  - code: 72
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+        - 5
+  - code: 67
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+        - 5
+  - code: 7D
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+        - 5
+  - code: 7F
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 5
+  - code: 79
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+        - 5
+  - code: 75
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+        - 5
+  - code: 61
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+        - 5
+  - code: 71
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+        - 4
+        - 5
+  - code: 77
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+        - 5
+  - code: 63
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 5
+  - code: 73
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 7
+      notes:
+        - 2
+        - 5
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "Add 1 cycle if adding index crosses a page boundary"
+  - "65C02: Add 1 cycle if d=1"
+---
+
+<p>
+  Adds the data in the operand with the contents of the accumulator.
+  Add 1 to the result if the carry flag is set.
+  Store the final result in the accumulator.
+</p>
+<h3>Binary/Decimal mode</h3>
+<p>
+  If the d flag is clear then binary addition is performed.
+  If the d flag set then Binary Coded Decimal (BCD) addition is performed.
+</p>
+<h3>Data size</h3>
+<p>
+  On all processors, the data added from memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>
+
+<h3>Multi-precision arithmetic</h3>
+<p>
+  In multi-precision (multi-word) arithmetic, the carry flag should be cleared before the low-order words are added.
+  The addition will generate a new carry flag value based on that addition which will then be passed on to the next word.
+</p>
+<p>
+  For example, to add 1 to a 16-bit value at &70 on 8-bit processors:
+</p>
+{{< highlight go "linenos=table" >}}
+  CLC      ; Clear carry before first addition
+  LDA &70  ; Add 1 to low-order byte
+  ADC #1
+  STA &70
+  LDA &71  ; Add 0 to high order byte
+  ADC #0   ; This will add 1 if carry was set
+  STA &71  ; in the low-order byte
+{{< / highlight >}}

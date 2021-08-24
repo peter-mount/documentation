@@ -1,0 +1,62 @@
+---
+type: "6502opcode"
+title: "Read/Write to mapped IO"
+linkTitle: "146-151 Read/Write to mapped IO"
+weight: 146
+categories:
+  - bbc
+osbyte:
+  - hex: 92
+    int: 146
+    title: Read IO in &FCxx FRED
+    entry:
+      x: Address within specified page for the call
+      y: value to write on write calls
+    exit:
+      a: preserved
+      x: undefined
+      y: value read for read calls
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: 93
+    int: 147
+    title: Write IO in &FCxx FRED
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: 94
+    int: 148
+    title: Read IO in &FDxx JIM
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: 95
+    int: 149
+    title: Write IO in &FDxx JIM
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: 96
+    int: 150
+    title: Read IO in &FExx SHEILA
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: 97
+    int: 151
+    title: Write IO in &FExx SHEILA
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+    Refer to the hardware secion about the FRED, JIM & SHEILA 1MHz buses.
+</p>

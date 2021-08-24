@@ -1,0 +1,46 @@
+---
+type: "6502opcode"
+title: "&00 (0) OS Version"
+linkTitle: "0 OS Version"
+weight: -1
+categories:
+  - bbc
+osbyte:
+  - hex: 00
+    int: 0
+    title: Get OS version
+    entry:
+      x: "0 execute BRK with message of OS version, <>0 RTS with OS version in X"
+    exit:
+      a: Preserved
+      x: OS version
+      y: Preserved
+      c: Undefined
+    compatibility:
+      electron: true
+      bbc: true
+      master: true
+---
+<p>
+    This OSBYTE call returns the OS type in X or as a message via BRK if X=0 on entry.
+</p>
+
+<h3>Returned values</h3>
+<table>
+    <thead>
+    <tr>
+        <th>X</th>
+        <th>OS version</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>0</td>
+        <td>OS 1.00 or Electron OS 1.00</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>OS 1.20 or American OS</td>
+    </tr>
+    </tbody>
+</table>

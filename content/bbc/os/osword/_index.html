@@ -1,0 +1,46 @@
+---
+type: "6502opcode"
+title: "OSWORD"
+linkTitle: "OSWORD"
+weight: 20
+categories:
+  - bbc
+#menu:
+#  main:
+#    weight: 20
+api:
+  - name: OSWORD
+    addr: "FFF1"
+    indirect: "20C"
+    title: "OS call specified by contents of A and parameter block"
+---
+<div style="break-inside: avoid">
+    <p>
+        The OSWORD routines are very similar in concept to the OSBYTE routines. The major difference arises in the way
+        of passing parameters. Instead of being passed in the X and Y registers, they are placed in a parameter block,
+        The address of this parameter block is sent to the routine in the X (for the low byte) and Y (for the high byte)
+        registers.
+    </p>
+    <h3>Entry parameters</h3>
+    <table>
+        <tr>
+            <th>A</th>
+            <td>OSWORD routine ID</td>
+        </tr>
+        <tr>
+            <th>X</th>
+            <td>Low byte of paameter block address</td>
+        </tr>
+        <tr>
+            <th>Y</th>
+            <td>High byte of paameter block address</td>
+        </tr>
+    </table>
+    <p>
+        OSWORD ID's in the range &E0..&FF (224..255) are passed to ther USERV (&200) handler with the registers
+        unchanged to the original OSWORD call.
+    </p>
+    <p>
+        All other unrecognised OSWORD calls are offered to the paged ROMs.
+    </p>
+</div>

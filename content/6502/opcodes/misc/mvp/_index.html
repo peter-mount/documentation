@@ -1,0 +1,87 @@
+---
+type: "6502opcode"
+title: "Block Move"
+linkTitle: "Block Move"
+weight: 3
+description: "Move (copy) memory block"
+tags:
+  - 6502 instruction
+codes:
+  - code: 54
+    op: "MVN"
+    addressing: bm
+    compatibility:
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: "*"
+      notes:
+        - 1
+  - code: 44
+    op: "MVP"
+    addressing: bm
+    compatibility:
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: "*"
+      notes:
+        - 1
+notes:
+  - 7 cycles per byte moved
+---
+<p>
+  The MVN & MVP instructions moves/copies a block of memory from one location to another.
+</p>
+<p>
+  The source, destination and length of the block are taken from the X, Y & C registers.
+</p>
+<p>
+  The source address is in X, the destination address is in Y.
+</p>
+<p>
+  The length of the block minus 1 is in the C double accumulator.
+  So if you are moving 42 bytes then C should have 41.
+</p>
+<p>
+  The two bytes of the operand consists of the source bank in the first byte and the destination bank in the second.
+</p>
+<h3>Processor modes</h3>
+<p>
+  These instructions should be run in 16-bit native mode.
+  If the index registers are in 8-bit mode (x=1) or the processor is in 6502 emulation mode (e=1) then the blocks specified
+  will be in zero page due to the high byte of the index registers will be 0.
+</p>
+<h3>Interrupts</h3>
+<p>
+  If a block move instruction is interrupted, it may be resumed automatically when RTI is executed by the handler,
+  as long as the registers are left intact.
+  The address pushed to the stack when it is interrupted is the address of the block move instruction so it resumes where it left off.
+  The byte currently being moved will complete first before the interrupt is serviced.
+</p>
+
+<h2>MVN</h2>
+<p>
+  MVN copies a block from the start of the source block to the start of the destination block.
+</p>
+<p>
+  The source and destination addresses need to point to the first byte of each block to be moved.
+</p>
+<p>
+  When execution is complete, the C accumulator will be &FFFF
+  X & Y will point to the byte after the end of the source & destination blocks respectively.
+</p>
+
+<h2>MVP - Block Move Previous</h2>
+<p>
+  MVP copies a block from the end of the source block to the end of the destination block.
+</p>
+<p>
+  The source and destination addresses need to point to the last byte of each block to be moved.
+</p>
+<p>
+  When execution is complete, the C accumulator will be &FFFF
+  X & Y will point to the byte before the start of the source & destination blocks respectively.
+</p>

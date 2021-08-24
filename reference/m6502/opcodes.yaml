@@ -1,0 +1,669 @@
+---
+# This file is generated.
+# To edit, change the files under content then run the generator.
+type: "6502opcode"
+title: Instruction List
+linkTitle: Instruction List
+weight: 10
+description: 6502 instructions by hex opcode
+codes:
+  - code: ""
+    op: "ADC"
+    addressing: imm
+  - code: "6D"
+    op: "ADC"
+    addressing: abs
+  - code: "6F"
+    op: "ADC"
+    addressing: absl
+  - code: ""
+    op: "ADC"
+    addressing: dp
+  - code: ""
+    op: "ADC"
+    addressing: dpi
+  - code: ""
+    op: "ADC"
+    addressing: dpil
+  - code: "7D"
+    op: "ADC"
+    addressing: absix
+  - code: ""
+    op: "ADC"
+    addressing: abslix
+  - code: ""
+    op: "ADC"
+    addressing: absiy
+  - code: ""
+    op: "ADC"
+    addressing: dpix
+  - code: ""
+    op: "ADC"
+    addressing: dpiix
+  - code: ""
+    op: "ADC"
+    addressing: dpiiy
+  - code: ""
+    op: "ADC"
+    addressing: dpiliy
+  - code: ""
+    op: "ADC"
+    addressing: sr
+  - code: ""
+    op: "ADC"
+    addressing: sriiy
+  - code: ""
+    op: "AND"
+    addressing: imm
+  - code: "2D"
+    op: "AND"
+    addressing: abs
+  - code: "2F"
+    op: "AND"
+    addressing: absl
+  - code: ""
+    op: "AND"
+    addressing: dp
+  - code: ""
+    op: "AND"
+    addressing: dpi
+  - code: ""
+    op: "AND"
+    addressing: dpil
+  - code: "3D"
+    op: "AND"
+    addressing: absix
+  - code: "3F"
+    op: "AND"
+    addressing: abslix
+  - code: ""
+    op: "AND"
+    addressing: absiy
+  - code: ""
+    op: "AND"
+    addressing: dpix
+  - code: ""
+    op: "AND"
+    addressing: dpiix
+  - code: ""
+    op: "AND"
+    addressing: dpiiy
+  - code: ""
+    op: "AND"
+    addressing: dpiliy
+  - code: ""
+    op: "AND"
+    addressing: sr
+  - code: ""
+    op: "AND"
+    addressing: sriiy
+  - code: "0A"
+    op: "ASL"
+    addressing: acc
+  - code: "0E"
+    op: "ASL"
+    addressing: abs
+  - code: "06"
+    op: "ASL"
+    addressing: dp
+  - code: "1E"
+    op: "ASL"
+    addressing: absix
+  - code: ""
+    op: "ASL"
+    addressing: dpix
+  - code: ""
+    op: "BCC"
+    addressing: pcr
+  - code: "B0"
+    op: "BCS"
+    addressing: pcr
+  - code: "F0"
+    op: "BEQ"
+    addressing: pcr
+  - code: ""
+    op: "BIT"
+    addressing: imm
+  - code: "2C"
+    op: "BIT"
+    addressing: abs
+  - code: ""
+    op: "BIT"
+    addressing: dp
+  - code: "3C"
+    op: "BIT"
+    addressing: absix
+  - code: "3C"
+    op: "BIT"
+    addressing: dpix
+  - code: ""
+    op: "BMI"
+    addressing: pcr
+  - code: "D0"
+    op: "BNE"
+    addressing: pcr
+  - code: ""
+    op: "BPL"
+    addressing: pcr
+  - code: ""
+    op: "BRA"
+    addressing: pcr
+  - code: "00"
+    op: "BRK"
+    addressing: si
+  - code: ""
+    op: "BRL"
+    addressing: pcrl
+  - code: ""
+    op: "BVC"
+    addressing: pcr
+  - code: ""
+    op: "BVS"
+    addressing: pcr
+  - code: ""
+    op: "CLC"
+    addressing: imp
+  - code: "D8"
+    op: "CLD"
+    addressing: imp
+  - code: ""
+    op: "CLI"
+    addressing: imp
+  - code: "B8"
+    op: "CLV"
+    addressing: imp
+  - code: "C9"
+    op: "CMP"
+    addressing: imm
+  - code: "CD"
+    op: "CMP"
+    addressing: abs
+  - code: "CF"
+    op: "CMP"
+    addressing: absl
+  - code: "C5"
+    op: "CMP"
+    addressing: dp
+  - code: "D2"
+    op: "CMP"
+    addressing: dpi
+  - code: "C7"
+    op: "CMP"
+    addressing: dpil
+  - code: "DD"
+    op: "CMP"
+    addressing: absix
+  - code: "DF"
+    op: "CMP"
+    addressing: abslix
+  - code: "D9"
+    op: "CMP"
+    addressing: absiy
+  - code: "D5"
+    op: "CMP"
+    addressing: dpix
+  - code: "C1"
+    op: "CMP"
+    addressing: dpiix
+  - code: "D1"
+    op: "CMP"
+    addressing: dpiiy
+  - code: "D7"
+    op: "CMP"
+    addressing: dpiliy
+  - code: "C3"
+    op: "CMP"
+    addressing: sr
+  - code: "D3"
+    op: "CMP"
+    addressing: sriiy
+  - code: "02"
+    op: "COP"
+    addressing: sic
+  - code: "E0"
+    op: "CPX"
+    addressing: imm
+  - code: "EC"
+    op: "CPX"
+    addressing: abs
+  - code: "E4"
+    op: "CPX"
+    addressing: dp
+  - code: "C0"
+    op: "CPY"
+    addressing: imm
+  - code: "CC"
+    op: "CPY"
+    addressing: abs
+  - code: "C4"
+    op: "CPY"
+    addressing: dp
+  - code: "3A"
+    op: "DEC"
+    addressing: acc
+  - code: "CE"
+    op: "DEC"
+    addressing: abs
+  - code: "C6"
+    op: "DEC"
+    addressing: dp
+  - code: "DE"
+    op: "DEC"
+    addressing: absix
+  - code: "D6"
+    op: "DEC"
+    addressing: dpix
+  - code: "CA"
+    op: "DEX"
+    addressing: imp
+  - code: ""
+    op: "DEY"
+    addressing: imp
+  - code: ""
+    op: "EOR"
+    addressing: imm
+  - code: "4D"
+    op: "EOR"
+    addressing: abs
+  - code: "4F"
+    op: "EOR"
+    addressing: absl
+  - code: ""
+    op: "EOR"
+    addressing: dp
+  - code: ""
+    op: "EOR"
+    addressing: dpi
+  - code: ""
+    op: "EOR"
+    addressing: dpil
+  - code: "5D"
+    op: "EOR"
+    addressing: absix
+  - code: "5F"
+    op: "EOR"
+    addressing: abslix
+  - code: ""
+    op: "EOR"
+    addressing: absiy
+  - code: ""
+    op: "EOR"
+    addressing: dpix
+  - code: ""
+    op: "EOR"
+    addressing: dpiix
+  - code: ""
+    op: "EOR"
+    addressing: dpiiy
+  - code: ""
+    op: "EOR"
+    addressing: dpiliy
+  - code: ""
+    op: "EOR"
+    addressing: sr
+  - code: ""
+    op: "EOR"
+    addressing: sriiy
+  - code: "1A"
+    op: "INC"
+    addressing: acc
+  - code: "EE"
+    op: "INC"
+    addressing: abs
+  - code: "E6"
+    op: "INC"
+    addressing: dp
+  - code: "FE"
+    op: "INC"
+    addressing: absix
+  - code: "F6"
+    op: "INC"
+    addressing: dpix
+  - code: "E8"
+    op: "INX"
+    addressing: imp
+  - code: "C8"
+    op: "INY"
+    addressing: imp
+  - code: "4D"
+    op: "JMP"
+    addressing: abs
+  - code: "6C"
+    op: "JMP"
+    addressing: absi
+  - code: "7C"
+    op: "JMP"
+    addressing: absii
+  - code: "5C"
+    op: "JMP"
+    addressing: absl
+  - code: "DC"
+    op: "JMP"
+    addressing: absil
+  - code: ""
+    op: "JSL"
+    addressing: absl
+  - code: ""
+    op: "JSR"
+    addressing: abs
+  - code: "FC"
+    op: "JSR"
+    addressing: absii
+  - code: "A9"
+    op: "LDA"
+    addressing: imm
+  - code: "AD"
+    op: "LDA"
+    addressing: abs
+  - code: "AF"
+    op: "LDA"
+    addressing: absl
+  - code: "A5"
+    op: "LDA"
+    addressing: dp
+  - code: "B2"
+    op: "LDA"
+    addressing: dpi
+  - code: "A7"
+    op: "LDA"
+    addressing: dpil
+  - code: "BD"
+    op: "LDA"
+    addressing: absix
+  - code: "BF"
+    op: "LDA"
+    addressing: abslix
+  - code: "B9"
+    op: "LDA"
+    addressing: absiy
+  - code: "B5"
+    op: "LDA"
+    addressing: dpix
+  - code: "A1"
+    op: "LDA"
+    addressing: dpiix
+  - code: "B1"
+    op: "LDA"
+    addressing: dpiiy
+  - code: "B7"
+    op: "LDA"
+    addressing: dpiliy
+  - code: "A3"
+    op: "LDA"
+    addressing: sr
+  - code: "B3"
+    op: "LDA"
+    addressing: sriiy
+  - code: "FB"
+    op: "LDX"
+    addressing: imp
+  - code: "A2"
+    op: "LDX"
+    addressing: imm
+  - code: "AE"
+    op: "LDX"
+    addressing: abs
+  - code: "A6"
+    op: "LDX"
+    addressing: dp
+  - code: "BE"
+    op: "LDX"
+    addressing: absix
+  - code: "B6"
+    op: "LDX"
+    addressing: dpix
+  - code: "A0"
+    op: "LDY"
+    addressing: imm
+  - code: "AC"
+    op: "LDY"
+    addressing: abs
+  - code: "A4"
+    op: "LDY"
+    addressing: dp
+  - code: "BC"
+    op: "LDY"
+    addressing: absix
+  - code: "B4"
+    op: "LDY"
+    addressing: dpix
+  - code: "4A"
+    op: "LSR"
+    addressing: acc
+  - code: "4E"
+    op: "LSR"
+    addressing: abs
+  - code: ""
+    op: "LSR"
+    addressing: dp
+  - code: "5E"
+    op: "LSR"
+    addressing: absix
+  - code: ""
+    op: "LSR"
+    addressing: dpix
+  - code: "09"
+    op: "ORA"
+    addressing: imm
+  - code: "0D"
+    op: "ORA"
+    addressing: abs
+  - code: "0F"
+    op: "ORA"
+    addressing: absl
+  - code: "05"
+    op: "ORA"
+    addressing: dp
+  - code: ""
+    op: "ORA"
+    addressing: dpi
+  - code: "07"
+    op: "ORA"
+    addressing: dpil
+  - code: "1D"
+    op: "ORA"
+    addressing: absix
+  - code: "1F"
+    op: "ORA"
+    addressing: abslix
+  - code: ""
+    op: "ORA"
+    addressing: absiy
+  - code: ""
+    op: "ORA"
+    addressing: dpix
+  - code: "01"
+    op: "ORA"
+    addressing: dpiix
+  - code: ""
+    op: "ORA"
+    addressing: dpiiy
+  - code: ""
+    op: "ORA"
+    addressing: dpiliy
+  - code: "03"
+    op: "ORA"
+    addressing: sr
+  - code: ""
+    op: "ORA"
+    addressing: sriiy
+  - code: "C2"
+    op: "REP"
+    addressing: imm
+  - code: "2A"
+    op: "ROL"
+    addressing: acc
+  - code: "2E"
+    op: "ROL"
+    addressing: abs
+  - code: ""
+    op: "ROL"
+    addressing: dp
+  - code: "3E"
+    op: "ROL"
+    addressing: absix
+  - code: ""
+    op: "ROL"
+    addressing: dpix
+  - code: "6A"
+    op: "ROR"
+    addressing: acc
+  - code: "6E"
+    op: "ROR"
+    addressing: abs
+  - code: ""
+    op: "ROR"
+    addressing: dp
+  - code: "7E"
+    op: "ROR"
+    addressing: absix
+  - code: ""
+    op: "ROR"
+    addressing: dpix
+  - code: "6B"
+    op: "RTL"
+    addressing: imp
+  - code: ""
+    op: "RTS"
+    addressing: imp
+  - code: ""
+    op: "SEC"
+    addressing: imp
+  - code: "F8"
+    op: "SED"
+    addressing: imp
+  - code: ""
+    op: "SEI"
+    addressing: imp
+  - code: "E2"
+    op: "SEP"
+    addressing: imm
+  - code: "8D"
+    op: "STA"
+    addressing: abs
+  - code: "8F"
+    op: "STA"
+    addressing: absl
+  - code: ""
+    op: "STA"
+    addressing: dp
+  - code: ""
+    op: "STA"
+    addressing: dpi
+  - code: ""
+    op: "STA"
+    addressing: dpil
+  - code: "9D"
+    op: "STA"
+    addressing: absix
+  - code: "9F"
+    op: "STA"
+    addressing: abslix
+  - code: ""
+    op: "STA"
+    addressing: absiy
+  - code: ""
+    op: "STA"
+    addressing: dpix
+  - code: ""
+    op: "STA"
+    addressing: dpiix
+  - code: ""
+    op: "STA"
+    addressing: dpiiy
+  - code: ""
+    op: "STA"
+    addressing: dpiliy
+  - code: ""
+    op: "STA"
+    addressing: sr
+  - code: ""
+    op: "STA"
+    addressing: sriiy
+  - code: "8E"
+    op: "STX"
+    addressing: abs
+  - code: ""
+    op: "STX"
+    addressing: dp
+  - code: ""
+    op: "STX"
+    addressing: dpiy
+  - code: "8C"
+    op: "STY"
+    addressing: abs
+  - code: ""
+    op: "STY"
+    addressing: dp
+  - code: ""
+    op: "STY"
+    addressing: dpix
+  - code: "9C"
+    op: "STZ"
+    addressing: abs
+  - code: ""
+    op: "STZ"
+    addressing: dp
+  - code: "9E"
+    op: "STZ"
+    addressing: absix
+  - code: ""
+    op: "STZ"
+    addressing: dpix
+  - code: "9C"
+    op: "TAX"
+    addressing: imp
+  - code: "A5"
+    op: "TAY"
+    addressing: imp
+  - code: "5B"
+    op: "TCD"
+    addressing: imp
+  - code: "1B"
+    op: "TCS"
+    addressing: imp
+  - code: "7B"
+    op: "TDC"
+    addressing: imp
+  - code: "1C"
+    op: "TRB"
+    addressing: abs
+  - code: ""
+    op: "TRB"
+    addressing: dp
+  - code: "0C"
+    op: "TSB"
+    addressing: abs
+  - code: "04"
+    op: "TSB"
+    addressing: dp
+  - code: "3B"
+    op: "TSC"
+    addressing: imp
+  - code: "BA"
+    op: "TSX"
+    addressing: imp
+  - code: "8A"
+    op: "TXA"
+    addressing: imp
+  - code: "9A"
+    op: "TXS"
+    addressing: imp
+  - code: "9B"
+    op: "TXY"
+    addressing: imp
+  - code: ""
+    op: "TYA"
+    addressing: imp
+  - code: "BB"
+    op: "TYX"
+    addressing: imp
+  - code: "CB"
+    op: "WAI"
+    addressing: imp
+  - code: ""
+    op: "WDM"
+    addressing: imp
+  - code: "EB"
+    op: "XBA"
+    addressing: imp

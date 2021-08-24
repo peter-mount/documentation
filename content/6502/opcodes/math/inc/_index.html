@@ -1,0 +1,139 @@
+---
+type: "6502opcode"
+title: "Increment"
+linkTitle: "Increment"
+weight: 3
+description: "Increment by one a register or a memory location"
+tags:
+  - 6502 instruction
+flags:
+  "n": Set if most significant bit of the result is set
+  z: Set if result is zero
+codes:
+  - code: 1A
+    op: "INC"
+    addressing: acc
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: EE
+    op: "INC"
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 6
+      notes:
+        - 1
+  - code: E6
+    op: "INC"
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 1
+        - 2
+  - code: FE
+    op: "INC"
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 7
+      notes:
+        - 1
+        - 3
+  - code: F6
+    op: "INC"
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 1
+        - 2
+  - code: E8
+    op: "INX"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+  - code: C8
+    op: "INY"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 2
+notes:
+    1: "65816: Add 2 cycles if m=0 (16-bit memory/accumulator)"
+    2: "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+    3: "65C02: Subtract 1 cycle if no page boundary is crossed"
+---
+<p>
+    The increment instructions add one to either a register or a memory location.
+</p>
+<p>
+  Unlike adding 1 with ADC, these instructions does not use the Carry flag in any way.
+  You can test for wraparound only by testing after every increment to see if the result
+  is zero or positive.
+</p>
+<p>
+  The d flag does not affect these instructions. The increment is always in binary mode.
+</p>
+<p>
+  For all processors, the increment is an 8-bit operation unless m=0 on the 65816 in which case the increment is 16-bit.
+</p>
+
+<div style="break-inside: avoid">
+  <h2>INC - Increment</h2>
+  <p>
+    Increment by 1 the contents of the memory location or accumulator.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h2>INX - Increment Index Register X</h2>
+  <p>
+    Increment by 1 the X index register.
+  </p>
+</div>
+
+<div style="break-inside: avoid">
+  <h2>INY - Increment Index Register Y</h2>
+  <p>
+    Increment by 1 the Y index register.
+  </p>
+</div>

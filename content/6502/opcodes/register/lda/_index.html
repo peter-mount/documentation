@@ -1,0 +1,207 @@
+---
+type: "6502opcode"
+title: "LDA"
+linkTitle: "LDA"
+weight: 3
+description: "Load Accumulator from Memory"
+tags:
+  - 6502 instruction
+op: "LDA"
+flags:
+  "n": Set if most-significant bit of result is set
+  z: Set if result is zero
+codes:
+  - code: A9
+    addressing: imm
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+      notes:
+        - 1
+    cycles:
+      value: 2
+      notes:
+        - 2
+  - code: AD
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: AF
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+  - code: A5
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 2
+        - 3
+  - code: B2
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+  - code: A7
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: BD
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: BF
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 2
+  - code: B9
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 4
+  - code: B5
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+        - 3
+  - code: A1
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: B1
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 2
+        - 3
+        - 4
+  - code: B7
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 2
+        - 3
+  - code: A3
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 2
+  - code: B3
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 7
+      notes:
+        - 2
+notes:
+  - "65816: Add 1 byte if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+  - "Add 1 cycle if adding index crosses a page boundary"
+---
+
+<p>
+  Load the accumulator with data from memory.
+</p>
+<p>
+  On all processors, the data loaded from memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

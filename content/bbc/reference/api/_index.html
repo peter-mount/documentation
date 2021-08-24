@@ -1,0 +1,64 @@
+---
+# This file is generated.
+# To edit, change the files under content then run the generator.
+type: "6502opcode"
+title: "MOS API by address"
+linkTitle: "MOS API by address"
+weight: 10
+description: "MOS API by address"
+notitle: "don't show instructions header in table"
+nometa: true
+api:
+- addr: FFB9
+  exit:
+    A: Read character
+  name: OSRDRM
+  title: Read byte from paged ROM
+- addr: FFBF
+  entry:
+    "Y": Event number
+  exit:
+    C: C=0 if & only if the event was enabled
+  name: OSEVEN
+  title: Generate an event
+- addr: FFE0
+  exit:
+    A: Read character
+    C: 0 valid character read, 1 not read due to an error
+    I: The interrupt status is preserved (though interrupts may be enabled during
+      a call).
+    X: Preserved
+    "Y": Preserved
+  indirect: "210"
+  name: OSRDCH
+  title: Read character from current input stream
+- addr: FFE3
+  name: OSASCI
+  title: Write character, call OSNEWL if A=&0D
+- addr: FFE7
+  name: OSNEWL
+  title: Write a newline
+- addr: FFEE
+  entry:
+    A: Character to write
+  exit:
+    A: Preserved
+    X: Preserved
+    "Y": Preserved
+  indirect: 20E
+  name: OSWRCH
+  title: Write character to screen or output stream
+- addr: FFF1
+  indirect: 20C
+  name: OSWORD
+  title: OS call specified by contents of A and parameter block
+- addr: FFF4
+  indirect: 20A
+  name: OSBYTE
+  title: Misc OS functions specified by accumulator
+- addr: FFF7
+  indirect: "208"
+  name: OSCLI
+  title: Pass string to the CLI
+
+---

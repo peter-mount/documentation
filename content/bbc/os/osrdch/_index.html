@@ -1,0 +1,25 @@
+---
+type: "6502opcode"
+title: "OSRDCH"
+linkTitle: "Read character"
+weight: 10
+categories:
+  - bbc
+api:
+  - name: OSRDCH
+    addr: "FFE0"
+    indirect: "210"
+    title: "Read character from current input stream"
+    exit:
+      "A": Read character
+      "X": Preserved
+      "Y": Preserved
+      "C": 0 valid character read, 1 not read due to an error
+      "I": The interrupt status is preserved (though interrupts may be enabled during a call).
+---
+<p>
+    This routine reads a character from the currently selected input stream and returns it in the accumulator.
+</p>
+<p>
+    If an error should occur acknowledgement of the error condition should be made using OSBYTE &7E.
+</p>

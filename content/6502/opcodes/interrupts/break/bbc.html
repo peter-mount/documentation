@@ -1,0 +1,22 @@
+---
+type: "6502opcode"
+title: "BRK on the BBC Micro & Acorn Electron"
+linkTitle: "BBC Micro"
+weight: 3
+description: "Example of BRK on the BBC Micro or Acorn Electron"
+---
+
+<p>
+    In the operating system for the BBC Micro (& Acorn Electron), the standard is to write BRK followed by an error number,
+    then the error message ending with a 0
+</p>
+{{< highlight go "linenos=table" >}}
+BRK           ; Software break
+EQUB 0        ; Error code
+EQUS "Silly"  ; This is a real error message in BBC BASIC, try: AUTO10,1000
+EQUB 0        ; End of message marker
+{{< / highlight >}}
+<p>
+    Service ROM's usually write error messages into RAM starting at &0100 and then do a JMP &0100 to run it.
+    They do that as the handler is usually in a Language rom so they would be paged out if they ran BRK from their own ROM.
+</p>

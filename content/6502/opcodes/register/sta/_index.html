@@ -1,0 +1,186 @@
+---
+type: "6502opcode"
+title: "STA"
+linkTitle: "STA"
+weight: 3
+description: "Store Accumulator to Memory"
+tags:
+  - 6502 instruction
+op: "STA"
+flags:
+codes:
+  - code: 8D
+    addressing: abs
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 1
+  - code: 8F
+    addressing: absl
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 1
+  - code: 85
+    addressing: dp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 3
+      notes:
+        - 1
+        - 2
+  - code: 92
+    addressing: dpi
+    compatibility:
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 1
+        - 2
+  - code: 87
+    addressing: dpil
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 1
+        - 2
+  - code: 9D
+    addressing: absix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 1
+  - code: 9F
+    addressing: abslix
+    compatibility:
+      65816: true
+    bytes:
+      value: 4
+    cycles:
+      value: 5
+      notes:
+        - 1
+  - code: 99
+    addressing: absiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 4
+      notes:
+        - 1
+  - code: 95
+    addressing: dpix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 1
+        - 2
+  - code: 81
+    addressing: dpiix
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 1
+        - 2
+  - code: 91
+    addressing: dpiiy
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 5
+      notes:
+        - 1
+        - 2
+  - code: 97
+    addressing: dpiliy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 1
+        - 2
+  - code: 83
+    addressing: sr
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 4
+      notes:
+        - 1
+  - code: 93
+    addressing: sriiy
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 7
+      notes:
+        - 1
+notes:
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
+---
+
+<p>
+  Stores the accumulator into memory.
+</p>
+<p>
+  On all processors, the data written to memory is 8-bit.
+  However, for 16-bit processors with the m flag is clear then the data written is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</p>

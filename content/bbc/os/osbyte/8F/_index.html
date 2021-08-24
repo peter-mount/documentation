@@ -1,0 +1,27 @@
+---
+type: "6502opcode"
+title: "&8F (143) Issue paged ROM service call"
+linkTitle: "143 issue paged ROM service call"
+weight: 143
+categories:
+  - bbc
+osbyte:
+  - hex: 8F
+    int: 143
+    title: Issue paged ROM service call
+    entry:
+      x: reason code
+      y: parameter passed with service call
+    exit:
+      x: 0 if a pages ROM claimed the service call
+      y: return argument dependent on the call
+      a: preserved
+      c: undefined
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  Refer to the section about service roms on how this call works.
+</p>
