@@ -2,7 +2,7 @@ package bbc
 
 import (
 	"flag"
-	"github.com/peter-mount/area51.dev/area51.dev/tools/util"
+	"github.com/peter-mount/documentation/tools/util"
 	"github.com/peter-mount/go-kernel"
 	"log"
 	"os"

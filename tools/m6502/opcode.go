@@ -2,7 +2,7 @@ package m6502
 
 import (
 	"fmt"
-	"github.com/peter-mount/area51.dev/area51.dev/tools/util"
+	"github.com/peter-mount/documentation/tools/util"
 	"log"
 	"os"
 	"path/filepath"

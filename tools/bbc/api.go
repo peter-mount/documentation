@@ -1,7 +1,7 @@
 package bbc
 
 import (
-	"github.com/peter-mount/area51.dev/area51.dev/tools/util"
+	"github.com/peter-mount/documentation/tools/util"
 	"log"
 	"sort"
 	"strconv"
