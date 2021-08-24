@@ -16,3 +16,4 @@
 .idea
 .vscode
 /go_build_newsite_main_go
+build-toolset.sh
