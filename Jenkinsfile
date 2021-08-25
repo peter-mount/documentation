@@ -21,7 +21,7 @@ if( version == 'master' ) {
   version = 'latest'
 }
 
-tag = "docker.europa.area51.dev/area51/documentation:" + version + "-" + CHANGE_ID
+tag = "docker.europa.area51.dev/area51/documentation:" + version
 
 cmd = "docker run -i --rm " +
           "-v \$(pwd):/work " +
