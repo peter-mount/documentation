@@ -27,6 +27,9 @@ node( 'documentation' ) {
     }
 
     stage( 'test' ) {
+        sh "pwd"
         //sh "df -h"
+        sh "ls -l"
     }
+
 }
