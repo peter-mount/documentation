@@ -11,7 +11,8 @@ properties([
   disableConcurrentBuilds(),
   disableResume(),
   pipelineTriggers([
-    cron('H H * * *')
+    cron('H H * * *'),
+    githubPush()
   ])
 ])
 
