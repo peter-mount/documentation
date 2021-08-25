@@ -44,18 +44,18 @@ node( 'documentation' ) {
     }
 
     stage( "NPM" ) {
-        sh $cmd + "npm install"
+        sh cmd + "npm install"
     }
 
     stage( "6502" ) {
-        sh $cmd + "doctool -6502 content/6502/"
+        sh cmd + "doctool -6502 content/6502/"
     }
 
     stage( "BBC" ) {
-        sh $cmd + "doctool -bbc content/bbc/"
+        sh cmd + "doctool -bbc content/bbc/"
     }
 
     stage( "hugo" ) {
-        sh $cmd + "hugo"
+        sh cmd + "hugo"
     }
 }
