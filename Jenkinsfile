@@ -57,6 +57,6 @@ node( 'documentation' ) {
     }
 
     stage( "upload" ) {
-        sh "find public -type f -exec curl --user raw-upload:secret --ftp-create-dirs -T {} https://nexus.europa.area51.dev/repository/raw-hugo/" + version + " \;"
+        sh "find public -type f -exec curl --user raw-upload:secret --ftp-create-dirs -T {} https://nexus.europa.area51.dev/repository/raw-hugo/" + version + " \\;"
     }
 }
