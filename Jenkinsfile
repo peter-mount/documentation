@@ -26,6 +26,6 @@ node( 'documentation' ) {
     }
 
     stage( 'test' ) {
-        sh "df -h"
+        //sh "df -h"
     }
 }
