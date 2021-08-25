@@ -28,8 +28,8 @@ node( 'documentation' ) {
 
     stage( "Compile" ) {
         sh "docker run -i --rm " +
-            "-v $(pwd):/work " +
-            "-e USERID=$(id -u) " +
+            "-v \$(pwd):/work " +
+            "-e USERID=\$(id -u) " +
             "docker.europa.area51.dev/area51/documentation:latest " +
             "compile.sh"
     }
