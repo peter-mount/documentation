@@ -21,9 +21,9 @@ if( version == 'master' ) {
   version = 'latest'
 }
 
-def tag = "docker.europa.area51.dev/area51/documentation:" + version + "-" + CHANGE_ID
+tag = "docker.europa.area51.dev/area51/documentation:" + version + "-" + CHANGE_ID
 
-def cmd = "docker run -i --rm " +
+cmd = "docker run -i --rm " +
           "-v \$(pwd):/work " +
           "-e USERID=\$(id -u) " +
           tag +
