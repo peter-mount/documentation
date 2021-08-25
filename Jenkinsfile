@@ -16,7 +16,14 @@ properties([
   ])
 ])
 
+// List of books to generate PDF versions
 def books = [ "bbc", "6502" ]
+
+// List of references to generate via doctool
+def references = [
+    "-6502 content/6502/",
+    "-bbc content/bbc/"
+]
 
 version=BRANCH_NAME
 if( version == 'master' ) {
@@ -34,27 +41,30 @@ node( 'documentation' ) {
         sh "docker pull " + tag
     }
 
-    stage( "NPM" ) {
+    stage( "npm" ) {
         sh cmd + "npm install"
     }
 
-    stage( "6502" ) {
-        sh cmd + "doctool -6502 content/6502/"
+    stage( "reference generation" ) {
+        for( reference in references ) {
+            sh cmd + "doctool " + reference
+        }
     }
 
-    stage( "BBC" ) {
-        sh cmd + "doctool -bbc content/bbc/"
-    }
-
-    stage( "hugo" ) {
+    stage( "hugo pregen" ) {
         sh "rm -rf public"
         sh cmd + "hugo"
     }
 
-    stage( "Generate PDF's" ) {
+    stage( "PDF generation" ) {
         for( book in books ) {
             sh cmd + "generate-pdf.sh " + book
         }
+    }
+
+    stage( "hugo final" ) {
+        sh "rm -rf public"
+        sh cmd + "hugo"
     }
 
     stage( "upload" ) {
