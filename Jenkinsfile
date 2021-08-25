@@ -26,10 +26,11 @@ node( 'documentation' ) {
         checkout scm
     }
 
-    stage( 'test' ) {
-        sh "pwd"
-        //sh "df -h"
-        sh "ls -l"
+    stage( "Compile" ) {
+        sh "docker run -i --rm " +
+            "-v $(pwd):/work " +
+            "-e USERID=$(id -u) " +
+            "docker.europa.area51.dev/area51/documentation:latest " +
+            "compile.sh"
     }
-
 }

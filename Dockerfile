@@ -10,11 +10,13 @@
 # aptrepo   Replacement path to a local debian repository
 #
 # npmrepo   Local NPM repository
-
+#
+# Hugo version to install
+#
 # ===================================================================
 # Container with JDK11, node & basic tools
 ARG prefix
-FROM ${prefix}openjdk:11 AS jdk
+FROM ${prefix}openjdk:11 AS base
 ARG aptrepo
 ARG npmrepo
 
@@ -37,16 +39,28 @@ RUN apt-get update &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # ===================================================================
-# GO for the various tools
+# Retrieve hugo (precompiled) & build our tools
 ARG prefix
 ARG arch=amd64
 ARG goos=linux
-FROM ${prefix}golang:alpine AS gobuild
+FROM ${prefix}golang:alpine AS build
+ARG hugoVersion=0.87.0
+
 RUN apk add --no-cache \
     curl \
     git \
     tzdata \
     zip
+
+# Get current Hugo extended
+RUN echo;echo "Downloading Hugo ${hugoVersion}";\
+    mkdir -pv /dest/bin/ &&\
+    cd /tmp &&\
+    wget -q -O /tmp/hugo.tgz \
+      https://github.com/gohugoio/hugo/releases/download/v${hugoVersion}/hugo_extended_${hugoVersion}_Linux-64bit.tar.gz &&\
+    tar xpf hugo.tgz &&\
+    cp -p hugo /dest/bin/ &&\
+    ls -l /dest/bin
 
 WORKDIR /work
 
@@ -56,19 +70,23 @@ RUN go env -w GOFLAGS=-mod=mod
 
 # Install dependencies
 COPY go.mod .
-RUN go mod download
+RUN echo;echo "Downloading go modules";\
+    go mod download
 
 # Build our tools
 COPY tools/ tools/
-RUN CGO_ENABLED=0 go build \
+RUN echo;echo "Compiling doctool";\
+    CGO_ENABLED=0 go build \
     -o /dest/bin/doctool \
     tools/bin/main.go
 
-FROM jdk AS npm
+ADD bin/* /dest/bin/
+
+# ===================================================================
+# Final stage add all resources to base image
+FROM base AS final
 
 # Copy the go tool build
-COPY --from=gobuild /dest/bin/* /usr/local/bin/
+COPY --from=build /dest/bin/* /usr/local/bin/
 
 WORKDIR /work
-COPY package.json .
-RUN npm install
