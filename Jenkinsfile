@@ -21,7 +21,7 @@ if( version == 'master' ) {
   version = 'latest'
 }
 
-tag = "docker.europa.area51.dev/area51/documentation:" + version
+tag = "docker.europa.area51.dev/area51/documentation:latest"
 
 cmd = "docker run -i --rm -v \$(pwd):/work -e USERID=\$(id -u) " + tag + " compile.sh "
 
@@ -29,15 +29,7 @@ node( 'documentation' ) {
     stage( 'Prepare' ) {
         checkout scm
         sh "rm -rf node_modules public"
-    }
-
-    stage( "Toolset" ) {
-        sh "docker build -t " + tag + " " +
-            "--build-arg prefix=docker.europa.area51.dev/library/ " +
-            "--build-arg aptrepo=https://nexus.europa.area51.dev/repository/apt- " +
-            "--add-host nexus.europa.area51.dev:192.168.2.4 " +
-            "--build-arg npmrepo=https://nexus.europa.area51.dev/repository/npm-group/ " +
-            "."
+        sh "docker pull " + tag
     }
 
     stage( "NPM" ) {
