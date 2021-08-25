@@ -16,6 +16,8 @@ properties([
   ])
 ])
 
+def books = [ "bbc", "6502" ]
+
 version=BRANCH_NAME
 if( version == 'master' ) {
   version = 'latest'
@@ -28,7 +30,7 @@ cmd = "docker run -i --rm -v \$(pwd):/work -e USERID=\$(id -u) " + tag + " compi
 node( 'documentation' ) {
     stage( 'Prepare' ) {
         checkout scm
-        sh "rm -rf node_modules public"
+        sh "rm -rf pdfs node_modules public"
         sh "docker pull " + tag
     }
 
@@ -47,6 +49,12 @@ node( 'documentation' ) {
     stage( "hugo" ) {
         sh "rm -rf public"
         sh cmd + "hugo"
+    }
+
+    stage( "Generate PDF's" ) {
+        for( book in books ) {
+            sh cmd + "generate-pdf.sh " + book
+        }
     }
 
     stage( "upload" ) {

@@ -32,7 +32,7 @@ RUN if [ ! -z "${aptrepo}" ]; then \
 RUN if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi
 
 RUN apt-get update &&\
-    apt-get install -y nodejs npm &&\
+    apt-get install -y nodejs npm python3 chromium &&\
     echo;echo "Ignore npm errors whilst we upgrade it to the newest version" &&\
     npm install npm@latest -g &&\
     echo;echo "Purging APT caches" &&\
