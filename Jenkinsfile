@@ -28,6 +28,7 @@ cmd = "docker run -i --rm -v \$(pwd):/work -e USERID=\$(id -u) " + tag + " compi
 node( 'documentation' ) {
     stage( 'Prepare' ) {
         checkout scm
+        sh "rm -rf node_modules public"
     }
 
     stage( "Toolset" ) {
