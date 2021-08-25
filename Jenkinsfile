@@ -23,11 +23,7 @@ if( version == 'master' ) {
 
 tag = "docker.europa.area51.dev/area51/documentation:" + version
 
-cmd = "docker run -i --rm " +
-          "-v \$(pwd):/work " +
-          "-e USERID=\$(id -u) " +
-          tag +
-          "compile.sh "
+cmd = "docker run -i --rm -v \$(pwd):/work -e USERID=\$(id -u) " + tag + " compile.sh "
 
 node( 'documentation' ) {
     stage( 'Prepare' ) {
