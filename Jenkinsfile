@@ -35,7 +35,7 @@ node( 'documentation' ) {
     }
 
     stage( "Toolset" ) {
-        sh "build -t " + tag + " " +
+        sh "docker build -t " + tag + " " +
             "--build-arg prefix=docker.europa.area51.dev/library/ " +
             "--build-arg aptrepo=https://nexus.europa.area51.dev/repository/apt- " +
             "--add-host nexus.europa.area51.dev:192.168.2.4 " +
