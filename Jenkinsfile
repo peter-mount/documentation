@@ -52,6 +52,11 @@ node( 'documentation' ) {
     }
 
     stage( "hugo" ) {
+        sh "rm -rf public"
         sh cmd + "hugo"
+    }
+
+    stage( "upload" ) {
+        sh "find public -type f -exec curl --user raw-upload:secret --ftp-create-dirs -T {} https://nexus.europa.area51.dev/repository/raw-hugo/" + version + " \;"
     }
 }
