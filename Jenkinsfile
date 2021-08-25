@@ -39,7 +39,7 @@ node( 'documentation' ) {
             "--build-arg prefix=docker.europa.area51.dev/library/ " +
             "--build-arg aptrepo=https://nexus.europa.area51.dev/repository/apt- " +
             "--add-host nexus.europa.area51.dev:192.168.2.4 " +
-            "--build-arg npmrepo=https://nexus.europa.area51.dev/repository/npm-group/ "\
+            "--build-arg npmrepo=https://nexus.europa.area51.dev/repository/npm-group/ " +
             "."
     }
 
