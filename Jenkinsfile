@@ -51,7 +51,7 @@ node( 'documentation' ) {
         }
     }
 
-    stage( "hugo pregen" ) {
+    stage( "hugo" ) {
         sh "rm -rf public"
         sh cmd + "hugo"
     }
@@ -60,11 +60,6 @@ node( 'documentation' ) {
         for( book in books ) {
             sh cmd + "generate-pdf.sh " + book
         }
-    }
-
-    stage( "hugo final" ) {
-        sh "rm -rf public"
-        sh cmd + "hugo"
     }
 
     stage( "upload" ) {

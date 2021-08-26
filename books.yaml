@@ -1,0 +1,18 @@
+# books.yaml is configuration defining the available books.
+#
+# Each book represents a section on the site, e.g. bbc, 6502 etc.
+# During production each one of these is processed so that the book index page is generated
+# as well as a pdf file for each book - this can be done from the users browser by selecting print
+# but this allows a standardised PDF to be generated as well as ensuring we have a good pdf version of each book.
+#
+# Note: this does not effect hugo, it will generate the pages. This just
+#
+books:
+  6502:
+    path: 6502
+    pdf: public/books/6502.pdf
+    generate: false # disables generation of this book
+  bbc:
+    path: bbc
+    pdf: public/books/bbc.pdf
+    generate: true  # enables generation of this book
