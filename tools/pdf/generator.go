@@ -54,6 +54,14 @@ func (p *PDF) printToPDF(url string, res *[]byte) chromedp.Tasks {
     chromedp.ActionFunc(func(ctx context.Context) error {
       buf, _, err := page.PrintToPDF().
         WithPrintBackground(false).
+        WithMarginTop(0.5).
+        WithMarginBottom(0.5).
+        //WithMarginLeft(.1).
+        //WithMarginRight(.1).
+        WithLandscape(false).
+        WithDisplayHeaderFooter(true).
+        WithHeaderTemplate("<div style='font-size: 5px;text-align:center;width:100%;margin-left:3em;margin-right:3em;'><span class='title'></span></div>").
+        WithFooterTemplate("<div style='font-size: 5px;width:100%;margin-left:3em;margin-right:3em;'><span class='date'></span> <span style='float:right'><span class='pageNumber'></span>&nbsp;of&nbsp;<span class='totalPages'></span></span></div>").
         Do(ctx)
 
       if err != nil {
