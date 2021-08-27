@@ -41,10 +41,10 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 
 func (b *BBC) Start() error {
   b.generator.
-    RegisterCompound("bbcAPIIndex", b.extract, b.writeAPIIndex).
-    RegisterCompound("bbcAPINameIndex", b.extract, b.writeAPINameIndex).
-    RegisterCompound("bbcOsbyteIndex", b.extract, b.writeOsbyteIndex).
-    RegisterCompound("bbcOswordIndex", b.extract, b.writeOswordIndex)
+    Register("bbcAPIIndex", b.extract, b.writeAPIIndex).
+    Register("bbcAPINameIndex", b.extract, b.writeAPINameIndex).
+    Register("bbcOsbyteIndex", b.extract, b.writeOsbyteIndex).
+    Register("bbcOswordIndex", b.extract, b.writeOswordIndex)
 
   return nil
 }

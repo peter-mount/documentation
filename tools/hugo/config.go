@@ -13,7 +13,7 @@ import (
 type Config struct {
   Webserver  WebserverConfig `yaml:"webserver"` // Webserver
   PDF        PDF             `yaml:"pdf"`       // Common PDF template, can be overridden per book
-  Books      []*Book         `yaml:"books"`     // Array of book definitions
+  Books      Books           `yaml:"books"`     // Array of book definitions
   configFile *string         `yaml:"-"`         // Config file name
 }
 
@@ -78,7 +78,7 @@ func (c *Config) Start() error {
     }
 
     // Sets book modified time before any generated files
-    _=book.Modified()
+    _ = book.Modified()
   }
 
   return nil

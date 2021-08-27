@@ -7,6 +7,18 @@ import (
   "time"
 )
 
+type Books []*Book
+
+func (bs Books) ForEach(f func(*Book) error) error {
+  for _, b := range bs {
+    err := f(b)
+    if err != nil {
+      return err
+    }
+  }
+  return nil
+}
+
 // Book defines a book that's rendered as pdf
 type Book struct {
   ID        string    `yaml:"id"`        // ID of the book, e.g. "bbc" or "6502"

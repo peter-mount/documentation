@@ -64,7 +64,7 @@ func (g *Generator) Register(n string, handlers ...GeneratorHandler) *Generator 
 }
 
 func (g *Generator) Run() error {
-  for _, book := range g.config.Books {
+  return g.config.Books.ForEach(func(book *Book) error {
     for _, n := range book.Generate {
       h, exists := g.generators[n]
       if !exists {
@@ -75,7 +75,8 @@ func (g *Generator) Run() error {
       if err != nil {
         return err
       }
+
     }
-  }
-  return nil
+    return nil
+  })
 }

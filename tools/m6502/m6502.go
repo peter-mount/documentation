@@ -29,8 +29,8 @@ func (s *M6502) Init(k *kernel.Kernel) error {
 
 func (s *M6502) Start() error {
   s.generator.
-    RegisterCompound("6502OpsIndex", s.extractOpcodes, s.writeOpsIndex).
-    RegisterCompound("6502OpsHexIndex", s.extractOpcodes, s.writeOpsHexIndex)
+    Register("6502OpsIndex", s.extractOpcodes, s.writeOpsIndex).
+    Register("6502OpsHexIndex", s.extractOpcodes, s.writeOpsHexIndex)
 
   return nil
 }

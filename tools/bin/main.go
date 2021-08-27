@@ -11,11 +11,11 @@ import (
 
 func main() {
   err := kernel.Launch(
-    // Content generators first
-    &m6502.M6502{},
-    &bbc.BBC{},
-    // Hugo & site generators last
+    // Core module
     &hugo.Hugo{},
+    // The various page/file generators
+    &bbc.BBC{},
+    &m6502.M6502{},
     &pdf.PDF{},
   )
   if err != nil {
