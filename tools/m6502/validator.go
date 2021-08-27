@@ -2,6 +2,7 @@ package m6502
 
 import "log"
 
+// A simple validator - checks the data for duplicate or missing opcodes
 func (s *M6502) validateOpcodes() {
 	log.Println("Validation Opcode allocation")
 

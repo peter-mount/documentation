@@ -19,26 +19,24 @@ type Api struct {
 }
 
 func (b *BBC) extractApi(api interface{}) {
-  if a, ok := api.([]interface{}); ok {
-    for _, e := range a {
-      if m, ok := e.(map[interface{}]interface{}); ok {
-        v := &Api{
-          Name:   util.DecodeString(m["name"], ""),
-          Addr:   util.DecodeString(m["addr"], ""),
-          Title:  util.DecodeString(m["title"], ""),
-          params: e,
-        }
-        i, err := strconv.ParseInt(v.Addr, 16, 64)
-        if err != nil {
-          log.Printf("Failed to parse addr \"%s\" for %s", v.Addr, v.Name)
-        } else {
-          v.call = int(i)
-        }
-
-        b.api = append(b.api, v)
+  util.ForEachInterface(api, func(e interface{}) {
+    util.IfMap(e, func(m map[interface{}]interface{}) {
+      v := &Api{
+        Name:   util.DecodeString(m["name"], ""),
+        Addr:   util.DecodeString(m["addr"], ""),
+        Title:  util.DecodeString(m["title"], ""),
+        params: e,
       }
-    }
-  }
+      i, err := strconv.ParseInt(v.Addr, 16, 64)
+      if err != nil {
+        log.Printf("Failed to parse addr \"%s\" for %s", v.Addr, v.Name)
+      } else {
+        v.call = int(i)
+      }
+
+      b.api = append(b.api, v)
+    })
+  })
 }
 
 func (b *BBC) writeAPIIndex(book *hugo.Book) error {

@@ -12,19 +12,17 @@ type Osbyte struct {
 }
 
 func (b *BBC) extractOsbyte(osbyte interface{}) {
-  if a, ok := osbyte.([]interface{}); ok {
-    for _, e := range a {
-      if m, ok := e.(map[interface{}]interface{}); ok {
-        if v, ok := util.DecodeInt(m["int"], 0); ok {
-          o := &Osbyte{
-            call:   v,
-            params: m,
-          }
-          b.osbyte = append(b.osbyte, o)
+  util.ForEachInterface(osbyte, func(e interface{}) {
+    util.IfMap(e, func(m map[interface{}]interface{}) {
+      if v, ok := util.DecodeInt(m["int"], 0); ok {
+        o := &Osbyte{
+          call:   v,
+          params: m,
         }
+        b.osbyte = append(b.osbyte, o)
       }
-    }
-  }
+    })
+  })
 }
 
 func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
