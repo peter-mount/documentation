@@ -1,6 +1,7 @@
 package bbc
 
 import (
+	"github.com/peter-mount/documentation/tools/hugo"
 	"github.com/peter-mount/documentation/tools/util"
 	"sort"
 )
@@ -26,7 +27,7 @@ func (b *BBC) extractOsword(osword interface{}) {
 	}
 }
 
-func (b *BBC) writeOswordIndex() error {
+func (b *BBC) writeOswordIndex(book *hugo.Book) error {
 	sort.SliceStable(b.osword, func(i, j int) bool {
 		return b.osword[i].call < b.osword[j].call
 	})
@@ -37,7 +38,7 @@ func (b *BBC) writeOswordIndex() error {
 	}
 
 	return util.WriteReferenceYaml(
-		*b.baseDir,
+		book.ContentPath(),
 		"osword",
 		"OSWord calls",
 		"OSWord &FFF1 calls",

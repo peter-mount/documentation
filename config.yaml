@@ -1,0 +1,36 @@
+# Documentation config
+
+# webserver config
+webserver:
+  address: "127.0.0.1"
+  port: 8080
+
+# Default PDF config
+pdf:
+  # No background graphics
+  printBackground: false
+  # Page margins in inches, default 0.4" 1cm
+  margin:
+    top: 0.5
+    bottom: 0.5
+    #left: 0.4
+    #right: 0.4
+  #landscape: false
+  #disableHeaderFooter: false
+  header: "<div style='font-size: 5px;text-align:center;width:100%;margin-left:3em;margin-right:3em;'><span class='title'></span></div>"
+  footer: "<div style='font-size: 5px;width:100%;margin-left:3em;margin-right:3em;'><span class='date'></span> <span style='float:right'><span class='pageNumber'></span>&nbsp;of&nbsp;<span class='totalPages'></span></span></div>"
+
+# Books
+books:
+  - id: bbc
+    title: "BBC Micro"
+    generate:
+      - bbcAPIIndex
+      - bbcAPINameIndex
+      - bbcOsbyteIndex
+      - bbcOswordIndex
+  - id: 6502
+    title: "6502 Microprocessor"
+    generate:
+      - 6502OpsIndex
+      - 6502OpsHexIndex
