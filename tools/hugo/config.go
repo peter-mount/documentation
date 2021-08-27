@@ -40,18 +40,6 @@ type PDFMargin struct {
   Right  float64 `yaml:"right"`  // Right margin in inches
 }
 
-// Book defines a book that's rendered as pdf
-type Book struct {
-  ID       string   `yaml:"id"`       // ID of the book, e.g. "bbc" or "6502"
-  Title    string   `yaml:"title"`    // Title of book
-  PDF      *PDF     `yaml:"pdf"`      // Custom PDF config for just this book
-  Generate []string `yaml:"generate"` // List of generators to run on this book
-}
-
-func (b *Book) ContentPath() string {
-  return "content/" + b.ID + "/"
-}
-
 func (c *Config) Name() string {
   return "Config"
 }
