@@ -57,6 +57,7 @@ func (b *BBC) writeAPIIndex(book *hugo.Book) error {
     "MOS API by address",
     "MOS API by address",
     10,
+    book.Modified(),
     r)
 }
 
@@ -76,5 +77,6 @@ func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
     "MOS API by name",
     "MOS API by name",
     10,
+    book.Modified(),
     r)
 }

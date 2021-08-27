@@ -6,9 +6,7 @@ import (
   "github.com/peter-mount/go-kernel"
   "gopkg.in/yaml.v2"
   "io/ioutil"
-  "log"
   "path/filepath"
-  "time"
 )
 
 // Config file for doctool
@@ -81,8 +79,6 @@ func (c *Config) Start() error {
 
     // Sets book modified time before any generated files
     _=book.Modified()
-
-    log.Printf("Book %s modified %s",book.ID,book.Modified().Format(time.RFC3339))
   }
 
   return nil

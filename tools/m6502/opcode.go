@@ -222,6 +222,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
     title,
     desc,
     10,
+    book.Modified(),
     func(a []string) ([]string, error) {
       a = append(a, "codes:")
 

@@ -43,5 +43,6 @@ func (b *BBC) writeOswordIndex(book *hugo.Book) error {
 		"OSWord calls",
 		"OSWord &FFF1 calls",
 		10,
+		book.Modified(),
 		r)
 }

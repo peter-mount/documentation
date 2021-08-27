@@ -5,10 +5,9 @@ import (
   "github.com/chromedp/cdproto/page"
   "github.com/chromedp/chromedp"
   "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
-  "io/ioutil"
   "log"
-  "os"
 )
 
 // PDF tool that handles the generation of PDF documentation of a "book"
@@ -62,20 +61,7 @@ func (p *PDF) generate(book *hugo.Book) error {
     return err
   }
 
-  fileName := book.ID + ".pdf"
-  fileTime := book.Modified()
-
-  err = ioutil.WriteFile(fileName, buf, 0644)
-  if err != nil {
-    return err
-  }
-
-  err = os.Chtimes(fileName, fileTime, fileTime)
-  if err != nil {
-    return err
-  }
-
-  return nil
+  return util.WriteFile(book.ID+".pdf", buf, book.Modified())
 }
 
 // print a specific pdf page.

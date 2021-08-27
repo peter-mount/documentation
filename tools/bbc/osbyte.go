@@ -43,5 +43,6 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
     "OSByte calls",
     "OSByte &FFF4 calls",
     10,
+    book.Modified(),
     r)
 }
