@@ -1,14 +1,14 @@
 package m6502
 
 import (
-  "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
 )
 
 type M6502 struct {
-  generator *hugo.Generator // Generator
-  extracted bool            // true once extract has run
+  generator *generator.Generator // Generator
+  extracted bool                 // true once extract has run
   opCodes   []*Opcode
   notes     *util.Notes
 }
@@ -18,11 +18,11 @@ func (s *M6502) Name() string {
 }
 
 func (s *M6502) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&hugo.Generator{})
+  service, err := k.AddService(&generator.Generator{})
   if err != nil {
     return err
   }
-  s.generator = service.(*hugo.Generator)
+  s.generator = service.(*generator.Generator)
 
   return nil
 }

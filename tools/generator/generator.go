@@ -1,16 +1,18 @@
-package hugo
+package generator
 
 import (
   "fmt"
+  "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/go-kernel"
+  "log"
 )
 
 // GeneratorHandler performs an action against a Book
-type GeneratorHandler func(*Book) error
+type GeneratorHandler func(*hugo.Book) error
 
 // Then returns a GeneratorHandler that calls this one then if no error the next one forming a chain
 func (h GeneratorHandler) Then(next GeneratorHandler) GeneratorHandler {
-  return func(b *Book) error {
+  return func(b *hugo.Book) error {
     err := h(b)
     if err == nil {
       err = next(b)
@@ -20,7 +22,7 @@ func (h GeneratorHandler) Then(next GeneratorHandler) GeneratorHandler {
 }
 
 type Generator struct {
-  config     *Config                     // Configuration
+  config     *hugo.Config                // Configuration
   generators map[string]GeneratorHandler // Map of available generators
 }
 
@@ -30,11 +32,11 @@ func (g *Generator) Name() string {
 
 func (g *Generator) Init(k *kernel.Kernel) error {
 
-  service, err := k.AddService(&Config{})
+  service, err := k.AddService(&hugo.Config{})
   if err != nil {
     return err
   }
-  g.config = service.(*Config)
+  g.config = service.(*hugo.Config)
 
   g.generators = make(map[string]GeneratorHandler)
   return nil
@@ -66,14 +68,17 @@ func (g *Generator) Register(n string, handlers ...GeneratorHandler) *Generator 
 }
 
 func (g *Generator) Run() error {
-  return g.config.Books.ForEach(func(book *Book) error {
+  return g.config.Books.ForEach(func(book *hugo.Book) error {
     return book.Generate.ForEach(func(n string) error {
       h, exists := g.generators[n]
-      if !exists {
-        return fmt.Errorf("book %s GeneratorHandler %s is not registered", book.ID, n)
+      if exists {
+        return h(book)
       }
 
-      return h(book)
+      // Log a warning but ignore - could be an invalid config or the generator is not deployed.
+      // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
+      log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
+      return nil
     })
   })
 }

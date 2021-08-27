@@ -1,6 +1,7 @@
 package bbc
 
 import (
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
@@ -13,11 +14,11 @@ import (
 // BBC generates the reference pages in the BBC book.
 // These pages are the indices to the various sections like MOS calls, OSByte & OSWord calls etc.
 type BBC struct {
-  generator *hugo.Generator // Generator
-  extracted bool            // True once extract() has run
-  api       []*Api          // MOS API calls
-  osbyte    []*Osbyte       // OSBYTE calls
-  osword    []*Osword       // OSWORD calls
+  generator *generator.Generator // Generator
+  extracted bool                 // True once extract() has run
+  api       []*Api               // MOS API calls
+  osbyte    []*Osbyte            // OSBYTE calls
+  osword    []*Osword            // OSWORD calls
 }
 
 // Output is used for generating the index pages front matter
@@ -33,11 +34,11 @@ func (b *BBC) Name() string {
 }
 
 func (b *BBC) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&hugo.Generator{})
+  service, err := k.AddService(&generator.Generator{})
   if err != nil {
     return err
   }
-  b.generator = service.(*hugo.Generator)
+  b.generator = service.(*generator.Generator)
 
   return nil
 }
