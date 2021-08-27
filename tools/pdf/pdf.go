@@ -8,6 +8,7 @@ import (
   "github.com/peter-mount/go-kernel"
   "io/ioutil"
   "log"
+  "os"
 )
 
 // PDF tool that handles the generation of PDF documentation of a "book"
@@ -61,7 +62,15 @@ func (p *PDF) generate(book *hugo.Book) error {
     return err
   }
 
-  err = ioutil.WriteFile(book.ID+".pdf", buf, 0644)
+  fileName := book.ID + ".pdf"
+  fileTime := book.Modified()
+
+  err = ioutil.WriteFile(fileName, buf, 0644)
+  if err != nil {
+    return err
+  }
+
+  err = os.Chtimes(fileName, fileTime, fileTime)
   if err != nil {
     return err
   }
