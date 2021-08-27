@@ -1,7 +1,0 @@
-{
-  "devDependencies": {
-    "autoprefixer": "^10.2.6",
-    "chrome-remote-interface": "^0.29.0",
-    "postcss-cli": "^8.3.1"
-  }
-}

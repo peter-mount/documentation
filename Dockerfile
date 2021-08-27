@@ -9,8 +9,6 @@
 #
 # aptrepo   Replacement path to a local debian repository
 #
-# npmrepo   Local NPM repository
-#
 # Hugo version to install
 #
 # ===================================================================
@@ -18,24 +16,15 @@
 ARG prefix
 FROM ${prefix}openjdk:11 AS base
 ARG aptrepo
-ARG npmrepo
 
-# --build-arg aptrepo= domain/path to replace url in apt for using a local nexus3 apt proxy repository
 RUN if [ ! -z "${aptrepo}" ]; then \
     sed -i \
       -e "s|http://deb.debian.org/|${aptrepo}|" \
       -e "s|http://security.debian.org/|${aptrepo}|" \
       /etc/apt/sources.list \
-    ;fi
-
-# --build-arg npmrepo= path to a local npm repository
-RUN if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi
-
-RUN apt-get update &&\
-    apt-get install -y nodejs npm python3 chromium &&\
-    echo;echo "Ignore npm errors whilst we upgrade it to the newest version" &&\
-    npm install npm@latest -g &&\
-    echo;echo "Purging APT caches" &&\
+    ;fi &&\
+    apt-get update &&\
+    apt-get install -y chromium &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # ===================================================================
