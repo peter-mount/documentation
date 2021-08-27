@@ -1,4 +1,4 @@
-package hugo
+package util
 
 import (
   "log"

@@ -39,15 +39,7 @@ func (p *PDF) Init(k *kernel.Kernel) error {
 
 // Run through args for book id's and generate the PDF's
 func (p *PDF) Run() error {
-
-  for _, book := range p.config.Books {
-    err := p.generate(book)
-    if err != nil {
-      return err
-    }
-  }
-
-  return nil
+  return p.config.Books.ForEach(p.generate)
 }
 
 func (p *PDF) generate(book *hugo.Book) error {
@@ -65,7 +57,7 @@ func (p *PDF) generate(book *hugo.Book) error {
 
 // print a specific pdf page.
 func (p *PDF) printToPDF(book *hugo.Book, res *[]byte) chromedp.Tasks {
-  url := p.config.Webpath("%s/_print/", book.ID)
+  url := p.config.WebPath("%s/_print/", book.ID)
 
   pdf := book.PDF
 

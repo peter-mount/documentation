@@ -10,6 +10,8 @@ import (
   "strings"
 )
 
+// BBC generates the reference pages in the BBC book.
+// These pages are the indices to the various sections like MOS calls, OSByte & OSWord calls etc.
 type BBC struct {
   generator *hugo.Generator // Generator
   extracted bool            // True once extract() has run
@@ -18,6 +20,7 @@ type BBC struct {
   osword    []*Osword       // OSWORD calls
 }
 
+// Output is used for generating the index pages front matter
 type Output struct {
   Nometa bool          `yaml:"nometa"`
   Api    []interface{} `yaml:"api,omitempty"`

@@ -5,6 +5,7 @@ import (
   "github.com/peter-mount/go-kernel"
 )
 
+// GeneratorHandler performs an action against a Book
 type GeneratorHandler func(*Book) error
 
 // Then returns a GeneratorHandler that calls this one then if no error the next one forming a chain
@@ -48,6 +49,7 @@ func (g *Generator) register(n string, h GeneratorHandler) *Generator {
   return g
 }
 
+// Register creates a named GeneratorHandler composed of the supplied handlers
 func (g *Generator) Register(n string, handlers ...GeneratorHandler) *Generator {
   switch len(handlers) {
   case 0:
@@ -65,18 +67,13 @@ func (g *Generator) Register(n string, handlers ...GeneratorHandler) *Generator 
 
 func (g *Generator) Run() error {
   return g.config.Books.ForEach(func(book *Book) error {
-    for _, n := range book.Generate {
+    return book.Generate.ForEach(func(n string) error {
       h, exists := g.generators[n]
       if !exists {
         return fmt.Errorf("book %s GeneratorHandler %s is not registered", book.ID, n)
       }
 
-      err := h(book)
-      if err != nil {
-        return err
-      }
-
-    }
-    return nil
+      return h(book)
+    })
   })
 }

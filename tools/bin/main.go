@@ -11,12 +11,12 @@ import (
 
 func main() {
   err := kernel.Launch(
-    // Core module
+    // Core modules
     &hugo.Hugo{},
+    &pdf.PDF{},
     // The various page/file generators
     &bbc.BBC{},
     &m6502.M6502{},
-    &pdf.PDF{},
   )
   if err != nil {
     log.Fatal(err)

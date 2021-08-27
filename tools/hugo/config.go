@@ -55,11 +55,18 @@ func (c *Config) Start() error {
     *c.configFile = "config.yaml"
   }
 
-  if filename, err := filepath.Abs(*c.configFile); err != nil {
+  filename, err := filepath.Abs(*c.configFile)
+  if err != nil {
     return err
-  } else if in, err := ioutil.ReadFile(filename); err != nil {
+  }
+
+  in, err := ioutil.ReadFile(filename)
+  if err != nil {
     return err
-  } else if err := yaml.Unmarshal(in, c); err != nil {
+  }
+
+  err = yaml.Unmarshal(in, c)
+  if err != nil {
     return err
   }
 
@@ -72,18 +79,20 @@ func (c *Config) Start() error {
   }
 
   // Ensure all books have PDF config by using the global version
-  for _, book := range c.Books {
+  _ = c.Books.ForEach(func(book *Book) error {
     if book.PDF == nil {
       book.PDF = &c.PDF
     }
 
     // Sets book modified time before any generated files
     _ = book.Modified()
-  }
+
+    return nil
+  })
 
   return nil
 }
 
-func (c *Config) Webpath(f string, a ...interface{}) string {
+func (c *Config) WebPath(f string, a ...interface{}) string {
   return fmt.Sprintf("http://%s:%d/"+f, append([]interface{}{c.Webserver.Address, c.Webserver.Port}, a...)...)
 }

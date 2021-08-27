@@ -1,15 +1,18 @@
 package hugo
 
 import (
+  "github.com/peter-mount/documentation/tools/util"
   "os"
   "path/filepath"
   "strings"
   "time"
 )
 
+type BookHandler func(*Book) error
+
 type Books []*Book
 
-func (bs Books) ForEach(f func(*Book) error) error {
+func (bs Books) ForEach(f BookHandler) error {
   for _, b := range bs {
     err := f(b)
     if err != nil {
@@ -21,13 +24,13 @@ func (bs Books) ForEach(f func(*Book) error) error {
 
 // Book defines a book that's rendered as pdf
 type Book struct {
-  ID        string    `yaml:"id"`        // ID of the book, e.g. "bbc" or "6502"
-  Title     string    `yaml:"title"`     // Title of book, default title from main page
-  Author    string    `yaml:"author"`    // Author of book, default ""
-  Copyright string    `yaml:"copyright"` // Copyright
-  PDF       *PDF      `yaml:"pdf"`       // Custom PDF config for just this book
-  Generate  []string  `yaml:"generate"`  // List of generators to run on this book
-  modified  time.Time `yaml:"-"`         // Last Modified time
+  ID        string           `yaml:"id"`        // ID of the book, e.g. "bbc" or "6502"
+  Title     string           `yaml:"title"`     // Title of book, default title from main page
+  Author    string           `yaml:"author"`    // Author of book, default ""
+  Copyright string           `yaml:"copyright"` // Copyright
+  PDF       *PDF             `yaml:"pdf"`       // Custom PDF config for just this book
+  Generate  util.StringSlice `yaml:"generate"`  // List of generators to run on this book
+  modified  time.Time        `yaml:"-"`         // Last Modified time
 }
 
 func (b *Book) ContentPath() string {
