@@ -1,0 +1,5 @@
+# Exclude absolutely everything then negate rules on what we want to be sent to docker for the build
+*
+!bin
+!tools
+!go.mod
