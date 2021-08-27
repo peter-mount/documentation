@@ -15,9 +15,8 @@ func (h *Hugo) Name() string {
 }
 
 func (h *Hugo) Init(k *kernel.Kernel) error {
-  // This just adds a dependency ensuring generator runs before hugo
-  _, err := k.AddService(&Generator{})
-  return err
+  // Depend on Generator running first
+  return k.DependsOn(&Generator{})
 }
 
 func (h *Hugo) Run() error {

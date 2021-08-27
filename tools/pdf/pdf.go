@@ -33,9 +33,8 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   }
   p.chromium = service.(*hugo.Chromium)
 
-  // Just depend on Webserver
-  _, err = k.AddService(&hugo.Webserver{})
-  return err
+  // These we need these services to be running before us
+  return k.DependsOn(&hugo.Generator{}, &hugo.Webserver{}, &hugo.Hugo{})
 }
 
 // Run through args for book id's and generate the PDF's

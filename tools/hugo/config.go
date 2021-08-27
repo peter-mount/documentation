@@ -44,7 +44,7 @@ func (c *Config) Name() string {
   return "Config"
 }
 
-func (c *Config) Init(k *kernel.Kernel) error {
+func (c *Config) Init(_ *kernel.Kernel) error {
   c.configFile = flag.String("c", "", "The config file to use")
   return nil
 }
