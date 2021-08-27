@@ -33,8 +33,8 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   }
   p.chromium = service.(*hugo.Chromium)
 
-  // These we need these services to be running before us
-  return k.DependsOn(&hugo.Generator{}, &hugo.Webserver{}, &hugo.Hugo{})
+  // We need a webserver & must run after hugo
+  return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
 }
 
 // Run through args for book id's and generate the PDF's
@@ -44,19 +44,11 @@ func (p *PDF) Run() error {
 
 func (p *PDF) generate(book *hugo.Book) error {
   log.Println("Generating PDF for", book.ID)
-
-  // capture pdf
-  var buf []byte
-  err := p.chromium.Run(p.printToPDF(book, &buf))
-  if err != nil {
-    return err
-  }
-
-  return util.WriteFile(book.ID+".pdf", buf, book.Modified())
+  return p.chromium.Run(p.printToPDF(book))
 }
 
 // print a specific pdf page.
-func (p *PDF) printToPDF(book *hugo.Book, res *[]byte) chromedp.Tasks {
+func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
   url := p.config.WebPath("%s/_print/", book.ID)
 
   pdf := book.PDF
@@ -80,8 +72,7 @@ func (p *PDF) printToPDF(book *hugo.Book, res *[]byte) chromedp.Tasks {
         return err
       }
 
-      *res = buf
-      return nil
+      return util.WriteFile(book.ID+".pdf", buf, book.Modified())
     }),
   }
 }
