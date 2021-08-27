@@ -39,7 +39,7 @@ func (g *Generator) Init(k *kernel.Kernel) error {
   return nil
 }
 
-func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
+func (g *Generator) register(n string, h GeneratorHandler) *Generator {
   if _, exists := g.generators[n]; exists {
     panic(fmt.Errorf("GeneratorHandler %s already registered", n))
   }
@@ -48,18 +48,18 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
   return g
 }
 
-func (g *Generator) RegisterCompound(n string, handlers ...GeneratorHandler) *Generator {
+func (g *Generator) Register(n string, handlers ...GeneratorHandler) *Generator {
   switch len(handlers) {
   case 0:
     panic(fmt.Errorf("no GeneratorHandlers defined for %s", n))
   case 1:
-    return g.Register(n, handlers[0])
+    return g.register(n, handlers[0])
   default:
     h := handlers[0]
     for _, next := range handlers[1:] {
       h = h.Then(next)
     }
-    return g.Register(n, h)
+    return g.register(n, h)
   }
 }
 
