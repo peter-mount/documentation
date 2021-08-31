@@ -63,6 +63,8 @@ func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
         WithMarginLeft(pdf.Margin.Left).
         WithMarginRight(pdf.Margin.Right).
         WithLandscape(pdf.Landscape).
+        WithPaperWidth(pdf.Width).
+        WithPaperHeight(pdf.Height).
         WithDisplayHeaderFooter(!pdf.DisableHeaderFooter).
         WithHeaderTemplate(book.Expand(pdf.Header)).
         WithFooterTemplate(book.Expand(pdf.Footer)).

@@ -26,6 +26,8 @@ type WebserverConfig struct {
 type PDF struct {
   PrintBackground     bool      `yaml:"printBackground"`     // Print background graphics
   Margin              PDFMargin `yaml:"margin"`              // Page margins
+  Width               float64   `yaml:"width"`               // Page width in inches
+  Height              float64   `yaml:"height"`              // Page height in inches
   Landscape           bool      `yaml:"landscape"`           // Landscape or Portrait
   Header              string    `yaml:"header"`              // Header in html
   Footer              string    `yaml:"footer"`              // Footer in html

@@ -9,12 +9,15 @@ webserver:
 pdf:
   # No background graphics
   printBackground: false
+  # Page size in inches, 8.3x11.7 is A4
+  width: 8.3
+  height: 11.7
   # Page margins in inches, default 0.4" 1cm
   margin:
     top: 0.5
     bottom: 0.5
-    #left: 0.4
-    #right: 0.4
+    left: 0.4
+    right: 0.4
   #landscape: false
   #disableHeaderFooter: false
   header: "<div style='font-size: 5px;text-align:center;width:100%;margin-left:3em;margin-right:3em;'>${title}</div>"
