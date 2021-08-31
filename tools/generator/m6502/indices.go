@@ -42,6 +42,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
     name,
     title,
     desc,
+    "manual",
     10,
     book.Modified(),
     func(a []string) ([]string, error) {

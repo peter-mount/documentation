@@ -25,14 +25,14 @@ func WriteFile(fileName string, data []byte, fileTime time.Time) error {
   return os.Chtimes(fileName, fileTime, fileTime)
 }
 
-func WriteReferenceFile(dir, name, title, desc string, weight int, fileTime time.Time, handler func([]string) ([]string, error)) error {
+func WriteReferenceFile(dir, name, title, desc, layout string, weight int, fileTime time.Time, handler func([]string) ([]string, error)) error {
   n := path.Join(dir, "reference", name, "_index.html")
   log.Printf("Generating %s", n)
 
   a := []string{"---",
     "# This file is generated.",
     "# To edit, change the files under content then run the generator.",
-    "type: \"6502opcode\"",
+    "type: \"" + layout + "\"",
     "title: \"" + title + "\"",
     "linkTitle: \"" + title + "\"",
     "weight: " + strconv.Itoa(weight),
@@ -50,8 +50,8 @@ func WriteReferenceFile(dir, name, title, desc string, weight int, fileTime time
   return WriteFile(n, []byte(strings.Join(a, "\n")), fileTime)
 }
 
-func WriteReferenceYaml(dir, name, title, desc string, weight int, fileTime time.Time, val interface{}) error {
-  return WriteReferenceFile(dir, name, title, desc, weight, fileTime, func(a []string) ([]string, error) {
+func WriteReferenceYaml(dir, name, title, desc, layout string, weight int, fileTime time.Time, val interface{}) error {
+  return WriteReferenceFile(dir, name, title, desc, layout, weight, fileTime, func(a []string) ([]string, error) {
     c, err := yaml.Marshal(val)
     if err != nil {
       return nil, err
