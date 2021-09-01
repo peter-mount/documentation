@@ -1,43 +1,5 @@
 <div style="page-break-after:always;">
-    {{- if isset .Page.Params "book" -}}
-    <h1 style="font-weight: bolder;">
-        {{- if isset .Page.Params.book "title" -}}
-        {{ .Page.Params.book.title }}
-        {{- else -}}
-        {{ .Page.Params.title }}
-        {{- end -}}
-    </h1>
-    <p>{{ with .Page.Params.book.subTitle }}{{ . }}{{ end }}</p>
-    {{- else -}}
-
-    <h1 class="title">{{ .Title }}</h1>
-    {{- with .Page.Params.description -}}
-    <div class="lead">{{ . | markdownify }}</div>
-    {{- end -}}
-
-    {{- end -}}
-
-    {{- with .Page.Params.book -}}
-    <table>
-        <tbody>
-        {{- with .title -}}
-        <tr><th>Title</th><td>{{ . }}</td></tr>
-        {{- end -}}
-        {{- with .subTitle -}}
-        <tr><th>Subtitle</th><td>{{ . }}</td></tr>
-        {{- end -}}
-        {{- with .author -}}
-        <tr><th>Author</th><td>{{ . }}</td></tr>
-        {{- end -}}
-        {{- with .subAuthor -}}
-        <tr><th></th><td>{{ . }}</td></tr>
-        {{- end -}}
-        {{- with .copyright -}}
-        <tr><th>Copyright</th><td>{{ . }}</td></tr>
-        {{- end -}}
-        </tbody>
-    </table>
-    {{- end -}}
+    {{- partial "copyright/meta.html" . -}}
 
     <h1 style="margin-top: 2em;">CC BY-SA version 4.0 license</h1>
 

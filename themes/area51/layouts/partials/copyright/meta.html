@@ -1,0 +1,48 @@
+{{/* Handles the top section of the copyright page */}}
+{{- define "recurse-copyright-meta" -}}
+    {{- with .title -}}
+    <tr><th>Title</th><td>{{ . }}</td></tr>
+    {{- end -}}
+    {{- with .subTitle -}}
+    <tr><th>Subtitle</th><td>{{ . }}</td></tr>
+    {{- end -}}
+    {{- with .author -}}
+    <tr><th>Author</th><td>{{ . }}</td></tr>
+    {{- end -}}
+    {{- with .subAuthor -}}
+    <tr><th></th><td>{{ . }}</td></tr>
+    {{- end -}}
+    {{- with .copyright -}}
+    <tr><th>Copyright</th><td>{{ . }}</td></tr>
+    {{- end -}}
+{{- end -}}
+
+{{- if isset .Page.Params "book" -}}
+<h1 style="font-weight: bolder;">
+    {{- if isset .Page.Params.book "title" -}}
+    {{- .Page.Params.book.title -}}
+    {{- else -}}
+    {{- .Page.Params.title -}}
+    {{- end -}}
+</h1>
+
+{{- with .Page.Params.book.subTitle }}<p>{{ . }}</p>{{ end -}}
+
+<table>
+    <tbody>
+    {{- template "recurse-copyright-meta" .Page.Params.book -}}
+    {{- with .Page.Params.book.frontImage -}}
+    <tr><th>&nbsp;</th></tr><tr><th colspan="2">Front Page Image</th></tr>
+    {{- template "recurse-copyright-meta" . -}}
+    {{- end -}}
+    </tbody>
+</table>
+
+{{- else -}}
+
+<h1 class="title">{{ .Title }}</h1>
+{{- with .Page.Params.description -}}
+<div class="lead">{{ . | markdownify }}</div>
+{{- end -}}
+
+{{- end -}}
