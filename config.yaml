@@ -35,6 +35,10 @@ books:
       - bbcAPINameIndex
       - bbcOsbyteIndex
       - bbcOswordIndex
+  - id: go-kernel
+    title: "go-kernel Microkernel for Go"
+    author: "Peter Mount, Area51.dev"
+    copyright: "CC BY-SA"
   - id: 6502
     title: "6502 Microprocessor"
     generate:

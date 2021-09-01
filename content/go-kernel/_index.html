@@ -1,0 +1,67 @@
+
+---
+type: "bookTitle"
+title: "go-kernel"
+linkTitle: "GO Kernel"
+weight: 20
+categories:
+    - go
+    - projects
+book:
+    title: "go-kernel Microkernel for Go"
+    subTitle: "Creating & reusing services within a single Go runtime"
+    image: "/go-kernel/gopher10th.jpg"
+    author: "Peter Mount, Area51.dev & Contributors"
+    subAuthor: ""
+    copyright: "CC BY-SA"
+    frontImage:
+        title: "Go 10th anniversary Gopher"
+        author: "Renee French"
+        copyright: "Creative Commons Attribution 3.0"
+#menu:
+#  main:
+#    weight: 20
+---
+<div style="break-inside: avoid">
+    <p>
+        go-kernel is a simple microkernel which can run multiple services within the same go runtime.
+        The kernel provides both lifecycle support for those services and dependency management
+        so that services start and stop in the correct order.
+    </p>
+    <p>
+        To create an application requires a simple bootstrap which contains the core Service's that are required to
+        run the application.
+    </p>
+    <p>
+        For example, this site is generated with a microkernel based application and it uses a bootstrap similar to the
+        following:
+    </p>
+    {{< highlight go "linenos=table" >}}package main
+
+import (
+  "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/pdf"
+  "github.com/peter-mount/go-kernel"
+  "log"
+)
+
+func main() {
+  err := kernel.Launch(
+    &hugo.Hugo{},
+    &pdf.PDF{},
+  )
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+{{< / highlight >}}
+    <p>
+        Here it defines two services which must be started.
+        Each one is declared by passing an empty instance of the
+    </p>
+    <p>
+        The order they are listed here will be used to determine which one starts first, although this can be affected
+        by any dependencies on earlier services. This is covered in the lifecycle section of the documentation.
+    </p>
+</div>
+

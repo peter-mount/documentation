@@ -1,0 +1,44 @@
+
+---
+type: "bookTitle"
+title: "Services"
+linkTitle: "Services"
+weight: 10
+categories:
+ - go
+ - projects
+---
+<div style="break-inside: avoid">
+    <p>
+        A Service is the core entity managed by the microkernel which will provide it with lifecycle support and dependency management.
+    </p>
+    <p>
+        It consists of a struct type which implements the Service interface and optionally any of the lifecycle interfaces.
+    </p>
+    <p>
+        At the bare minimum the Service interface must be implemented.
+    </p>
+    {{< highlight go "linenos=table" >}}type Service interface {
+    // Name returns the unique name of this service
+    Name() string
+}{{< / highlight >}}
+    <p>
+        The Name() function must return a unique identifier for your service.
+        Usually this can be the services name, just as long as it's unique with any other services deployed within the
+        kernel.
+    </p>
+    <p>For Example, a bare minimal Service can be defined</p>
+    {{< highlight go "linenos=table" >}}type MyService struct {
+}
+
+func (s *MyService) Name() string {
+    return "MyService
+}{{< / highlight >}}
+    <p>
+        With this basic definition this new service can now be deployed into the kernel.
+        As this example has no lifecycle functions defined the kernel will just deploy it and make it available to
+        any service that requires access to it.
+    </p>
+
+</div>
+
