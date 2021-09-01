@@ -1,4 +1,3 @@
-
 ---
 type: "bookTitle"
 title: "go-kernel"
@@ -28,40 +27,126 @@ book:
         The kernel provides both lifecycle support for those services and dependency management
         so that services start and stop in the correct order.
     </p>
-    <p>
-        To create an application requires a simple bootstrap which contains the core Service's that are required to
-        run the application.
-    </p>
-    <p>
-        For example, this site is generated with a microkernel based application and it uses a bootstrap similar to the
-        following:
-    </p>
-    {{< highlight go "linenos=table" >}}package main
 
-import (
-  "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/documentation/tools/pdf"
-  "github.com/peter-mount/go-kernel"
-  "log"
-)
+    <h2>Kernel lifecycle</h2>
+    <p>
+        When the kernel.Launch() function is called it starts an instance of the microkernel, then goes through each
+        stage of its lifecycle.
+        It exits when either the entire sequence has completed or if a service fails part way though, at which point it
+        will
+        return the error the failed service has returned.
+    </p>
+    <p>
+        The following is an overview of this sequence.
+        The details of each stage is described in full under the Services section of the documentation, however a
+        Service does not have to implement any of them, they are all optional.
+    </p>
 
-func main() {
-  err := kernel.Launch(
-    &hugo.Hugo{},
-    &pdf.PDF{},
-  )
-  if err != nil {
-    log.Fatal(err)
-  }
-}
-{{< / highlight >}}
-    <p>
-        Here it defines two services which must be started.
-        Each one is declared by passing an empty instance of the
-    </p>
-    <p>
-        The order they are listed here will be used to determine which one starts first, although this can be affected
-        by any dependencies on earlier services. This is covered in the lifecycle section of the documentation.
-    </p>
+    <table>
+        <tbody>
+        <tr>
+            <th style="vertical-align: top;">
+                Init
+            </th>
+            <td>
+                <p>
+                    This is the initial stage. Here services can declare they depend on other services by implementing
+                    the InitialisableService. They can also define any command line flags they want to use.
+                </p>
+                <p>
+                    Once this stage completes no new services can be added to the kernel.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th style="vertical-align: top;">
+                PostInit
+            </th>
+            <td>
+                <p>
+                    The second stage which allows a service to check it has everything it needs.
+                    Usually this is to check that any command line flags are valid or mandatory ones are present.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th style="vertical-align: top;">
+                Start
+            </th>
+            <td>
+                <p>
+                    The third stage is Start. A service can implement the StartableService interface so that it can
+                    perform any initialisation it requires.
+                    For example, it could load a configuration file, open a database.
+                </p>
+                <p>
+                    Once a service has started it can be safely used by any dependents.
+                </p>
+                <p>
+                    If a service fails to start the kernel will skip to the Stop stage to stop any previously started
+                    service before exiting with the error of the failure.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th style="vertical-align: top;">
+                Run
+            </th>
+            <td>
+                <p>
+                    When the kernel reaches the run stage, every service has now been started.
+                </p>
+                <p>
+                    The kernel will then go though every deployed service and if they implement the RunnableService
+                    interface it will the Run function. If that function returns an error then the kernel will stop
+                    and enter the Stop stage to stop any previously started service before exiting with the error of
+                    the failure.
+                </p>
+                <p>
+                    Be aware that it is possible for a single service to never exit from this stage.
+                    An example of this is the rest web server service provided by the kernel.
+                    As this has to run forever the RunnableService implementation never returns keeping the application
+                    running.
+                </p>
+                <p>
+                    For this reason the RunnableService interface is usually used for command line tools.
+                    For Server Daemons like a rest service this interface should not be used as you cannot guarantee
+                    it will ever be called.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th style="vertical-align: top;">
+                Stop
+            </th>
+            <td>
+                <p>
+                    This is the final stage where every service that implements the StoppableService interface that has
+                    also passed through the Start stage will have their Stop function called.
+                    This allows a service to release any resources it has open.
+                </p>
+                <p>
+                    Note: this will call those services in reverse order.
+                    Specifically, the most recently started service will be stopped first.
+                    This is done so that services are stopped in the correct sequence.
+                </p>
+                <p>
+                    Also, a StoppableService does not need to implement StartableService.
+                    It is perfectly fine to implement just Stop() and not Start().
+                </p>
+                <p>
+                    This stage can be invoked at various stages:
+                </p>
+                <ol>
+                    <li>When a service's Start() method returns an error</li>
+                    <li>When a service's Run() method returns an error</li>
+                    <li>When the Run stage completes</li>
+                    <li>The process receives a SIGINT(2) or SIGTERM(15) signal</li>
+                </ol>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
