@@ -18,7 +18,7 @@ categories:
     <p>
         At the bare minimum the Service interface must be implemented.
     </p>
-    {{< highlight go "linenos=table" >}}type Service interface {
+    {{< highlight go "linenos=inline" >}}type Service interface {
     // Name returns the unique name of this service
     Name() string
 }{{< / highlight >}}
@@ -28,7 +28,7 @@ categories:
         kernel.
     </p>
     <p>For Example, a bare minimal Service can be defined</p>
-    {{< highlight go "linenos=table" >}}type MyService struct {
+    {{< highlight go "linenos=inline" >}}type MyService struct {
 }
 
 func (s *MyService) Name() string {

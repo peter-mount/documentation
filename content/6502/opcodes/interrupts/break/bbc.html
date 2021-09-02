@@ -10,7 +10,7 @@ description: "Example of BRK on the BBC Micro or Acorn Electron"
     In the operating system for the BBC Micro (& Acorn Electron), the standard is to write BRK followed by an error number,
     then the error message ending with a 0
 </p>
-{{< highlight go "linenos=table" >}}
+{{< highlight go "linenos=inline" >}}
 BRK           ; Software break
 EQUB 0        ; Error code
 EQUS "Silly"  ; This is a real error message in BBC BASIC, try: AUTO10,1000

@@ -419,7 +419,7 @@ notes:
   <p>
     To shift left multiple words, use ASL for the first operation then ROL for the subsequent words.
   </p>
-  {{< highlight go "linenos=table" >}}
+  {{< highlight go "linenos=inline" >}}
   ; Shift 16-bit value at &70 left 1 bit.
   ; This is effectively a multiplication by 2
   ASL &70 ; Shift left low-order byte
@@ -435,7 +435,7 @@ notes:
     To shift right multiple words, use LSR for the first operation then ROR for the subsequent words.
     Unlike shifting left, here we have to start with the high-order byte first.
   </p>
-  {{< highlight go "linenos=table" >}}
+  {{< highlight go "linenos=inline" >}}
   ; Shift 16-bit value at &70 right 1 bit.
   ; This is effectively a division by 2
   LSR &71 ; Shift right high-order byte

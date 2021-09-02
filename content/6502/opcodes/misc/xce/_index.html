@@ -25,7 +25,7 @@ codes:
 </p>
 <h2>Switch to native 16-bit mode</h2>
 <p>To switch into native mode, clear the carry bit then invoke XCE</p>
-{{< highlight go "linenos=table" >}}
+{{< highlight go "linenos=inline" >}}
 .goNative
     CLC      ; Clear Carry to indicate native mode
     XCE      ; Processor will be in 16-bit native mode once this completes
@@ -42,7 +42,7 @@ codes:
 
 <h2>Switch to 6502 emulation mode</h2>
 <p>To switch into 6502 emulation mode, set the carry bit then invoke XCE</p>
-{{< highlight go "linenos=table" >}}
+{{< highlight go "linenos=inline" >}}
 .goEmulation
     SEC      ; Set Carry to indicate native mode
     XCE      ; Processor will be in 16-bit native mode once this completes
