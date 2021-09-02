@@ -1,0 +1,66 @@
+---
+type: "manual"
+title: "PostInit"
+linkTitle: "PostInit"
+weight: 2
+categories:
+    - go
+    - projects
+---
+<div style="break-inside: avoid">
+    <p>
+        After the Init stage the kernel enters PostInit.
+        Here the command flags have been parsed so any reference to them are now valid.
+        Any Service's which implements the PostInitialisableService service will have their PostInit() function called
+        so that they can check they are in a valid state.
+    </p>
+
+{{< highlight go "linenos=inline" >}}type PostInitialisableService interface {
+    // PostInit allows a Service to validate itself after it's been deployed but before it's started
+    PostInit() error
+}{{< / highlight >}}
+
+    <p>
+        This stage is provided to allow services to stop the kernel if they are in an invalid state before any Service
+        has been started.
+    </p>
+
+    <div class="alert-danger">
+        <p>
+            A service must never call a function in another service from inside the PostInit() method,
+            nor create any external resources like go routines or open files.
+        </p>
+        <p>
+            Doing so could call a service which has not yet been initialised and leave resources open if the kernel
+            exits
+            due to an error.
+        </p>
+    </div>
+
+    <p>
+        Example: Checking command line flags are valid failing if it's not been set
+    </p>
+
+{{< highlight go "linenos=inline" >}}type Config struct {
+    configFile *string
+}
+
+func (a *Config) Name() string {
+	return "Config"
+}
+
+func (a *Config) Init(k *kernel.Kernel) error {
+	a.configFile = flag.String("c", "", "The config file to use")
+
+	return nil
+}
+
+func (a *Config) PostInit() error {
+	if *a.configFile == "" {
+        return fmt.Errorf("No default config defined, provide with -c")
+	}
+
+	return nil
+}{{< / highlight >}}
+
+</div>

@@ -1,0 +1,79 @@
+---
+type: "manual"
+title: "Start & Stop a service"
+linkTitle: "Start & Stop"
+weight: 3
+categories:
+    - go
+    - projects
+---
+<div style="break-inside: avoid">
+    <p>
+        After the Init and PostInit stages have completed the deployment order of Service's in the kernel is
+        confirmed and the kernel then enters the Start stage.
+    </p>
+
+    <div class="alert-primary">
+        <p>
+            Both Start() and Stop() functions are optional.
+            It is perfectly valid for a service to have only one implemented.
+            For example a service may implement Start() and not have a Stop().
+            Likewise, some services only implement Stop()
+        </p>
+    </div>
+
+    <h2>Starting a service</h2>
+
+    <p>
+        During this stage, the kernel checks each Service in the deployment order and checks to see if it implements
+        the StartableService interface. If it does then it calls the services Start() function to allow the service to
+        initialise itself, creating any resources it requires.
+    </p>
+
+{{< highlight go "linenos=inline" >}}// A Service that expects to be called in the Start lifecycle phase
+type StartableService interface {
+	Start() error
+}{{< / highlight >}}
+
+    <p>
+        For example a service can open an external Database, load a configuration file or create a Webserver.
+    </p>
+
+    <div class="alert-primary">
+        <p>
+            A service can call any dependency and create any resource from within the Start() function as those
+            dependencies have already been started.
+        </p>
+    </div>
+
+    <p>
+        If an error occurs then the Start() method must close any resources it has already created and then return
+        an error.
+        The kernel will then enter the Stop stage to stop any service that has already started then return that error.
+    </p>
+
+    <h2>Stopping a service</h2>
+
+    <p>
+        Once the kernel has started a service in the Start stage, it also checks to see if the service implements the StoppableService interface.
+        If it does it will add that service to an internal stop list which contains those services which have been started
+        and require stopping during shutdown.
+    </p>
+
+    <p>
+        During shutdown, the stop list is called in reverse order so that the last service started will be stopped first.
+    </p>
+
+{{< highlight go "linenos=inline" >}}// A Service that expects to be called when the kernel shutsdown if it's in the Stop lifecycle phase
+type StoppableService interface {
+	Stop()
+}{{< / highlight >}}
+
+    <div class="alert-primary">
+        <p>
+            A service can call any dependency and create any resource from within the Stop() function as those
+            dependencies are still running and will be stopped after this service has exited it's Stop() function.
+        </p>
+    </div>
+
+</div>

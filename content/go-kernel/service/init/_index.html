@@ -1,6 +1,6 @@
 ---
 type: "manual"
-title: "Init & Service Dependencies"
+title: "Initialise & Service Dependencies"
 linkTitle: "Init & dependencies"
 weight: 1
 categories:
@@ -23,6 +23,17 @@ categories:
 <p>
     If an error is returned from this Init() method the Kernel will exit immediately returning that error.
 </p>
+
+<div class="alert-danger">
+    <p>
+        A service must never call a function in another service from inside the Init() method,
+        nor create any external resources like go routines or open files.
+    </p>
+    <p>
+        Doing so could call a service which has not yet been initialised and leave resources open if the kernel exits
+        due to an error.
+    </p>
+</div>
 
 <h2>Command line flags</h2>
 <p>
@@ -69,9 +80,13 @@ func (h *Hugo) Init(_ *kernel.Kernel) error {
     There are two types of dependencies. The most common one is where you want to use one service from another.
     To do this you need to use the AddService() function in the Kernel instance passed to Init().
 </p>
+{{< highlight go >}}func (k *Kernel) AddService(s Service) (Service, error){{< / highlight >}}
 <p>
     This function accepts a single instance of the service you require. The function will then either return the
     instance the service that's been deployed in the kernel which you can then cast and store for later use.
+</p>
+<p>
+    If an error occurs then AddService() will return that error. You must exit Init() returning that error.
 </p>
 
 <p>For example:</p>
@@ -114,20 +129,20 @@ func (w *Webserver) Init(k *kernel.Kernel) error {
 
     <ul>
         <li>If it already exists then the existing entry will be returned.</li>
-        <li>If it does not exist then the kernel will perform the following in sequence/
+        <li>If it does not exist then the kernel will perform the following in sequence:
             <ol>
                 <li>
                     If the new Service implements InitialisableService then it's Init() function will be called
-                    so that it can add its own dependencies.
+                    so that it can add its own dependencies which will then deploy before it.
                 </li>
-                <li>The new service is finally added and the instance you passed to the function will be returned.</li>
+                <li>The new service is finally added to the kernel and the instance you passed to the function will be returned.</li>
             </ol>
         </li>
-        <li>
-            If the kernel has a service with the same name defined but of a different type then the cast will cause a
-            panic stopping the kernel.
-        </li>
     </ul>
+    <p>
+        If the kernel has a service with the same name defined but of a different type then the cast will cause a
+        panic stopping the kernel.
+    </p>
 </div>
 
 <div style="break-before: page">
@@ -138,6 +153,7 @@ func (w *Webserver) Init(k *kernel.Kernel) error {
         This is rarely used but is a convenience function where you declare that you depend on one or more services
         to exist but don't actually want a reference to them.
     </p>
+{{< highlight go >}}func (k *Kernel) DependsOn(services ...Service) error{{< / highlight >}}
     <p>
         For example, you might have a service that requires a webserver to be running, but you don't need to directly
         link to it as you would be making http calls to it instead.
@@ -178,6 +194,9 @@ func (p *PDF) Init(k *kernel.Kernel) error {
     <p>
         Here we depend on two services which we store a reference to use them,
         but we also require two others to be deployed and started before this service.
+    </p>
+    <p>
+        If an error occurs then DependsOn() will return that error. You must exit Init() returning that error.
     </p>
 </div>
 

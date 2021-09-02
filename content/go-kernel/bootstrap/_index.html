@@ -37,10 +37,11 @@ func main() {
 {{< / highlight >}}
     <p>
         Here it defines two services which must be started.
-        Each one is declared by passing an empty instance of the
+        Each one is declared by passing an empty instance of the required Service's to the Launch method.
+        The kernel will then deploy each one.
     </p>
     <p>
         The order they are listed here will be used to determine which one starts first, although this can be affected
-        by any dependencies on earlier services. This is covered in the lifecycle section of the documentation.
+        by any dependencies on services that have already been deployed.
     </p>
 </div>
