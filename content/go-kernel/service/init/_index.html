@@ -176,8 +176,8 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
 }{{< / highlight >}}
     <p>
-        Here we depend on two services which we store a reference two, but we also require two others to be deployed before
-        this service.
+        Here we depend on two services which we store a reference to use them,
+        but we also require two others to be deployed and started before this service.
     </p>
 </div>
 
