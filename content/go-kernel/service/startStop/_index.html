@@ -38,11 +38,14 @@ type StartableService interface {
     <p>
         For example a service can open an external Database, load a configuration file or create a Webserver.
     </p>
+    <p>
+        If a service has internal types that require initialisation like maps, then those maps must be initialised
+        with a Start() method.
+    </p>
 
     <div class="alert-primary">
         <p>
-            A service can call any dependency and create any resource from within the Start() function as those
-            dependencies have already been started.
+            A service can call any dependency from within the Start() function as those dependencies have already been started.
         </p>
     </div>
 
@@ -71,8 +74,14 @@ type StoppableService interface {
 
     <div class="alert-primary">
         <p>
-            A service can call any dependency and create any resource from within the Stop() function as those
+            A service can call any dependency within the Stop() function as those
             dependencies are still running and will be stopped after this service has exited it's Stop() function.
+        </p>
+    </div>
+    <div class="alert-danger">
+        <p>
+            A service cannot create any new resources or go routines.
+            Attempting to do so may silently fail, especially if the kernel is being stopped due to a SIGINT or SIGTERM signal.
         </p>
     </div>
 

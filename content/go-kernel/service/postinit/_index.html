@@ -21,8 +21,12 @@ categories:
 }{{< / highlight >}}
 
     <p>
-        This stage is provided to allow services to stop the kernel if they are in an invalid state before any Service
+        This stage is provided to allow services to stop the kernel if they are in a valid state before any Service
         has been started.
+    </p>
+
+    <p>
+        For example, if the service created command line flags then it can check that they are valid.
     </p>
 
     <div class="alert-danger">
@@ -63,4 +67,7 @@ func (a *Config) PostInit() error {
 	return nil
 }{{< / highlight >}}
 
+    <p>
+
+    </p>
 </div>
