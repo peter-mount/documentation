@@ -38,6 +38,10 @@ func (g *Generator) Init(k *kernel.Kernel) error {
   }
   g.config = service.(*hugo.Config)
 
+  return nil
+}
+
+func (g *Generator) Start() error {
   g.generators = make(map[string]GeneratorHandler)
   return nil
 }
