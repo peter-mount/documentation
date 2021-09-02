@@ -16,7 +16,6 @@ categories:
     To do this the service needs to implement the InitialisableService interface:
 </p>
 {{< highlight go "linenos=inline" >}}type InitialisableService interface {
-    // Init initialises a Service when it's added to the Kernel
     Init(*Kernel) error
 }{{< / highlight >}}
 
@@ -86,7 +85,8 @@ func (h *Hugo) Init(_ *kernel.Kernel) error {
     instance the service that's been deployed in the kernel which you can then cast and store for later use.
 </p>
 <p>
-    If an error occurs then AddService() will return that error. You must exit Init() returning that error.
+    If an error occurs then AddService() will return that error.
+    You must exit the Init() function immediately, returning that error.
 </p>
 
 <p>For example:</p>
@@ -98,8 +98,6 @@ import (
   "github.com/peter-mount/go-kernel"
 )
 
-// Webserver provides a webserver if required for other tasks.
-// It serves the public directory
 type Webserver struct {
   config *Config      // Config
 }
@@ -119,7 +117,9 @@ func (w *Webserver) Init(k *kernel.Kernel) error {
 }{{< / highlight >}}
 
 <p>
-    The instance you pass to AddService() may not be the one returned if that service already exists in the kernel.
+    The instance you pass to AddService() may not be the same one returned if that service already exists in the kernel.
+</p>
+<p>
     The key here is the string the Name() function returns.
     As that must be unique it is used as the unique identifier within the kernel for the service.
 </p>

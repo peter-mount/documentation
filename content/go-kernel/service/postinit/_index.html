@@ -16,12 +16,11 @@ categories:
     </p>
 
 {{< highlight go "linenos=inline" >}}type PostInitialisableService interface {
-    // PostInit allows a Service to validate itself after it's been deployed but before it's started
     PostInit() error
 }{{< / highlight >}}
 
     <p>
-        This stage is provided to allow services to stop the kernel if they are in a valid state before any Service
+        This stage is provided to allow services to stop the kernel if they are in an invalid state before any Service
         has been started.
     </p>
 

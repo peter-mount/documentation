@@ -1,0 +1,85 @@
+---
+type: "manual"
+title: "Run"
+linkTitle: "Run"
+weight: 4
+categories:
+    - go
+    - projects
+---
+<div style="break-inside: avoid">
+    <p>
+        Between the Start and Stop stages is Run.
+        In this stage the kernel runs through each deployed service in deployment order and if that Service implements
+        the Runnable interface then it's Run() function is invoked.
+    </p>
+
+{{< highlight go "linenos=inline" >}}
+type RunnableService interface {
+    Run() error
+}{{< / highlight >}}
+
+    <p>
+        If that function returns an error then the kernel stops and enters the Stop stage.
+        Otherwise, it continues with the next deployed service.
+        When all services are checked it then enters the Stop stage.
+    </p>
+
+    <h2>Run patterns</h2>
+
+    <p>
+        There are two patterns for the use of this interface.
+    </p>
+
+    <h3>
+        Command line tools
+    </h3>
+
+    <p>
+        In this pattern you write the components of your tool as Service's with each component having dependencies to
+        the various Service's it requires to perform some task.
+    </p>
+
+    <p>
+        Then, each one of those components implements the Run() function.
+        It can then test to see if it should actually do something (e.g. a command line flag) and just return nil if it
+        should not do anything, otherwise perform its task.
+    </p>
+
+    <p>
+        Once all Service's implementing Run() have done their task the tool can then shutdown.
+    </p>
+
+    <p>
+        An example of this is the tool that generates this actual document.
+        It consists of a group of RunnableService's which perform various tasks:
+    </p>
+    <ol>
+        <li>Generates any dynamic pages like indices,</li>
+        <li>Run's hugo to generate the actual html site,</li>
+        <li>Run's chromium in headless mode to generate each PDF document based on the site.</li>
+    </ol>
+
+    <h3>Daemon</h3>
+
+    <p>
+        In the Daemon pattern only one Service implements RunnableService. When it's Run() function is called it never
+        returns keeping the kernel and the application alive.
+    </p>
+
+    <p>
+        Dependent services might extend the Daemon service by calling a registration function in the Daemon from within
+        their Start() function.
+    </p>
+
+    <p>
+        For example the daemon implements a webserver so the dependent services register handlers against specific
+        paths within the website.
+    </p>
+
+    <p>
+        An example of this is the rest package included with the kernel.
+        This implements a Webserver Service where you can register handlers against paths served by the server
+        and implement REST actions which are provided by dependent Service's.
+    </p>
+</div>

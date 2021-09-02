@@ -8,7 +8,7 @@ webserver:
 # Default PDF config
 pdf:
   # No background graphics
-  printBackground: false
+  printBackground: true
   # Page size in inches, 8.3x11.7 is A4
   width: 8.3
   height: 11.7

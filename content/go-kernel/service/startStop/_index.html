@@ -30,9 +30,8 @@ categories:
         initialise itself, creating any resources it requires.
     </p>
 
-{{< highlight go "linenos=inline" >}}// A Service that expects to be called in the Start lifecycle phase
-type StartableService interface {
-	Start() error
+{{< highlight go "linenos=inline" >}}type StartableService interface {
+    Start() error
 }{{< / highlight >}}
 
     <p>
@@ -67,9 +66,8 @@ type StartableService interface {
         During shutdown, the stop list is called in reverse order so that the last service started will be stopped first.
     </p>
 
-{{< highlight go "linenos=inline" >}}// A Service that expects to be called when the kernel shutsdown if it's in the Stop lifecycle phase
-type StoppableService interface {
-	Stop()
+{{< highlight go "linenos=inline" >}}type StoppableService interface {
+    Stop()
 }{{< / highlight >}}
 
     <div class="alert-primary">
@@ -80,7 +78,7 @@ type StoppableService interface {
     </div>
     <div class="alert-danger">
         <p>
-            A service cannot create any new resources or go routines.
+            A service cannot create any new resources or go routines from inside the Stop() function.
             Attempting to do so may silently fail, especially if the kernel is being stopped due to a SIGINT or SIGTERM signal.
         </p>
     </div>
