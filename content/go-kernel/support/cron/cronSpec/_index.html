@@ -1,0 +1,211 @@
+---
+type: "manual"
+title: "Cron specification"
+linkTitle: "Cron Specification"
+weight: 100
+---
+<div style="break-inside: avoid">
+    <p>The following describes a Cron specification. This is copied from the underlying libraries documentation.</p>
+    <p>A cron expression represents a set of times, using 6 space-separated fields.</p>
+    <table class="table table-striped table-sm table-borderless">
+        <thead>
+        <tr>
+            <th>Field name</th>
+            <th>Required</th>
+            <th>Allowed values</th>
+            <th>Allowed special characters</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Seconds</td>
+            <td>No</td>
+            <td>0-59</td>
+            <td>* / , -</td>
+        </tr>
+        <tr>
+            <td>Minutes</td>
+            <td>Yes</td>
+            <td>0-59</td>
+            <td>* / , -</td>
+        </tr>
+        <tr>
+            <td>Hours</td>
+            <td>Yes</td>
+            <td>0-23</td>
+            <td>* / , -</td>
+        </tr>
+        <tr>
+            <td>Day of month</td>
+            <td>Yes</td>
+            <td>1-31</td>
+            <td>* / , - ?</td>
+        </tr>
+        <tr>
+            <td>Month</td>
+            <td>Yes</td>
+            <td>1-12 or JAN-DEC</td>
+            <td>* / , -</td>
+        </tr>
+        <tr>
+            <td>Day of week</td>
+            <td>Yes</td>
+            <td>0-6 or SUN-SAT</td>
+            <td>* / , - ?</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>Note: Month and Day-of-week field values are case-insensitive.</p>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>Special Characters</h2>
+    <table class="table table-sm table-borderless">
+        <tbody>
+        <tr>
+            <th>*</th>
+            <td>
+                <p>
+                    The asterisk indicates that the cron expression will match for all values of the field.
+                </p>
+                <p>
+                    e.g., using an asterisk in the 5th field (month) would indicate every month.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th>/</th>
+            <td>
+                <p>
+                    Slashes are used to describe increments of ranges.
+                </p>
+                <p>
+                    For example 3-59/15 in the 1st field (minutes) would indicate the 3rd minute of the hour and every
+                    15 minutes thereafter.
+                </p>
+                <p>
+                    The form "*\/..." is equivalent to the form "first-last/...", that is, an increment over the largest
+                    possible range of the field.
+                </p>
+                <p>
+                    The form "N/..." is accepted as meaning "N-MAX/...", that is, starting at N, use the increment until
+                    the end of that specific range.
+                </p>
+                <p>
+                    It does not wrap around.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th>,</th>
+            <td>
+                <p>
+                    Commas are used to separate items of a list. For example, using "MON,WED,FRI" in the 5th field (day
+                    of week) would mean Mondays, Wednesdays and Fridays.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th>-</th>
+            <td>
+                <p>
+                    Hyphens are used to define ranges.
+                </p>
+                <p>
+                    For example, 9-17 would indicate every hour between 9am and 5pm inclusive.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th>?</th>
+            <td>
+                <p>
+                    Question mark may be used instead of '*' for leaving either day-of-month or day-of-week blank.
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>Predefined schedules</h2>
+
+    <p>You may use one of several pre-defined schedules in place of a cron expression.</p>
+    <table class="table table-sm table-striped table-borderless">
+        <thead>
+        <tr>
+            <th>Entry</th>
+            <th>Description</th>
+            <th>Equivalent Cron entry</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>@yearly (or @annually)</td>
+            <td>Run once a year, midnight, Jan. 1st</td>
+            <td>0 0 0 1 1 *</td>
+        </tr>
+        <tr>
+            <td>@monthly</td>
+            <td>Run once a month, midnight, first of month</td>
+            <td>0 0 0 1 * *</td>
+        </tr>
+        <tr>
+            <td>@weekly</td>
+            <td>Run once a week, midnight on Sunday</td>
+            <td>0 0 0 * * 0</td>
+        </tr>
+        <tr>
+            <td>@daily (or @midnight)</td>
+            <td>Run once a day, midnight</td>
+            <td>0 0 0 * * *</td>
+        </tr>
+        <tr>
+            <td>@hourly</td>
+            <td>Run once an hour, beginning of hour</td>
+            <td>0 0 * * * *</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>Intervals</h2>
+    <p>
+        You may also schedule a job to execute at fixed intervals.
+        This is supported by formatting the cron spec like this:
+    </p>
+    {{< highlight go "linenos=inline" >}}@every &lt;duration&gt;{{< / highlight >}}
+
+    <p>
+        where "duration" is a string accepted by
+        <a href="http://golang.org/pkg/time/#ParseDuration">time.ParseDuration</a>.
+    </p>
+    <p>
+        For example, "@every 1h30m10s" would indicate a schedule that activates every 1 hour, 30 minutes, 10 seconds.
+    </p>
+    <div class="alert-warning">
+        <p>
+            The interval does not take the job runtime into account.
+        </p>
+        <p>
+            For example, if a job takes 3 minutes to run, and it is scheduled to run every 5 minutes,
+            it will have only 2 minutes of idle time between each run.
+        </p>
+    </div>
+</div>
+
+<div style="break-inside: avoid">
+    <h2>Time zones</h2>
+    <p>
+        By default, all interpretation and scheduling is done in the machine's local time zone.
+        The time zone may be overridden by providing an additional space-separated field at the beginning of the cron
+        spec, of the form "TZ=Asia/Tokyo"
+    </p>
+    <div class="alert-warning">
+        <p>
+            Be aware that jobs scheduled during daylight-savings leap-ahead transitions will not be run!
+        </p>
+    </div>
+</div>

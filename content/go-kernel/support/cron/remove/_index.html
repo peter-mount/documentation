@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "Remove an existing Schedule"
+linkTitle: "Remove Schedule"
+weight: 20
+categories:
+ - go
+ - projects
+---
+<div style="break-inside: avoid">
+    <p>
+        The AddFunc, AddJob and Schedule functions return two values, an EntryID and an error.
+        If error is nil then the EntryID can be stored and used to cancel the Schedule at a later time.
+    </p>
+{{< highlight go "linenos=inline" >}}func (p *Example) Start() error {
+    id, err := p.cron.AddFunc("0 30 * * * *", p.tick)
+    if err != nil {
+        return err
+    }
+
+    // Pointless but cancels the timer
+    p.cron.Remove(id)
+    return nil
+}
+
+// tick is called every hour on the half hour
+func (p *Example) tick() {
+    // Do something
+}{{< / highlight >}}
+
+</div>

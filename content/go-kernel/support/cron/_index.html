@@ -1,0 +1,42 @@
+---
+type: "manual"
+title: "Cron scheduler service"
+linkTitle: "Cron"
+categories:
+ - go
+ - projects
+---
+<div style="break-inside: avoid">
+    <p>
+        The CronService integrates the <a href="https://gopkg.in/robfig/cron.v2">gopkg.in/robfig/cron.v2</a> scheduler into the microkernel.
+    </p>
+    <p>
+        To add the scheduler simply add it as a dependency to any of your own Service's:
+    </p>
+    <h2>Adding dependency</h2>
+{{< highlight go "linenos=inline" >}}package example
+
+import (
+  "github.com/peter-mount/go-kernel"
+  "github.com/peter-mount/go-kernel/cron"
+)
+
+type Example struct {
+  cron *cron.CronService
+}
+
+func (p *Example) Name() string {
+  return "Example"
+}
+
+func (p *Example) Init(k *kernel.Kernel) error {
+  service, err := k.AddService(&cron.CronService{})
+  if err != nil {
+    return err
+  }
+  p.cron = service.(*cron.CronService)
+
+  return nil
+}{{< / highlight >}}
+
+</div>

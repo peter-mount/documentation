@@ -1,0 +1,61 @@
+---
+type: "manual"
+title: "Custom Schedules"
+linkTitle: "Custom Schedules"
+weight: 10
+---
+<div style="break-inside: avoid">
+    <p>
+        The underlying library supports a
+        <a href="https://pkg.go.dev/gopkg.in/robfig/cron.v2?utm_source=godoc#Schedule">Schedule</a> interface which
+        allows for custom schedules to be implemented:
+    </p>
+{{< highlight go "linenos=inline" >}}type Schedule interface {
+    // Next returns the next activation time, later than the given time.
+    // Next is invoked initially, and then each time the job is run.
+    Next(time.Time) time.Time
+}{{< / highlight >}}
+    <p>
+        You can then create a type which implements this interface and, every time Next() is called return the time.Time
+        when that job will execute.
+    </p>
+    <p>
+        To schedule the Job you then use the Schedule() function in the Service:
+    </p>
+
+{{< highlight go "linenos=inline" >}}type MySchedule {
+}
+
+func (s *MySchedule) Next(t time.Time) time.Time {
+    return t.Add(time.Second*5)
+}
+
+type MyJob struct {
+}
+
+// Run will be called every 5 seconds
+func (j *MyJob) Run() {
+    // Do something
+}
+
+func (p *Example) Start() error {
+    id, err := p.cron.AddJob( &MySchedule{}, &MyJob{} )
+    if err != nil {
+        return err
+    }
+    p.tickId = id
+
+    return nil
+}
+
+func (p *Example) Stop() {
+    p.cron.Remove(p.tickId)
+}{{< / highlight >}}
+
+    <p>
+        The underlying library provides several Schedule implementations including
+        <a href="https://pkg.go.dev/gopkg.in/robfig/cron.v2?utm_source=godoc#ConstantDelaySchedule">ConstantDelaySchedule</a>
+        and
+        <a href="https://pkg.go.dev/gopkg.in/robfig/cron.v2?utm_source=godoc#SpecSchedule">SpecSchedule</a>.
+    </p>
+</div>
