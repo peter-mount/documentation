@@ -2,6 +2,7 @@ package pdf
 
 import (
   "context"
+  "flag"
   "github.com/chromedp/cdproto/page"
   "github.com/chromedp/chromedp"
   "github.com/peter-mount/documentation/tools/hugo"
@@ -14,6 +15,7 @@ import (
 type PDF struct {
   config   *hugo.Config   // Config
   chromium *hugo.Chromium // Chromium browser
+  enable   *bool          // Is PDF generation enabled
 }
 
 func (p *PDF) Name() string {
@@ -21,6 +23,8 @@ func (p *PDF) Name() string {
 }
 
 func (p *PDF) Init(k *kernel.Kernel) error {
+  p.enable = flag.Bool("p", false, "disable pdf generation")
+
   service, err := k.AddService(&hugo.Config{})
   if err != nil {
     return err
@@ -39,6 +43,10 @@ func (p *PDF) Init(k *kernel.Kernel) error {
 
 // Run through args for book id's and generate the PDF's
 func (p *PDF) Run() error {
+  if *p.enable {
+    return nil
+  }
+
   return p.config.Books.ForEach(p.generate)
 }
 
