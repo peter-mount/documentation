@@ -14,30 +14,30 @@ type GeneratorHandler func(*hugo.Book) error
 func (h GeneratorHandler) Then(next GeneratorHandler) GeneratorHandler {
   return func(b *hugo.Book) error {
     err := h(b)
-    if err == nil {
-      err = next(b)
+    if err != nil {
+      return err
     }
-    return err
+    return next(b)
   }
 }
 
-// NopGeneratorHandler is a GeneratorHandler that does nothing
-func NopGeneratorHandler(_ *hugo.Book) error {
-  return nil
-}
-
-// GeneratorHandlerChain returns a GeneratorHandler that will invoke each supplied GeneratorHandler in a single instance.
+// GeneratorHandlerOf returns a GeneratorHandler that will invoke each supplied GeneratorHandler in a single instance.
 // This is a convenience form of calling Then() on each one.
-func GeneratorHandlerChain(handlers ...GeneratorHandler) GeneratorHandler {
-  if len(handlers) == 0 {
-    return NopGeneratorHandler
+func GeneratorHandlerOf(handlers ...GeneratorHandler) GeneratorHandler {
+  switch len(handlers) {
+  case 0:
+    return func(_ *hugo.Book) error {
+      return nil
+    }
+  case 1:
+    return handlers[0]
+  default:
+    a := handlers[0]
+    for _, b := range handlers[1:] {
+      a = a.Then(b)
+    }
+    return a
   }
-
-  a := handlers[0]
-  for _, b := range handlers[1:] {
-    a = a.Then(b)
-  }
-  return a
 }
 
 type Generator struct {

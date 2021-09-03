@@ -45,7 +45,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
     "manual",
     10,
     book.Modified(),
-    func(a []string) ([]string, error) {
+    func(a util.StringSlice) (util.StringSlice, error) {
       a = append(a, "codes:")
 
       for _, op := range s.opCodes {

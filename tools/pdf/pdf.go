@@ -74,7 +74,7 @@ func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
         return err
       }
 
-      return util.WriteFile(book.ID+".pdf", buf, book.Modified())
+      return util.WriteFile(book.ID+".pdf", book.Modified(), util.ByteFileHandler(buf))
     }),
   }
 }

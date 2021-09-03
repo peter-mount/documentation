@@ -45,10 +45,10 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 
 func (b *BBC) Start() error {
   b.generator.
-    Register("bbcAPIIndex", generator.GeneratorHandlerChain(b.extract, b.writeAPIIndex)).
-    Register("bbcAPINameIndex", generator.GeneratorHandlerChain(b.extract, b.writeAPINameIndex)).
-    Register("bbcOsbyteIndex", generator.GeneratorHandlerChain(b.extract, b.writeOsbyteIndex)).
-    Register("bbcOswordIndex", generator.GeneratorHandlerChain(b.extract, b.writeOswordIndex))
+    Register("bbcAPIIndex", generator.GeneratorHandlerOf(b.extract, b.writeAPIIndex)).
+    Register("bbcAPINameIndex", generator.GeneratorHandlerOf(b.extract, b.writeAPINameIndex)).
+    Register("bbcOsbyteIndex", generator.GeneratorHandlerOf(b.extract, b.writeOsbyteIndex)).
+    Register("bbcOswordIndex", generator.GeneratorHandlerOf(b.extract, b.writeOswordIndex))
 
   return nil
 }
