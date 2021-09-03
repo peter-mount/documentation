@@ -35,13 +35,13 @@ func (b *BBC) writeOswordIndex(book *hugo.Book) error {
     r.Osword = append(r.Osword, o.params)
   }
 
-  return util.WriteReferenceYaml(
-    book.ContentPath(),
-    "osword",
+  return util.ReferenceFileBuilder(
     "OSWord calls",
     "OSWord &FFF1 calls",
     "manual",
     10,
-    book.Modified(),
-    r)
+  ).
+    Yaml(r).
+    WrapAsFrontMatter().
+    Write(book.ContentPath(), "osbyte", book.Modified())
 }

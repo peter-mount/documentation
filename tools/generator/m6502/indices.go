@@ -37,37 +37,37 @@ func (s *M6502) writeOpsHexIndex(book *hugo.Book) error {
 }
 
 func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
-  return util.WriteReferenceFile(
-    book.ContentPath(),
-    name,
+  return util.ReferenceFileBuilder(
     title,
     desc,
     "manual",
     10,
-    book.Modified(),
-    func(a util.StringSlice) (util.StringSlice, error) {
-      a = append(a, "codes:")
+  ).
+      Then(func(a util.StringSlice) (util.StringSlice, error) {
+        a = append(a, "codes:")
 
-      for _, op := range s.opCodes {
-        a = append(a,
-          "  - code: \""+op.Code+"\"",
-          "    op: \""+op.Op+"\"",
-          "    addressing: "+op.Addressing,
-          "    compatibility:",
-        )
+        for _, op := range s.opCodes {
+          a = append(a,
+            "  - code: \""+op.Code+"\"",
+            "    op: \""+op.Op+"\"",
+            "    addressing: "+op.Addressing,
+            "    compatibility:",
+          )
 
-        for k, _ := range op.Compatibility {
-          a = append(a, fmt.Sprintf("      %v: true", k))
+          for k, _ := range op.Compatibility {
+            a = append(a, fmt.Sprintf("      %v: true", k))
+          }
+
+          a = op.Bytes.append("    ", "bytes", a)
+          a = op.Cycles.append("    ", "cycles", a)
         }
 
-        a = op.Bytes.append("    ", "bytes", a)
-        a = op.Cycles.append("    ", "cycles", a)
-      }
-
-      a = append(a, "notes:")
-      for _, n := range s.notes.Notes {
-        a = append(a, fmt.Sprintf("  - \"%s\"", n.Value))
-      }
-      return a, nil
-    })
+        a = append(a, "notes:")
+        for _, n := range s.notes.Notes {
+          a = append(a, fmt.Sprintf("  - \"%s\"", n.Value))
+        }
+        return a, nil
+      }).
+    WrapAsFrontMatter().
+    Write(book.ContentPath(), name, book.Modified())
 }

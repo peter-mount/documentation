@@ -49,15 +49,15 @@ func (b *BBC) writeAPIIndex(book *hugo.Book) error {
     r.Api = append(r.Api, o.params)
   }
 
-  return util.WriteReferenceYaml(
-    book.ContentPath(),
-    "api",
+  return util.ReferenceFileBuilder(
     "MOS API by address",
     "MOS API by address",
     "manual",
     10,
-    book.Modified(),
-    r)
+  ).
+    Yaml(r).
+    WrapAsFrontMatter().
+    Write(book.ContentPath(), "api", book.Modified())
 }
 
 func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
@@ -70,13 +70,13 @@ func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
     r.Api = append(r.Api, o.params)
   }
 
-  return util.WriteReferenceYaml(
-    book.ContentPath(),
-    "apiName",
+  return util.ReferenceFileBuilder(
     "MOS API by name",
     "MOS API by name",
     "manual",
     10,
-    book.Modified(),
-    r)
+  ).
+    Yaml(r).
+    WrapAsFrontMatter().
+    Write(book.ContentPath(), "apiName", book.Modified())
 }

@@ -35,13 +35,13 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
     r.Osbyte = append(r.Osbyte, o.params)
   }
 
-  return util.WriteReferenceYaml(
-    book.ContentPath(),
-    "osbyte",
+  return util.ReferenceFileBuilder(
     "OSByte calls",
     "OSByte &FFF4 calls",
     "manual",
     10,
-    book.Modified(),
-    r)
+  ).
+    Yaml(r).
+    WrapAsFrontMatter().
+    Write(book.ContentPath(), "osbyte", book.Modified())
 }

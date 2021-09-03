@@ -10,6 +10,7 @@ import (
 
 type FileHandler func(w io.Writer) error
 
+// Then returns a new FileHandler which will run the left hand side first then the right hand side.
 func (a FileHandler) Then(b FileHandler) FileHandler {
   return func(w io.Writer) error {
     if err := a(w); err != nil {
@@ -19,6 +20,7 @@ func (a FileHandler) Then(b FileHandler) FileHandler {
   }
 }
 
+// FileHandlerOf returns a FileHandler which will run each supplied FileHandler in sequence
 func FileHandlerOf(h ...FileHandler) FileHandler {
   switch len(h) {
   case 0:
@@ -36,6 +38,7 @@ func FileHandlerOf(h ...FileHandler) FileHandler {
   }
 }
 
+// ByteFileHandler returns a FileHandler which will write a []byte
 func ByteFileHandler(b []byte) FileHandler {
   return func(w io.Writer) error {
     _, err := w.Write(b)
@@ -43,11 +46,12 @@ func ByteFileHandler(b []byte) FileHandler {
   }
 }
 
+// StringFileHandler returns a FileHandler which will write a string
 func StringFileHandler(s string) FileHandler {
   return ByteFileHandler([]byte(s))
 }
 
-func WriteFile(fileName string, fileTime time.Time, h FileHandler) error {
+func (a FileHandler) Write(fileName string, fileTime time.Time) error {
   log.Printf("Writing %s", fileName)
   err := os.MkdirAll(path.Dir(fileName), 0755)
   if err != nil {
@@ -60,7 +64,7 @@ func WriteFile(fileName string, fileTime time.Time, h FileHandler) error {
   }
   defer f.Close()
 
-  err = h(f)
+  err = a(f)
   if err != nil {
     return err
   }
