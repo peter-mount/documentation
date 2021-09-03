@@ -102,9 +102,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
     },
   }
 
-  return util.NewCSVBuilder().
-    Headings(t.Columns...).
-    ImportFrom(t).
+  return t.AsCSV().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified())
 }

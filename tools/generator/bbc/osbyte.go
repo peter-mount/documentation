@@ -9,44 +9,33 @@ import (
 type Osbyte struct {
   call   int                         // Call 0..255
   params map[interface{}]interface{} // Params
-  Hex    string
-  Title  string
-  Entry  FunctionParams
-  Exit   FunctionParams
-  Compat Compatibility
+  Hex    string                      // Hex code of OSByte call
+  Title  string                      // Title of OSByte call
+  Entry  FunctionParams              // Entry parameters
+  Exit   FunctionParams              // Exit parameters
+  Compat Compatibility               // Machine compatibility
 }
 
 type FunctionParams struct {
-  A string
-  X string
-  Y string
-  C string
+  A string // A register
+  X string // X register
+  Y string // Y register
+  C string // C Carry Flag
 }
 
 func (p *FunctionParams) decode(e interface{}) {
   util.IfMap(e, func(m map[interface{}]interface{}) {
-    util.IfMapEntry(m, "a", func(i interface{}) {
-      p.A = util.DecodeString(i, "")
-    })
-
-    util.IfMapEntry(m, "x", func(i interface{}) {
-      p.X = util.DecodeString(i, "")
-    })
-
-    util.IfMapEntry(m, "y", func(i interface{}) {
-      p.Y = util.DecodeString(i, "")
-    })
-
-    util.IfMapEntry(m, "c", func(i interface{}) {
-      p.C = util.DecodeString(i, "")
-    })
+    p.A = util.IfMapEntryString(m, "a")
+    p.X = util.IfMapEntryString(m, "x")
+    p.Y = util.IfMapEntryString(m, "y")
+    p.C = util.IfMapEntryString(m, "c")
   })
 }
 
 type Compatibility struct {
-  BBC      bool
-  Master   bool
-  Electron bool
+  BBC      bool // Valid on BBC micro (A, B or B+)
+  Master   bool // Valid on BBC Master 128, 512 or Compact
+  Electron bool // Valid on Acorn Electron
 }
 
 func (c *Compatibility) decode(e interface{}) {
@@ -71,6 +60,11 @@ func (b *BBC) extractOsbyte(osbyte interface{}) {
         util.IfMapEntry(m, "entry", o.Entry.decode)
         util.IfMapEntry(m, "exit", o.Exit.decode)
         util.IfMapEntry(m, "compatibility", o.Compat.decode)
+
+        if o.Entry.A == "" {
+          // This is always the case
+          o.Entry.A = "&" + o.Hex
+        }
 
         b.osbyte = append(b.osbyte, o)
       }
@@ -129,7 +123,7 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
         o.call,
         o.Hex,
         o.Title,
-        o.call, // Entry.A is always the call for osbyte ;-)
+        o.Entry.A,
         o.Entry.X,
         o.Entry.Y,
         o.Exit.A,
@@ -143,9 +137,7 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
     },
   }
 
-  return util.NewCSVBuilder().
-    Headings(t.Columns...).
-    ImportFrom(t).
+  return t.AsCSV().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), "osbyte", "osbyte.csv"), book.Modified())
 }

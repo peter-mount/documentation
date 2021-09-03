@@ -64,5 +64,7 @@ func (a TableHandler) ForEach(handlers ...TableHandler) TableHandler {
 }
 
 func (t Table) AsCSV() CSVBuilder {
-  return NewCSVBuilder().Headings(t.Columns...)
+  return NewCSVBuilder().
+    Headings(t.Columns...).
+    ImportFrom(t)
 }
