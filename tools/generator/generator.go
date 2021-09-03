@@ -21,6 +21,25 @@ func (h GeneratorHandler) Then(next GeneratorHandler) GeneratorHandler {
   }
 }
 
+// NopGeneratorHandler is a GeneratorHandler that does nothing
+func NopGeneratorHandler(_ *hugo.Book) error {
+  return nil
+}
+
+// GeneratorHandlerChain returns a GeneratorHandler that will invoke each supplied GeneratorHandler in a single instance.
+// This is a convenience form of calling Then() on each one.
+func GeneratorHandlerChain(handlers ...GeneratorHandler) GeneratorHandler {
+  if len(handlers) == 0 {
+    return NopGeneratorHandler
+  }
+
+  a := handlers[0]
+  for _, b := range handlers[1:] {
+    a = a.Then(b)
+  }
+  return a
+}
+
 type Generator struct {
   config     *hugo.Config                // Configuration
   generators map[string]GeneratorHandler // Map of available generators
@@ -46,29 +65,13 @@ func (g *Generator) Start() error {
   return nil
 }
 
-func (g *Generator) register(n string, h GeneratorHandler) *Generator {
+func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
   if _, exists := g.generators[n]; exists {
     panic(fmt.Errorf("GeneratorHandler %s already registered", n))
   }
 
   g.generators[n] = h
   return g
-}
-
-// Register creates a named GeneratorHandler composed of the supplied handlers
-func (g *Generator) Register(n string, handlers ...GeneratorHandler) *Generator {
-  switch len(handlers) {
-  case 0:
-    panic(fmt.Errorf("no GeneratorHandlers defined for %s", n))
-  case 1:
-    return g.register(n, handlers[0])
-  default:
-    h := handlers[0]
-    for _, next := range handlers[1:] {
-      h = h.Then(next)
-    }
-    return g.register(n, h)
-  }
 }
 
 func (g *Generator) Run() error {

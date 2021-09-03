@@ -45,10 +45,10 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 
 func (b *BBC) Start() error {
   b.generator.
-    Register("bbcAPIIndex", b.extract, b.writeAPIIndex).
-    Register("bbcAPINameIndex", b.extract, b.writeAPINameIndex).
-    Register("bbcOsbyteIndex", b.extract, b.writeOsbyteIndex).
-    Register("bbcOswordIndex", b.extract, b.writeOswordIndex)
+    Register("bbcAPIIndex", generator.GeneratorHandlerChain(b.extract, b.writeAPIIndex)).
+    Register("bbcAPINameIndex", generator.GeneratorHandlerChain(b.extract, b.writeAPINameIndex)).
+    Register("bbcOsbyteIndex", generator.GeneratorHandlerChain(b.extract, b.writeOsbyteIndex)).
+    Register("bbcOswordIndex", generator.GeneratorHandlerChain(b.extract, b.writeOswordIndex))
 
   return nil
 }
@@ -58,13 +58,8 @@ func (b *BBC) extract(book *hugo.Book) error {
     return nil
   }
 
-  b.osbyte = nil
-
   log.Println("Scanning BBC API")
-  err := filepath.Walk(book.ContentPath(), func(path string, info os.FileInfo, err error) error {
-    return b.extractMeta(book, path, info, err)
-  })
-  if err != nil {
+  if err := filepath.Walk(book.ContentPath(), b.extractMeta); err != nil {
     return err
   }
 
@@ -72,13 +67,12 @@ func (b *BBC) extract(book *hugo.Book) error {
   return nil
 }
 
-func (b *BBC) extractMeta(book *hugo.Book, path string, info os.FileInfo, err error) error {
+func (b *BBC) extractMeta(path string, info os.FileInfo, err error) error {
   if err != nil {
     return err
   }
 
   if !info.IsDir() && strings.HasSuffix(info.Name(), ".html") && !strings.Contains(path, "reference") {
-    //log.Println("Reading", path)
     m, err := util.LoadFrontMatter("", path)
     if err != nil {
       return err
