@@ -43,5 +43,6 @@ func (b *BBC) writeOswordIndex(book *hugo.Book) error {
   ).
     Yaml(r).
     WrapAsFrontMatter().
-    Write(book.ContentPath(), "osbyte", book.Modified())
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), "osword", "_index.html"), book.Modified())
 }

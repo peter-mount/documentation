@@ -62,3 +62,39 @@ func DecodeInt(v interface{}, def int) (int, bool) {
 
   return r, true
 }
+
+func DecodeBool(v interface{}) (bool, bool) {
+
+  if v != nil {
+    if s, ok := v.(string); ok {
+      b, err := strconv.ParseBool(s)
+      if err != nil {
+        return false, false
+      }
+      return b, true
+    } else if i, ok := v.(int); ok {
+      return i != 0, true
+    }
+
+    b, ok := v.(bool)
+    return b, ok
+  }
+
+  return false, true
+}
+
+func IfMapEntryString(m map[interface{}]interface{}, n string) string {
+  var s string
+  IfMapEntry(m, n, func(i interface{}) {
+    s = DecodeString(i, "")
+  })
+  return s
+}
+
+func IfMapEntryBool(m map[interface{}]interface{}, n string) bool {
+  var s bool
+  IfMapEntry(m, n, func(i interface{}) {
+    s, _ = DecodeBool(i)
+  })
+  return s
+}

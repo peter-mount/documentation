@@ -37,7 +37,7 @@ func (s *M6502) writeOpsHexIndex(book *hugo.Book) error {
 }
 
 func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
-  return util.ReferenceFileBuilder(
+  err := util.ReferenceFileBuilder(
     title,
     desc,
     "manual",
@@ -69,5 +69,42 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
         return a, nil
       }).
     WrapAsFrontMatter().
-    Write(book.ContentPath(), name, book.Modified())
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), name, "_index.html"), book.Modified())
+  if err != nil {
+    return err
+  }
+
+  t := util.Table{
+    Title: name,
+    Columns: []string{
+      "Decimal",
+      "Hex",
+      "Instruction",
+      "Addressing",
+      "Len(byte)",
+      "Cycles",
+    },
+    RowCount: len(s.opCodes),
+    GetRow: func(r int) interface{} {
+      return s.opCodes[r]
+    },
+    Transform: func(i interface{}) []interface{} {
+      o := i.(*Opcode)
+      return []interface{}{
+        o.Order,
+        o.Code,
+        o.Op,
+        o.Addressing,
+        o.Bytes.Value,
+        o.Cycles.Value,
+      }
+    },
+  }
+
+  return util.NewCSVBuilder().
+    Headings(t.Columns...).
+    ImportFrom(t).
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified())
 }

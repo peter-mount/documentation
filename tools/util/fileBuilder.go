@@ -5,7 +5,6 @@ import (
   "io"
   "path"
   "strconv"
-  "time"
 )
 
 // FileBuilder creates text files
@@ -86,9 +85,8 @@ func (a FileBuilder) FileHandler() FileHandler {
 
 // Write writes the FileBuilder to a text file.
 // It's short hand for FileHandler().Write() but follows the current reference section convention
-func (a FileBuilder) Write(dir, name string, fileTime time.Time) error {
-  return a.FileHandler().
-    Write(path.Join(dir, "reference", name, "_index.html"), fileTime)
+func ReferenceFilename(dir, name, fileName string) string {
+  return path.Join(dir, "reference", name, fileName)
 }
 
 // ReferenceFileBuilder returns a FileBuilder with standard front matter for hugo pages

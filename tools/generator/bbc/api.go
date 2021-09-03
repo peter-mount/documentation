@@ -57,7 +57,8 @@ func (b *BBC) writeAPIIndex(book *hugo.Book) error {
   ).
     Yaml(r).
     WrapAsFrontMatter().
-    Write(book.ContentPath(), "api", book.Modified())
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), "api", "_index.html"), book.Modified())
 }
 
 func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
@@ -78,5 +79,6 @@ func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
   ).
     Yaml(r).
     WrapAsFrontMatter().
-    Write(book.ContentPath(), "apiName", book.Modified())
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), "apiName", "_index.html"), book.Modified())
 }
