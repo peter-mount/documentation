@@ -75,7 +75,7 @@ func (s *M6502) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
   o := &OpcodeType{}
 
   util.IfMap(e1, func(e map[interface{}]interface{}) {
-    util.IfMapEntry(e, "entry", func(v interface{}) {
+    util.IfMapEntry(e, "value", func(v interface{}) {
       o.Value = util.DecodeString(v, "")
     })
 
