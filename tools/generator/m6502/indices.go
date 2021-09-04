@@ -75,6 +75,9 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
     return err
   }
 
+  // Use a copy as we reorder s.opCodes so when excel is processed later it gets just the last ordering
+  codes := append([]*Opcode{}, s.opCodes...)
+
   return util.WithTable().
     AsCSV(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified()).
     AsExcel(book).
@@ -88,9 +91,9 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
           "Len(byte)",
           "Cycles",
         },
-        RowCount: len(s.opCodes),
+        RowCount: len(codes),
         GetRow: func(r int) interface{} {
-          return s.opCodes[r]
+          return codes[r]
         },
         Transform: func(i interface{}) []interface{} {
           o := i.(*Opcode)
