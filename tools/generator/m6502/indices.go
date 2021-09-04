@@ -75,34 +75,33 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
     return err
   }
 
-  t := util.Table{
-    Title: name,
-    Columns: []string{
-      "Decimal",
-      "Hex",
-      "Instruction",
-      "Addressing",
-      "Len(byte)",
-      "Cycles",
-    },
-    RowCount: len(s.opCodes),
-    GetRow: func(r int) interface{} {
-      return s.opCodes[r]
-    },
-    Transform: func(i interface{}) []interface{} {
-      o := i.(*Opcode)
-      return []interface{}{
-        o.Order,
-        o.Code,
-        o.Op,
-        o.Addressing,
-        o.Bytes.Value,
-        o.Cycles.Value,
-      }
-    },
-  }
-
-  return t.AsCSV().
-    FileHandler().
-    Write(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified())
+  return util.WithTable().
+    AsCSV(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified()).
+    AsExcel(book).
+      Do(&util.Table{
+        Title: name,
+        Columns: []string{
+          "Decimal",
+          "Hex",
+          "Instruction",
+          "Addressing",
+          "Len(byte)",
+          "Cycles",
+        },
+        RowCount: len(s.opCodes),
+        GetRow: func(r int) interface{} {
+          return s.opCodes[r]
+        },
+        Transform: func(i interface{}) []interface{} {
+          o := i.(*Opcode)
+          return []interface{}{
+            o.Order,
+            o.Code,
+            o.Op,
+            o.Addressing,
+            o.Bytes.Value,
+            o.Cycles.Value,
+          }
+        },
+      })
 }

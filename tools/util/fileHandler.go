@@ -69,5 +69,8 @@ func (a FileHandler) Write(fileName string, fileTime time.Time) error {
     return err
   }
 
+  if fileTime.IsZero() {
+    fileTime = time.Now()
+  }
   return os.Chtimes(fileName, fileTime, fileTime)
 }

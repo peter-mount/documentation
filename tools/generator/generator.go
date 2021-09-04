@@ -3,6 +3,7 @@ package generator
 import (
   "fmt"
   "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
   "log"
 )
@@ -76,7 +77,7 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
 
 func (g *Generator) Run() error {
   return g.config.Books.ForEach(func(book *hugo.Book) error {
-    return book.Generate.ForEach(func(n string) error {
+    err := book.Generate.ForEach(func(n string) error {
       h, exists := g.generators[n]
       if exists {
         return h(book)
@@ -86,6 +87,14 @@ func (g *Generator) Run() error {
       // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
       log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
       return nil
+    })
+    if err != nil {
+      return err
+    }
+
+    return book.IfExcelPresent(func(excel util.ExcelBuilder) error {
+      return excel.FileHandler().
+        Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
     })
   })
 }

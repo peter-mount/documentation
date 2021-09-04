@@ -83,9 +83,11 @@ func (a FileBuilder) FileHandler() FileHandler {
   }
 }
 
-// Write writes the FileBuilder to a text file.
-// It's short hand for FileHandler().Write() but follows the current reference section convention
+// ReferenceFilename returns the file name for a reference file.
 func ReferenceFilename(dir, name, fileName string) string {
+  if name == "" {
+    return path.Join(dir, "reference", fileName)
+  }
   return path.Join(dir, "reference", name, fileName)
 }
 

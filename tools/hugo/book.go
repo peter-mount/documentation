@@ -24,13 +24,14 @@ func (bs Books) ForEach(f BookHandler) error {
 
 // Book defines a book that's rendered as pdf
 type Book struct {
-  ID        string           `yaml:"id"`        // ID of the book, e.g. "bbc" or "6502"
-  Title     string           `yaml:"title"`     // Title of book, default title from main page
-  Author    string           `yaml:"author"`    // Author of book, default ""
-  Copyright string           `yaml:"copyright"` // Copyright
-  PDF       *PDF             `yaml:"pdf"`       // Custom PDF config for just this book
-  Generate  util.StringSlice `yaml:"generate"`  // List of generators to run on this book
-  modified  time.Time        `yaml:"-"`         // Last Modified time
+  ID        string            `yaml:"id"`        // ID of the book, e.g. "bbc" or "6502"
+  Title     string            `yaml:"title"`     // Title of book, default title from main page
+  Author    string            `yaml:"author"`    // Author of book, default ""
+  Copyright string            `yaml:"copyright"` // Copyright
+  PDF       *PDF              `yaml:"pdf"`       // Custom PDF config for just this book
+  Generate  util.StringSlice  `yaml:"generate"`  // List of generators to run on this book
+  modified  time.Time         `yaml:"-"`         // Last Modified time
+  excel     util.ExcelBuilder `yaml:"-"`         // Excel builder if present
 }
 
 func (b *Book) ContentPath() string {
@@ -80,4 +81,22 @@ func (b *Book) Expand(s string) string {
   })
 
   return s
+}
+
+func (b *Book) GetExcel() util.ExcelBuilder {
+  if b.excel == nil {
+    b.excel = util.NewExcelBuilder()
+  }
+  return b.excel
+}
+
+func (b *Book) SetExcel(eb util.ExcelBuilder) {
+  b.excel = eb
+}
+
+func (b *Book) IfExcelPresent(h func(builder util.ExcelBuilder) error) error {
+  if b.excel != nil {
+    return h(b.excel)
+  }
+  return nil
 }

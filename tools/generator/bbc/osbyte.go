@@ -96,48 +96,47 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
     return err
   }
 
-  t := util.Table{
-    Title: "osbyte",
-    Columns: []string{
-      "Decimal",
-      "Hex",
-      "Action",
-      "Entry A",
-      "Entry X",
-      "Entry Y",
-      "Exit A",
-      "Exit X",
-      "Exit Y",
-      "Exit C",
-      "BBC",
-      "Master",
-      "Electron",
-    },
-    RowCount: len(b.osbyte),
-    GetRow: func(r int) interface{} {
-      return b.osbyte[r]
-    },
-    Transform: func(i interface{}) []interface{} {
-      o := i.(*Osbyte)
-      return []interface{}{
-        o.call,
-        o.Hex,
-        o.Title,
-        o.Entry.A,
-        o.Entry.X,
-        o.Entry.Y,
-        o.Exit.A,
-        o.Exit.X,
-        o.Exit.Y,
-        o.Exit.C,
-        o.Compat.BBC,
-        o.Compat.Master,
-        o.Compat.Electron,
-      }
-    },
-  }
-
-  return t.AsCSV().
-    FileHandler().
-    Write(util.ReferenceFilename(book.ContentPath(), "osbyte", "osbyte.csv"), book.Modified())
+  return util.WithTable().
+    AsCSV(util.ReferenceFilename(book.ContentPath(), "osbyte", "osbyte.csv"), book.Modified()).
+    AsExcel(book).
+      Do(&util.Table{
+        Title: "osbyte",
+        Columns: []string{
+          "Decimal",
+          "Hex",
+          "Action",
+          "Entry A",
+          "Entry X",
+          "Entry Y",
+          "Exit A",
+          "Exit X",
+          "Exit Y",
+          "Exit C",
+          "BBC",
+          "Master",
+          "Electron",
+        },
+        RowCount: len(b.osbyte),
+        GetRow: func(r int) interface{} {
+          return b.osbyte[r]
+        },
+        Transform: func(i interface{}) []interface{} {
+          o := i.(*Osbyte)
+          return []interface{}{
+            o.call,
+            o.Hex,
+            o.Title,
+            o.Entry.A,
+            o.Entry.X,
+            o.Entry.Y,
+            o.Exit.A,
+            o.Exit.X,
+            o.Exit.Y,
+            o.Exit.C,
+            o.Compat.BBC,
+            o.Compat.Master,
+            o.Compat.Electron,
+          }
+        },
+      })
 }
