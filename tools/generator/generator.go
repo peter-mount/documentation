@@ -76,25 +76,23 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
 }
 
 func (g *Generator) Run() error {
-  return g.config.Books.ForEach(func(book *hugo.Book) error {
-    err := book.Generate.ForEach(func(n string) error {
-      h, exists := g.generators[n]
-      if exists {
-        return h(book)
-      }
+  return g.config.Books.ForEach(
+    hugo.WithBook().
+        ForEachGenerator(
+          hugo.WithBookGenerator().
+              Then(func(book *hugo.Book, n string) error {
+                h, exists := g.generators[n]
+                if exists {
+                  return h(book)
+                }
 
-      // Log a warning but ignore - could be an invalid config or the generator is not deployed.
-      // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
-      log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
-      return nil
-    })
-    if err != nil {
-      return err
-    }
-
-    return book.IfExcelPresent(func(excel util.ExcelBuilder) error {
-      return excel.FileHandler().
-        Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
-    })
-  })
+                // Log a warning but ignore - could be an invalid config or the generator is not deployed.
+                // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
+                log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
+                return nil
+              })).
+        IfExcelPresent(func(book *hugo.Book, excel util.ExcelBuilder) error {
+          return excel.FileHandler().
+            Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
+        }))
 }

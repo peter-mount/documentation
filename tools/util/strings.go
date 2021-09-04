@@ -7,6 +7,12 @@ import (
 
 type StringHandler func(string) error
 
+func WithStringHandler() StringHandler {
+  return func(_ string) error {
+    return nil
+  }
+}
+
 func (a StringHandler) Then(b StringHandler) StringHandler {
   return func(s string) error {
     err := a(s)
@@ -15,6 +21,10 @@ func (a StringHandler) Then(b StringHandler) StringHandler {
     }
     return b(s)
   }
+}
+
+func (a StringHandler) Do(s string) error {
+  return a(s)
 }
 
 type StringSlice []string

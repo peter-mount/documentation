@@ -10,6 +10,61 @@ import (
 
 type BookHandler func(*Book) error
 
+func WithBook() BookHandler {
+  return func(_ *Book) error {
+    return nil
+  }
+}
+
+func (a BookHandler) Then(b BookHandler) BookHandler {
+  return func(book *Book) error {
+    err := a(book)
+    if err != nil {
+      return err
+    }
+    return b(book)
+  }
+}
+
+func (a BookHandler) Do(book *Book) error {
+  return a(book)
+}
+
+func (a BookHandler) IfExcelPresent(h func(book *Book, excel util.ExcelBuilder) error) BookHandler {
+  return a.Then(func(b *Book) error {
+    if b.excel != nil {
+      return h(b, b.excel)
+    }
+    return nil
+  })
+}
+
+type BookGeneratorHandler func(*Book, string) error
+
+func WithBookGenerator() BookGeneratorHandler {
+  return func(_ *Book, _ string) error {
+    return nil
+  }
+}
+
+func (a BookGeneratorHandler) Then(b BookGeneratorHandler) BookGeneratorHandler {
+  return func(book *Book, n string) error {
+    err := a(book, n)
+    if err != nil {
+      return err
+    }
+    return b(book, n)
+  }
+}
+
+func (a BookHandler) ForEachGenerator(f BookGeneratorHandler) BookHandler {
+  return a.Then(func(book *Book) error {
+    return book.Generate.ForEach(func(s string) error {
+      return f(book, s)
+    })
+  })
+}
+
 type Books []*Book
 
 func (bs Books) ForEach(f BookHandler) error {
@@ -94,9 +149,10 @@ func (b *Book) SetExcel(eb util.ExcelBuilder) {
   b.excel = eb
 }
 
-func (b *Book) IfExcelPresent(h func(builder util.ExcelBuilder) error) error {
-  if b.excel != nil {
-    return h(b.excel)
-  }
-  return nil
+// Do runs a function against this instance. When it exits it removes any resources the Book has used freeing up memory.
+func (b *Book) Do(f func(*Book) error) error {
+  defer func() {
+    b.excel = nil
+  }()
+  return f(b)
 }
