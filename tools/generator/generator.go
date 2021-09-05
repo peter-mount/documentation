@@ -80,19 +80,21 @@ func (g *Generator) Run() error {
     hugo.WithBook().
         ForEachGenerator(
           hugo.WithBookGenerator().
-              Then(func(book *hugo.Book, n string) error {
-                h, exists := g.generators[n]
-                if exists {
-                  return h(book)
-                }
-
-                // Log a warning but ignore - could be an invalid config or the generator is not deployed.
-                // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
-                log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
-                return nil
-              })).
+            Then(g.invokeGenerator)).
         IfExcelPresent(func(book *hugo.Book, excel util.ExcelBuilder) error {
           return excel.FileHandler().
             Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
         }))
+}
+
+func (g *Generator) invokeGenerator(book *hugo.Book, n string) error {
+  h, exists := g.generators[n]
+  if exists {
+    return h(book)
+  }
+
+  // Log a warning but ignore - could be an invalid config or the generator is not deployed.
+  // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
+  log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
+  return nil
 }
