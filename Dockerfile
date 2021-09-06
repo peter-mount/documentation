@@ -39,8 +39,7 @@ FROM ${prefix}golang:alpine AS build
 ARG hugoVersion=0.87.0
 
 # Required commands for the build
-RUN apk add --no-cache git tzdata
-#RUN apk add --no-cache curl git tzdata zip
+RUN apk add --no-cache tzdata
 
 # Get Hugo extended build with version in the hugoVersion build-arg
 RUN mkdir -pv /dest/bin/ &&\
