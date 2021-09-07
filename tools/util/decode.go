@@ -109,3 +109,12 @@ func IfMapEntryBool(m map[interface{}]interface{}, n string) bool {
   })
   return s
 }
+
+func IfMapEntryInt(m map[interface{}]interface{}, n string) int {
+  var s int
+  _ = IfMapEntry(m, n, func(i interface{}) error {
+    s, _ = DecodeInt(i, 0)
+    return nil
+  })
+  return s
+}

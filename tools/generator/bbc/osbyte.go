@@ -8,10 +8,10 @@ import (
 )
 
 type Osbyte struct {
-  call   int                         // Call 0..255
+  Call   int                         // Call 0..255
   params map[interface{}]interface{} // Params
-  Hex    string                      // Hex code of OSByte call
-  Title  string                      // Title of OSByte call
+  Hex    string                      // Hex code of OSByte Call
+  Title  string                      // Title of OSByte Call
   Entry  FunctionParams              // Entry parameters
   Exit   FunctionParams              // Exit parameters
   Compat Compatibility               // Machine compatibility
@@ -54,7 +54,7 @@ func (b *BBC) extractOsbyte(ctx context.Context, _ *hugo.FrontMatter) error {
     return util.IfMap(e, func(m map[interface{}]interface{}) error {
       if v, ok := util.DecodeInt(m["int"], 0); ok {
         o := &Osbyte{
-          call:   v,
+          Call:   v,
           params: m,
           Hex:    util.IfMapEntryString(m, "hex"),
           Title:  util.IfMapEntryString(m, "title"),
@@ -89,7 +89,7 @@ func (b *BBC) extractOsbyte(ctx context.Context, _ *hugo.FrontMatter) error {
 
 func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
   sort.SliceStable(b.osbyte, func(i, j int) bool {
-    return b.osbyte[i].call < b.osbyte[j].call
+    return b.osbyte[i].Call < b.osbyte[j].Call
   })
 
   r := Output{Nometa: true}
@@ -137,7 +137,7 @@ func (b *BBC) writeOsbyteTable(book *hugo.Book) error {
         Transform: func(i interface{}) []interface{} {
           o := i.(*Osbyte)
           return []interface{}{
-            o.call,
+            o.Call,
             o.Hex,
             o.Title,
             o.Entry.A,
