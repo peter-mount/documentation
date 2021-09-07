@@ -17,6 +17,11 @@ api:
       "a": "OSWord ID"
       "x": "Param address low"
       "y": "Param address high"
+    exit:
+      "a": "Undefined"
+      "x": "Undefined"
+      "y": "Undefined except for OSWORD 0x00"
+      "c": "Undefined except for OSWORD 0x00"
 ---
 <div style="break-inside: avoid">
     <p>
@@ -27,24 +32,37 @@ api:
     </p>
     <h3>Entry parameters</h3>
     <table>
+        <thead>
+        <tr>
+            <th>Register</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
         <tr>
             <th>A</th>
             <td>OSWORD routine ID</td>
         </tr>
         <tr>
             <th>X</th>
-            <td>Low byte of paameter block address</td>
+            <td>Low byte of parameter block address</td>
         </tr>
         <tr>
             <th>Y</th>
-            <td>High byte of paameter block address</td>
+            <td>High byte of parameter block address</td>
         </tr>
+        </tbody>
     </table>
     <p>
-        OSWORD ID's in the range &E0..&FF (224..255) are passed to ther USERV (&200) handler with the registers
+        OSWORD ID's in the range &E0..&FF (224..255) are passed to the USERV (&200) handler with the registers
         unchanged to the original OSWORD call.
     </p>
     <p>
         All other unrecognised OSWORD calls are offered to the paged ROMs.
+    </p>
+    <h3>Exit parameters</h3>
+    <p>
+        Only OSWORD 0x00 returns a result in the Y register and the Carry flag.
+        The registers are undefined when all others.
     </p>
 </div>

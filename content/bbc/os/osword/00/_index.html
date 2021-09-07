@@ -1,8 +1,7 @@
 ---
 type: "manual"
 title: "Read line from input"
-linkTitle: "0 Read line"
-weight: -1
+linkTitle: "Read line from input"
 categories:
   - bbc
   - osword
@@ -10,9 +9,6 @@ osword:
   - hex: "00"
     int: 0
     title: Read line from input
-    exit:
-      "y": "Line length, including CR if used"
-      "c": "How input terminated: 0=CR, 1=ESC"
     compatibility:
       bbc: true
       master: true
@@ -20,10 +16,17 @@ osword:
 ---
 <p>
   This routine takes a specified number of characters from the currently selected input stream.
+</p>
+<p>
   Input is terminated following a RETURN or an ESCAPE. DELETE (&7F/127) deletes the previous character and CTRL U
   (&15/21) deletes the entire line.
+</p>
+<p>
   If characters are presented after the maximum line length has been reached the characters are ignored and a BEL (ASCII
   7) character is output.
+</p>
+<p>
+  OSWORD 0x00 is the only OSWord which return's data in the registers.
 </p>
 
 <h3>Parameter block</h3>
