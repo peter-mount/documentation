@@ -14,17 +14,27 @@ api:
     indirect: "20E"
     title: "Write character to screen or output stream"
     entry:
-      "A": "Character to write"
+      "a": "Character to write"
     exit:
-      "A": Preserved
-      "X": Preserved
-      "Y": Preserved
+      "a": Preserved
+      "x": Preserved
+      "y": Preserved
   - name: OSNEWL
     addr: "FFE7"
     title: "Write a newline"
+    exit:
+      "a": "&0d"
+      "x": Preserved
+      "y": Preserved
   - name: OSASCI
     addr: "FFE3"
     title: "Write character, call OSNEWL if A=&0D"
+    entry:
+      "a": "Character to write"
+    exit:
+      "a": Preserved
+      "x": Preserved
+      "y": Preserved
 ---
 <div style="break-inside: avoid">
 </div>

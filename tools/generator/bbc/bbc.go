@@ -45,7 +45,8 @@ func (b *BBC) Start() error {
       Register("bbcAPIIndex",
         generator.GeneratorHandlerOf().
           RunOnce(&b.extracted, b.extract).
-          Then(b.writeAPIIndex)).
+          Then(b.writeAPIIndex).
+          Then(b.writeAPITable)).
       Register("bbcAPINameIndex",
         generator.GeneratorHandlerOf().
           RunOnce(&b.extracted, b.extract).
