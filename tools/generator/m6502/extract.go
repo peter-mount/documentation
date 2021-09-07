@@ -3,11 +3,10 @@ package m6502
 import (
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/walk"
   "log"
   "os"
-  "path/filepath"
   "strconv"
-  "strings"
 )
 
 func (s *M6502) extractOpcodes(book *hugo.Book) error {
@@ -19,7 +18,12 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
   s.notes = util.NewNotes()
 
   log.Println("Scanning 6502 opcodes")
-  err := filepath.Walk(book.ContentPath(), s.extractOpcode)
+  err := walk.NewPathWalker().
+    IsFile().
+    PathNotContain("/reference/").
+    PathHasSuffix(".html").
+    Then(s.extractOpcode).
+    Walk(book.ContentPath())
   if err != nil {
     return err
   }
@@ -37,36 +41,30 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
   return nil
 }
 
-func (s *M6502) extractOpcode(path string, info os.FileInfo, err error) error {
+func (s *M6502) extractOpcode(path string, _ os.FileInfo) error {
+  fm := &hugo.FrontMatter{}
+  err := fm.LoadFrontMatter(path)
   if err != nil {
     return err
   }
 
-  if !info.IsDir() && strings.HasSuffix(info.Name(), ".html") && !strings.Contains(path, "reference") {
-    fm := &hugo.FrontMatter{}
-    err := fm.LoadFrontMatter("", path)
-    if err != nil {
-      return err
+  notes := util.NewNotes()
+  notes.DecodePageNotes(fm.Other["notes"])
+
+  if codes, ok := fm.Other["codes"]; ok {
+    var defaultOp string
+    a, ok := fm.Other["op"]
+    if ok {
+      defaultOp = a.(string)
     }
 
-    notes := util.NewNotes()
-    notes.DecodePageNotes(fm.Other["notes"])
-
-    if codes, ok := fm.Other["codes"]; ok {
-      var defaultOp string
-      a, ok := fm.Other["op"]
-      if ok {
-        defaultOp = a.(string)
-      }
-
-      for _, e1 := range codes.([]interface{}) {
-        s.extractOp(defaultOp, notes, e1)
-      }
+    for _, e1 := range codes.([]interface{}) {
+      s.extractOp(defaultOp, notes, e1)
     }
-
-    // Import these notes into the global pool
-    s.notes.Merge(notes)
   }
+
+  // Import these notes into the global pool
+  s.notes.Merge(notes)
 
   return nil
 }

@@ -2,50 +2,11 @@ package hugo
 
 import (
   "github.com/peter-mount/documentation/tools/util"
-  "log"
   "os"
-  "path"
   "path/filepath"
   "strings"
   "time"
 )
-
-type BookShelf struct {
-  books Books
-}
-
-func (bs *BookShelf) Name() string {
-  return "BookShelf"
-}
-
-func (bs *BookShelf) Start() error {
-  log.Println("Searching for books")
-  return filepath.Walk("content", func(pathName string, info os.FileInfo, err error) error {
-    if err != nil {
-      return err
-    }
-
-    if !info.IsDir() && strings.HasSuffix(pathName, "/_index.html") {
-      fm := FrontMatter{}
-      err := fm.LoadFrontMatter(pathName)
-      if err != nil {
-        return err
-      }
-      if fm.Book != nil {
-        fm.Book.ID = path.Base(path.Dir(pathName))
-        log.Println("Found", fm.Book.ID)
-
-        bs.books = append(bs.books, fm.Book)
-      }
-    }
-
-    return nil
-  })
-}
-
-func (bs *BookShelf) Books() Books {
-  return bs.books
-}
 
 type BookHandler func(*Book) error
 

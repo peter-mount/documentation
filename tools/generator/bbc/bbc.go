@@ -3,11 +3,10 @@ package bbc
 import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "log"
   "os"
-  "path/filepath"
-  "strings"
 )
 
 // BBC generates the reference pages in the BBC book.
@@ -58,7 +57,14 @@ func (b *BBC) extract(book *hugo.Book) error {
   }
 
   log.Println("Scanning BBC API")
-  if err := filepath.Walk(book.ContentPath(), b.extractMeta); err != nil {
+
+  err := walk.NewPathWalker().
+    IsFile().
+    PathNotContain("/reference/").
+    PathHasSuffix(".html").
+    Then(b.extractMeta).
+    Walk(book.ContentPath())
+  if err != nil {
     return err
   }
 
@@ -66,29 +72,23 @@ func (b *BBC) extract(book *hugo.Book) error {
   return nil
 }
 
-func (b *BBC) extractMeta(path string, info os.FileInfo, err error) error {
+func (b *BBC) extractMeta(path string, _ os.FileInfo) error {
+  fm := hugo.FrontMatter{}
+  err := fm.LoadFrontMatter("", path)
   if err != nil {
     return err
   }
 
-  if !info.IsDir() && strings.HasSuffix(info.Name(), ".html") && !strings.Contains(path, "reference") {
-    fm := hugo.FrontMatter{}
-    err := fm.LoadFrontMatter("", path)
-    if err != nil {
-      return err
-    }
+  if api, exists := fm.Other["api"]; exists {
+    b.extractApi(api)
+  }
 
-    if api, exists := fm.Other["api"]; exists {
-      b.extractApi(api)
-    }
+  if osbyte, exists := fm.Other["osbyte"]; exists {
+    b.extractOsbyte(osbyte)
+  }
 
-    if osbyte, exists := fm.Other["osbyte"]; exists {
-      b.extractOsbyte(osbyte)
-    }
-
-    if osword, exists := fm.Other["osword"]; exists {
-      b.extractOsword(osword)
-    }
+  if osword, exists := fm.Other["osword"]; exists {
+    b.extractOsword(osword)
   }
 
   return nil
