@@ -1,0 +1,57 @@
+---
+type: "manual"
+title: "Read pixel value"
+linkTitle: "Read pixel value"
+weight: 9
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "09"
+    int: 9
+    title: "Read pixel value"
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  This routine returns the status of a screen pixel at a given pair of X and Y co-ordinates.
+</p>
+
+<h3>Parameter block</h3>
+<table>
+  <thead>
+  <tr>
+    <th>XY+</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td>
+    <td>LSB of X coordinate</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>MSB of X coordinate</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>LSB of Y coordinate</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>MSB of Y coordinate</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Logical colour at that point</td>
+  </tr>
+  </tbody>
+</table>
+<p>
+  On exit,
+  XY+4 contains the logical colour at the required point
+  or &FF if the point specified was off the screen.
+</p>

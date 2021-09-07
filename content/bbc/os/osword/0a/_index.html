@@ -1,0 +1,30 @@
+---
+type: "manual"
+title: "Read character definition"
+linkTitle: "Read character definition"
+weight: 10
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "0A"
+    int: 10
+    title: "Read character definition"
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  This call returns the 8 bytes which define the 8 by 8 matrix of each character.
+</p>
+<p>
+  The call requires a 9 byte parameter block pointed to by the X and Y registers.
+</p>
+<p>
+  The first byte contains the ASCII value of the character definition to be read.
+</p>
+<p>
+  After the call the 8 byte definition is contained in bytes 1 to 8 of the parameter block,
+  with the top row in byte 1 and the bottom row in byte 8.
+</p>

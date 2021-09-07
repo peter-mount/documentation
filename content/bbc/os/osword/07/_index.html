@@ -1,0 +1,120 @@
+---
+type: "manual"
+title: "Sound command"
+linkTitle: "Sound command"
+weight: 7
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "07"
+    int: 7
+    title: Sound command
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  This routine takes an 8 byte parameter block addressed by the X and Y registers.
+  The 8 bytes of the parameter block may be considered as the four parameters used for the SOUND command in BASIC.
+</p>
+
+<h3>Parameter block</h3>
+<table>
+  <thead>
+  <tr>
+    <th>XY+</th>
+    <th>Length</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td>
+    <td>2</td>
+    <td>Channel</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>2</td>
+    <td>Amplitude</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>2</td>
+    <td>Pitch</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>2</td>
+    <td>Duration</td>
+  </tr>
+  </tbody>
+</table>
+
+<p>
+  For example, to perform a <pre>SOUND 1,-15,200,20</pre> then the contents of the table would be:
+</p>
+
+<h3>Parameter block</h3>
+<table>
+  <thead>
+  <tr>
+    <th>XY+</th>
+    <th>Content</th>
+    <th>Sound Param</th>
+    <th>Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td>
+    <td>Channel</td>
+    <td>1</td>
+    <td>0x01</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td>0x00</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Amplitude</td>
+    <td>-15</td>
+    <td>0xF1</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td></td>
+    <td>0xFF</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Pitch</td>
+    <td>200</td>
+    <td>0xC8</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td></td>
+    <td>0x00</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Duration</td>
+    <td>20</td>
+    <td>0x14</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td></td>
+    <td>0x00</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,35 @@
+---
+type: "manual"
+title: "Interval timer"
+linkTitle: "Interval timer"
+weight: 3
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "03"
+    int: 3
+    title: Read interval timer
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: "04"
+    int: 4
+    title: Write interval timer
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  This routine may be used to read/write the interval timer, used for events.
+</p>
+
+<p>
+  For read (OSWord 0x03) the current clock value will be writted to the 5 bytes pointed to by the XY registers.
+</p>
+
+<p>
+  For write (OSWord 0x04) the new clock value is contained in the 5 bytes pointed to by the XY registers.
+</p>

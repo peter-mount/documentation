@@ -1,0 +1,79 @@
+---
+type: "manual"
+title: " Read/Write I/O processor memory "
+linkTitle: "Read/Write I/O processor memory "
+weight: 5
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "05"
+    int: 5
+    title: "Read I/O processor memory "
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: "06"
+    int: 6
+    title: "Write I/O processor memory "
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  A byte of I/O processor memory may be read or written across the Tube using this call.
+  A 32 bit address should be contained in memory at the address contained in the X and Y registers.
+</p>
+
+<p>For writes (OSWord 0x06) the value to write should be placed in XY+4</p>
+
+<p>For reads (OSWord 0x05) the value read is placed in XY+4 on exit.</p>
+
+<h3>Parameter block</h3>
+<table>
+  <thead>
+  <tr>
+    <th>XY+</th>
+    <th>Content</th>
+    <th>Read call</th>
+    <th>Write call</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td>
+    <td>LSB of address in I/O processor</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>MSB of address in I/O processor</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td>Byte read by OSWord 0x05</td>
+    <td>Byte to write with OSWord 0x06</td>
+  </tr>
+  </tbody>
+</table>
+<p>
+  If the I/O processor uses 16 bit memory addressing only least significant two bytes need to be specified.
+</p>

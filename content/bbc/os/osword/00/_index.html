@@ -5,10 +5,14 @@ linkTitle: "0 Read line"
 weight: -1
 categories:
   - bbc
+  - osword
 osword:
   - hex: "00"
     int: 0
     title: Read line from input
+    exit:
+      "y": "Line length, including CR if used"
+      "c": "How input terminated: 0=CR, 1=ESC"
     compatibility:
       bbc: true
       master: true

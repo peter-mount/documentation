@@ -1,0 +1,86 @@
+---
+type: "manual"
+title: " Read/Write palette"
+linkTitle: "Read/Write palette"
+weight: 5
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "0B"
+    int: 11
+    title: "Read palette"
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: "0C"
+    int: 12
+    title: "Write palette"
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+    These routines read and write the colour palette.
+    They take a 5 byte parameter block:
+</p>
+
+<h3>Parameter block</h3>
+<table>
+  <thead>
+  <tr>
+    <th>XY+</th>
+    <th>Content</th>
+    <th>Read call</th>
+    <th>Write call</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td>
+    <td>Logical colour</td>
+    <td>Logial colour</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Physical colour</td>
+    <td>Current mapping</td>
+    <td>Required mapping</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Reserved for future expansion</td>
+    <td></td>
+    <td>Set to 0</td>
+  </tr>
+  <tr>
+    <td>3</td>
+      <td>Reserved for future expansion</td>
+    <td></td>
+    <td>Set to 0</td>
+  </tr>
+  <tr>
+    <td>4</td>
+      <td>Reserved for future expansion</td>
+    <td></td>
+    <td>Set to 0</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Write Palette</h3>
+<p>
+  The OSWORD 12 write palette call performs the same task as a VDU 19 command
+  which can be used from machine code using OSWRCH.
+</p>
+<p>
+  The advantage of using this OSWORD call rather than the conventional VDU
+  route is that there is a significant saving in time.
+</p>
+<p>
+  Another advantage is that OSWORD calls can be used in interrupt routines
+  while VDU routines cannot.
+</p>

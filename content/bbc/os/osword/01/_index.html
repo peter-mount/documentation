@@ -1,0 +1,33 @@
+---
+type: "manual"
+title: "Read/Write system clock"
+linkTitle: "Read/Write system clock"
+weight: 1
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "01"
+    int: 1
+    title: Read system clock
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+  - hex: "02"
+    int: 2
+    title: Write system clock
+    compatibility:
+      bbc: true
+      master: true
+      electron: true
+---
+<p>
+  The clock is a five byte clock value is read or written to the address contained in the X and Y registers.
+</p>
+<p>
+  For example the TIME function in BASIC uses OSWORD 0x01.
+</p>
+<p>
+  This clock is incremented every hundredth of a second and is set to 0 by a hard BREAK.
+</p>
