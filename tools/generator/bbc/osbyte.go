@@ -35,9 +35,10 @@ func (p *FunctionParams) decode(e interface{}) error {
 }
 
 type Compatibility struct {
-  BBC      bool // Valid on BBC micro (A, B or B+)
-  Master   bool // Valid on BBC Master 128, 512 or Compact
-  Electron bool // Valid on Acorn Electron
+  BBC      bool   `yaml:"bbc,omitempty"`      // Valid on BBC micro (A, B or B+)
+  Master   bool   `yaml:"master,omitempty"`   // Valid on BBC Master 128, 512 or Compact
+  Electron bool   `yaml:"electron,omitempty"` // Valid on Acorn Electron
+  Other    string `yaml:"other,omitempty"`    // For alternate roms/hardware
 }
 
 func (c *Compatibility) decode(e interface{}) error {
@@ -45,6 +46,7 @@ func (c *Compatibility) decode(e interface{}) error {
     c.BBC = util.IfMapEntryBool(m, "bbc")
     c.Master = util.IfMapEntryBool(m, "master")
     c.Electron = util.IfMapEntryBool(m, "electron")
+    c.Other = util.IfMapEntryString(m, "other")
     return nil
   })
 }
@@ -129,6 +131,7 @@ func (b *BBC) writeOsbyteTable(book *hugo.Book) error {
           "BBC",
           "Master",
           "Electron",
+          "Other",
         },
         RowCount: len(b.osbyte),
         GetRow: func(r int) interface{} {
@@ -150,6 +153,7 @@ func (b *BBC) writeOsbyteTable(book *hugo.Book) error {
             o.Compat.BBC,
             o.Compat.Master,
             o.Compat.Electron,
+            o.Compat.Other,
           }
         },
       })

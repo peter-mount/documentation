@@ -81,6 +81,7 @@ func (b *BBC) writeOswordTable(book *hugo.Book) error {
           "BBC",
           "Master",
           "Electron",
+          "Other",
         },
         RowCount: len(b.osword),
         GetRow: func(r int) interface{} {
@@ -99,6 +100,7 @@ func (b *BBC) writeOswordTable(book *hugo.Book) error {
             o.Compat.BBC,
             o.Compat.Master,
             o.Compat.Electron,
+            o.Compat.Other,
           }
         },
       })

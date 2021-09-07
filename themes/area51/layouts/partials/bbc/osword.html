@@ -4,7 +4,7 @@
     <tr>
         <th scope="col" colspan="2">OSWord call</th>
         <th scope="col" rowspan="2">Action</th>
-        <th scope="col" colspan="3">Available on:</th>
+        <th scope="col" colspan="4">Available on:</th>
     </tr>
     <tr>
         <th scope="col"><em>(dec)</em></th>
@@ -12,6 +12,7 @@
         <th scope="col">BBC</th>
         <th scope="col">Master</th>
         <th scope="col">Electron</th>
+        <th scope="col">Other</th>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
         <td>{{ if isset .compatibility "bbc" }}x{{end }}</td>
         <td>{{ if isset .compatibility "master" }}x{{end }}</td>
         <td>{{ if isset .compatibility "electron" }}x{{end }}</td>
+        <td>{{ if isset .compatibility "other" }}{{.compatibility.other}}{{end }}</td>
     </tr>
     {{- end -}}
     </tbody>
