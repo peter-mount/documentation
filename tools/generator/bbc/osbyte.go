@@ -39,8 +39,8 @@ type Compatibility struct {
   Electron bool // Valid on Acorn Electron
 }
 
-func (c *Compatibility) decode(e interface{}) error{
-  return util.IfMap(e, func(m map[interface{}]interface{})error {
+func (c *Compatibility) decode(e interface{}) error {
+  return util.IfMap(e, func(m map[interface{}]interface{}) error {
     c.BBC = util.IfMapEntryBool(m, "bbc")
     c.Master = util.IfMapEntryBool(m, "master")
     c.Electron = util.IfMapEntryBool(m, "electron")
@@ -49,8 +49,8 @@ func (c *Compatibility) decode(e interface{}) error{
 }
 
 func (b *BBC) extractOsbyte(_ *hugo.FrontMatter, osbyte interface{}) error {
-  return util.ForEachInterface(osbyte, func(e interface{}) error{
-    return util.IfMap(e, func(m map[interface{}]interface{}) error{
+  return util.ForEachInterface(osbyte, func(e interface{}) error {
+    return util.IfMap(e, func(m map[interface{}]interface{}) error {
       if v, ok := util.DecodeInt(m["int"], 0); ok {
         o := &Osbyte{
           call:   v,
@@ -59,14 +59,20 @@ func (b *BBC) extractOsbyte(_ *hugo.FrontMatter, osbyte interface{}) error {
           Title:  util.IfMapEntryString(m, "title"),
         }
 
-        err:=util.IfMapEntry(m, "entry", o.Entry.decode)
-        if err!=nil {return err}
+        err := util.IfMapEntry(m, "entry", o.Entry.decode)
+        if err != nil {
+          return err
+        }
 
-        err=util.IfMapEntry(m, "exit", o.Exit.decode)
-        if err!=nil {return err}
+        err = util.IfMapEntry(m, "exit", o.Exit.decode)
+        if err != nil {
+          return err
+        }
 
-        err=util.IfMapEntry(m, "compatibility", o.Compat.decode)
-        if err!=nil {return err}
+        err = util.IfMapEntry(m, "compatibility", o.Compat.decode)
+        if err != nil {
+          return err
+        }
 
         if o.Entry.A == "" {
           // This is always the case
@@ -90,7 +96,7 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
     r.Osbyte = append(r.Osbyte, o.params)
   }
 
-  err := util.ReferenceFileBuilder(
+  return util.ReferenceFileBuilder(
     "OSByte calls",
     "OSByte &FFF4 calls",
     "manual",
@@ -100,10 +106,9 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
     WrapAsFrontMatter().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), "osbyte", "_index.html"), book.Modified())
-  if err != nil {
-    return err
-  }
+}
 
+func (b *BBC) writeOsbyteTable(book *hugo.Book) error {
   return util.WithTable().
     AsCSV(util.ReferenceFilename(book.ContentPath(), "osbyte", "osbyte.csv"), book.Modified()).
     AsExcel(book).

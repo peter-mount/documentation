@@ -2,6 +2,7 @@ package hugo
 
 import (
   "bufio"
+  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
   "gopkg.in/yaml.v2"
   "io"
@@ -116,4 +117,20 @@ func (fm *FrontMatter) readFrontMatter(s *bufio.Scanner) error {
 
   // no --- terminator so ignore the page
   return nil
+}
+
+func (a FrontMatterAction) WithNotes(global *util.Notes, f func(*util.Notes, *FrontMatter) error) FrontMatterAction {
+  return a.Then(func(fm *FrontMatter) error {
+    notes := util.NewNotes()
+    notes.DecodePageNotes(fm.Other["notes"])
+
+    if err := f(notes, fm); err != nil {
+      return err
+    }
+
+    // Import these notes into the global pool
+    global.Merge(notes)
+
+    return nil
+  })
 }

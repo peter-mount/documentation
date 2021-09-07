@@ -36,7 +36,7 @@ func (b *BBC) writeOswordIndex(book *hugo.Book) error {
     r.Osword = append(r.Osword, o.params)
   }
 
-  err := util.ReferenceFileBuilder(
+  return util.ReferenceFileBuilder(
     "OSWord calls",
     "OSWord &FFF1 calls",
     "manual",
@@ -46,10 +46,9 @@ func (b *BBC) writeOswordIndex(book *hugo.Book) error {
     WrapAsFrontMatter().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), "osword", "_index.html"), book.Modified())
-  if err != nil {
-    return err
-  }
+}
 
+func (b *BBC) writeOswordTable(book *hugo.Book) error {
   return util.WithTable().
     AsCSV(util.ReferenceFilename(book.ContentPath(), "osword", "osword.html"), book.Modified()).
     AsExcel(book).

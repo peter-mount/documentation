@@ -53,11 +53,13 @@ func (b *BBC) Start() error {
       Register("bbcOsbyteIndex",
         generator.GeneratorHandlerOf().
           RunOnce(&b.extracted, b.extract).
-          Then(b.writeOsbyteIndex)).
+          Then(b.writeOsbyteIndex).
+          Then(b.writeOsbyteTable)).
       Register("bbcOswordIndex",
         generator.GeneratorHandlerOf().
           RunOnce(&b.extracted, b.extract).
-          Then(b.writeOswordIndex))
+          Then(b.writeOswordIndex).
+          Then(b.writeOswordTable))
 
   return nil
 }

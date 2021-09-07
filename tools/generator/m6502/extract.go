@@ -17,7 +17,9 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
     IsFile().
     PathNotContain("/reference/").
     PathHasSuffix(".html").
-    Then(hugo.FrontMatterActionOf(s.extract).Walk()).
+    Then(hugo.FrontMatterActionOf().
+      WithNotes(s.notes,s.extract).
+      Walk()).
     Walk(book.ContentPath())
   if err != nil {
     return err
@@ -36,10 +38,7 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
   return nil
 }
 
-func (s *M6502) extract(fm *hugo.FrontMatter) error {
-  notes := util.NewNotes()
-  notes.DecodePageNotes(fm.Other["notes"])
-
+func (s *M6502) extract(notes *util.Notes,fm *hugo.FrontMatter) error {
   if codes, exists := fm.Other["codes"]; exists {
     var defaultOp string
     if a, exists := fm.Other["op"]; exists {
@@ -51,10 +50,6 @@ func (s *M6502) extract(fm *hugo.FrontMatter) error {
       return nil
     })
   }
-
-  // Import these notes into the global pool
-  s.notes.Merge(notes)
-
   return nil
 }
 
