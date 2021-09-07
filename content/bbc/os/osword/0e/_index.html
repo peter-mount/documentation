@@ -1,0 +1,134 @@
+---
+type: "manual"
+title: "Read CMOS clock"
+linkTitle: "Read CMOS clock"
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "0E"
+    int: 14
+    title: "Read CMOS clock"
+    compatibility:
+      master: true
+---
+<p>
+  This routine reads from the onboard CMOS clock.
+</p>
+
+<p>
+  For systems without a CMOS clock, the MOS passes the calls to sideways ROM's for support.
+</p>
+
+<p>
+  The first byte of the parameter block is a function code representing the action required.
+  The rest of the block's content (including its size) depends on that function.
+</p>
+
+<div style="break-inside: avoid">
+  <h2>Return clock value as string</h2>
+  <h3>On entry:</h3>
+  <p>XY=0</p>
+  <h3>On exit:</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>XY+</th>
+      <th>Length</th>
+      <th>Content</th>
+      <th colspan="2">Value range</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>0</td>
+      <td>24</td>
+      <td>Date</td>
+      <td>CR-terminated string in form</td>
+      <td>"Day,DD Mon Year.HH:MM:SS".</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="break-inside: avoid">
+  <h2>Return BCD clock value</h2>
+  <h3>On entry:</h3>
+  <p>XY=1</p>
+  <h3>On exit:</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>XY+</th>
+      <th>Length</th>
+      <th>Content</th>
+      <th colspan="2">Value range</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>year</td>
+      <td>0x00</td>
+      <td>0x99</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>month</td>
+      <td>0x01</td>
+      <td>0x12</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>day</td>
+      <td>0x01</td>
+      <td>0x31</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>day of week</td>
+      <td>0x01 Sun</td>
+      <td>0x07 Sat</td>
+    </tr>
+    </tbody>
+  </table>
+  <h5>Notes:</h5>
+  <dl>
+    <dt>year</dt>
+    <dd>0x80-0x99 represents 1980-1999. 0x00-0x79 represents 2000-2079.</dd>
+    <dt>day of week</dt>
+    <dd>0x00 = not returned</dd>
+  </dl>
+</div>
+
+<div style="break-inside: avoid">
+  <h2>Convert BCD to string</h2>
+  <h3>On entry:</h3>
+  <p>XY=1</p>
+  <p>XY+1&hellip;7 the BCD value as returned above</p>
+  <h3>On exit:</h3>
+  <p>XY+1&hellip;25 CR terminated string</p>
+  <table>
+    <thead>
+    <tr>
+      <th>XY+</th>
+      <th>Length</th>
+      <th>Content</th>
+      <th colspan="2">Value range</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>year</td>
+      <td>0x00</td>
+      <td>0x99</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

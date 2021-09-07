@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "Write CMOS clock"
+linkTitle: "Write CMOS clock"
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "0F"
+    int: 15
+    title: "Write CMOS clock"
+    compatibility:
+      master: true
+---
+<p>
+  This routine allows the onboard CMOS clock to be set.
+  For systems without a CMOS clock, the MOS passes the calls to sideways ROM's for support.
+</p>
+
+<p>
+  The first byte of the parameter block is a function code representing the action required.
+  The rest of the block's content (including its size) depends on that function.
+</p>
+<table>
+  <thead>
+  <tr>
+    <th>Function</th>
+    <th>Action</th>
+    <th>Format of input</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>8</td>
+    <td>Set time</td>
+    <td>"HH:MM:SS"</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>Set date</td>
+    <td>"Day,DD Mon Year"</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>Set date and time</td>
+    <td>"Day,DD Mon Year.HH:MM:SS"</td>
+  </tr>
+  </tbody>
+</table>
