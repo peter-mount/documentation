@@ -1,0 +1,84 @@
+{{- if isset .Params "osword" -}}
+<table class="table table-striped table-hover table-sm table-borderless">
+    <thead>
+    <tr>
+        <th scope="col" colspan="2">OSWord call</th>
+        <th scope="col" rowspan="2">Action</th>
+        <th scope="col" colspan="3">Available on:</th>
+    </tr>
+    <tr>
+        <th scope="col"><em>(dec)</em></th>
+        <th scope="col"><em>(hex)</em></th>
+        <th scope="col">BBC</th>
+        <th scope="col">Master</th>
+        <th scope="col">Electron</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{- range $.Params.osword -}}
+    <tr>
+        <td>{{.int}}</td>
+        <td>{{.hex}}</td>
+        <td>{{.title}}</td>
+        <td>{{ if isset .compatibility "bbc" }}x{{end }}</td>
+        <td>{{ if isset .compatibility "master" }}x{{end }}</td>
+        <td>{{ if isset .compatibility "electron" }}x{{end }}</td>
+    </tr>
+    {{- end -}}
+    </tbody>
+</table>
+{{- end -}}
+{{- if isset .Params "nometa" | not -}}
+
+{{- range $.Params.osword -}}
+{{- if isset . "entry" -}}
+<h3>Entry parameters</h3>
+<table>
+    {{- if isset .entry "x" -}}
+    <tr>
+        <th>X</th>
+        <td>{{.entry.x}}</td>
+    </tr>
+    {{- end -}}
+    {{- if isset .entry "y" -}}
+    <tr>
+        <th>Y</th>
+        <td>{{.entry.y}}</td>
+    </tr>
+    {{- end -}}
+</table>
+{{- end -}}
+{{- end -}}
+
+{{- range $.Params.osword -}}
+{{- if isset . "exit" -}}
+<h3>On exit:</h3>
+<table>
+    {{- if isset .exit "a" -}}
+    <tr>
+        <th>A</th>
+        <td>{{.exit.a}}</td>
+    </tr>
+    {{- end -}}
+    {{- if isset .exit "x" -}}
+    <tr>
+        <th>X</th>
+        <td>{{.exit.x}}</td>
+    </tr>
+    {{- end -}}
+    {{- if isset .exit "y" -}}
+    <tr>
+        <th>Y</th>
+        <td>{{.exit.y}}</td>
+    </tr>
+    {{- end -}}
+    {{- if isset .exit "c" -}}
+    <tr>
+        <th>C</th>
+        <td>{{.exit.c}}</td>
+    </tr>
+    {{- end -}}
+</table>
+{{- end -}}
+{{- end -}}
+{{- end -}}

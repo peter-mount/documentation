@@ -21,6 +21,7 @@
     </header>
     {{- partial "bbc/api.html" . -}}
     {{- partial "bbc/osbyte.html" . -}}
+    {{- partial "bbc/osword.html" . -}}
     {{ .Content }}
     {{- if isset .Params "notitle" | not -}}
     <div style="break-inside: avoid">
