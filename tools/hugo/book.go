@@ -1,6 +1,7 @@
 package hugo
 
 import (
+  "context"
   "github.com/peter-mount/documentation/tools/util"
   "os"
   "path/filepath"
@@ -8,68 +9,72 @@ import (
   "time"
 )
 
-type BookHandler func(*Book) error
+type BookHandler func(context.Context, *Book) error
 
 func WithBook() BookHandler {
-  return func(_ *Book) error {
-    return nil
-  }
+  return nil
 }
 
 func (a BookHandler) Then(b BookHandler) BookHandler {
-  return func(book *Book) error {
-    err := a(book)
-    if err != nil {
+  if a == nil {
+    return b
+  }
+  return func(ctx context.Context, book *Book) error {
+    if err := a(ctx, book); err != nil {
       return err
     }
-    return b(book)
+    return b(ctx, book)
   }
 }
 
-func (a BookHandler) Do(book *Book) error {
-  return a(book)
+func (a BookHandler) Do(ctx context.Context, book *Book) error {
+  if a == nil {
+    return nil
+  }
+  return a(ctx, book)
 }
 
-func (a BookHandler) IfExcelPresent(h func(book *Book, excel util.ExcelBuilder) error) BookHandler {
-  return a.Then(func(b *Book) error {
+func (a BookHandler) IfExcelPresent(h func(context.Context, *Book, util.ExcelBuilder) error) BookHandler {
+  return a.Then(func(ctx context.Context, b *Book) error {
     if b.excel != nil {
-      return h(b, b.excel)
+      return h(context.WithValue(ctx, "excel", b.excel), b, b.excel)
     }
     return nil
   })
 }
 
-type BookGeneratorHandler func(*Book, string) error
+type BookGeneratorHandler func(context.Context, *Book, string) error
 
 func WithBookGenerator() BookGeneratorHandler {
-  return func(_ *Book, _ string) error {
     return nil
-  }
 }
 
 func (a BookGeneratorHandler) Then(b BookGeneratorHandler) BookGeneratorHandler {
-  return func(book *Book, n string) error {
-    err := a(book, n)
+  if a==nil {
+    return b
+  }
+  return func(ctx context.Context,book *Book, n string) error {
+    err := a(ctx,book, n)
     if err != nil {
       return err
     }
-    return b(book, n)
+    return b(ctx,book, n)
   }
 }
 
 func (a BookHandler) ForEachGenerator(f BookGeneratorHandler) BookHandler {
-  return a.Then(func(book *Book) error {
+  return a.Then(func(ctx context.Context, book *Book) error {
     return book.Generate.ForEach(func(s string) error {
-      return f(book, s)
+      return f(context.WithValue(ctx, "bookGeneratorHandler", s), book, s)
     })
   })
 }
 
 type Books []*Book
 
-func (bs Books) ForEach(f BookHandler) error {
+func (bs Books) ForEach(ctx context.Context, f BookHandler) error {
   for _, b := range bs {
-    err := f(b)
+    err := f(ctx, b)
     if err != nil {
       return err
     }

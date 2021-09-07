@@ -1,6 +1,7 @@
 package generator
 
 import (
+  "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
@@ -94,17 +95,18 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
 
 func (g *Generator) Run() error {
   return g.bookShelf.Books().ForEach(
+    context.Background(),
     hugo.WithBook().
         ForEachGenerator(
           hugo.WithBookGenerator().
             Then(g.invokeGenerator)).
-        IfExcelPresent(func(book *hugo.Book, excel util.ExcelBuilder) error {
+        IfExcelPresent(func(ctx context.Context, book *hugo.Book, excel util.ExcelBuilder) error {
           return excel.FileHandler().
             Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
         }))
 }
 
-func (g *Generator) invokeGenerator(book *hugo.Book, n string) error {
+func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n string) error {
   h, exists := g.generators[n]
   if exists {
     return h(book)
