@@ -1,6 +1,7 @@
 package bbc
 
 import (
+  "context"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "sort"
@@ -11,8 +12,8 @@ type Osword struct {
   params map[interface{}]interface{} // Params
 }
 
-func (b *BBC) extractOsword(_ *hugo.FrontMatter, osword interface{}) error {
-  return util.ForEachInterface(osword, func(e interface{}) error {
+func (b *BBC) extractOsword(ctx context.Context, _ *hugo.FrontMatter) error {
+  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util.IfMap(e, func(m map[interface{}]interface{}) error {
       if v, ok := util.DecodeInt(m["int"], 0); ok {
         o := &Osword{

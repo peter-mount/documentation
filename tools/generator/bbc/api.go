@@ -1,6 +1,7 @@
 package bbc
 
 import (
+  "context"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "log"
@@ -18,8 +19,8 @@ type Api struct {
   params   interface{}
 }
 
-func (b *BBC) extractApi(_ *hugo.FrontMatter, api interface{}) error {
-  return util.ForEachInterface(api, func(e interface{}) error {
+func (b *BBC) extractApi(ctx context.Context, _ *hugo.FrontMatter) error {
+  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util.IfMap(e, func(m map[interface{}]interface{}) error {
       v := &Api{
         Name:   util.DecodeString(m["name"], ""),

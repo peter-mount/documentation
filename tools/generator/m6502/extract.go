@@ -1,6 +1,7 @@
 package m6502
 
 import (
+  "context"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
@@ -17,9 +18,10 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
     IsFile().
     PathNotContain("/reference/").
     PathHasSuffix(".html").
-    Then(hugo.FrontMatterActionOf().
-      WithNotes(s.notes,s.extract).
-      Walk()).
+      Then(hugo.FrontMatterActionOf().
+        Then(s.extract).
+        WithNotes(s.notes).
+        Walk()).
     Walk(book.ContentPath())
   if err != nil {
     return err
@@ -38,12 +40,14 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
   return nil
 }
 
-func (s *M6502) extract(notes *util.Notes,fm *hugo.FrontMatter) error {
+func (s *M6502) extract(ctx context.Context, fm *hugo.FrontMatter) error {
   if codes, exists := fm.Other["codes"]; exists {
     var defaultOp string
     if a, exists := fm.Other["op"]; exists {
       defaultOp = a.(string)
     }
+
+    notes := ctx.Value("notes").(*util.Notes)
 
     _ = util.ForEachInterface(codes, func(e1 interface{}) error {
       s.extractOp(defaultOp, notes, e1)
