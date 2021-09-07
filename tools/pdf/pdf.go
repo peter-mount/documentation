@@ -13,9 +13,10 @@ import (
 
 // PDF tool that handles the generation of PDF documentation of a "book"
 type PDF struct {
-  config   *hugo.Config   // Config
-  chromium *hugo.Chromium // Chromium browser
-  enable   *bool          // Is PDF generation enabled
+  config    *hugo.Config // Config
+  bookShelf *hugo.BookShelf
+  chromium  *hugo.Chromium // Chromium browser
+  enable    *bool          // Is PDF generation enabled
 }
 
 func (p *PDF) Name() string {
@@ -37,6 +38,12 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   }
   p.chromium = service.(*hugo.Chromium)
 
+  service, err = k.AddService(&hugo.BookShelf{})
+  if err != nil {
+    return err
+  }
+  p.bookShelf = service.(*hugo.BookShelf)
+
   // We need a webserver & must run after hugo
   return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
 }
@@ -47,7 +54,7 @@ func (p *PDF) Run() error {
     return nil
   }
 
-  return p.config.Books.ForEach(p.generate)
+  return p.bookShelf.Books().ForEach(p.generate)
 }
 
 func (p *PDF) generate(book *hugo.Book) error {

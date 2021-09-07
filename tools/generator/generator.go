@@ -42,7 +42,8 @@ func GeneratorHandlerOf(handlers ...GeneratorHandler) GeneratorHandler {
 }
 
 type Generator struct {
-  config     *hugo.Config                // Configuration
+  config     *hugo.Config // Configuration
+  bookShelf  *hugo.BookShelf
   generators map[string]GeneratorHandler // Map of available generators
 }
 
@@ -57,6 +58,12 @@ func (g *Generator) Init(k *kernel.Kernel) error {
     return err
   }
   g.config = service.(*hugo.Config)
+
+  service, err = k.AddService(&hugo.BookShelf{})
+  if err != nil {
+    return err
+  }
+  g.bookShelf = service.(*hugo.BookShelf)
 
   return nil
 }
@@ -76,7 +83,7 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
 }
 
 func (g *Generator) Run() error {
-  return g.config.Books.ForEach(
+  return g.bookShelf.Books().ForEach(
     hugo.WithBook().
         ForEachGenerator(
           hugo.WithBookGenerator().

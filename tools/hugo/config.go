@@ -13,7 +13,7 @@ import (
 type Config struct {
   Webserver  WebserverConfig `yaml:"webserver"` // Webserver
   PDF        PDF             `yaml:"pdf"`       // Common PDF template, can be overridden per book
-  Books      Books           `yaml:"books"`     // Array of book definitions
+  //Books      Books           `yaml:"books"`     // Array of book definitions
   configFile *string         `yaml:"-"`         // Config file name
 }
 
@@ -81,7 +81,7 @@ func (c *Config) Start() error {
   }
 
   // Ensure all books have PDF config by using the global version
-  _ = c.Books.ForEach(func(book *Book) error {
+  /*_ = c.Books.ForEach(func(book *Book) error {
     if book.PDF == nil {
       book.PDF = &c.PDF
     }
@@ -90,7 +90,7 @@ func (c *Config) Start() error {
     _ = book.Modified()
 
     return nil
-  })
+  })*/
 
   return nil
 }

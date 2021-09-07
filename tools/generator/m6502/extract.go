@@ -43,18 +43,18 @@ func (s *M6502) extractOpcode(path string, info os.FileInfo, err error) error {
   }
 
   if !info.IsDir() && strings.HasSuffix(info.Name(), ".html") && !strings.Contains(path, "reference") {
-    //log.Println("Reading", path)
-    m, err := util.LoadFrontMatter("", path)
+    fm := &hugo.FrontMatter{}
+    err := fm.LoadFrontMatter("", path)
     if err != nil {
       return err
     }
 
     notes := util.NewNotes()
-    notes.DecodePageNotes(m["notes"])
+    notes.DecodePageNotes(fm.Other["notes"])
 
-    if codes, ok := m["codes"]; ok {
+    if codes, ok := fm.Other["codes"]; ok {
       var defaultOp string
-      a, ok := m["op"]
+      a, ok := fm.Other["op"]
       if ok {
         defaultOp = a.(string)
       }

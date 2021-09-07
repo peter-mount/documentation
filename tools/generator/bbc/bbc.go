@@ -3,7 +3,6 @@ package bbc
 import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
   "log"
   "os"
@@ -73,20 +72,21 @@ func (b *BBC) extractMeta(path string, info os.FileInfo, err error) error {
   }
 
   if !info.IsDir() && strings.HasSuffix(info.Name(), ".html") && !strings.Contains(path, "reference") {
-    m, err := util.LoadFrontMatter("", path)
+    fm := hugo.FrontMatter{}
+    err := fm.LoadFrontMatter("", path)
     if err != nil {
       return err
     }
 
-    if api, exists := m["api"]; exists {
+    if api, exists := fm.Other["api"]; exists {
       b.extractApi(api)
     }
 
-    if osbyte, exists := m["osbyte"]; exists {
+    if osbyte, exists := fm.Other["osbyte"]; exists {
       b.extractOsbyte(osbyte)
     }
 
-    if osword, exists := m["osword"]; exists {
+    if osword, exists := fm.Other["osword"]; exists {
       b.extractOsword(osword)
     }
   }
