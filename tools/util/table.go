@@ -1,6 +1,7 @@
 package util
 
 import (
+  "context"
   "github.com/xuri/excelize/v2"
   "time"
 )
@@ -99,7 +100,7 @@ func (t *Table) setCell(f *excelize.File, c, r int, v interface{}) {
 
 func (a TableHandler) AsExcel(p ExcelProvider) TableHandler {
   return a.Then(func(t *Table) error {
-    p.SetExcel(p.GetExcel().Then(func(f *excelize.File) error {
+    p.SetExcel(p.GetExcel().Then(func(ctx context.Context,f *excelize.File) error {
       t.widths = make(map[int]int)
 
       f.NewSheet(t.Title)
