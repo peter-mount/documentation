@@ -11,9 +11,9 @@ type Osword struct {
   params map[interface{}]interface{} // Params
 }
 
-func (b *BBC) extractOsword(osword interface{}) {
-  util.ForEachInterface(osword, func(e interface{}) {
-    util.IfMap(e, func(m map[interface{}]interface{}) {
+func (b *BBC) extractOsword(_ *hugo.FrontMatter, osword interface{}) error {
+  return util.ForEachInterface(osword, func(e interface{}) error {
+    return util.IfMap(e, func(m map[interface{}]interface{}) error {
       if v, ok := util.DecodeInt(m["int"], 0); ok {
         o := &Osword{
           call:   v,
@@ -21,6 +21,7 @@ func (b *BBC) extractOsword(osword interface{}) {
         }
         b.osword = append(b.osword, o)
       }
+      return nil
     })
   })
 }

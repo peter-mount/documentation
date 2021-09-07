@@ -18,23 +18,26 @@ type Api struct {
   params   interface{}
 }
 
-func (b *BBC) extractApi(api interface{}) {
-  util.ForEachInterface(api, func(e interface{}) {
-    util.IfMap(e, func(m map[interface{}]interface{}) {
+func (b *BBC) extractApi(_ *hugo.FrontMatter, api interface{}) error {
+  return util.ForEachInterface(api, func(e interface{}) error {
+    return util.IfMap(e, func(m map[interface{}]interface{}) error {
       v := &Api{
         Name:   util.DecodeString(m["name"], ""),
         Addr:   util.DecodeString(m["addr"], ""),
         Title:  util.DecodeString(m["title"], ""),
         params: e,
       }
-      i, err := strconv.ParseInt(v.Addr, 16, 64)
-      if err != nil {
+
+      if i, err := strconv.ParseInt(v.Addr, 16, 64); err != nil {
         log.Printf("Failed to parse addr \"%s\" for %s", v.Addr, v.Name)
+        return err
       } else {
         v.call = int(i)
       }
 
       b.api = append(b.api, v)
+
+      return nil
     })
   })
 }

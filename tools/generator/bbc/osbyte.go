@@ -23,12 +23,13 @@ type FunctionParams struct {
   C string // C Carry Flag
 }
 
-func (p *FunctionParams) decode(e interface{}) {
-  util.IfMap(e, func(m map[interface{}]interface{}) {
+func (p *FunctionParams) decode(e interface{}) error {
+  return util.IfMap(e, func(m map[interface{}]interface{}) error {
     p.A = util.IfMapEntryString(m, "a")
     p.X = util.IfMapEntryString(m, "x")
     p.Y = util.IfMapEntryString(m, "y")
     p.C = util.IfMapEntryString(m, "c")
+    return nil
   })
 }
 
@@ -38,17 +39,18 @@ type Compatibility struct {
   Electron bool // Valid on Acorn Electron
 }
 
-func (c *Compatibility) decode(e interface{}) {
-  util.IfMap(e, func(m map[interface{}]interface{}) {
+func (c *Compatibility) decode(e interface{}) error{
+  return util.IfMap(e, func(m map[interface{}]interface{})error {
     c.BBC = util.IfMapEntryBool(m, "bbc")
     c.Master = util.IfMapEntryBool(m, "master")
     c.Electron = util.IfMapEntryBool(m, "electron")
+    return nil
   })
 }
 
-func (b *BBC) extractOsbyte(osbyte interface{}) {
-  util.ForEachInterface(osbyte, func(e interface{}) {
-    util.IfMap(e, func(m map[interface{}]interface{}) {
+func (b *BBC) extractOsbyte(_ *hugo.FrontMatter, osbyte interface{}) error {
+  return util.ForEachInterface(osbyte, func(e interface{}) error{
+    return util.IfMap(e, func(m map[interface{}]interface{}) error{
       if v, ok := util.DecodeInt(m["int"], 0); ok {
         o := &Osbyte{
           call:   v,
@@ -57,9 +59,14 @@ func (b *BBC) extractOsbyte(osbyte interface{}) {
           Title:  util.IfMapEntryString(m, "title"),
         }
 
-        util.IfMapEntry(m, "entry", o.Entry.decode)
-        util.IfMapEntry(m, "exit", o.Exit.decode)
-        util.IfMapEntry(m, "compatibility", o.Compat.decode)
+        err:=util.IfMapEntry(m, "entry", o.Entry.decode)
+        if err!=nil {return err}
+
+        err=util.IfMapEntry(m, "exit", o.Exit.decode)
+        if err!=nil {return err}
+
+        err=util.IfMapEntry(m, "compatibility", o.Compat.decode)
+        if err!=nil {return err}
 
         if o.Entry.A == "" {
           // This is always the case
@@ -68,6 +75,7 @@ func (b *BBC) extractOsbyte(osbyte interface{}) {
 
         b.osbyte = append(b.osbyte, o)
       }
+      return nil
     })
   })
 }

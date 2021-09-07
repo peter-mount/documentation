@@ -41,6 +41,16 @@ func GeneratorHandlerOf(handlers ...GeneratorHandler) GeneratorHandler {
   }
 }
 
+func (a GeneratorHandler) RunOnce(s *bool, b GeneratorHandler) GeneratorHandler {
+  return a.Then(func(book *hugo.Book) error {
+    if !*s {
+      *s = true
+      return b(book)
+    }
+    return nil
+  })
+}
+
 type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf

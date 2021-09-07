@@ -5,15 +5,10 @@ import (
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
   "log"
-  "os"
   "strconv"
 )
 
 func (s *M6502) extractOpcodes(book *hugo.Book) error {
-  if s.extracted {
-    return nil
-  }
-
   s.opCodes = nil
   s.notes = util.NewNotes()
 
@@ -22,7 +17,7 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
     IsFile().
     PathNotContain("/reference/").
     PathHasSuffix(".html").
-    Then(s.extractOpcode).
+    Then(hugo.FrontMatterActionOf(s.extract).Walk()).
     Walk(book.ContentPath())
   if err != nil {
     return err
@@ -41,26 +36,20 @@ func (s *M6502) extractOpcodes(book *hugo.Book) error {
   return nil
 }
 
-func (s *M6502) extractOpcode(path string, _ os.FileInfo) error {
-  fm := &hugo.FrontMatter{}
-  err := fm.LoadFrontMatter(path)
-  if err != nil {
-    return err
-  }
-
+func (s *M6502) extract(fm *hugo.FrontMatter) error {
   notes := util.NewNotes()
   notes.DecodePageNotes(fm.Other["notes"])
 
-  if codes, ok := fm.Other["codes"]; ok {
+  if codes, exists := fm.Other["codes"]; exists {
     var defaultOp string
-    a, ok := fm.Other["op"]
-    if ok {
+    if a, exists := fm.Other["op"]; exists {
       defaultOp = a.(string)
     }
 
-    for _, e1 := range codes.([]interface{}) {
+    _ = util.ForEachInterface(codes, func(e1 interface{}) error {
       s.extractOp(defaultOp, notes, e1)
-    }
+      return nil
+    })
   }
 
   // Import these notes into the global pool
@@ -72,19 +61,21 @@ func (s *M6502) extractOpcode(path string, _ os.FileInfo) error {
 func (s *M6502) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
   o := &OpcodeType{}
 
-  util.IfMap(e1, func(e map[interface{}]interface{}) {
-    util.IfMapEntry(e, "value", func(v interface{}) {
+  _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
+    _ = util.IfMapEntry(e, "value", func(v interface{}) error {
       o.Value = util.DecodeString(v, "")
+      return nil
     })
 
-    util.IfMapEntry(e, "notes", func(v interface{}) {
-      util.ForEachInterface(v, func(ae interface{}) {
+    return util.IfMapEntry(e, "notes", func(v interface{}) error {
+      return util.ForEachInterface(v, func(ae interface{}) error {
         if i, ok := ae.(int); ok {
           note := n.GetId(i)
           if note != nil {
             o.NoteId = append(o.NoteId, note.Value)
           }
         }
+        return nil
       })
     })
   })
@@ -93,7 +84,7 @@ func (s *M6502) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
 }
 
 func (s *M6502) extractOp(defaultOp string, n *util.Notes, e1 interface{}) {
-  util.IfMap(e1, func(e map[interface{}]interface{}) {
+  _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
     opcode := util.DecodeString(e["code"], "")
     order, _ := strconv.ParseInt(opcode, 16, 32)
     op := &Opcode{
@@ -108,5 +99,7 @@ func (s *M6502) extractOp(defaultOp string, n *util.Notes, e1 interface{}) {
     op.Cycles = s.decodeOpType(n, e["cycles"])
 
     s.opCodes = append(s.opCodes, op)
+
+    return nil
   })
 }

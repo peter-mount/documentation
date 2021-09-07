@@ -6,7 +6,6 @@ import (
   "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "log"
-  "os"
 )
 
 // BBC generates the reference pages in the BBC book.
@@ -43,53 +42,37 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 
 func (b *BBC) Start() error {
   b.generator.
-    Register("bbcAPIIndex", generator.GeneratorHandlerOf(b.extract, b.writeAPIIndex)).
-    Register("bbcAPINameIndex", generator.GeneratorHandlerOf(b.extract, b.writeAPINameIndex)).
-    Register("bbcOsbyteIndex", generator.GeneratorHandlerOf(b.extract, b.writeOsbyteIndex)).
-    Register("bbcOswordIndex", generator.GeneratorHandlerOf(b.extract, b.writeOswordIndex))
+      Register("bbcAPIIndex",
+        generator.GeneratorHandlerOf().
+          RunOnce(&b.extracted, b.extract).
+          Then(b.writeAPIIndex)).
+      Register("bbcAPINameIndex",
+        generator.GeneratorHandlerOf().
+          RunOnce(&b.extracted, b.extract).
+          Then(b.writeAPINameIndex)).
+      Register("bbcOsbyteIndex",
+        generator.GeneratorHandlerOf().
+          RunOnce(&b.extracted, b.extract).
+          Then(b.writeOsbyteIndex)).
+      Register("bbcOswordIndex",
+        generator.GeneratorHandlerOf().
+          RunOnce(&b.extracted, b.extract).
+          Then(b.writeOswordIndex))
 
   return nil
 }
 
 func (b *BBC) extract(book *hugo.Book) error {
-  if b.extracted {
-    return nil
-  }
-
   log.Println("Scanning BBC API")
 
-  err := walk.NewPathWalker().
+  return walk.NewPathWalker().
     IsFile().
     PathNotContain("/reference/").
     PathHasSuffix(".html").
-    Then(b.extractMeta).
+      Then(hugo.FrontMatterActionOf().
+        OtherExists("api", b.extractApi).
+        OtherExists("osbyte", b.extractOsbyte).
+        OtherExists("osword", b.extractOsword).
+        Walk()).
     Walk(book.ContentPath())
-  if err != nil {
-    return err
-  }
-
-  b.extracted = true
-  return nil
-}
-
-func (b *BBC) extractMeta(path string, _ os.FileInfo) error {
-  fm := hugo.FrontMatter{}
-  err := fm.LoadFrontMatter("", path)
-  if err != nil {
-    return err
-  }
-
-  if api, exists := fm.Other["api"]; exists {
-    b.extractApi(api)
-  }
-
-  if osbyte, exists := fm.Other["osbyte"]; exists {
-    b.extractOsbyte(osbyte)
-  }
-
-  if osword, exists := fm.Other["osword"]; exists {
-    b.extractOsword(osword)
-  }
-
-  return nil
 }

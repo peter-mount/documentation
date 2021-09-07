@@ -5,26 +5,35 @@ import (
 )
 
 // ForEachInterface will invoke a function for every entry in v if v is a slice
-func ForEachInterface(v interface{}, f func(interface{})) {
+func ForEachInterface(v interface{}, f func(interface{}) error) error {
   if a, ok := v.([]interface{}); ok {
     for _, e := range a {
-      f(e)
+      if err := f(e); err != nil {
+        return err
+      }
     }
   }
+  return nil
 }
 
 // IfMap will invoke a function if v is a map
-func IfMap(v interface{}, f func(map[interface{}]interface{})) {
+func IfMap(v interface{}, f func(map[interface{}]interface{}) error) error {
   if m, ok := v.(map[interface{}]interface{}); ok {
-    f(m)
+    if err := f(m); err != nil {
+      return err
+    }
   }
+  return nil
 }
 
 // IfMapEntry invokes a function if a map contains an entry
-func IfMapEntry(m map[interface{}]interface{}, n interface{}, f func(interface{})) {
+func IfMapEntry(m map[interface{}]interface{}, n interface{}, f func(interface{}) error) error {
   if v, ok := m[n]; ok {
-    f(v)
+    if err := f(v); err != nil {
+      return err
+    }
   }
+  return nil
 }
 
 func DecodeString(v interface{}, def string) string {
@@ -85,16 +94,18 @@ func DecodeBool(v interface{}) (bool, bool) {
 
 func IfMapEntryString(m map[interface{}]interface{}, n string) string {
   var s string
-  IfMapEntry(m, n, func(i interface{}) {
+  _ = IfMapEntry(m, n, func(i interface{}) error {
     s = DecodeString(i, "")
+    return nil
   })
   return s
 }
 
 func IfMapEntryBool(m map[interface{}]interface{}, n string) bool {
   var s bool
-  IfMapEntry(m, n, func(i interface{}) {
+  _ = IfMapEntry(m, n, func(i interface{}) error {
     s, _ = DecodeBool(i)
+    return nil
   })
   return s
 }
