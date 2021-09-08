@@ -8,10 +8,11 @@
     {{ $break := cond .DoPageBreak "page-break-before: always" "" }}
 	<h1 id="pg-{{ .Page.File.UniqueID }}">{{ .PageNum }} - {{ .Page.Title }}</h1>
     {{ with .Page.Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
-    {{ partial "bbc/api.html" .Page }}
-    {{ partial "bbc/osbyte.html" .Page }}
-    {{ partial "bbc/osword.html" .Page }}
+    {{- partial "bbc/api.html" .Page -}}
+    {{- partial "bbc/osbyte.html" .Page -}}
+    {{- partial "bbc/osword.html" .Page -}}
+    {{- partial "6502/memorymap.html" . -}}
 	{{ .Page.Content }}
-    {{ partial "6502/opcode.html" .Page }}
+    {{- partial "6502/opcode.html" .Page -}}
 </div>
 {{ end }}

@@ -22,6 +22,7 @@
     {{- partial "bbc/api.html" . -}}
     {{- partial "bbc/osbyte.html" . -}}
     {{- partial "bbc/osword.html" . -}}
+    {{- partial "6502/memorymap.html" . -}}
     {{ .Content }}
     {{- if isset .Params "notitle" | not -}}
     <div style="break-inside: avoid">

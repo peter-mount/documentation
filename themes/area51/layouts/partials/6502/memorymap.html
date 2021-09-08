@@ -1,0 +1,22 @@
+{{- if isset .Params "memorymap" -}}
+<table class="table table-striped table-hover table-sm table-borderless">
+    <thead>
+    <tr>
+        <th>Address</th>
+        <th>Len</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{- range $.Params.memorymap -}}
+    <tr>
+        <td>{{.address}}</td>
+        <td>{{.length}}</td>
+        <td>{{.name}}</td>
+        <td>{{.desc}}</td>
+    </tr>
+    {{- end -}}
+    </tbody>
+</table>
+{{- end -}}
