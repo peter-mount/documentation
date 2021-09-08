@@ -1,0 +1,226 @@
+---
+type: "manual"
+title: "Page 03"
+linkTitle: "Page 03"
+weight: 3
+categories:
+  - bbc
+memorymap:
+  - address: "0300"
+    length: 2
+    desc: "X/Right coordinate of graphics window"
+  - address: "0302"
+    length: 2
+    desc: "Y/Bottom coordinate of graphics window"
+  - address: "0304"
+    length: 2
+    desc: "X/left coordinate of graphics window"
+  - address: "0306"
+    length: 2
+    desc: "Y/Top coordinate of graphics window"
+
+  - address: "0308"
+    length: 1
+    desc: "X/left of text window"
+  - address: "0309"
+    length: 1
+    desc: "Y/bottom of text window"
+  - address: "030A"
+    length: 1
+    desc: "X/right of text window"
+  - address: "030B"
+    length: 1
+    desc: "Y/top of text window"
+
+  - address: "030C"
+    length: 2
+    desc: "X coordinate of graphics origin"
+  - address: "030E"
+    length: 2
+    desc: "Y coordinate of graphics origin"
+
+  - address: "0310"
+    length: 4
+    desc: "Current graphics origin in external coordinates"
+  - address: "0314"
+    length: 4
+    desc: "Current graphics cursor in external coordinates"
+
+  - address: "0318"
+    length: 1
+    desc: "Text cursor X coordinate"
+  - address: "0319"
+    length: 1
+    desc: "Text cursor Y coordinate"
+  - address: "031A"
+    length: 1
+    desc: "Line within current graphics char of graphics point"
+  - address: "031B"
+    length: 4
+    desc: "Graphic workspace or start of VDU queue"
+  - address: "031F"
+    length: 5
+    desc: "VDU queue"
+  - address: "0324"
+    length: 4
+    desc: "Current graphics cursor in internal coordinates"
+
+  - address: "033C"
+    length: 2
+    desc: "Graphics cursor Y coordinate"
+  - address: "033E"
+    length: 2
+    desc: "Graphics cursor X coordinate"
+
+  - address: "034A"
+    length: 2
+    desc: "Text cursor address"
+  - address: "034C"
+    length: 2
+    desc: "Text window width in bytes"
+  - address: "034E"
+    length: 1
+    desc: "High byte of screen memory start address, Low is 0x00"
+  - address: "034F"
+    length: 1
+    desc: "Bytes per character"
+  - address: "0350"
+    length: 2
+    desc: "Address of top-left of screen"
+  - address: "0352"
+    length: 2
+    desc: "No bytes per line"
+  - address: "0354"
+    length: 1
+    desc: "Screen memory length"
+  - address: "0355"
+    length: 1
+    desc: "Mode"
+  - address: "0356"
+    length: 1
+    desc: "Screen memory map type"
+  - address: "0357"
+    length: 1
+    desc: "Foreground text colour"
+  - address: "0358"
+    length: 1
+    desc: "Background text colour"
+  - address: "0359"
+    length: 1
+    desc: "Graphics foreground mask"
+  - address: "035A"
+    length: 1
+    desc: "Graphics background mask"
+  - address: "035B"
+    length: 1
+    desc: "Graphics foreground modifier"
+  - address: "035C"
+    length: 1
+    desc: "Graphics background modifier"
+  - address: "035D"
+    length: 2
+    desc: "General VDU jump vector"
+  - address: "035F"
+    length: 1
+    desc: "Record of last setting of 6845 cursor start reg"
+  - address: "0360"
+    length: 1
+    desc: "No colours available"
+  - address: "0361"
+    length: 1
+    desc: "No of pixels per byte"
+  - address: "0362"
+    length: 2
+    desc: "left/right colour masks"
+  - address: "0364"
+    length: 2
+    desc: "Text input cursor coordinates"
+  - address: "0366"
+    length: 1
+    desc: "Teletext output cursor character"
+  - address: "0367"
+    length: 1
+    desc: "Font flag (RAM or ROM)"
+    val:
+      "Bit 1": "Characters 224-255"
+      "Bit 2": "Characters 192-223"
+      "Bit 3": "Characters 160-191"
+      "Bit 4": "Characters 128-159"
+      "Bit 5": "Characters 96-127"
+      "Bit 6": "Characters 64-95"
+      "Bit 7": "Characters 32-63"
+  - address: "0368"
+    length: 7
+    desc: "Font location bytes"
+  - address: "036F"
+    length: 16
+    desc: "Palette mapping actual colour for each logical colour"
+  - address: "0380"
+    length: 29
+    desc: "Header block for BPUT file store"
+  - address: "039D"
+    length: 1
+    desc: "Offset of next byte to be output into BPUT buffer"
+  - address: "039E"
+    length: 1
+    desc: "Offset of next byte to be read from BGET buffer"
+  - address: "039F"
+    length: 8
+    desc: "Unused"
+  - address: "03A7"
+    length: 11
+    desc: "Filename of file being BGETed"
+
+  - address: "03B2"
+    length: 31
+    desc: "Block header of most recent block read"
+  - address: "03B2"
+    offset: 0
+    length: 12
+    desc: "Filename terminated by zero"
+  - address: "03BE"
+    offset: 12
+    length: 4
+    desc: "Load address"
+  - address: "03C2"
+    offset: 16
+    length: 4
+    desc: "Exec address"
+  - address: "03C6"
+    offset: 20
+    length: 2
+    desc: "Block number address"
+  - address: "03C8"
+    offset: 22
+    length: 2
+    desc: "Block length"
+  - address: "03CA"
+    offset: 24
+    length: 1
+    desc: "Block flag byte"
+  - address: "03CB"
+    offset: 25
+    length: 4
+    desc: "4 spare bytes"
+  - address: "03CF"
+    offset: 29
+    length: 2
+    desc: "Checksum"
+
+  - address: "03D1"
+    length: 1
+    desc: "Sequential block gap, *OPT3"
+  - address: "03D2"
+    length: 11
+    desc: "Filename of file being searched for"
+  - address: "03DD"
+    length: 2
+    desc: "Number of next block expected for BGET"
+  - address: "03DF"
+    length: 1
+    desc: "Copy of block flag of last block read"
+  - address: "03E0"
+    length: 32
+    desc: "Runtime keyboard buffer"
+
+---
