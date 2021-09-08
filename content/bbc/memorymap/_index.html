@@ -21,64 +21,61 @@ categories:
         <tbody>
         <tr>
             <td>0000</td>
-            <td colspan="3">Current Language Zero Page</td>
+            <td colspan="2">Current Language Zero Page</td>
+            <td rowspan="15">Master maps main ram even in shadow mode</td>
         </tr>
         <tr>
             <td>0080</td>
-            <td colspan="3">Operating System Zero Page</td>
+            <td colspan="2">Operating System Zero Page</td>
         </tr>
         <tr>
             <td>0100</td>
-            <td colspan="3">Processor Stack</td>
+            <td colspan="2">Processor Stack</td>
         </tr>
         <tr>
             <td>0200</td>
-            <td colspan="3">Operating System Workspace</td>
+            <td colspan="2">Operating System Workspace</td>
         </tr>
         <tr>
             <td>0400</td>
-            <td colspan="3">Language Workspace</td>
+            <td colspan="2">Language Workspace</td>
         </tr>
         <tr>
             <td>0800</td>
-            <td colspan="3">Sound & Printer Buffer</td>
+            <td colspan="2">Sound & Printer Buffer</td>
         </tr>
         <tr>
             <td>0900</td>
-            <td colspan="3">RS423, Speech & Tape output Buffer</td>
+            <td colspan="2">RS423, Speech & Tape output Buffer</td>
         </tr>
         <tr>
             <td>0A00</td>
-            <td colspan="3">RS423 & Tape input Buffer</td>
+            <td colspan="2">RS423 & Tape input Buffer</td>
         </tr>
         <tr>
             <td>0B00</td>
-            <td colspan="3">Function Keys</td>
+            <td colspan="2">Function Keys</td>
         </tr>
         <tr>
             <td>0C00</td>
-            <td colspan="3">User defined graphics</td>
+            <td colspan="2">User defined graphics</td>
         </tr>
         <tr>
             <td>0D00</td>
-            <td colspan="3">NMI routines (Disk/Econet)</td>
+            <td colspan="2">NMI routines (Disk/Econet)</td>
         </tr>
         <tr>
             <td>0D9F</td>
-            <td colspan="3">Expander vector set</td>
+            <td colspan="2">Expander vector set</td>
         </tr>
         <tr>
             <td>0DF0</td>
-            <td colspan="3">Paged ROM workspace storage locations</td>
+            <td colspan="2">Paged ROM workspace storage locations</td>
         </tr>
         <tr>
             <td>0E00</td>
             <td rowspan="6">USER workspace</td>
             <td >DFS workspace (not Master)</td>
-            <td rowspan="7">
-                USER workspace with shadow Mode 128&hellip;134<br/>
-                Screen memory is in shadow ram at same addresses as on normal machines
-            </td>
         </tr>
         <tr>
             <td>1900</td>
@@ -87,6 +84,10 @@ categories:
         <tr>
             <td>3000</td>
             <td>Screen (Mode 0, 1, 2)</td>
+            <td rowspan="5">
+                USER workspace with shadow Mode 128&hellip;134<br/>
+                Screen memory is in shadow ram at same addresses as on normal machines
+            </td>
         </tr>
         <tr>
             <td>4000</td>
@@ -107,11 +108,28 @@ categories:
         <tr>
             <td>8000</td>
             <td colspan="2">Paged Roms</td>
-            <td>Paged Rom/Sideways Ram</td>
+            <td>Private Ram</td>
         </tr>
         <tr>
             <td>C000</td>
-            <td colspan="3">OS ROM</td>
+            <td colspan="2" rowspan="5">OS ROM</td>
+            <td>Paged rom workspace</td>
+        </tr>
+        <tr>
+            <td>DC00</td>
+            <td>MOS CLI Buffer</td>
+        </tr>
+        <tr>
+            <td>DD00</td>
+            <td>*MOVE workspace</td>
+        </tr>
+        <tr>
+            <td>DF00</td>
+            <td>MOS private workspace</td>
+        </tr>
+        <tr>
+            <td>E000</td>
+            <td>OS ROM</td>
         </tr>
         <tr>
             <td>FC00</td>
