@@ -1,4 +1,11 @@
 {{- if isset .Params "osword" -}}
+{{- $hasBBC := 0}}{{$hasMaster := 0}}{{$hasElk := 0}}{{$hasOther := 0 -}}
+{{- range $.Params.osword -}}
+{{- if isset .compatibility "bbc" }}{{ $hasBBC = 1 }}{{end }}
+{{- if isset .compatibility "master" }}{{ $hasBBC = 1 }}{{end }}
+{{- if isset .compatibility "electron" }}{{ $hasBBC = 1 }}{{end }}
+{{- if isset .compatibility "other" }}{{ $hasOther = 1 }}{{end }}
+{{- end -}}
 <table class="table table-striped table-hover table-sm table-borderless">
     <thead>
     <tr>
@@ -9,10 +16,10 @@
     <tr>
         <th scope="col"><em>(dec)</em></th>
         <th scope="col"><em>(hex)</em></th>
-        <th scope="col">BBC</th>
+        {{- if $hasBBC }}<th scope="col">BBC</th>
         <th scope="col">Master</th>
-        <th scope="col">Electron</th>
-        <th scope="col">Other</th>
+        <th scope="col">Electron</th>{{ end -}}
+        {{- if $hasOther }}<th scope="col">Other</th>{{ end -}}
     </tr>
     </thead>
     <tbody>
@@ -21,10 +28,10 @@
         <td>{{.int}}</td>
         <td>{{.hex}}</td>
         <td>{{.title}}</td>
-        <td>{{ if isset .compatibility "bbc" }}x{{end }}</td>
+        {{- if $hasBBC }}<td>{{ if isset .compatibility "bbc" }}x{{end }}</td>
         <td>{{ if isset .compatibility "master" }}x{{end }}</td>
-        <td>{{ if isset .compatibility "electron" }}x{{end }}</td>
-        <td>{{ if isset .compatibility "other" }}{{.compatibility.other}}{{end }}</td>
+        <td>{{ if isset .compatibility "electron" }}x{{end }}</td>{{ end -}}
+        {{- if $hasOther }}<td>{{ if isset .compatibility "other" }}{{.compatibility.other}}{{end }}</td>{{ end -}}
     </tr>
     {{- end -}}
     </tbody>
