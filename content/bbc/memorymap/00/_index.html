@@ -7,190 +7,11 @@ categories:
     - bbc
 memorymap:
   - address: "0000"
-    length: 2
-    name: LOMEM
-    desc: Pointer to start of BASIC variables
-  - address: "0002"
-    length: 2
-    name: VARTOP
-    desc: Pointer to end of BASIC variables
-  - address: "0004"
-    length: 2
-    desc: Basic stack pointer
-  - address: "0006"
-    length: 2
-    name: HIMEM
-  - address: "0008"
-    length: 2
-    name: ERL
-  - address: "000A"
-    length: 1
-    desc: "BASIC text pointer offset"
-  - address: "000B"
-    length: 2
-    desc: "BASIC text pointer"
-  - address: "000D"
-    length: 5
-    name: RND
-    desc: "Random number store"
-  - address: "0012"
-    length: 2
-    name: TOP
-  - address: "0014"
-    length: 1
-    desc: "Number of chars in PRINT field"
-  - address: "0015"
-    length: 1
-    name: PRINT_FLAG
-    desc: "bit 7 if PRINT in hex"
-  - address: "0016"
-    length: 2
-    name: ERRORV
-    desc: "Error vector, default 0xB443"
-  - address: "0018"
-    length: 1
-    name: PAGE
-    desc: "High byte, low byte always 0x00"
-  - address: "0019"
-    length: 2
-    desc: "Secondary BASIC text pointer"
-  - address: "001B"
-    length: 1
-    desc: "Offset for secondary text pointer"
-  - address: "001C"
-    length: 2
-    desc: "DATA pointer, reset to PAGE"
-  - address: "001E"
-    length: 1
-    name: COUNT
-  - address: "001F"
-    length: 1
-    name: LISTO
-    desc: "option"
-  - address: "0020"
-    length: 1
-    name: TRACE
-    desc: "flag"
-    val:
-      "0x00": on
-      "0x01": off
-  - address: "0021"
-    length: 2
-    desc: "Maximum TRACE number"
-  - address: "0023"
-    length: 1
-    name: WIDTH
-  - address: "0024"
-    length: 1
-    desc: "No of REPEATs left"
-  - address: "0025"
-    length: 1
-    desc: "No of GOSUBs left"
-  - address: "0026"
-    length: 1
-    desc: "15*No of FORs left"
-  - address: "0027"
-    length: 1
-    desc: "Variable Type"
-    val:
-      "0x00": string
-      "0x40": integer
-      "0x05": float
-      "0xA4": function
-      "0xF2": procedure
-      "0xFF": real
-  - address: "0028"
-    length: 1
-    name: OPT
-    desc: "Value for assembler"
-    val:
-      "Bit 0": "list flag"
-      "Bit 1": "error flag"
-      "Bit 2": "relocate flag"
-  - address: "0029"
-    length: 3
-    desc: "Assembled code buffer"
-
-  - address: "002A"
-    length: 4
-    name: IAC
-    desc: "Integer accumulator"
-  - address: "002A"
-    offset: 0
-    length: 2
-    desc: "Pointer to variable"
-  - address: "002C"
-    offset: 2
-    length: 1
-    desc: "Variable type"
-    val:
-      "0x00": "8 bit byte"
-      "0x04": "32 bit integer variable"
-      "0x05": "40 bit floating point var"
-      "0x80": "string at defined address"
-      "0x81": "dynamic string"
-
-  - address: "002E"
-    length: 8
-    name: FAC1
-    desc: "Floating point accumulator 1"
-  - address: "002E"
-    offset: 0
-    length: 1
-    desc: "Sign/POINT parameter"
-  - address: "002F"
-    offset: 1
-    length: 1
-    desc: "Overflow/underflow byte"
-  - address: "0030"
-    offset: 2
-    length: 1
-    desc: "Exponent"
-  - address: "0031"
-    offset: 3
-    length: 4
-    desc: "Mantissa"
-  - address: "0035"
-    offset: 7
-    length: 1
-    desc: "rounding byte"
-
-  - address: "0036"
-    length: 1
-    desc: "length of string"
-  - address: "0037"
-    length: 2
-    desc: "Misc pointer"
-  - address: "0039"
-    length: 2
-    desc: "Misc pointer, var name len"
-
-  - address: "003B"
-    length: 8
-    name: FAC2
-    desc: "Floating point accumulator 2"
-  - address: "003B"
-    offset: 0
-    length: 1
-    desc: "Sign/POINT parameter"
-  - address: "003C"
-    offset: 1
-    length: 1
-    desc: "Overflow/underflow byte"
-  - address: "003D"
-    offset: 2
-    length: 1
-    desc: "Exponent"
-  - address: "003E"
-    offset: 3
-    length: 4
-    desc: "Mantissa"
-  - address: "0042"
-    offset: 7
-    length: 1
-    desc: "rounding byte"
+    length: 144
+    desc: "Allocated to current language"
 
   - address: "0070"
+    offset: "0x70"
     length: 32
     desc: "Guaranteed unused with BASIC"
 
@@ -227,6 +48,116 @@ memorymap:
   - address: "00D1"
     length: 1
     desc: "Byte mask for current graphics point"
+  - address: "00D2"
+    length: 2
+    desc: "Text colour to be ORed & EORed into memory respectively"
+  - address: "00D4"
+    length: 2
+    desc: "Graphics colour to be ORed & EORed into memory respectively"
+  - address: "00D6"
+    length: 2
+    desc: "Address of top line of current graphics character cell"
+  - address: "00D8"
+    length: 1
+    desc: "Caps-lock/shift-lock"
+    val:
+      "48": "No locks"
+      "32": "Caps lock"
+      "16": "Shift lock"
+  - address: "00DA"
+    length: 6
+    desc: "Temp workspace"
+  - address: "00E0"
+    length: 2
+    desc: "Pointer to row multiplication table, high byte first"
+
+  - address: "00E2"
+    length: 1
+    desc: "Cassette filing system status"
+    val:
+      "Bit 0": "Input file open"
+      "Bit 1": "Output file open"
+      "Bit 2": "Unused"
+      "Bit 3": "Set if currently *CAT"
+      "Bit 4": "Unused"
+      "Bit 5": "Unused"
+      "Bit 6": "Set if at end of file"
+      "Bit 7": "Set if end of file warning issued"
+  - address: "00E3"
+    length: 1
+    desc: "Cassette filing system options *OPT"
+
+  - address: "00E4"
+    length: 3
+    desc: "General OS workspace"
+
+  - address: "00E7"
+    length: 1
+    desc: "Auto repeat countdown timer"
+
+  - address: "00E8"
+    length: 2
+    desc: "Pointer to input buffer used by OSWORD 0x01"
+  - address: "00EA"
+    length: 1
+    desc: "RS423 timeout counter"
+    val:
+      "=1": "Cassette filing system using 6850"
+      "=0": "RS423 system holds 6850 but has timed out"
+      "<0": "RS423 system holds 6850 but has not yet timed out"
+  - address: "00EB"
+    length: 1
+    desc: "Cassette critical flag"
+
+  - address: "00EC"
+    length: 1
+    desc: "Internal key no of most recently pressed key"
+  - address: "00ED"
+    length: 1
+    desc: "Internal key no of first key pressed of those still pressed"
+  - address: "00EE"
+    length: 1
+    desc: "Internal key number of character to be ignored when scanning keyboard"
+    val:
+      "Note": "0xEE is also RAM copy of 1MHz bus register"
+  - address: "00EF"
+    length: 1
+    desc: "Accumulator value for most recent OSBYTE/OSWORD"
+  - address: "00F0"
+    length: 1
+    desc: "X register for most recent OSBYTE/OSWORD"
+  - address: "00F1"
+    length: 1
+    desc: "Y register value for most recent OSBYTE/OSWORD"
+  - address: "00F2"
+    length: 2
+    desc: "text pointer for processing OS commands/filenames"
+  - address: "00F4"
+    length: 1
+    desc: "RAM copy of currently selected Paged ROM"
+  - address: "00F5"
+    length: 1
+    desc: "Current logical speech PHROM or ROM filing system ROM number"
+  - address: "00F6"
+    length: 2
+    desc: "Address pointer into paged ROM or speech PHROM"
+  - address: "00F8"
+    length: 2
+    desc: "Unused"
+  - address: "00FA"
+    length: 2
+    desc: "General OS workspace"
+  - address: "00FC"
+    length: 1
+    desc: "Accumulator saved in IRQ routine"
+  - address: "00FD"
+    length: 2
+    desc: "Pointer to error message"
+  - address: "00FF"
+    length: 1
+    desc: "Escape status"
+    val:
+      "Bit 7": "set if ESCAPE pressed"
 
 
 ---
