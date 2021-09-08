@@ -1,0 +1,240 @@
+---
+type: "manual"
+title: "Page 00"
+linkTitle: "Page 00"
+weight: -1
+categories:
+    - bbc
+memorymap:
+  - address: "0000"
+    length: 2
+    name: LOMEM
+    desc: Pointer to start of BASIC variables
+  - address: "0002"
+    length: 2
+    name: VARTOP
+    desc: Pointer to end of BASIC variables
+  - address: "0004"
+    length: 2
+    desc: Basic stack pointer
+  - address: "0006"
+    length: 2
+    name: HIMEM
+  - address: "0008"
+    length: 2
+    name: ERL
+  - address: "000A"
+    length: 1
+    desc: "BASIC text pointer offset"
+  - address: "000B"
+    length: 2
+    desc: "BASIC text pointer"
+  - address: "000D"
+    length: 5
+    name: RND
+    desc: "Random number store"
+  - address: "0012"
+    length: 2
+    name: TOP
+  - address: "0014"
+    length: 1
+    desc: "Number of chars in PRINT field"
+  - address: "0015"
+    length: 1
+    name: PRINT_FLAG
+    desc: "bit 7 if PRINT in hex"
+  - address: "0016"
+    length: 2
+    name: ERRORV
+    desc: "Error vector, default 0xB443"
+  - address: "0018"
+    length: 1
+    name: PAGE
+    desc: "High byte, low byte always 0x00"
+  - address: "0019"
+    length: 2
+    desc: "Secondary BASIC text pointer"
+  - address: "001B"
+    length: 1
+    desc: "Offset for secondary text pointer"
+  - address: "001C"
+    length: 2
+    desc: "DATA pointer, reset to PAGE"
+  - address: "001E"
+    length: 1
+    name: COUNT
+  - address: "001F"
+    length: 1
+    name: LISTO
+    desc: "option"
+  - address: "0020"
+    length: 1
+    name: TRACE
+    desc: "flag"
+    val:
+      "0x00": on
+      "0x01": off
+  - address: "0021"
+    length: 2
+    desc: "Maximum TRACE number"
+  - address: "0023"
+    length: 1
+    name: WIDTH
+  - address: "0024"
+    length: 1
+    desc: "No of REPEATs left"
+  - address: "0025"
+    length: 1
+    desc: "No of GOSUBs left"
+  - address: "0026"
+    length: 1
+    desc: "15*No of FORs left"
+  - address: "0027"
+    length: 1
+    desc: "Variable Type"
+    val:
+      "0x00": string
+      "0x40": integer
+      "0x05": float
+      "0xA4": function
+      "0xF2": procedure
+      "0xFF": real
+  - address: "0028"
+    length: 1
+    name: OPT
+    desc: "Value for assembler"
+    val:
+      "Bit 0": "list flag"
+      "Bit 1": "error flag"
+      "Bit 2": "relocate flag"
+  - address: "0029"
+    length: 3
+    desc: "Assembled code buffer"
+
+  - address: "002A"
+    length: 4
+    name: IAC
+    desc: "Integer accumulator"
+  - address: "002A"
+    offset: 0
+    length: 2
+    desc: "Pointer to variable"
+  - address: "002C"
+    offset: 2
+    length: 1
+    desc: "Variable type"
+    val:
+      "0x00": "8 bit byte"
+      "0x04": "32 bit integer variable"
+      "0x05": "40 bit floating point var"
+      "0x80": "string at defined address"
+      "0x81": "dynamic string"
+
+  - address: "002E"
+    length: 8
+    name: FAC1
+    desc: "Floating point accumulator 1"
+  - address: "002E"
+    offset: 0
+    length: 1
+    desc: "Sign/POINT parameter"
+  - address: "002F"
+    offset: 1
+    length: 1
+    desc: "Overflow/underflow byte"
+  - address: "0030"
+    offset: 2
+    length: 1
+    desc: "Exponent"
+  - address: "0031"
+    offset: 3
+    length: 4
+    desc: "Mantissa"
+  - address: "0035"
+    offset: 7
+    length: 1
+    desc: "rounding byte"
+
+  - address: "0036"
+    length: 1
+    desc: "length of string"
+  - address: "0037"
+    length: 2
+    desc: "Misc pointer"
+  - address: "0039"
+    length: 2
+    desc: "Misc pointer, var name len"
+
+  - address: "003B"
+    length: 8
+    name: FAC2
+    desc: "Floating point accumulator 2"
+  - address: "003B"
+    offset: 0
+    length: 1
+    desc: "Sign/POINT parameter"
+  - address: "003C"
+    offset: 1
+    length: 1
+    desc: "Overflow/underflow byte"
+  - address: "003D"
+    offset: 2
+    length: 1
+    desc: "Exponent"
+  - address: "003E"
+    offset: 3
+    length: 4
+    desc: "Mantissa"
+  - address: "0042"
+    offset: 7
+    length: 1
+    desc: "rounding byte"
+
+  - address: "0070"
+    length: 32
+    desc: "Guaranteed unused with BASIC"
+
+  - address: "0090"
+    length: 16
+    desc: "Econet workspace"
+
+  - address: "00A0"
+    length: 8
+    desc: "Allocated to current NMI owner"
+  - address: "00A8"
+    length: 8
+    desc: "OS command workspace"
+
+  - address: "00B0"
+    length: 16
+    desc: "File system scratch space"
+  - address: "00C0"
+    length: 16
+    desc: "File system private space"
+
+  - address: "00D0"
+    length: 1
+    desc: "VDU status"
+    val:
+      "Bit 0": "VDU 2 enabled"
+      "Bit 1": "Scroll disabled"
+      "Bit 2": "Paged scroll selected"
+      "Bit 3": "Soft scrolling"
+      "Bit 4": "unused"
+      "Bit 5": "VDU 5 enabled"
+      "Bit 6": "Set when edit/text cursors are separated"
+      "Bit 7": "Set if VDU driver disabled"
+  - address: "00D1"
+    length: 1
+    desc: "Byte mask for current graphics point"
+
+
+---
+<p>
+  On the BBC Micro addresses 0x0000&hellip;0x008F are reserved for the current language.
+  The table above lists the known BASIC II memory map for those addresses.
+</p>
+<p>
+  BBC Basic reserves 0x0070&hellip;0x008F for user programs.
+  User code should not use addresses outside that range unless they have replaced BASIC.
+</p>
