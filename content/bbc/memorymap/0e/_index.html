@@ -1,0 +1,53 @@
+---
+type: "manual"
+title: "Page 0E-18 DFS"
+linkTitle: "Page 0E-18 DFS"
+weight: 14
+categories:
+  - bbc
+memorymap:
+  - address: "0E00"
+    length: 256
+    desc: "Copy of track 0 sector 0 catalogue data"
+  - address: "0F00"
+    length: 256
+    desc: "Copy of track 0 sector 1 catalogue data"
+  - address: "1000"
+    length: 256
+    desc: "Workspace"
+  - address: "1100"
+    length: 256
+    desc: "Parameter blocks for files/SPOOL/EXEC"
+  - address: "1200"
+    length: 256
+    desc: "First file/SPOOL/EXEC buffer"
+  - address: "1300"
+    length: 256
+    desc: "Second file buffer"
+  - address: "1400"
+    length: 256
+    desc: "Third file buffer"
+  - address: "1500"
+    length: 256
+    desc: "Fourth file buffer"
+  - address: "1600"
+    length: 256
+    desc: "Fifth file buffer"
+  - address: "1700"
+    length: 256
+    desc: "Workspace"
+  - address: "1800"
+    length: 256
+    desc: "Workspace"
+---
+
+<p>
+    This table relates to a BBC Model B with Acorn DFS active.
+    This will use pages 0x0E to 0x18 with the USER workspace starting at page 0x19.
+</p>
+
+<p>
+    This does NOT apply when either the Cassette or ROM filesystem is active,
+    or on a BBC Master 128.
+    In those cases USER workspace starts at page 0x0E.
+</p>
