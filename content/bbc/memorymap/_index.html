@@ -1,0 +1,135 @@
+---
+type: "manual"
+title: "Memory Map"
+linkTitle: "Memory Map"
+weight: 19
+categories:
+  - bbc
+---
+<div style="break-inside: avoid">
+    <p>
+    </p>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Address</th>
+            <th colspan="2">All machines</th>
+            <th>BBC Master 128</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0000</td>
+            <td colspan="3">Current Language Zero Page</td>
+        </tr>
+        <tr>
+            <td>0080</td>
+            <td colspan="3">Operating System Zero Page</td>
+        </tr>
+        <tr>
+            <td>0100</td>
+            <td colspan="3">Processor Stack</td>
+        </tr>
+        <tr>
+            <td>0200</td>
+            <td colspan="3">Operating System Workspace</td>
+        </tr>
+        <tr>
+            <td>0400</td>
+            <td colspan="3">Language Workspace</td>
+        </tr>
+        <tr>
+            <td>0800</td>
+            <td colspan="3">Sound & Printer Buffer</td>
+        </tr>
+        <tr>
+            <td>0900</td>
+            <td colspan="3">RS423, Speech & Tape output Buffer</td>
+        </tr>
+        <tr>
+            <td>0A00</td>
+            <td colspan="3">RS423 & Tape input Buffer</td>
+        </tr>
+        <tr>
+            <td>0B00</td>
+            <td colspan="3">Function Keys</td>
+        </tr>
+        <tr>
+            <td>0C00</td>
+            <td colspan="3">User defined graphics</td>
+        </tr>
+        <tr>
+            <td>0D00</td>
+            <td colspan="3">NMI routines (Disk/Econet)</td>
+        </tr>
+        <tr>
+            <td>0D9F</td>
+            <td colspan="3">Expander vector set</td>
+        </tr>
+        <tr>
+            <td>0DF0</td>
+            <td colspan="3">Paged ROM workspace storage locations</td>
+        </tr>
+        <tr>
+            <td>0E00</td>
+            <td rowspan="6">USER workspace</td>
+            <td >DFS workspace (not Master)</td>
+            <td rowspan="7">
+                USER workspace with shadow Mode 128&hellip;134<br/>
+                Screen memory is in shadow ram at same addresses as on normal machines
+            </td>
+        </tr>
+        <tr>
+            <td>1900</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3000</td>
+            <td>Screen (Mode 0, 1, 2)</td>
+        </tr>
+        <tr>
+            <td>4000</td>
+            <td>Screen (Mode 3)</td>
+        </tr>
+        <tr>
+            <td>5800</td>
+            <td>Screen (Mode 4, 5)</td>
+        </tr>
+        <tr>
+            <td>6000</td>
+            <td>Screen (Mode 6)</td>
+        </tr>
+        <tr>
+            <td>7B00</td>
+            <td colspan="2">Screen (Mode 7)</td>
+        </tr>
+        <tr>
+            <td>8000</td>
+            <td colspan="2">Paged Roms</td>
+            <td>Paged Rom/Sideways Ram</td>
+        </tr>
+        <tr>
+            <td>C000</td>
+            <td colspan="3">OS ROM</td>
+        </tr>
+        <tr>
+            <td>FC00</td>
+            <td colspan="3">FRED 1MHz bus</td>
+        </tr>
+        <tr>
+            <td>FD00</td>
+            <td colspan="3">JIM 1MHz bus</td>
+        </tr>
+        <tr>
+            <td>FE00</td>
+            <td colspan="3">SHIELA I/O Memory</td>
+        </tr>
+        <tr>
+            <td>FF00</td>
+            <td colspan="3">OS ROM Vectors</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
