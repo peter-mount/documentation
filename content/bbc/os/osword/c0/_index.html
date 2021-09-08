@@ -1,0 +1,95 @@
+---
+type: "manual"
+title: "IP Networking and DNS Resolution"
+linkTitle: "IP Networking and DNS Resolution"
+categories:
+  - bbc
+  - osword
+osword:
+  - hex: "C0"
+    int: 192
+    title: "IP Networking and DNS Resolution"
+    compatibility:
+      other: "SPROW Ethernet for BBC Master"
+---
+<p>
+  This call is supported on the <a href="http://www.sprow.co.uk/bbc/hardware/masternet/netprogapi.pdf">Network API</a>
+  documentation for the
+  <a href="http://www.sprow.co.uk/bbc/masternet.htm">SPROW Ethernet upgrade for the Master Series</a>
+  which I happen to have installed in my BBC Master 128.
+</p>
+
+<p>
+  This call is modelled on the Berkeley Sockets API.
+</p>
+
+<h2>Call format</h2>
+<p>
+  The control block follows the convention for high-numbered OSWORD calls where the control block contains the
+  request & response sizes, action and result codes as the first 4 bytes of the block.
+</p>
+
+<table>
+  <thead>
+  <tr>
+    <th>XY+</th>
+    <th>On entry</th>
+    <th>On exit</th>
+    <th>Range</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td>
+    <td>send block length, depends on subreason code</td>
+    <td>preserved</td>
+    <td>0x02&hellip;0x7F</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>return block length, depends on subreason code</td>
+    <td>preserved</td>
+    <td>0x02&hellip;0x7F</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>action</td>
+    <td>set to zero</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>must be zero</td>
+    <td>result</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4&hellip;</td>
+    <td>request data</td>
+    <td>result data</td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Actions</h2>
+
+<p>To allow for many functions to be performed but without using up lots of OSWord numbers a one byte
+  action code is included, allowing for up to 256 different pieces of functionality.
+  The action codes are further split into groups of 64 each:
+</p>
+<table>
+  <thead>
+  <tr>
+    <th>Action (range)</th>
+    <th>Functionality</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><td>0x00&hellip;0x3F</td><td>Socket operations</td></tr>
+  <tr><td>0x40&hellip;0x7F</td><td>Resolver operations</td></tr>
+  <tr><td>0x80&hellip;0xBF</td><td>Reserved for future use</td></tr>
+  <tr><td>0xC0&hellip;0xFF</td><td>Reserved for future use</td></tr>
+  </tbody>
+</table>
+<p>Unused or reserved action codes will return an error number at XY+3.</p>

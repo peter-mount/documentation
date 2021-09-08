@@ -1,0 +1,141 @@
+---
+type: "manual"
+title: "Resolver operations"
+linkTitle: "Resolver operations"
+weight: 20
+---
+
+<div style="page-break-inside: avoid">
+    <h2>0x40 Resolver Get Host By Name</h2>
+    <p>
+        Resolves a host name to a network address.
+    </p>
+    <p>
+        A control terminated name will be passed to the DNS resolver software built into the network module.
+        This call will then wait for a result, and only return when a match is found or timeout occurs.
+    </p>
+    <p>
+        The returned block at YX+8 onwards is a 'hostent' structure containing a list of IP addresses amongst other information,
+        the lists will remain valid until the next resolver request.
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td></td>
+            <td>Pointer to name looked up</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td></td>
+            <td>Pointer to null terminated list of pointers to aliases</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td></td>
+            <td>IP address type returned, 2 for AF_INET</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>4</td>
+            <td></td>
+            <td>Length of this address type, 4 for IPv4</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>4</td>
+            <td></td>
+            <td>Pointer to null terminated list of pointers to IP address(es)</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x41 Resolver Get Host</h2>
+    <p>
+        Resolves a host name to a network address.
+    </p>
+    <p>
+        This is very similar to GetHostByName except that it returns immediately.
+        If the name is already in the DNS cache the result will be filled in and YX+3 is zero,
+        otherwise a request is issued and a 'resolver busy' error returned.
+    </p>
+    <p>
+        Further calls to GetHost will update YX+3 until either a timeout occurs or the name is found.
+        This allows the request to be sent and the foreground program continue operating, compare this with
+        GetHostByName which blocks until the name has been found.
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td></td>
+            <td>Pointer to name looked up</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td></td>
+            <td>Pointer to null terminated list of pointers to aliases</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td></td>
+            <td>IP address type returned, 2 for AF_INET</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>4</td>
+            <td></td>
+            <td>Length of this address type, 4 for IPv4</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>4</td>
+            <td></td>
+            <td>Pointer to null terminated list of pointers to IP address(es)</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>Unsupported actions</h2>
+    <p>
+        The following actions are defined but do nothing. They do not return an error.
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>0x42</td><td>Resolver Get Cache</td></tr>
+        <tr><td>0x43</td><td>Resolver Cache Control</td></tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,139 @@
+---
+type: "manual"
+title: "Library functions"
+linkTitle: "Library functions"
+weight: 90
+---
+<div style="page-break-inside: avoid">
+<p>
+    The following listing provides BASIC functions with the same names and parameters as the corresponding
+    function in most libraries for the 'C' programming language as a convenience for use.
+</p>
+<p>
+    This is taken verbatim from the original documentation:
+</p>
+{{< highlight basic "linenos=inline" >}}
+REM Network functions
+REM (C)2010 SPROW
+:
+DEFFNgethost(name$)
+wordblk?0=8:REM Parameters in
+wordblk?1=24:REM Parameters out
+wordblk?2=&41:REM Resolver_GetHost
+wordblk?3=0:REM No error on entry
+wordblk!4=nameblk
+$nameblk=name$
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=0
+=wordblk+4:REM Address not value
+:
+DEFFNcreat(pf%,type%,prot%)
+wordblk?0=16:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&00:REM Socket_Creat
+wordblk?3=0:REM No error on entry
+wordblk!4=pf%
+wordblk!8=type%
+wordblk!12=prot%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+DEFFNbind(handle%,addr%,addrlen%)
+wordblk?0=16:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&01:REM Socket_Bind
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+wordblk!8=addr%
+wordblk!12=addrlen%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+DEFFNlisten(handle%,count%)
+wordblk?0=12:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&02:REM Socket_Listen
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+wordblk!8=count%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+{{< / highlight >}}
+</div>
+
+<div style="page-break-inside: avoid">
+{{< highlight basic "linenos=inline,linenostart=50" >}}
+DEFFNaccept(handle%,addr%,addrlenblk%)Network programmer's API
+wordblk?0=16:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&03:REM Socket_Accept
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+wordblk!8=addr%
+wordblk!12=addrlenblk%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+DEFFNconnect(handle%,addr%,addrlen%)
+wordblk?0=16:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&04:REM Socket_Connect
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+wordblk!8=addr%
+wordblk!12=addrlen%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+DEFFNrecv(handle%,data%,len%,opts%)
+wordblk?0=20:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&05:REM Socket_Recv
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+wordblk!8=data%
+wordblk!12=len%
+wordblk!16=opts%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+DEFFNsend(handle%,data%,len%,opts%)
+wordblk?0=20:REM Parameters in
+wordblk?1=8:REM Parameters out
+wordblk?2=&08:REM Socket_Send
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+wordblk!8=data%
+wordblk!12=len%
+wordblk!16=opts%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+IFwordblk?3<>0 THEN=-1
+=wordblk!4
+:
+DEFPROCshutdown(handle%,type%)
+wordblk?0=12:REM Parameters in
+wordblk?1=4:REM Parameters out
+wordblk?2=&0B:REM Socket_Shutdown
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%Network programmer's API
+wordblk!8=type%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+ENDPROC
+:
+DEFPROCclose(handle%)
+wordblk?0=8:REM Parameters in
+wordblk?1=4:REM Parameters out
+wordblk?2=&10:REM Socket_Close
+wordblk?3=0:REM No error on entry
+wordblk!4=handle%
+A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
+ENDPROC
+{{< / highlight >}}
+</div>

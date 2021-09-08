@@ -53,16 +53,79 @@ api:
         </tr>
         </tbody>
     </table>
+
+    <h2>OSWORD Specification</h2>
     <p>
-        OSWORD ID's in the range &E0..&FF (224..255) are passed to the USERV (&200) handler with the registers
-        unchanged to the original OSWORD call.
+        Only OSWORD 0x00 returns a result in the Y register and the Carry flag.
+        The registers are preserved for all other calls.
+    </p>
+    <p>
+        OSWORD calls with numbers 0x15&hellip;0x7F must only have a maximum of 16 bytes in the control block.
+    </p>
+    <p>
+        OSWORD calls with numbers greater than 0x7F must contain the number of parameters to send in the first byte of
+        the control block and the number of parameters to receive in the second byte.
+        Both of these must include the first two bytes so their values are in the range of 0x02&hellip;0x7f.
+    </p>
+    <p>
+        Note the first two values in the parameter block are required to instruct the Tube software how big the block
+        is when the OSWord is issued from a coprocessor.
+    </p>
+    <p>
+        Due to a limitation in the host side of the Tube software these values cannot exceed 128 bytes in either direction.
+    </p>
+    <p>
+        OSWORD calls with numbers &E0 to &FF are "available for use by the user" and are passed directly to USERV (0x0200) on the 6502 I/O processor.
+        This makes them easier to implement as only USERV needs to be hooked into instead of WORDV, and 0xF0/0xF1 is already prepared pointing at the control block.
     </p>
     <p>
         All other unrecognised OSWORD calls are offered to the paged ROMs.
     </p>
-    <h3>Exit parameters</h3>
     <p>
-        Only OSWORD 0x00 returns a result in the Y register and the Carry flag.
-        The registers are undefined when all others.
+        Although not enforced by the API, the convention for high-numbered OSWORD calls is for the control block contents to be:
     </p>
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>On entry</th>
+            <th>On exit</th>
+            <th>Range</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0</td>
+            <td>send block length, depends on subreason code</td>
+            <td>preserved</td>
+            <td>0x02&hellip;0x7F</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>return block length, depends on subreason code</td>
+            <td>preserved</td>
+            <td>0x02&hellip;0x7F</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>action</td>
+            <td>set to zero</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>must be zero</td>
+            <td>result</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4&hellip;</td>
+            <td>request data</td>
+            <td>result data</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+
 </div>

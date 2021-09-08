@@ -1,0 +1,453 @@
+---
+type: "manual"
+title: "Socket operations"
+linkTitle: "Socket operations"
+weight: 10
+---
+
+<div style="page-break-inside: avoid">
+    <h2>0x00 Socket Create</h2>
+    <p>
+        This function sets up a new socket and returns a handle for its future use.
+        Only a limited number of sockets can be opened simultaneously.
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>Communications domain, 2 for PF_INET</td>
+            <td>socket number created or -1 on failure</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>
+                Socket type:<br/>
+                1=stream<br/>2=datagram<br/>3=raw
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>Protocol or zero for default for the socket type</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x01 Socket Bind</h2>
+    <p>
+        Bind a socket to a specific local address.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 if the bind fails</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Pointer to socket address to bind to</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>Size of socket address, usually 16</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Socket address</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>sa+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>Size of socket address, usually 16</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>Address family, 2 for AF_INET</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>Port number</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>IPv4 address</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Zero</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>Zero</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+        Note that the size of the socket address structure is used twice, once in the structure itself, and also as the
+        third parameter at YX+12.
+    </p>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x02 Socket Listen</h2>
+    <p>
+        Switch a socket into listening for incoming connection attempts.
+        Only sockets opened and configured to tbe stream based sockets can be set to listen,
+        datagram and raw sockets are connectionless and cannot be set to listen.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 if the call fails</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Backlog of unaccepted connections to allow before rejecting</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x03 Socket Accept</h2>
+    <p>
+        Switch a socket into listening for incoming connection attempts.
+        Only sockets opened and configured to tbe stream based sockets can be set to listen,
+        datagram and raw sockets are connectionless and cannot be set to listen.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 if the bind fails</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Pointer to socket address to bind to</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>pointer to an integer describing the size of socket address (usually 16)</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+        Note: XY+12 in the original documentation mentions this is a pointer, but in other calls it's an actual value.
+        This needs clarifying.
+    </p>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x04 Socket Connect</h2>
+    <p>
+        Accept an incoming connection on an existing socket.
+        If there are no pending incoming connections, this call will block until there is one.
+        On accepting, the address details of the remote computer will be filled in at the block pointed to by YX+8.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 if the connect fails</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Pointer to socket address to bind to</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>size of socket address (usually 16)</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x05 Socket Receive</h2>
+    <p>
+        Read data from the given socket.
+        This function attempts to read data or waits until some is ready.
+    </p>
+    <p>
+        It is possible that zero bytes are returned, probably indicating that the remote computer has disconnected.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 on failure, otherwise number of bytes received</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Pointer to data buffer to receive into</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>Buffer size</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>4</td>
+            <td>Flags, usually 0</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x08 Socket Send</h2>
+    <p>
+        Send out data on the given socket.
+        For raw and datagram style sockets the message length must fit within one packet otherwise the request will
+        be rejected, for stream style sockets as much as the message as possible will be queued and sent subject to
+        available memory.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 on failure, otherwise number of bytes sent</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Pointer to data buffer to send</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>Buffer size</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>4</td>
+            <td>Flags, usually 0</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x0B Socket Shutdown</h2>
+    <p>
+        Shutdown part of a socket.
+        This allows a socket to be partially shut where the TCP/IP stack supports this. Caution should be taken as
+        this does not actually close the socket, so does not free up any of the resources associated with the socket -
+        see details of Close for how to do this.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 on failure</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>4</td>
+            <td>Direction to shut<br/>0=receive side<br/>1=transmit side<br/>2=both sides</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>4</td>
+            <td>Buffer size</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>4</td>
+            <td>Flags, usually 0</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>0x10 Socket Close</h2>
+    <p>
+        Close a socket.
+        As there are fixed number of sockets available it is important to remember to close sockets once any
+        transactions are complete.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>XY+</th>
+            <th>Length</th>
+            <th>On entry</th>
+            <th>On exit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>socket</td>
+            <td>-1 on failure</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-inside: avoid">
+    <h2>Unsupported actions</h2>
+    <p>
+        The following actions are defined but are not supported. Using them will return an error.
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>0x06</td><td>Socket Receive From</td></tr>
+            <tr><td>0x07</td><td>Socket Receive Message</td></tr>
+            <tr><td>0x09</td><td>Socket Send to</td></tr>
+            <tr><td>0x0A</td><td>Socket Send Message</td></tr>
+            <tr><td>0x0C</td><td>Socket Set Socket Option</td></tr>
+            <tr><td>0x0D</td><td>Socket Get Socket Option</td></tr>
+            <tr><td>0x0E</td><td>Socket Get Peer Name</td></tr>
+            <tr><td>0x0F</td><td>Socket Get Socket Name</td></tr>
+        <tr><td>0x11</td><td>Socket Select</td></tr>
+        <tr><td>0x12</td><td>Socket Ioctl</td></tr>
+        <tr><td>0x13</td><td>Socket Read</td></tr>
+        <tr><td>0x14</td><td>Socket Write</td></tr>
+        <tr><td>0x15</td><td>Socket Stat</td></tr>
+        <tr><td>0x16</td><td>Socket Readv</td></tr>
+        <tr><td>0x17</td><td>Socket Writev</td></tr>
+        </tbody>
+    </table>
+</div>
