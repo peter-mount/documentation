@@ -1,14 +1,17 @@
 package html
 
-import "strings"
+import (
+  "strings"
+)
 
 func (e *Element) ChipExpansion(s string) *Element {
   // FIXME This works but does not nest expressions. If that's needed it needs rewriting.
   for s != "" {
+    ix := strings.Index(s, " ")
     is := strings.Index(s, "(")
     ie := strings.Index(s, ")")
-    if ie > is && is > -1 {
-      switch s[:is] {
+    if (ix == -1 || (ix > -1 && ix > is)) && ie > is && is > -1 {
+      switch strings.TrimSpace(s[:is]) {
       // Address line
       case "A":
         e.Text("A").Sub().ChipExpansion(s[is+1 : ie]).End().End()
@@ -32,6 +35,9 @@ func (e *Element) ChipExpansion(s string) *Element {
         e.Text(s[:ie+1])
       }
       s = s[ie+1:]
+    } else if ix > -1 {
+      e.Text(s[:ix])
+      s = s[ix+1:]
     } else if ie > -1 {
       e.Text(s[:ie+1])
       s = s[ie+1:]
