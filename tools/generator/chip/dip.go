@@ -31,6 +31,9 @@ func dip(d *Definition) error {
         End().
         // Convert to FileBuilder
         End().
+          If(d.Title != "", func(e *html.Element) *html.Element {
+            return e.Div().Class("chip-title").Text(d.Title).End()
+          }).
         End().
         FileBuilder()).
     FileHandler().

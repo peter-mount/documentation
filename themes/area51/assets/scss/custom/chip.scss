@@ -1,7 +1,6 @@
 // Chip layouts
 .chip {
     display: block;
-    border: 1px dotted red;
     margin: .25em;
     padding-top: 1em;
     padding-bottom: 1em;
@@ -67,12 +66,20 @@
     span.not {
         border-top: 1px solid black;
     }
+
+    .chip-title {
+        text-align: center;
+        position: absolute;
+        bottom: .5em;
+        font-size: .6em;
+        width: 25em;
+    }
 }
 
 // DIP 28 pin
 .chip.dip28 {
     display: block;
-    height: 17em;
+    height: 18em;
     width: 15em;
 
     .chip-dip {
@@ -117,7 +124,7 @@
 // DIP 40 pin
 .chip.dip40 {
     display: block;
-    height: 23em;
+    height: 24em;
     width: 15em;
 
     .chip-dip {

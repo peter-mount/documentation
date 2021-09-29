@@ -56,6 +56,13 @@ func (e *Element) End() *Element {
   return e
 }
 
+func (e *Element) If(p bool, f func(*Element) *Element) *Element {
+  if p {
+    return f(e)
+  }
+  return e
+}
+
 func (e *Element) RootElement() *Element {
   n := e
   for n.parent != nil {
