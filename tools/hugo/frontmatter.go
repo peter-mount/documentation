@@ -81,13 +81,15 @@ func (a FrontMatterAction) Do(ctx context.Context, fm *FrontMatter) error {
 }
 
 func (a FrontMatterAction) Walk() walk.PathWalker {
-  return func(path string, _ os.FileInfo) error {
+  return func(path string, fileInfo os.FileInfo) error {
     fm := &FrontMatter{}
     if err := fm.LoadFrontMatter(path); err != nil {
       return err
     }
 
-    return a.Do(context.Background(), fm)
+    ctx := context.Background()
+    ctx = context.WithValue(ctx, "fileInfo", fileInfo)
+    return a.Do(ctx, fm)
   }
 }
 

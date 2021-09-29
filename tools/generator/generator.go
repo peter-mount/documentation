@@ -52,10 +52,13 @@ func (a GeneratorHandler) RunOnce(s *bool, b GeneratorHandler) GeneratorHandler 
   })
 }
 
+type GeneratorTask func() error
+
 type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf
   generators map[string]GeneratorHandler // Map of available generators
+  tasks      []GeneratorTask
 }
 
 func (g *Generator) Name() string {
@@ -93,8 +96,13 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
   return g
 }
 
+func (g *Generator) AddTask(t GeneratorTask) *Generator {
+  g.tasks = append(g.tasks, t)
+  return g
+}
+
 func (g *Generator) Run() error {
-  return g.bookShelf.Books().ForEach(
+  if err := g.bookShelf.Books().ForEach(
     context.Background(),
     hugo.WithBook().
         ForEachGenerator(
@@ -103,7 +111,18 @@ func (g *Generator) Run() error {
         IfExcelPresent(func(ctx context.Context, book *hugo.Book, excel util.ExcelBuilder) error {
           return excel.FileHandler().
             Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
-        }))
+        })); err != nil {
+    return err
+  }
+
+  for _, task := range g.tasks {
+    err := task()
+    if err != nil {
+      return err
+    }
+  }
+
+  return nil
 }
 
 func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n string) error {

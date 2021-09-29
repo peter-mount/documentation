@@ -1,0 +1,113 @@
+// Chip layouts
+.chip {
+    display: block;
+    border: 1px dotted red;
+    margin: .25em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    .chip-dip {
+        position: absolute;
+        left: 5em;
+        background: #333;
+        width: 5em;
+        color: lightgrey;
+        text-align: center;
+        vertical-align: center;
+        writing-mode: vertical-rl;
+        padding: 0.5em;
+
+        .chip-orient {
+            display: block;
+            position: absolute;
+            color: white;
+            left: .6em;
+            top: -.125em;
+            font-weight: bold;
+            font-size: 5em;
+            width: 1em;
+        }
+
+        .chip-label {
+            display: block;
+            line-height: 1em;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .chip-subLabel {
+            display: block;
+            line-height: 1em;
+        }
+    }
+
+    ol {
+        width: 5em;
+        counter-reset: chip;
+        padding: 0;
+        li {
+            width: 8.5em;
+            display: block;
+            font-size: .6em;
+            line-height: 1.75em;
+
+            span:first-child {
+                background: lightgrey;
+                width: 2em;
+                height: 1.5em;
+                text-align: center;
+                vertical-align: center;
+                border: 1px solid black;
+            }
+        }
+    }
+
+    span.not {
+        border-top: 1px solid black;
+    }
+}
+
+// DIP 40 pin
+.chip.dip40 {
+    display: inline-block;
+    height: 23em;
+    width: 15em;
+
+    .chip-dip {
+        height: 22em;
+        top: -0.5em;
+    }
+
+    ol {
+        li:nth-child(n):nth-child(-n+20) {
+            text-align: right;
+            span:first-child {
+                float: right;
+                margin-left: .5em;
+            }
+
+            span:first-child::before {
+                counter-increment: chip;
+                content: counter(chip);
+            }
+        }
+        li:nth-child(21) {
+            counter-set: chip 41;
+        }
+        li:nth-child(n+21):nth-child(-n+40) {
+            position: relative;
+            top: -35em;
+            left: 16.6em;
+            text-align: left;
+            span:first-child {
+                float: left;
+                margin-right: .5em;
+            }
+
+            span:first-child::before {
+                counter-increment: chip -1;
+                content: counter(chip);
+            }
+        }
+    }
+}

@@ -14229,6 +14229,87 @@ nav.foldable-nav .with-child ul {
     content: "\f122";
     padding-right: 0.5em; }
 
+.chip {
+  display: block;
+  border: 1px dotted red;
+  margin: .25em;
+  padding-top: 1em;
+  padding-bottom: 1em; }
+  .chip .chip-dip {
+    position: absolute;
+    left: 5em;
+    background: #333;
+    width: 5em;
+    color: lightgrey;
+    text-align: center;
+    vertical-align: center;
+    writing-mode: vertical-rl;
+    padding: 0.5em; }
+    .chip .chip-dip .chip-orient {
+      display: block;
+      position: absolute;
+      color: white;
+      left: .6em;
+      top: -.125em;
+      font-weight: bold;
+      font-size: 5em;
+      width: 1em; }
+    .chip .chip-dip .chip-label {
+      display: block;
+      line-height: 1em;
+      font-size: 2em;
+      font-weight: bold; }
+    .chip .chip-dip .chip-subLabel {
+      display: block;
+      line-height: 1em; }
+  .chip ol {
+    width: 5em;
+    counter-reset: chip;
+    padding: 0; }
+    .chip ol li {
+      width: 8.5em;
+      display: block;
+      font-size: .6em;
+      line-height: 1.75em; }
+      .chip ol li span:first-child {
+        background: lightgrey;
+        width: 2em;
+        height: 1.5em;
+        text-align: center;
+        vertical-align: center;
+        border: 1px solid black; }
+  .chip span.not {
+    border-top: 1px solid black; }
+
+.chip.dip40 {
+  display: inline-block;
+  height: 23em;
+  width: 15em; }
+  .chip.dip40 .chip-dip {
+    height: 22em;
+    top: -0.5em; }
+  .chip.dip40 ol li:nth-child(n):nth-child(-n+20) {
+    text-align: right; }
+    .chip.dip40 ol li:nth-child(n):nth-child(-n+20) span:first-child {
+      float: right;
+      margin-left: .5em; }
+    .chip.dip40 ol li:nth-child(n):nth-child(-n+20) span:first-child::before {
+      counter-increment: chip;
+      content: counter(chip); }
+  .chip.dip40 ol li:nth-child(21) {
+    counter-set: chip 41; }
+  .chip.dip40 ol li:nth-child(n+21):nth-child(-n+40) {
+    position: relative;
+    top: -35em;
+    left: 16.6em;
+    text-align: left; }
+    .chip.dip40 ol li:nth-child(n+21):nth-child(-n+40) span:first-child {
+      float: left;
+      margin-right: .5em; }
+    .chip.dip40 ol li:nth-child(n+21):nth-child(-n+40) span:first-child::before {
+      counter-increment: chip -1;
+      content: counter(chip); }
+
 footer {
   min-height: 150px; }
   @media (max-width: 991.98px) {

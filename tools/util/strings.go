@@ -48,6 +48,18 @@ func (s StringSlice) Write(w io.Writer) error {
   return err
 }
 
+func (s StringSlice) IsEmpty() bool {
+  return len(s) == 0
+}
+
+func (s StringSlice) Join(sep string) string {
+  return strings.Join(s, sep)
+}
+
+func (s StringSlice) Join2(prefix, suffix, sep string) string {
+  return prefix + s.Join(sep) + suffix
+}
+
 type StringSliceHandler func(StringSlice) (StringSlice, error)
 
 func (a StringSliceHandler) Then(b StringSliceHandler) StringSliceHandler {

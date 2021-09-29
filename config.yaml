@@ -42,5 +42,6 @@ books:
   - id: 6502
     title: "6502 Microprocessor"
     generate:
+      - chipIndex
       - 6502OpsIndex
       - 6502OpsHexIndex

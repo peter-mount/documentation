@@ -28,6 +28,8 @@
 @import "pageinfo";
 @import "taxonomy";
 
+@import "custom/chip";
+
 @if $td-enable-google-fonts {
     @import url($web-font-path);
 }

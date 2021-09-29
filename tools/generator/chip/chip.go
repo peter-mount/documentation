@@ -1,0 +1,187 @@
+package chip
+
+import (
+  "context"
+  "fmt"
+  "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/hugo"
+  util2 "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/walk"
+  "github.com/peter-mount/go-kernel"
+  "github.com/peter-mount/go-kernel/util"
+  "log"
+  "os"
+  "path"
+)
+
+// Chip handles the generation of CHIP pin layout images
+type Chip struct {
+  generator *generator.Generator   // Generator
+  chips     map[string]*Definition // Map of named chip definitions
+  extracted util.Set               // Set of book ID's so that we run once per book
+}
+
+type DefinitionHandler func(*Definition) error
+
+// Definition holds the details for this chip
+type Definition struct {
+  Name        string            `yaml:"name"`        // Unique Name of this chip
+  Category    string            `yaml:"category"`    // Category of this chip
+  SubCategory string            `yaml:"subCategory"` // Sub category of this chip
+  Title       string            `yaml:"title"`       // Title to describe this chip
+  Type        string            `yaml:"type"`        // Type of chip, e.g. "DIP"
+  Label       string            `yaml:"label"`       // Label, e.g. "MOS"
+  SubLabel    string            `yaml:"SubLabel"`    // Sub Label, e.g. "6502"
+  PinCount    int               `yaml:"PinCount"`    // Number of pins
+  Pins        map[int]string    `yaml:"pins"`        // Pin title definitions
+  Weight      int               `yaml:"weight"`      // Weight of chip, 0=natural
+  FileInfo    os.FileInfo       `yaml:"-"`           // FileInfo of containing file
+  handler     DefinitionHandler // Handler for this chip type
+}
+
+func (d *Definition) Generate() error {
+  if d.handler != nil {
+    return d.handler(d)
+  }
+
+  return fmt.Errorf("%s has no generatator handler", d.Name)
+}
+
+func (d *Definition) Path() string {
+  a := []string{"content/chipref/reference"}
+  if d.Category != "" {
+    a = append(a, d.Category)
+  }
+  if d.SubCategory != "" {
+    a = append(a, d.SubCategory)
+  }
+  a = append(a, d.Name)
+  return path.Join(a...)
+}
+
+func (c *Chip) Name() string {
+  return "Chip"
+}
+
+func (c *Chip) Init(k *kernel.Kernel) error {
+  service, err := k.AddService(&generator.Generator{})
+  if err != nil {
+    return err
+  }
+  c.generator = service.(*generator.Generator)
+
+  return nil
+}
+
+func (c *Chip) Start() error {
+  c.chips = make(map[string]*Definition)
+  c.extracted = util.NewHashSet()
+
+  c.generator.
+      Register("chipDefinitions",
+        generator.GeneratorHandlerOf().
+          Then(c.extract))
+  //Then(c.writeChipIndex))
+
+  return nil
+}
+
+// extract gets chip definitions from a book.
+// This runs once per book not once ever
+func (c *Chip) extract(book *hugo.Book) error {
+  // Only run once per Book ID
+  if c.extracted.Contains(book.ID) {
+    return nil
+  }
+
+  // Prevent us running again for this Book
+  c.extracted.Add(book.ID)
+
+  log.Printf("Scanning %s for chip designs", book.ID)
+
+  return walk.NewPathWalker().
+    IsFile().
+    PathNotContain("/reference/").
+    PathHasSuffix(".html").
+      Then(hugo.FrontMatterActionOf().
+        OtherExists("chip", c.extractChipDefinitions).
+        Walk()).
+    Walk(book.ContentPath())
+}
+
+func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) error {
+  return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
+    return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+      pinCount, ok := util2.DecodeInt(m["pinCount"], 0)
+      if !ok || pinCount < 1 {
+        return fmt.Errorf("invalid pinCount %d", pinCount)
+      }
+
+      weight, _ := util2.DecodeInt(m["weight"], 0)
+
+      v := &Definition{
+        Name:        util2.DecodeString(m["name"], ""),
+        Category:    util2.DecodeString(m["category"], ""),
+        SubCategory: util2.DecodeString(m["subCategory"], ""),
+        Title:       util2.DecodeString(m["title"], ""),
+        Type:        util2.DecodeString(m["type"], ""),
+        Label:       util2.DecodeString(m["label"], ""),
+        SubLabel:    util2.DecodeString(m["subLabel"], ""),
+        PinCount:    pinCount,
+        Pins:        make(map[int]string),
+        Weight:      weight,
+        FileInfo:    ctx.Value("fileInfo").(os.FileInfo),
+      }
+
+      if err := util2.IfMap(m["pins"], func(m map[interface{}]interface{}) error {
+        for pinId, label := range m {
+          key, ok := util2.DecodeInt(pinId, 0)
+          if !ok {
+            return fmt.Errorf("%s invalid Pin \"%s\"", v.Name, pinId)
+          }
+          if _, exists := v.Pins[key]; exists {
+            return fmt.Errorf("%s pin %d already defined", v.Name, key)
+          }
+          v.Pins[key] = label.(string)
+        }
+        return nil
+      }); err != nil {
+        return err
+      }
+
+      // Ensure we have an entry for each pin
+      for pin := 1; pin <= pinCount; pin++ {
+        if _, exists := v.Pins[pin]; !exists {
+          v.Pins[pin] = "Undefined()"
+          log.Printf("%s Pin %d is missing", v.Name, pin)
+        }
+      }
+
+      // Fail if counts don't match, can be a mis-labeled entry
+      if len(v.Pins) != pinCount {
+        return fmt.Errorf("%s pin count missmatch, expecting %d got %d", v.Name, pinCount, len(v.Pins))
+      }
+
+      // verify chip is correct
+      switch v.Type {
+      case "":
+        return fmt.Errorf("%s chip type is mandatory", v.Name)
+      case "dip":
+        if (pinCount % 2) == 1 {
+          return fmt.Errorf("%s dip must have even number of pins, got %d", v.Name, pinCount)
+        }
+        v.handler = dip
+      default:
+        return fmt.Errorf("%s unsupported chip type \"%s\"", v.Name, v.Type)
+      }
+
+      if _, exists := c.chips[v.Name]; exists {
+        return fmt.Errorf("%s already defined", v.Name)
+      }
+      c.chips[v.Name] = v
+
+      c.generator.AddTask(v.Generate)
+      return nil
+    })
+  })
+}
