@@ -14284,9 +14284,39 @@ nav.foldable-nav .with-child ul {
   .chip .chip-title {
     text-align: center;
     position: absolute;
-    bottom: .5em;
     font-size: .6em;
     width: 25em; }
+
+.chip.dip20 {
+  display: block;
+  height: 13em;
+  width: 15em; }
+  .chip.dip20 .chip-dip {
+    height: 11.5em;
+    top: -0.5em; }
+  .chip.dip20 .chip-title {
+    top: 21em; }
+  .chip.dip20 ol li:nth-child(n):nth-child(-n+10) {
+    text-align: right; }
+    .chip.dip20 ol li:nth-child(n):nth-child(-n+10) span:first-child {
+      float: right;
+      margin-left: .5em; }
+    .chip.dip20 ol li:nth-child(n):nth-child(-n+10) span:first-child::before {
+      counter-increment: chip;
+      content: counter(chip); }
+  .chip.dip20 ol li:nth-child(11) {
+    counter-set: chip 21; }
+  .chip.dip20 ol li:nth-child(n+11):nth-child(-n+20) {
+    position: relative;
+    top: -17.5em;
+    left: 16.6em;
+    text-align: left; }
+    .chip.dip20 ol li:nth-child(n+11):nth-child(-n+20) span:first-child {
+      float: left;
+      margin-right: .5em; }
+    .chip.dip20 ol li:nth-child(n+11):nth-child(-n+20) span:first-child::before {
+      counter-increment: chip -1;
+      content: counter(chip); }
 
 .chip.dip28 {
   display: block;
@@ -14295,6 +14325,8 @@ nav.foldable-nav .with-child ul {
   .chip.dip28 .chip-dip {
     height: 15.5em;
     top: -0.5em; }
+  .chip.dip28 .chip-title {
+    top: 27.5em; }
   .chip.dip28 ol li:nth-child(n):nth-child(-n+14) {
     text-align: right; }
     .chip.dip28 ol li:nth-child(n):nth-child(-n+14) span:first-child {
@@ -14324,6 +14356,8 @@ nav.foldable-nav .with-child ul {
   .chip.dip40 .chip-dip {
     height: 22em;
     top: -0.5em; }
+  .chip.dip40 .chip-title {
+    top: 38.5em; }
   .chip.dip40 ol li:nth-child(n):nth-child(-n+20) {
     text-align: right; }
     .chip.dip40 ol li:nth-child(n):nth-child(-n+20) span:first-child {
