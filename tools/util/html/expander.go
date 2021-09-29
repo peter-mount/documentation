@@ -1,50 +1,52 @@
 package html
 
 import (
-  "strings"
+  "github.com/peter-mount/documentation/tools/util"
+  "go/token"
 )
 
+// ChipExpansion takes a chip pin definition and converts it into HTML
 func (e *Element) ChipExpansion(s string) *Element {
-  // FIXME This works but does not nest expressions. If that's needed it needs rewriting.
-  for s != "" {
-    ix := strings.Index(s, " ")
-    is := strings.Index(s, "(")
-    ie := strings.Index(s, ")")
-    if (ix == -1 || (ix > -1 && ix > is)) && ie > is && is > -1 {
-      switch strings.TrimSpace(s[:is]) {
-      // Address line
-      case "A":
-        e.Text("A").Sub().ChipExpansion(s[is+1 : ie]).End().End()
-      // Data line
-      case "D":
-        e.Text("D").Sub().ChipExpansion(s[is+1 : ie]).End().End()
-      // Peripheral I/O line
-      case "P":
-        e.Text("P").Sub().ChipExpansion(s[is+1 : ie]).End().End()
-      case "V":
-        e.Text("V").Sub().ChipExpansion(s[is+1 : ie]).End().End()
-      case "NOT":
-        e.Span().Class("not").ChipExpansion(s[is+1 : ie]).End()
-      case "PHI":
-        e.Text("∅").Sub().ChipExpansion(s[is+1 : ie]).End().End()
-      case "SUB":
-        e.Sub().ChipExpansion(s[is+1 : ie]).End().End()
-      case "SUP":
-        e.Sup().ChipExpansion(s[is+1 : ie]).End().End()
+  return e.chipExpansion(util.Tokenize(s))
+}
+
+func (e *Element) chipExpansion(t *util.Token) *Element {
+  ce := e
+  for t != nil {
+    if t.Child != nil {
+      switch t.Token {
+      case token.SEMICOLON:
+      // Ignore
+      case token.LPAREN:
+        ce = ce.Text(" (").chipExpansion(t.Child).Text(")")
+      case token.IDENT:
+        switch t.Lit {
+        case "A":
+          ce = ce.Text("A").Sub().chipExpansion(t.Child).End()
+        case "D":
+          ce = ce.Text("D").Sub().chipExpansion(t.Child).End()
+        case "P":
+          ce = ce.Text("P").Sub().chipExpansion(t.Child).End()
+        case "V":
+          ce = ce.Text("V").Sub().chipExpansion(t.Child).End()
+        case "NOT":
+          ce = ce.Span().Class("not").chipExpansion(t.Child).End()
+        case "PHI":
+          ce = ce.Text("∅").Sub().chipExpansion(t.Child).End()
+        case "SUB":
+          ce = ce.Sub().chipExpansion(t.Child).End()
+        case "SUP":
+          ce = ce.Sup().chipExpansion(t.Child).End()
+        default:
+          ce = ce.Text(t.String()).chipExpansion(t.Child)
+        }
       default:
-        e.Text(s[:ie+1])
+        ce = ce.Text(t.String()).chipExpansion(t.Child)
       }
-      s = s[ie+1:]
-    } else if ix > -1 {
-      e.Text(s[:ix])
-      s = s[ix+1:]
-    } else if ie > -1 {
-      e.Text(s[:ie+1])
-      s = s[ie+1:]
-    } else {
-      e.Text(s)
-      s = ""
+    } else if t.Token != token.SEMICOLON {
+      ce = ce.Text(t.String())
     }
+    t = t.Next
   }
-  return e
+  return ce
 }
