@@ -76,6 +76,51 @@
     }
 }
 
+// DIP 20 pin
+.chip.dip20 {
+    display: block;
+    height: 13em;
+    width: 15em;
+
+    .chip-dip {
+        height: 11.5em;
+        top: -0.5em;
+    }
+
+    ol {
+        li:nth-child(n):nth-child(-n+10) {
+            text-align: right;
+            span:first-child {
+                float: right;
+                margin-left: .5em;
+            }
+
+            span:first-child::before {
+                counter-increment: chip;
+                content: counter(chip);
+            }
+        }
+        li:nth-child(11) {
+            counter-set: chip 21;
+        }
+        li:nth-child(n+11):nth-child(-n+20) {
+            position: relative;
+            top: -17.5em;
+            left: 16.6em;
+            text-align: left;
+            span:first-child {
+                float: left;
+                margin-right: .5em;
+            }
+
+            span:first-child::before {
+                counter-increment: chip -1;
+                content: counter(chip);
+            }
+        }
+    }
+}
+
 // DIP 28 pin
 .chip.dip28 {
     display: block;
