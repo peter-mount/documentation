@@ -48,14 +48,14 @@ func (d *Definition) Generate() error {
 }
 
 func (d *Definition) Path() string {
-  a := []string{"content/chipref/reference"}
+  a := []string{"themes/area51/layouts/shortcodes/generated/chip"}
   if d.Category != "" {
     a = append(a, d.Category)
   }
   if d.SubCategory != "" {
     a = append(a, d.SubCategory)
   }
-  a = append(a, d.Name)
+  a = append(a, d.Name+".html")
   return path.Join(a...)
 }
 

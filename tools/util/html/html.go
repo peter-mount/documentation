@@ -38,7 +38,7 @@ func (e *Element) String() string {
     }
 
     if e.name != "" {
-      a = append(a, "</", e.name, ">\n")
+      a = append(a, "</", e.name, ">")
     }
   }
 

@@ -107,3 +107,9 @@ func ReferenceFileBuilder(title, desc, layout string, weight int) FileBuilder {
     return ary, nil
   }
 }
+
+func BlankFileBuilder() FileBuilder {
+  return func(slice StringSlice) (StringSlice, error) {
+    return slice, nil
+  }
+}

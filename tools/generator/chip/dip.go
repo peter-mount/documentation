@@ -14,11 +14,7 @@ func (d *Definition) pin(i int, e *html.Element) {
 
 // dip Dual Inline Pin chip layout
 func dip(d *Definition) error {
-  return util.ReferenceFileBuilder(d.Title,
-    "",
-    "manual",
-    d.Weight).
-    WrapAsFrontMatter().
+  return util.BlankFileBuilder().
       Then(html.HtmlBuilder().
         Div().Class("chip").Class("dip%d", d.PinCount).
         Div().Class("position-relative").
@@ -38,5 +34,5 @@ func dip(d *Definition) error {
         End().
         FileBuilder()).
     FileHandler().
-    Write(d.Path()+".html", d.FileInfo.ModTime())
+    Write(d.Path(), d.FileInfo.ModTime())
 }

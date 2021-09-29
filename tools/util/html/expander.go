@@ -3,6 +3,7 @@ package html
 import "strings"
 
 func (e *Element) ChipExpansion(s string) *Element {
+  // FIXME This works but does not nest expressions. If that's needed it needs rewriting.
   for s != "" {
     is := strings.Index(s, "(")
     ie := strings.Index(s, ")")
@@ -17,6 +18,8 @@ func (e *Element) ChipExpansion(s string) *Element {
       // Peripheral I/O line
       case "P":
         e.Text("P").Sub().ChipExpansion(s[is+1 : ie]).End().End()
+      case "V":
+        e.Text("V").Sub().ChipExpansion(s[is+1 : ie]).End().End()
       case "NOT":
         e.Span().Class("not").ChipExpansion(s[is+1 : ie]).End()
       case "PHI":

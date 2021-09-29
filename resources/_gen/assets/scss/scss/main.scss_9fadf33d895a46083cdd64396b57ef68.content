@@ -14234,7 +14234,9 @@ nav.foldable-nav .with-child ul {
   border: 1px dotted red;
   margin: .25em;
   padding-top: 1em;
-  padding-bottom: 1em; }
+  padding-bottom: 1em;
+  font-size: 1.25em;
+  overflow: hidden; }
   .chip .chip-dip {
     position: absolute;
     left: 5em;
@@ -14281,8 +14283,37 @@ nav.foldable-nav .with-child ul {
   .chip span.not {
     border-top: 1px solid black; }
 
+.chip.dip28 {
+  display: block;
+  height: 17em;
+  width: 15em; }
+  .chip.dip28 .chip-dip {
+    height: 15.5em;
+    top: -0.5em; }
+  .chip.dip28 ol li:nth-child(n):nth-child(-n+14) {
+    text-align: right; }
+    .chip.dip28 ol li:nth-child(n):nth-child(-n+14) span:first-child {
+      float: right;
+      margin-left: .5em; }
+    .chip.dip28 ol li:nth-child(n):nth-child(-n+14) span:first-child::before {
+      counter-increment: chip;
+      content: counter(chip); }
+  .chip.dip28 ol li:nth-child(15) {
+    counter-set: chip 29; }
+  .chip.dip28 ol li:nth-child(n+15):nth-child(-n+28) {
+    position: relative;
+    top: -24.5em;
+    left: 16.6em;
+    text-align: left; }
+    .chip.dip28 ol li:nth-child(n+15):nth-child(-n+28) span:first-child {
+      float: left;
+      margin-right: .5em; }
+    .chip.dip28 ol li:nth-child(n+15):nth-child(-n+28) span:first-child::before {
+      counter-increment: chip -1;
+      content: counter(chip); }
+
 .chip.dip40 {
-  display: inline-block;
+  display: block;
   height: 23em;
   width: 15em; }
   .chip.dip40 .chip-dip {

@@ -5,6 +5,10 @@
 /area51.dev/themes/docsy/node_modules/
 /area51.dev/themes/docsy/tech-doc-hugo
 
+# Reference files
+generated
+#reference
+
 # vim temporary files
 *~
 *.sw?

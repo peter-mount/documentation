@@ -5,6 +5,8 @@
     margin: .25em;
     padding-top: 1em;
     padding-bottom: 1em;
+    font-size: 1.25em;
+    overflow: hidden;
 
     .chip-dip {
         position: absolute;
@@ -67,9 +69,54 @@
     }
 }
 
+// DIP 28 pin
+.chip.dip28 {
+    display: block;
+    height: 17em;
+    width: 15em;
+
+    .chip-dip {
+        height: 15.5em;
+        top: -0.5em;
+    }
+
+    ol {
+        li:nth-child(n):nth-child(-n+14) {
+            text-align: right;
+            span:first-child {
+                float: right;
+                margin-left: .5em;
+            }
+
+            span:first-child::before {
+                counter-increment: chip;
+                content: counter(chip);
+            }
+        }
+        li:nth-child(15) {
+            counter-set: chip 29;
+        }
+        li:nth-child(n+15):nth-child(-n+28) {
+            position: relative;
+            top: -24.5em;
+            left: 16.6em;
+            text-align: left;
+            span:first-child {
+                float: left;
+                margin-right: .5em;
+            }
+
+            span:first-child::before {
+                counter-increment: chip -1;
+                content: counter(chip);
+            }
+        }
+    }
+}
+
 // DIP 40 pin
 .chip.dip40 {
-    display: inline-block;
+    display: block;
     height: 23em;
     width: 15em;
 
