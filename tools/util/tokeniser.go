@@ -21,7 +21,7 @@ func (t *Token) next(nt *Token) *Token {
 }
 
 func (t *Token) child(nt *Token) *Token {
-  if t != nil {
+  if t != nil && nt != nil {
     t.Child = nt
     nt.Parent = t
   }
