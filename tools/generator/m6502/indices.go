@@ -54,9 +54,15 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
             "    compatibility:",
           )
 
-          for k, _ := range op.Compatibility {
-            a = append(a, fmt.Sprintf("      %v: true", k))
-          }
+          // Compatibility table is just the existence of the keys.
+          // Sorted so we keep the same order each time
+          _ = op.Compatibility.
+            Keys().
+            Sort().
+              ForEach(func(k string) error {
+                a = append(a, fmt.Sprintf("      %v: true", k))
+                return nil
+              })
 
           a = op.Bytes.append("    ", "bytes", a)
           a = op.Cycles.append("    ", "cycles", a)
@@ -64,7 +70,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
 
         a = append(a, "notes:")
         for _, n := range s.notes.Notes {
-          a = append(a, fmt.Sprintf("  - \"%s\"", n.Value))
+          a = append(a, fmt.Sprintf("  - \"%s\" # %d", n.Value, n.Key))
         }
         return a, nil
       }).

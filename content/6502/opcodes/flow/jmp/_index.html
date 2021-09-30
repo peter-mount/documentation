@@ -85,9 +85,9 @@ codes:
     cycles:
       value: 6
 notes:
-  1: "Add 1 cycle if 65C02"
-  2: "6502: If low byte of address is 0xFF yields incorrect result"
-  3: "Add 1 more cycle if branch taken crosses page boundary on a 6502, 65C02 or a 65816 in 6502 emulation mode (e=1)"
+  - "Add 1 cycle if 65C02"
+  - "6502: If low byte of address is 0xFF yields incorrect result"
+  - "Add 1 more cycle if branch taken crosses page boundary on a 6502, 65C02 or a 65816 in 6502 emulation mode (e=1)"
 ---
 <p>
   The branch instructions sets the Program Counter to a new value from which the next instruction will be taken.

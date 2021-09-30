@@ -15,7 +15,7 @@ type Opcode struct {
   Code          string
   Op            string
   Addressing    string
-  Compatibility map[interface{}]interface{}
+  Compatibility *util.SortedMap
   Bytes         *OpcodeType
   Cycles        *OpcodeType
   Notes         []int
@@ -36,7 +36,7 @@ func (o *OpcodeType) append(p, l string, a []string) []string {
   if len(o.Notes) > 0 {
     a = append(a, p+"  notes:")
     for _, n := range o.Notes {
-      a = append(a, p+"    - "+strconv.Itoa(n.Key))
+      a = append(a, p+"    - "+strconv.Itoa(n.Key) + " # " + n.Value)
     }
   }
   return a

@@ -91,7 +91,7 @@ func (s *M6502) extractOp(defaultOp string, n *util.Notes, e1 interface{}) {
       Code:          opcode,
       Op:            util.DecodeString(e["op"], defaultOp),
       Addressing:    util.DecodeString(e["addressing"], ""),
-      Compatibility: e["compatibility"].(map[interface{}]interface{}),
+      Compatibility: util.NewSortedMap().Decode(e["compatibility"]),
     }
 
     op.Bytes = s.decodeOpType(n, e["bytes"])
