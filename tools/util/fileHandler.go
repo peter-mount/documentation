@@ -53,6 +53,16 @@ func StringFileHandler(s string) FileHandler {
   return ByteFileHandler([]byte(s))
 }
 
+// Bytes returns the content as a []byte
+func (a FileHandler) Bytes() ([]byte, error) {
+  var buf bytes.Buffer
+  err := a(&buf)
+  if err != nil {
+    return nil, err
+  }
+  return buf.Bytes(), nil
+}
+
 // Write writes the file. If the file exists & has the same fileTime then it's content is checked before writing it.
 func (a FileHandler) Write(fileName string, fileTime time.Time) error {
   // Do we write or ignore
@@ -74,13 +84,11 @@ func (a FileHandler) Write(fileName string, fileTime time.Time) error {
   }
 
   if !writeNow && fl > 0 {
-    // Convert our content to a buffer
-    var buf bytes.Buffer
-    err := a(&buf)
+    // Get our new content as a byte array
+    bAry, err := a.Bytes()
     if err != nil {
       return err
     }
-    bAry := buf.Bytes()
 
     // If the sizes match then compare them for equality
     if int64(len(bAry)) == fl {
