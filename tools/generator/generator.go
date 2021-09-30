@@ -117,26 +117,26 @@ func (g *Generator) AddPriorityTask(p int, t Task) *Generator {
 }
 
 func (g *Generator) Run() error {
-  if err := g.bookShelf.Books().ForEach(
-    context.Background(),
-    hugo.WithBook().
-        ForEachGenerator(
-          hugo.WithBookGenerator().
-            Then(g.invokeGenerator)).
-        IfExcelPresent(func(ctx context.Context, book *hugo.Book, excel util.ExcelBuilder) error {
-          // Now append this as a task, priority 100 so that it runs after most tasks
-          g.AddPriorityTask(100, book.ExcelRunOnce(func() error {
-            return excel.FileHandler().
-              Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
-          }))
-          return nil
-        })); err != nil {
+  if err := g.bookShelf.Books().ForEach(context.Background(), g.invokeBook); err != nil {
     return err
   }
 
   return g.tasks.Drain(func(i interface{}) error {
     return i.(Task)()
   })
+}
+
+func (g *Generator) invokeBook(ctx context.Context, book *hugo.Book) error {
+  g.AddTask(func() error {
+    return hugo.WithBook().
+        ForEachGenerator(
+          hugo.WithBookGenerator().
+            Then(g.invokeGenerator).
+            Then(g.writeExcel)).
+      Do(ctx, book)
+  })
+
+  return nil
 }
 
 func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n string) error {
@@ -148,5 +148,18 @@ func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n stri
   // Log a warning but ignore - could be an invalid config or the generator is not deployed.
   // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
   log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
+  return nil
+}
+
+func (g *Generator) writeExcel(_ context.Context, book *hugo.Book, _ string) error {
+  g.AddPriorityTask(100, func() error {
+    if book.IsExcelPresent() {
+      defer book.SetExcel(nil)
+      return book.GetExcel().
+        FileHandler().
+        Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
+    }
+    return nil
+  })
   return nil
 }

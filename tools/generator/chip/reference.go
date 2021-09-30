@@ -9,7 +9,6 @@ import (
 // Generates the chip reference tables.
 // This is usually only used for the chipref book
 func (c *Chip) chipReferenceTables(book *hugo.Book) error {
-  // Simply postpone to a post task for this book so we have everything generated first
   c.generator.AddTask(func() error {
     return c.chipReferenceTablesTask(book)
   })
@@ -59,7 +58,7 @@ func (c *Chip) chipReferenceTable(book *hugo.Book, cat string) *util.Table {
 
   // Add pin columns up to MaxPins
   for pin := 1; pin <= maxPins; pin++ {
-    t.Columns = append(t.Columns, fmt.Sprintf("Pin %d", 1))
+    t.Columns = append(t.Columns, fmt.Sprintf("Pin %d", pin))
   }
 
   t.Transform = func(i interface{}) []interface{} {

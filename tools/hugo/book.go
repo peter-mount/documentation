@@ -34,9 +34,13 @@ func (a BookHandler) Do(ctx context.Context, book *Book) error {
   return a(ctx, book)
 }
 
+func (b *Book) IsExcelPresent() bool {
+  return b.excel != nil
+}
+
 func (a BookHandler) IfExcelPresent(h func(context.Context, *Book, util.ExcelBuilder) error) BookHandler {
   return a.Then(func(ctx context.Context, b *Book) error {
-    if b.excel != nil {
+    if b.IsExcelPresent() {
       return h(context.WithValue(ctx, "excel", b.excel), b, b.excel)
     }
     return nil
@@ -46,6 +50,13 @@ func (a BookHandler) IfExcelPresent(h func(context.Context, *Book, util.ExcelBui
 type BookGeneratorHandler func(context.Context, *Book, string) error
 
 func WithBookGenerator() BookGeneratorHandler {
+  return nil
+}
+
+func (a BookGeneratorHandler) Do(ctx context.Context, book *Book, s string) error {
+  if a != nil {
+    return a(ctx, book, s)
+  }
   return nil
 }
 

@@ -84,9 +84,11 @@ func (c *Chip) Start() error {
       Register("chipDefinitions",
         generator.HandlerOf().
           Then(c.extract))
-  //Then(c.writeChipIndex))
 
-  c.generator.Register("chipReferenceTables", c.chipReferenceTables)
+  c.generator.Register("chipReferenceTables",
+    generator.HandlerOf().
+      Then(c.extract).
+      Then(c.chipReferenceTables))
 
   return nil
 }
