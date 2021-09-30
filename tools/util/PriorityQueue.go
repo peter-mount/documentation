@@ -14,9 +14,9 @@ func (p PriorityQueue) Add(e interface{}) PriorityQueue {
 func (p PriorityQueue) AddPriority(priority int, e interface{}) PriorityQueue {
   ent := PriorityEntry{Priority: priority, Element: e}
 
-  for i, e := range p {
-    if e.Priority > priority {
-      a := append(p[:i], e)
+  for i, existing := range p {
+    if existing.Priority > priority {
+      a := append(p[:i], ent)
       return append(a, p[i:]...)
     }
   }
