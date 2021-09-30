@@ -1,7 +1,9 @@
 package util
 
 import (
+  "bytes"
   "io"
+  "io/ioutil"
   "log"
   "os"
   "path"
@@ -51,7 +53,59 @@ func StringFileHandler(s string) FileHandler {
   return ByteFileHandler([]byte(s))
 }
 
+// Write writes the file. If the file exists & has the same fileTime then it's content is checked before writing it.
 func (a FileHandler) Write(fileName string, fileTime time.Time) error {
+  // Do we write or ignore
+  writeNow := true
+
+  // File length if it exists
+  var fl int64
+
+  if fi, err := os.Stat(fileName); err != nil {
+    // If error is not-existing then fall through with writeNow is true
+    if !os.IsNotExist(err) {
+      return err
+    }
+
+    writeNow = true
+  } else {
+    fl = fi.Size()
+    writeNow = fileTime.After(fi.ModTime())
+  }
+
+  if !writeNow && fl > 0 {
+    // Convert our content to a buffer
+    var buf bytes.Buffer
+    err := a(&buf)
+    if err != nil {
+      return err
+    }
+    bAry := buf.Bytes()
+
+    // If the sizes match then compare them for equality
+    if int64(len(bAry)) == fl {
+      // FIXME do this in a better way?
+      // Read the file so compare it as same size
+      fBuf, err := ioutil.ReadFile(fileName)
+      if err != nil {
+        return err
+      }
+
+      // If identical then do nothing
+      if bytes.Equal(bAry, fBuf) {
+        return nil
+      }
+    }
+
+    // As we have the content use it & write the file
+    return ByteFileHandler(bAry).WriteAlways(fileName, fileTime)
+  }
+
+  return a.WriteAlways(fileName, fileTime)
+}
+
+// WriteAlways writes the file regardless of the existing files status
+func (a FileHandler) WriteAlways(fileName string, fileTime time.Time) error {
   log.Printf("Writing %s", fileName)
   err := os.MkdirAll(path.Dir(fileName), 0755)
   if err != nil {
