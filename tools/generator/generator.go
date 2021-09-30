@@ -65,7 +65,7 @@ type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf
   generators map[string]Handler // Map of available generators
-  tasks      []Task
+  tasks      util.PriorityQueue
 }
 
 func (g *Generator) Name() string {
@@ -106,7 +106,13 @@ func (g *Generator) Register(n string, h Handler) *Generator {
 
 // AddTask appends a Task to be performed once all Handler's have run.
 func (g *Generator) AddTask(t Task) *Generator {
-  g.tasks = append(g.tasks, t)
+  g.tasks = g.tasks.Add(t)
+  return g
+}
+
+// AddPriorityTask appends a Task to be performed once all Handler's have run.
+func (g *Generator) AddPriorityTask(p int, t Task) *Generator {
+  g.tasks = g.tasks.AddPriority(p, t)
   return g
 }
 
@@ -118,20 +124,19 @@ func (g *Generator) Run() error {
           hugo.WithBookGenerator().
             Then(g.invokeGenerator)).
         IfExcelPresent(func(ctx context.Context, book *hugo.Book, excel util.ExcelBuilder) error {
-          return excel.FileHandler().
-            Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
+          // Now append this as a task, priority 100 so that it runs after most tasks
+          g.AddPriorityTask(100, book.ExcelRunOnce(func() error {
+            return excel.FileHandler().
+              Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
+          }))
+          return nil
         })); err != nil {
     return err
   }
 
-  for _, task := range g.tasks {
-    err := task()
-    if err != nil {
-      return err
-    }
-  }
-
-  return nil
+  return g.tasks.Drain(func(i interface{}) error {
+    return i.(Task)()
+  })
 }
 
 func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n string) error {

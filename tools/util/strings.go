@@ -2,6 +2,7 @@ package util
 
 import (
   "io"
+  "sort"
   "strings"
 )
 
@@ -58,6 +59,13 @@ func (s StringSlice) Join(sep string) string {
 
 func (s StringSlice) Join2(prefix, suffix, sep string) string {
   return prefix + s.Join(sep) + suffix
+}
+
+func (s StringSlice) Sort() StringSlice {
+  sort.SliceStable(s, func(i, j int) bool {
+    return strings.ToLower(s[i]) < strings.ToLower(s[j])
+  })
+  return s
 }
 
 type StringSliceHandler func(StringSlice) (StringSlice, error)

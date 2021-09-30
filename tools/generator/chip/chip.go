@@ -16,9 +16,9 @@ import (
 
 // Chip handles the generation of CHIP pin layout images
 type Chip struct {
-  generator *generator.Generator   // Generator
-  chips     map[string]*Definition // Map of named chip definitions
-  extracted util.Set               // Set of book ID's so that we run once per book
+  generator *generator.Generator // Generator
+  chips     *Category            // Map of named chip definitions
+  extracted util.Set             // Set of book ID's so that we run once per book
 }
 
 // DefinitionHandler is called when generating the shortcode for this Definition
@@ -77,7 +77,7 @@ func (c *Chip) Init(k *kernel.Kernel) error {
 }
 
 func (c *Chip) Start() error {
-  c.chips = make(map[string]*Definition)
+  c.chips = NewCategory()
   c.extracted = util.NewHashSet()
 
   c.generator.
@@ -85,6 +85,8 @@ func (c *Chip) Start() error {
         generator.HandlerOf().
           Then(c.extract))
   //Then(c.writeChipIndex))
+
+  c.generator.Register("chipReferenceTables", c.chipReferenceTables)
 
   return nil
 }
@@ -179,10 +181,9 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
         return fmt.Errorf("%s unsupported chip type \"%s\"", v.Name, v.Type)
       }
 
-      if _, exists := c.chips[v.Name]; exists {
+      if !c.chips.Put(v) {
         return fmt.Errorf("%s already defined", v.Name)
       }
-      c.chips[v.Name] = v
 
       c.generator.AddTask(v.Generate)
       return nil

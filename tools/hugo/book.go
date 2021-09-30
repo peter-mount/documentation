@@ -46,19 +46,19 @@ func (a BookHandler) IfExcelPresent(h func(context.Context, *Book, util.ExcelBui
 type BookGeneratorHandler func(context.Context, *Book, string) error
 
 func WithBookGenerator() BookGeneratorHandler {
-    return nil
+  return nil
 }
 
 func (a BookGeneratorHandler) Then(b BookGeneratorHandler) BookGeneratorHandler {
-  if a==nil {
+  if a == nil {
     return b
   }
-  return func(ctx context.Context,book *Book, n string) error {
-    err := a(ctx,book, n)
+  return func(ctx context.Context, book *Book, n string) error {
+    err := a(ctx, book, n)
     if err != nil {
       return err
     }
-    return b(ctx,book, n)
+    return b(ctx, book, n)
   }
 }
 
@@ -91,6 +91,7 @@ type Book struct {
   Generate      util.StringSlice  `yaml:"generate"` // List of generators to run on this book
   modified      time.Time         `yaml:"-"` // Last Modified time
   excel         util.ExcelBuilder `yaml:"-"` // Excel builder if present
+  excelWritten  bool              // Set to true if the file has been written
 }
 
 type BookCopyright struct {
@@ -99,6 +100,16 @@ type BookCopyright struct {
   Author    string `yaml:"author"`    // Author of book, default ""
   SubAuthor string `yaml:"subAuthor"` // SubAuthor of book, default ""
   Copyright string `yaml:"copyright"` // Copyright
+}
+
+func (b *Book) ExcelRunOnce(f func() error) func() error {
+  return func() error {
+    if !b.excelWritten {
+      b.excelWritten = true
+      return f()
+    }
+    return nil
+  }
 }
 
 func (b *Book) ContentPath() string {
