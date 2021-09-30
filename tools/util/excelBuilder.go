@@ -6,13 +6,15 @@ import (
   "io"
 )
 
+// ExcelProvider provides a function that provides an ExcelBuilder and accepts its replacement.
 type ExcelProvider interface {
-  GetExcel() ExcelBuilder
-  SetExcel(ExcelBuilder)
+  BuildExcel(func(builder ExcelBuilder) ExcelBuilder) error
 }
 
+// ExcelBuilder used to build an Excel Spreadsheet
 type ExcelBuilder func(context.Context, *excelize.File) error
 
+// NewExcelBuilder creates a new ExcelBuilder
 func NewExcelBuilder() ExcelBuilder {
   return nil
 }
@@ -33,6 +35,7 @@ func (a ExcelBuilder) After(b ExcelBuilder) ExcelBuilder {
   return b.Then(a)
 }
 
+// FileHandler converts an ExcelBuilder into a FileHandler
 func (a ExcelBuilder) FileHandler() FileHandler {
   return func(w io.Writer) error {
     f := excelize.NewFile()

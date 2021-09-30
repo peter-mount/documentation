@@ -6,21 +6,20 @@ import (
   "time"
 )
 
+// Excel service that manages multiple Workbooks by ID and ensures they are written
 type Excel struct {
   generator *Generator // Generator
   builders  map[string]*provider
 }
 
+// provider implements the ExcelProvider interface
 type provider struct {
   builder util.ExcelBuilder
 }
 
-func (p *provider) GetExcel() util.ExcelBuilder {
-  return p.builder
-}
-
-func (p *provider) SetExcel(b util.ExcelBuilder) {
-  p.builder = b
+func (p *provider) BuildExcel(f func(builder util.ExcelBuilder) util.ExcelBuilder) error {
+  p.builder = f(p.builder)
+  return nil
 }
 
 func (e *Excel) Name() string {
@@ -42,6 +41,7 @@ func (e *Excel) Start() error {
   return nil
 }
 
+// Get returns a named ExcelProvider and ensures its written to disk.
 func (e *Excel) Get(n string, modified time.Time) util.ExcelProvider {
   if p, exists := e.builders[n]; exists {
     return p
@@ -50,11 +50,13 @@ func (e *Excel) Get(n string, modified time.Time) util.ExcelProvider {
   p := &provider{}
   e.builders[n] = p
 
-  e.generator.AddPriorityTask(500 + len(n), func() error {
+  e.generator.AddPriorityTask(500+len(n), func() error {
     if p.builder != nil {
+      // NOTE: Use WriteAlways with Excel as we cannot compare an existing version due to xlsx files being zip files
+      // so the timestamps are always different & the generated file will differ even with identical content.
       return p.builder.
         FileHandler().
-        Write("content/"+n+"/reference.xlsx", modified)
+        WriteAlways("content/"+n+"/reference.xlsx", modified)
     }
     return nil
   })

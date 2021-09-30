@@ -70,10 +70,15 @@ func (a TableHandler) ForEach(handlers ...TableHandler) TableHandler {
   }
 }
 
+// Do passes a Table to a TableHandler
 func (a TableHandler) Do(t *Table) error {
-  return a(t)
+  if a != nil {
+    return a(t)
+  }
+  return nil
 }
 
+// AsCSV will create a CSV file based on this Table
 func (a TableHandler) AsCSV(fileName string, fileTime time.Time) TableHandler {
   return a.Then(func(t *Table) error {
     return NewCSVBuilder().
@@ -98,43 +103,45 @@ func (t *Table) setCell(f *excelize.File, c, r int, v interface{}) {
   }
 }
 
+// AsExcel will create a new Sheet in an Excel Workbook based on this Table
 func (a TableHandler) AsExcel(p ExcelProvider) TableHandler {
   return a.Then(func(t *Table) error {
-    p.SetExcel(p.GetExcel().Then(func(ctx context.Context,f *excelize.File) error {
-      t.widths = make(map[int]int)
+    return p.BuildExcel(func(builder ExcelBuilder) ExcelBuilder {
+      return builder.Then(func(ctx context.Context, f *excelize.File) error {
+        t.widths = make(map[int]int)
 
-      f.NewSheet(t.Title)
+        f.NewSheet(t.Title)
 
-      for i, c := range t.Columns {
-        t.setCell(f, i+1, 1, c)
-      }
-
-      _ = t.ForEachRow(func(r int, rc int, v []interface{}) error {
-        for i, c := range v {
-          t.setCell(f, i+1, r+2, c)
+        for i, c := range t.Columns {
+          t.setCell(f, i+1, 1, c)
         }
+
+        _ = t.ForEachRow(func(r int, rc int, v []interface{}) error {
+          for i, c := range v {
+            t.setCell(f, i+1, r+2, c)
+          }
+          return nil
+        })
+
+        minC, maxC := -1, -1
+        for c, w := range t.widths {
+          cs, _ := excelize.ColumnNumberToName(c)
+          _ = f.SetColWidth(t.Title, cs, cs, float64(w))
+
+          if minC < 1 || minC > c {
+            minC = c
+          }
+          if maxC < c {
+            maxC = c
+          }
+        }
+
+        SetCellStyle(f, &t.headingStyleId, t.Title, minC, 1, maxC, 1, true, true)
+        SetCellStyle(f, &t.dataStyleId, t.Title, minC, 2, maxC, 2+t.RowCount, false, false)
+
         return nil
       })
-
-      minC, maxC := -1, -1
-      for c, w := range t.widths {
-        cs, _ := excelize.ColumnNumberToName(c)
-        _ = f.SetColWidth(t.Title, cs, cs, float64(w))
-
-        if minC < 1 || minC > c {
-          minC = c
-        }
-        if maxC < c {
-          maxC = c
-        }
-      }
-
-      SetCellStyle(f, &t.headingStyleId, t.Title, minC, 1, maxC, 1, true, true)
-      SetCellStyle(f, &t.dataStyleId, t.Title, minC, 2, maxC, 2+t.RowCount, false, false)
-
-      return nil
-    }))
-    return nil
+    })
   })
 }
 
