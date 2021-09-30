@@ -107,7 +107,7 @@ func (b *BBC) writeAPITable(book *hugo.Book) error {
 
   return util.WithTable().
     AsCSV(util.ReferenceFilename(book.ContentPath(), "api", "api.csv"), book.Modified()).
-    AsExcel(book).
+    AsExcel(b.excel.Get(book.ID, book.Modified())).
       Do(&util.Table{
         Title: "api",
         Columns: []string{

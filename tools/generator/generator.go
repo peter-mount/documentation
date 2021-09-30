@@ -106,13 +106,13 @@ func (g *Generator) Register(n string, h Handler) *Generator {
 
 // AddTask appends a Task to be performed once all Handler's have run.
 func (g *Generator) AddTask(t Task) *Generator {
-  g.tasks = g.tasks.Add(t)
+  g.tasks.Add(t)
   return g
 }
 
 // AddPriorityTask appends a Task to be performed once all Handler's have run.
 func (g *Generator) AddPriorityTask(p int, t Task) *Generator {
-  g.tasks = g.tasks.AddPriority(p, t)
+  g.tasks.AddPriority(p, t)
   return g
 }
 
@@ -131,8 +131,7 @@ func (g *Generator) invokeBook(ctx context.Context, book *hugo.Book) error {
     return hugo.WithBook().
         ForEachGenerator(
           hugo.WithBookGenerator().
-            Then(g.invokeGenerator).
-            Then(g.writeExcel)).
+            Then(g.invokeGenerator)).
       Do(ctx, book)
   })
 
@@ -151,6 +150,7 @@ func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n stri
   return nil
 }
 
+/*
 func (g *Generator) writeExcel(_ context.Context, book *hugo.Book, _ string) error {
   g.AddPriorityTask(100, func() error {
     if book.IsExcelPresent() {
@@ -163,3 +163,4 @@ func (g *Generator) writeExcel(_ context.Context, book *hugo.Book, _ string) err
   })
   return nil
 }
+*/

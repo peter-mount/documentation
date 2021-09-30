@@ -17,6 +17,7 @@ import (
 // Chip handles the generation of CHIP pin layout images
 type Chip struct {
   generator *generator.Generator // Generator
+  excel     *generator.Excel     // Excel
   chips     *Category            // Map of named chip definitions
   extracted util.Set             // Set of book ID's so that we run once per book
 }
@@ -72,6 +73,12 @@ func (c *Chip) Init(k *kernel.Kernel) error {
     return err
   }
   c.generator = service.(*generator.Generator)
+
+  service, err = k.AddService(&generator.Excel{})
+  if err != nil {
+    return err
+  }
+  c.excel = service.(*generator.Excel)
 
   return nil
 }

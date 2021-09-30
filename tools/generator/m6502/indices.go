@@ -86,7 +86,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
 
   return util.WithTable().
     AsCSV(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified()).
-    AsExcel(book).
+    AsExcel(s.excel.Get(book.ID, book.Modified())).
       Do(&util.Table{
         Title: name,
         Columns: []string{

@@ -33,7 +33,7 @@ func (a BookHandler) Do(ctx context.Context, book *Book) error {
   }
   return a(ctx, book)
 }
-
+/*
 func (b *Book) IsExcelPresent() bool {
   return b.excel != nil
 }
@@ -46,6 +46,7 @@ func (a BookHandler) IfExcelPresent(h func(context.Context, *Book, util.ExcelBui
     return nil
   })
 }
+*/
 
 type BookGeneratorHandler func(context.Context, *Book, string) error
 
@@ -101,9 +102,9 @@ type Book struct {
   PDF           PDF               `yaml:"pdf"` // Custom PDF config for just this book
   Generate      util.StringSlice  `yaml:"generate"` // List of generators to run on this book
   modified      time.Time         `yaml:"-"` // Last Modified time
-  excel         util.ExcelBuilder `yaml:"-"` // Excel builder if present
+/*  excel         util.ExcelBuilder `yaml:"-"` // Excel builder if present
   excelWritten  bool              // Set to true if the file has been written
-}
+*/}
 
 type BookCopyright struct {
   Title     string `yaml:"title"`     // Title of book, default title from main page
@@ -112,7 +113,7 @@ type BookCopyright struct {
   SubAuthor string `yaml:"subAuthor"` // SubAuthor of book, default ""
   Copyright string `yaml:"copyright"` // Copyright
 }
-
+/*
 func (b *Book) ExcelRunOnce(f func() error) func() error {
   return func() error {
     if !b.excelWritten {
@@ -122,7 +123,7 @@ func (b *Book) ExcelRunOnce(f func() error) func() error {
     return nil
   }
 }
-
+*/
 func (b *Book) ContentPath() string {
   return "content/" + b.ID + "/"
 }
@@ -171,7 +172,7 @@ func (b *Book) Expand(s string) string {
 
   return s
 }
-
+/*
 func (b *Book) GetExcel() util.ExcelBuilder {
   if b.excel == nil {
     b.excel = util.NewExcelBuilder()
@@ -182,11 +183,8 @@ func (b *Book) GetExcel() util.ExcelBuilder {
 func (b *Book) SetExcel(eb util.ExcelBuilder) {
   b.excel = eb
 }
-
+*/
 // Do runs a function against this instance. When it exits it removes any resources the Book has used freeing up memory.
 func (b *Book) Do(f func(*Book) error) error {
-  defer func() {
-    b.excel = nil
-  }()
   return f(b)
 }

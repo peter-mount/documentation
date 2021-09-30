@@ -8,6 +8,7 @@ import (
 
 type M6502 struct {
   generator *generator.Generator // Generator
+  excel     *generator.Excel     // Excel
   extracted bool                 // true once extract has run
   opCodes   []*Opcode
   notes     *util.Notes
@@ -23,6 +24,12 @@ func (s *M6502) Init(k *kernel.Kernel) error {
     return err
   }
   s.generator = service.(*generator.Generator)
+
+  service, err = k.AddService(&generator.Excel{})
+  if err != nil {
+    return err
+  }
+  s.excel = service.(*generator.Excel)
 
   return nil
 }

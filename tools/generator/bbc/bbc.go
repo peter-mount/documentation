@@ -12,6 +12,7 @@ import (
 // These pages are the indices to the various sections like MOS calls, OSByte & OSWord calls etc.
 type BBC struct {
   generator *generator.Generator // Generator
+  excel     *generator.Excel     // Excel
   extracted bool                 // True once extract() has run
   api       []*Api               // MOS API calls
   osbyte    []*Osbyte            // OSBYTE calls
@@ -36,6 +37,12 @@ func (b *BBC) Init(k *kernel.Kernel) error {
     return err
   }
   b.generator = service.(*generator.Generator)
+
+  service, err = k.AddService(&generator.Excel{})
+  if err != nil {
+    return err
+  }
+  b.excel = service.(*generator.Excel)
 
   return nil
 }
