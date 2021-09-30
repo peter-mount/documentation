@@ -6,6 +6,7 @@ import (
   "strings"
 )
 
+// Element represents an HTML element.
 type Element struct {
   name     string
   class    util.StringSlice
@@ -14,11 +15,14 @@ type Element struct {
   text     string
 }
 
+// Class adds a css class name to the element.
+// This takes a format string like fmt.Sprintf()
 func (e *Element) Class(c string, a ...interface{}) *Element {
   e.class = append(e.class, fmt.Sprintf(c, a...))
   return e
 }
 
+// String converts the Element & any children to a string
 func (e *Element) String() string {
   var a []string
 
@@ -45,10 +49,13 @@ func (e *Element) String() string {
   return strings.Join(a, "")
 }
 
+// HtmlBuilder creates a new Element builder
 func HtmlBuilder() *Element {
   return &Element{}
 }
 
+// End terminates the current element, returning its parent.
+// For the root it return's the current root element.
 func (e *Element) End() *Element {
   if e != nil && e.parent != nil {
     return e.parent
@@ -56,6 +63,14 @@ func (e *Element) End() *Element {
   return e
 }
 
+// Exec invokes a function returning the return value from it.
+// It's used to embed common html sequences into a builder.
+func (e *Element) Exec(f func(*Element) *Element) *Element {
+  return f(e)
+}
+
+// If calls a function if a condition is true.
+// The returned instance will be the returned instance from that function or the current element if the condition was false.
 func (e *Element) If(p bool, f func(*Element) *Element) *Element {
   if p {
     return f(e)
@@ -63,6 +78,7 @@ func (e *Element) If(p bool, f func(*Element) *Element) *Element {
   return e
 }
 
+// RootElement returns the root element of the current document.
 func (e *Element) RootElement() *Element {
   n := e
   for n.parent != nil {
@@ -71,18 +87,23 @@ func (e *Element) RootElement() *Element {
   return n
 }
 
+// Textf appends a Text element based on a fmt.Sprintf() formatted string.
 func (e *Element) Textf(f string, s ...interface{}) *Element {
-  e.element("").text = fmt.Sprintf(f, s...)
-  return e
+  return e.Text(fmt.Sprintf(f, s...))
 }
 
+// Text appends each provided string as a text Element.
 func (e *Element) Text(s ...string) *Element {
+  ne := e
   for _, a := range s {
-    e.element("").text = a
+    ne := ne.element("")
+    ne.text = a
   }
-  return e
+  return ne
 }
 
+// FileBuilder converts the Element to an util.FileBuilder instance.
+// This instance will always operate from the document root Element.
 func (e *Element) FileBuilder() util.FileBuilder {
   n := e.RootElement()
   return func(slice util.StringSlice) (util.StringSlice, error) {
@@ -90,22 +111,20 @@ func (e *Element) FileBuilder() util.FileBuilder {
   }
 }
 
-func (e *Element) Sequence(start, end int, f func(int, *Element)) *Element {
+// Sequence calls a function for each integer between start and end inclusively.
+// If start > end then the sequence will count down from start until end.
+func (e *Element) Sequence(start, end int, f func(int, *Element) *Element) *Element {
+  ne := e
   if start < end {
     for i := start; i <= end; i++ {
-      f(i, e)
+      ne = f(i, ne)
     }
   } else {
     for i := start; i >= end; i-- {
-      f(i, e)
+      ne = f(i, ne)
     }
   }
-  return e
-}
-
-func (e *Element) Exec(f func(*Element)) *Element {
-  f(e)
-  return e
+  return ne
 }
 
 func (e *Element) element(n string) *Element {
@@ -117,26 +136,32 @@ func (e *Element) element(n string) *Element {
   return child
 }
 
+// Div element. This is open so End() must be called to terminate it.
 func (e *Element) Div() *Element {
   return e.element("div")
 }
 
+// Span element. This is open so End() must be called to terminate it.
 func (e *Element) Span() *Element {
   return e.element("span")
 }
 
+// OL element. This is open so End() must be called to terminate it.
 func (e *Element) OL() *Element {
   return e.element("ol")
 }
 
+// LI element. This is open so End() must be called to terminate it.
 func (e *Element) LI() *Element {
   return e.element("li")
 }
 
+// Sub element. This is open so End() must be called to terminate it.
 func (e *Element) Sub() *Element {
   return e.element("sub")
 }
 
+// Sup element. This is open so End() must be called to terminate it.
 func (e *Element) Sup() *Element {
   return e.element("sup")
 }

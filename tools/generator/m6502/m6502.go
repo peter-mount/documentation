@@ -30,11 +30,11 @@ func (s *M6502) Init(k *kernel.Kernel) error {
 func (s *M6502) Start() error {
   s.generator.
       Register("6502OpsIndex",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           RunOnce(&s.extracted, s.extractOpcodes).
           Then(s.writeOpsIndex)).
       Register("6502OpsHexIndex",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           RunOnce(&s.extracted, s.extractOpcodes).
           Then(s.writeOpsHexIndex))
 

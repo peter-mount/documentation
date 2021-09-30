@@ -9,11 +9,13 @@ import (
   "log"
 )
 
-// GeneratorHandler performs an action against a Book
-type GeneratorHandler func(*hugo.Book) error
+// Handler performs an action against a Book.
+// Handler's can either do all of their work in one go or pass Task's to the Generator to be run after
+// all other Handler's have run.
+type Handler func(*hugo.Book) error
 
 // Then returns a GeneratorHandler that calls this one then if no error the next one forming a chain
-func (h GeneratorHandler) Then(next GeneratorHandler) GeneratorHandler {
+func (h Handler) Then(next Handler) Handler {
   return func(b *hugo.Book) error {
     err := h(b)
     if err != nil {
@@ -23,9 +25,9 @@ func (h GeneratorHandler) Then(next GeneratorHandler) GeneratorHandler {
   }
 }
 
-// GeneratorHandlerOf returns a GeneratorHandler that will invoke each supplied GeneratorHandler in a single instance.
+// HandlerOf returns a Handler that will invoke each supplied GeneratorHandler in a single instance.
 // This is a convenience form of calling Then() on each one.
-func GeneratorHandlerOf(handlers ...GeneratorHandler) GeneratorHandler {
+func HandlerOf(handlers ...Handler) Handler {
   switch len(handlers) {
   case 0:
     return func(_ *hugo.Book) error {
@@ -42,8 +44,10 @@ func GeneratorHandlerOf(handlers ...GeneratorHandler) GeneratorHandler {
   }
 }
 
-func (a GeneratorHandler) RunOnce(s *bool, b GeneratorHandler) GeneratorHandler {
-  return a.Then(func(book *hugo.Book) error {
+// RunOnce will call a Handler once. It uses a pointer to a boolean to store this state.
+// It's useful for simple tasks but should be treated as Deprecated as it only works for one Book not multiple books.
+func (h Handler) RunOnce(s *bool, b Handler) Handler {
+  return h.Then(func(book *hugo.Book) error {
     if !*s {
       *s = true
       return b(book)
@@ -52,13 +56,16 @@ func (a GeneratorHandler) RunOnce(s *bool, b GeneratorHandler) GeneratorHandler 
   })
 }
 
-type GeneratorTask func() error
+// Task is a task that the Generator must run once all other Handler's have been run.
+// They are usually tasks created by those Handlers.
+type Task func() error
 
+// Generator is a kernel Service which handles the generation of content based on page metadata.
 type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf
-  generators map[string]GeneratorHandler // Map of available generators
-  tasks      []GeneratorTask
+  generators map[string]Handler // Map of available generators
+  tasks      []Task
 }
 
 func (g *Generator) Name() string {
@@ -83,11 +90,12 @@ func (g *Generator) Init(k *kernel.Kernel) error {
 }
 
 func (g *Generator) Start() error {
-  g.generators = make(map[string]GeneratorHandler)
+  g.generators = make(map[string]Handler)
   return nil
 }
 
-func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
+// Register a named Handler
+func (g *Generator) Register(n string, h Handler) *Generator {
   if _, exists := g.generators[n]; exists {
     panic(fmt.Errorf("GeneratorHandler %s already registered", n))
   }
@@ -96,7 +104,8 @@ func (g *Generator) Register(n string, h GeneratorHandler) *Generator {
   return g
 }
 
-func (g *Generator) AddTask(t GeneratorTask) *Generator {
+// AddTask appends a Task to be performed once all Handler's have run.
+func (g *Generator) AddTask(t Task) *Generator {
   g.tasks = append(g.tasks, t)
   return g
 }

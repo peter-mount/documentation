@@ -43,21 +43,21 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 func (b *BBC) Start() error {
   b.generator.
       Register("bbcAPIIndex",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeAPIIndex).
           Then(b.writeAPITable)).
       Register("bbcAPINameIndex",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeAPINameIndex)).
       Register("bbcOsbyteIndex",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeOsbyteIndex).
           Then(b.writeOsbyteTable)).
       Register("bbcOswordIndex",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeOswordIndex).
           Then(b.writeOswordTable))

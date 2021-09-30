@@ -21,6 +21,7 @@ type Chip struct {
   extracted util.Set               // Set of book ID's so that we run once per book
 }
 
+// DefinitionHandler is called when generating the shortcode for this Definition
 type DefinitionHandler func(*Definition) error
 
 // Definition holds the details for this chip
@@ -39,6 +40,7 @@ type Definition struct {
   handler     DefinitionHandler // Handler for this chip type
 }
 
+// Generate implements the GeneratorTask interface to generate the shortcode for this chip Definition.
 func (d *Definition) Generate() error {
   if d.handler != nil {
     return d.handler(d)
@@ -47,6 +49,7 @@ func (d *Definition) Generate() error {
   return fmt.Errorf("%s has no generatator handler", d.Name)
 }
 
+// Path returns the path to the generated shortcode
 func (d *Definition) Path() string {
   a := []string{"themes/area51/layouts/shortcodes/generated/chip"}
   if d.Category != "" {
@@ -79,7 +82,7 @@ func (c *Chip) Start() error {
 
   c.generator.
       Register("chipDefinitions",
-        generator.GeneratorHandlerOf().
+        generator.HandlerOf().
           Then(c.extract))
   //Then(c.writeChipIndex))
 
@@ -109,6 +112,7 @@ func (c *Chip) extract(book *hugo.Book) error {
     Walk(book.ContentPath())
 }
 
+// extractChipDefinitions extracts all definitions from a specific hugo page
 func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) error {
   return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util2.IfMap(e, func(m map[interface{}]interface{}) error {
