@@ -7,31 +7,33 @@ type PriorityEntry struct {
   Element  interface{}
 }
 
-func (p PriorityQueue) Add(e interface{}) PriorityQueue {
-  return p.AddPriority(0, e)
+func (p *PriorityQueue) Add(e interface{}) {
+  p.AddPriority(0, e)
 }
 
-func (p PriorityQueue) AddPriority(priority int, e interface{}) PriorityQueue {
+func (p *PriorityQueue) AddPriority(priority int, e interface{}) {
   ent := PriorityEntry{Priority: priority, Element: e}
 
-  for i, existing := range p {
+  for i, existing := range *p {
     if existing.Priority > priority {
-      a := append(p[:i], ent)
-      return append(a, p[i:]...)
+      *p=append(*p,ent)
+      copy((*p)[i+1:],(*p)[i:])
+      (*p)[i]=ent
+      return
     }
   }
 
-  return append(p, ent)
+  *p = append(*p, ent)
 }
 
-func (p PriorityQueue) IsEmpty() bool {
-  return len(p) == 0
+func (p *PriorityQueue) IsEmpty() bool {
+  return len(*p) == 0
 }
 
 // ForEach will call a function for each entry in the PriorityQueue.
 // The Queue is not modified during this call.
-func (p PriorityQueue) ForEach(f func(interface{}) error) error {
-  for _, e := range p {
+func (p *PriorityQueue) ForEach(f func(interface{}) error) error {
+  for _, e := range *p {
     err := f(e.Element)
     if err != nil {
       return err
