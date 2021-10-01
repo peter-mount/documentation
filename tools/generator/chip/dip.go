@@ -53,7 +53,7 @@ func dip(d *Definition) error {
         if side {
           x = vWidth2 - dipWidth2 - dipPinWidth
           y = (dipPinSpacingV * pin) - dipPinSpacingV2
-          z = dipPinWidth-z
+          z = dipPinWidth - z
         } else {
           x = vWidth2 + dipWidth2
           y = dipPinSpacingV*(d.PinCount-pin+1) - dipPinSpacingV2
