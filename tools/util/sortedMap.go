@@ -7,29 +7,34 @@ func NewSortedMap() *SortedMap {
   return &m
 }
 
-func (m *SortedMap) AddAll(s map[string]interface{}) *SortedMap {
-  for k, v := range s {
+// AddAll will add all entries in the source map to this instance
+func (m *SortedMap) AddAll(source map[string]interface{}) *SortedMap {
+  for k, v := range source {
     (*m)[k] = v
   }
   return m
 }
 
-func (m *SortedMap) DecodeMap(s map[interface{}]interface{}) *SortedMap {
-  for k, v := range s {
+// DecodeMap will add all entries in the source map to this instance.
+func (m *SortedMap) DecodeMap(source map[interface{}]interface{}) *SortedMap {
+  _ = m.decodeMap(source)
+  return m
+}
+
+// Decode will add all entries in the source to this instance if it's a map. If not it does nothing.
+func (m *SortedMap) Decode(source interface{}) *SortedMap {
+  _ = IfMap(source, m.decodeMap)
+  return m
+}
+
+func (m *SortedMap) decodeMap(source map[interface{}]interface{}) error {
+  for k, v := range source {
     ks := DecodeString(k, "")
     if ks != "" {
       (*m)[ks] = v
     }
   }
-  return m
-}
-
-func (m *SortedMap) Decode(v interface{}) *SortedMap {
-  _ = IfMap(v, func(sm map[interface{}]interface{}) error {
-    m.DecodeMap(sm)
-    return nil
-  })
-  return m
+  return nil
 }
 
 func (m *SortedMap) Keys() StringSlice {

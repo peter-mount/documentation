@@ -3,6 +3,7 @@ package generator
 import (
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
+  "path"
   "time"
 )
 
@@ -42,24 +43,25 @@ func (e *Excel) Start() error {
 }
 
 // Get returns a named ExcelProvider and ensures its written to disk.
-func (e *Excel) Get(n string, modified time.Time) util.ExcelProvider {
-  if p, exists := e.builders[n]; exists {
-    return p
+func (e *Excel) Get(name string, modified time.Time) util.ExcelProvider {
+  if provider, exists := e.builders[name]; exists {
+    return provider
   }
 
-  p := &provider{}
-  e.builders[n] = p
+  provider := &provider{}
+  e.builders[name] = provider
 
-  e.generator.AddPriorityTask(500+len(n), func() error {
-    if p.builder != nil {
+  e.generator.AddPriorityTask(500, func() error {
+    if provider.builder != nil {
       // NOTE: Use WriteAlways with Excel as we cannot compare an existing version due to xlsx files being zip files
-      // so the timestamps are always different & the generated file will differ even with identical content.
-      return p.builder.
+      // so the timestamps inside the zip file are always different causing the generated file to differ
+      // even if the actual content is identical.
+      return provider.builder.
         FileHandler().
-        WriteAlways("content/"+n+"/reference.xlsx", modified)
+        WriteAlways(path.Join("content", name, "reference.xlsx"), modified)
     }
     return nil
   })
 
-  return p
+  return provider
 }

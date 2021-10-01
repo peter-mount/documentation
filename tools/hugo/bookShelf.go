@@ -8,7 +8,6 @@ import (
 )
 
 // BookShelf manages all Book's.
-// A Book is a _index.html file containing a book: section within it's FrontMatter
 type BookShelf struct {
   books Books
 }

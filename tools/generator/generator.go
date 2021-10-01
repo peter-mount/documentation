@@ -111,8 +111,8 @@ func (g *Generator) AddTask(t Task) *Generator {
 }
 
 // AddPriorityTask appends a Task to be performed once all Handler's have run.
-func (g *Generator) AddPriorityTask(p int, t Task) *Generator {
-  g.tasks.AddPriority(p, t)
+func (g *Generator) AddPriorityTask(priority int, task Task) *Generator {
+  g.tasks.AddPriority(priority, task)
   return g
 }
 
@@ -149,18 +149,3 @@ func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n stri
   log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
   return nil
 }
-
-/*
-func (g *Generator) writeExcel(_ context.Context, book *hugo.Book, _ string) error {
-  g.AddPriorityTask(100, func() error {
-    if book.IsExcelPresent() {
-      defer book.SetExcel(nil)
-      return book.GetExcel().
-        FileHandler().
-        Write(util.ReferenceFilename(book.ContentPath(), "", "reference.xlsx"), book.Modified())
-    }
-    return nil
-  })
-  return nil
-}
-*/
