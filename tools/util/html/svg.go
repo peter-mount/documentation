@@ -2,7 +2,8 @@ package html
 
 func (e *Element) Svg() *Element {
   return e.element("svg").
-    Attr("xmlns", "http://www.w3.org/2000/svg")
+    Attr("xmlns", "http://www.w3.org/2000/svg").
+    Attr("version", "1.1")
 }
 
 func (e *Element) ViewBox(x, y, width, height int) *Element {
@@ -60,6 +61,10 @@ func (e *Element) StrokeWidth(v string, a ...interface{}) *Element {
 // SvgText is the text element, cannot use Text() as that adds plain text
 func (e *Element) SvgText() *Element {
   return e.element("text")
+}
+
+func (e *Element) TSpan() *Element {
+  return e.element("tspan")
 }
 
 func (e *Element) Circle() *Element {

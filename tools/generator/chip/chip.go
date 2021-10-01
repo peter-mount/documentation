@@ -51,15 +51,16 @@ func (d *Definition) Generate() error {
 }
 
 // Path returns the path to the generated shortcode
-func (d *Definition) Path() string {
-  a := []string{"themes/area51/layouts/shortcodes/generated/chip"}
+func (d *Definition) Path(dir string) string {
+  //a := []string{"themes/area51/layouts/shortcodes/generated/chip"}
+  a := []string{dir}
   if d.Category != "" {
     a = append(a, d.Category)
   }
   if d.SubCategory != "" {
     a = append(a, d.SubCategory)
   }
-  a = append(a, d.Name+".html")
+  a = append(a, d.Name)
   return path.Join(a...)
 }
 
