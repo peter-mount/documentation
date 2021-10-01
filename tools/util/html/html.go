@@ -10,9 +10,15 @@ import (
 type Element struct {
   name     string
   class    util.StringSlice
+  attrs    []Attr
   parent   *Element
   children []*Element
   text     string
+}
+
+type Attr struct {
+  Name  string
+  Value string
 }
 
 // Class adds a css class name to the element.
@@ -20,6 +26,18 @@ type Element struct {
 func (e *Element) Class(c string, a ...interface{}) *Element {
   e.class = append(e.class, fmt.Sprintf(c, a...))
   return e
+}
+
+func (e *Element) Attr(name, format string, args ...interface{}) *Element {
+  e.attrs = append(e.attrs, Attr{
+    Name:  name,
+    Value: fmt.Sprintf(format, args...),
+  })
+  return e
+}
+
+func (e *Element) AttrInt(name string, val int) *Element {
+  return e.Attr(name, "%d", val)
 }
 
 // String converts the Element & any children to a string
@@ -31,9 +49,17 @@ func (e *Element) String() string {
   } else {
     if e.name != "" {
       a = append(a, "<", e.name)
+
       if !e.class.IsEmpty() {
         a = append(a, e.class.Join2(" class=\"", "\"", " "))
       }
+
+      if len(e.attrs) > 0 {
+        for _, attr := range e.attrs {
+          a = append(a, fmt.Sprintf(" %s=%q", attr.Name, attr.Value))
+        }
+      }
+
       a = append(a, ">")
     }
 
@@ -164,4 +190,8 @@ func (e *Element) Sub() *Element {
 // Sup element. This is open so End() must be called to terminate it.
 func (e *Element) Sup() *Element {
   return e.element("sup")
+}
+
+func (e *Element) Style() *Element {
+  return e.element("style")
 }
