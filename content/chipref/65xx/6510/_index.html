@@ -3,7 +3,7 @@ type: "manual"
 title: "MOS 6510 Microprocessor"
 linkTitle: "6510 CPU"
 weight: 65100
-description: The 6510 8 bit Microprocessor
+description: "The 6510 8 bit Microprocessor with 8 bit bi-directional interface port"
 chip:
   - name: "6510"
     category: "mos"
@@ -12,12 +12,61 @@ chip:
     pinCount: 40
     label: "MOS"
     subLabel: "6510"
-    source: "1982 MOS Technology Data Catalog"
+    source: "http://archive.6502.org/datasheets/mos_6510_mpu.pdf"
+    pins:
+        "1": "PHI(1) (IN)"
+        "2": "RDY"
+        "3": "NOT(IRQ)"
+        "4": "NOT(NMI)"
+        "5": "AEC"
+        "6": "V(CC)"
+        "7": "A(0)"
+        "8": "A(1)"
+        "9": "A(2)"
+        "10": "A(3)"
+        "11": "A(4)"
+        "12": "A(5)"
+        "13": "A(6)"
+        "14": "A(7)"
+        "15": "A(8)"
+        "16": "A(9)"
+        "17": "A(10)"
+        "18": "A(11)"
+        "19": "A(12)"
+        "20": "A(13)"
+        "21": "V(SS)"
+        "22": "A(14)"
+        "23": "A(15)"
+        "24": "P(5)"
+        "25": "P(4)"
+        "26": "P(3)"
+        "27": "P(2)"
+        "28": "P(1)"
+        "29": "P(0)"
+        "30": "D(7)"
+        "31": "D(6)"
+        "32": "D(5)"
+        "33": "D(4)"
+        "34": "D(3)"
+        "35": "D(2)"
+        "36": "D(1)"
+        "37": "D(0)"
+        "38": "R/NOT(W)"
+        "39": "PHI(2) (IN)"
+        "40": "NOT(RES)"
+  - name: "6510-1"
+    category: "mos"
+    title: "MOS 6510-1"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "6510-1"
+    source: "http://archive.6502.org/datasheets/mos_6510_mpu.pdf"
     notes:
         - Marked as product preview on 1982 document
     pins:
         "1": "NOT(RES)"
-        "2": "PHI(0) (IN)"
+        "2": "PHI(1) (IN)"
         "3": "NOT(IRQ)"
         "4": "AEC"
         "5": "V(CC)"
@@ -56,14 +105,79 @@ chip:
         "38": "D(0)"
         "39": "R/W"
         "40": "PHI(2) (IN)"
+  - name: "6510-2"
+    category: "mos"
+    title: "MOS 6510-2"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "6510-2"
+    source: "http://archive.6502.org/datasheets/mos_6510_mpu.pdf"
+    notes:
+        - Marked as product preview on 1982 document
+    pins:
+        "1": "NOT(RES)"
+        "2": "PHI(2) (IN)"
+        "3": "NOT(IRQ)"
+        "4": "AEC"
+        "5": "V(CC)"
+        "6": "A(0)"
+        "7": "A(1)"
+        "8": "A(2)"
+        "9": "A(3)"
+        "10": "A(4)"
+        "11": "A(5)"
+        "12": "A(6)"
+        "13": "A(7)"
+        "14": "A(8)"
+        "15": "A(9)"
+        "16": "A(10)"
+        "17": "A(11)"
+        "18": "A(12)"
+        "19": "A(13)"
+        "20": "V(SS)"
+        "21": "A(14)"
+        "22": "A(15)"
+        "23": "P(7)"
+        "24": "P(6)"
+        "25": "P(5)"
+        "26": "P(4)"
+        "27": "P(3)"
+        "28": "P(2)"
+        "29": "P(1)"
+        "30": "P(0)"
+        "31": "D(7)"
+        "32": "D(6)"
+        "33": "D(5)"
+        "34": "D(4)"
+        "35": "D(3)"
+        "36": "D(2)"
+        "37": "D(1)"
+        "38": "D(0)"
+        "39": "R/W"
+        "40": "PHI(2) (OUT)"
 ---
 <div class="container">
     <div class="row">
-        <div class="col-8">
-
-        </div>
         <div class="col-4">
             <img src="/chipref/reference/mos/6510.svg"/>
         </div>
+        <div class="col-4">
+            <img src="/chipref/reference/mos/6510-1.svg"/>
+        </div>
+        <div class="col-4">
+            <img src="/chipref/reference/mos/6510-2.svg"/>
+        </div>
+        <div class="col-6">
+        </div>
     </div>
 </div>
+<h2>Internal I/O Port</h2>
+<p>
+    The 6510 has an 8 bit I/O port built in.
+    Only the lower 6 bits (P<sub>0</sub>&hellip;P<sub>5</sub>) are exposed on the 6510 (as used on the Commodore 64)
+    whilst all 8 bits are exposed on the 6510-1 and 6510-2 processors by sacrificing the RDY &amp; <span class="not">NMI</span> signals.
+</p>
+<p>
+    The Data Direction Register is at address 0x0000 whilst the data port is at address 0x0001.
+</p>
