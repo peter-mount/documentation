@@ -1,6 +1,6 @@
 ---
 type: "manual"
-title: "MOS 6502 Microprocessor"
+title: "6502 Microprocessor"
 linkTitle: "6502 CPU"
 weight: 65020
 description: The 6502 8 bit Microprocessor
@@ -47,21 +47,343 @@ chip:
         "31": "D(2)"
         "32": "D(1)"
         "33": "D(0)"
-        "34": "R/W"
+        "34": "R/NOT(W)"
         "35": "NC"
         "36": "NC"
         "37": "PHI(0) (IN)"
         "38": "S0"
         "39": "PHI(2) (OUT)"
         "40": "NOT(RES)"
+  - name: "WDC65C02S"
+    category: "mos"
+    title: "WDC 65C02 8-bit CPU"
+    type: "dip"
+    pinCount: 40
+    label: "WDC"
+    subLabel: "65C02"
+    source: "https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf"
+    pins:
+        "1": "NOT(VP)"
+        "2": "RDY"
+        "3": "PHI(1) (OUT)"
+        "4": "NOT(IRQ)"
+        "5": "NOT(ML)"
+        "6": "NOT(NMI)"
+        "7": "SYNC"
+        "8": "V(DD)"
+        "9": "A(0)"
+        "10": "A(1)"
+        "11": "A(2)"
+        "12": "A(3)"
+        "13": "A(4)"
+        "14": "A(5)"
+        "15": "A(6)"
+        "16": "A(7)"
+        "17": "A(8)"
+        "18": "A(9)"
+        "19": "A(10)"
+        "20": "A(11)"
+        "21": "V(SS)"
+        "22": "A(12)"
+        "23": "A(13)"
+        "24": "A(14)"
+        "25": "A(15)"
+        "26": "D(7)"
+        "27": "D(6)"
+        "28": "D(5)"
+        "29": "D(4)"
+        "30": "D(3)"
+        "31": "D(2)"
+        "32": "D(1)"
+        "33": "D(0)"
+        "34": "R/NOT(W)"
+        "35": "NC"
+        "36": "BE"
+        "37": "PHI(0) (IN)"
+        "38": "NOT(SO)"
+        "39": "PHI(2) (OUT)"
+        "40": "NOT(RES)"
+  - name: "WDC65C02S-PLCC"
+    category: "mos"
+    title: "WDC 65C02 8-bit CPU"
+    type: "plcc"
+    label: "WDC"
+    subLabel: "65C02"
+    source: "https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf"
+    pinCount: 44
+    pinOffset: -6
+    pins:
+        "1": "V(SS)"
+        "2": "NOT(VP)"
+        "3": "RDY"
+        "4": "PHI(1) (OUT)"
+        "5": "NOT(IRQ)"
+        "6": "NOT(ML)"
+        "7": "NOT(NMI)"
+        "8": "SYNC"
+        "9": "V(DD)"
+        "10": "A(0)"
+        "11": "A(1)"
+        "12": "NC"
+        "13": "A(2)"
+        "14": "A(3)"
+        "15": "A(4)"
+        "16": "A(5)"
+        "17": "A(6)"
+        "18": "A(7)"
+        "19": "A(8)"
+        "20": "A(9)"
+        "21": "A(10)"
+        "22": "A(11)"
+        "23": "V(SS)"
+        "24": "V(SS)"
+        "25": "A(12)"
+        "26": "A(13)"
+        "27": "A(14)"
+        "28": "A(15)"
+        "29": "D(7)"
+        "30": "D(6)"
+        "31": "D(5)"
+        "32": "D(4)"
+        "33": "D(3)"
+        "34": "D(2)"
+        "35": "D(1)"
+        "36": "D(0)"
+        "37": "V(DD)"
+        "38": "R/NOT(W)"
+        "39": "NC"
+        "40": "BE"
+        "41": "PHI(2) (IN)"
+        "42": "NOT(SO)"
+        "43": "PHI(2) (OUT)"
+        "44": "NOT(RES)"
+  - name: "WDC65C02S-QFP"
+    category: "mos"
+    title: "WDC 65C02 8-bit CPU"
+    type: "qfp"
+    label: "WDC"
+    subLabel: "65C02"
+    source: "https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf"
+    pinCount: 44
+    pinOffset: 0
+    pins:
+        "1": "NOT(NMI)"
+        "2": "SYNC"
+        "3": "V(DD)"
+        "4": "A(0)"
+        "5": "A(1)"
+        "6": "NC"
+        "7": "A(2)"
+        "8": "A(3)"
+        "9": "A(4)"
+        "10": "A(5)"
+        "11": "A(6)"
+        "12": "A(7)"
+        "13": "A(8)"
+        "14": "A(9)"
+        "15": "A(10)"
+        "16": "A(11)"
+        "17": "V(SS)"
+        "18": "V(SS)"
+        "19": "A(12)"
+        "20": "A(13)"
+        "21": "A(14)"
+        "22": "A(15)"
+        "23": "D(7)"
+        "24": "D(6)"
+        "25": "D(5)"
+        "26": "D(4)"
+        "27": "D(3)"
+        "28": "D(2)"
+        "29": "D(1)"
+        "30": "D(0)"
+        "31": "V(DD)"
+        "32": "R/NOT(W)"
+        "33": "NC"
+        "34": "BE"
+        "35": "PHI(2) (IN)"
+        "36": "NOT(SO)"
+        "37": "PHI(2) (OUT)"
+        "38": "NOT(RES)"
+        "39": "V(SS)"
+        "40": "NOT(VP)"
+        "41": "RDY"
+        "42": "PHI(1) (OUT)"
+        "43": "NOT(IRQ)"
+        "44": "NOT(ML)"
 ---
+<p>
+    This is the classic 6502 Microprocessor.
+    Originally produced by MOS in 1974, it is now produced by WDC (Western Design Center).
+</p>
 <div class="container">
     <div class="row">
-        <div class="col-8">
-
-        </div>
-        <div class="col-4">
+        <div class="col-6">
             <img src="/chipref/reference/mos/6502.svg"/>
+        </div>
+        <div class="col-6">
+            <img src="/chipref/reference/mos/WDC65C02S.svg"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <img src="/chipref/reference/mos/WDC65C02S-PLCC.svg"/>
+        </div>
+        <div class="col-6">
+            <img src="/chipref/reference/mos/WDC65C02S-QFP.svg"/>
         </div>
     </div>
 </div>
+<h2>Pin descriptions</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Pin</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>A<sub>0</sub>&hellip;A<sub>15</sub></td>
+        <td>Address Bus</td>
+        <td>
+            The sixteen bit Address Bus formed by A0-A15, address memory and I/O registers that exchange data on the Data Bus.
+            The address lines can be set to the high impedance state by the Bus Enable (BE) signal.
+        </td>
+    </tr>
+    <tr>
+        <td>BE</td>
+        <td>Bus Enable</td>
+        <td>
+            The Bus Enable (BE) input signal provides external control of the Address, Data and the RWB buffers.
+            When Bus Enable is high, the Address, Data and RWB buffers are active.
+            When BE is low, these buffers are set to the high impedance status.
+            Bus Enable is an asynchronous signal.
+        </td>
+    </tr>
+    <tr>
+        <td>D<sub>0</sub>&hellip;D<sub>7</sub></td>
+        <td>Data Bus</td>
+        <td>
+            These lines may be set to the high impedance state by the Bus Enable (BE) signal.
+        </td>
+    </tr>
+    <tr>
+        <td><span class="not">IRQ</span></td>
+        <td>Interrupt Request</td>
+        <td>
+            The processor initiates it's interrupt sequence when the <span class="not">IRQ</span> line is pulled low.
+            The <span class="not">IRQ</span> signal should be held low until the interrupt handler clears the interrupt request source.
+        </td>
+    </tr>
+    <tr>
+        <td><span class="not">ML</span></td>
+        <td>Memory Lock</td>
+        <td>
+            The Memory Lock (<span class="not">ML</span>) output may be used to ensure the integrity of Read-Modify-Write instructions in a multiprocessor system.
+            Memory Lock indicates the need to defer arbitration of the bus cycle when <span class="not">ML</span> is low.
+            Memory Lock is low during the last three cycles of ASL, DEC, INC, LSR, ROL, ROR, TRB, and TSB memory referencing instructions.
+        </td>
+    </tr>
+    <tr>
+        <td><span class="not">NMI</span></td>
+        <td>Non-Maskable Interrupt</td>
+        <td>
+            A negative transition on the Non-Maskable Interrupt (<span class="not">NMI</span>) input initiates an interrupt sequence after the current instruction is completed.
+            Since <span class="not">NMI</span> is an edge-sensitive input, an interrupt will occur if there is a negative transition while servicing a previous interrupt.
+            Also, after the edge interrupt occurs no further interrupts will occur if <span class="not">NMI</span> remains low.
+        </td>
+    </tr>
+    <tr>
+        <td>NC</td>
+        <td>No Connection</td>
+        <td>Not connected internally. It should not be connected externally</td>
+    </tr>
+    <tr>
+        <td>
+            ∅<sub>2</sub><br/>
+            ∅<sub>2</sub>&nbsp;(OUT)<br/>
+            ∅<sub>1</sub>&nbsp;(OUT)
+        </td>
+        <td>
+            Phase 2<br/>
+            Phase 2 Out<br/>
+            Phase 1 Out
+        </td>
+        <td>
+            Phase<sub>2</sub> or ∅<sub>2</sub> is the system clock input.
+            ∅<sub>2</sub>&nbsp;(Out) is generated from the ∅<sub>2</sub> input.
+            ∅<sub>1</sub>&nbsp;(Out) is the inverted ∅<sub>2</sub> signal.
+        </td>
+    </tr>
+    <tr>
+        <td>R/<span class="not">W</span></td>
+        <td>Read/Write</td>
+        <td>
+            The R/<span class="not">W</span> signal is used to control data transfer.
+            When it's in the high state the processor is reading memory.
+            When it's in the low state the Data Bus contains valid data to be written to the memory address.
+            The R/<span class="not">W</span> signal is set to a high impedance state wheh Bus Enable is low.
+        </td>
+    </tr>
+    <tr>
+        <td>RDY</td>
+        <td>Ready</td>
+        <td>
+            A low signal on RDY will halt the processor in its current state.
+            Returning to high signal will restart the processor on the next PHI<sub>2</sub> negative transition.
+            The WAI instruction (65C02 &amp; later) will pull RDY low.
+            If RDY is not used a pull-up resistor is recommended as newer processors no longer have an active pull-up.
+        </td>
+    </tr>
+    <tr>
+        <td><span class="not">RES</span></td>
+        <td>Reset</td>
+        <td>
+            Initialise the microprocessor.
+            The <span class="not">RES</span> pin must be held low for at least 2 clock cycles after V<sub>DD</sub>
+            reaches operating voltage.
+            Ready (RDY) has no effect whilst <span class="not">RES</span> is low.
+            When a positive edge is detected on <span class="not">RES</span> the processor will begin a reset sequence which is 7 cycles long.
+        </td>
+    </tr>
+    <tr>
+        <td><span class="not">SO</span></td>
+        <td>Set Overflow</td>
+        <td>
+            A negative transition on the <span class="not">SO</span> pin sets the overflow bit in the status register.
+        </td>
+    </tr>
+    <tr>
+        <td>SYNC</td>
+        <td>Synchronize with OpCode fetch</td>
+        <td>
+            The SYNC line is high when the processor is reading an instruction from memory (not whilst reading data).
+            If the RDY line is pulled low during the same clock cycle as SYNC is high the processor will stop & remain
+            stopped until RDY goes high. This can be used to implement hardware single instruction execution.
+        </td>
+    </tr>
+    <tr>
+        <td>V<sub>DD</sub><br/>V<sub>CC</sub></td>
+        <td>Power</td>
+        <td>
+            Positive power supply voltage.
+            Some old data sheets shows this as V<sub>CC</sub>
+        </td>
+    </tr>
+    <tr>
+        <td>V<sub>SS</sub></td>
+        <td>Ground</td>
+        <td>System logic ground</td>
+    </tr>
+    <tr>
+        <td><span class="not">VP</span></td>
+        <td>Vector Pull</td>
+        <td>
+            The Vector Pull (<span class="not">VP</span>) output indicates that a vector location is being addressed during an interrupt sequence.
+        </td>
+    </tr>
+    </tbody>
+</table>
