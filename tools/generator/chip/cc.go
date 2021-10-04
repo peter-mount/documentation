@@ -1,9 +1,21 @@
 package chip
 
-import "github.com/peter-mount/documentation/tools/util/html"
+import (
+  "github.com/peter-mount/documentation/tools/util/html"
+)
 
 func lccc(d *Definition) error {
   // For now lccc is just an alias for cc
+  return cc(d)
+}
+
+func plcc(d *Definition) error {
+  // For now plcc is just an alias for cc
+  return cc(d)
+}
+
+func qfp(d *Definition) error {
+  // For now qfp is just an alias for cc
   return cc(d)
 }
 
@@ -54,20 +66,20 @@ func cc(d *Definition) error {
         }
 
         // Position of pin on associated side
-        pinSizeIndex := (pinIndex - 1) % pinSizeCount // pin # on side
+        pinSideIndex := (pinIndex - 1) % pinSizeCount // pin # on side
 
         // side from 0..3 counter-clockwise from left
         pinSide := (pinIndex - 1) / pinSizeCount
 
-        // Convert pinSizeIndex to account for correct counter-clockwise pin ordering
+        // Convert pinSideIndex to account for correct counter-clockwise pin ordering
         if pinSide > 1 {
-          pinSizeIndex = pinSizeCount - pinSizeIndex - 1
+          pinSideIndex = pinSizeCount - pinSideIndex - 1
         }
 
         // Calculate position of pins
         align := pinSide < 2 // Side 0 & 1 are right aligned
-        x := vWidth2 - (dipPinWidth2 / 2) + (dipPinWidth * (pinSizeIndex - 2))
-        y := vHeight2 - (dipPinSpacingV2 / 2) + (dipPinSpacingV * (pinSizeIndex - 2))
+        x := vWidth2 - (dipPinWidth2 / 2) + (dipPinWidth * (pinSideIndex - pinSizeCount/2))
+        y := vHeight2 - (dipPinSpacingV2 / 2) + (dipPinSpacingV * (pinSideIndex - pinSizeCount/2))
         rotate := 0 // text rotation
 
         // Adjust

@@ -196,6 +196,16 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
           return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
         }
         v.handler = lccc
+      case "plcc":
+        if (pinCount % 4) != 0 {
+          return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
+        }
+        v.handler = plcc
+      case "qfp":
+        if (pinCount % 4) != 0 {
+          return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
+        }
+        v.handler = qfp
       default:
         return fmt.Errorf("%s unsupported chip type \"%s\"", v.Name, v.Type)
       }
