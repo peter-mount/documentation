@@ -105,3 +105,9 @@ func dipPinLabel(rightAlign bool, x, y int, label string, e *html.Element) *html
   _ = Parse(label, dipPinFontSize, rightAlign, b)
   return b.End()
 }
+
+func dipPinLabelV(rightAlign bool, x, y int, label string, e *html.Element) *html.Element {
+  b := e.G().Attr("transform", "translate(%d %d) rotate(90deg)", x, y)
+  _ = Parse(label, dipPinFontSize, rightAlign, b)
+  return b.End()
+}

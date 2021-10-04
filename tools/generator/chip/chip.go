@@ -35,6 +35,7 @@ type Definition struct {
   Label       string            `yaml:"label"`       // Label, e.g. "MOS"
   SubLabel    string            `yaml:"SubLabel"`    // Sub Label, e.g. "6502"
   PinCount    int               `yaml:"PinCount"`    // Number of pins
+  PinOffset   int               `yaml:"PinOffset"`   // Offset from where 1 normally is located, default=0
   Pins        map[int]string    `yaml:"pins"`        // Pin title definitions
   Weight      int               `yaml:"weight"`      // Weight of chip, 0=natural
   FileInfo    os.FileInfo       `yaml:"-"`           // FileInfo of containing file
@@ -133,6 +134,8 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
         return fmt.Errorf("invalid pinCount %d", pinCount)
       }
 
+      pinOffset, ok := util2.DecodeInt(m["pinOffset"], 0)
+
       weight, _ := util2.DecodeInt(m["weight"], 0)
 
       v := &Definition{
@@ -144,6 +147,7 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
         Label:       util2.DecodeString(m["label"], ""),
         SubLabel:    util2.DecodeString(m["subLabel"], ""),
         PinCount:    pinCount,
+        PinOffset:   pinOffset,
         Pins:        make(map[int]string),
         Weight:      weight,
         FileInfo:    ctx.Value("fileInfo").(os.FileInfo),
@@ -187,6 +191,11 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
           return fmt.Errorf("%s dip must have even number of pins, got %d", v.Name, pinCount)
         }
         v.handler = dip
+      case "lccc":
+        if (pinCount % 4) != 0 {
+          return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
+        }
+        v.handler = lccc
       default:
         return fmt.Errorf("%s unsupported chip type \"%s\"", v.Name, v.Type)
       }
