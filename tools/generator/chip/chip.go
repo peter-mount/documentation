@@ -196,6 +196,11 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
           return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
         }
         v.handler = lccc
+      case "lqfp":
+        if (pinCount % 4) != 0 {
+          return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
+        }
+        v.handler = lqfp
       case "plcc":
         if (pinCount % 4) != 0 {
           return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)

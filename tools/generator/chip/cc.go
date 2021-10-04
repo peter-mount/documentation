@@ -10,6 +10,11 @@ func lccc(d *Definition) error {
   return cc(d)
 }
 
+func lqfp(d *Definition) error {
+  // For now lccc is just an alias for cc
+  return cc(d)
+}
+
 func plcc(d *Definition) error {
   // For now plcc is just an alias for cc
   return cc(d)
@@ -30,7 +35,7 @@ func cc(d *Definition) error {
   width := height // These are square chips
   width2 := width / 2
 
-  vWidth := 200 + width
+  vWidth := 300 + width // TODO default at 200, make configurable to increase the size
   vWidth2 := vWidth / 2
   vHeight := vWidth
   vHeight2 := vHeight / 2
