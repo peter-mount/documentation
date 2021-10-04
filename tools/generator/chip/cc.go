@@ -2,6 +2,7 @@ package chip
 
 import (
   "github.com/peter-mount/documentation/tools/util/html"
+  "strings"
 )
 
 func lccc(d *Definition) error {
@@ -29,7 +30,7 @@ func cc(d *Definition) error {
   width := height // These are square chips
   width2 := width / 2
 
-  vWidth := 120 + width
+  vWidth := 200 + width
   vWidth2 := vWidth / 2
   vHeight := vWidth
   vHeight2 := vHeight / 2
@@ -44,9 +45,10 @@ func cc(d *Definition) error {
     Text(".chipCase circle {fill:white;}").
     Textf("rect.chipPin {width:%dpx;height:%dpx;fill:%s;stroke:%s;stroke-dasharray:3 3;}", 10, dipPinHeight, "#eee", html.BLACK).
     Textf("text.chipPin {font-size:%dpx;text-anchor:middle;}", dipPinFontSize).
-    Textf("g.chipLabel {fill:lightgrey;text-anchor:middle;}").
+    Textf("g.chipLabel {fill:black;text-anchor:middle;}").
     Textf("text.chipLabel {font-size:%dpx;font-weight:bold;}", dipLabelFontSize).
     Textf("text.chipSubLabel {font-size:%dpx;}", dipSubLabelFontSize).
+    Textf("text.chipTypeLabel {font-size:%dpx;}", dipSubLabelFontSize/2).
     End(). // style
     G().Class("chip").
     // DIP Labels
@@ -54,6 +56,7 @@ func cc(d *Definition) error {
     Attr("transform", "translate(%d %d)", vWidth2, vHeight2).
     SvgText().Y(-7).Class("chipLabel").Text(d.Label).End().
     SvgText().Y(30).Class("chipSubLabel").Text(d.SubLabel).End().
+    SvgText().Y(height2-40).Class("chipTypeLabel").Text(strings.ToUpper(d.Type)).End().
     End(). // G.chipLabel
       Sequence(1, d.PinCount, func(pin int, e *html.Element) *html.Element {
         // Number of pins per side

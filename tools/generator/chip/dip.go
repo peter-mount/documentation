@@ -38,7 +38,7 @@ func dip(d *Definition) error {
     Textf("g.chipCase rect {width:%dpx;height:%dpx;}", dipWidth, height).
     Textf("rect.chipPin {width:%dpx;height:%dpx;fill:%s;stroke:%s;}", 10, dipPinHeight, html.LightGrey, html.BLACK).
     Textf("text.chipPin {font-size:%dpx;text-anchor:middle;}", dipPinFontSize).
-    Text("g.chipLabel {fill:lightgrey;text-anchor:middle;}").
+    Text("g.chipLabel {fill:black;text-anchor:middle;}").
     Textf("text.chipLabel {font-size:%dpx;font-weight:bold;}", dipLabelFontSize).
     Textf("text.chipSubLabel {font-size:%dpx;}", dipSubLabelFontSize).
     End().

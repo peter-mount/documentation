@@ -14260,6 +14260,9 @@ table.generic th, table.generic td {
 table.generic .sep {
   border-left: 1px solid black; }
 
+.not {
+  text-decoration: overline; }
+
 footer {
   min-height: 150px; }
   @media (max-width: 991.98px) {
