@@ -30,20 +30,30 @@ func dip(d *Definition) error {
   vWidth2 := vWidth / 2
   b.
     Svg().ViewBox(0, 0, vWidth, height+50).Width(vWidth).
-    G().
-    Attr("font-family", html.TextFont).
+    Style().Attr("type", "text/css").
+    // TODO check text-decoration-thickness as seems broken in Chrome 94 but works in Firefox 92
+    Text("tspan.not {text-decoration: overline;webkit-text-decoration-thickness: 2px;text-decoration-thickness: 2px;}").
+    Textf(".chip {font-family:%s;}", html.TextFont).
+    Textf("g.chipCase rect {width:%dpx;height:%dpx;fill:#333;}", dipWidth, height).
+    Text(".chipCase circle {fill:white;}").
+    Textf("rect.chipPin {width:%dpx;height:%dpx;fill:%s;stroke:%s;}", dipPinWidth, dipPinHeight, html.LightGrey, html.BLACK).
+    Textf("text.chipPin {font-size:%dpx;text-anchor:middle;}", dipPinFontSize).
+    Textf("g.chipLabel {fill:lightgrey;text-anchor:middle;}").
+    Textf("text.chipLabel {font-size:%dpx;font-weight:bold;}", dipLabelFontSize).
+    Textf("text.chipSubLabel {font-size:%dpx;}", dipSubLabelFontSize).
+    End().
+    G().Class("chip").
     // DIP visualisation
-    Rect().X(vWidth2-dipWidth2).Y(10).Width(dipWidth).Height(height).Fill("#333").End().
-    // Orientation Notch
-    Circle().CX(vWidth2).CY(10).R(10).Fill(html.WHITE).End().
+    G().Class("chipCase").
+    Rect().X(vWidth2-dipWidth2).Y(10).End().
+    Circle().CX(vWidth2).CY(10).R(10).End().
+    End(). // G.chipCase
     // DIP Labels
-    G().
-    Fill(html.LightGrey).
-    Attr("text-anchor", "middle").
+    G().Class("chipLabel").
     Attr("transform", "translate(%d %d) rotate(90)", vWidth2, height2).
-    SvgText().Y(-7).AttrInt("font-size", dipLabelFontSize).Text(d.Label).Attr("font-weight", "bold").End().
-    SvgText().Y(30).AttrInt("font-size", dipSubLabelFontSize).Text(d.SubLabel).End().
-    End(). // G() dip label
+    SvgText().Y(-7).Class("chipLabel").Text(d.Label).End().
+    SvgText().Y(30).Class("chipSubLabel").Text(d.SubLabel).End().
+    End(). // G.chipLabel
       // End DIP visualisation
       // left side counting top to bottom
       Sequence(1, d.PinCount, func(pin int, e *html.Element) *html.Element {
@@ -75,15 +85,19 @@ func dip(d *Definition) error {
 
 func dipPin(pin, x, y int, e *html.Element) *html.Element {
   return e.Rect().
+    Class("chipPin").
     X(x).Y(y).
-    Width(dipPinWidth).Height(dipPinHeight).
-    Fill(html.LightGrey).
-    Stroke(html.BLACK).
-    End().
+    //Width(dipPinWidth).Height(dipPinHeight).
+    //Fill(html.LightGrey).
+    //Stroke(html.BLACK).
+    End(). // Rect
     SvgText().
+    Class("chipPin").
     X(x+dipPinWidth2).Y(y+dipPinHeight2+6).
-    AttrInt("font-size", dipPinFontSize).
-    Attr("text-anchor", "middle").Textf("%d", pin).End()
+    //AttrInt("font-size", dipPinFontSize).
+    //Attr("text-anchor", "middle").
+    Textf("%d", pin).
+    End() // SvgText
 }
 
 func dipPinLabel(rightAlign bool, x, y int, label string, e *html.Element) *html.Element {

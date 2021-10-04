@@ -58,7 +58,7 @@ func (f *PinFormatter) subscript(t *util.Token) {
 func (f *PinFormatter) text(s string) {
   f.e = f.e.TSpan()
   if f.textDecoration != "" {
-    f.e.Attr("text-decoration", f.textDecoration)
+    f.e.Class(f.textDecoration)
   }
   if f.dy != 0 {
     f.e.AttrInt("dy", f.dy)
@@ -98,7 +98,7 @@ func (f *PinFormatter) parse(t *util.Token) {
         switch t.Lit {
         // Text with a line above it
         case "NOT":
-          f.textDecoration = "overline"
+          f.textDecoration = "not"
           f.parse(t.Child)
         case "PHI":
           f.reference("∅", t)
