@@ -29,6 +29,7 @@
 @import "taxonomy";
 
 @import "custom/chip";
+@import "custom/table";
 
 @if $td-enable-google-fonts {
     @import url($web-font-path);

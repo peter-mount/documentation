@@ -1,0 +1,115 @@
+---
+type: "manual"
+title: "7401 Quad NAND"
+linkTitle: "7401 Q-NAND"
+weight: 7401
+description: "Quad 2-input positive NAnd gate with open collector output"
+chip:
+  - name: "7401"
+    category: "logic/74xx"
+    title: "74xx01 Quad 2-input NAnd gate, Open Collector output"
+    type: "dip"
+    pinCount: 14
+    label: ""
+    subLabel: "7401"
+    source: "TI datasheet sn5401.pdf"
+    pins:
+      "1": "Y(1)"
+      "2": "A(1)"
+      "3": "B(1)"
+      "4": "Y(2)"
+      "5": "A(2)"
+      "6": "B(2)"
+      "7": "GND"
+      "8": "A(3)"
+      "9": "B(3)"
+      "10": "Y(3)"
+      "11": "A(4)"
+      "12": "B(4)"
+      "13": "Y(4)"
+      "14": "V(CC)"
+---
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <p>
+        These devices contain 4 independent 2-input NAND gates.
+        The open-collector outputs require pull-up resistors to perform correctly.
+        They may be connected to other open-collector outputs to implement active-low
+        wired-OR or active-high wired-AND functions.
+        Open-collector devices are often used to generate higher V<sub>OH</sub> levels.
+      </p>
+      <p>
+        The TI SN5401 & SN54LS01 operate over the full military temperature range of -55&deg;C to 125&deg;C.
+        The SN7401 & SN74LS01 operate over 0&deg;C to 70&deg;C.
+      </p>
+
+      <table class="generic">
+        <thead>
+        <tr>
+          <th colspan="4">
+            Absolute max ratings over operating free-air temperature range
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Supply Voltage</td>
+          <td>V<sub>CC</sub></td>
+          <td>
+            '01 & 'LS01
+          </td>
+          <td>7V</td>
+        </tr>
+        <tr>
+          <td rowspan="2" colspan="2">Input voltage</td>
+          <td>'01</td>
+          <td>5.5V</td>
+        </tr>
+        <tr>
+          <td>'LS01</td>
+          <td>7V</td>
+        </tr>
+        <tr>
+          <td colspan="2">Off-state output voltage</td>
+          <td></td>
+          <td>7V</td>
+        </tr>
+        <tr>
+          <td rowspan="2" colspan="2">Operating free-air temperature range</td>
+          <td>SN54'</td>
+          <td>-55&deg;C to 125&deg;C</td>
+        </tr>
+        <tr>
+          <td>SN74'</td>
+          <td>0&deg;C to 70&deg;C</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-4">
+      <img src="/chipref/reference/logic/74xx/7401.svg"/>
+
+      <table class="truth">
+        <caption>Function table (each gate)</caption>
+        <thead>
+        <tr>
+          <th colspan="2">Inputs</th>
+          <th>Output</th>
+        </tr>
+        <tr>
+          <th>A<sub>n</sub></th>
+          <th>B<sub>n</sub></th>
+          <th>Y<sub>n</sub></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>H</td><td>H</td><td>L</td></tr>
+        <tr><td>L</td><td>H</td><td>H</td></tr>
+        <tr><td>H</td><td>L</td><td>H</td></tr>
+        <tr><td>L</td><td>L</td><td>H</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

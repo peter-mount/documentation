@@ -14380,6 +14380,29 @@ nav.foldable-nav .with-child ul {
       counter-increment: chip -1;
       content: counter(chip); }
 
+table.truth {
+  border: 1px solid black;
+  width: 100%; }
+  table.truth thead {
+    border-bottom: 1px solid black; }
+    table.truth thead th {
+      text-align: center; }
+    table.truth thead th:last-child {
+      border-left: 1px solid black; }
+  table.truth tbody td {
+    text-align: center; }
+  table.truth tbody td:last-child {
+    border-left: 1px solid black; }
+
+table.generic th {
+  text-align: center; }
+
+table.generic th, table.generic td {
+  vertical-align: top; }
+
+table.generic .sep {
+  border-left: 1px solid black; }
+
 footer {
   min-height: 150px; }
   @media (max-width: 991.98px) {
