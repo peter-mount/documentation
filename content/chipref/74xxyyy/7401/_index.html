@@ -74,7 +74,49 @@ chip:
         The TI SN5401 & SN54LS01 operate over the full military temperature range of -55&deg;C to 125&deg;C.
         The SN7401 & SN74LS01 operate over 0&deg;C to 70&deg;C.
       </p>
-
+    </div>
+    <div class="col-4">
+      <table class="truth">
+        <caption>Function table (each gate)</caption>
+        <thead>
+        <tr>
+          <th colspan="2">Inputs</th>
+          <th>Output</th>
+        </tr>
+        <tr>
+          <th>A<sub>n</sub></th>
+          <th>B<sub>n</sub></th>
+          <th>Y<sub>n</sub></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>H</td><td>H</td><td>L</td></tr>
+        <tr><td>L</td><td>H</td><td>H</td></tr>
+        <tr><td>H</td><td>L</td><td>H</td></tr>
+        <tr><td>L</td><td>L</td><td>H</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <!--div>SN5401 J Package</div>
+      <div>SN54LS01 J or W Package</div>
+      <div>SN7401 N Package</div>
+      <div>SN74LS01 D or N Package</div-->
+      <div class="chipref">
+        <img src="/chipref/reference/logic/74xx/7401.svg"/>
+      </div>
+    </div>
+      <div class="col-6">
+        <!--div>SN54LS01 FK Package</div-->
+        <div class="chipref">
+        <img src="/chipref/reference/logic/74xx/54LS01-LCCC.svg"/>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
       <table class="generic">
         <thead>
         <tr>
@@ -115,39 +157,6 @@ chip:
           <td>SN74'</td>
           <td>0&deg;C to 70&deg;C</td>
         </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-4">
-      <div class="chipref">
-        <img src="/chipref/reference/logic/74xx/7401.svg"/>
-        <div>SN5401 J Package</div>
-        <div>SN54LS01 J or W Package</div>
-        <div>SN7401 N Package</div>
-        <div>SN74LS01 D or N Package</div>
-      </div>
-      <div class="chipref">
-        <img src="/chipref/reference/logic/74xx/54LS01-LCCC.svg"/>
-        <div>SN54LS01 FK Package</div>
-      </div>
-      <table class="truth">
-        <caption>Function table (each gate)</caption>
-        <thead>
-        <tr>
-          <th colspan="2">Inputs</th>
-          <th>Output</th>
-        </tr>
-        <tr>
-          <th>A<sub>n</sub></th>
-          <th>B<sub>n</sub></th>
-          <th>Y<sub>n</sub></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr><td>H</td><td>H</td><td>L</td></tr>
-        <tr><td>L</td><td>H</td><td>H</td></tr>
-        <tr><td>H</td><td>L</td><td>H</td></tr>
-        <tr><td>L</td><td>L</td><td>H</td></tr>
         </tbody>
       </table>
     </div>

@@ -17,7 +17,7 @@ func cc(d *Definition) error {
   width := height // These are square chips
   width2 := width / 2
 
-  vWidth := 200 + width
+  vWidth := 120 + width
   vWidth2 := vWidth / 2
   vHeight := vWidth
   vHeight2 := vHeight / 2
@@ -28,20 +28,15 @@ func cc(d *Definition) error {
     // TODO check text-decoration-thickness as seems broken in Chrome 94 but works in Firefox 92
     Text("tspan.not {text-decoration: overline;webkit-text-decoration-thickness: 2px;text-decoration-thickness: 2px;}").
     Textf(".chip {font-family:%s;}", html.TextFont).
-    Textf("g.chipCase rect {width:%dpx;height:%dpx;fill:#333;rx:10px;ry:10px;}", width, height).
+    Textf("g.chipCase polygon {stroke:black;fill:none;stroke-width: 2px;}").
     Text(".chipCase circle {fill:white;}").
-    Textf("rect.chipPin {width:%dpx;height:%dpx;fill:%s;stroke:%s;}", dipPinWidth, dipPinHeight, html.LightGrey, html.BLACK).
+    Textf("rect.chipPin {width:%dpx;height:%dpx;fill:%s;stroke:%s;stroke-dasharray:3 3;}", 10, dipPinHeight, "#eee", html.BLACK).
     Textf("text.chipPin {font-size:%dpx;text-anchor:middle;}", dipPinFontSize).
     Textf("g.chipLabel {fill:lightgrey;text-anchor:middle;}").
     Textf("text.chipLabel {font-size:%dpx;font-weight:bold;}", dipLabelFontSize).
     Textf("text.chipSubLabel {font-size:%dpx;}", dipSubLabelFontSize).
     End(). // style
     G().Class("chip").
-    // DIP visualisation
-    G().Class("chipCase").
-    Rect().X(vWidth2-width2).Y(vHeight2-height2).End().
-    Circle().CX(vWidth2-width2+16).CY(vHeight2-height2+16).R(7).End().
-    End(). // G.chipCase
     // DIP Labels
     G().Class("chipLabel").
     Attr("transform", "translate(%d %d)", vWidth2, vHeight2).
@@ -91,7 +86,17 @@ func cc(d *Definition) error {
 
         e = dipPinLabel2(align, pin, x, y, rotate, d.Pins[pin], e)
         return e
-      })
+      }).
+    // DIP visualisation - last so it overlays the pins
+    G().Class("chipCase").
+    Polygon().
+    Point(vWidth2-width2+16, vHeight2-height2).
+    Point(vWidth2-width2, vHeight2-height2+16).
+    Point(vWidth2-width2, vHeight2+height2).
+    Point(vWidth2+width2, vHeight2+height2).
+    Point(vWidth2+width2, vHeight2-height2).
+    End(). //Polygon()
+    End() // G.chipCase
 
   // =================================================================
   // Convert to FileBuilder & generate the shortcode html file
@@ -100,16 +105,4 @@ func cc(d *Definition) error {
     FileBuilder().
     FileHandler().
     Write(d.Path("content/chipref/reference")+".svg", d.FileInfo.ModTime())
-}
-
-func dipPinLabel2(align bool, pin, x, y, r int, l string, e *html.Element) *html.Element {
-  z := 8 + dipPinWidth
-  if align {
-    z = dipPinWidth - z
-  }
-
-  e = e.G().Attr("transform", "translate(%d %d) rotate(%d)", x, y, -90*r)
-  e = dipPin(pin, 0, 0, e)
-  e = dipPinLabel(align, z, 17, l, e)
-  return e.End()
 }

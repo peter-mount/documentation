@@ -14,11 +14,21 @@ type Element struct {
   parent   *Element
   children []*Element
   text     string
+  points   []Point
 }
 
 type Attr struct {
   Name  string
   Value string
+}
+
+type Point struct {
+  X int
+  Y int
+}
+
+func (p Point) String() string {
+  return fmt.Sprintf("%d,%d", p.X, p.Y)
 }
 
 // Class adds a css class name to the element.
@@ -58,6 +68,14 @@ func (e *Element) String() string {
         for _, attr := range e.attrs {
           a = append(a, fmt.Sprintf(" %s=%q", attr.Name, attr.Value))
         }
+      }
+
+      if len(e.points) > 0 {
+        var r []string
+        for _, p := range e.points {
+          r = append(r, p.String())
+        }
+        a = append(a, " points=\"", strings.Join(r, " "), "\"")
       }
 
       a = append(a, ">")

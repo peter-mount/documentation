@@ -22,6 +22,10 @@ func (e *Element) Y(v int) *Element {
   return e.AttrInt("y", v)
 }
 
+func (e *Element) ClipPath() *Element {
+  return e.element("clipPath")
+}
+
 func (e *Element) CX(v int) *Element {
   return e.AttrInt("cx", v)
 }
@@ -73,6 +77,19 @@ func (e *Element) Circle() *Element {
 
 func (e *Element) G() *Element {
   return e.element("g")
+}
+
+func (e *Element) Polygon() *Element {
+  return e.element("polygon")
+}
+
+func (e *Element) Polyline() *Element {
+  return e.element("polyline")
+}
+
+func (e *Element) Point(x, y int) *Element {
+  e.points = append(e.points, Point{X: x, Y: y})
+  return e
 }
 
 func (e *Element) Rect() *Element {

@@ -1,6 +1,7 @@
 package html
 
 const (
+  NONE      = "none"
   BLACK     = "black"
   WHITE     = "white"
   LightGrey = "lightgrey"
