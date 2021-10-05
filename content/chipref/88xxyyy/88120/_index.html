@@ -1,0 +1,50 @@
+---
+type: "manual"
+title: "88120 Quad Line Driver"
+linkTitle: "88120"
+weight: 88120
+description: "Quad Line Driver"
+chip:
+  - name: "88120"
+    category: "receiver"
+    title: "88120 Line Receiver"
+    type: "dip"
+    label: ""
+    subLabel: "88LS120"
+    source: "https://datasheetspdf.com/pdf/1411994/RSComponents/88LS120/1 page 7"
+    pinCount: 16
+    pins:
+      "1": "A(FSOff)"
+      "2": "A(-INPUT)"
+      "3": "A(TERM)"
+      "4": "A(+INPUT)"
+      "5": "A(STROBE)"
+      "6": "A(RespTM)"
+      "7": "A(OUTPUT)"
+      "8": "GND"
+      "9": "B(OUTPUT)"
+      "10": "B(RespTM)"
+      "11": "B(STROBE)"
+      "12": "B(+INPUT)"
+      "13": "B(TERM)"
+      "14": "B(-INPUT)"
+      "15": "B(FSOff)"
+      "16": "V(CC)"
+---
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <p>
+        The 88LS120 is a dual differential, TTL compatible, line receiver for both balanced and unbalanced data transmission.
+        The device features hysteresis and a response control for applications where controlled rise and falltimes and/or high frequency noise rejection are desirable.
+        Threshold offset control is provided for fail-safe protection, should the input be open or short circuited.
+        Each receiver includes an optional 180&#8486; terminating resistor and the output gate contains a logic strobe for time discrimination.
+      </p>
+    </div>
+    <div class="col-6">
+      <div class="chipref">
+        <img src="/chipref/reference/receiver/88120.svg"/>
+      </div>
+    </div>
+  </div>
+</div>
