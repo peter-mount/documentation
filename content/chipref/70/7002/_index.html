@@ -1,0 +1,183 @@
+---
+type: "manual"
+title: "μPD7002 12-bit binary A/D converter"
+linkTitle: "μPD7002"
+weight: 7002
+description: "12-bit binary A/D converter"
+chip:
+  - name: "7002"
+    category: "converter"
+    title: "μPD7002 12-bit binary A/D converter"
+    type: "dip"
+    pinCount: 28
+    label: "NEC"
+    subLabel: "μPD7002"
+    source: "https://datasheetspdf.com/pdf/369087/NEC/UPD7002/1"
+    pins:
+        "1": "X(0)"
+        "2": "X(1)"
+        "3": "V(SS)"
+        "4": "C(I)"
+        "5": "GD"
+        "6": "C(I)"
+        "7": "GD"
+        "8": "V(REF)"
+        "9": "GND"
+        "10": "CH(3)"
+        "11": "CH(2)"
+        "12": "CH(1)"
+        "13": "CH(0)"
+        "14": "V(DD)"
+        "15": "D(7)"
+        "16": "D(6)"
+        "17": "D(5)"
+        "18": "D(4)"
+        "19": "D(3)"
+        "20": "D(2)"
+        "21": "D(1)"
+        "22": "D(0)"
+        "23": "NOT(CS)"
+        "24": "NOT(WR)"
+        "25": "NOT(RD)"
+        "26": "A(0)"
+        "27": "A(1)"
+        "28": "NOT(EOC)"
+---
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <p>
+                The μPD7002 is a high performance, low power monolithic CMOS A/D converter designed for microprocessor applications.
+                The Analogue input voltage is applied to one of the 4 analog inputs.
+            </p>
+            <p>
+                By loading the input register with the multiplexer channel & the desired resolution of 8 or 12 bits,
+                the integrating A/D conversion sequence is started.
+            </p>
+            <p>
+                At the end of the conversion the <span class="not">EOC</span> signal goes low and if connected to the
+                interrupt line of a microprocessor will cause an interrupt.
+                At this point the digital data can be read in two bytes from the output registers.
+            </p>
+            <p>
+                The μPD7002 also features a status register that can be read at any time.
+            </p>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-6">
+                <table class="chipPin">
+                    <thead>
+                    <tr>
+                        <th colspan="2">Pin</th>
+                        <th rowspan="2">I/O</th>
+                        <th rowspan="2">Description</th>
+                    </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1, 2</td>
+                        <td>X<sub>0</sub>, X<sub>1</sub></td>
+                        <td>I</td>
+                        <td>External Clock Input</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>V<sub>SS</sub></td>
+                        <td></td>
+                        <td>TTL Ground</td>
+                    </tr>
+                    <tr>
+                        <td>4, 6</td>
+                        <td>C<sub>I</sub></td>
+                        <td></td>
+                        <td>Integrating Capacitor</td>
+                    </tr>
+                    <tr>
+                        <td>5, 7</td>
+                        <td>GD</td>
+                        <td></td>
+                        <td>Guard</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>V<sub>REF</sub></td>
+                        <td>I</td>
+                        <td>Reference Voltage Input</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>GND</td>
+                        <td></td>
+                        <td>Analogue Ground</td>
+                    </tr>
+                    <tr>
+                        <td>10&hellip;13</td>
+                        <td>CH<sub>0&hellip;3</sub></td>
+                        <td>I</td>
+                        <td>Analog Channel 0&hellip;3</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>V<sub>DD</sub></td>
+                        <td>I</td>
+                        <td>TTL Voltage +5V</td>
+                    </tr>
+                    <tr>
+                        <td>15&hellip;22</td>
+                        <td>D<sub>0&hellip;7</sub></td>
+                        <td>I/O</td>
+                        <td>Data Bus</td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td><span class="not">CS</span></td>
+                        <td>I</td>
+                        <td>Chip Select</td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td><span class="not">WR</span></td>
+                        <td>I</td>
+                        <td>Control Bus</td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td><span class="not">RD</span></td>
+                        <td>I</td>
+                        <td>Control Bus</td>
+                    </tr>
+                    <tr>
+                        <td>26&hellip;27</td>
+                        <td>A<sub>0&hellip;1</sub></td>
+                        <td>I</td>
+                        <td>Address Bus</td>
+                    </tr>
+                    <tr>
+                        <td>28</td>
+                        <td><span class="not">EOC</span></td>
+                        <td>O</td>
+                        <td>End of Conversion Interrupt</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        <div class="col-6">
+            <div class="chipref">
+                <img src="/chipref/reference/converter/7002.svg"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>
+                The μPD7002 is the A/D converter used by the BBC Microcomputer.
+            </p>
+        </div>
+    </div>
+</div>
