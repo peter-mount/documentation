@@ -90,7 +90,7 @@ func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
       }
 
       return util.ByteFileHandler(buf).
-        Write(book.ID+".pdf", book.Modified())
+        Write("static/static/book/"+book.ID+".pdf", book.Modified())
     }),
   }
 }
