@@ -1,0 +1,135 @@
+---
+type: "manual"
+title: "DS3691 RS422/RS423 Line Driver"
+linkTitle: "DS3691"
+weight: 3691
+description: "DS3691 RS422/RS423 Line Driver"
+chip:
+  - name: "3691"
+    category: "driver"
+    title: "DS3691 RS422/RS423 Line Driver"
+    type: "dip"
+    label: "NatSemi"
+    subLabel: "DS3691"
+    source: "http://www.farnell.com/datasheets/78225.pdf"
+    pinCount: 16
+    pins:
+      "1": "V(CC)"
+      "2": "IN(A)"
+      "3": "IN(B)/DISABLE"
+      "4": "MODE"
+      "5": "GND"
+      "6": "IN(C)/DISABLE"
+      "7": "IN(D)"
+      "8": "V(EE)"
+      "9": "RTC(D)"
+      "10": "OUT(D)"
+      "11": "OUT(C)"
+      "12": "RTC(C)"
+      "13": "RTC(B)"
+      "14": "OUT(B)"
+      "15": "OUT(A)"
+      "16": "RTC(A)"
+---
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <p>
+        The DS1691A/DS3691 are low power Schottky TTL line drivers designed to meet the requirements of EIA standards RS-422 and RS-423.
+        They feature 4 buffered outputs with high source and sink current capability with internal short circuit protection.
+        A mode control input provides a choice of operation either as 4 single-ended line drivers or 2 differential line drivers.
+        A rise time control pin allows the use of an external capacitor to slow the rise time for suppression of near end crosstalk to other receivers in the cable.
+        Rise time capacitors are primarily intended for waveshaping output signals in the single-ended driver mode.
+        Multipoint applications in differential mode with waveshaping capacitors is not allowed.
+      </p>
+      <p>
+        With the mode select pin low, the DS1691A/DS3691 are dual-differential line drivers with TRI-STATE outputs.
+        They feature ±10V output common-mode range in TRI-STATE mode and 0V output unbalance when operated with ±5V supply.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <table class="truth">
+        <caption>Function table: Mode 0=RS422, 1=RS423</caption>
+        <thead>
+        <tr>
+          <th colspan="3">Inputs</th>
+          <th colspan="2">Outputs</th>
+        </tr>
+        <tr>
+          <th>Mode</th>
+          <th>IN<sub>A</sub></th>
+          <th>IN<sub>A</sub></th>
+          <th class="sep">OUT<sub>A</sub></th>
+          <th>OUT<sub>B</sub></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td class="sep">0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td class="sep">Tri-State</td>
+          <td>Tri-State</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td class="sep">1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td class="sep">Tri-State</td>
+          <td>Tri-State</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td class="sep">0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td class="sep">0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td class="sep">1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td class="sep">1</td>
+          <td>1</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-6">
+      <div class="chipref">
+        <img src="/chipref/reference/driver/3691.svg"/>
+      </div>
+    </div>
+  </div>
+</div>
