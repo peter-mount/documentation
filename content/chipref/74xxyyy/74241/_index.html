@@ -69,7 +69,7 @@ chip:
 ---
 <div class="container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             <p>
                 The 74241 provides Octal Buffers and Line Drivers With 3-State Outputs.
             </p>
@@ -85,7 +85,9 @@ chip:
                 the minimum value of the resistor is determined by the current-sinking capability of the driver.
             </p>
         </div>
-        <div class="col-4">
+    </div>
+    <div class="row">
+        <div class="col-6">
             <table class="truth">
                 <caption>Function table Channel 1</caption>
                 <thead>
@@ -122,6 +124,8 @@ chip:
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="col-6">
             <table class="truth">
                 <caption>Function table Channel 2</caption>
                 <thead>
@@ -162,154 +166,149 @@ chip:
     </div>
     <div class="row">
         <div class="col-6">
-            <div class="chipref">
-                <img src="/chipref/reference/logic/74xx/74241.svg"/>
-            </div>
+            <table class="chipPin">
+                    <thead>
+                    <tr>
+                        <th colspan="2">Pin</th>
+                        <th rowspan="2">I/O</th>
+                        <th rowspan="2">Description</th>
+                    </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1<span class="not">G</span></td>
+                        <td>I</td>
+                        <td>Channel 1 output enable</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1A<sub>1</sub></td>
+                        <td>I</td>
+                        <td>Channel 1 A side 1</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2Y<sub>4</sub></td>
+                        <td>O</td>
+                        <td>Channel 2 Y side 4</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>1A<sub>2</sub></td>
+                        <td>I</td>
+                        <td>Channel 1 A side 2</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>2Y<sub>3</sub></td>
+                        <td>O</td>
+                        <td>Channel 2 Y side 3</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>1A<sub>3</sub></td>
+                        <td>I</td>
+                        <td>Channel 1 A side 3</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>2Y<sub>2</sub></td>
+                        <td>O</td>
+                        <td>Channel 2 Y side 2</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>1A<sub>4</sub></td>
+                        <td>I</td>
+                        <td>Channel 1 A side 4</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>2Y<sub>1</sub></td>
+                        <td>O</td>
+                        <td>Channel 2 Y side 1</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>GND</td>
+                        <td></td>
+                        <td>Ground</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>2A<sub>1</sub></td>
+                        <td>I</td>
+                        <td>Channel 2 A side 1</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>1Y<sub>4</sub></td>
+                        <td>O</td>
+                        <td>Channel 1 Y side 4</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>2A<sub>2</sub></td>
+                        <td>I</td>
+                        <td>Channel 2 A side 2</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>1Y<sub>3</sub></td>
+                        <td>O</td>
+                        <td>Channel 1 Y side 3</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>2A<sub>3</sub></td>
+                        <td>I</td>
+                        <td>Channel 2 A side 3</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>1Y<sub>2</sub></td>
+                        <td>O</td>
+                        <td>Channel 1 Y side 2</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>2A<sub>4</sub></td>
+                        <td>I</td>
+                        <td>Channel 2 A side 4</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>1Y<sub>1</sub></td>
+                        <td>O</td>
+                        <td>Channel 1 Y side 1</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>2G</td>
+                        <td>I</td>
+                        <td>Channel 2 Output Enable</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>V<sub>CC</sub></td>
+                        <td></td>
+                        <td>Power supply</td>
+                    </tr>
+                    </tbody>
+                </table>
         </div>
         <div class="col-6">
             <div class="chipref">
+                <img src="/chipref/reference/logic/74xx/74241.svg"/>
+            </div>
+            <div class="chipref">
                 <img src="/chipref/reference/logic/74xx/74241-LCCC.svg"/>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="chipPin">
-                <thead>
-                <tr>
-                    <th colspan="2">Pin</th>
-                    <th rowspan="2">I/O</th>
-                    <th rowspan="2">Description</th>
-                    <th rowspan="2">Chipset</th>
-                </tr>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>1<span class="not">G</span></td>
-                    <td>I</td>
-                    <td>Channel 1 output enable</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>1A<sub>1</sub></td>
-                    <td>I</td>
-                    <td>Channel 1 A side 1</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2Y<sub>4</sub></td>
-                    <td>O</td>
-                    <td>Channel 2 Y side 4</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>1A<sub>2</sub></td>
-                    <td>I</td>
-                    <td>Channel 1 A side 2</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>2Y<sub>3</sub></td>
-                    <td>O</td>
-                    <td>Channel 2 Y side 3</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>1A<sub>3</sub></td>
-                    <td>I</td>
-                    <td>Channel 1 A side 3</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>2Y<sub>2</sub></td>
-                    <td>O</td>
-                    <td>Channel 2 Y side 2</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>1A<sub>4</sub></td>
-                    <td>I</td>
-                    <td>Channel 1 A side 4</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>2Y<sub>1</sub></td>
-                    <td>O</td>
-                    <td>Channel 2 Y side 1</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>GND</td>
-                    <td></td>
-                    <td>Ground</td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>2A<sub>1</sub></td>
-                    <td>I</td>
-                    <td>Channel 2 A side 1</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>1Y<sub>4</sub></td>
-                    <td>O</td>
-                    <td>Channel 1 Y side 4</td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td>2A<sub>2</sub></td>
-                    <td>I</td>
-                    <td>Channel 2 A side 2</td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td>1Y<sub>3</sub></td>
-                    <td>O</td>
-                    <td>Channel 1 Y side 3</td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td>2A<sub>3</sub></td>
-                    <td>I</td>
-                    <td>Channel 2 A side 3</td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>1Y<sub>2</sub></td>
-                    <td>O</td>
-                    <td>Channel 1 Y side 2</td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td>2A<sub>4</sub></td>
-                    <td>I</td>
-                    <td>Channel 2 A side 4</td>
-                </tr>
-                <tr>
-                    <td>18</td>
-                    <td>1Y<sub>1</sub></td>
-                    <td>O</td>
-                    <td>Channel 1 Y side 1</td>
-                </tr>
-                <tr>
-                    <td>19</td>
-                    <td>2G</td>
-                    <td>I</td>
-                    <td>Channel 2 Output Enable</td>
-                </tr>
-                <tr>
-                    <td>20</td>
-                    <td>V<sub>CC</sub></td>
-                    <td></td>
-                    <td>Power supply</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
