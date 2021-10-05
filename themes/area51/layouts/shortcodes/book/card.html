@@ -1,0 +1,14 @@
+<div class="card mb-4 {{ with $.Get "colour" }}{{.}}{{ end }}">
+    <div class="card-header">{{ $.Get "header" }}</div>
+    <div class="card-body">
+        <p class="card-text">{{ $.Inner | htmlUnescape | safeHTML }}</p>
+    </div>
+    <div class="card-footer">
+        {{- with $.Get "html" -}}
+        <a class="btn btn-success mr-3 mb-4" href="{{.}}">Read Online</a>
+        {{- end -}}
+        {{- with $.Get "pdf" -}}
+        <a class="btn btn-success mr-3 mb-4" href="{{.}}">Download<i class="fa fa-file-pdf ml-2"></i></a>
+        {{- end -}}
+    </div>
+</div>
