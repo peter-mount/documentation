@@ -24,3 +24,4 @@ reference
 /go_build_newsite_main_go
 build-toolset.sh
 public
+publish-deploy-uat.sh
