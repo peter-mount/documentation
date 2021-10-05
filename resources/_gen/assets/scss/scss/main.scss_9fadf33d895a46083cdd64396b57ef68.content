@@ -14250,6 +14250,8 @@ table.truth {
     text-align: center; }
   table.truth tbody td:last-child {
     border-left: 1px solid black; }
+  table.truth .sep {
+    border-left: 1px solid black; }
 
 table.generic th {
   text-align: center; }

@@ -1,18 +1,18 @@
 ---
 type: "manual"
-title: "7405 Hex Inverter with Open Collector outputs"
-linkTitle: "7405 Hex Inverter"
-weight: 7405
-description: "Hex Inverter with Open Collector outputs"
+title: "7406 Hex Inverter with Open Collector High-Voltage outputs"
+linkTitle: "7406"
+weight: 7406
+description: "Hex Inverter with Open Collector High-Voltage outputs"
 chip:
-  - name: "7405"
+  - name: "7406"
     category: "logic/74xx"
-    title: "74xx05 Hex Inverter"
+    title: "74xx06 Hex Inverter"
     type: "dip"
     pinCount: 14
     label: ""
-    subLabel: "7405"
-    source: "TI datasheet sn74ls05.pdf"
+    subLabel: "74LS06"
+    source: "TI datasheet sn74ls06.pdf"
     pins:
       "1": "A(1)"
       "2": "Y(1)"
@@ -28,14 +28,13 @@ chip:
       "12": "Y(6)"
       "13": "A(6)"
       "14": "V(CC)"
-  - name: "54LS05-LCCC"
+  - name: "74LS06-LCCC"
     category: "logic/74xx"
-    title: "54xx05 Hex Inverter"
+    title: "74LS06 Hex Inverter"
     type: "lccc"
     label: ""
-    subLabel: "54LS05"
-    source: "TI datasheet sn74ls05.pdf"
-    note: "Datasheet shows FK package only for 54LS05"
+    subLabel: "74LS06"
+    source: "TI datasheet sn74ls06.pdf"
     pinCount: 20
     pinOffset: -3 # Pin1 is middle top row
     pins:
@@ -64,7 +63,8 @@ chip:
   <div class="row">
     <div class="col-8">
       <p>
-        These devices contain 6 hex inverters.
+        These devices contain 6 hex inverters with High-Voltage Open Collectors.
+        The outputs are rated at 30V.
       </p>
       <p>
         The TI SN5405 & SN54LS05 operate over the full military temperature range of -55&deg;C to 125&deg;C.
@@ -85,8 +85,14 @@ chip:
         </tr>
         </thead>
         <tbody>
-        <tr><td>H</td><td>L</td></tr>
-        <tr><td>L</td><td>H</td></tr>
+        <tr>
+          <td>H</td>
+          <td>L</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td>H</td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -96,10 +102,10 @@ chip:
     </div>
     <div class="col-6">
       <div class="chipref">
-        <img src="/chipref/reference/logic/74xx/7405.svg"/>
+        <img src="/chipref/reference/logic/74xx/7406.svg"/>
       </div>
       <div class="chipref">
-        <img src="/chipref/reference/logic/74xx/54LS05-LCCC.svg"/>
+        <img src="/chipref/reference/logic/74xx/74LS06-LCCC.svg"/>
       </div>
     </div>
   </div>
