@@ -35,6 +35,35 @@ table.generic {
     }
 }
 
+table.chipPin {
+    border: 1px solid black;
+    width: 100%;
+
+    thead {
+        border-bottom: 1px solid black;
+        th {
+            text-align: center;
+            vertical-align: bottom;
+            border-left: 1px solid black;
+        }
+    }
+
+    th, td {
+        vertical-align: top;
+    }
+    td:first-child,
+    td:nth-child(2),
+    td:nth-child(3) {
+        text-align: center;
+    }
+    td:nth-child(2),
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5) {
+        border-left: 1px solid black;
+    }
+}
+
 .not {
     text-decoration: overline;
 }
