@@ -63,6 +63,9 @@ chip:
             <p>
                 The μPD7002 also features a status register that can be read at any time.
             </p>
+            <p>
+                The μPD7002 is the A/D converter used by the BBC Microcomputer.
+            </p>
         </div>
     </div>
         <div class="row">
@@ -173,11 +176,12 @@ chip:
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <p>
-                The μPD7002 is the A/D converter used by the BBC Microcomputer.
-            </p>
-        </div>
-    </div>
 </div>
+
+{{% pageinfo %}}
+<strong>Note:</strong> Be careful as this chip has 2 grounds which are independent of each other:
+<ul>
+    <li>V<sub>SS</sub> which is TTL Ground</li>
+    <li>GND which is Analogue ground</li>
+</ul>
+{{% /pageinfo %}}
