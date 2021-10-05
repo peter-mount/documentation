@@ -8,6 +8,8 @@
 # Reference files
 generated
 reference
+*.xlsx
+*.pdf
 
 # vim temporary files
 *~
