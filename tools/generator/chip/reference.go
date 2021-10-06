@@ -18,7 +18,7 @@ func (c *Chip) chipReferenceTables(book *hugo.Book) error {
 func (c *Chip) chipReferenceTablesTask(book *hugo.Book) error {
   return c.chips.ForEachCategory(func(cat string) error {
     return util.WithTable().
-      AsCSV(util.ReferenceFilename(book.ContentPath(), cat, cat+".csv"), book.Modified()).
+      AsCSV(book.StaticPath(cat+".csv"), book.Modified()).
       AsExcel(c.excel.Get(book.ID, book.Modified())).
       Do(c.chipReferenceTable(book, cat))
   })

@@ -113,7 +113,7 @@ func (b *BBC) writeOsbyteIndex(book *hugo.Book) error {
 
 func (b *BBC) writeOsbyteTable(book *hugo.Book) error {
   return util.WithTable().
-    AsCSV(util.ReferenceFilename(book.ContentPath(), "osbyte", "osbyte.csv"), book.Modified()).
+    AsCSV(book.StaticPath("osbyte.csv"), book.Modified()).
     AsExcel(b.excel.Get(book.ID, book.Modified())).
       Do(&util.Table{
         Title: "osbyte",

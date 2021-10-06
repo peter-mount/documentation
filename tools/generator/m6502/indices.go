@@ -85,7 +85,7 @@ func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
   codes := append([]*Opcode{}, s.opCodes...)
 
   return util.WithTable().
-    AsCSV(util.ReferenceFilename(book.ContentPath(), name, name+".csv"), book.Modified()).
+    AsCSV(book.StaticPath(name+".csv"), book.Modified()).
     AsExcel(s.excel.Get(book.ID, book.Modified())).
       Do(&util.Table{
         Title: name,

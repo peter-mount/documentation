@@ -4,6 +4,7 @@ import (
   "context"
   "github.com/peter-mount/documentation/tools/util"
   "os"
+  "path"
   "path/filepath"
   "strings"
   "time"
@@ -100,6 +101,10 @@ type BookCopyright struct {
 
 func (b *Book) ContentPath() string {
   return "content/" + b.ID + "/"
+}
+
+func (b *Book) StaticPath(suffix string) string {
+  return path.Join("static/static/book", b.ID+"_"+suffix)
 }
 
 func (b *Book) Modified() time.Time {
