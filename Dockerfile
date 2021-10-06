@@ -17,6 +17,9 @@ ARG prefix
 FROM ${prefix}debian:11-slim AS base
 ARG aptrepo
 
+# Needed post node15 otherwise npm will install at / & thats no longer permitted
+WORKDIR /root
+
 # We need ca-certificates installed first before our local apt proxy defined in the aptrepo build-arg
 RUN if [ ! -z "${aptrepo}" ]; then \
         apt-get update &&\
@@ -26,9 +29,14 @@ RUN if [ ! -z "${aptrepo}" ]; then \
           -e "s|http://security.debian.org/|${aptrepo}|" \
           /etc/apt/sources.list \
     ;fi &&\
+    if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi &&\
     apt-get update &&\
-    apt-get install -y ca-certificates chromium &&\
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get install -y ca-certificates chromium nodejs npm &&\
+    npm install npm@latest -g &&\
+    npm install -g postcss postcss-cli &&\
+    npm install autoprefixer &&\
+    chmod -R +rx /root &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.npmrc
 
 # ===================================================================
 # Retrieve hugo (precompiled) & build our tools
@@ -36,7 +44,7 @@ ARG prefix
 ARG arch=amd64
 ARG goos=linux
 FROM ${prefix}golang:alpine AS build
-ARG hugoVersion=0.87.0
+ARG hugoVersion=0.88.1
 
 # Required commands for the build
 RUN apk add --no-cache tzdata

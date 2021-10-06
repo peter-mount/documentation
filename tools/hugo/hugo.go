@@ -17,9 +17,10 @@ func (h *Hugo) Name() string {
   return "hugo"
 }
 
-func (h *Hugo) Init(_ *kernel.Kernel) error {
+func (h *Hugo) Init(k *kernel.Kernel) error {
   h.server = flag.Bool("s", false, "Run hugo in server mode")
-  return nil
+
+  return k.DependsOn(&PostCSS{})
 }
 
 func (h *Hugo) Run() error {

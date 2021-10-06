@@ -4,6 +4,7 @@ reference
 *.xlsx
 *.pdf
 
+node_modules
 /resources/_gen/
 
 # vim temporary files
