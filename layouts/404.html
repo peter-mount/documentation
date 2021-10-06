@@ -1,10 +1,34 @@
 {{ define "main"}}
-    <main id="main">
-      <div>
-       <h1 id="title">Not found</h1>
-       <p>Oops! This page doesn't exist. Try going back to our <a href="{{ "/" | relURL }}">home page</a>.</p>
+<link rel="preload" as="image" href="/train-404.png">
+<style>
+    #td-cover-block-0 {
+        background-image: url(/train-404.jpg);
+    }
 
-       <p>You can learn how to make a 404 page like this in <a href="https://gohugo.io/templates/404/">Custom 404 Pages</a>.</p>      
-      </div>
-    </main>
+    .td-navbar {
+        background: 0 0 !important;
+    }
+</style>
+<section id="td-cover-block-0"
+         class="row td-cover-block td-cover-block--height-max js-td-cover td-overlay td-overlay--dark -bg-orange">
+    <div class="container td-overlay__inner">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="row td-box td-box--primary position-relative td-box--gradient td-box--height-auto">
+    <div class="container text-center td-arrow-down">
+		<span class="h4 mb-0">
+          <h1 class="display-1 mt-0 mt-md-0 pb-4">404 Not Found</h1>
+          <p>
+              Oops! This page doesn't exist.
+              Try going back to our <a href="/">home page</a>.
+          </p>
+		</span>
+    </div>
+</section>
 {{ end }}
