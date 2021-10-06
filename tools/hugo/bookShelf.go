@@ -5,6 +5,7 @@ import (
   "log"
   "os"
   "path"
+  "strings"
 )
 
 // BookShelf manages all Book's.
@@ -35,6 +36,7 @@ func (bs *BookShelf) scanPage(pathName string, _ os.FileInfo) error {
 
   if fm.Book != nil {
     fm.Book.ID = path.Base(path.Dir(pathName))
+    fm.Book.contentPath = pathName[strings.LastIndex(pathName, "content/"):strings.LastIndex(pathName, "/")]
     log.Println("Found", fm.Book.ID)
 
     bs.books = append(bs.books, fm.Book)

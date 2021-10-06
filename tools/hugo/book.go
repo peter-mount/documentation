@@ -88,6 +88,7 @@ type Book struct {
   FrontImage    BookCopyright    `yaml:"frontImage"` // Copyright of front image
   PDF           PDF              `yaml:"pdf"` // Custom PDF config for just this book
   Generate      util.StringSlice `yaml:"generate"` // List of generators to run on this book
+  contentPath string
   modified      time.Time        `yaml:"-"` // Last Modified time
 }
 
@@ -100,7 +101,7 @@ type BookCopyright struct {
 }
 
 func (b *Book) ContentPath() string {
-  return "content/" + b.ID + "/"
+  return b.contentPath
 }
 
 func (b *Book) StaticPath(suffix string) string {
