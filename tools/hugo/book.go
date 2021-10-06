@@ -104,7 +104,7 @@ func (b *Book) ContentPath() string {
 }
 
 func (b *Book) StaticPath(suffix string) string {
-  return path.Join("static/static/book", b.ID+"_"+suffix)
+  return path.Join("static/static/book", b.ID+"_"+strings.ReplaceAll(suffix, "/", "_"))
 }
 
 func (b *Book) Modified() time.Time {

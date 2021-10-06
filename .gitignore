@@ -3,6 +3,7 @@ generated
 reference
 *.xlsx
 *.pdf
+static/static/book
 
 node_modules
 /resources/_gen/
