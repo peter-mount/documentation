@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 180 300" width="1em">
+    <style type="text/css">circle{fill:currentColor}</style>
+    <defs>
+        <circle id="x" cx="10" cy="10" r="3.6"/>
+        <g id="y">
+            <use xlink:href="#x"/>
+            <use xlink:href="#x" x="10"/>
+            <use xlink:href="#x" x="20"/>
+            <use xlink:href="#x" x="30"/>
+        </g>
+        <g id="z">
+            <use xlink:href="#y"/>
+            <use xlink:href="#x" x="40"/>
+        </g>
+    </defs>
+    <g transform="scale(2.5)">
+        <g id="l">
+            <use xlink:href="#y"/>
+            <g id="m">
+                <use xlink:href="#x" x="5" y="5"/>
+                <use xlink:href="#x" x="35" y="5"/>
+            </g>
+            <use xlink:href="#x" x="20" y="10"/>
+            <use xlink:href="#x" x="15" y="15"/>
+            <use xlink:href="#x" x="25" y="15"/>
+            <use xlink:href="#x" x="20" y="20"/>
+            <use xlink:href="#m" y="20"/>
+            <use xlink:href="#x" x="10" y="30"/>
+            <use xlink:href="#x" x="15" y="35"/>
+            <use xlink:href="#y" x="-60" transform="rotate(-90)"/>
+        </g>
+        <g id="n">
+            <use xlink:href="#x" x="40"/>
+            <use xlink:href="#x" x="40" y="10"/>
+            <use xlink:href="#x" x="40" y="30"/>
+        </g>
+        <use xlink:href="#x" x="5" y="35"/>
+        <use xlink:href="#l" x="-100" transform="scale(-1,1)"/>
+        <use xlink:href="#z" x="10" y="40"/>
+        <use xlink:href="#x" x="60" y="40"/>
+        <use xlink:href="#y" x="5" y="45"/>
+        <use xlink:href="#z" y="50"/>
+        <use xlink:href="#y" x="5" y="55"/>
+        <use xlink:href="#y" x="10" y="60"/>
+        <use xlink:href="#y" x="15" y="65"/>
+        <use xlink:href="#y" x="20" y="70"/>
+        <use xlink:href="#y" x="25" y="75"/>
+        <use xlink:href="#y" x="30" y="80"/>
+        <use xlink:href="#n" x="45" y="-85" transform="rotate(90)"/>
+        <use xlink:href="#x" x="30" y="90"/>
+        <use xlink:href="#x" x="50" y="90"/>
+        <use xlink:href="#x" x="70" y="90"/>
+        <use xlink:href="#z" x="5" y="95"/>
+        <use xlink:href="#x" x="55" y="95"/>
+        <use xlink:href="#x" x="75" y="95"/>
+        <use xlink:href="#x" x="80" y="100"/>
+        <use xlink:href="#z" x="-110" y="80" transform="rotate(-90)"/>
+    </g>
+</svg>

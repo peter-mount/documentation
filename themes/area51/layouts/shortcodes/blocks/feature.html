@@ -2,7 +2,9 @@
 {{ $url_text := .Get "url_text" }}
 <div class="col-lg-4 mb-5 mb-lg-0 text-center ">
   <div class="mb-4 h1">
+    {{- with .Get "img" }}<span class="svgRune">{{. | readFile | safeHTML }}</span>{{ else -}}
     <i class="{{ if not (or (hasPrefix $icon "fas ") (hasPrefix $icon "fab ")) }}fas {{ end }}{{ $icon }}"></i>
+    {{- end -}}
   </div>
   <h4 class="h3">
     {{ if eq .Page.File.Ext "md" }}

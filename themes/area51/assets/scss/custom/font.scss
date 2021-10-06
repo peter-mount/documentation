@@ -1,0 +1,12 @@
+
+.svgRune {
+    width: 1em;
+    height: 1em;
+    svg {
+    display: inline-block;
+        color: currentColor;
+        fill: currentColor;
+        width: inherit;
+        height: inherit;
+    }
+}
