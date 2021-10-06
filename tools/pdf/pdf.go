@@ -9,6 +9,7 @@ import (
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
   "log"
+  "strings"
 )
 
 // PDF tool that handles the generation of PDF documentation of a "book"
@@ -64,7 +65,7 @@ func (p *PDF) generate(ctx context.Context, book *hugo.Book) error {
 
 // print a specific pdf page.
 func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
-  url := p.config.WebPath("%s/_print/", book.ID)
+  url := p.config.WebPath("%s/_print/", strings.ToLower(book.WebPath()))
 
   pdf := book.PDF
 
@@ -90,7 +91,7 @@ func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
       }
 
       return util.ByteFileHandler(buf).
-        Write("static/static/book/"+book.ID+".pdf", book.Modified())
+        Write("public/static/book/"+book.ID+".pdf", book.Modified())
     }),
   }
 }
