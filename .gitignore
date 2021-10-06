@@ -1,15 +1,10 @@
-/area51.dev/node_modules/
-
-/area51.dev/themes/docsy/public/
-/area51.dev/themes/docsy/resources/
-/area51.dev/themes/docsy/node_modules/
-/area51.dev/themes/docsy/tech-doc-hugo
-
 # Reference files
 generated
 reference
 *.xlsx
 *.pdf
+
+/resources/_gen/
 
 # vim temporary files
 *~
