@@ -58,7 +58,7 @@ func (e *Excel) Get(name string, modified time.Time) util.ExcelProvider {
       // even if the actual content is identical.
       return provider.builder.
         FileHandler().
-        WriteAlways(path.Join("content", name, "reference.xlsx"), modified)
+        WriteAlways(path.Join("static/static/book/", name+".xlsx"), modified)
     }
     return nil
   })
