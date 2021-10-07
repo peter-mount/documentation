@@ -4,6 +4,7 @@ reference
 *.xlsx
 *.pdf
 static/static/book
+static/static/chipref
 
 node_modules
 /resources/_gen/

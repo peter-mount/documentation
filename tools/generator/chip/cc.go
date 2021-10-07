@@ -124,5 +124,5 @@ func cc(d *Definition) error {
     End(). // Svg
     FileBuilder().
     FileHandler().
-    Write(d.Path("content/chipref/reference")+".svg", d.FileInfo.ModTime())
+    Write(d.Path("static/static/chipref")+".svg", d.FileInfo.ModTime())
 }

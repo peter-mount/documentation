@@ -78,5 +78,5 @@ func dip(d *Definition) error {
   return b.
     FileBuilder().
     FileHandler().
-    Write(d.Path("content/chipref/reference")+".svg", d.FileInfo.ModTime())
+    Write(d.Path("static/static/chipref")+".svg", d.FileInfo.ModTime())
 }
