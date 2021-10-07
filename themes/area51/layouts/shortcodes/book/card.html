@@ -1,5 +1,5 @@
 <div class="card mb-4 {{ with $.Get "colour" }}{{.}}{{ end }}">
-    <div class="card-header">{{ $.Get "header" }}</div>
+    {{- with .Get "header" -}}<div class="card-header">{{.}}</div>{{- end -}}
     <div class="card-body">
         <p class="card-text">{{ $.Inner | htmlUnescape | safeHTML }}</p>
     </div>
