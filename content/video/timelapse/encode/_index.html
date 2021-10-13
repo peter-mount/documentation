@@ -10,50 +10,57 @@ linkTitle: "Encode"
     To create an mp4 from these frames:
 </p>
 <pre>
-    ffmpeg -r 1/10 -start_number 1 -i out%08d.jpeg -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
+    ffmpeg -r 30 -start_number 1 -i out%08d.jpeg -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
 </pre>
-<table>
-    <thead>
-    <tr>
-        <th>Parameter</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>-r 30</td>
-        <td>The source frame rate</td>
-    </tr>
-    <tr>
-        <td>-start_number 1</td>
-        <td>The start frame number. This defaults to 1 if left out</td>
-    </tr>
-    <tr>
-        <td>-i out%08d.jpeg</td>
-        <td>The filename format, should match that used to create the frames</td>
-    </tr>
-    <tr>
-        <td>-c:v libx264</td>
-        <td>Video encoding format</td>
-    </tr>
-    <tr>
-        <td>-r 30</td>
-        <td>Output frame rate</td>
-    </tr>
-    <tr>
-        <td>-pix_fmt yuv420p</td>
-        <td>Output video frame format</td>
-    </tr>
-    </tbody>
-</table>
 <p>
     Note there are two <code>-r</code> parameters for the frame rate.
     The first one is the source frame rate.
     The second one is the output frame rate of the final video.
 </p>
+<table>
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Description</th>
+        <th>Notes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="nowrap">-r 30</td>
+        <td>The source frame rate.</td>
+        <td>This can be either lower than, equal or greater to the output rate</td>
+    </tr>
+    <tr>
+        <td class="nowrap">-start_number 1</td>
+        <td>The start frame number.</td>
+        <td>This is optional and will default to 1 if omitted.</td>
+    </tr>
+    <tr>
+        <td class="nowrap">-i out%08d.jpeg</td>
+        <td>The source frame filename format</td>
+        <td>This should match that used to create the frames</td>
+    </tr>
+    <tr>
+        <td class="nowrap">-c:v libx264</td>
+        <td>Video encoding format</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="nowrap">-r 30</td>
+        <td>Output frame rate</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="nowrap">-pix_fmt yuv420p</td>
+        <td>Output video frame format</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
 <p>
-    For the source, do not confuse this with the capture frame rate.
-    Instead, set it to how fast you want the source frames to be read in at.
+    For the source frame rate, do not confuse this with the capture frame rate.
+    Instead, set it to how fast you want the source frames to be read in at when creating the video.
 </p>
 <p>
     For example: When generating a 30fps video, and you want each frame image to be exactly one frame from the source

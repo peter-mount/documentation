@@ -70,3 +70,8 @@ table.chipPin {
 .not {
     text-decoration: overline;
 }
+
+th.nowrap,
+td.nowrap {
+    white-space: nowrap;
+}
