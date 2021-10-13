@@ -1,0 +1,55 @@
+---
+type: "manual"
+title: "Capture frames"
+linkTitle: "Capture"
+---
+
+<h2>Capture images from Webcam</h2>
+<p>
+    Here we have a WebCam (Insta360 One-R with 4K camera mod) presenting itself as /dev/video1 on a Raspberry PI
+</p>
+
+<p>
+    To capture images every 10 seconds we can use:
+</p>
+<pre>
+    ffmpeg -f v4l2 -i /dev/video1 -r 1/10 out%08d.jpg
+</pre>
+<p>
+    Here <code>-i /dev/video1</code> is the camera's device,
+    <code>-r 1/10</code> is the capturing framerate, 1 in every 10 seconds
+    and <code>out^08d.jpeg</code> is the filename for each frame generated.
+</p>
+<table>
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>-f v4l2</td>
+        <td>Tell ffmpeg we are reading from v4l2 (Video For Linux 2)</td>
+    </tr>
+    <tr>
+        <td>-i /dev/video1</td>
+        <td>The V4L2 device of the camera to capture from</td>
+    </tr>
+    <tr>
+        <td>-r 1/10</td>
+        <td>The frame rate</td>
+    </tr>
+    <tr>
+        <td>out%08d.jpg</td>
+        <td>The frame filename to write.</td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    Here the frame rate is the capture rate in frames per second.
+    So 1/10 means that we capture a single frame once every 10 seconds.
+</p>
+<p>
+    For the frame filename pattern, %08d will be replaced by the frame number, in this case 8 digits with leading 0's.
+</p>
