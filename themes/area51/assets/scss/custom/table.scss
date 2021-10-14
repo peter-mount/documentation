@@ -80,6 +80,9 @@ table.hexGrid {
     display: block;
     overflow-x: auto;
     margin-bottom: 1em;
+    caption {
+        caption-side: top;
+    }
 
     // All cells have border & centered
     th, td {
