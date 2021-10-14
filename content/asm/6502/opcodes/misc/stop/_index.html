@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "STP - Stop Processor"
+linkTitle: "STP"
+weight: 20
+description: "Stop the Processor until Reset"
+tags:
+  - 6502 instruction
+flags:
+codes:
+  - code: "DB"
+    op: STP
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+      notes:
+    cycles:
+      value: 3
+      notes:
+        - 1
+notes:
+  - "Uses 3 cycles to shut down the processor. Additional cycles required by reset to restart it"
+---
+<p>
+  STP will stop the processors oscillator input, shutting down the processor until a reset occurs
+  by pulling the <span class="not">RES</span> pin low.
+  </p>
+<p>
+  As power consumption is a function of frequency in CMOS circuits, stopping the clock cuts power to almost nothing.
+</p>
