@@ -1,0 +1,194 @@
+---
+type: "manual"
+title: "Stack"
+linkTitle: "Stack operations"
+weight: 3
+description: "Stack operations"
+tags:
+  - 6502 instruction
+flags:
+  "n": Set if most significant bit of the transferred value is set
+  z: Set if value transferred is zero
+#src: Src
+#dest: Dest
+#altright: Notes
+codes:
+  - code: F4
+    op: "PEA"
+    addressing: sa
+    compatibility:
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 5
+  - code: D4
+    op: "PEI"
+    addressing: sdpi
+    compatibility:
+      65816: true
+    bytes:
+      value: 2
+    cycles:
+      value: 6
+      notes:
+        - 1
+  - code: 62
+    op: "PER"
+    addressing: spcrl
+    compatibility:
+      65816: true
+    bytes:
+      value: 3
+    cycles:
+      value: 6
+  - code: 48
+    op: "PHA"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+      notes:
+        - 2
+  - code: 8B
+    op: "PHB"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: 0B
+    op: "PHD"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 4
+  - code: 4B
+    op: "PHK"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: "08"
+    op: "PHP"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: DA
+    op: "PHX"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+      notes:
+        - 3
+  - code: 5A
+    op: "PHY"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+      notes:
+        - 3
+  - code: 68
+    op: "PLA"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+      notes:
+        - 2
+  - code: AB
+    op: "PLB"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 4
+  - code: 2B
+    op: "PLD"
+    addressing: imp
+    compatibility:
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 5
+  - code: 28
+    op: "PLP"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 4
+  - code: FA
+    op: "PLX"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 4
+      notes:
+        - 3
+  - code: 7A
+    op: "PLY"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 4
+      notes:
+        - 3
+notes:
+  - "Add 1 cycle if low byte of Direct Page register is other than zero (DL<>0)"
+  - "65816: Add 1 cycle if m=0 (16-bit memory/accumulator)"
+  - "65816: Add 1 cycle if x=0 (16-bit registers)"
+---

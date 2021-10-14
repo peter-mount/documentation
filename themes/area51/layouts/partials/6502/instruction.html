@@ -19,6 +19,9 @@
 {{- if eq .mode "imm" }}#<em>const</em>{{ end -}}
 {{- if eq .mode "pcr" }}<em>nearlabel</em>{{ end -}}
 {{- if eq .mode "pcrl" }}<em>label</em>{{ end -}}
+{{- if eq .mode "sa" }}<em>addr</em>{{ end -}}
+{{- if eq .mode "sdpi" }}(<em>dp</em>){{ end -}}
 {{- if eq .mode "sic" }}<em>const</em>{{ end -}}
+{{- if eq .mode "spcrl" }}<em>label</em>{{ end -}}
 {{- if eq .mode "sr" }}<em>sr</em>,S{{ end -}}
 {{- if eq .mode "sriiy" }}(<em>sr</em>,S),Y{{ end -}}
