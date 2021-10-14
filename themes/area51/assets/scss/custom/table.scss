@@ -80,6 +80,8 @@ table.hexGrid {
     display: block;
     overflow-x: auto;
     margin-bottom: 1em;
+    break-inside: avoid;
+
     caption {
         caption-side: top;
     }
@@ -116,7 +118,7 @@ table.hexGrid {
     }
 
     td {
-        font-size: 80%;
+        font-size: 75%;
 
         div {
             position: relative;

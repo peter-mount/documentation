@@ -2,6 +2,7 @@
 {{- if isset .Params "codes" -}}
 {{- $opcode := $.Params.codes -}}
 {{- if isset .Params "notitle" | not -}}
+<div class="printPageBreakAvoid">
     <h3>Instructions</h3>
     {{- end -}}
     <table class="table table-striped table-hover table-sm table-borderless">
@@ -65,13 +66,16 @@
         {{- end -}}
         </tbody>
     </table>
-    {{end}}
+</div>
+{{- end -}}
 
-    {{- if isset $.Params "notes" -}}
+{{- if isset $.Params "notes" -}}
+<div class="printPageBreakAvoid">
     <h3>Notes:</h3>
     <ol>
         {{- range $.Params.notes }}
         <li>{{.}}</li>
         {{end -}}
     </ol>
-    {{- end -}}
+</div>
+{{- end -}}
