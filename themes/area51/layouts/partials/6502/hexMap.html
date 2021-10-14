@@ -1,34 +1,42 @@
 {{- if isset .Params "hexgrid" -}}
 <div class="container">
+    {{- range $prefix, $grid := $.Params.hexgrid -}}
     <div class="row">
         <table class="hexGrid">
+            {{- if ne $prefix "00" -}}
+            <caption>Opcodes with prefix {{ $prefix }}</caption>
+            {{- end -}}
             <tr>
                 <th></th>
                 {{- range seq 0 15 -}}
                 <th>{{ printf "%X" . }}</th>
                 {{- end -}}
             </tr>
-            {{- range $h, $r := $.Params.hexgrid -}}
+            {{- range $h, $r := $grid -}}
             <tr>
                 <th>{{ printf "%X" $h }}</th>
                 {{- range $l, $c := $r -}}
-                {{- if isset $c "label" -}}
+                {{- if ne $c.label "" -}}
                 <td>
                     <div>
                         <span class="op">{{- partial "6502/instruction.html" (dict "op" $c.label "mode" $c.addressing) -}}</span>
-                        <span class="code">{{ printf "%X%X" $h $l }}</span>
+                        {{- with $c.op }}<span class="code">{{.}}</span>{{ end -}}
                         {{- with $c.size }}<span class="size">{{.}}</span>{{ end -}}
                         {{- with $c.cycles }}<span class="cycles">{{.}}</span>{{ end -}}
                     </div>
                 </td>
                 {{- else -}}
-                <td class="unused"></td>
+                <td class="unused">
+                    <div></div>
+                </td>
                 {{- end -}}
                 {{- end -}}
             </tr>
             {{- end -}}
         </table>
     </div>
+
+    {{- if eq $prefix "00" -}}
     <div class="row">
         <table class="hexGrid">
             <caption>Opcode Matrix Legend</caption>
@@ -44,5 +52,8 @@
             </tr>
         </table>
     </div>
+    {{- end -}}
+
+    {{- end -}}
 </div>
 {{- end -}}
