@@ -75,3 +75,82 @@ th.nowrap,
 td.nowrap {
     white-space: nowrap;
 }
+
+table.hexGrid {
+    display: block;
+    overflow-x: auto;
+    margin-bottom: 1em;
+
+    // All cells have border & centered
+    th, td {
+        border-right: 1px solid grey;
+        border-bottom: 1px solid grey;
+        text-align: center;
+    }
+
+    // Top border
+    tr:first-child th {
+        border-top: 1px solid grey;
+    }
+
+    // Left border on first column
+    th:first-child {
+        border-left: 1px solid grey;
+    }
+
+    // Unused op code shows with a background TODO do we need this?
+    td.unused {
+      background: #ccc;
+    }
+
+    td.legend {
+        border-top: 1px solid grey;
+        border-left: 1px solid grey;
+
+        div {
+            width: 15em;
+        }
+    }
+
+    td {
+        font-size: 80%;
+
+        div {
+            position: relative;
+            width: 4.6em;
+            height: 2.5em;
+
+            span {
+                position: absolute;
+                font-size: 70%;
+                line-height: 1em;
+            }
+
+            span.op {
+                left: 0;
+                top: 0.25em;
+                right: 0;
+                text-align: center;
+            }
+
+            span.code {
+                left: 0;
+                bottom: 0;
+                right: 0;
+                text-align: center;
+            }
+
+            span.size {
+                left: 0.25em;
+                bottom: 0;
+                text-align: left;
+            }
+
+            span.cycles {
+                right: 0.25em;
+                bottom: 0;
+                text-align: right;
+            }
+        }
+    }
+}

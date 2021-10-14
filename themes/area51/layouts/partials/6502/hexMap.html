@@ -1,0 +1,48 @@
+{{- if isset .Params "hexgrid" -}}
+<div class="container">
+    <div class="row">
+        <table class="hexGrid">
+            <tr>
+                <th></th>
+                {{- range seq 0 15 -}}
+                <th>{{ printf "%X" . }}</th>
+                {{- end -}}
+            </tr>
+            {{- range $h, $r := $.Params.hexgrid -}}
+            <tr>
+                <th>{{ printf "%X" $h }}</th>
+                {{- range $l, $c := $r -}}
+                {{- if isset $c "label" -}}
+                <td>
+                    <div>
+                        <span class="op">{{- partial "6502/instruction.html" (dict "op" $c.label "mode" $c.addressing) -}}</span>
+                        <span class="code">{{ printf "%X%X" $h $l }}</span>
+                        {{- with $c.size }}<span class="size">{{.}}</span>{{ end -}}
+                        {{- with $c.cycles }}<span class="cycles">{{.}}</span>{{ end -}}
+                    </div>
+                </td>
+                {{- else -}}
+                <td class="unused"></td>
+                {{- end -}}
+                {{- end -}}
+            </tr>
+            {{- end -}}
+        </table>
+    </div>
+    <div class="row">
+        <table class="hexGrid">
+            <caption>Opcode Matrix Legend</caption>
+            <tr>
+                <td class="legend">
+                    <div>
+                        <span class="op">Opcode <em>Address mode</em></span>
+                        <span class="code">Opcode hex</span>
+                        <span class="size">Size bytes</span>
+                        <span class="cycles">Cycle count</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{{- end -}}

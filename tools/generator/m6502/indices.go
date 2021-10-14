@@ -14,6 +14,7 @@ func (s *M6502) writeOpsIndex(book *hugo.Book) error {
 
   return s.writeFile(
     book,
+    "codes",
     "opcodes",
     "Instruction List by opcode",
     "6502 instructions by hex opcode",
@@ -30,50 +31,65 @@ func (s *M6502) writeOpsHexIndex(book *hugo.Book) error {
 
   return s.writeFile(
     book,
+    "codes",
     "instructions",
     "Instruction List by name",
     "6502 instructions by name",
   )
 }
 
-func (s *M6502) writeFile(book *hugo.Book, name, title, desc string) error {
+func (s *M6502) writeOpsHexGrid(book *hugo.Book) error {
+  return util.ReferenceFileBuilder("Opcode Matrix", "Instructions shown in an Opcode Matrix", "manual", 10).
+      Then(NewHexGrid().
+        Opcode(s.opCodes...).
+        FileBuilder()).
+    WrapAsFrontMatter().
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), "hexgrid", "_index.html"), book.Modified())
+}
+
+func (s *M6502) writeOpCodes(prefix string, codes []*Opcode) util.FileBuilder {
+  return func(a util.StringSlice) (util.StringSlice, error) {
+    a = append(a, prefix+":")
+
+    for _, op := range codes {
+      a = append(a,
+        "  - code: \""+op.Code+"\"",
+        "    op: \""+op.Op+"\"",
+        "    addressing: "+op.Addressing,
+        "    compatibility:",
+      )
+
+      // Compatibility table is just the existence of the keys.
+      // Sorted so we keep the same order each time
+      _ = op.Compatibility.
+        Keys().
+        Sort().
+          ForEach(func(k string) error {
+            a = append(a, fmt.Sprintf("      %v: true", k))
+            return nil
+          })
+
+      a = op.Bytes.append("    ", "bytes", a)
+      a = op.Cycles.append("    ", "cycles", a)
+    }
+
+    a = append(a, "notes:")
+    for _, n := range s.notes.Notes {
+      a = append(a, fmt.Sprintf("  - \"%s\" # %d", n.Value, n.Key))
+    }
+    return a, nil
+  }
+}
+
+func (s *M6502) writeFile(book *hugo.Book, prefix, name, title, desc string) error {
   err := util.ReferenceFileBuilder(
     title,
     desc,
     "manual",
     10,
   ).
-      Then(func(a util.StringSlice) (util.StringSlice, error) {
-        a = append(a, "codes:")
-
-        for _, op := range s.opCodes {
-          a = append(a,
-            "  - code: \""+op.Code+"\"",
-            "    op: \""+op.Op+"\"",
-            "    addressing: "+op.Addressing,
-            "    compatibility:",
-          )
-
-          // Compatibility table is just the existence of the keys.
-          // Sorted so we keep the same order each time
-          _ = op.Compatibility.
-            Keys().
-            Sort().
-              ForEach(func(k string) error {
-                a = append(a, fmt.Sprintf("      %v: true", k))
-                return nil
-              })
-
-          a = op.Bytes.append("    ", "bytes", a)
-          a = op.Cycles.append("    ", "cycles", a)
-        }
-
-        a = append(a, "notes:")
-        for _, n := range s.notes.Notes {
-          a = append(a, fmt.Sprintf("  - \"%s\" # %d", n.Value, n.Key))
-        }
-        return a, nil
-      }).
+    Then(s.writeOpCodes(prefix, s.opCodes)).
     WrapAsFrontMatter().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), name, "_index.html"), book.Modified())

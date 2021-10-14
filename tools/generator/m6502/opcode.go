@@ -27,6 +27,16 @@ type OpcodeType struct {
   Notes  []*util.Note // Resolved global note
 }
 
+func (o *OpcodeType) Int() int {
+  if o != nil {
+    i, err := strconv.Atoi(o.Value)
+    if err == nil {
+      return i
+    }
+  }
+  return 0
+}
+
 func (o *OpcodeType) append(p, l string, a []string) []string {
   a = append(a,
     p+l+":",
@@ -36,7 +46,7 @@ func (o *OpcodeType) append(p, l string, a []string) []string {
   if len(o.Notes) > 0 {
     a = append(a, p+"  notes:")
     for _, n := range o.Notes {
-      a = append(a, p+"    - "+strconv.Itoa(n.Key) + " # " + n.Value)
+      a = append(a, p+"    - "+strconv.Itoa(n.Key)+" # "+n.Value)
     }
   }
   return a

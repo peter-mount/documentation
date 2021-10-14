@@ -43,7 +43,11 @@ func (s *M6502) Start() error {
       Register("6502OpsHexIndex",
         generator.HandlerOf().
           RunOnce(&s.extracted, s.extractOpcodes).
-          Then(s.writeOpsHexIndex))
+          Then(s.writeOpsHexIndex)).
+      Register("6502OpsHexGrid",
+        generator.HandlerOf().
+          RunOnce(&s.extracted, s.extractOpcodes).
+          Then(s.writeOpsHexGrid))
 
   return nil
 }

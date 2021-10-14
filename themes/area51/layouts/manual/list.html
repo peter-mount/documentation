@@ -28,6 +28,7 @@
     <div style="break-inside: avoid">
         {{- end -}}
         {{- partial "6502/opcode.html" . -}}
+        {{- partial "6502/hexMap.html" . -}}
         {{- if isset .Params "notitle" | not -}}
     </div>
     {{- end -}}
