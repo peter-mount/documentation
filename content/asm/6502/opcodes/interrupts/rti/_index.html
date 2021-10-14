@@ -1,0 +1,34 @@
+---
+type: "manual"
+title: "RTI"
+linkTitle: "RTI"
+description: "Return from Interrupt"
+tags:
+  - 6502 instruction
+codes:
+  - code: 40
+    op: "RTI"
+    addressing: imp
+    compatibility:
+      6502: true
+      65c02: true
+      65816: true
+    bytes:
+      value: 1
+    cycles:
+      value: 6
+      notes:
+        - 1
+notes:
+  - "65816: Add 1 cycle in 65816 native mode (e=0)"
+---
+<p>
+  The RTI instruction is used at the end of an interrupt handler.
+  It pulls both the status register and program counter from the stack.
+  For 16bit processors running in native mode it also pulls the program bank register from the stack.
+</p>
+
+<p>
+  Unlike RTS, the address on the stack is the actual return address.
+  (RTS expects it to be the address before the next instruction).
+</p>
