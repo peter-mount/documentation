@@ -155,9 +155,11 @@ func (e *Element) FileBuilder() util.FileBuilder {
   }
 }
 
+type SequenceHandler func(int, *Element) *Element
+
 // Sequence calls a function for each integer between start and end inclusively.
 // If start > end then the sequence will count down from start until end.
-func (e *Element) Sequence(start, end int, f func(int, *Element) *Element) *Element {
+func (e *Element) Sequence(start, end int, f SequenceHandler) *Element {
   ne := e
   if start < end {
     for i := start; i <= end; i++ {
@@ -178,6 +180,10 @@ func (e *Element) element(n string) *Element {
   }
   e.children = append(e.children, child)
   return child
+}
+
+func (e *Element) A() *Element {
+  return e.element("a")
 }
 
 // Div element. This is open so End() must be called to terminate it.
@@ -212,4 +218,28 @@ func (e *Element) Sup() *Element {
 
 func (e *Element) Style() *Element {
   return e.element("style")
+}
+
+func (e *Element) Table() *Element {
+  return e.element("table")
+}
+
+func (e *Element) THead() *Element {
+  return e.element("thead")
+}
+
+func (e *Element) TBody() *Element {
+  return e.element("tbody")
+}
+
+func (e *Element) TR() *Element {
+  return e.element("tr")
+}
+
+func (e *Element) TD() *Element {
+  return e.element("td")
+}
+
+func (e *Element) TH() *Element {
+  return e.element("th")
 }
