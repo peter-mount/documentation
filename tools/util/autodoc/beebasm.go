@@ -3,7 +3,6 @@ package autodoc
 import (
   "fmt"
   "io"
-  "path"
   "strings"
   "time"
 )
@@ -20,8 +19,8 @@ func (b *beebAsm) valid() bool {
 }
 
 func BeebAsm(dir, file string, modified time.Time) Builder {
-  fileName := path.Join(dir, "beebasm", file+".asm")
-  w, err := InitBuilder(fileName, modified)
+  fileName, w, err := InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "BeebASM", "Files for the BeebASM assembler")
+
   return &beebAsm{
     fileName: fileName,
     modified: modified,

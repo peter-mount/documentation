@@ -27,13 +27,24 @@ type Handler func(Builder) error
 
 type TopicHandler func(string, string) Handler
 
-func InitBuilder(fileName string, modified time.Time) (io.WriteCloser, error) {
+// InitBuilder creates any required directories & _index.html files for a built file
+// dir directory to write to
+// file FileName of file (without suffix)
+// asm Assembler - this will form the directory underneath dir where the actual file will live.
+// suffix File suffix to add to file, will have "." inserted between them
+// title, linkTitle, desc frontmatter for the _index.html for the assembler page
+func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkTitle, desc string) (string, io.WriteCloser, error) {
+  if err := util.GenerateReferenceIndexFile(path.Join(dir, asm, "_index.html"), modified, title, linkTitle, desc); err != nil {
+    return "", nil, err
+  }
+
   writeNow := true
+  fileName := path.Join(dir, asm, file+"."+suffix)
 
   if fi, err := os.Stat(fileName); err != nil {
     // If error is not-existing then fall through with writeNow is true
     if !os.IsNotExist(err) {
-      return nil, err
+      return "", nil, err
     }
 
     writeNow = true
@@ -42,29 +53,28 @@ func InitBuilder(fileName string, modified time.Time) (io.WriteCloser, error) {
   }
 
   if err := os.MkdirAll(path.Dir(fileName), 0755); err != nil {
-    return nil, err
+    return "", nil, err
   }
 
   if err := util.GenerateReferenceIndices(fileName, modified); err != nil {
-    return nil, err
+    return "", nil, err
   }
 
   if writeNow || true {
     log.Println("Creating", fileName)
     f, err := os.Create(fileName)
     if err != nil {
-      return nil, err
+      return "", nil, err
     }
 
-    return f, nil
+    return fileName, f, nil
   }
 
-  return nil, nil
+  return fileName, nil, nil
 }
 
 func CloseBuilder(err error, w io.WriteCloser, fileName string, modified time.Time) error {
   if w != nil {
-    log.Println("Finishing", fileName)
     if err == nil {
       err = w.Close()
     }

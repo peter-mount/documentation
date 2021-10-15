@@ -3,7 +3,6 @@ package autodoc
 import (
   "fmt"
   "io"
-  "path"
   "strings"
   "time"
 )
@@ -20,8 +19,8 @@ func (b *zAsm) valid() bool {
 }
 
 func ZAsm(dir, file string, modified time.Time) Builder {
-  fileName := path.Join(dir, "zasm", file+".z80")
-  w, err := InitBuilder(fileName, modified)
+  fileName, w, err := InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "ZAsm", "Files for the ZAsm assembler")
+
   return &zAsm{
     fileName: fileName,
     modified: modified,
