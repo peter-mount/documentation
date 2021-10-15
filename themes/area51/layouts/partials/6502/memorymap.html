@@ -1,33 +1,58 @@
 {{- if isset .Params "memorymap" -}}
-<table class="table table-striped table-hover table-sm table-borderless">
-    <thead>
-    <tr>
-        <th colspan="2">Address</th>
-        <th>Len</th>
-        <th>Name</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{- range $.Params.memorymap -}}
-    <tr>
-        {{- if isset . "offset" -}}
-        <td></td><td><em>{{.address}}</em></td>
-        {{- else -}}
-        <td colspan="2">{{.address}}</td>
-        {{- end -}}
-        <td>{{.length}}</td>
-        <td>{{.name}}</td>
-        <td>
-            {{- .desc -}}
-            {{- with .val -}}
-            {{- range $key, $val := . -}}
-            <br/>{{- $key }} = {{ $val -}}
-            {{- end -}}
-            {{- end -}}
-        </td>
-    </tr>
-    {{- end -}}
-    </tbody>
-</table>
+{{- $hasLen := 0 -}}
+{{- $hasName := 0 -}}
+{{- $hasDefaultVal := 0 -}}
+{{- range $.Params.memorymap -}}
+{{- with .length}}{{$hasLen =1}}{{end -}}
+{{- with .name}}{{$hasName =1}}{{end -}}
+{{- with .default}}{{$hasDefaultVal =1}}{{end -}}
 {{- end -}}
+<div class="printPageBreakAvoid">
+    <table class="memory">
+        <thead>
+        <tr>
+            <th>Address</th>
+            <th>Len</th>
+            {{- if $hasName}}
+            <th>Name</th>
+            {{end -}}
+            <th>Description</th>
+            {{- if $hasDefaultVal}}
+            <th>Default</th>
+            {{end -}}
+        </tr>
+        </thead>
+        <tbody>
+        {{- range $.Params.memorymap -}}
+        <tr>
+
+            <td {{- if isset . "offset"}} class="offset"{{end}}>{{.address}}</td>
+            {{- if $hasLen}}
+            <td>{{.length}}</td>
+            {{end -}}
+            {{- if $hasName}}
+            <td>{{.name}}</td>
+            {{end -}}
+            <td>
+                {{- .desc -}}
+                {{- with .note}}<div class="note">{{.}}</div>{{end -}}
+                {{- with .val -}}
+                <table>
+                    {{- range $key, $val := . -}}
+                    <tr>
+                        <td>{{$key}}</td>
+                        <td>{{$val}}</td>
+                    </tr>
+                    {{- end -}}
+                </table>
+                {{- end -}}
+            </td>
+            {{- if $hasDefaultVal}}
+            <td>{{.default}}</td>
+            {{end -}}
+        </tr>
+        {{- end -}}
+        </tbody>
+    </table>
+    {{- end -}}
+</div>

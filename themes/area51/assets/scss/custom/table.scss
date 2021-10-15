@@ -39,6 +39,53 @@ table.generic {
     }
 }
 
+table.memory {
+    border: 1px solid lightgrey;
+    width: 100%;
+
+    table {
+        border: 1px solid lightgrey;
+        margin: 0.5em;
+        width: calc(100% - 1em);
+
+        td {
+            padding-left: 0.25em;
+            padding-right: 0.25em;
+        }
+        td:first-child {
+            white-space: nowrap;
+        }
+        td:not(:first-child) {
+            width: 100%;
+        }
+    }
+
+    tr {
+        border-bottom: 1px solid lightgrey;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    th, td {
+        vertical-align: top;
+    }
+
+    th:not(:last-child), td:not(:last-child) {
+        vertical-align: top;
+        border-right: 1px solid lightgrey;
+    }
+
+    td.offset {
+        text-align: right;
+        font-style: italic;
+    }
+    td div.note {
+        font-style: italic;
+    }
+}
+
 table.chipPin {
     border: 1px solid black;
     width: 100%;
