@@ -1,0 +1,138 @@
+---
+type: "manual"
+title: "Page 03"
+linkTitle: "Page 03"
+description: "C64 Page 3"
+weight: 3
+categories:
+  - c64
+memorymap:
+  - address: "0300"
+    length: 12
+    desc: "BASIC Indirect vector table"
+  - address: "030C"
+    length: 4
+    desc: "Storage for registers with BASIC SYS call"
+    note: "1 byte each for A, X, Y & Status in that order"
+  - address: "0310"
+    length: 3
+    name: "USRPOK"
+    desc: "Jump instruction for BASIC USR() function"
+    note: "Actual JMP instruction so first byte MUST be 0x4C"
+    default: "0x4c"
+  - address: "0311"
+    length: 2
+    name: "USRADD"
+    offset: true
+    desc: "Address of USR() function"
+    note: "This is the address used by USR() when it calls USRPOK"
+  - address: "0313"
+    length: 1
+    desc: "Unused"
+  - address: "0314"
+    length: 2
+    name: "CINV"
+    desc: "IRQ Interrupt Routine Vector"
+    default: "0xEA31"
+  - address: "0316"
+    length: 2
+    name: "CBNV"
+    desc: "BRK Interrupt Routine Vector"
+    default: "0xFE66"
+  - address: "0318"
+    length: 2
+    name: "NMINV"
+    desc: "NMI Interrupt Routine Vector"
+    default: "0xFE47"
+  - address: "031A"
+    desc: "Kernal Indirect Vectors"
+  - address: "031A"
+    length: 2
+    offset: true
+    name: "IOPEN"
+    desc: "Kernal OPEN Vector"
+    default: "0xFE4A"
+  - address: "031C"
+    length: 2
+    offset: true
+    name: "ICLOSE"
+    desc: "Kernal close Vector"
+    default: "0xF291"
+  - address: "031e"
+    length: 2
+    offset: true
+    name: "ICHKIN"
+    desc: "Kernal CHKIN Vector"
+    default: "0xF20E"
+  - address: "0320"
+    length: 2
+    offset: true
+    name: "ICKOUT"
+    desc: "Kernal CKOUT Vector"
+    default: "0xF250"
+  - address: "0322"
+    length: 2
+    offset: true
+    name: "ICLRCH"
+    desc: "Kernal CLRCHN Vector"
+    default: "0xF333"
+  - address: "0324"
+    length: 2
+    offset: true
+    name: "IBASIN"
+    desc: "Kernal CHRIN Vector"
+    default: "0xF157"
+  - address: "0326"
+    length: 2
+    offset: true
+    name: "IBSOUT"
+    desc: "Kernal CHROUT Vector"
+    default: "0xF1CA"
+  - address: "0328"
+    length: 2
+    offset: true
+    name: "ISTOP"
+    desc: "Kernal STOP Vector"
+    default: "0xF6ED"
+  - address: "032A"
+    length: 2
+    offset: true
+    name: "IGETIN"
+    desc: "Kernal GETIN Vector"
+    default: "0xF13E"
+  - address: "032C"
+    length: 2
+    offset: true
+    name: "ICLALL"
+    desc: "Kernal CLALL Vector"
+    default: "0xF32F"
+  - address: "032E"
+    length: 2
+    offset: true
+    name: "USRCMD"
+    desc: "User-Defined Command Vector"
+    default: "0xFE66"
+    note: "Unused on C64, holdover from the PET."
+  - address: "0330"
+    length: 2
+    offset: true
+    name: "ILOAD"
+    desc: "Kernal LOAD Vector"
+    default: "0xF49E"
+  - address: "0332"
+    length: 2
+    offset: true
+    name: "ISAVE"
+    desc: "Kernal SAVE Vector"
+    default: "0xF5DD"
+  - address: "0334"
+    length: 8
+    desc: "Unused, space for 4 user vectors"
+  - address: "033C"
+    length: 192
+    name: "TBUFFR"
+    desc: "Cassette I/O Buffer"
+  - address: "03FC"
+    length: 4
+    desc: "Unused"
+---
