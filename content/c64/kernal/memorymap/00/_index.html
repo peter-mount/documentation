@@ -1,0 +1,131 @@
+---
+type: "manual"
+title: "Page 00"
+linkTitle: "Page 00"
+description: "C64 Zero Page"
+weight: -1
+categories:
+  - c64
+memorymap:
+  - address: "0000"
+    length: 1
+    desc: "6510 On-Chip I/O DATA Direction Register"
+    default: "0xEF"
+    val:
+      "Bit 0": "Direction of Bit 0 on I/O Port. Default = 1 Output"
+      "Bit 1": "Direction of Bit 1 on I/O Port. Default = 1 Output"
+      "Bit 2": "Direction of Bit 2 on I/O Port. Default = 1 Output"
+      "Bit 3": "Direction of Bit 3 on I/O Port. Default = 1 Output"
+      "Bit 4": "Direction of Bit 4 on I/O Port. Default = 0 Input"
+      "Bit 5": "Direction of Bit 5 on I/O Port. Default = 1 Output"
+      "Bit 6": "Direction of Bit 6 on I/O Port. Not used"
+      "Bit 7": "Direction of Bit 7 on I/O Port. Not used"
+  - address: "0001"
+    length: 1
+    desc: "6510 On-Chip I/O Port"
+    default: "0x37"
+    val:
+      "Bit 0": "LORAM. Selects ROM/RAM at 0xA000. 1=Basic, 0=RAM"
+      "Bit 1": "HIRAM. Selects ROM/RAM at 0xE000, 1=Kernal, 0=RAM"
+      "Bit 2": "CHAREN. Selects Character ROM or I/O devices. 1=I/O, 0=ROM"
+      "Bit 3": "Cassette Data Output line"
+      "Bit 4": "Cassette switch sense. Reads 0=button pressed, 1=not pressed"
+      "Bit 5": "Cassette Motor Control. 1=Motor on, 0=Motor off"
+      "Bit 6": "Not used, not connected on 6510"
+      "Bit 7": "Not used, not connected on 6510"
+  - address: "0002"
+    length: 1
+    desc: "Unused"
+  - address: "0003"
+    length: 2
+    name: "ADRAY1"
+    desc: "Vector to routine to convert Number from Floating Point to Signed Integer"
+    default: "0xB1AA"
+  - address: "0005"
+    length: 2
+    name: "ADRAY2"
+    desc: "Vector to routine to convert Number from Integer to Floating Point"
+    default: "0xB391"
+  - address: "0007"
+    desc: "Used by BASIC and/or Kernal"
+  - address: "000A"
+    length: 1
+    name: "VERCK"
+    desc: "Flag: LOAD or VERIFY"
+    val:
+      "00": "LOAD"
+      "01-FF": "VERIFY"
+  - address: "000B"
+    desc: "Used by BASIC and/or Kernal"
+  - address: "002B"
+    length: 2
+    name: "TXTTAB"
+    desc: "Pointer to start of BASIC program text"
+    default: "0x0801"
+  - address: "002D"
+    length: 2
+    name: "VARTAB"
+    desc: "Pointer to start of BASIC Variable storage area"
+    default: "End of program +1"
+  - address: "002F"
+    length: 2
+    name: "ARYTAB"
+    desc: "Pointer to start of array variable area"
+  - address: "0031"
+    length: 2
+    name: "STREND"
+    desc: "End of Basic array storage (+1), Start of free ram"
+  - address: "0033"
+    length: 2
+    name: "FRETOP"
+    desc: "Pointer to bottom of string text area"
+    note: "Grows downwards from end of BASIC area"
+  - address: "0035"
+    length: 2
+    name: "FRESPC"
+    desc: "Temp pointer for strings"
+  - address: "0037"
+    length: 2
+    name: "MEMSIZ"
+    desc: "Highest address used by basic"
+    note: "RS232 device can reduce this by 512 bytes for it's buffers"
+    default: "0x9FFF"
+  - address: "0039"
+    desc: "Used by BASIC"
+  - address: "0090"
+    desc: "Used by Kernal"
+  - address: "00CC"
+    length: 1
+    name: "BLNSW"
+    desc: "Cursor Blink Enable"
+    val:
+      "00": "Cursor is on"
+      "01-FF": "Cursor is off"
+  - address: "00CD"
+    desc: "Used by Kernal"
+  - address: "00F7"
+    length: 2
+    name: "RIBUF"
+    desc: "RS232 Input Buffer Pointer"
+    note: "00xx for no buffer, allocate on input, any other value buffer exists"
+  - address: "00F9"
+    length: 2
+    name: "ROBUF"
+    desc: "RS232 Output Buffer Pointer"
+    note: "00xx for no buffer, allocate on output, any other value buffer exists"
+  - address: "00FB"
+    length: 4
+    name: "FREKZP"
+    desc: "4 free bytes of Zero Page for User Programs"
+    note: "Guaranteed BASIC will not use these 4 bytes"
+  - address: "00FF"
+    length: 12
+    name: "BASZPT"
+    desc: "BASIC temp data area for floating point to ASCII conversion"
+    note: "Runs into start of page 1, free for use if conversions not needed"
+---
+<p>
+    The C64 uses the 6510 Microprocessor, a variant of the 6502.
+    The main difference is that this Microprocessor contains a built-in 8-bit I/O port, with 6 pins exposed on the 6510.
+    This port is mapped into memory at addresses 0000 &amp; 0001.
+</p>
