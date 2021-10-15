@@ -12,14 +12,19 @@ memorymap:
     name: "BUF"
     desc: "BASIC Line Editor Input Buffer"
   - address: "0259"
+    desc: "Kernal File Tables"
+  - address: "0259"
+    offset: true
     length: 10
     name: "LAT"
     desc: "Active logical file number table"
   - address: "0263"
+    offset: true
     length: 10
     name: "FAT"
     desc: "Device number for each logical file"
   - address: "026D"
+    offset: true
     length: 10
     name: "SAT"
     desc: "Secondary address for each logical file"
@@ -38,24 +43,28 @@ memorymap:
     desc: "End of Memory pointer"
     default: "0xA000"
     note: "Usually this is the first byte of the BASIC ROM"
-  - address: "0285"
-    length: 1
-    name: "TIMOUT"
-    desc: "Unused Serial bus timeout"
   - address: "0286"
+    desc: "Screen workspace"
+  - address: "0286"
+    offset: true
     length: 1
     name: "COLOR"
     desc: "Current Foreground text colour"
   - address: "0287"
+    offset: true
     length: 1
     name: "GDCOL"
     desc: "Colour of character under Cursor"
   - address: "0288"
+    offset: true
     length: 1
     name: "HIBASE"
     desc: "Page of Screen Memory"
     default: "0x04"
   - address: "0289"
+    desc: "Keyboard workspace"
+  - address: "0289"
+    offset: true
     length: 1
     name: "XMAX"
     desc: "Max length of keyboard buffer"
@@ -63,6 +72,7 @@ memorymap:
       "0x00": "No buffer"
       "0x01-0x0F": "Buffer size"
   - address: "028A"
+    offset: true
     length: 1
     name: "RPTFLG"
     desc: "Which keys will repeat"
@@ -70,9 +80,8 @@ memorymap:
       "0x00": "Only cursor, insert, delete or space repeat"
       "0x40": "No keys repeat"
       "0x80": "All keys repeat"
-  - address: "028B"
-    desc: "Used by Kernal"
   - address: "028D"
+    offset: true
     length: 1
     name: "SHFLAG"
     desc: "Shift/Ctrl/Commodore key pressed"
@@ -81,13 +90,13 @@ memorymap:
       "Bit 1": "1=Commodore key pressed"
       "Bit 2": "1=Control pressed"
   - address: "028E"
+    offset: true
     length: 1
     name: "LSTSHF"
     desc: "Last value of Shift/Ctrl/Commodore key pressed"
     note: "Used with SHFLAG to debounce those keys. Values match those for SHFLAG"
-  - address: "028F"
-    desc: "Used by Kernal"
   - address: "0291"
+    offset: true
     length: 1
     name: "MODE"
     desc: "Shift/Commodore switch"
@@ -101,6 +110,9 @@ memorymap:
     desc: "Screen scrolling enabled"
     note: "0 enables scrolling, any other value disables scrolling"
   - address: "0293"
+    desc: "Mock 6551 RS-232"
+  - address: "0293"
+    offset: true
     length: 1
     name: "M51CTR"
     desc: "Mock 6551 RS-232 Control Register"
@@ -115,6 +127,7 @@ memorymap:
       "%0xxxxxxx": "1 stop bit"
       "%1xxxxxxx": "2 stop bits"
   - address: "0294"
+    offset: true
     length: 1
     name: "M51CDR"
     desc: "Mock 6551 RS-232 Command Register"
@@ -129,11 +142,13 @@ memorymap:
       "%101xxxxx": "Mark Parity"
       "%111xxxxx": "Space Parity"
   - address: "0295"
+    offset: true
     length: 2
     name: "M51AJB"
     desc: "Mock 6551 RS-232 Nonstandard Bit Timing"
     note: "Not actually used by Kernal but present for 6551 UART emulation"
   - address: "0297"
+    offset: true
     length: 1
     name: "M51STAT"
     desc: "Mock 6551 RS-232 Status Register"
@@ -147,29 +162,33 @@ memorymap:
       "Bit 6": "1=DTR (Data Set Ready) Signal Missing"
       "Bit 7": "1=Break Detected"
   - address: "0298"
+    offset: true
     length: 3
     desc: "Used by Kernal for RS-232"
   - address: "029B"
+    desc: "RS-232 Buffers"
+  - address: "029B"
+    offset: true
     length: 1
     name: "RIDBE"
     desc: "RS-232 Index to end of receive buffer"
   - address: "029C"
+    offset: true
     length: 1
     name: "RIDBS"
     desc: "RS-232 Index to start of receive buffer"
   - address: "029D"
+    offset: true
     length: 1
     name: "RODBE"
     desc: "RS-232 Index to end of transmit buffer"
   - address: "029E"
+    offset: true
     length: 1
     name: "RODBS"
     desc: "RS-232 Index to start of transmit buffer"
-  - address: "029F"
-    length: 2
-    name: "IRQTMP"
-    desc: "Save area for IRQ vector during cassette I/O"
   - address: "02A1"
+    offset: true
     length: 1
     name: "ENABL"
     desc: "RS-232 Interrupts Enabled"
