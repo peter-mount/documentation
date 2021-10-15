@@ -4,7 +4,7 @@ title: "Initialise & Service Dependencies"
 linkTitle: "Init & dependencies"
 weight: 1
 ---
-<div style="break-inside: avoid">
+<div class="printPageBreakAvoid">
 <p>
     The first lifecycle stage a service goes through is init.
     Here a service can declare any other services it has a dependency on or any command line flags it requires.
@@ -63,7 +63,7 @@ func (h *Hugo) Init(_ *kernel.Kernel) error {
 </p>
 </div>
 
-<div style="break-inside: avoid">
+<div class="printPageBreakAvoid">
 
 <h2>Service dependencies</h2>
 <p>
@@ -197,7 +197,7 @@ func (p *PDF) Init(k *kernel.Kernel) error {
     </p>
 </div>
 
-<div style="break-inside: avoid">
+<div class="printPageBreakAvoid">
     <h2>Circular dependencies</h2>
     <p>
         The kernel does not allow circular dependencies.
