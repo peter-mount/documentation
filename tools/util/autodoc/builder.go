@@ -1,6 +1,7 @@
 package autodoc
 
 import (
+  "github.com/peter-mount/documentation/tools/util"
   "io"
   "log"
   "os"
@@ -40,12 +41,15 @@ func InitBuilder(fileName string, modified time.Time) (io.WriteCloser, error) {
     writeNow = modified.After(fi.ModTime())
   }
 
-  if writeNow || true {
-    err := os.MkdirAll(path.Dir(fileName), 0755)
-    if err != nil {
-      return nil, err
-    }
+  if err := os.MkdirAll(path.Dir(fileName), 0755); err != nil {
+    return nil, err
+  }
 
+  if err := util.GenerateReferenceIndices(fileName, modified); err != nil {
+    return nil, err
+  }
+
+  if writeNow || true {
     log.Println("Creating", fileName)
     f, err := os.Create(fileName)
     if err != nil {
