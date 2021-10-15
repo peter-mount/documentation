@@ -3,6 +3,7 @@ package hugo
 import (
   "context"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/autodoc"
   "os"
   "path"
   "path/filepath"
@@ -83,12 +84,12 @@ func (bs Books) ForEach(ctx context.Context, f BookHandler) error {
 
 // Book defines a book that's rendered as pdf
 type Book struct {
-  BookCopyright                  // Copyright of book
-  ID            string           `yaml:"id"` // ID of the book, e.g. "bbc" or "6502"
+  BookCopyright `yaml:",inline"`                     // Copyright of book
+  ID            string           `yaml:"id"`         // ID of the book, e.g. "bbc" or "6502"
   FrontImage    BookCopyright    `yaml:"frontImage"` // Copyright of front image
-  PDF           PDF              `yaml:"pdf"` // Custom PDF config for just this book
-  Generate      util.StringSlice `yaml:"generate"` // List of generators to run on this book
-  modified      time.Time        `yaml:"-"` // Last Modified time
+  PDF           PDF              `yaml:"pdf"`        // Custom PDF config for just this book
+  Generate      util.StringSlice `yaml:"generate"`   // List of generators to run on this book
+  modified      time.Time        `yaml:"-"`          // Last Modified time
   contentPath   string
   webPath       string
 }
@@ -101,8 +102,11 @@ type BookCopyright struct {
   Copyright string `yaml:"copyright"` // Copyright
 }
 
-func (b *Book) ContentPath() string {
-  return b.contentPath
+func (b *Book) ContentPath(s ...string) string {
+  if len(s) == 0 {
+    return b.contentPath
+  }
+  return path.Join(append([]string{b.contentPath}, s...)...)
 }
 
 func (b *Book) WebPath() string {
@@ -161,4 +165,36 @@ func (b *Book) Expand(s string) string {
 // Do runs a function against this instance. When it exits it removes any resources the Book has used freeing up memory.
 func (b *Book) Do(f func(*Book) error) error {
   return f(b)
+}
+
+func (b *Book) Autodoc(topic string, path string) autodoc.Handler {
+  return func(builder autodoc.Builder) error {
+    builder.Separator().
+      Comment("%s for %s", topic, b.Title)
+
+    if b.SubTitle != "" {
+      builder.Comment(b.SubTitle)
+    }
+    if b.Author != "" {
+      builder.Comment("Author: %s", b.Author)
+    }
+    if b.SubAuthor != "" {
+      builder.Comment("SubAuthor: %s", b.SubAuthor)
+    }
+
+    builder.Comment("").
+      Comment("URL: https://area51.dev/%s/", strings.Join(strings.Split(b.ContentPath(), "/")[1:], "/")).
+      Comment("").
+      Comment("Modified: %s", b.Modified().Format(time.RFC1123))
+
+    if len(path) > 0 {
+      builder.Comment("").
+        Comment("Current version: https://area51.dev/%s", strings.Join(strings.Split(path, "/")[1:], "/"))
+    }
+
+    builder.Separator().
+      Newline()
+
+    return nil
+  }
 }

@@ -73,6 +73,16 @@ func (a FrontMatterAction) WithNotes(globalNotes *util.Notes) FrontMatterAction 
   }
 }
 
+func (a FrontMatterAction) Context(name string, value interface{}) FrontMatterAction {
+  if a == nil {
+    return nil
+  }
+
+  return func(ctx context.Context, matter *FrontMatter) error {
+    return a(context.WithValue(ctx, name, value), matter)
+  }
+}
+
 func (a FrontMatterAction) Do(ctx context.Context, fm *FrontMatter) error {
   if a == nil {
     return nil
@@ -91,6 +101,14 @@ func (a FrontMatterAction) Walk() walk.PathWalker {
     ctx = context.WithValue(ctx, "fileInfo", fileInfo)
     return a.Do(ctx, fm)
   }
+}
+
+func FileInfo(ctx context.Context) os.FileInfo {
+  fi, ok := ctx.Value("fileInfo").(os.FileInfo)
+  if ok {
+    return fi
+  }
+  return nil
 }
 
 func (fm *FrontMatter) LoadFrontMatter(fileName string) error {
