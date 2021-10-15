@@ -81,7 +81,7 @@ func (h *Headers) AutodocHandler() autodoc.Handler {
       if h1.Label == "" && h1.Value == "" && h1.Comment != "" {
         b.Comment(h1.Comment)
       } else {
-        b.Header(h1.Label, h1.Value, h1.Comment)
+        b.Header(h1.Label, b.Hex(h1.Value), h1.Comment)
       }
       return nil
     })

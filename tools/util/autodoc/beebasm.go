@@ -2,6 +2,7 @@ package autodoc
 
 import (
   "fmt"
+  "github.com/peter-mount/documentation/tools/util"
   "io"
   "strings"
   "time"
@@ -80,4 +81,11 @@ func (b *beebAsm) Newline() Builder {
 
 func (b *beebAsm) Separator() Builder {
   return b.write("; " + strings.Repeat("*", 75))
+}
+
+func (b *beebAsm) Hex(v interface{}) string {
+  if i, ok := util.DecodeInt(v, 0); ok {
+    return fmt.Sprintf("&%X", i)
+  }
+  panic(fmt.Errorf("invalid value %v", v))
 }

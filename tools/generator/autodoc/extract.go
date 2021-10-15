@@ -44,7 +44,7 @@ func (s *Autodoc) extractMemoryMap(ctx context.Context, _ *hugo.FrontMatter) err
     return util2.IfMap(e, func(m map[interface{}]interface{}) error {
       headers.Add(&Header{
         Label:   util2.DecodeString(m["name"], ""),
-        Value:   util2.DecodeString(m["address"], ""),
+        Value:   "0x" + util2.DecodeString(m["address"], ""), // Valid as address is always in hex
         Comment: util2.DecodeString(m["desc"], ""),
       })
       return nil

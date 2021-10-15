@@ -1,6 +1,7 @@
 package util
 
 import (
+  "math/big"
   "strconv"
 )
 
@@ -59,11 +60,16 @@ func DecodeInt(v interface{}, def int) (int, bool) {
 
   if v != nil {
     if s, ok := v.(string); ok {
-      i, err := strconv.Atoi(s)
-      if err != nil {
-        return 0, false
-      }
-      r = i
+      n := new(big.Int)
+      n.SetString(s, 0)
+      r = int(n.Int64())
+      /*
+         i, err := strconv.Atoi(s)
+         if err != nil {
+           return 0, false
+         }
+         r = i
+      */
     } else if i, ok := v.(int); ok {
       r = i
     }
