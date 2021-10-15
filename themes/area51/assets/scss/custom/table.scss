@@ -72,6 +72,10 @@ table.memory {
         vertical-align: top;
     }
 
+    th:first-child, td:first-child {
+        width: 5em;
+    }
+
     th:not(:last-child), td:not(:last-child) {
         vertical-align: top;
         border-right: 1px solid lightgrey;

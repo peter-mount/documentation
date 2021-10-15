@@ -1,0 +1,185 @@
+---
+type: "manual"
+title: "Page 02"
+linkTitle: "Page 02"
+description: "C64 Page 2"
+weight: -1
+categories:
+  - c64
+memorymap:
+  - address: "0200"
+    length: 0x59
+    name: "BUF"
+    desc: "BASIC Line Editor Input Buffer"
+  - address: "0259"
+    length: 10
+    name: "LAT"
+    desc: "Active logical file number table"
+  - address: "0263"
+    length: 10
+    name: "FAT"
+    desc: "Device number for each logical file"
+  - address: "026D"
+    length: 10
+    name: "SAT"
+    desc: "Secondary address for each logical file"
+  - address: "0277"
+    length: 10
+    name: "KEYD"
+    desc: "Keyboard buffer"
+  - address: "0281"
+    length: 2
+    name: "MEMSTR"
+    desc: "Start of Memory pointer"
+    default: "0x0800"
+  - address: "0283"
+    length: 2
+    name: "MEMSIZ"
+    desc: "End of Memory pointer"
+    default: "0xA000"
+    note: "Usually this is the first byte of the BASIC ROM"
+  - address: "0285"
+    length: 1
+    name: "TIMOUT"
+    desc: "Unused Serial bus timeout"
+  - address: "0286"
+    length: 1
+    name: "COLOR"
+    desc: "Current Foreground text colour"
+  - address: "0287"
+    length: 1
+    name: "GDCOL"
+    desc: "Colour of character under Cursor"
+  - address: "0288"
+    length: 1
+    name: "HIBASE"
+    desc: "Page of Screen Memory"
+    default: "0x04"
+  - address: "0289"
+    length: 1
+    name: "XMAX"
+    desc: "Max length of keyboard buffer"
+    val:
+      "0x00": "No buffer"
+      "0x01-0x0F": "Buffer size"
+  - address: "028A"
+    length: 1
+    name: "RPTFLG"
+    desc: "Which keys will repeat"
+    val:
+      "0x00": "Only cursor, insert, delete or space repeat"
+      "0x40": "No keys repeat"
+      "0x80": "All keys repeat"
+  - address: "028B"
+    desc: "Used by Kernal"
+  - address: "028D"
+    length: 1
+    name: "SHFLAG"
+    desc: "Shift/Ctrl/Commodore key pressed"
+    val:
+      "Bit 0": "1=Left or Right shift is pressed or Shift Lock is active"
+      "Bit 1": "1=Commodore key pressed"
+      "Bit 2": "1=Control pressed"
+  - address: "028E"
+    length: 1
+    name: "LSTSHF"
+    desc: "Last value of Shift/Ctrl/Commodore key pressed"
+    note: "Used with SHFLAG to debounce those keys. Values match those for SHFLAG"
+  - address: "028F"
+    desc: "Used by Kernal"
+  - address: "0291"
+    length: 1
+    name: "MODE"
+    desc: "Shift/Commodore switch"
+    note: "Enables/Disables character switching when Shift & Commodore keys are pressed"
+    val:
+      "0x00": "Commodore-Shift is disabled"
+      "0x80": "Commodore-Shift will toggle between uppercase/graphics & lowercase/uppercase character set"
+  - address: "0292"
+    length: 1
+    name: "AUTODN"
+    desc: "Screen scrolling enabled"
+    note: "0 enables scrolling, any other value disables scrolling"
+  - address: "0293"
+    length: 1
+    name: "M51CTR"
+    desc: "Mock 6551 RS-232 Control Register"
+    val:
+      "%xxxx0110": "300 bps"
+      "%xxxx1000": "1200 bps"
+      "%xxxx1010": "2400 bps"
+      "%x00xxxxx": "8 data bits"
+      "%x01xxxxx": "7 data bits"
+      "%x10xxxxx": "6 data bits"
+      "%x11xxxxx": "5 data bits"
+      "%0xxxxxxx": "1 stop bit"
+      "%1xxxxxxx": "2 stop bits"
+  - address: "0294"
+    length: 1
+    name: "M51CDR"
+    desc: "Mock 6551 RS-232 Command Register"
+    val:
+      "%xxxxxxx0": "3 Line"
+      "%xxxxxxx1": "X Line"
+      "%xxx0xxxx": "Full Duplex"
+      "%xxx1xxxx": "Half Duplex"
+      "%xx0xxxxx": "No parity"
+      "%001xxxxx": "Odd Parity"
+      "%011xxxxx": "Even Parity"
+      "%101xxxxx": "Mark Parity"
+      "%111xxxxx": "Space Parity"
+  - address: "0295"
+    length: 2
+    name: "M51AJB"
+    desc: "Mock 6551 RS-232 Nonstandard Bit Timing"
+    note: "Not actually used by Kernal but present for 6551 UART emulation"
+  - address: "0297"
+    length: 1
+    name: "M51STAT"
+    desc: "Mock 6551 RS-232 Status Register"
+    val:
+      "Bit 0": "1=Parity Error"
+      "Bit 1": "1=Framing Error"
+      "Bit 2": "1=Receive Buffer Overrun"
+      "Bit 3": "1=Receive Buffer Empty"
+      "Bit 4": "1=CTS (Clear To Send) Signal Missing"
+      "Bit 5": "Unused"
+      "Bit 6": "1=DTR (Data Set Ready) Signal Missing"
+      "Bit 7": "1=Break Detected"
+  - address: "0298"
+    length: 3
+    desc: "Used by Kernal for RS-232"
+  - address: "029B"
+    length: 1
+    name: "RIDBE"
+    desc: "RS-232 Index to end of receive buffer"
+  - address: "029C"
+    length: 1
+    name: "RIDBS"
+    desc: "RS-232 Index to start of receive buffer"
+  - address: "029D"
+    length: 1
+    name: "RODBE"
+    desc: "RS-232 Index to end of transmit buffer"
+  - address: "029E"
+    length: 1
+    name: "RODBS"
+    desc: "RS-232 Index to start of transmit buffer"
+  - address: "029F"
+    length: 2
+    name: "IRQTMP"
+    desc: "Save area for IRQ vector during cassette I/O"
+  - address: "02A1"
+    length: 1
+    name: "ENABL"
+    desc: "RS-232 Interrupts Enabled"
+    val:
+      "Bit 4": "System is waiting for receiver edge"
+      "Bit 1": "System is receiving data"
+      "Bit 0": "System is transmitting data"
+  - address: "02A2"
+    desc: "Used by Kernal"
+  - address: "02A7"
+    length: 89
+    desc: "Unused, available for application use"
+---
