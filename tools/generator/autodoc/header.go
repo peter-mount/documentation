@@ -68,6 +68,7 @@ func (h *Headers) task(book *hugo.Book) generator.Task {
   return func() error {
     return autodoc.For(book.ContentPath("reference/include"), "headers", book.Modified()).
       Using(autodoc.BeebAsm).
+      Using(autodoc.ZAsm).
       InvokeTopic("Headers", book.Autodoc).
       Invoke(h.AutodocHandler()).
       Do()
