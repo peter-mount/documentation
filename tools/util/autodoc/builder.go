@@ -60,7 +60,7 @@ func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkT
     return "", nil, err
   }
 
-  if writeNow || true {
+  if writeNow {
     log.Println("Creating", fileName)
     f, err := os.Create(fileName)
     if err != nil {
