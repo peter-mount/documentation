@@ -56,10 +56,6 @@ func (h Handler) RunOnce(s *bool, b Handler) Handler {
   })
 }
 
-// Task is a task that the Generator must run once all other Handler's have been run.
-// They are usually tasks created by those Handlers.
-type Task func() error
-
 // Generator is a kernel Service which handles the generation of content based on page metadata.
 type Generator struct {
   config     *hugo.Config // Configuration
@@ -101,18 +97,6 @@ func (g *Generator) Register(n string, h Handler) *Generator {
   }
 
   g.generators[n] = h
-  return g
-}
-
-// AddTask appends a Task to be performed once all Handler's have run.
-func (g *Generator) AddTask(t Task) *Generator {
-  g.tasks.Add(t)
-  return g
-}
-
-// AddPriorityTask appends a Task to be performed once all Handler's have run.
-func (g *Generator) AddPriorityTask(priority int, task Task) *Generator {
-  g.tasks.AddPriority(priority, task)
   return g
 }
 
