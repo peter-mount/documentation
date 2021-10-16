@@ -1,0 +1,21 @@
+{{- if isset .Params "resources" -}}
+<div class="taxonomy taxonomy-terms-cloud taxo-categories">
+    <h3 class="taxonomy-title">Resources</h3>
+    <table class="resources">
+        <thead>
+        <tr>
+            <th>File</th>
+            <th>Size</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{- range .Params.resources -}}
+        <tr>
+            <td><a href="{{.url}}" target="_blank">{{.name}}</a></td>
+            <td>{{.size}}</td>
+        </tr>
+        {{- end -}}
+        </tbody>
+    </table>
+</div>
+{{- end -}}

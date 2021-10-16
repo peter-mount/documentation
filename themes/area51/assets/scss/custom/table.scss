@@ -210,3 +210,21 @@ table.hexGrid {
         }
     }
 }
+
+table.resources {
+  width: 100%;
+
+  thead {
+    border-bottom: 1px solid black;
+  }
+
+  th:last-child, td:last-child {
+    text-align: right;
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
