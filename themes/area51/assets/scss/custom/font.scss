@@ -14,3 +14,13 @@
 .printPageBreakAvoid {
     break-inside: avoid
 }
+
+.sourceCode {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-size: 80%;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 1em;
+    overflow: auto;
+    white-space: pre;
+}
