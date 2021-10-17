@@ -8,9 +8,13 @@ import (
 // They are usually tasks created by those Handlers.
 type Task func(ctx context.Context) error
 
-// NewTask creates a new Task chain
-func NewTask() Task {
-  return nil
+// Of creates a new Task forming a chain of the provided tasks
+func Of(tasks ...Task) Task {
+  var task Task
+  for _, b := range tasks {
+    task = task.Then(b)
+  }
+  return task
 }
 
 // Then joins two tasks together
@@ -22,10 +26,11 @@ func (a Task) Then(b Task) Task {
     return a
   }
   return func(ctx context.Context) error {
-    if err := a(ctx); err != nil {
-      return err
+    err := a(ctx)
+    if err == nil {
+      err = b(ctx)
     }
-    return b(ctx)
+    return err
   }
 }
 
@@ -41,4 +46,18 @@ func (a Task) Do(ctx context.Context) error {
     return a(ctx)
   }
   return nil
+}
+
+// RunOnce will invoke a task exactly once.
+// It uses a pointer to a boolean to store this state.
+// It's useful for simple tasks but should be treated as Deprecated.
+// Currently, here as Book still uses it as it only works for one Book not multiple books.
+func (a Task) RunOnce(f *bool, t Task) Task {
+  return a.Then(func(ctx context.Context) error {
+    if !*f {
+      *f = true
+      return t(ctx)
+    }
+    return nil
+  })
 }

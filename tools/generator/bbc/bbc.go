@@ -1,8 +1,10 @@
 package bbc
 
 import (
+  "context"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "log"
@@ -50,21 +52,21 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 func (b *BBC) Start() error {
   b.generator.
       Register("bbcAPIIndex",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeAPIIndex).
           Then(b.writeAPITable)).
       Register("bbcAPINameIndex",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeAPINameIndex)).
       Register("bbcOsbyteIndex",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeOsbyteIndex).
           Then(b.writeOsbyteTable)).
       Register("bbcOswordIndex",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&b.extracted, b.extract).
           Then(b.writeOswordIndex).
           Then(b.writeOswordTable))
@@ -72,7 +74,9 @@ func (b *BBC) Start() error {
   return nil
 }
 
-func (b *BBC) extract(book *hugo.Book) error {
+func (b *BBC) extract(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   log.Println("Scanning BBC API")
 
   return walk.NewPathWalker().

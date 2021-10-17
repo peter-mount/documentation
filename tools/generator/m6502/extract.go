@@ -2,6 +2,7 @@ package m6502
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
@@ -9,7 +10,9 @@ import (
   "strconv"
 )
 
-func (s *M6502) extractOpcodes(book *hugo.Book) error {
+func (s *M6502) extractOpcodes(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   s.opCodes = nil
   s.notes = util.NewNotes()
 

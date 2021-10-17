@@ -13,7 +13,7 @@ import (
 type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf
-  generators map[string]Handler // Map of available generators
+  generators map[string]task.Task // Map of available generators
   tasks      task.Queue
 }
 
@@ -39,13 +39,13 @@ func (g *Generator) Init(k *kernel.Kernel) error {
 }
 
 func (g *Generator) Start() error {
-  g.generators = make(map[string]Handler)
+  g.generators = make(map[string]task.Task)
   g.tasks = task.NewQueue()
   return nil
 }
 
 // Register a named Handler
-func (g *Generator) Register(n string, h Handler) *Generator {
+func (g *Generator) Register(n string, h task.Task) *Generator {
   if _, exists := g.generators[n]; exists {
     panic(fmt.Errorf("GeneratorHandler %s already registered", n))
   }
@@ -70,6 +70,17 @@ func (g *Generator) AddPriorityTask(priority int, task task.Task) task.Queue {
   return g.tasks.AddPriorityTask(priority, task)
 }
 
+const (
+  BookKey = "hugo.Book"
+)
+
+func GetBook(ctx context.Context) *hugo.Book {
+  if b, ok := ctx.Value(BookKey).(*hugo.Book); ok {
+    return b
+  }
+  return nil
+}
+
 func (g *Generator) invokeBook(_ context.Context, book *hugo.Book) error {
   g.AddTask(func(ctx context.Context) error {
     return hugo.WithBook().
@@ -85,11 +96,14 @@ func (g *Generator) invokeBook(_ context.Context, book *hugo.Book) error {
 func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n string) error {
   h, exists := g.generators[n]
   if exists {
-    return h(book)
+    g.AddTask(func(ctx context.Context) error {
+      return h.Do(context.WithValue(ctx, BookKey, book))
+    })
+  } else {
+    // Log a warning but ignore - could be an invalid config or the generator is not deployed.
+    // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
+    log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
   }
 
-  // Log a warning but ignore - could be an invalid config or the generator is not deployed.
-  // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
-  log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
   return nil
 }

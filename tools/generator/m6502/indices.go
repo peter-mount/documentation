@@ -1,13 +1,17 @@
 package m6502
 
 import (
+  "context"
   "fmt"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "sort"
 )
 
-func (s *M6502) writeOpsIndex(book *hugo.Book) error {
+func (s *M6502) writeOpsIndex(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   sort.SliceStable(s.opCodes, func(i, j int) bool {
     return s.opCodes[i].Order < s.opCodes[j].Order
   })
@@ -21,7 +25,9 @@ func (s *M6502) writeOpsIndex(book *hugo.Book) error {
   )
 }
 
-func (s *M6502) writeOpsHexIndex(book *hugo.Book) error {
+func (s *M6502) writeOpsHexIndex(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   sort.SliceStable(s.opCodes, func(i, j int) bool {
     if s.opCodes[i].Op == s.opCodes[j].Op {
       return s.opCodes[i].Addressing < s.opCodes[j].Addressing
@@ -38,7 +44,9 @@ func (s *M6502) writeOpsHexIndex(book *hugo.Book) error {
   )
 }
 
-func (s *M6502) writeOpsHexGrid(book *hugo.Book) error {
+func (s *M6502) writeOpsHexGrid(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   return util.ReferenceFileBuilder("Opcode Matrix", "Instructions shown in an Opcode Matrix", "manual", 10).
       Then(NewHexGrid().
         Opcode(s.opCodes...).

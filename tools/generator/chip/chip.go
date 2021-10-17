@@ -6,6 +6,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   util2 "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
@@ -91,11 +92,11 @@ func (c *Chip) Start() error {
 
   c.generator.
       Register("chipDefinitions",
-        generator.HandlerOf().
+        task.Of().
           Then(c.extract))
 
   c.generator.Register("chipReferenceTables",
-    generator.HandlerOf().
+    task.Of().
       Then(c.extract).
       Then(c.chipReferenceTables))
 
@@ -104,7 +105,9 @@ func (c *Chip) Start() error {
 
 // extract gets chip definitions from a book.
 // This runs once per book not once ever
-func (c *Chip) extract(book *hugo.Book) error {
+func (c *Chip) extract(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   // Only run once per Book ID
   if c.extracted.Contains(book.ID) {
     return nil

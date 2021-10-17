@@ -2,6 +2,7 @@ package bbc
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "sort"
@@ -42,7 +43,9 @@ func (b *BBC) extractOsword(ctx context.Context, _ *hugo.FrontMatter) error {
   })
 }
 
-func (b *BBC) writeOswordIndex(book *hugo.Book) error {
+func (b *BBC) writeOswordIndex(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   sort.SliceStable(b.osword, func(i, j int) bool {
     return b.osword[i].Call < b.osword[j].Call
   })
@@ -64,7 +67,9 @@ func (b *BBC) writeOswordIndex(book *hugo.Book) error {
     Write(util.ReferenceFilename(book.ContentPath(), "osword", "_index.html"), book.Modified())
 }
 
-func (b *BBC) writeOswordTable(book *hugo.Book) error {
+func (b *BBC) writeOswordTable(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   return util.WithTable().
     AsCSV(book.StaticPath("osword.csv"), book.Modified()).
     AsExcel(b.excel.Get(book.ID, book.Modified())).

@@ -3,6 +3,7 @@ package m6502
 import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
 )
 
@@ -37,15 +38,15 @@ func (s *M6502) Init(k *kernel.Kernel) error {
 func (s *M6502) Start() error {
   s.generator.
       Register("6502OpsIndex",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&s.extracted, s.extractOpcodes).
           Then(s.writeOpsIndex)).
       Register("6502OpsHexIndex",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&s.extracted, s.extractOpcodes).
           Then(s.writeOpsHexIndex)).
       Register("6502OpsHexGrid",
-        generator.HandlerOf().
+        task.Of().
           RunOnce(&s.extracted, s.extractOpcodes).
           Then(s.writeOpsHexGrid))
 

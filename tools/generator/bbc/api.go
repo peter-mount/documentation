@@ -2,6 +2,7 @@ package bbc
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "log"
@@ -54,7 +55,9 @@ func (b *BBC) extractApi(ctx context.Context, _ *hugo.FrontMatter) error {
   })
 }
 
-func (b *BBC) writeAPIIndex(book *hugo.Book) error {
+func (b *BBC) writeAPIIndex(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   sort.SliceStable(b.api, func(i, j int) bool {
     return b.api[i].call < b.api[j].call
   })
@@ -76,7 +79,9 @@ func (b *BBC) writeAPIIndex(book *hugo.Book) error {
     Write(util.ReferenceFilename(book.ContentPath(), "api", "_index.html"), book.Modified())
 }
 
-func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
+func (b *BBC) writeAPINameIndex(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   sort.SliceStable(b.api, func(i, j int) bool {
     return strings.ToLower(b.api[i].Name) < strings.ToLower(b.api[j].Name)
   })
@@ -98,7 +103,9 @@ func (b *BBC) writeAPINameIndex(book *hugo.Book) error {
     Write(util.ReferenceFilename(book.ContentPath(), "apiName", "_index.html"), book.Modified())
 }
 
-func (b *BBC) writeAPITable(book *hugo.Book) error {
+func (b *BBC) writeAPITable(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   // Work with a copy as this could be changed once excel runs
   api := append([]*Api{}, b.api...)
   sort.SliceStable(api, func(i, j int) bool {

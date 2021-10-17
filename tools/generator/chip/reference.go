@@ -3,20 +3,27 @@ package chip
 import (
   "context"
   "fmt"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/task"
 )
 
 // Generates the chip reference tables.
-// This is usually only used for the chipref book
-func (c *Chip) chipReferenceTables(book *hugo.Book) error {
-  c.generator.AddTask(func(_ context.Context) error {
-    return c.chipReferenceTablesTask(book)
-  })
+// This is usually only used for the chipref book.
+func (c *Chip) chipReferenceTables(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
+  // Requeue so it runs later
+  c.generator.AddPriorityTask(50, task.Of(c.chipReferenceTablesTask).
+    WithValue(generator.BookKey, book))
+
   return nil
 }
 
-func (c *Chip) chipReferenceTablesTask(book *hugo.Book) error {
+func (c *Chip) chipReferenceTablesTask(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   return c.chips.ForEachCategory(func(cat string) error {
     return util.WithTable().
       AsCSV(book.StaticPath(cat+".csv"), book.Modified()).
@@ -25,7 +32,7 @@ func (c *Chip) chipReferenceTablesTask(book *hugo.Book) error {
   })
 }
 
-func (c *Chip) chipReferenceTable(book *hugo.Book, cat string) *util.Table {
+func (c *Chip) chipReferenceTable(_ *hugo.Book, cat string) *util.Table {
 
   defs := c.chips.DefinitionNames(cat)
 

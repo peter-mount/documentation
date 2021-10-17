@@ -2,13 +2,16 @@ package autodoc
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   util2 "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
   "log"
 )
 
-func (s *Autodoc) extract(book *hugo.Book) error {
+func (s *Autodoc) extract(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
   // Only run once per Book ID
   if s.extracted.Contains(book.ID) {
     return nil

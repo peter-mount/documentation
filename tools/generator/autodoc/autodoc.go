@@ -5,6 +5,7 @@ import (
   "errors"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
 )
@@ -34,7 +35,7 @@ func (s *Autodoc) Start() error {
   s.headers = make(map[string]*Headers)
 
   s.generator.
-    Register("autodoc", generator.HandlerOf(s.extract))
+    Register("autodoc", task.Of(s.extract))
 
   return nil
 }
