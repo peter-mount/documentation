@@ -48,7 +48,7 @@ func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
   h := NewHeaders()
   s.headers[book.ID] = h
 
-  s.generator.AddTask(h.task(book))
+  s.generator.AddTask(task.Of(h.task).WithValue(generator.BookKey, book))
 
   return h
 }

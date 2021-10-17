@@ -3,9 +3,8 @@ package autodoc
 import (
   "context"
   "fmt"
-  "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
-  "github.com/peter-mount/documentation/tools/util/task"
 )
 
 // Header is a constant value taken from source, e.g. memory map
@@ -66,15 +65,15 @@ func (h *Headers) ForEach(f HeaderHandler) error {
 }
 
 // task returns a Task to generate the header include file
-func (h *Headers) task(book *hugo.Book) task.Task {
-  return func(_ context.Context) error {
-    return autodoc.For(book.ContentPath("reference/include"), "headers", book.Modified()).
-      Using(autodoc.BeebAsm).
-      Using(autodoc.ZAsm).
-      InvokeTopic("Headers", book.Autodoc).
-      Invoke(h.AutodocHandler()).
-      Do()
-  }
+func (h *Headers) task(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
+  return autodoc.For(book.ContentPath("reference/include"), "headers", book.Modified()).
+    Using(autodoc.BeebAsm).
+    Using(autodoc.ZAsm).
+    InvokeTopic("Headers", book.Autodoc).
+    Invoke(h.AutodocHandler()).
+    Do()
 }
 
 func (h *Headers) AutodocHandler() autodoc.Handler {

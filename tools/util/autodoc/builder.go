@@ -4,7 +4,6 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
   "io"
-  "log"
   "os"
   "path"
   "strings"
@@ -54,8 +53,6 @@ func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkT
   fsName := file + "." + suffix
   buildFileName := path.Join(dir, asm, fsName)
 
-  log.Println(dir, asm, fsName, buildFileName)
-
   if fi, err := os.Stat(buildFileName); err != nil {
     // If error is not-existing then fall through with writeNow is true
     if !os.IsNotExist(err) {
@@ -88,7 +85,6 @@ func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkT
   }
 
   if writeNow {
-    log.Println("Creating", buildFileName)
     f, err := os.Create(buildFileName)
     if err != nil {
       return "", nil, err
