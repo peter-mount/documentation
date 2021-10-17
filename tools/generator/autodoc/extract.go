@@ -7,7 +7,6 @@ import (
   util2 "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
   "log"
-  "os"
 )
 
 func (s *Autodoc) extract(ctx context.Context) error {
@@ -27,10 +26,6 @@ func (s *Autodoc) extract(ctx context.Context) error {
     IsFile().
     PathNotContain("/reference/").
     PathHasSuffix(".html").
-      Then(func(path string, info os.FileInfo) error {
-        log.Println(path)
-        return nil
-      }).
       Then(hugo.FrontMatterActionOf().
         OtherExists("memorymap", s.extractMemoryMap).
         Walk(ctx)).
@@ -44,7 +39,6 @@ func (s *Autodoc) extractMemoryMap(ctx context.Context, _ *hugo.FrontMatter) err
 
   return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util2.IfMap(e, func(m map[interface{}]interface{}) error {
-      log.Println(book.ID, m["name"])
       return headers.Add(&Header{
         Label:   util2.DecodeString(m["name"], ""),
         Value:   "0x" + util2.DecodeString(m["address"], ""), // Valid as address is always in hex
