@@ -22,13 +22,17 @@ func (a PathPredicate) Not() PathPredicate {
 
 // NewPathWalker creates a new PathWalker
 func NewPathWalker() PathWalker {
-  return func(path string, info os.FileInfo) error {
-    return nil
-  }
+  return nil
 }
 
 // Then performs the current PathWalker then another PathWalker
 func (a PathWalker) Then(b PathWalker) PathWalker {
+  if a == nil {
+    return b
+  }
+  if b == nil {
+    return a
+  }
   return func(path string, info os.FileInfo) error {
     err := a(path, info)
     if err != nil {
@@ -45,6 +49,9 @@ var (
 
 // If will test a path with a PathPredicate and allow the path to be processed only if the PathPredicate passes
 func (a PathWalker) If(p PathPredicate) PathWalker {
+  if a == nil {
+    return nil
+  }
   return func(path string, info os.FileInfo) error {
     if p(path, info) {
       return a(path, info)
@@ -60,6 +67,9 @@ func (a PathWalker) IfNot(p PathPredicate) PathWalker {
 
 // IsDir allows processing only if the current path is a Directory
 func (a PathWalker) IsDir() PathWalker {
+  if a == nil {
+    return nil
+  }
   return a.If(func(_ string, info os.FileInfo) bool {
     return info.IsDir()
   })
@@ -67,6 +77,9 @@ func (a PathWalker) IsDir() PathWalker {
 
 // IsFile allows processing only if the current path is a File
 func (a PathWalker) IsFile() PathWalker {
+  if a == nil {
+    return nil
+  }
   return a.If(func(_ string, info os.FileInfo) bool {
     return !info.IsDir()
   })
@@ -74,6 +87,9 @@ func (a PathWalker) IsFile() PathWalker {
 
 // PathContains allows processing if the path contains the provided string
 func (a PathWalker) PathContains(s string) PathWalker {
+  if a == nil {
+    return nil
+  }
   return a.If(func(path string, _ os.FileInfo) bool {
     return strings.Contains(path, s)
   })
@@ -81,6 +97,9 @@ func (a PathWalker) PathContains(s string) PathWalker {
 
 // PathNotContain allows processing if the path does not contain the provided string
 func (a PathWalker) PathNotContain(s string) PathWalker {
+  if a == nil {
+    return nil
+  }
   return a.If(func(path string, _ os.FileInfo) bool {
     return !strings.Contains(path, s)
   })
@@ -88,6 +107,9 @@ func (a PathWalker) PathNotContain(s string) PathWalker {
 
 // PathHasSuffix allows processing if the path has the provided suffix
 func (a PathWalker) PathHasSuffix(s string) PathWalker {
+  if a == nil {
+    return nil
+  }
   return a.If(func(path string, _ os.FileInfo) bool {
     return strings.HasSuffix(path, s)
   })
@@ -95,6 +117,9 @@ func (a PathWalker) PathHasSuffix(s string) PathWalker {
 
 // PathHasNotSuffix allows processing if the path has not got the provided suffix
 func (a PathWalker) PathHasNotSuffix(s string) PathWalker {
+  if a == nil {
+    return nil
+  }
   return a.If(func(path string, _ os.FileInfo) bool {
     return !strings.HasSuffix(path, s)
   })
@@ -109,7 +134,10 @@ func (a PathWalker) Walk(root string) error {
     }
 
     // Enter our PathWalker chain
-    err = a(path, info)
+    if a != nil {
+      err = a(path, info)
+    }
+
     // Don't pass this to the Walker as it just means we have stopped processing
     if err == predicateFail {
       return nil
