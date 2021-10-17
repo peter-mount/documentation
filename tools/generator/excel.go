@@ -16,7 +16,9 @@ type Excel struct {
 
 // provider implements the ExcelProvider interface
 type provider struct {
-  builder util.ExcelBuilder
+  name     string
+  modified time.Time
+  builder  util.ExcelBuilder
 }
 
 func (p *provider) BuildExcel(f func(builder util.ExcelBuilder) util.ExcelBuilder) error {
@@ -49,20 +51,23 @@ func (e *Excel) Get(name string, modified time.Time) util.ExcelProvider {
     return provider
   }
 
-  provider := &provider{}
+  provider := &provider{name:name,modified: modified}
   e.builders[name] = provider
 
-  e.generator.AddPriorityTask(500, func(_ context.Context) error {
-    if provider.builder != nil {
-      // NOTE: Use WriteAlways with Excel as we cannot compare an existing version due to xlsx files being zip files
-      // so the timestamps inside the zip file are always different causing the generated file to differ
-      // even if the actual content is identical.
-      return provider.builder.
-        FileHandler().
-        WriteAlways(path.Join("static/static/book/", name+".xlsx"), modified)
-    }
-    return nil
-  })
+  // Add task that will actually write the Excel file
+  e.generator.AddPriorityTask(500, provider.task)
 
   return provider
+}
+
+func (p *provider) task(_ context.Context) error {
+  if p.builder != nil {
+    // NOTE: Use WriteAlways with Excel as we cannot compare an existing version due to xlsx files being zip files
+    // so the timestamps inside the zip file are always different causing the generated file to differ
+    // even if the actual content is identical.
+    return p.builder.
+      FileHandler().
+      WriteAlways(path.Join("static/static/book/", p.name+".xlsx"), p.modified)
+  }
+  return nil
 }
