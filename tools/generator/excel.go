@@ -3,6 +3,7 @@ package generator
 import (
   "context"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   "path"
   "time"
@@ -10,7 +11,7 @@ import (
 
 // Excel service that manages multiple Workbooks by ID and ensures they are written
 type Excel struct {
-  generator *Generator // Generator
+  taskQueue task.Queue // Generator
   builders  map[string]*provider
 }
 
@@ -35,7 +36,7 @@ func (e *Excel) Init(k *kernel.Kernel) error {
   if err != nil {
     return err
   }
-  e.generator = service.(*Generator)
+  e.taskQueue = service.(task.Queue)
 
   return nil
 }
@@ -45,17 +46,17 @@ func (e *Excel) Start() error {
   return nil
 }
 
-// Get returns a named ExcelProvider and ensures its written to disk.
+// Get returns a named ExcelProvider and ensures it is written to disk.
 func (e *Excel) Get(name string, modified time.Time) util.ExcelProvider {
   if provider, exists := e.builders[name]; exists {
     return provider
   }
 
-  provider := &provider{name:name,modified: modified}
+  provider := &provider{name: name, modified: modified}
   e.builders[name] = provider
 
   // Add task that will actually write the Excel file
-  e.generator.AddPriorityTask(500, provider.task)
+  e.taskQueue.AddPriorityTask(500, provider.task)
 
   return provider
 }
