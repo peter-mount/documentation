@@ -4,64 +4,17 @@ import (
   "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   "log"
 )
-
-// Handler performs an action against a Book.
-// Handler's can either do all of their work in one go or pass Task's to the Generator to be run after
-// all other Handler's have run.
-type Handler func(*hugo.Book) error
-
-// Then returns a GeneratorHandler that calls this one then if no error the next one forming a chain
-func (h Handler) Then(next Handler) Handler {
-  return func(b *hugo.Book) error {
-    err := h(b)
-    if err != nil {
-      return err
-    }
-    return next(b)
-  }
-}
-
-// HandlerOf returns a Handler that will invoke each supplied GeneratorHandler in a single instance.
-// This is a convenience form of calling Then() on each one.
-func HandlerOf(handlers ...Handler) Handler {
-  switch len(handlers) {
-  case 0:
-    return func(_ *hugo.Book) error {
-      return nil
-    }
-  case 1:
-    return handlers[0]
-  default:
-    a := handlers[0]
-    for _, b := range handlers[1:] {
-      a = a.Then(b)
-    }
-    return a
-  }
-}
-
-// RunOnce will call a Handler once. It uses a pointer to a boolean to store this state.
-// It's useful for simple tasks but should be treated as Deprecated as it only works for one Book not multiple books.
-func (h Handler) RunOnce(s *bool, b Handler) Handler {
-  return h.Then(func(book *hugo.Book) error {
-    if !*s {
-      *s = true
-      return b(book)
-    }
-    return nil
-  })
-}
 
 // Generator is a kernel Service which handles the generation of content based on page metadata.
 type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf
   generators map[string]Handler // Map of available generators
-  tasks      util.PriorityQueue
+  tasks      task.Queue
 }
 
 func (g *Generator) Name() string {
@@ -87,6 +40,7 @@ func (g *Generator) Init(k *kernel.Kernel) error {
 
 func (g *Generator) Start() error {
   g.generators = make(map[string]Handler)
+  g.tasks = task.NewQueue()
   return nil
 }
 
@@ -105,10 +59,15 @@ func (g *Generator) Run() error {
     return err
   }
 
-  ctx := context.WithValue(context.Background(), ctxKey, g)
-  return g.tasks.Drain(func(i interface{}) error {
-    return i.(Task)(ctx)
-  })
+  return task.Run(g.tasks, context.Background())
+}
+
+func (g *Generator) AddTask(task task.Task) task.Queue {
+  return g.tasks.AddTask(task)
+}
+
+func (g *Generator) AddPriorityTask(priority int, task task.Task) task.Queue {
+  return g.tasks.AddPriorityTask(priority, task)
 }
 
 func (g *Generator) invokeBook(_ context.Context, book *hugo.Book) error {
