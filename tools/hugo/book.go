@@ -1,7 +1,6 @@
 package hugo
 
 import (
-  "context"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/autodoc"
   "os"
@@ -11,70 +10,13 @@ import (
   "time"
 )
 
-type BookHandler func(context.Context, *Book) error
-
-func WithBook() BookHandler {
-  return nil
-}
-
-func (a BookHandler) Then(b BookHandler) BookHandler {
-  if a == nil {
-    return b
-  }
-  return func(ctx context.Context, book *Book) error {
-    if err := a(ctx, book); err != nil {
-      return err
-    }
-    return b(ctx, book)
-  }
-}
-
-func (a BookHandler) Do(ctx context.Context, book *Book) error {
-  if a == nil {
-    return nil
-  }
-  return a(ctx, book)
-}
-
-type BookGeneratorHandler func(context.Context, *Book, string) error
-
-func WithBookGenerator() BookGeneratorHandler {
-  return nil
-}
-
-func (a BookGeneratorHandler) Do(ctx context.Context, book *Book, s string) error {
-  if a != nil {
-    return a(ctx, book, s)
-  }
-  return nil
-}
-
-func (a BookGeneratorHandler) Then(b BookGeneratorHandler) BookGeneratorHandler {
-  if a == nil {
-    return b
-  }
-  return func(ctx context.Context, book *Book, n string) error {
-    err := a(ctx, book, n)
-    if err != nil {
-      return err
-    }
-    return b(ctx, book, n)
-  }
-}
-
-func (a BookHandler) ForEachGenerator(f BookGeneratorHandler) BookHandler {
-  return a.Then(func(ctx context.Context, book *Book) error {
-    return book.Generate.ForEach(func(s string) error {
-      return f(context.WithValue(ctx, "bookGeneratorHandler", s), book, s)
-    })
-  })
-}
+type BookHandler func(*Book) error
 
 type Books []*Book
 
-func (bs Books) ForEach(ctx context.Context, f BookHandler) error {
+func (bs Books) ForEach(f BookHandler) error {
   for _, b := range bs {
-    err := f(ctx, b)
+    err := f(b)
     if err != nil {
       return err
     }

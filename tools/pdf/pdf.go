@@ -55,12 +55,10 @@ func (p *PDF) Run() error {
     return nil
   }
 
-  return p.bookShelf.Books().ForEach(context.Background(), p.generate)
-}
-
-func (p *PDF) generate(ctx context.Context, book *hugo.Book) error {
-  log.Println("Generating PDF for", book.ID)
-  return p.chromium.Run(p.printToPDF(book))
+  return p.bookShelf.Books().ForEach(func(book *hugo.Book) error {
+    log.Println("Generating PDF for", book.ID)
+    return p.chromium.Run(p.printToPDF(book))
+  })
 }
 
 // print a specific pdf page.

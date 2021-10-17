@@ -55,7 +55,7 @@ func (g *Generator) Register(n string, h task.Task) *Generator {
 }
 
 func (g *Generator) Run() error {
-  if err := g.bookShelf.Books().ForEach(context.Background(), g.invokeBook); err != nil {
+  if err := g.bookShelf.Books().ForEach(g.invokeBook); err != nil {
     return err
   }
 
@@ -81,29 +81,17 @@ func GetBook(ctx context.Context) *hugo.Book {
   return nil
 }
 
-func (g *Generator) invokeBook(_ context.Context, book *hugo.Book) error {
-  g.AddTask(func(ctx context.Context) error {
-    return hugo.WithBook().
-        ForEachGenerator(
-          hugo.WithBookGenerator().
-            Then(g.invokeGenerator)).
-      Do(ctx, book)
+func (g *Generator) invokeBook(book *hugo.Book) error {
+  return book.Generate.ForEach(func(n string) error {
+    h, exists := g.generators[n]
+    if exists {
+      g.AddTask(h.WithValue(BookKey, book))
+    } else {
+      // Log a warning but ignore - could be an invalid config or the generator is not deployed.
+      // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
+      log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
+    }
+
+    return nil
   })
-
-  return nil
-}
-
-func (g *Generator) invokeGenerator(ctx context.Context, book *hugo.Book, n string) error {
-  h, exists := g.generators[n]
-  if exists {
-    g.AddTask(func(ctx context.Context) error {
-      return h.Do(context.WithValue(ctx, BookKey, book))
-    })
-  } else {
-    // Log a warning but ignore - could be an invalid config or the generator is not deployed.
-    // Originally this was a fatal error, but now we just ignore to allow custom tools to be run
-    log.Printf("book %s GeneratorHandler %s is not registered", book.ID, n)
-  }
-
-  return nil
 }
