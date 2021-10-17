@@ -1,6 +1,7 @@
 package chip
 
 import (
+  "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
@@ -9,7 +10,7 @@ import (
 // Generates the chip reference tables.
 // This is usually only used for the chipref book
 func (c *Chip) chipReferenceTables(book *hugo.Book) error {
-  c.generator.AddTask(func() error {
+  c.generator.AddTask(func(_ context.Context) error {
     return c.chipReferenceTablesTask(book)
   })
   return nil

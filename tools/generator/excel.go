@@ -1,6 +1,7 @@
 package generator
 
 import (
+  "context"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
   "path"
@@ -51,7 +52,7 @@ func (e *Excel) Get(name string, modified time.Time) util.ExcelProvider {
   provider := &provider{}
   e.builders[name] = provider
 
-  e.generator.AddPriorityTask(500, func() error {
+  e.generator.AddPriorityTask(500, func(_ context.Context) error {
     if provider.builder != nil {
       // NOTE: Use WriteAlways with Excel as we cannot compare an existing version due to xlsx files being zip files
       // so the timestamps inside the zip file are always different causing the generated file to differ

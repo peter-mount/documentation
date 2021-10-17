@@ -1,6 +1,7 @@
 package autodoc
 
 import (
+  "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
@@ -65,7 +66,7 @@ func (h *Headers) ForEach(f HeaderHandler) error {
 }
 
 func (h *Headers) task(book *hugo.Book) generator.Task {
-  return func() error {
+  return func(_ context.Context) error {
     return autodoc.For(book.ContentPath("reference/include"), "headers", book.Modified()).
       Using(autodoc.BeebAsm).
       Using(autodoc.ZAsm).

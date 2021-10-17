@@ -105,13 +105,14 @@ func (g *Generator) Run() error {
     return err
   }
 
+  ctx := context.WithValue(context.Background(), ctxKey, g)
   return g.tasks.Drain(func(i interface{}) error {
-    return i.(Task)()
+    return i.(Task)(ctx)
   })
 }
 
-func (g *Generator) invokeBook(ctx context.Context, book *hugo.Book) error {
-  g.AddTask(func() error {
+func (g *Generator) invokeBook(_ context.Context, book *hugo.Book) error {
+  g.AddTask(func(ctx context.Context) error {
     return hugo.WithBook().
         ForEachGenerator(
           hugo.WithBookGenerator().

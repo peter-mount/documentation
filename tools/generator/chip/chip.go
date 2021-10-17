@@ -43,7 +43,7 @@ type Definition struct {
 }
 
 // Generate implements the GeneratorTask interface to generate the shortcode for this chip Definition.
-func (d *Definition) Generate() error {
+func (d *Definition) Generate(_ context.Context) error {
   if d.handler != nil {
     return d.handler(d)
   }

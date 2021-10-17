@@ -1,38 +1,37 @@
 package generator
 
+import "context"
+
 // Task is a task that the Generator must run once all other Handler's have been run.
 // They are usually tasks created by those Handlers.
-type Task func() error
+type Task func(context.Context) error
 
-type ContextTask func(Context) error
+type TaskContext interface {
+  AddTask(t Task) TaskContext
+  AddPriorityTask(priority int, task Task) TaskContext
+}
 
-type Context interface {
-  AddTask(t Task) Context
-  AddPriorityTask(priority int, task Task) Context
-  AddContextTask(t ContextTask) Context
-  AddContextPriorityTask(priority int, t ContextTask) Context
+const (
+  ctxKey = "GeneratorTaskContext"
+)
+
+// GetTaskContext returns the TaskContext contained in the passed Context
+func GetTaskContext(ctx context.Context) TaskContext {
+  if tc, ok := ctx.Value(ctxKey).(TaskContext); ok {
+    return tc
+  }
+
+  return nil
 }
 
 // AddTask appends a Task to be performed once all Handler's have run.
-func (g *Generator) AddTask(t Task) Context {
+func (g *Generator) AddTask(t Task) TaskContext {
   g.tasks.Add(t)
   return g
 }
 
 // AddPriorityTask appends a Task to be performed once all Handler's have run.
-func (g *Generator) AddPriorityTask(priority int, task Task) Context {
+func (g *Generator) AddPriorityTask(priority int, task Task) TaskContext {
   g.tasks.AddPriority(priority, task)
   return g
-}
-
-func (g *Generator) AddContextTask(t ContextTask) Context {
-  return g.AddTask(func() error {
-    return t(g)
-  })
-}
-
-func (g *Generator) AddContextPriorityTask(priority int, t ContextTask) Context {
-  return g.AddPriorityTask(priority, func() error {
-    return t(g)
-  })
 }
