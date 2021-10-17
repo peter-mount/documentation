@@ -2,9 +2,7 @@ package autodoc
 
 import (
   "context"
-  "errors"
   "github.com/peter-mount/documentation/tools/generator"
-  "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
@@ -40,22 +38,11 @@ func (s *Autodoc) Start() error {
   return nil
 }
 
-func (s *Autodoc) getBook(ctx context.Context) (*hugo.Book, error) {
-  book, ok := ctx.Value("book").(*hugo.Book)
-  if !ok {
-    return nil, errors.New("no book present in context")
-  }
-  return book, nil
-}
-
-func (s *Autodoc) getHeaders(ctx context.Context) (*Headers, error) {
-  book, err := s.getBook(ctx)
-  if err != nil {
-    return nil, err
-  }
+func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
+  book := generator.GetBook(ctx)
 
   if h, exists := s.headers[book.ID]; exists {
-    return h, nil
+    return h
   }
 
   h := NewHeaders()
@@ -63,5 +50,5 @@ func (s *Autodoc) getHeaders(ctx context.Context) (*Headers, error) {
 
   s.generator.AddTask(h.task(book))
 
-  return h, nil
+  return h
 }

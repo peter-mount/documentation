@@ -87,6 +87,6 @@ func (b *BBC) extract(ctx context.Context) error {
         OtherExists("api", b.extractApi).
         OtherExists("osbyte", b.extractOsbyte).
         OtherExists("osword", b.extractOsword).
-        Walk()).
+        Walk(ctx)).
     Walk(book.ContentPath())
 }

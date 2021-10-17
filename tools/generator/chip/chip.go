@@ -124,7 +124,7 @@ func (c *Chip) extract(ctx context.Context) error {
     PathHasSuffix(".html").
       Then(hugo.FrontMatterActionOf().
         OtherExists("chip", c.extractChipDefinitions).
-        Walk()).
+        Walk(ctx)).
     Walk(book.ContentPath())
 }
 

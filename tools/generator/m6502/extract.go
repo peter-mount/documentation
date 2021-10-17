@@ -24,7 +24,7 @@ func (s *M6502) extractOpcodes(ctx context.Context) error {
       Then(hugo.FrontMatterActionOf().
         Then(s.extract).
         WithNotes(s.notes).
-        Walk()).
+        Walk(ctx)).
     Walk(book.ContentPath())
   if err != nil {
     return err

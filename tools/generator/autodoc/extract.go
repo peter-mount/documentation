@@ -7,6 +7,7 @@ import (
   util2 "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
   "log"
+  "os"
 )
 
 func (s *Autodoc) extract(ctx context.Context) error {
@@ -26,31 +27,29 @@ func (s *Autodoc) extract(ctx context.Context) error {
     IsFile().
     PathNotContain("/reference/").
     PathHasSuffix(".html").
+      Then(func(path string, info os.FileInfo) error {
+        log.Println(path)
+        return nil
+      }).
       Then(hugo.FrontMatterActionOf().
         OtherExists("memorymap", s.extractMemoryMap).
-        Context("book", book).
-        Walk()).
+        Walk(ctx)).
     Walk(book.ContentPath())
 }
 
 func (s *Autodoc) extractMemoryMap(ctx context.Context, _ *hugo.FrontMatter) error {
-  headers, err := s.getHeaders(ctx)
-  if err != nil {
-    return err
-  }
-
-  // err is never non nil as headers are attached to the book
-  book, _ := s.getBook(ctx)
-  headers.Add(&Header{Comment: book.Title})
+  book := generator.GetBook(ctx)
+  headers := s.getHeaders(ctx)
+  _ = headers.Add(&Header{Comment: book.Title})
 
   return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util2.IfMap(e, func(m map[interface{}]interface{}) error {
-      headers.Add(&Header{
+      log.Println(book.ID, m["name"])
+      return headers.Add(&Header{
         Label:   util2.DecodeString(m["name"], ""),
         Value:   "0x" + util2.DecodeString(m["address"], ""), // Valid as address is always in hex
         Comment: util2.DecodeString(m["desc"], ""),
       })
-      return nil
     })
   })
 }
