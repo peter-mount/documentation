@@ -1,6 +1,7 @@
 package autodoc
 
 import (
+  "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
   "io"
@@ -11,6 +12,7 @@ import (
 type beebAsm struct {
   fileName string
   modified time.Time
+  ctx      context.Context
   w        io.WriteCloser
   err      error
 }
@@ -19,14 +21,15 @@ func (b *beebAsm) valid() bool {
   return b.err == nil && b.w != nil
 }
 
-func BeebAsm(dir, file string, modified time.Time) Builder {
-  fileName, w, err := InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "BeebASM", "Files for the BeebASM assembler")
+func BeebAsm(dir, file string, modified time.Time, ctx context.Context) Builder {
+  fileName, w, err := InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "BeebASM", "Files for the BeebASM assembler", ctx)
 
   return &beebAsm{
     fileName: fileName,
     modified: modified,
     w:        w,
     err:      err,
+    ctx:      ctx,
   }
 }
 
@@ -36,7 +39,7 @@ func (b *beebAsm) Using(Provider) Builder {
 
 func (b *beebAsm) Invoke(handler Handler) Builder {
   if b.err == nil {
-    b.err = handler(b)
+    b.err = handler(b.ctx, b)
   }
   return b
 }
@@ -46,7 +49,7 @@ func (b *beebAsm) InvokeTopic(t string, h TopicHandler) Builder {
 }
 
 func (b *beebAsm) Do() error {
-  return CloseBuilder(b.err, b.w, b.fileName, b.modified)
+  return CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
 }
 
 func (b *beebAsm) write(s string) Builder {

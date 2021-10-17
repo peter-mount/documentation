@@ -5,6 +5,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
+  "github.com/peter-mount/documentation/tools/util/task"
 )
 
 // Header is a constant value taken from source, e.g. memory map
@@ -68,16 +69,26 @@ func (h *Headers) ForEach(f HeaderHandler) error {
 func (h *Headers) task(ctx context.Context) error {
   book := generator.GetBook(ctx)
 
-  return autodoc.For(book.ContentPath("reference/include"), "headers", book.Modified()).
-    Using(autodoc.BeebAsm).
-    Using(autodoc.ZAsm).
-    InvokeTopic("Headers", book.Autodoc).
-    Invoke(h.AutodocHandler()).
-    Do()
+  dirName := book.ContentPath("reference/include")
+  fileName := "headers"
+
+  task.GetQueue(ctx).
+      AddTask(task.Of().
+          Then(func(ctx context.Context) error {
+            return autodoc.For(dirName, fileName, book.Modified(), ctx).
+              Using(autodoc.BeebAsm).
+              Using(autodoc.ZAsm).
+              InvokeTopic("Headers", buildHeaderFile).
+              Invoke(h.AutodocHandler()).
+              Do()
+          }).
+        WithValue(generator.BookKey, book))
+
+  return nil
 }
 
 func (h *Headers) AutodocHandler() autodoc.Handler {
-  return func(b autodoc.Builder) error {
+  return func(ctx context.Context, b autodoc.Builder) error {
     return h.ForEach(func(h1 *Header) error {
       if h1.Label == "" && h1.Value == "" && h1.Comment != "" {
         b.Comment(h1.Comment)

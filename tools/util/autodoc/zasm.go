@@ -1,6 +1,7 @@
 package autodoc
 
 import (
+  "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
   "io"
@@ -11,6 +12,7 @@ import (
 type zAsm struct {
   fileName string
   modified time.Time
+  ctx      context.Context
   w        io.WriteCloser
   err      error
 }
@@ -19,14 +21,15 @@ func (b *zAsm) valid() bool {
   return b.err == nil && b.w != nil
 }
 
-func ZAsm(dir, file string, modified time.Time) Builder {
-  fileName, w, err := InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "ZAsm", "Files for the ZAsm assembler")
+func ZAsm(dir, file string, modified time.Time, ctx context.Context) Builder {
+  fileName, w, err := InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "ZAsm", "Files for the ZAsm assembler", ctx)
 
   return &zAsm{
     fileName: fileName,
     modified: modified,
     w:        w,
     err:      err,
+    ctx:      ctx,
   }
 }
 
@@ -36,7 +39,7 @@ func (b *zAsm) Using(Provider) Builder {
 
 func (b *zAsm) Invoke(handler Handler) Builder {
   if b.err == nil {
-    b.err = handler(b)
+    b.err = handler(b.ctx, b)
   }
   return b
 }
@@ -46,7 +49,7 @@ func (b *zAsm) InvokeTopic(t string, h TopicHandler) Builder {
 }
 
 func (b *zAsm) Do() error {
-  return CloseBuilder(b.err, b.w, b.fileName, b.modified)
+  return CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
 }
 
 func (b *zAsm) write(s string) Builder {

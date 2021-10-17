@@ -2,7 +2,6 @@ package hugo
 
 import (
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/autodoc"
   "os"
   "path"
   "path/filepath"
@@ -107,36 +106,4 @@ func (b *Book) Expand(s string) string {
 // Do runs a function against this instance. When it exits it removes any resources the Book has used freeing up memory.
 func (b *Book) Do(f func(*Book) error) error {
   return f(b)
-}
-
-func (b *Book) Autodoc(topic string, path string) autodoc.Handler {
-  return func(builder autodoc.Builder) error {
-    builder.Separator().
-      Comment("%s for %s", topic, b.Title)
-
-    if b.SubTitle != "" {
-      builder.Comment(b.SubTitle)
-    }
-    if b.Author != "" {
-      builder.Comment("Author: %s", b.Author)
-    }
-    if b.SubAuthor != "" {
-      builder.Comment("SubAuthor: %s", b.SubAuthor)
-    }
-
-    builder.Comment("").
-      Comment("URL: https://area51.dev/%s/", strings.Join(strings.Split(b.ContentPath(), "/")[1:], "/")).
-      Comment("").
-      Comment("Modified: %s", b.Modified().Format(time.RFC1123))
-
-    if len(path) > 0 {
-      builder.Comment("").
-        Comment("Current version: https://area51.dev/%s", strings.Join(strings.Split(path, "/")[1:], "/"))
-    }
-
-    builder.Separator().
-      Newline()
-
-    return nil
-  }
 }
