@@ -29,8 +29,12 @@ func (r *resource) resources(a []Resource, prefix string) []Resource {
       np := r.Name()
       if prefix != "" {
         np = path.Join(prefix, np)
+        if r.Size() > 0 {
+          a = append(a, Wrap(prefix, r))
+        }
+      }else {
+        a = cr.resources(a, path.Join(prefix, np))
       }
-      a = cr.resources(a, path.Join(prefix, np))
     }
     return nil
   })
@@ -49,11 +53,14 @@ func Wrap(prefix string, r Resource) Resource {
 
 func (r resource) FileBuilder() util.FileBuilder {
   return func(slice util.StringSlice) (util.StringSlice, error) {
-    slice = append(slice, "resources:")
-    for _, e := range r.Flatten() {
-      slice = append(slice, "  - name: \""+e.Name()+"\"")
-      slice = append(slice, "    url: \""+e.Url()+"\"")
-      slice = append(slice, "    size: \""+util.Unit(e.Size())+"\"")
+    res:=r.Flatten()
+    if len(res)>0 {
+      slice = append(slice, "resources:")
+      for _, e := range res {
+        slice = append(slice, "  - name: \""+e.Name()+"\"")
+        slice = append(slice, "    url: \""+e.Url()+"\"")
+        slice = append(slice, "    size: \""+util.Unit(e.Size())+"\"")
+      }
     }
     return slice, nil
   }
