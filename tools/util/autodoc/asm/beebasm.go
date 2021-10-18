@@ -1,9 +1,10 @@
-package autodoc
+package asm
 
 import (
   "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/autodoc"
   "io"
   "strings"
   "time"
@@ -21,8 +22,8 @@ func (b *beebAsm) valid() bool {
   return b.err == nil && b.w != nil
 }
 
-func BeebAsm(dir, file string, modified time.Time, ctx context.Context) Builder {
-  fileName, w, err := InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "BeebASM", "Files for the BeebASM assembler", ctx)
+func BeebAsm(dir, file string, modified time.Time, ctx context.Context) autodoc.Builder {
+  fileName, w, err := autodoc.InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "BeebASM", "Files for the BeebASM assembler", ctx)
 
   return &beebAsm{
     fileName: fileName,
@@ -33,31 +34,31 @@ func BeebAsm(dir, file string, modified time.Time, ctx context.Context) Builder 
   }
 }
 
-func (b *beebAsm) Using(Provider) Builder {
+func (b *beebAsm) Using(autodoc.Provider) autodoc.Builder {
   panic("not implemented")
 }
 
-func (b *beebAsm) Invoke(handler Handler) Builder {
+func (b *beebAsm) Invoke(handler autodoc.Handler) autodoc.Builder {
   if b.err == nil {
     b.err = handler(b.ctx, b)
   }
   return b
 }
 
-func (b *beebAsm) InvokeTopic(t string, h TopicHandler) Builder {
+func (b *beebAsm) InvokeTopic(t string, h autodoc.TopicHandler) autodoc.Builder {
   return b.Invoke(h(t, b.fileName))
 }
 
 func (b *beebAsm) Do() error {
-  return CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
+  return autodoc.CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
 }
 
-func (b *beebAsm) write(s string) Builder {
-  Write(&b.err, &b.w, s)
+func (b *beebAsm) write(s string) autodoc.Builder {
+  autodoc.Write(&b.err, &b.w, s)
   return b
 }
 
-func (b *beebAsm) append(c, f string, a ...interface{}) Builder {
+func (b *beebAsm) append(c, f string, a ...interface{}) autodoc.Builder {
   s := fmt.Sprintf(f, a...)
   if c != "" {
     s = fmt.Sprintf("%-32s ; %s", s, c)
@@ -65,12 +66,12 @@ func (b *beebAsm) append(c, f string, a ...interface{}) Builder {
   return b.write(s)
 }
 
-func (b *beebAsm) Comment(s string, a ...interface{}) Builder {
+func (b *beebAsm) Comment(s string, a ...interface{}) autodoc.Builder {
   // This form of comment starts at the beginning of the line
   return b.write(fmt.Sprintf("; "+s, a...))
 }
 
-func (b *beebAsm) Header(label, value, comment string) Builder {
+func (b *beebAsm) Header(label, value, comment string) autodoc.Builder {
   // Value with no label is invalid so ignore
   if label != "" && value != "" {
     return b.append(comment, "%s = %s", label, value)
@@ -78,11 +79,11 @@ func (b *beebAsm) Header(label, value, comment string) Builder {
   return b
 }
 
-func (b *beebAsm) Newline() Builder {
+func (b *beebAsm) Newline() autodoc.Builder {
   return b.write("")
 }
 
-func (b *beebAsm) Separator() Builder {
+func (b *beebAsm) Separator() autodoc.Builder {
   return b.write("; " + strings.Repeat("*", 75))
 }
 

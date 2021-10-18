@@ -1,9 +1,10 @@
-package autodoc
+package asm
 
 import (
   "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/autodoc"
   "io"
   "strings"
   "time"
@@ -21,8 +22,8 @@ func (b *zAsm) valid() bool {
   return b.err == nil && b.w != nil
 }
 
-func ZAsm(dir, file string, modified time.Time, ctx context.Context) Builder {
-  fileName, w, err := InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "ZAsm", "Files for the ZAsm assembler", ctx)
+func ZAsm(dir, file string, modified time.Time, ctx context.Context) autodoc.Builder {
+  fileName, w, err := autodoc.InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "ZAsm", "Files for the ZAsm assembler", ctx)
 
   return &zAsm{
     fileName: fileName,
@@ -33,31 +34,31 @@ func ZAsm(dir, file string, modified time.Time, ctx context.Context) Builder {
   }
 }
 
-func (b *zAsm) Using(Provider) Builder {
+func (b *zAsm) Using(autodoc.Provider) autodoc.Builder {
   panic("not implemented")
 }
 
-func (b *zAsm) Invoke(handler Handler) Builder {
+func (b *zAsm) Invoke(handler autodoc.Handler) autodoc.Builder {
   if b.err == nil {
     b.err = handler(b.ctx, b)
   }
   return b
 }
 
-func (b *zAsm) InvokeTopic(t string, h TopicHandler) Builder {
+func (b *zAsm) InvokeTopic(t string, h autodoc.TopicHandler) autodoc.Builder {
   return b.Invoke(h(t, b.fileName))
 }
 
 func (b *zAsm) Do() error {
-  return CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
+  return autodoc.CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
 }
 
-func (b *zAsm) write(s string) Builder {
-  Write(&b.err, &b.w, s)
+func (b *zAsm) write(s string) autodoc.Builder {
+  autodoc.Write(&b.err, &b.w, s)
   return b
 }
 
-func (b *zAsm) append(c, f string, a ...interface{}) Builder {
+func (b *zAsm) append(c, f string, a ...interface{}) autodoc.Builder {
   s := fmt.Sprintf(f, a...)
   if c != "" {
     s = fmt.Sprintf("%-32s ; %s", s, c)
@@ -65,12 +66,12 @@ func (b *zAsm) append(c, f string, a ...interface{}) Builder {
   return b.write(s)
 }
 
-func (b *zAsm) Comment(s string, a ...interface{}) Builder {
+func (b *zAsm) Comment(s string, a ...interface{}) autodoc.Builder {
   // This form of comment starts at the beginning of the line
   return b.write(fmt.Sprintf("; "+s, a...))
 }
 
-func (b *zAsm) Header(label, value, comment string) Builder {
+func (b *zAsm) Header(label, value, comment string) autodoc.Builder {
   // Value with no label is invalid so ignore
   if label != "" && value != "" {
     return b.append(comment, "%-16s equ %s", label, value)
@@ -78,11 +79,11 @@ func (b *zAsm) Header(label, value, comment string) Builder {
   return b
 }
 
-func (b *zAsm) Newline() Builder {
+func (b *zAsm) Newline() autodoc.Builder {
   return b.write("")
 }
 
-func (b *zAsm) Separator() Builder {
+func (b *zAsm) Separator() autodoc.Builder {
   return b.write("; " + strings.Repeat("*", 75))
 }
 

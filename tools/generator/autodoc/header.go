@@ -5,6 +5,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
+  "github.com/peter-mount/documentation/tools/util/autodoc/asm"
   "github.com/peter-mount/documentation/tools/util/task"
 )
 
@@ -76,8 +77,8 @@ func (h *Headers) task(ctx context.Context) error {
       AddTask(task.Of().
           Then(func(ctx context.Context) error {
             return autodoc.For(dirName, fileName, book.Modified(), ctx).
-              Using(autodoc.BeebAsm).
-              Using(autodoc.ZAsm).
+              Using(asm.BeebAsm).
+              Using(asm.ZAsm).
               InvokeTopic("Headers", buildHeaderFile).
               Invoke(h.AutodocHandler()).
               Do()
