@@ -3,15 +3,17 @@ package autodoc
 import (
   "context"
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/util/autodoc"
   "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
 )
 
 type Autodoc struct {
-  generator *generator.Generator // Generator
-  extracted util.Set             // Set of book ID's so that we run once per book
-  headers   map[string]*Headers  // Headers per book
+  generator       *generator.Generator     // Generator
+  resourceManager *autodoc.ResourceManager // ResourceManager
+  extracted       util.Set                 // Set of book ID's so that we run once per book
+  headers         map[string]*Headers      // Headers per book
 }
 
 func (s *Autodoc) Name() string {
@@ -25,6 +27,12 @@ func (s *Autodoc) Init(k *kernel.Kernel) error {
   }
   s.generator = service.(*generator.Generator)
 
+  service, err = k.AddService(&autodoc.ResourceManager{})
+  if err != nil {
+    return err
+  }
+  s.resourceManager = service.(*autodoc.ResourceManager)
+
   return nil
 }
 
@@ -33,7 +41,8 @@ func (s *Autodoc) Start() error {
   s.headers = make(map[string]*Headers)
 
   s.generator.
-    Register("autodoc", task.Of(s.extract))
+      Register("autodoc", task.Of(s.extract).
+        WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 
   return nil
 }
@@ -48,7 +57,9 @@ func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
   h := NewHeaders()
   s.headers[book.ID] = h
 
-  s.generator.AddTask(task.Of(h.task).WithValue(generator.BookKey, book))
+  s.generator.AddPriorityTask(20, task.Of(h.task).
+    WithValue(generator.BookKey, book).
+    WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 
   return h
 }

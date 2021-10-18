@@ -82,7 +82,7 @@ func (h *Headers) task(ctx context.Context) error {
               Invoke(h.AutodocHandler()).
               Do()
           }).
-        WithValue(generator.BookKey, book))
+        WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
 
   return nil
 }

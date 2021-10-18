@@ -2,6 +2,7 @@ package task
 
 import (
   "context"
+  "fmt"
 )
 
 // Task is a task that the Generator must run once all other Handler's have been run.
@@ -36,8 +37,32 @@ func (a Task) Then(b Task) Task {
 
 // WithValue adds a named value to the context
 func (a Task) WithValue(key string, value interface{}) Task {
+  if value == nil {
+    panic(key)
+  }
+
   return func(ctx context.Context) error {
     return a(context.WithValue(ctx, key, value))
+  }
+}
+
+// WithContext copies the specified keys from a source context.
+// It's the equivalent of WithValue(key,srcCtx.Value(key))
+func (a Task) WithContext(srcCtx context.Context, keys ...string) Task {
+  t := a
+  for _, key := range keys {
+    t = t.WithValue(key, srcCtx.Value(key))
+  }
+  return t
+}
+
+// RequireValue ensures that a key is defined within the current Context.
+func (a Task) RequireValue(key string) Task {
+  return func(ctx context.Context) error {
+    if ctx.Value(key) == nil {
+      return fmt.Errorf("required context Value %q missing", key)
+    }
+    return a.Do(ctx)
   }
 }
 

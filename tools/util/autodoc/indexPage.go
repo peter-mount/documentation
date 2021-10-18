@@ -3,7 +3,6 @@ package autodoc
 import (
   "context"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/resource"
   "github.com/peter-mount/documentation/tools/util/task"
   "os"
   "path"
@@ -17,7 +16,9 @@ func GenerateIndexPage(dir, file, asm, buildFileName string, modified time.Time)
       return err
     }
 
-    res := resource.NewDirectory("").
+    rm := GetResourceManager(ctx)
+
+    res := rm.GetResources(dir).
       Add(fi.Name(), buildFileName[len("content"):], int(fi.Size()))
 
     return util.GenerateCustomIndexFile(path.Join(dir, asm, file, "_index.html"), modified, func(indexFileName string, fileTime time.Time) error {
