@@ -112,21 +112,8 @@ func (a FileHandler) Write(fileName string, fileTime time.Time) error {
   return a.WriteAlways(fileName, fileTime)
 }
 
-const (
-  referenceDir = "reference"
-)
-
 // WriteAlways writes the file regardless of the existing files status
 func (a FileHandler) WriteAlways(fileName string, fileTime time.Time) error {
-  err := a.writeAlways(fileName, fileTime)
-  if err != nil {
-    return err
-  }
-
-  return GenerateReferenceIndex(fileName, fileTime)
-}
-
-func (a FileHandler) writeAlways(fileName string, fileTime time.Time) error {
   log.Printf("Writing %s", fileName)
   err := os.MkdirAll(path.Dir(fileName), 0755)
   if err != nil {

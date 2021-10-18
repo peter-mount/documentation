@@ -34,6 +34,11 @@ func (rm *ResourceManager) GetResources(dir string) resource.Resource {
   return pf
 }
 
+func (rm *ResourceManager) GetResourceIfExists(dir string) (resource.Resource, bool) {
+  r, exists := rm.m[dir]
+  return r, exists
+}
+
 func (rm *ResourceManager) getResource(pf resource.Resource, dir string) resource.Resource {
   if r, exists := rm.m[dir]; exists {
     return r

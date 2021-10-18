@@ -23,7 +23,7 @@ func (b *beebAsm) valid() bool {
 }
 
 func BeebAsm(dir, file string, modified time.Time, ctx context.Context) autodoc.Builder {
-  fileName, w, err := autodoc.InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "BeebASM", "Files for the BeebASM assembler", ctx)
+  fileName, w, err := autodoc.InitBuilder(dir, file, modified, "beebasm", "asm", "BeebASM", "Files for the BeebASM assembler", ctx)
 
   return &beebAsm{
     fileName: fileName,

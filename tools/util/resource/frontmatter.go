@@ -12,7 +12,7 @@ import (
 // appear as if they are in a subdirectory.
 func (r *resource) Flatten() []Resource {
   var a []Resource
-  a = r.resources(a, r.Name())
+  a = r.resources(a, "")
   sort.SliceStable(a, func(i, j int) bool {
     return strings.ToLower(a[i].Name()) < strings.ToLower(a[j].Name())
   })
@@ -26,7 +26,11 @@ func (r *resource) resources(a []Resource, prefix string) []Resource {
 
   _ = r.ForEach(func(c Resource) error {
     if cr, ok := c.(*resource); ok {
-      a = cr.resources(a, path.Join(prefix, r.Name()))
+      np := r.Name()
+      if prefix != "" {
+        np = path.Join(prefix, np)
+      }
+      a = cr.resources(a, path.Join(prefix, np))
     }
     return nil
   })

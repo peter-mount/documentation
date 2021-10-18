@@ -3,14 +3,17 @@ package autodoc
 import (
   "context"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/resource"
   "github.com/peter-mount/documentation/tools/util/task"
   "os"
   "path"
   "time"
 )
 
-func GenerateIndexPage(dir, file, asm, buildFileName string, modified time.Time) task.Task {
-  return func(ctx context.Context) error {
+func GenerateFileIndexPage(dir, file, asm, buildFileName string, modified time.Time) task.Task {
+  fullFileName := path.Join(dir, asm, file, "_index.html")
+
+  return task.Of(func(ctx context.Context) error {
     fi, err := os.Stat(buildFileName)
     if err != nil {
       return err
@@ -18,16 +21,17 @@ func GenerateIndexPage(dir, file, asm, buildFileName string, modified time.Time)
 
     rm := GetResourceManager(ctx)
 
-    res := rm.GetResources(dir).
-      Add(fi.Name(), buildFileName[len("content"):], int(fi.Size()))
+    fileResource := resource.NewFile(fi.Name(), buildFileName[len("content"):], int(fi.Size()))
+    rm.GetResources(path.Join(dir, asm)).AddChild(fileResource)
 
-    return util.GenerateCustomIndexFile(path.Join(dir, asm, file, "_index.html"), modified, func(indexFileName string, fileTime time.Time) error {
+    return GenerateCustomIndexFile(fullFileName, modified, func(indexFileName string, fileTime time.Time) error {
       return util.ReferenceFileBuilder(file, "Generated file for "+asm, "manual", 10).
-        Then(res.FileBuilder()).
+        Then(fileResource.FileBuilder()).
         WrapAsFrontMatter().
         Appendf("{{< book/include src=%q >}}", buildFileName).
         FileHandler().
         WriteAlways(indexFileName, modified)
     })
-  }
+  }).
+    Then(GenerateReferenceIndices(fullFileName, modified))
 }

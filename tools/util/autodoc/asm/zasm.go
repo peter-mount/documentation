@@ -23,7 +23,7 @@ func (b *zAsm) valid() bool {
 }
 
 func ZAsm(dir, file string, modified time.Time, ctx context.Context) autodoc.Builder {
-  fileName, w, err := autodoc.InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "ZAsm", "Files for the ZAsm assembler", ctx)
+  fileName, w, err := autodoc.InitBuilder(dir, file, modified, "zasm", "z80", "ZAsm", "Files for the ZAsm assembler", ctx)
 
   return &zAsm{
     fileName: fileName,

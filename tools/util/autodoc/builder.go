@@ -2,7 +2,6 @@ package autodoc
 
 import (
   "context"
-  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/task"
   "io"
   "os"
@@ -45,8 +44,8 @@ type TopicHandler func(string, string) Handler
 // asm Assembler - this will form the directory underneath dir where the actual file will live.
 // suffix File suffix to add to file, will have "." inserted between them
 // title, linkTitle, desc frontmatter for the _index.html for the assembler page
-func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkTitle, desc string, ctx context.Context) (string, io.WriteCloser, error) {
-  if err := util.GenerateReferenceIndexFile(path.Join(dir, asm, "_index.html"), modified, title, linkTitle, desc); err != nil {
+func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, desc string, ctx context.Context) (string, io.WriteCloser, error) {
+  if err := GenerateReferenceIndexFile(ctx, path.Join(dir, asm, "_index.html"), modified, title, desc); err != nil {
     return "", nil, err
   }
 
@@ -71,10 +70,9 @@ func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkT
 
   // Add indices files later
   task.GetQueue(ctx).
-      AddPriorityTask(30, func(ctx context.Context) error {
-        return util.GenerateReferenceIndices(buildFileName, modified)
-      }).
-      AddPriorityTask(30, GenerateIndexPage(dir, file, asm, buildFileName, modified).
+      AddPriorityTask(30, GenerateReferenceIndices(buildFileName, modified).
+        WithContext(ctx, ResourceManagerKey)).
+      AddPriorityTask(30, GenerateFileIndexPage(dir, file, asm, buildFileName, modified).
         WithContext(ctx, ResourceManagerKey))
 
   if writeNow {

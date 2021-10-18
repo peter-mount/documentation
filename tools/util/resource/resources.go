@@ -12,8 +12,6 @@ type Resource interface {
   Url() string
   // Size of this Resource in bytes
   Size() int
-  // Add a Resource to to this instance
-  Add(name, url string, size int) Resource
   // AddChild adds a sub-Resource to this one, e.g. a directory
   AddChild(Resource) Resource
   // Flatten returns the Resource & all children as a single slice.
@@ -36,9 +34,8 @@ func NewDirectory(name string) Resource {
   return &resource{name: name}
 }
 
-// Add a specific resource to this instance
-func (r *resource) Add(name, url string, size int) Resource {
-  return r.AddChild(&resource{name: name, url: url, size: size})
+func NewFile(name, url string, size int) Resource {
+  return &resource{name: name, url: url, size: size}
 }
 
 // AddChild adds a child Resource, e.g. resources for a sub-page we want to include here

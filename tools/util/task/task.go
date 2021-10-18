@@ -86,3 +86,28 @@ func (a Task) RunOnce(f *bool, t Task) Task {
     return nil
   })
 }
+
+// Queue will defer the queued task onto the underlying Queue.
+// If one or more tasks are provided then they will be queued if the flow reaches this location.
+// If none, then the current task will be queued when run.
+func (a Task) Queue(tasks ...Task) Task {
+  return a.QueueWithPriority(0, tasks...)
+}
+
+// QueueWithPriority will defer the queued task onto the underlying Queue with a priority
+// If one or more tasks are provided then they will be queued if the flow reaches this location.
+// If none, then the current task will be queued when run.
+func (a Task) QueueWithPriority(priority int, tasks ...Task) Task {
+  if len(tasks) == 0 {
+    return func(ctx context.Context) error {
+      GetQueue(ctx).AddPriorityTask(priority, a)
+      return nil
+    }
+  }
+
+  r := a
+  for _, task := range tasks {
+    r = r.Then(task.Queue())
+  }
+  return r
+}
