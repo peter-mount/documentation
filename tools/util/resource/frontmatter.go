@@ -1,6 +1,7 @@
 package resource
 
 import (
+  "github.com/peter-mount/documentation/tools/util"
   "path"
   "sort"
   "strings"
@@ -39,5 +40,17 @@ func Wrap(prefix string, r Resource) Resource {
     name: path.Join(prefix, r.Name()),
     url:  r.Url(),
     size: r.Size(),
+  }
+}
+
+func (r resource) FileBuilder() util.FileBuilder {
+  return func(slice util.StringSlice) (util.StringSlice, error) {
+    slice = append(slice, "resources:")
+    for _, e := range r.Flatten() {
+      slice = append(slice, "  - name: \""+e.Name()+"\"")
+      slice = append(slice, "    url: \""+e.Url()+"\"")
+      slice = append(slice, "    size: \""+util.Unit(e.Size())+"\"")
+    }
+    return slice, nil
   }
 }

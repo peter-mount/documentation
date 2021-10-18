@@ -75,6 +75,7 @@ func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, linkT
       AddPriorityTask(30, func(ctx context.Context) error {
         return util.GenerateReferenceIndices(buildFileName, modified)
       }).
+    AddPriorityTask(30, GenerateIndexPage(dir,file,asm, buildFileName,  modified)).
       AddPriorityTask(30, func(ctx context.Context) error {
         return util.GenerateCustomIndexFile(path.Join(dir, asm, file, "_index.html"), modified, func(indexFileName string, fileTime time.Time) error {
           return util.StringFileHandler(fmt.Sprintf(

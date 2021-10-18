@@ -1,5 +1,7 @@
 package resource
 
+import "github.com/peter-mount/documentation/tools/util"
+
 // Resource represents the Resources table on the top right side of each page
 // It can represent either a single downloadable resource or a directory of
 // resources.
@@ -18,6 +20,7 @@ type Resource interface {
   Flatten() []Resource
   // ForEach invokes a Handler for each Resource including children
   ForEach(Handler) error
+  FileBuilder() util.FileBuilder
 }
 
 type Handler func(Resource) error
@@ -27,6 +30,10 @@ type resource struct {
   url      string     // Path to the resource
   size     int        // Size of the resource
   children []Resource // Child resources
+}
+
+func NewDirectory(name string) Resource {
+  return &resource{name: name}
 }
 
 // Add a specific resource to this instance

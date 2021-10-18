@@ -1,6 +1,7 @@
 package util
 
 import (
+  "fmt"
   "gopkg.in/yaml.v2"
   "io"
   "path"
@@ -51,6 +52,18 @@ func (a FileBuilder) WrapAsFrontMatter() FileBuilder {
     slice = append(slice, "---")
     return slice, nil
   }
+}
+
+func (a FileBuilder) Append(s string) FileBuilder {
+  return a.Then(func(slice StringSlice) (StringSlice, error) {
+    return append(slice, s), nil
+  })
+}
+
+func (a FileBuilder) Appendf(s string, args ...interface{}) FileBuilder {
+  return a.Then(func(slice StringSlice) (StringSlice, error) {
+    return append(slice, fmt.Sprintf(s, args...)), nil
+  })
 }
 
 // Yaml appends the supplied value as YAML
