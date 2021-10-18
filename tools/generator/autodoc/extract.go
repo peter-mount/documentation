@@ -32,10 +32,13 @@ func (s *Autodoc) extract(ctx context.Context) error {
     Walk(book.ContentPath())
 }
 
-func (s *Autodoc) extractMemoryMap(ctx context.Context, _ *hugo.FrontMatter) error {
-  book := generator.GetBook(ctx)
+func (s *Autodoc) extractMemoryMap(ctx context.Context, fm *hugo.FrontMatter) error {
+
   headers := s.getHeaders(ctx)
-  _ = headers.Add(&Header{Comment: book.Title})
+  if d, exists := fm.Other["description"]; exists {
+    _ = headers.Add(&Header{Comment: util2.DecodeString(d, "")})
+    log.Println(d)
+  }
 
   return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util2.IfMap(e, func(m map[interface{}]interface{}) error {
