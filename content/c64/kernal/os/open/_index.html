@@ -1,0 +1,40 @@
+---
+type: "manual"
+title: "OPEN"
+linkTitle: "OPEN"
+description: "Open a logical file"
+weight: 0xFFC0
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "OPEN"
+      addr: "FFC0"
+      title: "Open a logical file"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine is used to OPEN a logical file.
+        Once the logical file is set up, it can be used for input/output operations.
+    </p>
+    <p>
+        Most of the I/O routines call on this routine to create the logical files to operate on.
+        No arguments need to be set up to use this routine, but both the <a href=""../setlfs/">SETLFS</a> and <a href="../setnam/">SETNAM</a> routines must be called before using this routine.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="openFile" comment="Equivalent of Basic: OPEN 15,8,15,\"I/O\"" >}}
+    {{< book/asm op="LDA" param="#filenameEnd-filename" comment="Length of filename" >}}
+    {{< book/asm op="LDX" param="#&amp;lt;filename" comment="Address of filename" >}}
+    {{< book/asm op="LDY" param="#&amp;gt;filename">}}
+    {{< book/asm op="JSR" param="<a href='../setnam/'>SETNAM</a>" comment="Set filename">}}
+    {{< book/asm op="LDA" param="#15" comment="Logical file number" >}}
+    {{< book/asm op="LDX" param="#8" comment="Device number, 8 = disk" >}}
+    {{< book/asm op="LDY" param="#15" comment="Secondary address">}}
+    {{< book/asm op="JSR" param="<a href='../setlfs/'>SETLFS</a>" comment="Setup logical file">}}
+    {{< book/asm op="JMP" param="OPEN" comment="Open the logical file">}}
+    {{< book/asm label="filename" op="EQUS" param="\"I/O\"" comment="Filename" >}}
+    {{< book/asm label="filenameEnd" >}}
+    {{< /book/sourceCode >}}
+
+</div>
