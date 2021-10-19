@@ -1,0 +1,35 @@
+---
+type: "manual"
+title: "SETTIM"
+linkTitle: "SETTIM"
+description: "Set system clock"
+weight: 0xFFDB
+categories:
+- c64
+- kernalAPI
+api:
+    - name: "SETTIM"
+      addr: "FFDB"
+      title: "Set system clock"
+---
+<p>
+    A system clock is maintained by an interrupt routine that updates the clock every 1/60th of a second (one "jiffy").
+    The clock is three bytes long, which gives it the capability to count up to 5,184,000 jiffies (24 hours).
+    At that point the clock resets to zero.
+</p>
+<p>
+    Before calling this routine to set the clock,
+    the accumulator must contain the most significant byte,
+    the X index register the next most significant byte,
+    and the Y index register the least significant byte of the initial time setting (in jiffies).
+</p>
+<p>
+</p>
+<p>Example</p>
+<pre>
+                        ; Set clock to 10 minutes = 600 seconds = 3600 jiffies
+        LDA #0          ; Most significant byte
+        LDX #>3600
+        LDY #<3600      ; Least significant byte
+        JSR SETTIM
+</pre>

@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "RDTIM"
+linkTitle: "RDTIM"
+description: "Read system clock"
+weight: 0xFFDE
+categories:
+- c64
+- kernalAPI
+api:
+    - name: "RDTIM"
+      addr: "FFDE"
+      title: "Read system clock"
+---
+<p>
+    This routine is used to read the system clock.
+    The clock's resolution is a 60th of a second.
+    Three bytes are returned by the routine.
+    The accumulator contains the most significant byte,
+    the X index register contains the next most significant byte,
+    and the Y index register contains the least significant byte.
+</p>
+
+<p>Example</p>
+<pre>
+        JSR RDTIM       ; Read system clock
+        STY time        ; Store in our time variable
+        STX time+1
+        STA time+2
+        RTS
+time:   EQUB 0,0,0      ; 3 bytes to store the time
+</pre>
