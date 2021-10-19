@@ -14,6 +14,7 @@ type Autodoc struct {
   resourceManager *autodoc.ResourceManager // ResourceManager
   extracted       util.Set                 // Set of book ID's so that we run once per book
   headers         map[string]*Headers      // Headers per book
+  apis            map[string]*Api          // Apis per book
 }
 
 func (s *Autodoc) Name() string {
@@ -39,6 +40,7 @@ func (s *Autodoc) Init(k *kernel.Kernel) error {
 func (s *Autodoc) Start() error {
   s.extracted = util.NewHashSet()
   s.headers = make(map[string]*Headers)
+  s.apis = make(map[string]*Api)
 
   s.generator.
       Register("autodoc", task.Of(s.extract).
@@ -62,4 +64,21 @@ func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
     WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 
   return h
+}
+
+func (s *Autodoc) getApi(ctx context.Context) *Api {
+  book := generator.GetBook(ctx)
+
+  if a, exists := s.apis[book.ID]; exists {
+    return a
+  }
+
+  a := NewApi()
+  s.apis[book.ID] = a
+
+  s.generator.AddPriorityTask(20, task.Of(a.task).
+    WithValue(generator.BookKey, book).
+    WithValue(autodoc.ResourceManagerKey, s.resourceManager))
+
+  return a
 }

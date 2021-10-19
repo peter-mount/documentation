@@ -79,6 +79,14 @@ func (b *zAsm) Header(label, value, comment string) autodoc.Builder {
   return b
 }
 
+func (b *zAsm) Function(label, value, comment string) autodoc.Builder {
+  // Value with no label is invalid so ignore
+  if label != "" && value != "" {
+    return b.append(comment, "%-16s equ %s", label, value)
+  }
+  return b
+}
+
 func (b *zAsm) Newline() autodoc.Builder {
   return b.write("")
 }

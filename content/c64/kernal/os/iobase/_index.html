@@ -35,3 +35,10 @@ api:
         LDY #2          ; Offset to DDR of user port
         STA (point),Y   ; Set the register
 </pre>
+
+<p>
+    For the C64 the value returned is 0xDC00 - address of CLA #1
+</p>
+<p>
+    For the C128 the value returned is 0xD000 - address of the VIC chip
+</p>

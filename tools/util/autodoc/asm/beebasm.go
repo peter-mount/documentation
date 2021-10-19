@@ -79,6 +79,14 @@ func (b *beebAsm) Header(label, value, comment string) autodoc.Builder {
   return b
 }
 
+func (b *beebAsm) Function(label, value, comment string) autodoc.Builder {
+  // Value with no label is invalid so ignore
+  if label != "" && value != "" {
+    return b.append(comment, "%s = %s", label, value)
+  }
+  return b
+}
+
 func (b *beebAsm) Newline() autodoc.Builder {
   return b.write("")
 }

@@ -15,6 +15,8 @@ type Builder interface {
   Comment(string, ...interface{}) Builder
   // Header sets a constant value to a label
   Header(string, string, string) Builder
+  // Function declares a function
+  Function(string, string, string) Builder
   // Newline writes a blank line
   Newline() Builder
   // Separator writes a Comment line with a row of characters to mark some division in the output
@@ -165,6 +167,13 @@ func (u *unionBuilder) Comment(s string, a ...interface{}) Builder {
 func (u *unionBuilder) Header(s string, s2 string, s3 string) Builder {
   for _, b := range u.src {
     b.Header(s, s2, s3)
+  }
+  return u
+}
+
+func (u *unionBuilder) Function(s string, s2 string, s3 string) Builder {
+  for _, b := range u.src {
+    b.Function(s, s2, s3)
   }
   return u
 }
