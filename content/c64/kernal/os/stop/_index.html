@@ -1,0 +1,85 @@
+---
+type: "manual"
+title: "STOP"
+linkTitle: "STOP"
+description: "Check if key/stop key is pressed"
+weight: 0xFFE1
+categories:
+- c64
+- kernalAPI
+api:
+  - name: "STOP"
+    addr: "FFE1"
+    indirect: "0328"
+    title: "Check if key/stop key is pressed"
+---
+<p>
+  This routine checks for either the RUN/STOP key or certain other keys are pressed.
+</p>
+
+<h2>Check for RUN/STOP key pressed</h2>
+<p>
+  If the key was pressed during a <a href="../udtim/">UDTIM</a> call, this call returns the z flag set.
+  In addition, the channels will be reset to default values.
+</p>
+<p>Example:</p>
+<pre>
+        JSR <a href="../udtim/">UDTIM</a>
+        JSR STOP
+        BEQ stopPressed     ; STOP is pressed
+</pre>
+
+<h2>Check for other keys</h2>
+<p>
+  If the stop key is not pressed then the z flag will be clear and the accumulator will be set to one of the following
+  keys located on the same keyboard column as the stop key:
+</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="generic">
+        <thead>
+        <tr>
+          <th>C64 key</th>
+          <th>Accumulator</th>
+          <th>Vic-20 key</th>
+          <th>Accumulator</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td><td>0xFE</td>
+          <td>Cursor Down</td><td>0x7F</td>
+        </tr>
+        <tr>
+          <td>Left arrow</td><td>0xFD</td>
+          <td>/</td><td>0xBF</td>
+        </tr>
+        <tr>
+          <td>CTRL</td><td>0xFB</td>
+          <td>,</td><td>0xDF</td>
+        </tr>
+        <tr>
+          <td>2</td><td>0xF7</td>
+          <td>N</td><td>0xEF</td>
+        </tr>
+        <tr>
+          <td>Space</td><td>0xEF</td>
+          <td>V</td><td>0xF7</td>
+        </tr>
+        <tr>
+          <td>Commodore</td><td>0xDF</td>
+          <td>X</td><td>0xFB</td>
+        </tr>
+        <tr>
+          <td>Q</td><td>0xBF</td>
+          <td>Left Shift</td><td>0xFD</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<p>
+  If no key is down in the STOP column, the routine returns 0xFF on both machines.
+</p>
