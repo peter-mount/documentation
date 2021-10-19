@@ -1,0 +1,27 @@
+---
+type: "manual"
+title: "UNTLK"
+linkTitle: "UNTLK"
+description: "Send an UNTALK command"
+weight: 0xFFAB
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "UNTLK"
+      addr: "FFAB"
+      title: "Send an UNTALK command"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine commands all devices on the serial bus to stop sending data.
+        Calling this routine results in an UNTALK command being transmitted on the serial bus.
+        Only devices previously commanded to talk are affected.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="JSR" param="UNTLK" >}}
+    {{< /book/sourceCode >}}
+
+</div>

@@ -1,0 +1,29 @@
+---
+type: "manual"
+title: "UNLSN"
+linkTitle: "UNLSN"
+description: "Send an UNLISTEN command"
+weight: 0xFFAE
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "UNLISTEN"
+      addr: "FFAE"
+      title: "Send an UNLISTEN command"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine commands all devices on the serial bus to stop receiving data.
+        Calling this routine results in an UNLISTEN command being transmitted on the serial bus.
+        Only devices previously commanded to listen are affected.
+        This routine is normally used after the Commodore 64 has finished sending data to external devices.
+        Sending the UNLISTEN commands the listening devices to get off the serial bus, so it can be used for other purposes.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="JSR" param="UNLSN" >}}
+    {{< /book/sourceCode >}}
+
+</div>

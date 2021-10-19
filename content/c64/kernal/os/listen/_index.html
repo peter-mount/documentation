@@ -1,0 +1,29 @@
+---
+type: "manual"
+title: "LISTEN"
+linkTitle: "LISTEN"
+description: "Command a device on serial bus to LISTEN"
+weight: 0xFFB1
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "LISTEN"
+      addr: "FFB1"
+      title: "Command a device on serial bus to LISTEN"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine will command a device on the serial bus to receive data.
+        The accumulator must first be loaded with a device number between 0 and 31.
+        When called, this routine then ORs bit by bit to convert this device number to a talk address.
+        The specified device will then go into listen mode, and be ready to accept information.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#8" comment="Command device #8 to listen" >}}
+    {{< book/asm op="JSR" param="LISTEN" >}}
+    {{< /book/sourceCode >}}
+
+</div>

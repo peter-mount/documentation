@@ -1,0 +1,92 @@
+---
+type: "manual"
+title: "READST"
+linkTitle: "READST"
+description: "Read status word"
+weight: 0xFFB7
+subtopic: "channel"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "READST"
+      addr: "FFB7"
+      title: "Read status word"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine returns the current status of the I/O devices in the accumulator.
+        The routine is usually called after new communication to an I/O device.
+        The routine gives you information about device status, or errors that have occurred during the I/O operation.
+    </p>
+    <p>The bits returned in the accumulator contain the following information:</p>
+    <div class="container">
+        <table class="generic">
+            <thead>
+            <tr>
+                <th>Bit</th>
+                <th>Cassette Read</th>
+                <th>Serial Bus R/W</th>
+                <th>Tape Verify/Load</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>0</td>
+                <td></td>
+                <td>write timeout</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td>read timeout</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>short block</td>
+                <td></td>
+                <td>short block</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>long block</td>
+                <td></td>
+                <td>long block</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>unrecoverable read error</td>
+                <td></td>
+                <td>any mismatch</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>checksum error</td>
+                <td></td>
+                <td>checksum error</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>end of file</td>
+                <td>EOI line</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>end of tape</td>
+                <td>device not present</td>
+                <td>end of tape</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="JSR" param="READST" comment="Check for end of file during read" >}}
+    {{< book/asm op="AND" param="#&40" comment="Check bit 6" >}}
+    {{< book/asm op="BNE" param="eofDetected" comment="Branch on EOF" >}}
+    {{< /book/sourceCode >}}
+
+</div>

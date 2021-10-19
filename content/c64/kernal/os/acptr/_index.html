@@ -1,0 +1,37 @@
+---
+type: "manual"
+title: "ACPTR"
+linkTitle: "ACPTR"
+description: "Get data from the serial bus"
+weight: 0xFFA5
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "ACPTR"
+      addr: "FFA5"
+      title: "Get data from the serial bus"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine gets a byte of data off the serial bus using full handshaking.
+        The data is returned in the accumulator.
+    </p>
+    <p>
+        To prepare for this routine the <a href="../talk/">TALK</a> routine must be called first to command the device on the serial bus to send data through the bus.
+        If the input device needs a secondary command, it must be sent by using the <a href="../tksa/">TKSA</a> routine before calling this routine.
+    </p>
+    <p>
+        Errors are returned in the status word.
+        The <a href="../readst/">READST</a> routine is used to read the status word.
+    </p>
+    <p>
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="JSR" param="ACPTR" comment="Get a byte from the bus" >}}
+    {{< book/asm op="STA" param="data" >}}
+    {{< /book/sourceCode >}}
+
+</div>

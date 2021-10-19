@@ -1,0 +1,28 @@
+---
+type: "manual"
+title: "TALK"
+linkTitle: "TALK"
+description: "Command a device on serial bus to TALK"
+weight: 0xFFB4
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "TALK"
+      addr: "FFB4"
+      title: "Command a device on serial bus to TALK"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        To use this routine the accumulator must first be loaded with a device number between 0 and 31.
+        When called, this routine then ORs bit by bit to convert this device number to a talk address.
+        Then this data is transmitted as a command on the serial bus.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#4" comment="Command device #4 to talk" >}}
+    {{< book/asm op="JSR" param="TALK" >}}
+    {{< /book/sourceCode >}}
+
+</div>

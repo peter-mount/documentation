@@ -1,0 +1,40 @@
+---
+type: "manual"
+title: "CIOUT"
+linkTitle: "CIOUT"
+description: "Transmit a byte over the serial bus"
+weight: 0xFFA8
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CIOUT"
+      addr: "FFA8"
+      title: "Transmit a byte over the serial bus"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine is used to send information to devices on the serial bus.
+        A call to this routine will put a data byte onto the serial bus using full serial handshaking.
+    </p>
+    <p>
+        Before this routine is called, the <a href="../listen/">LISTEN</a> routine must be used to command a device on the serial bus to get ready to receive data.
+        If a device needs a secondary address, it must also be sent by using the <a href="../second/">SECOND</a> routine.
+    </p>
+    <p>
+        The accumulator is loaded with a byte to handshake as data on the serial bus.
+        A device must be listening or the status word will return a timeout.
+    </p>
+    <p>
+        This routine always buffers one character. (The routine holds the previous character to be sent back.)
+        So when a call to the <a href="../unlsn/">UNLSN</a> routine is made to end the data transmission, the buffered character is sent with an End Or Identify (EOI) set.
+        Then the <a href="../unlsn/">UNLSN</a> command is sent to the device.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#'X'" comment="Send 'X' to the serial bus" >}}
+    {{< book/asm op="JSR" param="CIOUT" >}}
+    {{< /book/sourceCode >}}
+
+</div>

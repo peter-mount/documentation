@@ -1,0 +1,30 @@
+---
+type: "manual"
+title: "SETTMO"
+linkTitle: "SETTMO"
+description: "Set IEEE bus card timeout"
+weight: 0xFFA2
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SETTMO"
+      addr: "FFA2"
+      title: "Set IEEE bus card timeout"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine sets the timeout flag for the IEEE bus.
+        When the timeout flag is set, the Commodore 64 will wait for a device on the IEEE port for 64 milliseconds.
+        If the device does not respond to the Commodore 64's Data Address Valid (DAV) signal within that time the Commodore 64 will recognize an error condition and leave the handshake sequence.
+        When this routine is called when the accumulator contains a 0 in bit 7, timeouts are enabled.
+        A 1 in bit 7 will disable the timeouts.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#0" comment="Disable IEEE Timeout" >}}
+    {{< book/asm op="JSR" param="SETTMO" >}}
+    {{< /book/sourceCode >}}
+
+</div>
