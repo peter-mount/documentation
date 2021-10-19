@@ -43,23 +43,24 @@ api:
 
 <p>Example:</p>
 <pre>
-        LDA #8                  ; Logical File Number
-        LDX #8                  ; Device 8 = Disk
-        LDY #1                  ; Secondary address 1 = Use address stored in the file
+        LDA #8                      ; Logical File Number
+        LDX #8                      ; Device 8 = Disk
+        LDY #1                      ; Secondary address 1 = Use address stored in the file
         JSR <a href="../setlfs/">SETLFS</a>
 
-        LDA #8                  ; Length of fileName
-        LDX #&lt;fileName          ; Address of fileName
+        LDA #fileNameEnd-fileName   ; Length of fileName
+        LDX #&lt;fileName              ; Address of fileName
         LDY #&gt;fileName
         JSR <a href="../setnam/">SETNAM</a>
 
-        LDA #0                  ; Load operation
-        JSR LOAD                ; Load file
+        LDA #0                      ; Load operation
+        JSR LOAD                    ; Load file
 
-        STX endAddress          ; Optional, save address after the loaded data
+        STX endAddress              ; Optional, save address after the loaded data
         STY endAddress+1
         RTS
 
-.fileName                       ; Filename to load
-        EQUS "TESTCARD", 0
+.fileName                           ; Filename to load
+        EQUS "TESTCARD"
+.fileNameEnd
 </pre>

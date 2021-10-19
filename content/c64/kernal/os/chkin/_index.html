@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "CHKIN"
+linkTitle: "CHKIN"
+description: "Open channel for input"
+weight: 0xFFC6
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CHKIN"
+      addr: "FFC6"
+      title: "Open channel for input"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        Any logical file number that has been created by the <a href="../open/">OPEN</a> routine can be defined as an input channel.
+        Of course, the device you intend opening a channel to must be an input device.
+        Otherwise, an error will occur, and the routine will be aborted.
+    </p>
+    <p>
+        If you are getting data from anywhere other than the keyboard, this routine must be called before using either the <a href="../chrin/">CHRIN</a> or the <a href="../getin/">GETIN</a> routines for data input.
+        If you want to use the input from the keyboard, and no other input channels are opened, then the calls to this routine, and to the <a href="../open/">OPEN</a> routine are not needed.
+    </p>
+
+    <p>Example:</p>
+    <pre>
+        LDX #2          ; Define logical file 2 as an input channel
+        JSR CHKIN
+    </pre>
+</div>

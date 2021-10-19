@@ -1,0 +1,27 @@
+---
+type: "manual"
+title: "CLRCHN"
+linkTitle: "CLRCHN"
+description: "Clear I/O channels"
+weight: 0xFFCC
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CLRCHN"
+      addr: "FFCC"
+      title: "Clear I/O channels"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine is called to clear all open channels and restore the I/O channels to their original default values.
+    </p>
+    <p>
+        It is usually called after opening other I/O channels like a tape or disk drive and using them for input/output operations.
+        The default input device is 0 (keyboard).
+        The default output device is 3 (screen).
+    </p>
+    <p>
+        This routine is automatically called when the <a href="../clall/">CLALL</a> routine is executed.
+    </p>
+</div>

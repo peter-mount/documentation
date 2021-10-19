@@ -1,0 +1,26 @@
+---
+type: "manual"
+title: "CLOSE"
+linkTitle: "Close"
+description: "Close a logical file"
+weight: 0xFFC3
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CLOSE"
+      addr: "FFC3"
+      title: "Close a logical file"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine is used to close a logical file after all I/O operations have been completed on that file.
+        This routine is called after the accumulator is loaded with the logical file number to be closed - the same number used when the file was opened using the <a href="../open/">OPEN</a> routine.
+    </p>
+
+    <p>Example:</p>
+    <pre>
+            LDA #15         ; Close logical file 15
+            JSR CLOSE
+    </pre>
+</div>

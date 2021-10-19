@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "CHKOUT"
+linkTitle: "CHKOUT"
+description: "Open channel for output"
+weight: 0xFFC9
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CHKOUT"
+      addr: "FFC9"
+      title: "Open channel for output"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        Any logical file number that has been created by the <a href="../open/">OPEN</a> routine can be defined as an output channel.
+        Of course, the device you intend opening a channel to must be an output device.
+        Otherwise, an error will occur, and the routine will be aborted.
+    </p>
+    <p>
+        This routine must be called before any data is sent to any output device unless you want to use the screen as your output device.
+        If screen output is desired, and there are no other output channels already defined, then calls to this routine, and to the <a href="../open/">OPEN</a> routine are not needed.
+    </p>
+
+    <p>Example:</p>
+    <pre>
+        LDX #3          ; Define logical file 3 as an output channel
+        JSR CHKOUT
+    </pre>
+</div>

@@ -1,0 +1,59 @@
+---
+type: "manual"
+title: "CHRIN"
+linkTitle: "CHRIN"
+description: "Get a character from the input channel"
+weight: 0xFFCF
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CHRIN"
+      addr: "FFCF"
+      title: "Get a character from the input channel"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine gets a byte of data from a channel already set up as the input channel by the <a href="../chkin/">CHKIN</a>
+        routine.
+        If <a href="../chkin/">CHKIN</a> has NOT been used to define another input channel, then all your data is
+        expected from the keyboard.
+    </p>
+    <p>
+        The data byte is returned in the accumulator.
+        The Y index register is unchanged and is usually used in a loop to store received characters.
+    </p>
+    <p>
+        The channel remains open after the call.
+    </p>
+    <h2>Reading from the Keyboard</h2>
+    <p>
+        Input from the keyboard is handled in a special way.
+        First, the cursor is turned on, and blinks until a carriage return is typed on the keyboard.
+        All characters on the line can be retrieved one at a time by calling this routine once for each character.
+        When the carriage return is retrieved, the entire line has been processed.
+        The next time this routine is called, the whole process begins again, i.e., by flashing the cursor.
+    </p>
+    <p>Example:</p>
+    <pre>
+.readLine   LDY #0              ; Prepare Y register to store data
+.readLoop   JSR CHRIN           ; Get next character
+            STA BUF,Y           ; Store in BUF (0x200 89 byte basic input buffer)
+            INY
+            CMP #0x0D           ; Carriage Return
+            BNE readLoop        ; Loop back for next character
+            RTS
+</pre>
+    <div class="alert-warning">
+        <p>
+            This example does no bounds checking so if more than 89 characters are read
+            it will overwrite the Kernal workspace in page 2.
+        </p>
+    </div>
+</div>
+<div class="printPageBreakAvoid">
+    <h2>Reading from other devices</h2>
+    <p>
+        Here you need to call <a href="../open/">OPEN</a> and <a href="../chkin/">CHKIN</a> first before calling CHRIN.
+    </p>
+</div>
