@@ -1,0 +1,26 @@
+---
+type: "manual"
+title: "RAMTAS"
+linkTitle: "RAMTAS"
+description: "Perform RAM test"
+subtopic: "mem"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "RAMTAS"
+      addr: "FF87"
+      title: "Perform RAM test"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine is used to test RAM and set the top and bottom of memory pointers accordingly.
+    </p>
+    <p>
+        It clears locations &00 to &0101 and &0200 to &03FF.
+        It then allocates the cassette buffer, and sets the screen base to $0400.
+    </p>
+    <p>
+        Normally, this routine is called as part of the initialization process of a Commodore 64 program cartridge.
+    </p>
+</div>

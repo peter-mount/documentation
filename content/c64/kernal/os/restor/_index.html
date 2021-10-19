@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "RESTOR"
+linkTitle: "RESTOR"
+description: "Restore default system & interrup vectors"
+subtopic: "sys"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "RESTOR"
+      addr: "FF8A"
+      title: "Restore default system & interrup vectors"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine restores the default values of all system vectors used in KERNAL and BASIC routines and interrupts.
+    </p>
+    <p>
+        See the Memory Map for the default vector contents.
+    </p>
+    <p>
+        The <a href="../vector/">VECTOR</a> routine is used to read and alter individual system vectors.
+    </p>
+</div>

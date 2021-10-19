@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "VECTOR"
+linkTitle: "VECTOR"
+description: "Manage RAM Vectors"
+subtopic: "sys"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "VECTOR"
+      addr: "FF8D"
+      title: "Manage RAM Vectors"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine manages all system vector jump addresses stored in RAM.
+    </p>
+    <p>
+        Calling this routine with the the accumulator carry bit set stores the current contents of the RAM vectors in a list pointed to by the X and Y registers.
+    </p>
+    <p>
+        When this routine is called with the carry clear, the user list pointed to by the X and Y registers is transferred to the system RAM vectors.
+    </p>
+    <p>
+        The RAM vectors are listed in the memory map.
+    </p>
+    <div class="alert-warning">
+        This routine requires caution in its use.
+        The best way to use it is to first read the entire vector contents into the user area, alter the desired vectors, and then copy the contents back to the system vectors.
+    </div>
+</div>

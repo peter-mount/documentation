@@ -1,0 +1,34 @@
+---
+type: "manual"
+title: "SETMSG"
+linkTitle: "SETMSG"
+description: "Control system message output"
+subtopic: "screen"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SETMSG"
+      addr: "FF90"
+      title: "Control system message output"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine controls the printing of error and control messages by the KERNAL.
+        Either print error messages or print control messages can be selected by setting the accumulator when the routine is called.
+        <code>FILE NOT FOUND</code> is an example of an error message.
+        <code>PRESS PLAY ON CASSETTE</code> is an example of a control message.
+    </p>
+    <p>
+        Bits 6 and 7 of this value determine where the message will come from.
+    </p>
+    <p>
+        If bit 7 is 1, one of the error messages from the KERNAL is printed.
+    </p>
+    <p>
+        If bit 6 is set, control messages are printed.
+    </p>
+    <p>
+        If this is set to 0 then all kernal messages are disabled.
+    </p>
+</div>
