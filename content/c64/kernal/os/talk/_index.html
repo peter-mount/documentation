@@ -16,8 +16,13 @@ api:
 <div class="printPageBreakAvoid">
     <p>
         To use this routine the accumulator must first be loaded with a device number between 0 and 31.
+    </p>
+    <p>
         When called, this routine then ORs bit by bit to convert this device number to a talk address.
         Then this data is transmitted as a command on the serial bus.
+    </p>
+    <p>
+        If a secondary address is required then the <a href="../tksa/">TKSA</a> routine must be called immediately after this one.
     </p>
 
     {{< book/sourceCode title="Example:">}}

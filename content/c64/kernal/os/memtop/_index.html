@@ -1,0 +1,30 @@
+---
+type: "manual"
+title: "MEMTOP"
+linkTitle: "MEMTOP"
+description: "Set top of memory"
+weight: 0xFF99
+subtopic: "mem"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "MEMTOP"
+      addr: "FF99"
+      title: "Set top of memory"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine reads or writes the top of memory.
+    </p>
+    <p>
+        When the Carry flag is set then the top memory address is read into the X, Y index registers.
+    </p>
+    <p>
+        When the Carry flag is clear then the top memory address is set to the address in the X, Y index registers.
+    </p>
+    <p>
+        The value is stored in the MEMSIZ variable at 0x283.
+    </p>
+
+</div>

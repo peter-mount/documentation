@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "SECOND"
+linkTitle: "SECOND"
+description: "Send secondary address for LISTEN"
+weight: 0xFF93
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SECOND"
+      addr: "FF93"
+      title: "Send secondary address for LISTEN"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine transmits a secondary address on the serial bus for a LISTEN device.
+        The routine sends this number as a secondary address command over the serial bus.
+        This routine can only be called after a call to the <a href="../listen/">LISTEN</a> routine.
+        It will not work after a <a href="../talk/">TALK</a>.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#8" comment="Command device #8 to listen with command #15" >}}
+    {{< book/asm op="JSR" param="<a href='../talk/'>LISTEN</a>" >}}
+    {{< book/asm op="LDA" param="#15" >}}
+    {{< book/asm op="JSR" param="SECOND" >}}
+    {{< /book/sourceCode >}}
+
+</div>

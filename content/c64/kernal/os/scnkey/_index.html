@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "SCNKEY"
+linkTitle: "SCNKEY"
+description: "Scan the keyboard"
+weight: 0xFF9F
+subtopic: "kbd"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SCNKEY"
+      addr: "FF9F"
+      title: "Scan the keyboard"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine scans the Commodore 64 keyboard and checks for pressed keys.
+        It is the same routine called by the interrupt handler.
+        If a key is down, its ASCII value is placed in the keyboard queue.
+        This routine is called only if the normal IRQ interrupt is bypassed.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="getKey" op="JSR" param="SCNKEY" comment="Scan keyboard" >}}
+    {{< book/asm op="JSR" param="<a href='../getin/'>GETIN</a>" comment="Get character" >}}
+    {{< book/asm op="CMP" param="#0" comment="Have we got a character?" >}}
+    {{< book/asm op="BEQ" param="getKey" comment="No then loop back" >}}
+    {{< book/asm op="JMP" param="<a href='../chrout/'>CHROUT</a>" comment="Print it to the screen" >}}
+    {{< /book/sourceCode >}}
+
+</div>

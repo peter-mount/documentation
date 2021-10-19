@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "TKSA"
+linkTitle: "TKSA"
+description: "Send secondary address to a device commanded to TALK"
+weight: 0xFF96
+subtopic: "ieee"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "TKSA"
+      addr: "FF96"
+      title: "Send secondary address to a device commanded to TALK"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine transmits a secondary address on the serial bus for a TALK device.
+        This routine must be called with a number between 0 and 31 in the accumulator.
+        The routine sends this number as a secondary address command over the serial bus.
+        This routine can only be called after a call to the <a href="../talk/">TALK</a> routine.
+        It will not work after a <a href="../listen/">LISTEN</a>.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#4" comment="Command device #4 to talk with command #7" >}}
+    {{< book/asm op="JSR" param="<a href='../talk/'>TALK</a>" >}}
+    {{< book/asm op="LDA" param="#7" >}}
+    {{< book/asm op="JSR" param="TKSA" >}}
+    {{< /book/sourceCode >}}
+
+</div>
