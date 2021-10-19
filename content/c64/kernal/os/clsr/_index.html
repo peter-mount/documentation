@@ -1,0 +1,24 @@
+---
+type: "manual"
+title: "CLSR"
+linkTitle: "CLSR"
+description: "Clear the screen"
+subtopic: "screen"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "CLSR"
+      addr: "E544"
+      title: "Clear the screen"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine sets up the screen line link table (0x00D9&hellip;0x00F2).
+        It then clears the screen line by line using the <a href="../clrln/">CLRLN</a> routine.
+        Once that's completed, it then homes the cursor to the top left.
+    </p>
+    <div class="alert-warning">
+        This is not an official documented Kernal entry point but is listed in the C64 ROM disassembly.
+    </div>
+</div>
