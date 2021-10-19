@@ -12,24 +12,26 @@ api:
       addr: "FFDB"
       title: "Set system clock"
 ---
-<p>
-    A system clock is maintained by an interrupt routine that updates the clock every 1/60th of a second (one "jiffy").
-    The clock is three bytes long, which gives it the capability to count up to 5,184,000 jiffies (24 hours).
-    At that point the clock resets to zero.
-</p>
-<p>
-    Before calling this routine to set the clock,
-    the accumulator must contain the most significant byte,
-    the X index register the next most significant byte,
-    and the Y index register the least significant byte of the initial time setting (in jiffies).
-</p>
-<p>
-</p>
-<p>Example</p>
-<pre>
-                        ; Set clock to 10 minutes = 600 seconds = 3600 jiffies
-        LDA #0          ; Most significant byte
-        LDX #>3600
-        LDY #<3600      ; Least significant byte
-        JSR SETTIM
-</pre>
+<div class="printPageBreakAvoid">
+    <p>
+        A system clock is maintained by an interrupt routine that updates the clock every 1/60th of a second (one
+        "jiffy").
+        The clock is three bytes long, which gives it the capability to count up to 5,184,000 jiffies (24 hours).
+        At that point the clock resets to zero.
+    </p>
+    <p>
+        Before calling this routine to set the clock,
+        the accumulator must contain the most significant byte,
+        the X index register the next most significant byte,
+        and the Y index register the least significant byte of the initial time setting (in jiffies).
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="setClock" comment="Set clock to 10 minutes = 600 seconds = 3600 jiffies" >}}
+    {{< book/asm op="LDA" param="#0" comment="Most significant byte" >}}
+    {{< book/asm op="LDX" param="#&amp;gt;3600" >}}
+    {{< book/asm op="LDY" param="#&amp;lt;3600" comment="Least significant byte" >}}
+    {{< book/asm op="JMP" param="SETTIM" >}}
+    {{< /book/sourceCode >}}
+
+</div>

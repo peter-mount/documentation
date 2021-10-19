@@ -29,6 +29,20 @@ api:
         BEQ stopPressed     ; STOP is pressed
 </pre>
 
+{{< book/sourceCode title="Example:">}}
+{{< book/asm comment="Check for STOP key pressed" >}}
+{{< book/asm op="JSR" param="<a href=''../udtim/'>UDTIM</a>" comment="Update timer which also scans for STOP" >}}
+{{< book/asm op="JSR" param="STOP" >}}
+{{< book/asm op="BNE" param="stopNotDown" >}}
+{{< book/asm op="JMP" param="stopDown" comment="Jump to code to handle STOP" >}}
+{{< book/asm label="stopNotDown" comment="Continue further processing" >}}
+{{< /book/sourceCode >}}
+
+<p>
+  In the above example if the STOP key is pressed we jump to the method <code>stopDown</code>.
+  This method could reset your application, cancelling some lengthy operation.
+</p>
+
 <h2>Check for other keys</h2>
 <p>
   If the stop key is not pressed then the z flag will be clear and the accumulator will be set to one of the following

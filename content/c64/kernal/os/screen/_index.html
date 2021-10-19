@@ -15,11 +15,16 @@ api:
       "x": "Max columns on text screen"
       "y": "Max rows on text screen"
 ---
-<p>This routine returns the format of the screen, e.g., 40 columns in X and 25 lines in Y. The routine can be used to determine what machine a program is running on. This function has been implemented on the Commodore 64 to help upward compatibility of your programs.</p>
+<div class="printPageBreakAvoid">
+  <p>
+    This routine returns the format of the screen, e.g., 40 columns in X and 25 lines in Y.
+    The routine can be used to determine what machine a program is running on.
+    This function has been implemented on the Commodore 64 to help upward compatibility of your programs.
+  </p>
 
-<p>Example:</p>
-<pre>
-        JSR SCREEN
-        STX MAXCOL
-        STY MAXROW
-</pre>
+{{< book/sourceCode title="Example:">}}
+{{< book/asm op="JSR" param="SCREEN" >}}
+{{< book/asm op="STX" param="MAXCOL" >}}
+{{< book/asm op="STY" param="MAXROW" >}}
+{{< /book/sourceCode >}}
+</div>

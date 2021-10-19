@@ -13,54 +13,56 @@ api:
       indirect: "0330"
       title: "Load memory from a device"
 ---
-<p>
-    This routine LOADs data bytes from any input device directly into the memory.
-    It can also be used for a verify operation, comparing data from a device with the data already in memory, while leaving the data stored in RAM unchanged.
-</p>
+<div class="printPageBreakAvoid">
+    <p>
+        This routine LOADs data bytes from any input device directly into the memory.
+        It can also be used for a verify operation, comparing data from a device with the data already in memory, while
+        leaving the data stored in RAM unchanged.
+    </p>
 
-<p>
-    To use, you first need to call <a href="../setlfs/">SETLFS</a> to set the device to save to.
-    Then <a href="../setnam/">SETNAM</a> must be called to set the filename.
-</p>
+    <p>
+        To use, you first need to call <a href="../setlfs/">SETLFS</a> to set the device to save to.
+        Then <a href="../setnam/">SETNAM</a> must be called to set the filename.
+    </p>
 
-<p>
-    The accumulator must be set to 0 for a load or 1 for a verify operation.
-</p>
-<p>
-    If the input device is opened with a secondary address of 0, the header information from the device is ignored.
-    In this case the X &amp; Y registers must contain the starting address for the load.
-</p>
-<p>
-    With a secondary address of 1 the data is loaded into memory starting at the location specified by the header.
-</p>
-<p>
-    This routine returns the highest address of the data loaded on exit.
-</p>
+    <p>
+        The accumulator must be set to 0 for a load or 1 for a verify operation.
+    </p>
+    <p>
+        If the input device is opened with a secondary address of 0, the header information from the device is ignored.
+        In this case the X &amp; Y registers must contain the starting address for the load.
+    </p>
+    <p>
+        With a secondary address of 1 the data is loaded into memory starting at the location specified by the header.
+    </p>
+    <p>
+        This routine returns the highest address of the data loaded on exit.
+    </p>
 
-<div class="alert-warning">
-    You cannot load from devices 0 (keyboard), 2 (RS-232) or 3 (Screen).
+    <div class="alert-warning">
+        You cannot load from devices 0 (keyboard), 2 (RS-232) or 3 (Screen).
+    </div>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="fileName" op="EQUS" param="\"TESTCARD\"" comment="Filename to load" >}}
+    {{< book/asm label="fileNameEnd" >}}
+    {{< book/asm >}}
+    {{< book/asm label="loadFile" op="LDA" param="#8" comment="Logical File Number" >}}
+    {{< book/asm op="LDX" param="#8" comment="Device 8 = Disk" >}}
+    {{< book/asm op="LDY" param="#1" comment="Secondary address 1 = Use address stored in the file" >}}
+    {{< book/asm op="JSR" param="<a href='../setlfs'>SETLFS</a>" >}}
+    {{< book/asm >}}
+    {{< book/asm op="LDA" param="#fileNameEnd-fileName" comment="length of fileName" >}}
+    {{< book/asm op="LDX" param="#&amp;lt;fileName" comment="Address if fileName" >}}
+    {{< book/asm op="LDY" param="#&amp;gt;fileName" >}}
+    {{< book/asm op="JSR" param="<a href='../setnam/'>SETNAM</a>" >}}
+    {{< book/asm >}}
+    {{< book/asm op="LDA" param="#0" comment="0=Load operation" >}}
+    {{< book/asm op="JSR" param="LOAD" >}}
+    {{< book/asm op="STX" param="endAddress" comment="Optional, save address after the loaded data" >}}
+    {{< book/asm op="STY" param="endAddress+1" >}}
+    {{< book/asm op="RTS" >}}
+    {{< book/asm >}}
+    {{< book/asm label="endAddress" op="EQUW" param="0" comment="Address after our loaded data" >}}
+    {{< /book/sourceCode >}}
 </div>
-
-<p>Example:</p>
-<pre>
-        LDA #8                      ; Logical File Number
-        LDX #8                      ; Device 8 = Disk
-        LDY #1                      ; Secondary address 1 = Use address stored in the file
-        JSR <a href="../setlfs/">SETLFS</a>
-
-        LDA #fileNameEnd-fileName   ; Length of fileName
-        LDX #&lt;fileName              ; Address of fileName
-        LDY #&gt;fileName
-        JSR <a href="../setnam/">SETNAM</a>
-
-        LDA #0                      ; Load operation
-        JSR LOAD                    ; Load file
-
-        STX endAddress              ; Optional, save address after the loaded data
-        STY endAddress+1
-        RTS
-
-.fileName                           ; Filename to load
-        EQUS "TESTCARD"
-.fileNameEnd
-</pre>

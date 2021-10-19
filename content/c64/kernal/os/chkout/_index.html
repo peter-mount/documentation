@@ -23,9 +23,9 @@ api:
         If screen output is desired, and there are no other output channels already defined, then calls to this routine, and to the <a href="../open/">OPEN</a> routine are not needed.
     </p>
 
-    <p>Example:</p>
-    <pre>
-        LDX #3          ; Define logical file 3 as an output channel
-        JSR CHKOUT
-    </pre>
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDX" param="#3" comment="Define logical file 3 as an output channel" >}}
+    {{< book/asm op="JSR" param="CHKOUT" >}}
+    {{< /book/sourceCode >}}
+
 </div>

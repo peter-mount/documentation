@@ -12,32 +12,38 @@ api:
       addr: "FFD2"
       title: "Output a character"
 ---
-<p>
-    This routine outputs a character to an already opened channel.
-    Use the <a href="../open/">OPEN</a> and <a href="../chkout">CHKOUT</a> routines to set up the output channel before calling this routine.
-    If this call is omitted, data is sent to the default output device (number 3, the screen).
-</p>
-<p>
-    The data byte to be output is loaded into the accumulator, and this routine is called.
-    The data is then sent to the specified output device.
-    The channel is left open after the call.
-</p>
+<div class="printPageBreakAvoid">
+    <p>
+        This routine outputs a character to an already opened channel.
+        Use the <a href="../open/">OPEN</a> and <a href="../chkout">CHKOUT</a> routines to set up the output channel
+        before calling this routine.
+        If this call is omitted, data is sent to the default output device (number 3, the screen).
+    </p>
+    <p>
+        The data byte to be output is loaded into the accumulator, and this routine is called.
+        The data is then sent to the specified output device.
+        The channel is left open after the call.
+    </p>
 
-<div class="alert-warning">
-    <p>
-        Care must be taken when using this routine to send data to a specific serial device since data will be sent to
-        all open output channels on the bus.
-    </p>
-    <p>
-        Unless this is desired, all open output channels on the serial bus other than the intended destination channel
-        must be closed by a call to the <a href="../clichn">CLRCHN</a> routine.
-    </p>
+    <div class="alert-warning">
+        <p>
+            Care must be taken when using this routine to send data to a specific serial device since data will be sent
+            to
+            all open output channels on the bus.
+        </p>
+        <p>
+            Unless this is desired, all open output channels on the serial bus other than the intended destination
+            channel
+            must be closed by a call to the <a href="../clrchn">CLRCHN</a> routine.
+        </p>
+    </div>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDX" param="#4" comment="Logical file 4" >}}
+    {{< book/asm op="JSR" param="<a href='../chkout/'>CHKOUT</a>" comment="Open channel 4 for output">}}
+    {{< book/asm op="LDA" param="#'A'" >}}
+    {{< book/asm op="JSR" param="CHROUT" comment="Send character">}}
+    {{< book/asm op="JMP" param="<a href='../clrchn/'>CLRCHN</a>" comment="Clear all I/O channels so future output goes to screen">}}
+    {{< /book/sourceCode >}}
+
 </div>
-
-<p>Example:</p>
-<pre>
-        LDX #4              ; Logical file #4
-        JSR <a href="../chkout/">CHKOUT</a>          ; Open channel 4 for output
-        LDA #'A'
-        JSR CHROUT          ; Send character
-</pre>

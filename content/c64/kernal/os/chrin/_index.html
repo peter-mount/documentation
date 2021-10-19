@@ -44,6 +44,17 @@ api:
             BNE readLoop        ; Loop back for next character
             RTS
 </pre>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="readLine" op="LDY" param="#0" comment="Prepare Y register to store data" >}}
+    {{< book/asm label="readLoop" op="JSR" param="CHRIN" comment="Get next character" >}}
+    {{< book/asm op="STA" param="BUF,Y" comment="Store in BUF (0x200 89 byte basic input buffer)">}}
+    {{< book/asm op="INY" >}}
+    {{< book/asm op="CMP" param="#0x0D" comment="Check for Carriage Return">}}
+    {{< book/asm op="BNE" param="readLoop" comment="Loop back to the next character" >}}
+    {{< book/asm op="RTS" >}}
+    {{< /book/sourceCode >}}
+
     <div class="alert-warning">
         <p>
             This example does no bounds checking so if more than 89 characters are read
@@ -51,6 +62,7 @@ api:
         </p>
     </div>
 </div>
+
 <div class="printPageBreakAvoid">
     <h2>Reading from other devices</h2>
     <p>

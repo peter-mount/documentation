@@ -23,9 +23,9 @@ api:
         If you want to use the input from the keyboard, and no other input channels are opened, then the calls to this routine, and to the <a href="../open/">OPEN</a> routine are not needed.
     </p>
 
-    <p>Example:</p>
-    <pre>
-        LDX #2          ; Define logical file 2 as an input channel
-        JSR CHKIN
-    </pre>
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDX" param="#2" comment="Define logical file 2 as an input channel" >}}
+    {{< book/asm op="JSR" param="CHKIN" >}}
+    {{< /book/sourceCode >}}
+
 </div>

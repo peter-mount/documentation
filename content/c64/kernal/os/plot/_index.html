@@ -18,32 +18,44 @@ api:
       "x": "Current row if carry set"
       "y": "Current column if carry set"
 ---
-<p>
-  This routine either reads or sets the text cursor's location.
-</p>
+<div class="printPageBreakAvoid">
+    <p>
+        This routine either reads or sets the text cursor's location.
+    </p>
 
-<h2>Reading cursor location</h2>
-<p>
-  A call to this routine with the accumulator carry flag set loads the current position of the cursor on the screen (in X,Y coordinates) into the Y and X registers.
-  Y is the column number of the cursor location (0-39),
-  and X is the row number of the location of the cursor (0-24).
-</p>
-<p>Example:</p>
-<pre>
-        SEC           ; Set Carry flag to read the text position
-        JSR PLOT
-        STX curRow    ; X is the row
-        STY curCol    ; Y is the column
-</pre>
+    <h2>Reading cursor location</h2>
+    <p>
+        A call to this routine with the accumulator carry flag set loads the current position of the cursor on the
+        screen (in X,Y coordinates) into the Y and X registers.
+        Y is the column number of the cursor location (0-39),
+        and X is the row number of the location of the cursor (0-24).
+    </p>
 
-<h2>Setting cursor location</h2>
-<p>
-  A call with the carry bit clear moves the cursor to X,Y as determined by the Y and X registers.
-</p>
-<p>Example:</p>
-<pre>
-        LDX #10       ; Set cursor to row 10 column 5
-        LDY #5
-        CLC           ; Clear Carry flag to set the position
-        JSR PLOT
-</pre>
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="getCurPos" comment="Get current cursor position" >}}
+    {{< book/asm op="SEC" comment="Set Carry to read the text position" >}}
+    {{< book/asm op="JSR" param="PLOT" >}}
+    {{< book/asm op="STX" param="FREKZP" comment="Store the Row (0..24)">}}
+    {{< book/asm op="STY" param="FREKZP+1" comment="Store the Column (0..39)">}}
+    {{< book/asm op="RTS" >}}
+    {{< /book/sourceCode >}}
+    {{< book/c64/frekzp >}}
+
+</div>
+
+<div class="printPageBreakAvoid">
+    <h2>Setting cursor location</h2>
+    <p>
+        A call with the carry bit clear moves the cursor to X,Y as determined by the Y and X registers.
+    </p>
+    <p>Example:</p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="setCurPos" comment="Set the cursor position to Row 10 Column 5" >}}
+    {{< book/asm op="CLC" comment="Clear Carry to set the text position" >}}
+    {{< book/asm op="LDX" param="#10" comment="We want Row 10">}}
+    {{< book/asm op="LDY" param="#5" comment="Column 5">}}
+    {{< book/asm op="JMP" param="PLOT" >}}
+    {{< /book/sourceCode >}}
+
+</div>

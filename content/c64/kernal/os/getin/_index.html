@@ -12,26 +12,30 @@ api:
       addr: "FFE4"
       title: "Get a character"
 ---
-<p>
-    If the input channel is the keyboard, this subroutine removes one character from the keyboard queue and returns it
-    as an ASCII value in the accumulator.
-    If the queue is empty, the value returned in the accumulator will be zero.
-</p>
-<p>
-    Characters are put into the queue automatically by an interrupt driven keyboard scan routine which calls the
-    <a href="../scnkey/">SCNKEY</a> routine.
-    The keyboard buffer can hold up to ten characters.
-    After the buffer is filled, additional characters are ignored until at least one character has been removed from the
-    queue.
-</p>
-<p>
-    If the channel is RS-232, then only the A register is used and a single character is returned.
-    See <a href="../readst/">READST</a> to check validity.
-</p>
-<p>
-    If the channel is serial, cassette, or screen, call <a href="../basin/">BASIN</a> routine.
-</p>
-<h4>See also</h4>
-<p>
-    <a href="../chkin/">CHKIN</a>, <a href="../open/">OPEN</a>, <a href="../basin/">READST</a>
-</p>
+<div class="printPageBreakAvoid">
+    <p>
+        If the input channel is the keyboard, this subroutine removes one character from the keyboard queue and returns
+        it
+        as an ASCII value in the accumulator.
+        If the queue is empty, the value returned in the accumulator will be zero.
+    </p>
+    <p>
+        Characters are put into the queue automatically by an interrupt driven keyboard scan routine which calls the
+        <a href="../scnkey/">SCNKEY</a> routine.
+        The keyboard buffer can hold up to ten characters.
+        After the buffer is filled, additional characters are ignored until at least one character has been removed from
+        the
+        queue.
+    </p>
+    <p>
+        If the channel is RS-232, then only the A register is used and a single character is returned.
+        See <a href="../readst/">READST</a> to check validity.
+    </p>
+    <p>
+        If the channel is serial, cassette, or screen, call <a href="../basin/">BASIN</a> routine.
+    </p>
+    <h4>See also</h4>
+    <p>
+        <a href="../chkin/">CHKIN</a>, <a href="../open/">OPEN</a>, <a href="../basin/">READST</a>
+    </p>
+</div>

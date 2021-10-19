@@ -1,7 +1,7 @@
 ---
 type: "manual"
 title: "CLOSE"
-linkTitle: "Close"
+linkTitle: "CLOSE"
 description: "Close a logical file"
 weight: 0xFFC3
 categories:
@@ -18,9 +18,9 @@ api:
         This routine is called after the accumulator is loaded with the logical file number to be closed - the same number used when the file was opened using the <a href="../open/">OPEN</a> routine.
     </p>
 
-    <p>Example:</p>
-    <pre>
-            LDA #15         ; Close logical file 15
-            JSR CLOSE
-    </pre>
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#15" comment="Close logical file 15" >}}
+    {{< book/asm op="JSR" param="CLOSE" >}}
+    {{< /book/sourceCode >}}
+
 </div>

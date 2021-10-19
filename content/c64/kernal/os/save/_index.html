@@ -13,45 +13,42 @@ api:
       indirect: "0332"
       title: "Save memory to a device"
 ---
-<p>
-    This routine saves a section of memory to a device.
-</p>
+<div class="printPageBreakAvoid">
+    <p>
+        This routine saves a section of memory to a device.
+    </p>
 
-<p>
-    To use, you first need to call <a href="../setlfs/">SETLFS</a> to set the device to save to.
-    Then <a href="../setnam/">SETNAM</a> must be called to set the filename.
-</p>
-<p>
-    Finally you store the start address in 2 bytes of zero page memory,
-    set X & Y to point to the address immediately after the data to save,
-    and A to the offset within zeropage where the start address was stored.
-</p>
-<p>
-    Any errors are reported via the <a href="../setnam/">READST</a> routine.
-</p>
+    <p>
+        To use, you first need to call <a href="../setlfs/">SETLFS</a> to set the device to save to.
+        Then <a href="../setnam/">SETNAM</a> must be called to set the filename.
+    </p>
+    <p>
+        Finally you store the start address in 2 bytes of zero page memory,
+        set X & Y to point to the address immediately after the data to save,
+        and A to the offset within zeropage where the start address was stored.
+    </p>
+    <p>
+        Any errors are reported via the <a href="../setnam/">READST</a> routine.
+    </p>
 
-<div class="alert-warning">
-    You cannot save to devices 0 (keyboard), 2 (RS-232) or 3 (Screen).
+    <div class="alert-warning">
+        You cannot save to devices 0 (keyboard), 2 (RS-232) or 3 (Screen).
+    </div>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm label="saveFile" op="LDA" param="#1" comment="Select device 1 = Cassette" >}}
+    {{< book/asm op="JSR" param="<a href='../setlfs'>SETLFS</a>" >}}
+    {{< book/asm op="LDA" param="#0" comment="Set no file name, valid for cassette only" >}}
+    {{< book/asm op="JSR" param="<a href='../setnam'>SETNAM</a>" >}}
+    {{< book/asm op="LDA" param="#&amp;lt;startAddress" comment="Start address low byte" >}}
+    {{< book/asm op="STA" param="FREEKZP" comment="Store in Zero Page." >}}
+    {{< book/asm op="LDA" param="#&amp;gt;startAddress" comment="Start address high byte" >}}
+    {{< book/asm op="STA" param="FREEKZP+1" >}}
+    {{< book/asm op="LDX" param="#&amp;lt;endAddress" comment="End address low byte" >}}
+    {{< book/asm op="LDY" param="#&amp;gt;endAddress" comment="End address high byte" >}}
+    {{< book/asm op="LDA" param="#&amp;lt;FREEKZP" comment="Zero page offset to FREEKZP" >}}
+    {{< book/asm op="JMP" param="SAVE" comment="Save the file" >}}
+    {{< /book/sourceCode >}}
+    {{< book/c64/frekzp >}}
+
 </div>
-
-<p>Example:</p>
-<pre>
-        LDA #1                  ; Select device 1 = Cassette
-        JSR <a href="../setlfs/">SETLFS</a>
-
-        LDA #0                  ; Set no file name, valid for cassette only
-        JSR <a href="../setnam/">SETNAM</a>
-
-        LDA #&lt;startAddress      ; Start address low byte
-        STA FREKZP              ; Store in zero page
-        LDA #&gt;startAddress      ; Start address high byte
-        STA FREKZP+1
-        LDX #&lt;endAddress        ; End address of save, low byte
-        LDY #&gt;endAddress        ; End address of save, high byte
-        LDA #&gt;FREKZP            ; Zero page offset to FREKZP
-        JSR SAVE
-</pre>
-<p>
-    Note: FREKZP (0x00FB) in this example is a 4 byte block of zeropage memory unused by Basic or Kernal and is
-    available for user code.
-</p>

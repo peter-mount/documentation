@@ -1,0 +1,6 @@
+<div class="sourceLine">
+    {{- with .Get "label"}}<span class="label">{{.}}</span>{{end -}}
+    {{- with .Get "op"}}<span class="op">{{.}}</span>{{end -}}
+    {{- with .Get "param"}}<span class="param">{{. | htmlUnescape | safeHTML}}</span>{{end -}}
+    {{- with .Get "comment"}}<span class="comment">{{.}}</span>{{end -}}
+</div>
