@@ -1,0 +1,21 @@
+---
+type: "manual"
+title: "CLALL"
+linkTitle: "CLALL"
+description: "Close all files"
+weight: 0xFFE7
+categories:
+  - c64
+  - kernalAPI
+api:
+  - name: "CLALL"
+    addr: "FFE7"
+    title: "Close all files"
+---
+<p>
+  This routine closes all open files.
+  When this routine is called, the pointers into the open file table are reset, closing all files.
+</p>
+<p>
+  Also, the CLRCHN routine is automatically called to reset the I/O channels.
+</p>
