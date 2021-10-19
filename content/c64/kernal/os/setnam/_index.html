@@ -1,0 +1,42 @@
+---
+type: "manual"
+title: "SETNAM"
+linkTitle: "SETNAM"
+description: "Set file name"
+weight: 0xFFBD
+subtopic: "file"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SETNAM"
+      addr: "FFBD"
+      title: "Set file name"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine is used to set up the file name for the <a href="../open/">OPEN</a>,
+        <a href="../save/">SAVE</a>, or <a href="../load/">LOAD</a> routines.
+    </p>
+    <p>
+        The accumulator must be loaded with the length of the file name.
+        The X and Y registers must be loaded with the address of the file name, in standard 6502 low-byte/high-byte format.
+    </p>
+    <p>
+        The address can be any valid memory address in the system where a string of characters for the file name is stored.
+    </p>
+    <p>
+        If no file name is desired, the accumulator must be set to 0, representing a zero file length.
+        The X and Y registers can be set to any memory address in that case.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#filenameEnd-filename" comment="Length of filename" >}}
+    {{< book/asm op="LDX" param="#&amp;lt;filename" comment="Address of filename" >}}
+    {{< book/asm op="LDY" param="#&amp;gt;filename">}}
+    {{< book/asm op="JSR" param="SETNAM" comment="Set filename">}}
+    {{< book/asm label="filename" op="EQUS" param="\"I/O\"" comment="Filename" >}}
+    {{< book/asm label="filenameEnd" >}}
+    {{< /book/sourceCode >}}
+
+</div>

@@ -1,0 +1,83 @@
+---
+type: "manual"
+title: "SETLFS"
+linkTitle: "SETLFS"
+description: "Setup a logical file"
+weight: 0xFFBA
+subtopic: "file"
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SETLFS"
+      addr: "FFBA"
+      title: "Setup a logical file"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        This routine sets the logical file number, device address, and secondary address (command number) for other
+        KERNAL routines.
+    </p>
+    <p>
+        The logical file number is used by the system as a key to the file table created by the OPEN file routine.
+        Device addresses can range from 0 to 31. The following codes are used by the Commodore 64 to stand for the CBM
+        devices listed below:
+    </p>
+
+    <div class="container">
+        <table class="generic">
+            <thead>
+            <tr>
+                <th>Address</th>
+                <th>Device</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>0</td>
+                <td>Keyboard</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Cassette / Datassette</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>RS232</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Screen</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Printer</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Disk drive</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Disk drive</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p>
+        Device numbers 4 or greater automatically refer to devices on the serial bus.
+    </p>
+    <p>
+        A command to the device is sent as a secondary address on the serial bus after the device number is sent during the serial attention handshaking sequence.
+        If no secondary address is to be sent, the Y index register should be set to 255.
+    </p>
+
+    {{< book/sourceCode title="Example:">}}
+    {{< book/asm op="LDA" param="#15" comment="Logical file number" >}}
+    {{< book/asm op="LDX" param="#8" comment="Device number, 8 = disk" >}}
+    {{< book/asm op="LDY" param="#15" comment="Secondary address">}}
+    {{< book/asm op="JSR" param="SETLFS" comment="Setup logical file">}}
+    {{< /book/sourceCode >}}
+
+</div>
