@@ -1,0 +1,57 @@
+---
+type: "manual"
+title: "SAVE"
+linkTitle: "SAVE"
+description: "Save memory to a device"
+weight: 0xFFD8
+categories:
+    - c64
+    - kernalAPI
+api:
+    - name: "SAVE"
+      addr: "FFD8"
+      indirect: "0332"
+      title: "Save memory to a device"
+---
+<p>
+    This routine saves a section of memory to a device.
+</p>
+
+<p>
+    To use, you first need to call <a href="../setlfs/">SETLFS</a> to set the device to save to.
+    Then <a href="../setnam/">SETNAM</a> must be called to set the filename.
+</p>
+<p>
+    Finally you store the start address in 2 bytes of zero page memory,
+    set X & Y to point to the address immediately after the data to save,
+    and A to the offset within zeropage where the start address was stored.
+</p>
+<p>
+    Any errors are reported via the <a href="../setnam/">READST</a> routine.
+</p>
+
+<div class="alert-warning">
+    You cannot save to devices 0 (keyboard), 2 (RS-232) or 3 (Screen).
+</div>
+
+<p>Example:</p>
+<pre>
+        LDA #1                  ; Select device 1 = Cassette
+        JSR <a href="../setlfs/">SETLFS</a>
+
+        LDA #0                  ; Set no file name, valid for cassette only
+        JSR <a href="../setnam/">SETNAM</a>
+
+        LDA #&lt;startAddress      ; Start address low byte
+        STA FREKZP              ; Store in zero page
+        LDA #&gt;startAddress      ; Start address high byte
+        STA FREKZP+1
+        LDX #&lt;endAddress        ; End address of save, low byte
+        LDY #&gt;endAddress        ; End address of save, high byte
+        LDA #&gt;FREKZP            ; Zero page offset to FREKZP
+        JSR SAVE
+</pre>
+<p>
+    Note: FREKZP (0x00FB) in this example is a 4 byte block of zeropage memory unused by Basic or Kernal and is
+    available for user code.
+</p>
