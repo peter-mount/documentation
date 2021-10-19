@@ -228,3 +228,20 @@ table.resources {
     }
   }
 }
+
+.sectionIndex {
+    h4 {
+        border-bottom: 1px solid black;
+    }
+    table {
+        th {
+            text-align: left;
+        }
+        th, td {
+            vertical-align: top;
+        }
+        td {
+            padding-left: 0.25em;
+        }
+    }
+}

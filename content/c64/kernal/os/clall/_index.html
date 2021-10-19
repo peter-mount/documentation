@@ -2,15 +2,16 @@
 type: "manual"
 title: "CLALL"
 linkTitle: "CLALL"
-description: "Close all files"
+description: "Close all open files"
 weight: 0xFFE7
+subtopic: "file"
 categories:
   - c64
   - kernalAPI
 api:
   - name: "CLALL"
     addr: "FFE7"
-    title: "Close all files"
+    title: "Close all open files"
 ---
 <div class="printPageBreakAvoid">
   <p>
@@ -18,6 +19,6 @@ api:
     When this routine is called, the pointers into the open file table are reset, closing all files.
   </p>
   <p>
-    Also, the CLRCHN routine is automatically called to reset the I/O channels.
+    Also, the <a href="../clrchn/">CLRCHN</a> routine is automatically called to reset the I/O channels.
   </p>
 </div>
