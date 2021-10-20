@@ -24,7 +24,7 @@ no_list: true
                     <th>Normal Use</th>
                     <th>Alternate Use</th>
                     <th>All RAM mode</th>
-                    <th>Cartridge</th>
+                    <th>ROM Cartridge</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,33 +104,56 @@ no_list: true
                 </tr>
                 <tr>
                     <td>0800</td>
-                    <td colspan="4">Application memory</td>
+                    <td rowspan="2" colspan="3">38K Application memory</td>
+                    <td>30K Application memory</td>
                 </tr>
                 <tr>
-                    <td rowspan="4"></td>
+                    <td></td>
                     <td>8000</td>
-                    <td rowspan="4">BASIC ROM</td>
-                    <td rowspan="4" colspan="2">8K RAM</td>
-                    <td rowspan="2">Cart ROM Low</td>
+                    <td>Cart ROM Low</td>
                 </tr>
-                <tr><td>9000</td></tr>
                 <tr>
+                    <td></td>
                     <td>A000</td>
-                    <td rowspan="2">Cart ROM High</td>
+                    <td>BASIC ROM</td>
+                    <td colspan="2">8K RAM</td>
+                    <td>Cart ROM High</td>
                 </tr>
-                <tr><td>B000</td></tr>
                 <tr>
                     <td></td>
                     <td>C000</td>
                     <td colspan="4">4K RAM</td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td rowspan="7"></td>
                     <td>D000</td>
-                    <td>Memory mapped I/O devices</td>
-                    <td>Character ROM</td>
-                    <td>4K RAM</td>
-                    <td>As other columns</td>
+                    <td>VIC-II Registers</td>
+                    <td rowspan="7">Character ROM</td>
+                    <td rowspan="7">4K RAM</td>
+                    <td rowspan="7">As other columns</td>
+                </tr>
+                <tr>
+                    <td>D400</td>
+                    <td>SID Registers</td>
+                </tr>
+                <tr>
+                    <td>D800</td>
+                    <td>Color RAM</td>
+                </tr>
+                <tr>
+                    <td>DC00</td>
+                    <td>CIA 1</td>
+                </tr>
+                <tr>
+                    <td>DD00</td>
+                    <td>CIA 2</td>
+                </tr>
+                <tr>
+                    <td>DE00</td>
+                    <td rowspan="2">Expansion I/O</td>
+                </tr>
+                <tr>
+                    <td>DF00</td>
                 </tr>
                 <tr>
                     <td rowspan="2"><a href="../os/">Kernal</a></td>
@@ -139,7 +162,7 @@ no_list: true
                     <td rowspan="2" colspan="2">8K RAM</td>
                     <td rowspan="2">Cart ROM High</td>
                 </tr>
-                <tr><td>9000</td></tr>
+                <tr><td>F000</td></tr>
                 </tbody>
             </table>
         </div>
@@ -162,6 +185,10 @@ no_list: true
                     </li>
                     <li>
                         Memory in pages 00&hellip;7F is always RAM
+                    </li>
+                    <li>
+                        A cartridge can provide rom in 3 8K locations,
+                        although only 2 8K banks can be made visible to the processor at any time.
                     </li>
                     <li>
                         The default location of the screen & sprites is in pages 04&hellip;07.
