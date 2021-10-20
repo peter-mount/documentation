@@ -2,9 +2,11 @@
 type: "manual"
 title: "Memory Map"
 linkTitle: "Memory Map"
+description: "Commodore 64 Memory Map"
 weight: 19
 categories:
   - c64
+  - memoryMap
 no_list: true
 ---
 <div class="printPageBreakAvoid">
@@ -21,106 +23,123 @@ no_list: true
                     <th>Address</th>
                     <th>Normal Use</th>
                     <th>Alternate Use</th>
+                    <th>All RAM mode</th>
+                    <th>Cartridge</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td rowspan="6"><a href="00/">Page 00</a></td>
                     <td>0000</td>
-                    <td colspan="2">6510 IO DDR</td>
+                    <td colspan="4">6510 IO DDR</td>
                 </tr>
                 <tr>
                     <td>0001</td>
-                    <td colspan="2">6510 IO Port</td>
+                    <td colspan="4">6510 IO Port</td>
                 </tr>
                 <tr>
                     <td>0002</td>
-                    <td colspan="2">Free for application use</td>
+                    <td colspan="4">Free for application use</td>
                 </tr>
                 <tr>
                     <td>0003</td>
-                    <td colspan="2">Kernal & BASIC Zero Page</td>
+                    <td colspan="4">Kernal & BASIC Zero Page</td>
                 </tr>
                 <tr>
                     <td>00FB</td>
-                    <td colspan="2">User Zero Page</td>
+                    <td colspan="4">User Zero Page</td>
                 </tr>
                 <tr>
                     <td>00FF</td>
-                    <td colspan="2">BASIC Temp Area</td>
+                    <td colspan="4">BASIC Temp Area</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>0100</td>
-                    <td colspan="2">Processor Stack</td>
+                    <td colspan="4">Processor Stack</td>
                 </tr>
                 <tr>
                     <td rowspan="4"><a href="02/">Page 02</a></td>
                     <td>0200</td>
-                    <td colspan="2">BASIC editor input buffer</td>
+                    <td colspan="4">BASIC editor input buffer</td>
                 </tr>
                 <tr>
                     <td>0259</td>
-                    <td colspan="2">Kernal file tables</td>
+                    <td colspan="4">Kernal file tables</td>
                 </tr>
                 <tr>
                     <td>0277</td>
-                    <td colspan="2">Kernal Workspace</td>
+                    <td colspan="4">Kernal Workspace</td>
                 </tr>
                 <tr>
                     <td>02A7</td>
-                    <td colspan="2">Free for application use</td>
+                    <td colspan="4">Free for application use</td>
                 </tr>
                 <tr>
                     <td rowspan="5"><a href="03/">Page 03</a></td>
                     <td>0300</td>
-                    <td colspan="2">BASIC workspace</td>
+                    <td colspan="4">BASIC workspace</td>
                 </tr>
                 <tr>
                     <td>0314</td>
-                    <td colspan="2">Kernal Vector table</td>
+                    <td colspan="4">Kernal Vector table</td>
                 </tr>
                 <tr>
                     <td>0334</td>
-                    <td colspan="2">Application Vector table</td>
+                    <td colspan="4">Application Vector table</td>
                 </tr>
                 <tr>
                     <td>033C</td>
-                    <td colspan="2">Cassette I/O Buffer</td>
+                    <td colspan="4">Cassette I/O Buffer</td>
                 </tr>
                 <tr>
                     <td>03FC</td>
-                    <td colspan="2">Free for application use</td>
+                    <td colspan="4">Free for application use</td>
                 </tr>
                 <tr>
-                    <td rowspan="6"></td>
+                    <td rowspan="2"></td>
                     <td>0400</td>
                     <td>Default screen</td>
-                    <td>1K Free if screen is mapped elsewhere</td>
+                    <td colspan="3">1K Free if screen is mapped elsewhere</td>
                 </tr>
                 <tr>
                     <td>0800</td>
-                    <td colspan="2">Application memory</td>
+                    <td colspan="4">Application memory</td>
                 </tr>
                 <tr>
+                    <td rowspan="4"></td>
                     <td>8000</td>
-                    <td>BASIC ROM</td>
-                    <td>8K RAM</td>
+                    <td rowspan="4">BASIC ROM</td>
+                    <td rowspan="4" colspan="2">8K RAM</td>
+                    <td rowspan="2">Cart ROM Low</td>
                 </tr>
+                <tr><td>9000</td></tr>
                 <tr>
+                    <td>A000</td>
+                    <td rowspan="2">Cart ROM High</td>
+                </tr>
+                <tr><td>B000</td></tr>
+                <tr>
+                    <td></td>
                     <td>C000</td>
-                    <td colspan="2">4K RAM</td>
+                    <td colspan="4">4K RAM</td>
                 </tr>
                 <tr>
+                    <td></td>
                     <td>D000</td>
                     <td>Memory mapped I/O devices</td>
                     <td>Character ROM</td>
+                    <td>4K RAM</td>
+                    <td>As other columns</td>
                 </tr>
                 <tr>
+                    <td rowspan="2"><a href="../os/">Kernal</a></td>
                     <td>E000</td>
-                    <td>KERNAL ROM</td>
-                    <td>8K RAM</td>
+                    <td rowspan="2"><a href="../os/">KERNAL</a> ROM</td>
+                    <td rowspan="2" colspan="2">8K RAM</td>
+                    <td rowspan="2">Cart ROM High</td>
                 </tr>
+                <tr><td>9000</td></tr>
                 </tbody>
             </table>
         </div>
@@ -131,6 +150,15 @@ no_list: true
                     <li>
                         The alternate use for a section of the memory map is selected by
                         bits 0&hellip;2 of the 6510 I/O port.
+                        <br/>
+                        Note bits 0 &amp; 1 must have at least 1 bit set.
+                        Both clear triggers All RAM mode.
+                    </li>
+                    <li>
+                        All RAM Mode is selected with bits 0&amp;1 of the 6510 I/O port set to 0.
+                        <br/>
+                        This mode exposes ram in the I/O area.
+                        It's not as useful due to it hiding the device I/O area.
                     </li>
                     <li>
                         Memory in pages 00&hellip;7F is always RAM
