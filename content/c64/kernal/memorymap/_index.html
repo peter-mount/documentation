@@ -5,8 +5,152 @@ linkTitle: "Memory Map"
 weight: 19
 categories:
   - c64
+no_list: true
 ---
 <div class="printPageBreakAvoid">
+    <p>
+        The following table shows the memory map for the Commodore 64.
+    </p>
 
+    <div class="container">
+        <div class="row">
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Docs</th>
+                    <th>Address</th>
+                    <th>Normal Use</th>
+                    <th>Alternate Use</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td rowspan="6"><a href="00/">Page 00</a></td>
+                    <td>0000</td>
+                    <td colspan="2">6510 IO DDR</td>
+                </tr>
+                <tr>
+                    <td>0001</td>
+                    <td colspan="2">6510 IO Port</td>
+                </tr>
+                <tr>
+                    <td>0002</td>
+                    <td colspan="2">Free for application use</td>
+                </tr>
+                <tr>
+                    <td>0003</td>
+                    <td colspan="2">Kernal & BASIC Zero Page</td>
+                </tr>
+                <tr>
+                    <td>00FB</td>
+                    <td colspan="2">User Zero Page</td>
+                </tr>
+                <tr>
+                    <td>00FF</td>
+                    <td colspan="2">BASIC Temp Area</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>0100</td>
+                    <td colspan="2">Processor Stack</td>
+                </tr>
+                <tr>
+                    <td rowspan="4"><a href="02/">Page 02</a></td>
+                    <td>0200</td>
+                    <td colspan="2">BASIC editor input buffer</td>
+                </tr>
+                <tr>
+                    <td>0259</td>
+                    <td colspan="2">Kernal file tables</td>
+                </tr>
+                <tr>
+                    <td>0277</td>
+                    <td colspan="2">Kernal Workspace</td>
+                </tr>
+                <tr>
+                    <td>02A7</td>
+                    <td colspan="2">Free for application use</td>
+                </tr>
+                <tr>
+                    <td rowspan="5"><a href="03/">Page 03</a></td>
+                    <td>0300</td>
+                    <td colspan="2">BASIC workspace</td>
+                </tr>
+                <tr>
+                    <td>0314</td>
+                    <td colspan="2">Kernal Vector table</td>
+                </tr>
+                <tr>
+                    <td>0334</td>
+                    <td colspan="2">Application Vector table</td>
+                </tr>
+                <tr>
+                    <td>033C</td>
+                    <td colspan="2">Cassette I/O Buffer</td>
+                </tr>
+                <tr>
+                    <td>03FC</td>
+                    <td colspan="2">Free for application use</td>
+                </tr>
+                <tr>
+                    <td rowspan="6"></td>
+                    <td>0400</td>
+                    <td>Default screen</td>
+                    <td>1K Free if screen is mapped elsewhere</td>
+                </tr>
+                <tr>
+                    <td>0800</td>
+                    <td colspan="2">Application memory</td>
+                </tr>
+                <tr>
+                    <td>8000</td>
+                    <td>BASIC ROM</td>
+                    <td>8K RAM</td>
+                </tr>
+                <tr>
+                    <td>C000</td>
+                    <td colspan="2">4K RAM</td>
+                </tr>
+                <tr>
+                    <td>D000</td>
+                    <td>Memory mapped I/O devices</td>
+                    <td>Character ROM</td>
+                </tr>
+                <tr>
+                    <td>E000</td>
+                    <td>KERNAL ROM</td>
+                    <td>8K RAM</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Notes</h3>
+                <ul>
+                    <li>
+                        The alternate use for a section of the memory map is selected by
+                        bits 0&hellip;2 of the 6510 I/O port.
+                    </li>
+                    <li>
+                        Memory in pages 00&hellip;7F is always RAM
+                    </li>
+                    <li>
+                        The default location of the screen & sprites is in pages 04&hellip;07.
+                        This can be reused if the screen is remapped in the VIC-II chip to an
+                        alternate location in memory.
+                    </li>
+                    <li>
+                        Writing to memory when a ROM is paged in will still write to the RAM.
+                        Only reading will get data from the ROM.
+                        <p>
+                            This is useful with BitMap screen mode as you can map the screen
+                            beneath the KERNAL rom as the VIC-II chip always sees RAM.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 

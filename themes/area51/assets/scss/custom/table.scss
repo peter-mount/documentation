@@ -127,6 +127,14 @@ td.nowrap {
     white-space: nowrap;
 }
 
+table.memoryMap {
+    th, td {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+}
+
+table.memoryMap,
 table.hexGrid {
     display: block;
     overflow-x: auto;
@@ -150,7 +158,8 @@ table.hexGrid {
     }
 
     // Left border on first column
-    th:first-child {
+    th:first-child,
+    td:first-child {
         border-left: 1px solid grey;
     }
 
