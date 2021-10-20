@@ -12,14 +12,16 @@
         <thead>
         <tr>
             <th>Address</th>
+            {{- if $hasLen -}}
             <th>Len</th>
-            {{- if $hasName}}
+            {{- end -}}
+            {{- if $hasName -}}
             <th>Name</th>
-            {{end -}}
+            {{- end -}}
             <th>Description</th>
-            {{- if $hasDefaultVal}}
+            {{- if $hasDefaultVal -}}
             <th>Default</th>
-            {{end -}}
+            {{- end -}}
         </tr>
         </thead>
         <tbody>
@@ -27,12 +29,12 @@
         <tr>
 
             <td {{- if isset . "offset"}} class="offset"{{end}}>{{.address}}</td>
-            {{- if $hasLen}}
+            {{- if $hasLen -}}
             <td>{{.length}}</td>
-            {{end -}}
-            {{- if $hasName}}
+            {{- end -}}
+            {{- if $hasName -}}
             <td>{{.name}}</td>
-            {{end -}}
+            {{- end -}}
             <td>
                 {{- .desc -}}
                 {{- with .note}}<div class="note">{{.}}</div>{{end -}}
@@ -47,9 +49,9 @@
                 </table>
                 {{- end -}}
             </td>
-            {{- if $hasDefaultVal}}
+            {{- if $hasDefaultVal -}}
             <td>{{.default}}</td>
-            {{end -}}
+            {{- end -}}
         </tr>
         {{- end -}}
         </tbody>
