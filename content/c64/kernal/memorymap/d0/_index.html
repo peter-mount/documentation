@@ -1,0 +1,561 @@
+---
+type: "manual"
+title: "Page D0"
+linkTitle: "Page D0"
+description: "VIC-II Registers"
+weight: 0xD0
+categories:
+  - c64
+memorymap:
+  - address: "D000"
+    name: "VIC2M0X"
+    desc: "X Coordinate Sprite 0"
+    format:
+      - span: 8
+        label: M0X
+  - address: "D001"
+    name: "VIC2M0Y"
+    desc: "Y Coordinate Sprite 0"
+    format:
+      - span: 8
+        label: M0Y
+  - address: "D002"
+    name: "VIC2M1X"
+    desc: "X Coordinate Sprite 1"
+    format:
+      - span: 8
+        label: M1X
+  - address: "D003"
+    name: "VIC2M1Y"
+    desc: "Y Coordinate Sprite 1"
+    format:
+      - span: 8
+        label: M1Y
+  - address: "D004"
+    name: "VIC2M2X"
+    desc: "X Coordinate Sprite 2"
+    format:
+      - span: 8
+        label: M2X
+  - address: "D005"
+    name: "VIC2M2Y"
+    desc: "Y Coordinate Sprite 2"
+    format:
+      - span: 8
+        label: M2Y
+  - address: "D006"
+    name: "VIC2M3X"
+    desc: "X Coordinate Sprite 3"
+    format:
+      - span: 8
+        label: M3X
+  - address: "D007"
+    name: "VIC2M3Y"
+    desc: "Y Coordinate Sprite 3"
+    format:
+      - span: 8
+        label: M3Y
+  - address: "D008"
+    name: "VIC2M4X"
+    desc: "X Coordinate Sprite 4"
+    format:
+      - span: 8
+        label: M4X
+  - address: "D009"
+    name: "VIC2M4Y"
+    desc: "Y Coordinate Sprite 4"
+    format:
+      - span: 8
+        label: M4Y
+  - address: "D00A"
+    name: "VIC2M5X"
+    desc: "X Coordinate Sprite 5"
+    format:
+      - span: 8
+        label: M5X
+  - address: "D05B"
+    name: "VIC2M5Y"
+    desc: "Y Coordinate Sprite 5"
+    format:
+      - span: 8
+        label: M5Y
+  - address: "D00C"
+    name: "VIC2M6X"
+    desc: "X Coordinate Sprite 6"
+    format:
+      - span: 8
+        label: M6X
+  - address: "D00D"
+    name: "VIC2M6Y"
+    desc: "Y Coordinate Sprite 6"
+    format:
+      - span: 8
+        label: M6Y
+  - address: "D00E"
+    name: "VIC2M7X"
+    desc: "X Coordinate Sprite 7"
+    format:
+      - span: 8
+        label: M7X
+  - address: "D00F"
+    name: "VIC2M7Y"
+    desc: "Y Coordinate Sprite 7"
+    format:
+      - span: 8
+        label: M7Y
+  - address: "D010"
+    name: "VIC2MNX"
+    format:
+      - M7X8
+      - M6X8
+      - M5X8
+      - M4X8
+      - M3X8
+      - M2X8
+      - M1X8
+      - M0X8
+    desc: "Bit 8 of X coordinates"
+  - address: "D011"
+    name: "VIC2CR1"
+    format:
+      - "RST8<sup>[1]</sup>"
+      - ECM
+      - BMM
+      - DEN
+      - RSEL
+      - span: 3
+        label: YSCROLL
+    desc: "Control register 1"
+  - address: "D012"
+    name: "VIC2RASTER"
+    desc: "Raster counter"
+    format:
+      - span: 8
+        label: "RASTER<sup>[1]</sup>"
+  - address: "D013"
+    name: "VIC2LPX"
+    desc: "Light pen X"
+    format:
+      - span: 8
+        label: LPX
+  - address: "D014"
+    name: "VIC2LPY"
+    desc: "Light pen Y"
+    format:
+      - span: 8
+        label: LPY
+  - address: "D015"
+    name: "VIC2SPE"
+    desc: "Sprite Enabled"
+    format:
+      - M7E
+      - M6E
+      - M5E
+      - M4E
+      - M3E
+      - M2E
+      - M1E
+      - M0E
+  - address: "D016"
+    name: "VIC2CR2"
+    desc: "Control register 2"
+    format:
+      -
+      -
+      - "RES<sup>[3]</sup>"
+      - MCM
+      - CSEL
+      - span: 3
+        label: XSCROLL
+  - address: "D017"
+    name: "VIC2SPYE"
+    desc: "Sprite Y expansion"
+    format:
+      - M7YE
+      - M6YE
+      - M5YE
+      - M4YE
+      - M3YE
+      - M2YE
+      - M1YE
+      - M0YE
+  - address: "D018"
+    name: "VIC2MPTR"
+    desc: "Memory pointers"
+    format:
+      - VM13
+      - VM12
+      - VM11
+      - VM10
+      - CB13
+      - CB12
+      - CB11
+      -
+  - address: "D019"
+    name: "VIC2INTR"
+    desc: "Interrupt Register"
+    format:
+      - IRQ
+      -
+      -
+      -
+      - ILP
+      - IMMC
+      - IMBC
+      - IRST
+  - address: "D01A"
+    name: "VIC2INTE"
+    desc: "Interrupt Enabled"
+    format:
+      - IRQ
+      -
+      -
+      -
+      - ELP
+      - EMMC
+      - EMBC
+      - ERST
+  - address: "D01B"
+    name: "VIC2SPDP"
+    desc: "Sprite data priority"
+    format:
+      - M7DP
+      - M6DP
+      - M5DP
+      - M4DP
+      - M3DP
+      - M2DP
+      - M1DP
+      - M0DP
+  - address: "D01C"
+    name: "VIC2SPMC"
+    desc: "Sprite multicolour"
+    format:
+      - M7MC
+      - M6MC
+      - M5MC
+      - M4MC
+      - M3MC
+      - M2MC
+      - M1MC
+      - M0MC
+  - address: "D01D"
+    name: "VIC2SPXE"
+    desc: "Sprite X expansion"
+    format:
+      - M7XE
+      - M6XE
+      - M5XE
+      - M4XE
+      - M3XE
+      - M2XE
+      - M1XE
+      - M0XE
+  - address: "D01E"
+    name: "VIC2SPSPCOL"
+    desc: "Sprite-Sprite collision<sup>[2]</sup>"
+    format:
+      - M7M
+      - M6M
+      - M5M
+      - M4M
+      - M3M
+      - M2M
+      - M1M
+      - M0M
+  - address: "D01F"
+    name: "VIC2SPDCOL"
+    desc: "Sprite data collision<sup>[2]</sup>"
+    format:
+      - M7D
+      - M6D
+      - M5D
+      - M4D
+      - M3D
+      - M2D
+      - M1D
+      - M0D
+  - address: "D020"
+    name: "VIC2BORDER"
+    desc: "Border colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: EC
+  - address: "D021"
+    name: "VIC2B0C"
+    desc: "Background colour 0"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: B0C
+  - address: "D022"
+    name: "VIC2B1C"
+    desc: "Background colour 1"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: B1C
+  - address: "D023"
+    name: "VIC2B2C"
+    desc: "Background colour 2"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: B2C
+  - address: "D024"
+    name: "VIC2B3C"
+    desc: "Background colour 3"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: B3C
+  - address: "D025"
+    name: "VIC2SPMM0"
+    desc: "Sprite multicolour 0"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: MM0
+  - address: "D026"
+    name: "VIC2SPMM1"
+    desc: "Sprite multicolour 1"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: MM1
+  - address: "D027"
+    name: "VIC2SPCOL0"
+    desc: "Sprite 0 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M0C
+  - address: "D028"
+    name: "VIC2SPCOL1"
+    desc: "Sprite 1 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M1C
+  - address: "D029"
+    name: "VIC2SPCOL2"
+    desc: "Sprite 2 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M2C
+  - address: "D02A"
+    name: "VIC2SPCOL3"
+    desc: "Sprite 3 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M3C
+  - address: "D02B"
+    name: "VIC2SPCOL4"
+    desc: "Sprite 4 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M4C
+  - address: "D02C"
+    name: "VIC2SPCOL5"
+    desc: "Sprite 5 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M5C
+  - address: "D02D"
+    name: "VIC2SPCOL6"
+    desc: "Sprite 6 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M6C
+  - address: "D02E"
+    name: "VIC2SPCOL7"
+    desc: "Sprite 7 colour"
+    format:
+      -
+      -
+      -
+      -
+      - span: 4
+        label: M7C
+  - address: "D02E"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D02F"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D030"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D031"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D032"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D033"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D034"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D035"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D036"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D037"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D038"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D039"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D03A"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D03B"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D03C"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D03D"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D03E"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+  - address: "D03F"
+    desc: "Unused"
+    format:
+      - span: 8
+        label: "0xFF on read, write ignored"
+notes:
+  - RST8 in 0xD011 is bit 8 of the RASTER register in 0xD012.
+  - Registers 0xD01E &amp; 0xD01F cannot be written and are cleared on reading
+  - RES in 0xD016 stops the VIC on the 6566. It has no function on the 6567 or 6569
+  - Bit's with no label are not connected and return 1 on a read.
+---
+
+<div class="container">
+  <div class="row m-md-4">
+    <h2>Multiple address ranges</h2>
+    <p>
+      The VIC-II chip has 64 addressable registers.
+      In the C64 memory map it is mapped to the range 0xD000&hellip;0xD3FF with it's registers repeated every 64 bytes.
+    </p>
+    <p>
+      This means that the following address ranges match those of the first 64 bytes at 0xD000&hellip;0xD03F:
+    </p>
+    <table class="memoryMap">
+      <thead>
+      <tr>
+        <th colspan="2">Address Range</th>
+        <th>Equivalent</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td>0xD040</td><td>0xD07F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD080</td><td>0xD0BF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD0C0</td><td>0xD0FF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD100</td><td>0xD13F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD140</td><td>0xD17F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD180</td><td>0xD1BF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD1C0</td><td>0xD1FF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD200</td><td>0xD23F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD240</td><td>0xD27F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD280</td><td>0xD2BF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD2C0</td><td>0xD2FF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD300</td><td>0xD33F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD340</td><td>0xD37F</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD380</td><td>0xD3BF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      <tr><td>0xD3C0</td><td>0xD3FF</td><td>Same as 0xD000&hellip;0xD03F</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

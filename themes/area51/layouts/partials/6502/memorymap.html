@@ -1,10 +1,12 @@
 {{- if isset .Params "memorymap" -}}
 {{- $hasLen := 0 -}}
 {{- $hasName := 0 -}}
+{{- $hasFormat := 0 -}}
 {{- $hasDefaultVal := 0 -}}
 {{- range $.Params.memorymap -}}
 {{- with .length}}{{$hasLen =1}}{{end -}}
 {{- with .name}}{{$hasName =1}}{{end -}}
+{{- with .format}}{{$hasFormat =1}}{{end -}}
 {{- with .default}}{{$hasDefaultVal =1}}{{end -}}
 {{- end -}}
 <div class="printPageBreakAvoid">
@@ -17,6 +19,16 @@
             {{- end -}}
             {{- if $hasName -}}
             <th>Name</th>
+            {{- end -}}
+            {{- if $hasFormat -}}
+            <th>Bit 7</th>
+            <th>Bit 6</th>
+            <th>Bit 5</th>
+            <th>Bit 4</th>
+            <th>Bit 3</th>
+            <th>Bit 2</th>
+            <th>Bit 1</th>
+            <th>Bit 0</th>
             {{- end -}}
             <th>Description</th>
             {{- if $hasDefaultVal -}}
@@ -35,8 +47,23 @@
             {{- if $hasName -}}
             <td>{{.name}}</td>
             {{- end -}}
+
+            {{- if $hasFormat -}}
+            {{- with .format -}}
+            {{- range . -}}
+            {{- if isset . "span" -}}
+            <td class="text-center" colspan="{{.span}}">{{.label | safeHTML}}</td>
+            {{- else -}}
+            <td class="text-center">{{. | safeHTML}}</td>
+            {{- end -}}
+            {{- end -}}
+            {{- else -}}
+            <td colspan="8"></td>
+            {{- end -}}
+            {{- end -}}
+
             <td>
-                {{- .desc -}}
+                {{- .desc | safeHTML -}}
                 {{- with .note}}<div class="note">{{.}}</div>{{end -}}
                 {{- with .val -}}
                 <table>
