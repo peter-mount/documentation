@@ -1,3 +1,4 @@
+<div class=" clearfix"></div>
 <div class="section-index">
     {{ $pages := (where .Site.Pages "Section" .Section).ByWeight }}
     {{ $pages = (where $pages "Type" "!=" "search") }}
