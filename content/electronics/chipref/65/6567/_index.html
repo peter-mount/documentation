@@ -220,7 +220,8 @@ resources:
         <div class="col-12">
             <div class="alert-info">
                 Taken from the original Commodore Semiconductor Group datasheet<br/>
-                OCR Source: <a href="http://archive.6502.org/datasheets/mos_6567_vic_ii_preliminary.pdf">Archive.org mos_6567_vic_ii_preliminary.pdf</a>.
+                OCR Source: <a href="http://archive.6502.org/datasheets/mos_6567_vic_ii_preliminary.pdf">Archive.org
+                mos_6567_vic_ii_preliminary.pdf</a>.
                 Some spelling mistakes may remain due to the poor quality of the source material.
             </div>
         </div>
@@ -340,20 +341,20 @@ resources:
                 </tbody>
             </table>
             <p>
-            The eight bit character pointer permits 256 different .character
-            definitions to be available simultaneously. Each character is an
-            8x8 matrix of dots stored in the character base as eight consecutive
-            bytes. The location of the character base is defined by bits
-            CB13-CB11 in register 24 (0x18) which are used for the 3 most
-            significant bits (MSB) of the character base address. The 11 lower
-            order addresses are formed by the 8 bit character pointer from the
-            video matrix (D7-D0) which selects a particluar character, and a 3
-            bit raster counter (RC2-RC0) which selects one of the eight
-            character bytes. The resulting characters are formated as 25 rows
-            of 40 characters each. In addition to the 8 bit character pointer,
-            a 4-bit COLOR NYBBLE is associated with each video matrix location
-            (the video matrix memory is 12 bits wide) which selects one of
-            sixteen colors for each character.
+                The eight bit character pointer permits 256 different .character
+                definitions to be available simultaneously. Each character is an
+                8x8 matrix of dots stored in the character base as eight consecutive
+                bytes. The location of the character base is defined by bits
+                CB13-CB11 in register 24 (0x18) which are used for the 3 most
+                significant bits (MSB) of the character base address. The 11 lower
+                order addresses are formed by the 8 bit character pointer from the
+                video matrix (D7-D0) which selects a particluar character, and a 3
+                bit raster counter (RC2-RC0) which selects one of the eight
+                character bytes. The resulting characters are formated as 25 rows
+                of 40 characters each. In addition to the 8 bit character pointer,
+                a 4-bit COLOR NYBBLE is associated with each video matrix location
+                (the video matrix memory is 12 bits wide) which selects one of
+                sixteen colors for each character.
             </p>
 
             <table class="memoryMap">
@@ -416,10 +417,22 @@ resources:
                 </tr>
                 CHAR POINTER
                 MS BIT PAIR BACKGROUND'COLOR DISPLAYED
-                <tr><td>00</td><td>Background #0 color (register 33 (0x21))</td></tr>
-                <tr><td>01</td><td>Background #1 color (register 34 (0x22))</td></tr>
-                <tr><td>10</td><td>Background #2 color (register 35 (0x23))</td></tr>
-                <tr><td>11</td><td>Background #3 color (register 36 (0x24))</td></tr>
+                <tr>
+                    <td>00</td>
+                    <td>Background #0 color (register 33 (0x21))</td>
+                </tr>
+                <tr>
+                    <td>01</td>
+                    <td>Background #1 color (register 34 (0x22))</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Background #2 color (register 35 (0x23))</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Background #3 color (register 36 (0x24))</td>
+                </tr>
             </table>
             <p>
                 Since the two MSB of the character pointers are used for color
@@ -491,8 +504,10 @@ resources:
             <p>
                 VM<sub>x</sub> denotes the video matrix counter outputs,
                 RC<sub>x</sub> denotes the 3 bit raster line counter and CB<sub>13</sub> is from register 24 (0x18).
-                The raster counter increments once each horizontal video line (raster line) and the video matrix counter increments once every eight lines.
-                This address sequence causes each 8x8 dot block of the video display to reflect eight sequential memory locations.
+                The raster counter increments once each horizontal video line (raster line) and the video matrix counter
+                increments once every eight lines.
+                This address sequence causes each 8x8 dot block of the video display to reflect eight sequential memory
+                locations.
             </p>
         </div>
     </div>
@@ -592,17 +607,55 @@ resources:
             <table class="memoryMap">
                 <thead>
                 <tr>
-                    <th></th><th>Byte</th><th>Byte</th><th>Byte</th>
+                    <th></th>
+                    <th>Byte</th>
+                    <th>Byte</th>
+                    <th>Byte</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr><th>Row 0</th><td>00</td><td>01</td><td>02</td></tr>
-                    <tr><th>Row 1</th><td>03</td><td>04</td><td>05</td></tr>
-                    <tr><th>Row .</th><td>-</td><td>-</td><td>-</td></tr>
-                    <tr><th>Row .</th><td>-</td><td>-</td><td>-</td></tr>
-                    <tr><th>Row .</th><td>-</td><td>-</td><td>-</td></tr>
-                    <tr><th>Row 19</th><td>57</td><td>58</td><td>59</td></tr>
-                    <tr><th>Row 20</th><td>60</td><td>61</td><td>62</td></tr>
+                <tr>
+                    <th>Row 0</th>
+                    <td>00</td>
+                    <td>01</td>
+                    <td>02</td>
+                </tr>
+                <tr>
+                    <th>Row 1</th>
+                    <td>03</td>
+                    <td>04</td>
+                    <td>05</td>
+                </tr>
+                <tr>
+                    <th>Row .</th>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <th>Row .</th>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <th>Row .</th>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <th>Row 19</th>
+                    <td>57</td>
+                    <td>58</td>
+                    <td>59</td>
+                </tr>
+                <tr>
+                    <th>Row 20</th>
+                    <td>60</td>
+                    <td>61</td>
+                    <td>62</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -1025,12 +1078,12 @@ resources:
                 <tr>
                     <td>IRST</td>
                     <td>ERST</td>
-                    <td>Actual raster count = stored raster count </td>
+                    <td>Actual raster count = stored raster count</td>
                 </tr>
                 <tr>
                     <td>IMDC</td>
                     <td>EMDC</td>
-                    <td>MOB-DATA collision (first bit only) </td>
+                    <td>MOB-DATA collision (first bit only)</td>
                 </tr>
                 <tr>
                     <td>IMMC</td>
@@ -1040,7 +1093,7 @@ resources:
                 <tr>
                     <td>ILP</td>
                     <td>ELP</td>
-                    <td>First negative transition of LP per frame </td>
+                    <td>First negative transition of LP per frame</td>
                 </tr>
                 <tr>
                     <td>IRQ</td>
@@ -1093,22 +1146,134 @@ resources:
                 </tr>
                 </thead>
                 <tbody>
-                <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0x0</td><td>Black</td></tr>
-                <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0x1</td><td>White</td></tr>
-                <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0x2</td><td>Red</td></tr>
-                <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0x3</td><td>Cyan</td></tr>
-                <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0x4</td><td>Purple</td></tr>
-                <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0x5</td><td>Green</td></tr>
-                <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0x6</td><td>Blue</td></tr>
-                <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0x7</td><td>Yellow</td></tr>
-                <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0x8</td><td>Orange</td></tr>
-                <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0x9</td><td>Brown</td></tr>
-                <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0xA</td><td>Light Red</td></tr>
-                <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0xB</td><td>Dark Grey</td></tr>
-                <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0xC</td><td>Medium Grey</td></tr>
-                <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0xD</td><td>Light Green</td></tr>
-                <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0xE</td><td>Light Blue</td></tr>
-                <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0xF</td><td>Light Grey</td></tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0x0</td>
+                    <td>Black</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0x1</td>
+                    <td>White</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0x2</td>
+                    <td>Red</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0x3</td>
+                    <td>Cyan</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0x4</td>
+                    <td>Purple</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0x5</td>
+                    <td>Green</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0x6</td>
+                    <td>Blue</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0x7</td>
+                    <td>Yellow</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0x8</td>
+                    <td>Orange</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0x9</td>
+                    <td>Brown</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0xA</td>
+                    <td>Light Red</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0xB</td>
+                    <td>Dark Grey</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0xC</td>
+                    <td>Medium Grey</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0xD</td>
+                    <td>Light Green</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0xE</td>
+                    <td>Light Blue</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0xF</td>
+                    <td>Light Grey</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -1120,23 +1285,98 @@ resources:
             <h4>HORIZONTAL DECODES</h4>
             <table class="memoryMap">
                 <thead>
-                <tr><th>NAME</th><th>SET</th><th>CLEAR</th><th>FUNCTION</th></tr>
+                <tr>
+                    <th>NAME</th>
+                    <th>SET</th>
+                    <th>CLEAR</th>
+                    <th>FUNCTION</th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr><td>HSYNC</td><td>416</td><td>452</td><td>Horizontal sync pulse</td></tr>
-                <tr><td>HEQ1</td><td>178</td><td>196</td><td>Horizontal equalization pulse 1</td></tr>
-                <tr><td>HEQ2</td><td>434</td><td>452</td><td>Horizontal equalization pulse 2</td></tr>
-                <tr><td>HBLANK</td><td>396</td><td>496</td><td>Blanks video during horiz retrace</td></tr>
-                <tr><td>BURST</td><td>456</td><td>492</td><td>Gates reference color burst</td></tr>
-                <tr><td>BKDE38</td><td>35</td><td>339</td><td>Enables 38 column background</td></tr>
-                <tr><td>BKDE40</td><td>28</td><td>348</td><td>Enables 40 column background</td></tr>
-                <tr><td>BOL</td><td>508</td><td>4</td><td>Begin line (internal clock)</td></tr>
-                <tr><td>EOL</td><td>340</td><td>346</td><td>End line (internal clock)</td></tr>
-                <tr><td>VINC</td><td>404</td><td>412</td><td>Increment vertical counter</td></tr>
-                <tr><td>CW</td><td>12</td><td>332</td><td>Enable character fetch</td></tr>
-                <tr><td>VMBA</td><td>496</td><td>332</td><td>Buss avail for character fetch</td></tr>
-                <tr><td>REFW</td><td>484</td><td>12</td><td>Enable dynamic ram refresh</td></tr>
-                <tr><td>SPBA</td><td>336</td><td>376</td><td>Buss avail for sprite #0 fetch</td></tr>
+                <tr>
+                    <td>HSYNC</td>
+                    <td>416</td>
+                    <td>452</td>
+                    <td>Horizontal sync pulse</td>
+                </tr>
+                <tr>
+                    <td>HEQ1</td>
+                    <td>178</td>
+                    <td>196</td>
+                    <td>Horizontal equalization pulse 1</td>
+                </tr>
+                <tr>
+                    <td>HEQ2</td>
+                    <td>434</td>
+                    <td>452</td>
+                    <td>Horizontal equalization pulse 2</td>
+                </tr>
+                <tr>
+                    <td>HBLANK</td>
+                    <td>396</td>
+                    <td>496</td>
+                    <td>Blanks video during horiz retrace</td>
+                </tr>
+                <tr>
+                    <td>BURST</td>
+                    <td>456</td>
+                    <td>492</td>
+                    <td>Gates reference color burst</td>
+                </tr>
+                <tr>
+                    <td>BKDE38</td>
+                    <td>35</td>
+                    <td>339</td>
+                    <td>Enables 38 column background</td>
+                </tr>
+                <tr>
+                    <td>BKDE40</td>
+                    <td>28</td>
+                    <td>348</td>
+                    <td>Enables 40 column background</td>
+                </tr>
+                <tr>
+                    <td>BOL</td>
+                    <td>508</td>
+                    <td>4</td>
+                    <td>Begin line (internal clock)</td>
+                </tr>
+                <tr>
+                    <td>EOL</td>
+                    <td>340</td>
+                    <td>346</td>
+                    <td>End line (internal clock)</td>
+                </tr>
+                <tr>
+                    <td>VINC</td>
+                    <td>404</td>
+                    <td>412</td>
+                    <td>Increment vertical counter</td>
+                </tr>
+                <tr>
+                    <td>CW</td>
+                    <td>12</td>
+                    <td>332</td>
+                    <td>Enable character fetch</td>
+                </tr>
+                <tr>
+                    <td>VMBA</td>
+                    <td>496</td>
+                    <td>332</td>
+                    <td>Buss avail for character fetch</td>
+                </tr>
+                <tr>
+                    <td>REFW</td>
+                    <td>484</td>
+                    <td>12</td>
+                    <td>Enable dynamic ram refresh</td>
+                </tr>
+                <tr>
+                    <td>SPBA</td>
+                    <td>336</td>
+                    <td>376</td>
+                    <td>Buss avail for sprite #0 fetch</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -1146,16 +1386,56 @@ resources:
             <h3>VERTICAL DECODES</h3>
             <table class="memoryMap">
                 <thead>
-                <tr><th>NAME</th><th>SET</th><th>CLEAR</th><th>FUNCTION</th></tr>
+                <tr>
+                    <th>NAME</th>
+                    <th>SET</th>
+                    <th>CLEAR</th>
+                    <th>FUNCTION</th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr><td>VRESET</td><td>261</td><td>n/a</td><td>Resets vertical count to zero</td></tr>
-                <tr><td>VSYNC</td><td>17</td><td>20</td><td>Enables vertical sync</td></tr>
-                <tr><td>VEQ</td><td>14</td><td>23</td><td>Enables vertical equalazation</td></tr>
-                <tr><td>VBLANK</td><td>13</td><td>24</td><td>Blanks video during vert retrace</td></tr>
-                <tr><td>VSW24</td><td>55</td><td>247</td><td>Enables 24 row screen window</td></tr>
-                <tr><td>VSW24</td><td>51</td><td>251</td><td>Enables 25 row screen window</td></tr>
-                <tr><td>EEVMF</td><td>48</td><td>248</td><td>Enables character fetch</td></tr>
+                <tr>
+                    <td>VRESET</td>
+                    <td>261</td>
+                    <td>n/a</td>
+                    <td>Resets vertical count to zero</td>
+                </tr>
+                <tr>
+                    <td>VSYNC</td>
+                    <td>17</td>
+                    <td>20</td>
+                    <td>Enables vertical sync</td>
+                </tr>
+                <tr>
+                    <td>VEQ</td>
+                    <td>14</td>
+                    <td>23</td>
+                    <td>Enables vertical equalazation</td>
+                </tr>
+                <tr>
+                    <td>VBLANK</td>
+                    <td>13</td>
+                    <td>24</td>
+                    <td>Blanks video during vert retrace</td>
+                </tr>
+                <tr>
+                    <td>VSW24</td>
+                    <td>55</td>
+                    <td>247</td>
+                    <td>Enables 24 row screen window</td>
+                </tr>
+                <tr>
+                    <td>VSW24</td>
+                    <td>51</td>
+                    <td>251</td>
+                    <td>Enables 25 row screen window</td>
+                </tr>
+                <tr>
+                    <td>EEVMF</td>
+                    <td>48</td>
+                    <td>248</td>
+                    <td>Enables character fetch</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -1179,54 +1459,630 @@ resources:
                 </tr>
                 </thead>
                 <tbody>
-<tr><td>00</td><td>0x00</td><td>M0X7</td><td>M0X6</td><td>M0XS</td><td>M0X4</td><td>M0X3</td><td>M0X2</td><td>M0X1</td><td>M0X0</td><td>MIB 0 X-position</td></tr>
-<tr><td>01</td><td>0x01</td><td>M0Y7</td><td>M0Y6</td><td>M0Y5</td><td>M0Y4</td><td>M0Y3</td><td>M0Y2</td><td>M0Y1</td><td>M0Y0</td><td>MIB 0 Y-position</td></tr>
-<tr><td>02</td><td>0x02</td><td>M1X7</td><td>M1X6</td><td>M1X5</td><td>M1X4</td><td>M1X3</td><td>M1X2</td><td>M1X1</td><td>M1X0</td><td>MIB 1 X-position</td></tr>
-<tr><td>03</td><td>0x03</td><td>M1Y7</td><td>M1Y6</td><td>M1Y5</td><td>M1Y4</td><td>M1Y3</td><td>M1Y2</td><td>MlYl</td><td>M1Y0</td><td>MIB 1 Y-position</td></tr>
-<tr><td>04</td><td>0x04</td><td>M2X7</td><td>M2X6</td><td>M2X5</td><td>M2X4</td><td>M2X3</td><td>M2X2</td><td>M2X1</td><td>M2X0</td><td>MIB 2 X-position</td></tr>
-<tr><td>05</td><td>0x05</td><td>M2Y7</td><td>M2Y6</td><td>M2Y5</td><td>M2Y4</td><td>M2Y3</td><td>M2Y2</td><td>M2Y1</td><td>M2Y0</td><td>MIB 2 Y-position</td></tr>
-<tr><td>06</td><td>0x06</td><td>M3X7</td><td>M3X6</td><td>M3X5</td><td>M3X4</td><td>M3X3</td><td>M3X2</td><td>M3X1</td><td>M3X0</td><td>MIB 3 X-position</td></tr>
-<tr><td>07</td><td>0x07</td><td>M3Y7</td><td>M3Y6</td><td>M3Y5</td><td>M3Y4</td><td>M3Y3</td><td>M3Y2</td><td>M3Y1</td><td>M3Y0</td><td>MIB 3 Y-position</td></tr>
-<tr><td>08</td><td>0x08</td><td>M4X7</td><td>M4X6</td><td>M4X5</td><td>M4X4</td><td>M4X3</td><td>M4X2</td><td>M4X1</td><td>M4X0</td><td>MIB 4 X-position</td></tr>
-<tr><td>09</td><td>0x09</td><td>M4Y7</td><td>M4Y6</td><td>M4Y5</td><td>M4Y4</td><td>M4Y3</td><td>M4Y2</td><td>M4Y1</td><td>M4Y0</td><td>MIB 4 Y-position</td></tr>
-<tr><td>10</td><td>0x0A</td><td>M5X7</td><td>M5X6</td><td>M5X5</td><td>M5X4</td><td>M5X3</td><td>M5X2</td><td>M5X1</td><td>M5X0</td><td>MIB 5 X-position</td></tr>
-<tr><td>11</td><td>0x0B</td><td>M5Y7</td><td>M5Y6</td><td>M5Y5</td><td>M5Y4</td><td>M5Y3</td><td>M5Y2</td><td>M5Y1</td><td>M5Y0</td><td>MIB 5 Y-position</td></tr>
-<tr><td>12</td><td>0x0C</td><td>M6X7</td><td>M6X6</td><td>M6X5</td><td>M6X4</td><td>M6X3</td><td>M6X2</td><td>M6X1</td><td>M6X0</td><td>MIB 6 X-position</td></tr>
-<tr><td>13</td><td>0x0D</td><td>M6Y7</td><td>M6Y6</td><td>M6Y5</td><td>M6Y4</td><td>M6Y3</td><td>M6Y2</td><td>M6Y1</td><td>M6Y0</td><td>MIB 6 Y-position</td></tr>
-<tr><td>14</td><td>0x0C</td><td>M7X7</td><td>M7X6</td><td>M7X5</td><td>M7X4</td><td>M7X3</td><td>M7X2</td><td>M7X1</td><td>M7X0</td><td>MIB 7 X-position</td></tr>
-<tr><td>15</td><td>0x0F</td><td>M7Y7</td><td>M7Y6</td><td>M7Y5</td><td>M7Y4</td><td>M7Y3</td><td>M7Y2</td><td>M7Y1</td><td>M7Y0</td><td>MIB 7 Y-position</td></tr>
-<tr><td>16</td><td>0x10</td><td>M7X8</td><td>M6X8</td><td>M5X8</td><td>M4X8</td><td>M3X8</td><td>M2X8</td><td>M1X8</td><td>M0X8</td><td>MSB of X-position</td></tr>
-<tr><td>17</td><td>0x11</td><td>RC8</td><td>ECM</td><td>Bl*!</td><td>BLNK</td><td>RSEL</td><td>Y2</td><td>Y1</td><td>Y0</td><td>See text</td></tr>
-<tr><td>18</td><td>0x12</td><td>HC7</td><td>RC6</td><td>RC5</td><td>RC4</td><td>RC3</td><td>RC2</td><td>RC1</td><td>RC0</td><td>Raster register</td></tr>
-<tr><td>19</td><td>0x13</td><td>LPX8</td><td>LPX7</td><td>LPX6</td><td>LPX5</td><td>LPX4</td><td>LPX3</td><td>LPX2</td><td>LPXl</td><td>Light Pen X</td></tr>
-<tr><td>20</td><td>0x14</td><td>LPY7</td><td>LPY6</td><td>LPY5</td><td>LPY4</td><td>LPY3</td><td>LPY2</td><td>LPYl</td><td>LPY0</td><td>Light Pen Y</td></tr>
-<tr><td>21</td><td>0x15</td><td>M7E</td><td>M6E</td><td>M5E</td><td>M4E</td><td>M3E</td><td>M2E</td><td>M1E</td><td>M0E</td><td>MIB Enable</td></tr>
-<tr><td>22</td><td>0x16</td><td>-</td><td>-</td><td>RES</td><td>MZM</td><td>CSEL</td><td>X2</td><td>XI</td><td>X0</td><td>See text</td></tr>
-<tr><td>23</td><td>0x17</td><td>M7YE</td><td>M6YE</td><td>M5YE</td><td>M4YE</td><td>M3YE</td><td>M2YE</td><td>M1YE</td><td>M0YE</td><td>MIB Y-expand</td></tr>
-<tr><td>24</td><td>0x18</td><td>VM13</td><td>VM12</td><td>VM11</td><td>VM10</td><td>CB13</td><td>CB12</td><td>CB11</td><td>-</td><td>Memory Pointers</td></tr>
-<tr><td>25</td><td>0x19</td><td><span class="not">IRQ</span></td><td>-</td><td>-</td><td>-</td><td>ILP</td><td>IMMC</td><td>IMBC</td><td>IRST</td><td>Interrupt Register</td></tr>
-<tr><td>26</td><td>0x1A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>ELP</td><td>EMMC</td><td>EMBC</td><td>ERST</td><td>Enable Interrupt</td></tr>
-<tr><td>27</td><td>0x1B</td><td>M70P</td><td>M6DP</td><td>M5DP</td><td>M4DP</td><td>M3DP</td><td>M2DP</td><td>M1DP</td><td>M0DP</td><td>MIB-DATA Priority</td></tr>
-<tr><td>28</td><td>0x1C</td><td>M7MC</td><td>M6MC</td><td>M5MC</td><td>M4MC</td><td>M3MC</td><td>M2MC</td><td>M1MC</td><td>M0MC</td><td>MIB Multicolor Sel</td></tr>
-<tr><td>29</td><td>0x10</td><td>M7XE</td><td>M6XE</td><td>M5XE</td><td>M4XE</td><td>M3XE</td><td>M2XE</td><td>M1XE</td><td>M0XE</td><td>MIB X-expand</td></tr>
-<tr><td>30</td><td>0x1E</td><td>M7M</td><td>M6M</td><td>M5M</td><td>M4M</td><td>M3M</td><td>M2M</td><td>M1M</td><td>M0M</td><td>MIB-MIB Collision</td></tr>
-<tr><td>31</td><td>0x1F</td><td>M7D</td><td>M6D</td><td>M5D</td><td>M4D</td><td>M3D</td><td>M2D</td><td>MIB</td><td>M0D</td><td>MIB-DATA Collision</td></tr>
-<tr><td>32</td><td>0x20</td><td>-</td><td>-</td><td>-</td><td>-</td><td>EC3</td><td>EC2</td><td>SCI</td><td>BC0</td><td>Exterior Color</td></tr>
-<tr><td>33</td><td>0x21</td><td>-</td><td>-</td><td>-</td><td>-</td><td>B0C3</td><td>B0C2</td><td>B0C1</td><td>B0C0</td><td>Bkgd #0 Color</td></tr>
-<tr><td>34</td><td>0x22</td><td>-</td><td>-</td><td>-</td><td>-</td><td>B1C3</td><td>B1C2</td><td>B1C1</td><td>B1C0</td><td>Bkgd #1 Color</td></tr>
-<tr><td>35</td><td>0x23</td><td>-</td><td>-</td><td>-</td><td>-</td><td>B2C3</td><td>B2C2</td><td>B2C1</td><td>B2C0</td><td>Bkgd #2 Color</td></tr>
-<tr><td>36</td><td>0x24</td><td>-</td><td>-</td><td>-</td><td>-</td><td>B3C3</td><td>B3C2</td><td>B3C1</td><td>B3C0</td><td>Bkgd #3 Color</td></tr>
-<tr><td>37</td><td>0x25</td><td>-</td><td>-</td><td>-</td><td>-</td><td>MM03</td><td>MM02</td><td>MM01</td><td>MM00</td><td>MIB Multicolor #0</td></tr>
-<tr><td>38</td><td>0x26</td><td>-</td><td>-</td><td>-</td><td>•</td><td>MM13</td><td>MM12</td><td>MM11</td><td>MM10</td><td>MIB Multicolor #1</td></tr>
-<tr><td>39</td><td>0x27</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M0C3</td><td>M0C2</td><td>M0C1</td><td>M0C0</td><td>MIB 0 Color</td></tr>
-<tr><td>40</td><td>0x28</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M1C3</td><td>M1C2</td><td>M1C1</td><td>M1C0</td><td>MIB 1 Color</td></tr>
-<tr><td>41</td><td>0x29</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M2C3</td><td>M2C2</td><td>M2C1</td><td>M2C0</td><td>MIB 2 Color</td></tr>
-<tr><td>42</td><td>0x2A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M3C3</td><td>M3C2</td><td>M3C1</td><td>M3C0</td><td>MIB 3 Color</td></tr>
-<tr><td>43</td><td>0x2B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M4C3</td><td>M4C2</td><td>M4C1</td><td>M4C0</td><td>MIB 4 Color</td></tr>
-<tr><td>44</td><td>0x2C</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M5C3</td><td>M5C2</td><td>M5C1</td><td>M5C0</td><td>MIB 5 Color</td></tr>
-<tr><td>45</td><td>0x2D</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M6C3</td><td>M6C2</td><td>M6C1</td><td>M6C0</td><td>MIB 6 Color</td></tr>
-<tr><td>46</td><td>0x2E</td><td>-</td><td>-</td><td>-</td><td>-</td><td>M7C3</td><td>M7C2</td><td>M7C1</td><td>M7C0</td><td>MIB 7 Color</td></tr>
-<tr><td>47</td><td>0x2F</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td></td></tr>
+                <tr>
+                    <td>00</td>
+                    <td>0x00</td>
+                    <td>M0X7</td>
+                    <td>M0X6</td>
+                    <td>M0XS</td>
+                    <td>M0X4</td>
+                    <td>M0X3</td>
+                    <td>M0X2</td>
+                    <td>M0X1</td>
+                    <td>M0X0</td>
+                    <td>MIB 0 X-position</td>
+                </tr>
+                <tr>
+                    <td>01</td>
+                    <td>0x01</td>
+                    <td>M0Y7</td>
+                    <td>M0Y6</td>
+                    <td>M0Y5</td>
+                    <td>M0Y4</td>
+                    <td>M0Y3</td>
+                    <td>M0Y2</td>
+                    <td>M0Y1</td>
+                    <td>M0Y0</td>
+                    <td>MIB 0 Y-position</td>
+                </tr>
+                <tr>
+                    <td>02</td>
+                    <td>0x02</td>
+                    <td>M1X7</td>
+                    <td>M1X6</td>
+                    <td>M1X5</td>
+                    <td>M1X4</td>
+                    <td>M1X3</td>
+                    <td>M1X2</td>
+                    <td>M1X1</td>
+                    <td>M1X0</td>
+                    <td>MIB 1 X-position</td>
+                </tr>
+                <tr>
+                    <td>03</td>
+                    <td>0x03</td>
+                    <td>M1Y7</td>
+                    <td>M1Y6</td>
+                    <td>M1Y5</td>
+                    <td>M1Y4</td>
+                    <td>M1Y3</td>
+                    <td>M1Y2</td>
+                    <td>MlYl</td>
+                    <td>M1Y0</td>
+                    <td>MIB 1 Y-position</td>
+                </tr>
+                <tr>
+                    <td>04</td>
+                    <td>0x04</td>
+                    <td>M2X7</td>
+                    <td>M2X6</td>
+                    <td>M2X5</td>
+                    <td>M2X4</td>
+                    <td>M2X3</td>
+                    <td>M2X2</td>
+                    <td>M2X1</td>
+                    <td>M2X0</td>
+                    <td>MIB 2 X-position</td>
+                </tr>
+                <tr>
+                    <td>05</td>
+                    <td>0x05</td>
+                    <td>M2Y7</td>
+                    <td>M2Y6</td>
+                    <td>M2Y5</td>
+                    <td>M2Y4</td>
+                    <td>M2Y3</td>
+                    <td>M2Y2</td>
+                    <td>M2Y1</td>
+                    <td>M2Y0</td>
+                    <td>MIB 2 Y-position</td>
+                </tr>
+                <tr>
+                    <td>06</td>
+                    <td>0x06</td>
+                    <td>M3X7</td>
+                    <td>M3X6</td>
+                    <td>M3X5</td>
+                    <td>M3X4</td>
+                    <td>M3X3</td>
+                    <td>M3X2</td>
+                    <td>M3X1</td>
+                    <td>M3X0</td>
+                    <td>MIB 3 X-position</td>
+                </tr>
+                <tr>
+                    <td>07</td>
+                    <td>0x07</td>
+                    <td>M3Y7</td>
+                    <td>M3Y6</td>
+                    <td>M3Y5</td>
+                    <td>M3Y4</td>
+                    <td>M3Y3</td>
+                    <td>M3Y2</td>
+                    <td>M3Y1</td>
+                    <td>M3Y0</td>
+                    <td>MIB 3 Y-position</td>
+                </tr>
+                <tr>
+                    <td>08</td>
+                    <td>0x08</td>
+                    <td>M4X7</td>
+                    <td>M4X6</td>
+                    <td>M4X5</td>
+                    <td>M4X4</td>
+                    <td>M4X3</td>
+                    <td>M4X2</td>
+                    <td>M4X1</td>
+                    <td>M4X0</td>
+                    <td>MIB 4 X-position</td>
+                </tr>
+                <tr>
+                    <td>09</td>
+                    <td>0x09</td>
+                    <td>M4Y7</td>
+                    <td>M4Y6</td>
+                    <td>M4Y5</td>
+                    <td>M4Y4</td>
+                    <td>M4Y3</td>
+                    <td>M4Y2</td>
+                    <td>M4Y1</td>
+                    <td>M4Y0</td>
+                    <td>MIB 4 Y-position</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>0x0A</td>
+                    <td>M5X7</td>
+                    <td>M5X6</td>
+                    <td>M5X5</td>
+                    <td>M5X4</td>
+                    <td>M5X3</td>
+                    <td>M5X2</td>
+                    <td>M5X1</td>
+                    <td>M5X0</td>
+                    <td>MIB 5 X-position</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>0x0B</td>
+                    <td>M5Y7</td>
+                    <td>M5Y6</td>
+                    <td>M5Y5</td>
+                    <td>M5Y4</td>
+                    <td>M5Y3</td>
+                    <td>M5Y2</td>
+                    <td>M5Y1</td>
+                    <td>M5Y0</td>
+                    <td>MIB 5 Y-position</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>0x0C</td>
+                    <td>M6X7</td>
+                    <td>M6X6</td>
+                    <td>M6X5</td>
+                    <td>M6X4</td>
+                    <td>M6X3</td>
+                    <td>M6X2</td>
+                    <td>M6X1</td>
+                    <td>M6X0</td>
+                    <td>MIB 6 X-position</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>0x0D</td>
+                    <td>M6Y7</td>
+                    <td>M6Y6</td>
+                    <td>M6Y5</td>
+                    <td>M6Y4</td>
+                    <td>M6Y3</td>
+                    <td>M6Y2</td>
+                    <td>M6Y1</td>
+                    <td>M6Y0</td>
+                    <td>MIB 6 Y-position</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>0x0C</td>
+                    <td>M7X7</td>
+                    <td>M7X6</td>
+                    <td>M7X5</td>
+                    <td>M7X4</td>
+                    <td>M7X3</td>
+                    <td>M7X2</td>
+                    <td>M7X1</td>
+                    <td>M7X0</td>
+                    <td>MIB 7 X-position</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>0x0F</td>
+                    <td>M7Y7</td>
+                    <td>M7Y6</td>
+                    <td>M7Y5</td>
+                    <td>M7Y4</td>
+                    <td>M7Y3</td>
+                    <td>M7Y2</td>
+                    <td>M7Y1</td>
+                    <td>M7Y0</td>
+                    <td>MIB 7 Y-position</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>0x10</td>
+                    <td>M7X8</td>
+                    <td>M6X8</td>
+                    <td>M5X8</td>
+                    <td>M4X8</td>
+                    <td>M3X8</td>
+                    <td>M2X8</td>
+                    <td>M1X8</td>
+                    <td>M0X8</td>
+                    <td>MSB of X-position</td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>0x11</td>
+                    <td>RC8</td>
+                    <td>ECM</td>
+                    <td>Bl*!</td>
+                    <td>BLNK</td>
+                    <td>RSEL</td>
+                    <td>Y2</td>
+                    <td>Y1</td>
+                    <td>Y0</td>
+                    <td>See text</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td>0x12</td>
+                    <td>HC7</td>
+                    <td>RC6</td>
+                    <td>RC5</td>
+                    <td>RC4</td>
+                    <td>RC3</td>
+                    <td>RC2</td>
+                    <td>RC1</td>
+                    <td>RC0</td>
+                    <td>Raster register</td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td>0x13</td>
+                    <td>LPX8</td>
+                    <td>LPX7</td>
+                    <td>LPX6</td>
+                    <td>LPX5</td>
+                    <td>LPX4</td>
+                    <td>LPX3</td>
+                    <td>LPX2</td>
+                    <td>LPXl</td>
+                    <td>Light Pen X</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>0x14</td>
+                    <td>LPY7</td>
+                    <td>LPY6</td>
+                    <td>LPY5</td>
+                    <td>LPY4</td>
+                    <td>LPY3</td>
+                    <td>LPY2</td>
+                    <td>LPYl</td>
+                    <td>LPY0</td>
+                    <td>Light Pen Y</td>
+                </tr>
+                <tr>
+                    <td>21</td>
+                    <td>0x15</td>
+                    <td>M7E</td>
+                    <td>M6E</td>
+                    <td>M5E</td>
+                    <td>M4E</td>
+                    <td>M3E</td>
+                    <td>M2E</td>
+                    <td>M1E</td>
+                    <td>M0E</td>
+                    <td>MIB Enable</td>
+                </tr>
+                <tr>
+                    <td>22</td>
+                    <td>0x16</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>RES</td>
+                    <td>MZM</td>
+                    <td>CSEL</td>
+                    <td>X2</td>
+                    <td>XI</td>
+                    <td>X0</td>
+                    <td>See text</td>
+                </tr>
+                <tr>
+                    <td>23</td>
+                    <td>0x17</td>
+                    <td>M7YE</td>
+                    <td>M6YE</td>
+                    <td>M5YE</td>
+                    <td>M4YE</td>
+                    <td>M3YE</td>
+                    <td>M2YE</td>
+                    <td>M1YE</td>
+                    <td>M0YE</td>
+                    <td>MIB Y-expand</td>
+                </tr>
+                <tr>
+                    <td>24</td>
+                    <td>0x18</td>
+                    <td>VM13</td>
+                    <td>VM12</td>
+                    <td>VM11</td>
+                    <td>VM10</td>
+                    <td>CB13</td>
+                    <td>CB12</td>
+                    <td>CB11</td>
+                    <td>-</td>
+                    <td>Memory Pointers</td>
+                </tr>
+                <tr>
+                    <td>25</td>
+                    <td>0x19</td>
+                    <td><span class="not">IRQ</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>ILP</td>
+                    <td>IMMC</td>
+                    <td>IMBC</td>
+                    <td>IRST</td>
+                    <td>Interrupt Register</td>
+                </tr>
+                <tr>
+                    <td>26</td>
+                    <td>0x1A</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>ELP</td>
+                    <td>EMMC</td>
+                    <td>EMBC</td>
+                    <td>ERST</td>
+                    <td>Enable Interrupt</td>
+                </tr>
+                <tr>
+                    <td>27</td>
+                    <td>0x1B</td>
+                    <td>M70P</td>
+                    <td>M6DP</td>
+                    <td>M5DP</td>
+                    <td>M4DP</td>
+                    <td>M3DP</td>
+                    <td>M2DP</td>
+                    <td>M1DP</td>
+                    <td>M0DP</td>
+                    <td>MIB-DATA Priority</td>
+                </tr>
+                <tr>
+                    <td>28</td>
+                    <td>0x1C</td>
+                    <td>M7MC</td>
+                    <td>M6MC</td>
+                    <td>M5MC</td>
+                    <td>M4MC</td>
+                    <td>M3MC</td>
+                    <td>M2MC</td>
+                    <td>M1MC</td>
+                    <td>M0MC</td>
+                    <td>MIB Multicolor Sel</td>
+                </tr>
+                <tr>
+                    <td>29</td>
+                    <td>0x10</td>
+                    <td>M7XE</td>
+                    <td>M6XE</td>
+                    <td>M5XE</td>
+                    <td>M4XE</td>
+                    <td>M3XE</td>
+                    <td>M2XE</td>
+                    <td>M1XE</td>
+                    <td>M0XE</td>
+                    <td>MIB X-expand</td>
+                </tr>
+                <tr>
+                    <td>30</td>
+                    <td>0x1E</td>
+                    <td>M7M</td>
+                    <td>M6M</td>
+                    <td>M5M</td>
+                    <td>M4M</td>
+                    <td>M3M</td>
+                    <td>M2M</td>
+                    <td>M1M</td>
+                    <td>M0M</td>
+                    <td>MIB-MIB Collision</td>
+                </tr>
+                <tr>
+                    <td>31</td>
+                    <td>0x1F</td>
+                    <td>M7D</td>
+                    <td>M6D</td>
+                    <td>M5D</td>
+                    <td>M4D</td>
+                    <td>M3D</td>
+                    <td>M2D</td>
+                    <td>MIB</td>
+                    <td>M0D</td>
+                    <td>MIB-DATA Collision</td>
+                </tr>
+                <tr>
+                    <td>32</td>
+                    <td>0x20</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>EC3</td>
+                    <td>EC2</td>
+                    <td>SCI</td>
+                    <td>BC0</td>
+                    <td>Exterior Color</td>
+                </tr>
+                <tr>
+                    <td>33</td>
+                    <td>0x21</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>B0C3</td>
+                    <td>B0C2</td>
+                    <td>B0C1</td>
+                    <td>B0C0</td>
+                    <td>Bkgd #0 Color</td>
+                </tr>
+                <tr>
+                    <td>34</td>
+                    <td>0x22</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>B1C3</td>
+                    <td>B1C2</td>
+                    <td>B1C1</td>
+                    <td>B1C0</td>
+                    <td>Bkgd #1 Color</td>
+                </tr>
+                <tr>
+                    <td>35</td>
+                    <td>0x23</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>B2C3</td>
+                    <td>B2C2</td>
+                    <td>B2C1</td>
+                    <td>B2C0</td>
+                    <td>Bkgd #2 Color</td>
+                </tr>
+                <tr>
+                    <td>36</td>
+                    <td>0x24</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>B3C3</td>
+                    <td>B3C2</td>
+                    <td>B3C1</td>
+                    <td>B3C0</td>
+                    <td>Bkgd #3 Color</td>
+                </tr>
+                <tr>
+                    <td>37</td>
+                    <td>0x25</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>MM03</td>
+                    <td>MM02</td>
+                    <td>MM01</td>
+                    <td>MM00</td>
+                    <td>MIB Multicolor #0</td>
+                </tr>
+                <tr>
+                    <td>38</td>
+                    <td>0x26</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>•</td>
+                    <td>MM13</td>
+                    <td>MM12</td>
+                    <td>MM11</td>
+                    <td>MM10</td>
+                    <td>MIB Multicolor #1</td>
+                </tr>
+                <tr>
+                    <td>39</td>
+                    <td>0x27</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M0C3</td>
+                    <td>M0C2</td>
+                    <td>M0C1</td>
+                    <td>M0C0</td>
+                    <td>MIB 0 Color</td>
+                </tr>
+                <tr>
+                    <td>40</td>
+                    <td>0x28</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M1C3</td>
+                    <td>M1C2</td>
+                    <td>M1C1</td>
+                    <td>M1C0</td>
+                    <td>MIB 1 Color</td>
+                </tr>
+                <tr>
+                    <td>41</td>
+                    <td>0x29</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M2C3</td>
+                    <td>M2C2</td>
+                    <td>M2C1</td>
+                    <td>M2C0</td>
+                    <td>MIB 2 Color</td>
+                </tr>
+                <tr>
+                    <td>42</td>
+                    <td>0x2A</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M3C3</td>
+                    <td>M3C2</td>
+                    <td>M3C1</td>
+                    <td>M3C0</td>
+                    <td>MIB 3 Color</td>
+                </tr>
+                <tr>
+                    <td>43</td>
+                    <td>0x2B</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M4C3</td>
+                    <td>M4C2</td>
+                    <td>M4C1</td>
+                    <td>M4C0</td>
+                    <td>MIB 4 Color</td>
+                </tr>
+                <tr>
+                    <td>44</td>
+                    <td>0x2C</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M5C3</td>
+                    <td>M5C2</td>
+                    <td>M5C1</td>
+                    <td>M5C0</td>
+                    <td>MIB 5 Color</td>
+                </tr>
+                <tr>
+                    <td>45</td>
+                    <td>0x2D</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M6C3</td>
+                    <td>M6C2</td>
+                    <td>M6C1</td>
+                    <td>M6C0</td>
+                    <td>MIB 6 Color</td>
+                </tr>
+                <tr>
+                    <td>46</td>
+                    <td>0x2E</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>M7C3</td>
+                    <td>M7C2</td>
+                    <td>M7C1</td>
+                    <td>M7C0</td>
+                    <td>MIB 7 Color</td>
+                </tr>
+                <tr>
+                    <td>47</td>
+                    <td>0x2F</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
                 </tbody>
             </table>
             <p>
@@ -1251,14 +2107,50 @@ resources:
 
             <table class="memoryMap">
                 <thead>
-                <tr><th>AEC</th><th>PH<sub>0</sub></th><th><span class="not">CS</span></th><th>R/<span class="not">W</span></th><th>ACTION</th></tr>
+                <tr>
+                    <th>AEC</th>
+                    <th>PH<sub>0</sub></th>
+                    <th><span class="not">CS</span></th>
+                    <th>R/<span class="not">W</span></th>
+                    <th>ACTION</th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr><td>0</td><td>0</td><td>X</td><td>X</td><td>Phase 1 - 8562 Memory Fetch</td></tr>
-                <tr><td>0</td><td>1</td><td>X</td><td>X</td><td>Phase 2 - DMA (Processor Off)</td></tr>
-                <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>Write to 8562 Register</td></tr>
-                <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>Read from 8562 Register</td></tr>
-                <tr><td>1</td><td>1</td><td>1</td><td>X</td><td>Processor Memory Cycle</td></tr>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td>Phase 1 - 8562 Memory Fetch</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td>Phase 2 - DMA (Processor Off)</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Write to 8562 Register</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>Read from 8562 Register</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>X</td>
+                    <td>Processor Memory Cycle</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -1309,13 +2201,33 @@ resources:
 
             <table class="memoryMap">
                 <thead>
-                <tr><th>Phase</th><th>Data</th><th>Condition</th></tr>
+                <tr>
+                    <th>Phase</th>
+                    <th>Data</th>
+                    <th>Condition</th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr><td>1</td><td>MIB Pointer</td><td></td></tr>
-                <tr><td>2</td><td>MIB Byte 1</td><td>Each raster while MIB is displayed</td></tr>
-                <tr><td>1</td><td>MIB Byte 2</td><td>Each raster while MIB is displayed</td></tr>
-                <tr><td>2</td><td>MIB Byte 3</td><td>Each raster while MIB is displayed</td></tr>
+                <tr>
+                    <td>1</td>
+                    <td>MIB Pointer</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>MIB Byte 1</td>
+                    <td>Each raster while MIB is displayed</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>MIB Byte 2</td>
+                    <td>Each raster while MIB is displayed</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>MIB Byte 3</td>
+                    <td>Each raster while MIB is displayed</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -1330,7 +2242,8 @@ resources:
                 controlled by <span class="not">CS</span>, R/<span class="not">W</span>, and Phase<sub>0</sub>.
             </p>
             <p>
-                The data bus can only be accessed while AEC and Phase<sub>0</sub> are high and <span class="not">CS</span> is low.
+                The data bus can only be accessed while AEC and Phase<sub>0</sub> are high and <span
+                    class="not">CS</span> is low.
             </p>
 
             <h4>CHIP SELECT (<span class="not">CS</span>)</h4>
@@ -1348,10 +2261,12 @@ resources:
                 data transfer on the data bus, in conjunction with <span class="not">CS</span>.
             </p>
             <p>
-                When R/<span class="not">W</span> is high ("1") data is transferred from the selected register to the data bus output.
+                When R/<span class="not">W</span> is high ("1") data is transferred from the selected register to the
+                data bus output.
             </p>
             <p>
-                When R/<span class="not">W</span> is low ("0") data presented on the data bus pins is loaded into the selected register.
+                When R/<span class="not">W</span> is low ("0") data presented on the data bus pins is loaded into the
+                selected register.
             </p>
 
             <h4>ADDRESS BUS (A<sub>10</sub>&hellip;A<sub>0</sub>)</h4>
@@ -1360,10 +2275,12 @@ resources:
             </p>
             <p>
                 During the row address time, A<sub>6</sub>-A<sub>0</sub> are driven on pins A<sub>6</sub>-A<sub>0</sub>,
-                while A<sub>13</sub>-A<sub>8</sub> are driven on pins A<sub>5</sub>-A<sub>0</sub> and pin A<sub>6</sub> is "1" during the column time.
+                while A<sub>13</sub>-A<sub>8</sub> are driven on pins A<sub>5</sub>-A<sub>0</sub> and pin A<sub>6</sub>
+                is "1" during the column time.
                 A<sub>10</sub>-A<sub>7</sub> is stable for the entire memory cycle.
                 The lower six address pins, A<sub>5</sub>-A<sub>0</sub>, are also bi-directional.
-                During a processor read or write of the video device, address pins A<sub>5</sub>-A<sub>0</sub>0 are inputs which latch on the low edge of <span class="not">RAS</span>.
+                During a processor read or write of the video device, address pins A<sub>5</sub>-A<sub>0</sub>0 are
+                inputs which latch on the low edge of <span class="not">RAS</span>.
                 The data on these address inputs selects the register for read or write as defined in the register map
             </p>
 
@@ -1376,13 +2293,16 @@ resources:
 
             <h4><span class="not">RAS</span> / <span class="not">CAS</span></h4>
             <p>
-                The <span class="not">RAS</span> and <span class="not">CAS</span> signals provide the timing signals necessary for dynamic RAMs.
-                These signals are provided twice each clock out cycle to support a memory cycle during both phase 1 and phase 2.
+                The <span class="not">RAS</span> and <span class="not">CAS</span> signals provide the timing signals
+                necessary for dynamic RAMs.
+                These signals are provided twice each clock out cycle to support a memory cycle during both phase 1 and
+                phase 2.
             </p>
 
             <h4>INTERRUPTS (<span class="not">IRQ</span>)</h4>
             <p>
-                The interrupt output, <span class="not">IRQ</span>, is brought low when an enabled source of interrupt occurs with in the device.
+                The interrupt output, <span class="not">IRQ</span>, is brought low when an enabled source of interrupt
+                occurs with in the device.
                 The <span class="not">IRQ</span> output is open drain, requiring an external pull-up resistor.
             </p>
         </div>
@@ -1391,8 +2311,10 @@ resources:
         <div class="col-12">
             <h3>VIDEO INTERFACE</h3>
             <p>
-                The video output from the 6567 consists of two signals which must be externally mixed together to create NTSC compatible composite video.
-                After appropriate mixing, the resulting signal can directly drive a video monitor or RF modulator for use with a standard television.
+                The video output from the 6567 consists of two signals which must be externally mixed together to create
+                NTSC compatible composite video.
+                After appropriate mixing, the resulting signal can directly drive a video monitor or RF modulator for
+                use with a standard television.
             </p>
 
             <h4>VIDEO CLOCK IN</h4>
@@ -1400,26 +2322,30 @@ resources:
                 This clock input is the fundamental dot shift rate clock.
                 In addition, all other video sync and system interface signals are derived by dividing this clock.
                 Normally, the desired frequency is 9 Mhz.
-                The primary constaints are the system timing and the requirement that one horizontal raster line is 520 video clock cycles
+                The primary constaints are the system timing and the requirement that one horizontal raster line is 520
+                video clock cycles
             </p>
 
             <h4>COLOR CLOCK IN</h4>
             <p>
                 The color clock is used to derive the chrominance signal.
                 NTSC video systems require this input to be 14.31818 Mhz.
-                This base frequency is divided by 4 internally and then appropriately phase shifted to create the 3.5795 Mhz video color signal for NTSC applications.
+                This base frequency is divided by 4 internally and then appropriately phase shifted to create the 3.5795
+                Mhz video color signal for NTSC applications.
             </p>
 
             <h4>SYNC/LUM OUTPUT</h4>
             <p>
-                SYNC/LUM output from the 6567 contains all the video data, including horizontal and vertical syncs, as well as the
+                SYNC/LUM output from the 6567 contains all the video data, including horizontal and vertical syncs, as
+                well as the
                 luminance information of the video display.
                 It is an open drain output requiring an external pull-up of 500 ohms.
             </p>
 
             <h4>COLOR OUTPUT</h4>
             <p>
-                The COLOR output contains all the chrominance information, including the color reference burst and the color of all display data.
+                The COLOR output contains all the chrominance information, including the color reference burst and the
+                color of all display data.
                 The COLOR output is open source and should be terminated with 1,000 ohms to ground.
             </p>
 
@@ -1427,26 +2353,424 @@ resources:
     </div>
     <div class="row">
         <div class="col-12">
-            <h3></h3>
+            <h3>ELECTRICAL REQUIREMENTS </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h4>ABSOLUTE MAXIMUM RATINGS</h4>
             <p>
-
+                Stresses above those listed may cause permanent damage to the circuit.
+                This is a stress rating only.
+                Functional operation of the device at these or any conditions other than those indicated in the
+                operational sections of this specification is not implied.
             </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Units</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Ambient temerature under bias</td>
+                    <td>-25</td>
+                    <td>+125</td>
+                    <td>Deg. C.</td>
+                </tr>
+                <tr>
+                    <td>Storage temperature</td>
+                    <td>-65</td>
+                    <td>+150</td>
+                    <td>Deg. C.</td>
+                </tr>
+                <tr>
+                    <td>Applied Supply voltage V<sub>CC</sub></td>
+                    <td>-0.5</td>
+                    <td>+7.0</td>
+                    <td>Volts</td>
+                </tr>
+                <tr>
+                    <td>Applied Output voltage</td>
+                    <td>-0.5.</td>
+                    <td>+5.5</td>
+                    <td>Volts</td>
+                </tr>
+                <tr>
+                    <td>Applied Input voltage</td>
+                    <td>-0.5</td>
+                    <td>+7.0</td>
+                    <td>Volts</td>
+                </tr>
+                <tr>
+                    <td>Applied Supply Volt. V<sub>DD</sub></td>
+                    <td>-0.5</td>
+                    <td>+15.0</td>
+                    <td>Volts</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h4>OPERATING CONDITIONS</h4>
+            <p>
+                All electrical characteristics (A.C. and D.C.) are specified over the entire range of the operating
+                conditions unless specifically noted.
+            </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Condition</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Units</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Supply Votage (V<sub>CC</sub>)</td>
+                    <td>4.75</td>
+                    <td>5.25</td>
+                    <td>Volts</td>
+                </tr>
+                <tr>
+                    <td>Supply Voltage (V<sub>DD)</sub>)</td>
+                    <td>11.4</td>
+                    <td>12.5</td>
+                    <td>Volts</td>
+                </tr>
+                <tr>
+                    <td>Free Air Temperature</td>
+                    <td>0</td>
+                    <td>50</td>
+                    <td>Deg. C.</td>
+                </tr>
+                <tr>
+                    <td>Dot Clock cycle</td>
+                    <td>122</td>
+                    <td>123</td>
+                    <td>ns</td>
+                </tr>
+                <tr>
+                    <td>Dotclk lo pulse in</td>
+                    <td>60</td>
+                    <td>-</td>
+                    <td>ns</td>
+                </tr>
+                <tr>
+                    <td>Dotclk hi pulse in</td>
+                    <td>45</td>
+                    <td>-</td>
+                    <td>ns</td>
+                </tr>
+                <tr>
+                    <td>Color Clock frequency</td>
+                    <td>14.317</td>
+                    <td>14.319</td>
+                    <td>MHZ</td>
+                </tr>
+                <tr>
+                    <td>Colorclk lo pulse in</td>
+                    <td>25</td>
+                    <td>-</td>
+                    <td>ns</td>
+                </tr>
+                <tr>
+                    <td>Colorclk hi pulse in</td>
+                    <td>25</td>
+                    <td>-</td>
+                    <td>ns</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h3></h3>
-            <p>
+            <h4>D.C. CHARACTERISTICS </h4>
 
-            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>Symbol</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Units</th>
+                    <th>Test Conditions</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Input high level</td>
+                    <td>Vih</td>
+                    <td>2.0</td>
+                    <td>V<sub>CC</sub></td>
+                    <td>Volts</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Input low level</td>
+                    <td>Vil</td>
+                    <td>-0.5</td>
+                    <td>0.8</td>
+                    <td>Volts</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Output High level</td>
+                    <td>Voh</td>
+                    <td>2.4</td>
+                    <td>-</td>
+                    <td>Volts</td>
+                    <td>Ioh = -200uA</td>
+                </tr>
+                <tr>
+                    <td>Output Low level</td>
+                    <td>Vol</td>
+                    <td>-</td>
+                    <td>0.4</td>
+                    <td>Volts</td>
+                    <td>Iol = 3.2mA</td>
+                </tr>
+                <tr>
+                    <td>I/O Leakage</td>
+                    <td>Ilkg</td>
+                    <td>-10</td>
+                    <td>10</td>
+                    <td>uAmps</td>
+                    <td>0.4V&lt;Vout&lt;2.4V<br/>(addr buss off)<br/>(data buss off)</td>
+                </tr>
+                <tr>
+                    <td>Supply Current</td>
+                    <td>I<sub>CC</sub></td>
+                    <td>-</td>
+                    <td>200</td>
+                    <td>mAmps</td>
+                    <td>Outputs open</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>I<sub>DD</sub></td>
+                    <td>-</td>
+                    <td>50</td>
+                    <td>mAmps</td>
+                    <td>Dot Clk low</td>
+                </tr>
+                <tr>
+                    <td>Pin capacitance</td>
+                    <td>Cpin</td>
+                    <td>-</td>
+                    <td>10</td>
+                    <td>pF</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h3></h3>
+            <h4>A.C. CHARACTERISTICS</h4>
             <p>
-
+                A.C. characteristic are specified with input waveforms between 0.4V input low level and 2.4V input high
+                level and Dot Clock in of 8.182 Mhz.
+                Outputs are loaded at the rated D.C. currents and voltage with 60fcF total capacitive load (including
+                fixturing).
+                All time measurements of active signals are referenced to 1.5V on inputs and outputs.
+                Time measurements of high impedance signals are referenced to Vol and Voh levels.
             </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>Symbol</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Units</th>
+                    <th>Test Conditions</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>PW Clkout hi</td>
+                    <td>Tph</td>
+                    <td>465</td>
+                    <td>500</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>PW clkout lo</td>
+                    <td>Tpl</td>
+                    <td>475</td>
+                    <td>510</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly Clk-RASlo</td>
+                    <td>Trhl</td>
+                    <td>155</td>
+                    <td>190</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly Clk-RAShi</td>
+                    <td>Trlh</td>
+                    <td>£3</td>
+                    <td>50</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>PW RAS hi</td>
+                    <td>Trp</td>
+                    <td>135</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly RASlo-CASlo</td>
+                    <td>Trcd</td>
+                    <td>25</td>
+                    <td>65</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly Clk-CASlo</td>
+                    <td>Tchl</td>
+                    <td>-</td>
+                    <td>220</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly Clk-CAShi</td>
+                    <td>Tclh</td>
+                    <td>15</td>
+                    <td>35</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly Clk-AEChi/lo</td>
+                    <td>Taec</td>
+                    <td>10</td>
+                    <td>30</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dly Clk-BAhi/lo</td>
+                    <td>Tba</td>
+                    <td>-</td>
+                    <td>300</td>
+                    <td>ns</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Setup Addout-RASlo</td>
+                    <td>Tasrout</td>
+                    <td>35</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td>6567 man read</td>
+                </tr>
+                <tr>
+                    <td>Hold Addout-RASlo</td>
+                    <td>Trahout</td>
+                    <td>30</td>
+                    <td>45</td>
+                    <td>ns</td>
+                    <td>6667 mem read</td>
+                </tr>
+                <tr>
+                    <td>Setup Addout-CASlo</td>
+                    <td>Tasc</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td>6567 mem read</td>
+                </tr>
+                <tr>
+                    <td>Hold Addout-CAShi</td>
+                    <td>Tcah</td>
+                    <td>20</td>
+                    <td>50</td>
+                    <td>ns</td>
+                    <td>6567 mem read</td>
+                </tr>
+                <tr>
+                    <td>Setup Addin-RASlo</td>
+                    <td>Tasrin</td>
+                    <td>25</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td>uP read/write</td>
+                </tr>
+                <tr>
+                    <td>Hold Addin-RASlo</td>
+                    <td>Trahin</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td>uP read/write</td>
+                </tr>
+                <tr>
+                    <td>Dly Data-Caslo</td>
+                    <td>Tcacout</td>
+                    <td>-</td>
+                    <td>220</td>
+                    <td>ns</td>
+                    <td>u p read</td>
+                </tr>
+                <tr>
+                    <td>Dly Clkhi-dataoff</td>
+                    <td>Toff</td>
+                    <td>80</td>
+                    <td>135</td>
+                    <td>ns</td>
+                    <td>u p read</td>
+                </tr>
+                <tr>
+                    <td>Setup Oatain-Clk</td>
+                    <td>lids</td>
+                    <td>50</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td>menv/uP/color data</td>
+                </tr>
+                <tr>
+                    <td>Hold Datain-Clk</td>
+                    <td>Tdh</td>
+                    <td>40</td>
+                    <td>-</td>
+                    <td>ns</td>
+                    <td>mem/uP/color data</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>6567 TIMING DIAGRAM</h3>
+            <img src="timing.png" alt="6567 Timing Diagram"/>
         </div>
     </div>
 </div>
