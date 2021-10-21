@@ -42,18 +42,159 @@ chip:
       "26": "EXT(IN)"
       "27": "AUDIO(OUT)"
       "28": "VDD"
+  - name: "6582"
+    category: "mos"
+    title: "MOS 6582 SID (Sound Interface Device)"
+    type: "dip"
+    pinCount: 28
+    label: "MOS"
+    subLabel: "6582"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_6581"
+    pins:
+      "1": "CAP(1A)"
+      "2": "CAP(1B)"
+      "3": "CAP(2A)"
+      "4": "CAP(2B)"
+      "5": "NOT(RES)"
+      "6": "PHI(2)"
+      "7": "R/NOT(W)"
+      "8": "NOT(CS)"
+      "9": "A(0)"
+      "10": "A(1)"
+      "11": "A(2)"
+      "12": "A(3)"
+      "13": "A(4)"
+      "14": "GND"
+      "15": "D(0)"
+      "16": "D(1)"
+      "17": "D(2)"
+      "18": "D(3)"
+      "19": "D(4)"
+      "20": "D(5)"
+      "21": "D(6)"
+      "22": "D(7)"
+      "23": "POT(Y)"
+      "24": "POT(X)"
+      "25": "V(CC)"
+      "26": "EXT(IN)"
+      "27": "AUDIO(OUT)"
+      "28": "VDD"
+  - name: "8580"
+    category: "mos"
+    title: "MOS 8580 SID (Sound Interface Device)"
+    type: "dip"
+    pinCount: 28
+    label: "MOS"
+    subLabel: "8580"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_6581"
+    pins:
+      "1": "CAP(1A)"
+      "2": "CAP(1B)"
+      "3": "CAP(2A)"
+      "4": "CAP(2B)"
+      "5": "NOT(RES)"
+      "6": "PHI(2)"
+      "7": "R/NOT(W)"
+      "8": "NOT(CS)"
+      "9": "A(0)"
+      "10": "A(1)"
+      "11": "A(2)"
+      "12": "A(3)"
+      "13": "A(4)"
+      "14": "GND"
+      "15": "D(0)"
+      "16": "D(1)"
+      "17": "D(2)"
+      "18": "D(3)"
+      "19": "D(4)"
+      "20": "D(5)"
+      "21": "D(6)"
+      "22": "D(7)"
+      "23": "POT(Y)"
+      "24": "POT(X)"
+      "25": "V(CC)"
+      "26": "EXT(IN)"
+      "27": "AUDIO(OUT)"
+      "28": "VDD"
 resources:
   - name: "6581.svg"
     url: "/static/chipref/mos/6581.svg"
     size: "12K"
+  - name: "6582.svg"
+    url: "/static/chipref/mos/6582.svg"
+    size: "12K"
+  - name: "8580.svg"
+    url: "/static/chipref/mos/8580.svg"
+    size: "12K"
 ---
 <div class="container">
   <div class="row">
-    <div class="col-7">
-
+    <div class="col-6">
+      <p>
+        The SID is a mixed-signal integrated circuit, featuring both digital and analog circuitry.
+        All control ports are digital, while the output ports are analog.
+        The SID features three-voice synthesis, where each voice may use one of at least five different waveforms:
+        pulse wave (with variable duty cycle), triangle wave, sawtooth wave, pseudorandom noise (called white noise in documentation),
+        and certain complex/combined waveforms when multiple waveforms are selected simultaneously.
+      </p>
+      <p>
+        Due to imperfect manufacturing technologies of the time and poor separation between the analog and digital parts of the chip,
+        the 6581's output (before the amplifier stage) was always slightly biased from the zero level.
+        Each time the volume register was altered, an audible click was produced.
+        By quickly adjusting the amplifier's gain through the main 4-bit volume register, this bias could be modulated as PCM,
+        resulting in a "virtual" fourth channel allowing 4-bit digital sample playback.
+      </p>
+      <p>
+        The better manufacturing technology in the 8580 used in the later revisions of Commodore 64C and the Commodore 128 DCR caused the bias to almost entirely disappear,
+        causing the digitized sound samples to become very quiet.
+        Fortunately, the volume level could be mostly restored with either a hardware modification (biasing the audio-in pin),
+        or more commonly a software trick involving using the Pulse waveform to intentionally recreate the required bias.
+      </p>
+      <p>
+      The software trick generally renders one voice temporarily unusable, although clever musical compositions can make this problem less noticeable.
+        An excellent example of this quality improvement noticeably reducing a sampled channel can be found in the introduction to Electronic Arts' game Skate or Die (1987).
+        The guitar riff played is all but missing when played on the Commodore 64c or the Commodore 128.
+      </p>
+      <p>
+        The 6581 and 8580 differ from each other in several ways.
+        The original 6581 was manufactured using the older NMOS process, which used 12V DC to operate.
+      </p>
+      <div class="alert-warning">
+        The 6581 is very sensitive to static discharge and if they weren't handled properly the filters would stop working,
+        explaining the reason of the great quantity of dead 6581s in the market.
+      </div>
+      <p>
+        The 8580 was made using the HMOS-II process, which requires less power (9V DC), and therefore makes the IC run cooler.
+        The 8580 is thus far more durable than the 6581.
+      </p>
+      <p>
+        Also, due to more stable waveform generators, the bit-mixing effects are less noticeable and thus the combined waveforms
+        come close to matching the original SID specification (which stated that they will be combined as a binary AND).
+        The filter is also very different between the two models, with the 6581 cutoff range being a relatively straight line on a log scale,
+        while the cutoff range on the 8580 is a straight line on a linear scale, and is close to the designers' actual specifications.
+        Additionally, a better separation between the analog and the digital circuits made the 8580's output less noisy and distorted.
+        The noise in 6xxx-series systems can be reduced by disconnecting the audio-in pin.
+      </p>
+      <p>
+        The consumer version of the 8580 was rebadged the 6582, even though the die on the chip is identical to a stock 8580 chip,
+        including the '8580R5' mark.
+        Dr. Evil Laboratories used it in their SID Symphony expansion cartridge (sold to Creative Micro Designs in 1991),
+        and it was used in a few other places as well, including one PC sound-card.
+      </p>
+      <p>
+        Despite its documented shortcomings, many SID musicians prefer the flawed 6581 chip over the corrected 8580 chip.
+        The main reason for this is that the filter produces strong distortion that is sometimes used to produce simulation
+        of instruments such as a distorted electric guitar. Also, the highpass component of the filter was mixed in 3 dB
+        attenuated compared to the other outputs, making the sound more bassy.
+        In addition to nonlinearities in filter, the D/A circuitry used in the waveform generators produces yet more
+        additional distortion that made its sound richer in character.
+      </p>
+      <p>Source: <a href="https://en.wikipedia.org/wiki/MOS_Technology_6581" target="_blank">Wikipedia: MOS Technology 6581</a></p>
     </div>
     <div class="col-4">
       <img src="/static/chipref/mos/6581.svg"/>
+      <img src="/static/chipref/mos/6582.svg"/>
+      <img src="/static/chipref/mos/8580.svg"/>
     </div>
   </div>
 </div>
