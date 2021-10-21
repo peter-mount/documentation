@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "Page D8"
+linkTitle: "D8 Colour RAM"
+description: "Colour memory"
+weight: 0xD8
+categories:
+  - c64
+memorymap:
+  - address: "D800"
+    length: 1000
+    name: "COLMEM"
+    desc: "Colour Memory"
+    format:
+      - span: 4
+        label: "Not Connected"
+      - span: 4
+        label: "Colour"
+  - address: "D8E8"
+    length: 24
+    format:
+      - span: 8
+        label: "Unused"
+    desc: "Unused"
+---
+
+<div class="container">
+  <div class="row m-md-4">
+    <div class="col-6">
+      <h2>Memory format</h2>
+      <p>
+        For each character in every row (40 chars per row; 0-39) and column (25 columns; 0-24) one of 16 colors can be
+        assigned.
+        The color values 0-15 are only used in the lower nibbles.
+        The upper nibbles are undefined and are purely random values.
+      </p>
+      <p>
+        The colour memory is provided by an MM2114N-3 4Kb (1024x4) static RAM chip.
+      </p>
+      <p>
+        As this chip only provides 4 bits, the upper nibble is random as it's not connected to anything.
+        It is separate from the onboard 64K RAM
+      </p>
+    </div>
+    <div class="col-6">
+      <img src="/static/chipref/ns/2114.svg"/>
+    </div>
+  </div>
+</div>
