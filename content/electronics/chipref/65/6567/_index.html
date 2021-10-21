@@ -544,9 +544,7 @@ resources:
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>MULTI-COLOR BIT MAP MODE</h3>
             <p>
                 Multi-colored bit map mode is selected by setting the MCM bit in
@@ -593,7 +591,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>MOVABLE IMAGE BLOCKS</h3>
             <p>
                 The movable image block (MIB) is a special type of display image
@@ -659,19 +657,14 @@ resources:
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>MIB ENABLE</h3>
             <p>
                 Each MIB can be selectively enabled for display by setting its
                 corresponding enable bit (MnE) to "1” in register 21 (0x15). If
                 the MnE bit is "0", the MIB will not be displayed.
             </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+
             <h3>MIB POSITION</h3>
             <p>
                 Each MIB is positioned via its X and Y position register (see
@@ -694,7 +687,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h4>STANDARD MIB COLOR</h4>
             <p>
                 In the standard mode, a "0" bit of MIB data allows any
@@ -703,9 +696,7 @@ resources:
                 determined by the corresponding MIB Color register.
             </p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h4>MULTI-COLOR MIB</h4>
             <p>
                 Each MIB can be individually specified to be multi-color via
@@ -752,7 +743,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>MIB MAGNIFICATION</h3>
             <p>
                 Each MIB can be independently expanded (2X) in both the horizontal
@@ -785,9 +776,7 @@ resources:
                 expanded).
             </p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>MIB PRIORITY</h3>
             <p>
                 The priority of each MIB may be individually controlled with
@@ -830,7 +819,10 @@ resources:
                 Two types of MIB collision (co-incidence) are detected, MIB to MIB
                 collision and MIB to display data collision.
             </p>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
             <h4>MIB TO MIB COLLISION</h4>
             <p>
                 A collision between two MIBs occurs when non-transparent output
@@ -842,7 +834,8 @@ resources:
                 register, when they are automatically cleared. MIBs collisions
                 are detected even if off screen, behind the border.
             </p>
-
+        </div>
+        <div class="col-6">
             <h4>MIB TO DATA COLLISION</h4>
             <p>
                 A second register, MIB-DATA COLLISION register 31 (0x1F) also
@@ -858,7 +851,10 @@ resources:
                 position (see scrolling). The MIB-DATA COLLISION register also
                 automatically clears when read
             </p>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h3>MIB COLLISION INTERRUPTS</h3>
             <p>
                 The collision interrupt latches are set whenever the first bit
@@ -2504,102 +2500,8 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <h4>D.C. CHARACTERISTICS </h4>
-
-            <table class="memoryMap">
-                <thead>
-                <tr>
-                    <th>Characteristic</th>
-                    <th>Symbol</th>
-                    <th>Min</th>
-                    <th>Max</th>
-                    <th>Units</th>
-                    <th>Test Conditions</th>
-                </tr>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Input high level</td>
-                    <td>Vih</td>
-                    <td>2.0</td>
-                    <td>V<sub>CC</sub></td>
-                    <td>Volts</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Input low level</td>
-                    <td>Vil</td>
-                    <td>-0.5</td>
-                    <td>0.8</td>
-                    <td>Volts</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Output High level</td>
-                    <td>Voh</td>
-                    <td>2.4</td>
-                    <td>-</td>
-                    <td>Volts</td>
-                    <td>Ioh = -200uA</td>
-                </tr>
-                <tr>
-                    <td>Output Low level</td>
-                    <td>Vol</td>
-                    <td>-</td>
-                    <td>0.4</td>
-                    <td>Volts</td>
-                    <td>Iol = 3.2mA</td>
-                </tr>
-                <tr>
-                    <td>I/O Leakage</td>
-                    <td>Ilkg</td>
-                    <td>-10</td>
-                    <td>10</td>
-                    <td>uAmps</td>
-                    <td>0.4V&lt;Vout&lt;2.4V<br/>(addr buss off)<br/>(data buss off)</td>
-                </tr>
-                <tr>
-                    <td>Supply Current</td>
-                    <td>I<sub>CC</sub></td>
-                    <td>-</td>
-                    <td>200</td>
-                    <td>mAmps</td>
-                    <td>Outputs open</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>I<sub>DD</sub></td>
-                    <td>-</td>
-                    <td>50</td>
-                    <td>mAmps</td>
-                    <td>Dot Clk low</td>
-                </tr>
-                <tr>
-                    <td>Pin capacitance</td>
-                    <td>Cpin</td>
-                    <td>-</td>
-                    <td>10</td>
-                    <td>pF</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h4>A.C. CHARACTERISTICS</h4>
-            <p>
-                A.C. characteristic are specified with input waveforms between 0.4V input low level and 2.4V input high
-                level and Dot Clock in of 8.182 Mhz.
-                Outputs are loaded at the rated D.C. currents and voltage with 60fcF total capacitive load (including
-                fixturing).
-                All time measurements of active signals are referenced to 1.5V on inputs and outputs.
-                Time measurements of high impedance signals are referenced to Vol and Voh levels.
-            </p>
-
             <table class="memoryMap">
                 <thead>
                 <tr>
@@ -2775,7 +2677,96 @@ resources:
                 </tr>
                 </tbody>
             </table>
-
+            <p>
+                A.C. characteristic are specified with input waveforms between 0.4V input low level and 2.4V input high
+                level and Dot Clock in of 8.182 Mhz.
+                Outputs are loaded at the rated D.C. currents and voltage with 60fcF total capacitive load (including
+                fixturing).
+                All time measurements of active signals are referenced to 1.5V on inputs and outputs.
+                Time measurements of high impedance signals are referenced to Vol and Voh levels.
+            </p>
+        </div>
+        <div class="col-6">
+            <h4>D.C. CHARACTERISTICS </h4>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>Symbol</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Units</th>
+                    <th>Test Conditions</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Input high level</td>
+                    <td>Vih</td>
+                    <td>2.0</td>
+                    <td>V<sub>CC</sub></td>
+                    <td>Volts</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Input low level</td>
+                    <td>Vil</td>
+                    <td>-0.5</td>
+                    <td>0.8</td>
+                    <td>Volts</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Output High level</td>
+                    <td>Voh</td>
+                    <td>2.4</td>
+                    <td>-</td>
+                    <td>Volts</td>
+                    <td>Ioh = -200uA</td>
+                </tr>
+                <tr>
+                    <td>Output Low level</td>
+                    <td>Vol</td>
+                    <td>-</td>
+                    <td>0.4</td>
+                    <td>Volts</td>
+                    <td>Iol = 3.2mA</td>
+                </tr>
+                <tr>
+                    <td>I/O Leakage</td>
+                    <td>Ilkg</td>
+                    <td>-10</td>
+                    <td>10</td>
+                    <td>uAmps</td>
+                    <td>0.4V&lt;Vout&lt;2.4V<br/>(addr buss off)<br/>(data buss off)</td>
+                </tr>
+                <tr>
+                    <td>Supply Current</td>
+                    <td>I<sub>CC</sub></td>
+                    <td>-</td>
+                    <td>200</td>
+                    <td>mAmps</td>
+                    <td>Outputs open</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>I<sub>DD</sub></td>
+                    <td>-</td>
+                    <td>50</td>
+                    <td>mAmps</td>
+                    <td>Dot Clk low</td>
+                </tr>
+                <tr>
+                    <td>Pin capacitance</td>
+                    <td>Cpin</td>
+                    <td>-</td>
+                    <td>10</td>
+                    <td>pF</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="row">
