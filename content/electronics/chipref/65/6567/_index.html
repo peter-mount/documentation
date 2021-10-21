@@ -1236,26 +1236,193 @@ resources:
     </div>
     <div class="row">
         <div class="col-12">
-            <h3></h3>
+            <h3>SYSTEM INTFERACE</h3>
             <p>
+                The 6567vidso controller device interacts with the system data bus
+                in a unique way. a 65XX system requires the system busses only
+                during the Phase 2 (clock high) portion of the cycle. The 6567
+                device takes advantage of this characteristic by normally accessing
+                system memory only during the Phase 1 (clock low) portion of the
+                clock cycle. Therefore, operations such as character data fetches
+                and memory refresh are totally transparent to the processor and do
+                not reduce the processor through-put. The video chip provides the
+                interface control signals required to maintain this bus sharing.
+            </p>
 
+            <table class="memoryMap">
+                <thead>
+                <tr><th>AEC</th><th>PH<sub>0</sub></th><th><span class="not">CS</span></th><th>R/<span class="not">W</span></th><th>ACTION</th></tr>
+                </thead>
+                <tbody>
+                <tr><td>0</td><td>0</td><td>X</td><td>X</td><td>Phase 1 - 8562 Memory Fetch</td></tr>
+                <tr><td>0</td><td>1</td><td>X</td><td>X</td><td>Phase 2 - DMA (Processor Off)</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>Write to 8562 Register</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>Read from 8562 Register</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>X</td><td>Processor Memory Cycle</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>BUSS MUTLIPLEXING</h3>
+            <p>
+                The video circuit provides the AEC signal (address enable control)
+                which is used to disable the processor address bus drivers,
+                thereby allowing the video device to access the address bus. AEC
+                is active low which permits direct connection to the AEC input of
+                the 65XX family. The AEC signal is activated during every Phase 1
+                so that processor operation is not normally affected. Because of
+                this bus "sharing", all memory accesses must be completed in 1/2
+                cycle. Since the video chip provides a IMhz clock (which should
+                be used as system phase 2), a memory cycle is 500ns including
+                address setup, data access and data setup to the reading device.
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h3></h3>
+            <h3>DMA OPERATION</h3>
             <p>
+                Certain operations of the 6567require data at a faster rate than
+                available by reading only during the Phase 1 time; specifically,
+                the access of character pointers from the video matrix and the
+                fetch of MIB data. Therefore, the processor must be disabled and
+                the data accessed during the Phase 2 clock. This is accomplished
+                via the BA (bus available) signal. The BA line is normally high
+                but is brought low during Phase 1 to indicate that the video chip
+                will require a Phase 2 data access. Three Phase 2 times are
+                allowed after BA low for the processor to complete any current
+                memory accesses. On the fourth Phase 2 after BA low, the AEC
+                signal will remain low during Phase 2 as the video chip fetches
+                data. The BA line is normally connected to the RDY input of a
+                65XX processor. The character pointer fetches occur every eighth
+                raster line during the display window and require 40 consecutive
+                Phase 2 accesses to fetch the video matrix pointers.
+            </p>
+            <p>
+                The MIB pointers are fetched every other Phase 1 at the end of
+                each raster line. As needed, additional cycles are used for MIB
+                data fetches, with all necessary bus control provided by the 8562
+                device.
+            </p>
 
+            <table class="memoryMap">
+                <thead>
+                <tr><th>Phase</th><th>Data</th><th>Condition</th></tr>
+                </thead>
+                <tbody>
+                <tr><td>1</td><td>MIB Pointer</td><td></td></tr>
+                <tr><td>2</td><td>MIB Byte 1</td><td>Each raster while MIB is displayed</td></tr>
+                <tr><td>1</td><td>MIB Byte 2</td><td>Each raster while MIB is displayed</td></tr>
+                <tr><td>2</td><td>MIB Byte 3</td><td>Each raster while MIB is displayed</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>INTERFACE SIGNAL DESCRIPTION </h3>
+
+            <h4>DATA BUS (D<sub>7</sub>&hellip;D<sub>0</sub>)</h4>
+            <p>
+                The eight data bus pins are the bi-directional data port,
+                controlled by <span class="not">CS</span>, R/<span class="not">W</span>, and Phase<sub>0</sub>.
+            </p>
+            <p>
+                The data bus can only be accessed while AEC and Phase<sub>0</sub> are high and <span class="not">CS</span> is low.
+            </p>
+
+            <h4>CHIP SELECT (<span class="not">CS</span>)</h4>
+            <p>
+                The chip select pin, <span class="not">CS</span>, is brought low to enable access to the
+                circuit registers in conjunction with the address and R/<span class="not">W</span> pins.
+            </p>
+            <p>
+                <span class="not">CS</span> low is recognized only while AEC and Phase<sub>0</sub> are high.
+            </p>
+
+            <h4>READ/WRITE (R/<span class="not">W</span>)</h4>
+            <p>
+                The read/write input, R/<span class="not">W</span>, is used to determine the direction of
+                data transfer on the data bus, in conjunction with <span class="not">CS</span>.
+            </p>
+            <p>
+                When R/<span class="not">W</span> is high ("1") data is transferred from the selected register to the data bus output.
+            </p>
+            <p>
+                When R/<span class="not">W</span> is low ("0") data presented on the data bus pins is loaded into the selected register.
+            </p>
+
+            <h4>ADDRESS BUS (A<sub>10</sub>&hellip;A<sub>0</sub>)</h4>
+            <p>
+                Address pins A<sub>6</sub>-A<sub>0</sub> are multiplexed to allow direct connection to dynamic RAMs.
+            </p>
+            <p>
+                During the row address time, A<sub>6</sub>-A<sub>0</sub> are driven on pins A<sub>6</sub>-A<sub>0</sub>,
+                while A<sub>13</sub>-A<sub>8</sub> are driven on pins A<sub>5</sub>-A<sub>0</sub> and pin A<sub>6</sub> is "1" during the column time.
+                A<sub>10</sub>-A<sub>7</sub> is stable for the entire memory cycle.
+                The lower six address pins, A<sub>5</sub>-A<sub>0</sub>, are also bi-directional.
+                During a processor read or write of the video device, address pins A<sub>5</sub>-A<sub>0</sub>0 are inputs which latch on the low edge of <span class="not">RAS</span>.
+                The data on these address inputs selects the register for read or write as defined in the register map
+            </p>
+
+            <h4>CLOCK OUT</h4>
+            <p>
+                The clock output, Phase<sub>0</sub>, is the 1Mhz clock used as the 65XX processor Phase<sub>0</sub> in.
+                All system bus activity is referenced to this clock.
+                The clock frequency is generated by dividing the 8Mhz video input clock by eight.
+            </p>
+
+            <h4><span class="not">RAS</span> / <span class="not">CAS</span></h4>
+            <p>
+                The <span class="not">RAS</span> and <span class="not">CAS</span> signals provide the timing signals necessary for dynamic RAMs.
+                These signals are provided twice each clock out cycle to support a memory cycle during both phase 1 and phase 2.
+            </p>
+
+            <h4>INTERRUPTS (<span class="not">IRQ</span>)</h4>
+            <p>
+                The interrupt output, <span class="not">IRQ</span>, is brought low when an enabled source of interrupt occurs with in the device.
+                The <span class="not">IRQ</span> output is open drain, requiring an external pull-up resistor.
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h3></h3>
+            <h3>VIDEO INTERFACE</h3>
             <p>
-
+                The video output from the 6567 consists of two signals which must be externally mixed together to create NTSC compatible composite video.
+                After appropriate mixing, the resulting signal can directly drive a video monitor or RF modulator for use with a standard television.
             </p>
+
+            <h4>VIDEO CLOCK IN</h4>
+            <p>
+                This clock input is the fundamental dot shift rate clock.
+                In addition, all other video sync and system interface signals are derived by dividing this clock.
+                Normally, the desired frequency is 9 Mhz.
+                The primary constaints are the system timing and the requirement that one horizontal raster line is 520 video clock cycles
+            </p>
+
+            <h4>COLOR CLOCK IN</h4>
+            <p>
+                The color clock is used to derive the chrominance signal.
+                NTSC video systems require this input to be 14.31818 Mhz.
+                This base frequency is divided by 4 internally and then appropriately phase shifted to create the 3.5795 Mhz video color signal for NTSC applications.
+            </p>
+
+            <h4>SYNC/LUM OUTPUT</h4>
+            <p>
+                SYNC/LUM output from the 6567 contains all the video data, including horizontal and vertical syncs, as well as the
+                luminance information of the video display.
+                It is an open drain output requiring an external pull-up of 500 ohms.
+            </p>
+
+            <h4>COLOR OUTPUT</h4>
+            <p>
+                The COLOR output contains all the chrominance information, including the color reference burst and the color of all display data.
+                The COLOR output is open source and should be terminated with 1,000 ohms to ground.
+            </p>
+
         </div>
     </div>
     <div class="row">
