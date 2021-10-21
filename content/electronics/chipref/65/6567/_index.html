@@ -292,7 +292,7 @@ resources:
                 memory. The video matrix is comprised of 1,000 consecutive
                 locations in memory which each contain an eight bit character
                 pointer. The location of the video matrix within memory is defined
-                by bits VM13-VM10 in register 24 ($18) which are used as the 4 MSB
+                by bits VM13-VM10 in register 24 (0x18) which are used as the 4 MSB
                 of the video matrix address. The lower order 10 bits are provided
                 by an internal couiter (VC9-VC0) which steps through the 1000
                 character locations. Note that the 6567 provides only 14 address
@@ -344,7 +344,7 @@ resources:
             definitions to be available simultaneously. Each character is an
             8x8 matrix of dots stored in the character base as eight consecutive
             bytes. The location of the character base is defined by bits
-            CB13-CB11 in register 24 ($18) which are used for the 3 most
+            CB13-CB11 in register 24 (0x18) which are used for the 3 most
             significant bits (MSB) of the character base address. The 11 lower
             order addresses are formed by the 8 bit character pointer from the
             video matrix (D7-D0) which selects a particluar character, and a 3
@@ -404,7 +404,7 @@ resources:
                 The extended color mode allows the selection of individual
                 background colors for each character region while maintaining the
                 normal 8 x 8 character resolution. This mode is selected by
-                setting the-BCM bit of register 17 ($11) to "1M. The character
+                setting the-BCM bit of register 17 (0x11) to "1M. The character
                 dot data is displayed similar to the standard mode except the 2
                 MSB of the character pointer are used to select the background
                 color for each character region.
@@ -416,10 +416,10 @@ resources:
                 </tr>
                 CHAR POINTER
                 MS BIT PAIR BACKGROUND'COLOR DISPLAYED
-                <tr><td>00</td><td>Background #0 color (register 33 ($21))</td></tr>
-                <tr><td>01</td><td>Background #1 color (register 34 ($22))</td></tr>
-                <tr><td>10</td><td>Background #2 color (register 35 ($23))</td></tr>
-                <tr><td>11</td><td>Background #3 color (register 36 ($24))</td></tr>
+                <tr><td>00</td><td>Background #0 color (register 33 (0x21))</td></tr>
+                <tr><td>01</td><td>Background #1 color (register 34 (0x22))</td></tr>
+                <tr><td>10</td><td>Background #2 color (register 35 (0x23))</td></tr>
+                <tr><td>11</td><td>Background #3 color (register 36 (0x24))</td></tr>
             </table>
             <p>
                 Since the two MSB of the character pointers are used for color
@@ -441,7 +441,7 @@ resources:
                 one-to-one correspondence between each displayed dot and memory bit.
                 The bit map mode- provides a screen resolution of 320H x ' 200V
                 individually controllable display dots. Bit map mode is selected by
-                setting the BMM bit in register 17 ($11) to a ”1". The VIDEO MATRIX
+                setting the BMM bit in register 17 (0x11) to a ”1". The VIDEO MATRIX
                 is accessed as in character mode, but the video matrix data is
                 interpreted as color data rather than as character pointers. The
                 VIDEO MATRIX COUNTER is also used to create the address to fetch the
@@ -490,7 +490,7 @@ resources:
             </table>
             <p>
                 VM<sub>x</sub> denotes the video matrix counter outputs,
-                RC<sub>x</sub> denotes the 3 bit raster line counter and CB<sub>13</sub> is from register 24 ($18).
+                RC<sub>x</sub> denotes the 3 bit raster line counter and CB<sub>13</sub> is from register 24 (0x18).
                 The raster counter increments once each horizontal video line (raster line) and the video matrix counter increments once every eight lines.
                 This address sequence causes each 8x8 dot block of the video display to reflect eight sequential memory locations.
             </p>
@@ -535,7 +535,7 @@ resources:
             <h3>MULTI-COLOR BIT MAP MODE</h3>
             <p>
                 Multi-colored bit map mode is selected by setting the MCM bit in
-                register 22 ($16) to a "1" in conjunction with the B W bit.
+                register 22 (0x16) to a "1" in conjunction with the B W bit.
                 Multi-color mode utilizes the same memory addressing sequence as
                 standard bit map mode, but interpretes the display dot data
                 differently.
@@ -605,14 +605,20 @@ resources:
                     <tr><th>Row 20</th><td>60</td><td>61</td><td>62</td></tr>
                 </tbody>
             </table>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h3>MIB ENABLE</h3>
             <p>
                 Each MIB can be selectively enabled for display by setting its
-                corresponding enable bit (MnE) to "1” in register 21 ($15). If
+                corresponding enable bit (MnE) to "1” in register 21 (0x15). If
                 the MnE bit is "0", the MIB will not be displayed.
             </p>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h3>MIB POSITION</h3>
             <p>
                 Each MIB is positioned via its X and Y position register (see
@@ -627,7 +633,556 @@ resources:
     </div>
     <div class="row">
         <div class="col-12">
-            TODO resume from page 7/12
+            <h3>MIB COLOR</h3>
+            <p>
+                A separate 4-bit register is associated with each MIB to specify
+                the MIB color. There are two MIB color modes.
+            </p>
+
+            <h4>STANDARD MIB COLOR</h4>
+            <p>
+                In the standard mode, a "0" bit of MIB data allows any
+                background, character or bit map data to show through
+                (transparent) and a "1" bit is displayed £s the MIB color
+                determined by the corresponding MIB Color register.
+            </p>
+
+            <h4>MULTI-COLOR MIB</h4>
+            <p>
+                Each MIB can be individually specified to be multi-color via
+                MnMC bits in the MIB multi-color register 28 (0x1C). When the
+                MnMC bit is H1H, the corresponding MIB is displayed in the
+                multi-color mode. In the multi-color mode, the MIB data is
+                interpreted in pairs as in the other multi-color modes
+            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>MIB Bit Pair</th>
+                    <th>Colour displayed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>00</td>
+                    <td>Transparent (background data)</td>
+                </tr>
+                <tr>
+                    <td>01</td>
+                    <td>MIB Multi-color #0 (register 37 0x25)</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>MIB Color (registers 39-46 0x27-0x2E)</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>MIB Multi-color #1 (register 38 ox26)</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                Since two bits of data are required for each color, the
+                resolution of the MIB is reduced to 12 H x 21 V. Each
+                horizontal dot is expanded to twice the standard size so that
+                the size of the overall MIB does not change. Up to 3 colors can
+                be displayed in each MIB (in addition to transparent), but the
+                two colors specified by the MIB multi-color registers are shared
+                among all 8 MIBs
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>MIB MAGNIFICATION</h3>
+            <p>
+                Each MIB can be independently expanded (2X) in both the horizontal
+                and vertical directions. Two registers contain the control bits
+                (MiXE,MnYE) for the magnification control.
+            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Register</th>
+                    <th>Function</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>29 0x1D</td>
+                    <td>Horizontal expand (MiXE) "1"=expand; "0"=normal</td>
+                </tr>
+                <tr>
+                    <td>23 0x17</td>
+                    <td>Vertical expand (MnYE) "1"=expand; "0"=normal</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                No increase in resolution is realized by expanding the MIBs. The
+                same 24x21 array (or 12x21 if multi-colored) is displayed except
+                but the size of each dot is doubled in the desired direction (up
+                to 4X standard dot dimension if a MIB is both multi-colored and
+                expanded).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>MIB PRIORITY</h3>
+            <p>
+                The priority of each MIB may be individually controlled with
+                respect to the other displayed information (from character or bit
+                map modes).. The priority of each MIB is set by the corresponding
+                bit (MnDP) of register 27 (SIB).
+            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Bit</th>
+                    <th>Priority</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>MIB data displayed'instead of any data (in front)</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>MIB data displayed only instead of Bkgd #0 or multi-color bit pair 01 (behind)</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                MIB data bits of "0" always permit any other information to be
+                displayed (i.e. MIB transparent sections). The MIBs have a fixed
+                priority with respect to each other, with MIB 0 having the highest
+                priority (in front) and MIB 7 the lowest (behind). When MIB data
+                (except transparent data) of two MIBs are co-incident, the data
+                from the lower number MIB will be displayed.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>COLLISION DETECTION</h3>
+            <p>
+                Two types of MIB collision (co-incidence) are detected, MIB to MIB
+                collision and MIB to display data collision.
+            </p>
+
+            <h4>MIB TO MIB COLLISION</h4>
+            <p>
+                A collision between two MIBs occurs when non-transparent output
+                data of two MIBs are co-incident. Co-incidence of MIB
+                transparent areas will not generate a collision. When a
+                collision occurs, the MIB bits (ttiM) in the MIB-MIB COLLISION
+                register 30 (0x1E) will be set to "1" for each colliding MIB.
+                The collision bits ranain set until a read of the collision
+                register, when they are automatically cleared. MIBs collisions
+                are detected even if off screen, behind the border.
+            </p>
+
+            <h4>MIB TO DATA COLLISION</h4>
+            <p>
+                A second register, MIB-DATA COLLISION register 31 (0x1F) also
+                contains a bit (MiD) for each MIB which is set to "1" when both
+                the MIB and display data are co-incident. Again, the
+                co-incidence of MIB transparent data and/or display background
+                does not generate a collision. For special applications, the
+                display data from the 0-1 multicolor bit pair also does not
+                cause a collision. This feature permits their use as background
+                display data without interfering with true MIB collisions. A
+                MIB-DATA collision can occur off-screen in the horizontal
+                direction if display data has been scrolled to an off-screen
+                position (see scrolling). The MIB-DATA COLLISION register also
+                automatically clears when read
+            </p>
+
+            <h3>MIB COLLISION INTERRUPTS</h3>
+            <p>
+                The collision interrupt latches are set whenever the first bit
+                of either register is set to "1". Once any collision bit within
+                a register is set high, subsequent collisions will not set the
+                interrupt latch until that collision register has been cleared
+                to all "0"s by a read.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>MIB MEMORY ACCESS</h3>
+            <p>
+                The data for each MIB is stored in 63 consecutive bytes of memory.
+                Each block of MIB data is defined by a MIB pointer, located at the
+                end of the VIDEO MATRIX. Since only 1,000 bytes of the video
+                matrix are used in the normal display modes video matrix locations
+                1016-1023 (0x3F8-0x3FF) are used for MIB pointers 0-7 respectively.
+                The eight bit MIB pointer from the video matrix together with the
+                six bits from the MIB byte counter to count through the 63 bytes
+                define the entire 14-bit address field.
+            </p>
+
+            <table class="memoryMap">
+                <caption>MIB DATA ADPRESS</caption>
+                <thead>
+                <tr>
+                    <th>A13</th>
+                    <th>A12</th>
+                    <th>A11</th>
+                    <th>A10</th>
+                    <th>A09</th>
+                    <th>A08</th>
+                    <th>A07</th>
+                    <th>A06</th>
+                    <th>A05</th>
+                    <th>A04</th>
+                    <th>A03</th>
+                    <th>A02</th>
+                    <th>A01</th>
+                    <th>A00</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>MP<sub>7</sub></td>
+                    <td>MP<sub>6</sub></td>
+                    <td>MP<sub>5</sub></td>
+                    <td>MP<sub>4</sub></td>
+                    <td>MP<sub>3</sub></td>
+                    <td>MP<sub>2</sub></td>
+                    <td>MP<sub>1</sub></td>
+                    <td>MP<sub>0</sub></td>
+                    <td>MC<sub>5</sub></td>
+                    <td>MC<sub>4</sub></td>
+                    <td>MC<sub>3</sub></td>
+                    <td>MC<sub>2</sub></td>
+                    <td>MC<sub>1</sub></td>
+                    <td>MC<sub>0</sub></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p>
+                The MP<sub>x</sub> are the MIB pointer bits from the video matrix and MC<sub>x</sub> are
+                the internally generated MIB counter bits. The MIB pointers are
+                read from the video matrix at the end of every raster line. When
+                the Y position register of a MIB matches the current raster line
+                count, the actual fetches of MIB data begin. Internal counters
+                automatically step through the 63 bytes of MIB data, displaying
+                three bytes on each raster line.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>OTHER FEATURES </h3>
+
+            <h3>SCREEN BLANKING</h3>
+            <p>
+                The display screen may be blanked by setting the BLNK bit in
+                register 17 (0x11) to a H1H. when the screen in blanked, the
+                entire screen displays the exterior color specified by register 32
+                (0x20). When blanking is enabled, only transparent (Phase 1)
+                memory accesses are required, permitting full processor
+                utilization of the system bus. However, MOB data will be accessed
+                if the MOBS are not also disabled.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>DISPLAY ROW/COLUMN SELECT</h3>
+            <p>
+                The normal display space consists of 25 cows of 40 character
+                regions per row. For special display purposes, the display window
+                may be reduced to 24 rows or 38 characters. There is no change in
+                the format of the displayed information, except that characters
+                (bits) adjacent to the exterior border area are covered by the
+                border.
+            </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>RSEL</th>
+                    <th>Number of rows</th>
+                    <th>CSEL</th>
+                    <th>Number of columns</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>24 rows</td>
+                    <td>0</td>
+                    <td>38 columns</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>25 rows</td>
+                    <td>1</td>
+                    <td>40 columns</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                The RSEL bit is in register 17 (0x11) and the CSEL bit is in
+                register 22 (0x16). For standard display the larger display window
+                is normally used, while the smaller display window is normally
+                used in conjunction with scrolling.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>SCROLLING</h3>
+            <p>
+                The display data may be scrolled up to one character region in
+                both the horizontal and vertical direction. When used in
+                conjunction with the smaller display window (above), scrolling can
+                be used to create a smooth panning motion of display data while
+                updating the system memory only when a new character row (or
+                column) is required. Scrolling is also used for centering a
+                display within the screen.
+            </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Bits</th>
+                    <th>Register</th>
+                    <th>Function</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>X<sub>2</sub>, X<sub>1</sub>, X<sub>0</sub></td>
+                    <td>22 0x16</td>
+                    <td>Horizontal Position</td>
+                </tr>
+                <tr>
+                    <td>Y<sub>2</sub>, Y<sub>1</sub>, Y<sub>0</sub></td>
+                    <td>17 0x11</td>
+                    <td>Vertical Position</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>LIGHT PEN</h3>
+            <p>
+                The light pen input latches the current screen position into a
+                pair of registers.(LPX,LPY) on a low-going edge. The X position
+                register 19 (0x13) contains the 8 MSB of the X position at the time
+                of transition. Since the X position is defined by a 9 bit
+                coulter, resolution to 2 horizontal dots is provided. Similarly,
+                the Y position is latched in its register 20 (0x14) with 8 bits
+                provide unique raster resolution within the visible display. The
+                light pen latch may be triggered only once per frame, and
+                subsequent triggers within the same frame will have no effect.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>RASTER REGISTER</h3>
+            <p>
+                The raster register is a dual function register. A read of the
+                raster register 18 (0x12) returns the lower 3 bits of the current
+                raster positon (the MSB-RC8 is located in register 17 (0x11)). A
+                write to the raster bits (including RC8) is latched for use in an
+                internal raster compare. When the current raster matches the
+                written value, the raster interrupt latch is set. The raster
+                register should be interrogated to prevent display flicker by
+                delaying display changes to occur outside the visible area. The
+                visible area of the display is from raster 51 to raster 251
+                (0x033-0x0FB).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>INTERRUPT REGISTER</h3>
+            <p>
+                The interrupt register indicates the status of the four sources of
+                interrupt. An interrupt latch in register 25 (0x19) is set to "I"
+                when an interrupt source has generated an interrupt request.
+            </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Latch Bit</th>
+                    <th>Enable Bit</th>
+                    <th>When Set</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>IRST</td>
+                    <td>ERST</td>
+                    <td>Actual raster count = stored raster count </td>
+                </tr>
+                <tr>
+                    <td>IMDC</td>
+                    <td>EMDC</td>
+                    <td>MOB-DATA collision (first bit only) </td>
+                </tr>
+                <tr>
+                    <td>IMMC</td>
+                    <td>EMMC</td>
+                    <td>MOB-MOB collision (first bit only)</td>
+                </tr>
+                <tr>
+                    <td>ILP</td>
+                    <td>ELP</td>
+                    <td>First negative transition of LP per frame </td>
+                </tr>
+                <tr>
+                    <td>IRQ</td>
+                    <td></td>
+                    <td>When <span class="not">IRQ</span> output low</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                To enable an interrupt request to set the IRQ/ output to •'0", the
+                corresponding interrupt enable bit in register 26 (0x1A) must be
+                set to "I”. Once an interrupt latch has been set, the latch may
+                be cleared only by writing a "1" to the associated bit in the
+                interrupt register. This feature allows selective handling of
+                video interrupts without software storing of the active
+                interrupts.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>DYNAMIC RAM REFRESH</h3>
+            <p>
+                A dynamic ram refresh controller is built in to the 6567 device.
+                Five 8-bit row addresses are refreshed every raster line. This
+                rate guarantees a maximum delay of 2.02 ms between the refresh of
+                any single row address in a 128 refresh scheme. (The maximum
+                delay is 3.66ms in a 256 address refresh scheme). This refresh is
+                totally transparent to the system, since the refresh occurs during
+                Phase 1 of the system clock. The 6567 generates both SAS/ and
+                CAS/ which are normally connected directly to the dynamic rams.
+                RAS/ and CAS/ are generated for every Phase 2 and every video data
+                access (including refresh) so that external clock generation is
+                not required.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>COLOR CODE TABLE</h3>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>D<sub>11</sub></th>
+                    <th>D<sub>10</sub></th>
+                    <th>D<sub>9</sub></th>
+                    <th>D<sub>8</sub></th>
+                    <th>Hex</th>
+                    <th>Colour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0x0</td><td>Black</td></tr>
+                <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0x1</td><td>White</td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0x2</td><td>Red</td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0x3</td><td>Cyan</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0x4</td><td>Purple</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0x5</td><td>Green</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0x6</td><td>Blue</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0x7</td><td>Yellow</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0x8</td><td>Orange</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0x9</td><td>Brown</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0xA</td><td>Light Red</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0xB</td><td>Dark Grey</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0xC</td><td>Medium Grey</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0xD</td><td>Light Green</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0xE</td><td>Light Blue</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0xF</td><td>Light Grey</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3></h3>
+            <p>
+
+            </p>
         </div>
     </div>
 </div>
