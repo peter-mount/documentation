@@ -512,7 +512,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>STANDARD BIT MAP MODE</h3>
             <p>
                 In the standard bit map mode, color information is derived only
@@ -691,7 +691,10 @@ resources:
                 A separate 4-bit register is associated with each MIB to specify
                 the MIB color. There are two MIB color modes.
             </p>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h4>STANDARD MIB COLOR</h4>
             <p>
                 In the standard mode, a "0" bit of MIB data allows any
@@ -699,7 +702,10 @@ resources:
                 (transparent) and a "1" bit is displayed £s the MIB color
                 determined by the corresponding MIB Color register.
             </p>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h4>MULTI-COLOR MIB</h4>
             <p>
                 Each MIB can be individually specified to be multi-color via
@@ -945,7 +951,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>DISPLAY ROW/COLUMN SELECT</h3>
             <p>
                 The normal display space consists of 25 cows of 40 character
@@ -987,9 +993,7 @@ resources:
                 used in conjunction with scrolling.
             </p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>SCROLLING</h3>
             <p>
                 The display data may be scrolled up to one character region in
@@ -1025,7 +1029,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>LIGHT PEN</h3>
             <p>
                 The light pen input latches the current screen position into a
@@ -1039,9 +1043,7 @@ resources:
                 subsequent triggers within the same frame will have no effect.
             </p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>RASTER REGISTER</h3>
             <p>
                 The raster register is a dual function register. A read of the
@@ -1058,7 +1060,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>INTERRUPT REGISTER</h3>
             <p>
                 The interrupt register indicates the status of the four sources of
@@ -1112,9 +1114,7 @@ resources:
                 interrupts.
             </p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>DYNAMIC RAM REFRESH</h3>
             <p>
                 A dynamic ram refresh controller is built in to the 6567 device.
@@ -1281,7 +1281,10 @@ resources:
     <div class="row">
         <div class="col-12">
             <h3>SCREEN POSITION DECODES</h3>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
             <h4>HORIZONTAL DECODES</h4>
             <table class="memoryMap">
                 <thead>
@@ -1380,9 +1383,7 @@ resources:
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <h3>VERTICAL DECODES</h3>
             <table class="memoryMap">
                 <thead>
@@ -2093,6 +2094,10 @@ resources:
     <div class="row">
         <div class="col-12">
             <h3>SYSTEM INTFERACE</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
             <p>
                 The 6567vidso controller device interacts with the system data bus
                 in a unique way. a 65XX system requires the system busses only
@@ -2104,7 +2109,8 @@ resources:
                 not reduce the processor through-put. The video chip provides the
                 interface control signals required to maintain this bus sharing.
             </p>
-
+        </div>
+        <div class="col-6">
             <table class="memoryMap">
                 <thead>
                 <tr>
@@ -2192,13 +2198,18 @@ resources:
                 raster line during the display window and require 40 consecutive
                 Phase 2 accesses to fetch the video matrix pointers.
             </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
             <p>
                 The MIB pointers are fetched every other Phase 1 at the end of
                 each raster line. As needed, additional cycles are used for MIB
                 data fetches, with all necessary bus control provided by the 8562
                 device.
             </p>
-
+        </div>
+        <div class="col-6">
             <table class="memoryMap">
                 <thead>
                 <tr>
