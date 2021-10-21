@@ -1,0 +1,172 @@
+---
+type: "manual"
+title: "Page DC"
+linkTitle: "Page DC"
+description: "CIA 1"
+weight: 0xDC
+categories:
+  - c64
+memorymap:
+  - address: "DC00"
+    name: "CIA1PRA"
+    desc: "Data Port A<sup>[1,2,3]</sup>"
+    format:
+      - "KM7<br/>PAD"
+      - "KM6<br/>PAD"
+      - "KM5"
+      - "KM4<br/>J2FB<br/>LPEN"
+      - "KM3<br/>J2Dn"
+      - "KM2<br/>J2Up"
+      - "KM1<br/>J2Rt"
+      - "KM0<br/>J2Lt"
+  - address: "DC01"
+    name: "CIA1PRB"
+    desc: "Data Port B<sup>[1,4]</sup>"
+    format:
+      - "KM7<br/>TIMB"
+      - "KM6<br/>TIMA"
+      - "KM5"
+      - "KM4<br/>J1FB<br/>LPEN"
+      - "KM3<br/>J1Dn"
+      - "KM2<br/>J1Up"
+      - "KM1<br/>J1Rt"
+      - "KM0<br/>J1Lt"
+  - address: "DC02"
+    name: "CIA1DDRA"
+    desc: "Data Direction Port A"
+    format:
+      - DDA7
+      - DDA6
+      - DDA5
+      - DDA4
+      - DDA3
+      - DDA2
+      - DDA1
+      - DDA0
+  - address: "DC03"
+    name: "CIA1DDRB"
+    desc: "Data Direction Port B"
+    format:
+      - DDB7
+      - DDB6
+      - DDB5
+      - DDB4
+      - DDB3
+      - DDB2
+      - DDB1
+      - DDB0
+  - address: "DC04"
+    name: "CIA1TIMAL"
+    desc: "Timer A Low byte"
+    format:
+      - span: 8
+        label: TIMAL
+  - address: "DC05"
+    name: "CIA1TIMAH"
+    desc: "Timer A High byte"
+    format:
+      - span: 8
+        label: TIMAH
+  - address: "DC06"
+    name: "CIA1TIMBL"
+    desc: "Timer B Low byte"
+    format:
+      - span: 8
+        label: TIMBL
+  - address: "DC07"
+    name: "CIA1TIMBH"
+    desc: "Timer B High byte"
+    format:
+      - span: 8
+        label: TIMBH
+  - address: "DC08"
+    name: "CIA1RTCT"
+    desc: "Real time clock 1/10s"
+    format:
+      - span: 8
+        label: RTCT
+  - address: "DC09"
+    name: "CIA1RTCS"
+    desc: "Real time clock seconds"
+    format:
+      - span: 8
+        label: RTCS
+  - address: "DC0A"
+    name: "CIA1RTCM"
+    desc: "Real time clock minutes"
+    format:
+      - span: 8
+        label: RTCM
+  - address: "DC0B"
+    name: "CIA1RTCH"
+    desc: "Real time clock hours"
+    format:
+      - span: 8
+        label: RTCH
+  - address: "DC0C"
+    name: "CIA1SR"
+    desc: "Shift register"
+    format:
+      - span: 8
+        label: SR
+  - address: "DC0D"
+    name: "CIA1ICS"
+    desc: "Interrupt Control & Status<br/>Read top, Write bottom"
+    format:
+      - IRQ<br/>Source
+      - span: 2
+        label: "Always 0<br/>Unused"
+      - "IRQ Flag<br/>IntRel"
+      - "SDR<br/>IntRel"
+      - "Alarm<br/>IntRel"
+      - "UTB<br/>IntRel"
+      - "UTA<br/>IntRel"
+  - address: "DC0E"
+    name: "CIA1CTA"
+    desc: "Control Timer A"
+    format:
+      - "RTC<sup>[5]</sup>"
+      - "SRC<sup>[6]</sup>"
+      - "TSRC<sup>[7]</sup>"
+      - "Load<sup>[8]</sup>"
+      - "RES<sup>[9]</sup>"
+      - "OVFL<sup>[10]</sup>"
+      - "UNFL1<sup>[11]</sup>"
+      - "START"
+  - address: "DC0F"
+    name: "CIA1CTB"
+    desc: "Control Timer B"
+    format:
+      - ""
+      - span: 2
+        label: "TCOUNT<sup>[13]</sup>"
+      - "Load<sup>[8]</sup>"
+      - "RES<sup>[9]</sup>"
+      - "OVFL<sup>[10]</sup>"
+      - "UNFL2<sup>[12]</sup>"
+      - "START"
+notes:
+  - "Keyboard matrix pins are R/W. PRA for columns, PRB for rows"
+  - "Joystick pins 0=activated. Port 1 in PRA and Port 2 on PRB"
+  - "Bits 6 & 7 of CIA1PRA selects paddle, %01=Paddle A, %10=Paddle B"
+  - "Bits 6 & 7 of CIA1PRB handler timer toggle/impule output.<br/>Bit 2 of register 14 or timer A & 15 for B"
+  - "RTC 0=60Hz 1=50Hz"
+  - "Shift register direction SP pin 0=read, 1=write"
+  - "TSRC 0=count system cycles, 1=positive slope at CNT pin"
+  - "1 = Load latic into the timer once"
+  - "0 = Timer restart after underflow (latch reloaded), 1 = timer stops after underflow"
+  - "0 = Timer overflow, port B bit 6 high 1 cycle, 1 = underflow, port B bit 6 inverted"
+  - "1 = Indicates timer underflow at port B bit 6"
+  - "1 = Indicates timer underflow at port B bit 7"
+  - "Timer counts: %00 System cycle, %01 +ve slope CNT-pin, %10 Timer A underflow, %11 Timer A underflow if CNT-pin high"
+---
+
+<div class="container">
+  <div class="row m-md-4">
+    <h2>Multiple address ranges</h2>
+    <p>
+      CIA1 is mapped to addresses 0xDCxx but only occupies 16 bytes.
+      Referencing any address from 0xDC1x&hellip;0xDCFx will mirror those at 0xDC0x.
+    </p>
+  </div>
+</div>
