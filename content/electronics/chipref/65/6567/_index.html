@@ -1,0 +1,477 @@
+---
+type: "manual"
+title: "MOS 6567 VIC-II"
+linkTitle: "6567 VIC-II"
+weight: 65670
+description: "The 6567 VIC-II (Video Interface Chip II)"
+chip:
+  - name: "6567"
+    category: "mos"
+    title: "MOS 6567 VIC-II (Video Interface Chip II)"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "6567"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_VIC-II"
+    pins:
+        "1": "D(6)"
+        "2": "D(5)"
+        "3": "D(4)"
+        "4": "D(3)"
+        "5": "D(2)"
+        "6": "D(1)"
+        "7": "D(0)"
+        "8": "NOT(IRQ)"
+        "9": "LP"
+        "10": "NOT(CS)"
+        "11": "R/NOT(W)"
+        "12": "BA"
+        "13": "V(DD)"
+        "14": "Color"
+        "15": "S/LUM"
+        "16": "AEC"
+        "17": "PHI(0)"
+        "18": "NOT(RAS)"
+        "19": "CAS"
+        "20": "V(SS)"
+        "21": "CC(IN)"
+        "22": "VC(IN)"
+        "23": "A(11)"
+        "24": "A(0) (A(8))"
+        "25": "A(1) (A(9))"
+        "26": "A(2) (A(10))"
+        "27": "A(3) (A(11))"
+        "28": "A(4) (A(12))"
+        "29": "A(5) (A(13))"
+        "30": "A(6) (1)"
+        "31": "A(7)"
+        "32": "A(8)"
+        "33": "A(9)"
+        "34": "A(10)"
+        "35": "D(11)"
+        "36": "D(10)"
+        "37": "D(9)"
+        "38": "D(8)"
+        "39": "D(7)"
+        "40": "V(CC)"
+resources:
+  - name: "6567.svg"
+    url: "/static/chipref/mos/6567.svg"
+    size: "12K"
+---
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert-info">
+                Taken from the original Commodore Semiconductor Group datasheet<br/>
+                OCR Source: <a href="http://archive.6502.org/datasheets/mos_6567_vic_ii_preliminary.pdf">Archive.org mos_6567_vic_ii_preliminary.pdf</a>.
+                Some spelling mistakes may remain due to the poor quality of the source material.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <h2>6567 Video Interface Chip</h2>
+
+            <h3>General Description:</h3>
+            <p>
+                The 6567 Video Interface Chip (VIC II) is a multi-purpose video
+                controller for use in both computer video terminals and video
+                game applications. The color video display is 25 rows of 40
+                characters each with additional features including horizontal
+                and vertical scroll, bit map graphics and movable image blocks
+                (MIBS).
+            </p>
+            <h3>Features</h3>
+            <ul>
+                <li>Mask programmable sync, generation, NTSC - 6567, PAL - 6569, PAL-N-6572, PAL-M-6573.</li>
+                <li>47 Addressable control registers.</li>
+                <li>Fully expandable system with up to 16K byte display memory.</li>
+                <li>On chip color generation (16 colors)</li>
+                <li>Up to eight independent movable image blocks (MIBS).</li>
+                <li>Light gun/pen for target games.</li>
+            </ul>
+        </div>
+        <div class="col-4">
+            <img src="/static/chipref/mos/6567.svg"/>
+            <p>(Multiplexed addresses in parentheses)</p>
+        </div>
+        <div class="col-2">
+            <h2>Variants</h2>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Chip</th>
+                    <th>Region</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>6567</td>
+                    <td>NTSC</td>
+                </tr>
+                <tr>
+                    <td>6569</td>
+                    <td>PAL</td>
+                </tr>
+                <tr>
+                    <td>6572</td>
+                    <td>PAL-N</td>
+                </tr>
+                <tr>
+                    <td>6573</td>
+                    <td>PAL-M</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>CHARACTER DISPLAY MODE</h3>
+            <p>
+                In the character display mode, the 6567 fetches CHARACTER POINTERS
+                from the VIDEO MATRIX area of memory and translates the pointers to
+                character dot addresses in the 2,048 byte CHARACTER BASE area of
+                memory. The video matrix is comprised of 1,000 consecutive
+                locations in memory which each contain an eight bit character
+                pointer. The location of the video matrix within memory is defined
+                by bits VM13-VM10 in register 24 ($18) which are used as the 4 MSB
+                of the video matrix address. The lower order 10 bits are provided
+                by an internal couiter (VC9-VC0) which steps through the 1000
+                character locations. Note that the 6567 provides only 14 address
+                outputs so additional system hardware may be required for complete
+                system memory decodes.
+            </p>
+
+            <table class="memoryMap">
+                <caption>CHARACTER POINTER ADDRESS</caption>
+                <thead>
+                <tr>
+                    <th>A13</th>
+                    <th>A12</th>
+                    <th>A11</th>
+                    <th>A10</th>
+                    <th>A09</th>
+                    <th>A08</th>
+                    <th>A07</th>
+                    <th>A06</th>
+                    <th>A05</th>
+                    <th>A04</th>
+                    <th>A03</th>
+                    <th>A02</th>
+                    <th>A01</th>
+                    <th>A00</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>CB<sub>13</sub></td>
+                    <td>CB<sub>12</sub></td>
+                    <td>CB<sub>11</sub></td>
+                    <td>VM<sub>10</sub></td>
+                    <td>VC<sub>9</sub></td>
+                    <td>VC<sub>8</sub></td>
+                    <td>VC<sub>7</sub></td>
+                    <td>VC<sub>6</sub></td>
+                    <td>VC<sub>5</sub></td>
+                    <td>VC<sub>4</sub></td>
+                    <td>VC<sub>3</sub></td>
+                    <td>VC<sub>2</sub></td>
+                    <td>VC<sub>1</sub></td>
+                    <td>VC<sub>0</sub></td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+            The eight bit character pointer permits 256 different .character
+            definitions to be available simultaneously. Each character is an
+            8x8 matrix of dots stored in the character base as eight consecutive
+            bytes. The location of the character base is defined by bits
+            CB13-CB11 in register 24 ($18) which are used for the 3 most
+            significant bits (MSB) of the character base address. The 11 lower
+            order addresses are formed by the 8 bit character pointer from the
+            video matrix (D7-D0) which selects a particluar character, and a 3
+            bit raster counter (RC2-RC0) which selects one of the eight
+            character bytes. The resulting characters are formated as 25 rows
+            of 40 characters each. In addition to the 8 bit character pointer,
+            a 4-bit COLOR NYBBLE is associated with each video matrix location
+            (the video matrix memory is 12 bits wide) which selects one of
+            sixteen colors for each character.
+            </p>
+
+            <table class="memoryMap">
+                <caption>CHARACTER DATA ADDRESS</caption>
+                <thead>
+                <tr>
+                    <th>A13</th>
+                    <th>A12</th>
+                    <th>A11</th>
+                    <th>A10</th>
+                    <th>A09</th>
+                    <th>A08</th>
+                    <th>A07</th>
+                    <th>A06</th>
+                    <th>A05</th>
+                    <th>A04</th>
+                    <th>A03</th>
+                    <th>A02</th>
+                    <th>A01</th>
+                    <th>A00</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>CB<sub>13</sub></td>
+                    <td>CB<sub>12</sub></td>
+                    <td>CB<sub>11</sub></td>
+                    <td>D<sub>7</sub></td>
+                    <td>D<sub>6</sub></td>
+                    <td>D<sub>5</sub></td>
+                    <td>D<sub>4</sub></td>
+                    <td>D<sub>3</sub></td>
+                    <td>D<sub>2</sub></td>
+                    <td>D<sub>1</sub></td>
+                    <td>D<sub>0</sub></td>
+                    <td>RC<sub>2</sub></td>
+                    <td>RC<sub>1</sub></td>
+                    <td>RC<sub>0</sub></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>EXTENDED COLOR CHARACTER MODE</h3>
+            <p>
+                The extended color mode allows the selection of individual
+                background colors for each character region while maintaining the
+                normal 8 x 8 character resolution. This mode is selected by
+                setting the-BCM bit of register 17 ($11) to "1M. The character
+                dot data is displayed similar to the standard mode except the 2
+                MSB of the character pointer are used to select the background
+                color for each character region.
+            </p>
+            <table class="memoryMap">
+                <tr>
+                    <th>CHAR POINTER<br/>MS BIT PAIR</th>
+                    <th>BACKGROUND COLOR DISPLAYED</th>
+                </tr>
+                CHAR POINTER
+                MS BIT PAIR BACKGROUND'COLOR DISPLAYED
+                <tr><td>00</td><td>Background #0 color (register 33 ($21))</td></tr>
+                <tr><td>01</td><td>Background #1 color (register 34 ($22))</td></tr>
+                <tr><td>10</td><td>Background #2 color (register 35 ($23))</td></tr>
+                <tr><td>11</td><td>Background #3 color (register 36 ($24))</td></tr>
+            </table>
+            <p>
+                Since the two MSB of the character pointers are used for color
+                information, only 64 different character definitions are
+                available. The 8562 forces CB10 and QB9 to "0" regardless of the
+                original pointer values, so that only the first 64 character
+                definitions are accessed. In extended color mode, each character
+                can select one of sixteen individually defined foreground colors
+                and one of the four available background colors.
+            </p>
+            <p> EXTENDED COLOR MODE AND MULTI-COLOR MODE CAN NOT BE ENABLED SIMULTANEOUSLY.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>BIT MAP MODE</h3>
+            <p>
+                In bit map mode, the 6567 fetches data from memory to create a
+                one-to-one correspondence between each displayed dot and memory bit.
+                The bit map mode- provides a screen resolution of 320H x ' 200V
+                individually controllable display dots. Bit map mode is selected by
+                setting the BMM bit in register 17 ($11) to a ”1". The VIDEO MATRIX
+                is accessed as in character mode, but the video matrix data is
+                interpreted as color data rather than as character pointers. The
+                VIDEO MATRIX COUNTER is also used to create the address to fetch the
+                dot data for display from the 3,000 byte DISPLAY BASE. The display
+                data address is formed as follows:
+            </p>
+
+            <table class="memoryMap">
+                <caption>CHARACTER DATA ADDRESS</caption>
+                <thead>
+                <tr>
+                    <th>A13</th>
+                    <th>A12</th>
+                    <th>A11</th>
+                    <th>A10</th>
+                    <th>A09</th>
+                    <th>A08</th>
+                    <th>A07</th>
+                    <th>A06</th>
+                    <th>A05</th>
+                    <th>A04</th>
+                    <th>A03</th>
+                    <th>A02</th>
+                    <th>A01</th>
+                    <th>A00</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>CB<sub>13</sub></td>
+                    <td>VM<sub>9</sub></td>
+                    <td>VM<sub>8</sub></td>
+                    <td>VM<sub>7</sub></td>
+                    <td>VM<sub>6</sub></td>
+                    <td>VM<sub>5</sub></td>
+                    <td>VM<sub>4</sub></td>
+                    <td>VM<sub>3</sub></td>
+                    <td>VM<sub>2</sub></td>
+                    <td>VM<sub>1</sub></td>
+                    <td>VM<sub>0</sub></td>
+                    <td>RC<sub>2</sub></td>
+                    <td>RC<sub>1</sub></td>
+                    <td>RC<sub>0</sub></td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                VM<sub>x</sub> denotes the video matrix counter outputs,
+                RC<sub>x</sub> denotes the 3 bit raster line counter and CB<sub>13</sub> is from register 24 ($18).
+                The raster counter increments once each horizontal video line (raster line) and the video matrix counter increments once every eight lines.
+                This address sequence causes each 8x8 dot block of the video display to reflect eight sequential memory locations.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>STANDARD BIT MAP MODE</h3>
+            <p>
+                In the standard bit map mode, color information is derived only
+                fran the data stored in the video matrix (the color nybble is
+                disregarded). These 8 bits are divided into two 4-bit nybbles,
+                allowing two colors to be selected independently in each 8x8 dot
+                block. When a bit in the display memory is a "0", the color of
+                the output dot is set by the least significant (lower) nybble
+                (LSN). Similarly, a display memory bit of "1" selects the output
+                color specified by the MSN (upper nybble).
+            </p>
+
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Display Bit</th>
+                    <th>Display Colour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>Lower nibble of video matrix pointer</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Upper nibble of video matrix pointer</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>MULTI-COLOR BIT MAP MODE</h3>
+            <p>
+                Multi-colored bit map mode is selected by setting the MCM bit in
+                register 22 ($16) to a "1" in conjunction with the B W bit.
+                Multi-color mode utilizes the same memory addressing sequence as
+                standard bit map mode, but interpretes the display dot data
+                differently.
+            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Display Bit Pair</th>
+                    <th>Display Colour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>00</td>
+                    <td>Background #0 color (register 33 0x21)</td>
+                </tr>
+                <tr>
+                    <td>01</td>
+                    <td>Upper nibble of video matrix pointer</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Lower nibble of video matrix pointer</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Video matrix colour nibble</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                Note that the color nybble (DB11-DB8) IS used for the multi-color
+                bit map mode. As in character multi-color mode, the horizontal
+                dot size is doubled since two bits are required for color
+                selection, resulting in a screen resolution of 160H x 200V.
+                Utilizing multi-color bit map mode, three independently selected
+                colors can be displayed in each 8 x 8 block in addition to the
+                background color.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>MOVABLE IMAGE BLOCKS</h3>
+            <p>
+                The movable image block (MIB) is a special type of display image
+                which can be displayed at any screen position without the 8x8 dot
+                block constraints inherent in character and bit map modes. Up to 8
+                unique MIBs can be displayed simultaneously, each defined by 63
+                bytes in memory displayed as a 24x21 dot array (shown below). A
+                number of special features make MIBs especially suited for video
+                graphics and game applicatons.
+            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th></th><th>Byte</th><th>Byte</th><th>Byte</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr><th>Row 0</th><td>00</td><td>01</td><td>02</td></tr>
+                    <tr><th>Row 1</th><td>03</td><td>04</td><td>05</td></tr>
+                    <tr><th>Row .</th><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><th>Row .</th><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><th>Row .</th><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><th>Row 19</th><td>57</td><td>58</td><td>59</td></tr>
+                    <tr><th>Row 20</th><td>60</td><td>61</td><td>62</td></tr>
+                </tbody>
+            </table>
+
+            <h3>MIB ENABLE</h3>
+            <p>
+                Each MIB can be selectively enabled for display by setting its
+                corresponding enable bit (MnE) to "1” in register 21 ($15). If
+                the MnE bit is "0", the MIB will not be displayed.
+            </p>
+
+            <h3>MIB POSITION</h3>
+            <p>
+                Each MIB is positioned via its X and Y position register (see
+                register map 1.3) within 512 horizontal and 256 vertical
+                positions. The position of a MIB is specified by the upper-left
+                corner of the array. X locations 23 to 347 (0x17-0x157) and Y
+                locations 50 to 249 (0x32-0xF9) are visible. Since not all
+                available MIB positions are entirely visible on the screen, MIBs
+                may be moved smoothly on and off the display screen
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            TODO resume from page 7/12
+        </div>
+    </div>
+</div>
