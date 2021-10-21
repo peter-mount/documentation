@@ -1,0 +1,47 @@
+---
+type: "manual"
+title: "Page D4"
+linkTitle: "D4 SID"
+description: "SID Registers"
+weight: 0xD4
+categories:
+  - c64
+memorymap:
+  - address: "D400"
+    name: "SID1FRELOW"
+    desc: "Frequency voice 1 low byte"
+    format:
+      - span: 8
+        label: FRE1LOW
+  - address: "D401"
+    name: "SID1FREHIGH"
+    desc: "Frequency voice 1 high byte"
+    format:
+      - span: 8
+        label: FRE1HIGH
+  - address: "D402"
+    name: "SID1PWDCLOW"
+    desc: "Pulse wave duty cycle voice 1 low byte"
+    format:
+      - span: 8
+        label: PWDC1LOW
+  - address: "D403"
+    name: "SID1PWDCHIGH"
+    desc: "Pulse wave duty cycle voice 1 high byte"
+    format:
+      - span: 4
+      - span: 4
+        label: PWDC1HIGH
+  - address: "D404"
+    name: "SID1CR"
+    desc: "Control Register voice 1"
+    format:
+      - noise
+      - pulse
+      - sawtooth
+      - triangle
+      - test
+      - "ringmod V3"
+      - "synth V3"
+      - gate
+---
