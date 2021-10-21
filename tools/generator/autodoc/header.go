@@ -3,10 +3,12 @@ package autodoc
 import (
   "context"
   "fmt"
+  "github.com/microcosm-cc/bluemonday"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
   "github.com/peter-mount/documentation/tools/util/autodoc/asm"
   "github.com/peter-mount/documentation/tools/util/task"
+  "strings"
 )
 
 // Header is a constant value taken from source, e.g. memory map
@@ -14,6 +16,7 @@ type Header struct {
   Label   string // Label of entry
   Value   string // Value of constant
   Comment string // Comment about this entry
+  Inline  bool   // If true then comment is forced as an inline comment not a new line one
 }
 
 type HeaderHandler func(*Header) error
@@ -42,6 +45,8 @@ type Headers struct {
 func NewHeaders() *Headers {
   return &Headers{m: make(map[string]*Header)}
 }
+
+var hdrBreak = []string{"<br/>", "<br>", "\n", "\\n"}
 
 func (h *Headers) Add(header *Header) error {
   if header.Label != "" {
@@ -91,12 +96,37 @@ func (h *Headers) task(ctx context.Context) error {
 func (h *Headers) AutodocHandler() autodoc.Handler {
   return func(ctx context.Context, b autodoc.Builder) error {
     return h.ForEach(func(h1 *Header) error {
-      if h1.Label == "" && h1.Value == "" && h1.Comment != "" {
-        b.Comment(h1.Comment)
+      comment := stripHtml(splitComment(h1.Comment))
+      if !h1.Inline && h1.Label == "" && h1.Value == "" && comment != "" {
+        b.Comment(comment)
       } else {
-        b.Header(h1.Label, b.Hex(h1.Value), h1.Comment)
+        b.Header(h1.Label, b.Hex(h1.Value), comment)
       }
       return nil
     })
   }
+}
+
+// Splits a comment at the first sign of a line break
+func splitComment(comment string) string {
+  for _, brk := range hdrBreak {
+    i := strings.Index(comment, brk)
+    if i > -1 {
+      return comment[:i]
+    }
+  }
+  return comment
+}
+
+// stripHtml removes any html elements that can appear in
+func stripHtml(comment string) string {
+  if comment == "" {
+    return ""
+  }
+
+  // Do not allow any html or element content
+  return bluemonday.NewPolicy().
+    AllowElements().
+    SkipElementsContent("sub", "sup").
+    Sanitize(comment)
 }
