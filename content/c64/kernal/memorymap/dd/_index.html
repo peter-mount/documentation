@@ -1,0 +1,174 @@
+---
+type: "manual"
+title: "Page DD"
+linkTitle: "DD CIA-2"
+description: "CIA 2"
+weight: 0xDD
+categories:
+  - c64
+memorymap:
+  - address: "DD00"
+    name: "CIA2PRA"
+    desc: "Data Port A<sup>[1,2,3]</sup>"
+    format:
+      - SBDI
+      - SBCI
+      - SBDO
+      - SBCO
+      - SBAO
+      - "TXD/PA2"
+      - span: 2
+        label: "VICMEM<sup>[]</sup>"
+  - address: "DD01"
+    name: "CIA2PRB"
+    desc: "User Port PB0-7<sup>[4]</sup>"
+    format:
+      - "PB7<br/>DSR"
+      - "PB6<br/>CTS"
+      - "PB5<br/>UPJ"
+      - "PB4<br/>DCD"
+      - "PB3<br/>RI"
+      - "PB2<br/>DTR"
+      - "PB1<br/>RTS"
+      - "PB0<br/>RXD"
+  - address: "DD02"
+    name: "CIA2DDRA"
+    desc: "Data Direction Port A"
+    format:
+      - DDA7
+      - DDA6
+      - DDA5
+      - DDA4
+      - DDA3
+      - DDA2
+      - DDA1
+      - DDA0
+  - address: "DD03"
+    name: "CIA2DDRB"
+    desc: "Data Direction Port B"
+    format:
+      - DDB7
+      - DDB6
+      - DDB5
+      - DDB4
+      - DDB3
+      - DDB2
+      - DDB1
+      - DDB0
+  - address: "DD04"
+    name: "CIA2TIMAL"
+    desc: "Timer A Low byte"
+    format:
+      - span: 8
+        label: TIMAL
+  - address: "DD05"
+    name: "CIA2TIMAH"
+    desc: "Timer A High byte"
+    format:
+      - span: 8
+        label: TIMAH
+  - address: "DD06"
+    name: "CIA2TIMBL"
+    desc: "Timer B Low byte"
+    format:
+      - span: 8
+        label: TIMBL
+  - address: "DD07"
+    name: "CIA2TIMBH"
+    desc: "Timer B High byte"
+    format:
+      - span: 8
+        label: TIMBH
+  - address: "DD08"
+    name: "CIA2RTCT"
+    desc: "Real time clock 1/10s"
+    format:
+      - span: 8
+        label: RTCT
+  - address: "DD09"
+    name: "CIA2RTCS"
+    desc: "Real time clock seconds"
+    format:
+      - span: 8
+        label: RTCS
+  - address: "DD0A"
+    name: "CIA2RTCM"
+    desc: "Real time clock minutes"
+    format:
+      - span: 8
+        label: RTCM
+  - address: "DD0B"
+    name: "CIA2RTCH"
+    desc: "Real time clock hours"
+    format:
+      - span: 8
+        label: RTCH
+  - address: "DD0C"
+    name: "CIA2SR"
+    desc: "Shift register"
+    format:
+      - span: 8
+        label: SR
+  - address: "DD0D"
+    name: "CIA2ICS"
+    desc: "Interrupt Control & Status<br/>Read top, Write bottom"
+    format:
+      - NMI<sup>[14]</sup><br/>Source
+      - span: 2
+        label: "Always 0<br/>Unused"
+      - "NMI Flag<sup>[15]</sup><br/>IntRel"
+      - "SDR<br/>IntRel"
+      - "Alarm<br/>IntRel"
+      - "UTB<br/>IntRel"
+      - "UTA<br/>IntRel"
+  - address: "DD0E"
+    name: "CIA2CTA"
+    desc: "Control Timer A"
+    format:
+      - "RTC<sup>[5]</sup>"
+      - "SRC<sup>[6]</sup>"
+      - "TSRC<sup>[7]</sup>"
+      - "Load<sup>[8]</sup>"
+      - "RES<sup>[9]</sup>"
+      - "OVFL<sup>[10]</sup>"
+      - "UNFL1<sup>[11]</sup>"
+      - "START"
+  - address: "DD0F"
+    name: "CIA2CTB"
+    desc: "Control Timer B"
+    format:
+      - ""
+      - span: 2
+        label: "TCOUNT<sup>[13]</sup>"
+      - "Load<sup>[8]</sup>"
+      - "RES<sup>[9]</sup>"
+      - "OVFL<sup>[10]</sup>"
+      - "UNFL2<sup>[12]</sup>"
+      - "START"
+notes:
+  - "SBxx Serial Bus, D=Data, C=Clock, A=Attention, I=In, O=Out"
+  - "Bit 2 is RS232 TXD output or the userport PA2 (Pin M)"
+  - "Bits 0 & 1 VIC-II memory base, %00 = Bank 3 0xC000-0xFFFF, %01 = Bank 2 0x8000-0xBFFF, %10 = Bank 1 0x4000-0x7FFF, %11 = Bank 0 0x0000-0x3FFF"
+  - "Port B is the user port data, either 8 I/O pins or RS232"
+  - "RTC 0=60Hz 1=50Hz"
+  - "Shift register direction SP pin 0=read, 1=write"
+  - "TSRC 0=count system cycles, 1=positive slope at CNT pin"
+  - "1 = Load latic into the timer once"
+  - "0 = Timer restart after underflow (latch reloaded), 1 = timer stops after underflow"
+  - "0 = Timer overflow, port B bit 6 high 1 cycle, 1 = underflow, port B bit 6 inverted"
+  - "1 = Indicates timer underflow at port B bit 6"
+  - "1 = Indicates timer underflow at port B bit 7"
+  - "Timer counts: %00 System cycle, %01 +ve slope CNT-pin, %10 Timer A underflow, %11 Timer A underflow if CNT-pin high"
+  - "CIA-2 is connected to the NMI line"
+  - "NMI Signal occured at FLAG-pin RS232 data received"
+---
+
+<div class="container">
+  <div class="row m-md-4">
+    <h2>Multiple address ranges</h2>
+    <p>
+      CIA2 is mapped to addresses 0xDDxx but only occupies 16 bytes.
+      Referencing any address from 0xDD1x&hellip;0xDDFx will mirror those at 0xDD0x.
+    </p>
+  </div>
+</div>
