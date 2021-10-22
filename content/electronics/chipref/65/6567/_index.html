@@ -515,14 +515,16 @@ resources:
         <div class="col-6">
             <h3>STANDARD BIT MAP MODE</h3>
             <p>
-                In the standard bit map mode, color information is derived only
-                fran the data stored in the video matrix (the color nybble is
-                disregarded). These 8 bits are divided into two 4-bit nybbles,
-                allowing two colors to be selected independently in each 8x8 dot
-                block. When a bit in the display memory is a "0", the color of
-                the output dot is set by the least significant (lower) nybble
-                (LSN). Similarly, a display memory bit of "1" selects the output
-                color specified by the MSN (upper nybble).
+                In the standard bit map mode, color information is derived only from the data stored in the video matrix (the color nybble is disregarded).
+            </p>
+            <p>
+                These 8 bits are divided into two 4-bit nybbles, allowing two colors to be selected independently in each 8x8 dot block.
+            </p>
+            <p>
+                When a bit in the display memory is a "0", the color of the output dot is set by the least significant (lower) nybble (LSN).
+            </p>
+            <p>
+                Similarly, a display memory bit of "1" selects the output color specified by the MSN (upper nybble).
             </p>
 
             <table class="memoryMap">
@@ -660,20 +662,22 @@ resources:
         <div class="col-6">
             <h3>MIB ENABLE</h3>
             <p>
-                Each MIB can be selectively enabled for display by setting its
-                corresponding enable bit (MnE) to "1” in register 21 (0x15). If
-                the MnE bit is "0", the MIB will not be displayed.
+                Each MIB can be selectively enabled for display by setting its corresponding enable bit (MnE) to "1” in register 21 (0x15).
+            </p>
+            <p>
+                If the MnE bit is "0", the MIB will not be displayed.
             </p>
 
             <h3>MIB POSITION</h3>
             <p>
-                Each MIB is positioned via its X and Y position register (see
-                register map 1.3) within 512 horizontal and 256 vertical
-                positions. The position of a MIB is specified by the upper-left
-                corner of the array. X locations 23 to 347 (0x17-0x157) and Y
-                locations 50 to 249 (0x32-0xF9) are visible. Since not all
-                available MIB positions are entirely visible on the screen, MIBs
-                may be moved smoothly on and off the display screen
+                Each MIB is positioned via its X and Y position register (see register map 1.3) within 512 horizontal and 256 vertical positions.
+                The position of a MIB is specified by the upper-left corner of the array.
+            </p>
+            <p>
+                X locations 23 to 347 (0x17-0x157) and Y locations 50 to 249 (0x32-0xF9) are visible.
+            </p>
+            <p>
+                Since not all available MIB positions are entirely visible on the screen, MIBs may be moved smoothly on and off the display screen
             </p>
         </div>
     </div>
@@ -699,11 +703,9 @@ resources:
         <div class="col-6">
             <h4>MULTI-COLOR MIB</h4>
             <p>
-                Each MIB can be individually specified to be multi-color via
-                MnMC bits in the MIB multi-color register 28 (0x1C). When the
-                MnMC bit is H1H, the corresponding MIB is displayed in the
-                multi-color mode. In the multi-color mode, the MIB data is
-                interpreted in pairs as in the other multi-color modes
+                Each MIB can be individually specified to be multi-color via MnMC bits in the MIB multi-color register 28 (0x1C).
+                When the MnMC bit is H1H, the corresponding MIB is displayed in the multi-color mode.
+                In the multi-color mode, the MIB data is interpreted in pairs as in the other multi-color modes.
             </p>
             <table class="memoryMap">
                 <thead>
@@ -732,13 +734,9 @@ resources:
                 </tbody>
             </table>
             <p>
-                Since two bits of data are required for each color, the
-                resolution of the MIB is reduced to 12 H x 21 V. Each
-                horizontal dot is expanded to twice the standard size so that
-                the size of the overall MIB does not change. Up to 3 colors can
-                be displayed in each MIB (in addition to transparent), but the
-                two colors specified by the MIB multi-color registers are shared
-                among all 8 MIBs
+                Since two bits of data are required for each color, the resolution of the MIB is reduced to 12 H x 21 V.
+                Each horizontal dot is expanded to twice the standard size so that the size of the overall MIB does not change.
+                Up to 3 colors can be displayed in each MIB (in addition to transparent), but the two colors specified by the MIB multi-color registers are shared among all 8 MIBs.
             </p>
         </div>
     </div>
@@ -746,9 +744,10 @@ resources:
         <div class="col-6">
             <h3>MIB MAGNIFICATION</h3>
             <p>
-                Each MIB can be independently expanded (2X) in both the horizontal
-                and vertical directions. Two registers contain the control bits
-                (MiXE,MnYE) for the magnification control.
+                Each MIB can be independently expanded (2X) in both the horizontal and vertical directions.
+            </p>
+            <p>
+                Two registers contain the control bits (MiXE,MnYE) for the magnification control:
             </p>
             <table class="memoryMap">
                 <thead>
@@ -769,20 +768,22 @@ resources:
                 </tbody>
             </table>
             <p>
-                No increase in resolution is realized by expanding the MIBs. The
-                same 24x21 array (or 12x21 if multi-colored) is displayed except
-                but the size of each dot is doubled in the desired direction (up
-                to 4X standard dot dimension if a MIB is both multi-colored and
+                No increase in resolution is realized by expanding the MIBs.
+            </p>
+            <p>
+                The same 24x21 array (or 12x21 if multi-colored) is displayed
+                except but the size of each dot is doubled in the desired direction
+                (up to 4X standard dot dimension if a MIB is both multi-colored and
                 expanded).
             </p>
         </div>
         <div class="col-6">
             <h3>MIB PRIORITY</h3>
             <p>
-                The priority of each MIB may be individually controlled with
-                respect to the other displayed information (from character or bit
-                map modes).. The priority of each MIB is set by the corresponding
-                bit (MnDP) of register 27 (SIB).
+                The priority of each MIB may be individually controlled with respect to the other displayed information (from character or bit map modes).
+            </p>
+            <p>
+                The priority of each MIB is set by the corresponding bit (MnDP) of register 27 (SIB):
             </p>
             <table class="memoryMap">
                 <thead>
@@ -803,12 +804,13 @@ resources:
                 </tbody>
             </table>
             <p>
-                MIB data bits of "0" always permit any other information to be
-                displayed (i.e. MIB transparent sections). The MIBs have a fixed
-                priority with respect to each other, with MIB 0 having the highest
-                priority (in front) and MIB 7 the lowest (behind). When MIB data
-                (except transparent data) of two MIBs are co-incident, the data
-                from the lower number MIB will be displayed.
+                MIB data bits of "0" always permit any other information to be displayed (i.e. MIB transparent sections).
+            </p>
+            <p>
+                The MIBs have a fixed priority with respect to each other, with MIB 0 having the highest priority (in front) and MIB 7 the lowest (behind).
+            </p>
+            <p>
+                When MIB data (except transparent data) of two MIBs are co-incident, the data from the lower number MIB will be displayed.
             </p>
         </div>
     </div>
@@ -827,12 +829,18 @@ resources:
             <p>
                 A collision between two MIBs occurs when non-transparent output
                 data of two MIBs are co-incident. Co-incidence of MIB
-                transparent areas will not generate a collision. When a
-                collision occurs, the MIB bits (ttiM) in the MIB-MIB COLLISION
+                transparent areas will not generate a collision.
+            </p>
+            <p>
+                When a collision occurs, the MIB bits (ttiM) in the MIB-MIB COLLISION
                 register 30 (0x1E) will be set to "1" for each colliding MIB.
-                The collision bits ranain set until a read of the collision
-                register, when they are automatically cleared. MIBs collisions
-                are detected even if off screen, behind the border.
+            </p>
+            <p>
+                The collision bits remain set until a read of the collision
+                register, when they are automatically cleared.
+            </p>
+            <p>
+                MIBs collisions are detected even if off-screen, behind the border.
             </p>
         </div>
         <div class="col-6">
@@ -840,16 +848,23 @@ resources:
             <p>
                 A second register, MIB-DATA COLLISION register 31 (0x1F) also
                 contains a bit (MiD) for each MIB which is set to "1" when both
-                the MIB and display data are co-incident. Again, the
-                co-incidence of MIB transparent data and/or display background
-                does not generate a collision. For special applications, the
-                display data from the 0-1 multicolor bit pair also does not
-                cause a collision. This feature permits their use as background
-                display data without interfering with true MIB collisions. A
-                MIB-DATA collision can occur off-screen in the horizontal
+                the MIB and display data are co-incident.
+                Again, the co-incidence of MIB transparent data and/or display background
+                does not generate a collision.
+            </p>
+            <p>
+                For special applications, the display data from the 0-1 multicolor bit pair also does not
+                cause a collision.
+                This feature permits their use as background
+                display data without interfering with true MIB collisions.
+            </p>
+            <p>
+                A MIB-DATA collision can occur off-screen in the horizontal
                 direction if display data has been scrolled to an off-screen
-                position (see scrolling). The MIB-DATA COLLISION register also
-                automatically clears when read
+                position (see scrolling).
+            </p>
+            <p>
+                The MIB-DATA COLLISION register also automatically clears when read
             </p>
         </div>
     </div>
@@ -871,9 +886,13 @@ resources:
             <p>
                 The data for each MIB is stored in 63 consecutive bytes of memory.
                 Each block of MIB data is defined by a MIB pointer, located at the
-                end of the VIDEO MATRIX. Since only 1,000 bytes of the video
-                matrix are used in the normal display modes video matrix locations
+                end of the VIDEO MATRIX.
+            </p>
+            <p>
+                Since only 1,000 bytes of the video matrix are used in the normal display modes video matrix locations
                 1016-1023 (0x3F8-0x3FF) are used for MIB pointers 0-7 respectively.
+            </p>
+            <p>
                 The eight bit MIB pointer from the video matrix together with the
                 six bits from the MIB byte counter to count through the 63 bytes
                 define the entire 14-bit address field.
@@ -921,11 +940,13 @@ resources:
 
             <p>
                 The MP<sub>x</sub> are the MIB pointer bits from the video matrix and MC<sub>x</sub> are
-                the internally generated MIB counter bits. The MIB pointers are
-                read from the video matrix at the end of every raster line. When
-                the Y position register of a MIB matches the current raster line
-                count, the actual fetches of MIB data begin. Internal counters
-                automatically step through the 63 bytes of MIB data, displaying
+                the internally generated MIB counter bits.
+                The MIB pointers are read from the video matrix at the end of every raster line.
+            </p>
+            <p>
+                When the Y position register of a MIB matches the current raster line
+                count, the actual fetches of MIB data begin.
+                Internal counters automatically step through the 63 bytes of MIB data, displaying
                 three bytes on each raster line.
             </p>
         </div>
@@ -939,7 +960,10 @@ resources:
                 The display screen may be blanked by setting the BLNK bit in
                 register 17 (0x11) to a H1H. when the screen in blanked, the
                 entire screen displays the exterior color specified by register 32
-                (0x20). When blanking is enabled, only transparent (Phase 1)
+                (0x20).
+            </p>
+            <p>
+                When blanking is enabled, only transparent (Phase 1)
                 memory accesses are required, permitting full processor
                 utilization of the system bus. However, MOB data will be accessed
                 if the MOBS are not also disabled.
@@ -952,7 +976,10 @@ resources:
             <p>
                 The normal display space consists of 25 cows of 40 character
                 regions per row. For special display purposes, the display window
-                may be reduced to 24 rows or 38 characters. There is no change in
+                may be reduced to 24 rows or 38 characters.
+            </p>
+            <p>
+                There is no change in
                 the format of the displayed information, except that characters
                 (bits) adjacent to the exterior border area are covered by the
                 border.
@@ -993,12 +1020,16 @@ resources:
             <h3>SCROLLING</h3>
             <p>
                 The display data may be scrolled up to one character region in
-                both the horizontal and vertical direction. When used in
-                conjunction with the smaller display window (above), scrolling can
+                both the horizontal and vertical direction.
+            </p>
+            <p>
+                When used in conjunction with the smaller display window (above), scrolling can
                 be used to create a smooth panning motion of display data while
                 updating the system memory only when a new character row (or
-                column) is required. Scrolling is also used for centering a
-                display within the screen.
+                column) is required.
+            </p>
+            <p>
+                Scrolling is also used for centering a display within the screen.
             </p>
 
             <table class="memoryMap">
@@ -1114,14 +1145,21 @@ resources:
             <h3>DYNAMIC RAM REFRESH</h3>
             <p>
                 A dynamic ram refresh controller is built in to the 6567 device.
-                Five 8-bit row addresses are refreshed every raster line. This
-                rate guarantees a maximum delay of 2.02 ms between the refresh of
-                any single row address in a 128 refresh scheme. (The maximum
-                delay is 3.66ms in a 256 address refresh scheme). This refresh is
+                Five 8-bit row addresses are refreshed every raster line.
+            </p>
+            <p>
+                This rate guarantees a maximum delay of 2.02 ms between the refresh of any single row address in a 128 refresh scheme.
+                (The maximum delay is 3.66ms in a 256 address refresh scheme).
+            </p>
+            <p>
+                This refresh is
                 totally transparent to the system, since the refresh occurs during
-                Phase 1 of the system clock. The 6567 generates both SAS/ and
-                CAS/ which are normally connected directly to the dynamic rams.
-                RAS/ and CAS/ are generated for every Phase 2 and every video data
+                Phase 1 of the system clock.
+            </p>
+            <p>
+                The 6567 generates both <span class="not">SAS</span> and
+                <span class="not">CAS</span> which are normally connected directly to the dynamic rams.
+                <span class="not">RAS</span> and <span class="not">CAS</span> are generated for every Phase 2 and every video data
                 access (including refresh) so that external clock generation is
                 not required.
             </p>
