@@ -103,12 +103,116 @@ chip:
         "38": "PHI(2)"
         "39": "PHI(1)"
         "40": "V(DD)"
+  - name: "6561e"
+    category: "mos"
+    title: "MOS 6561E VIC (Video Interface Chip) PAL"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "VIC 6561E PAL"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_VIC"
+    pins:
+        "1": "NC"
+        "2": "CHROMA"
+        "3": "LUMA/SYNC"
+        "4": "R/NOT(W)"
+        "5": "D(11)"
+        "6": "D(10)"
+        "7": "D(9)"
+        "8": "D(8)"
+        "9": "D(7)"
+        "10": "D(6)"
+        "11": "D(5)"
+        "12": "D(4)"
+        "13": "D(3)"
+        "14": "D(2)"
+        "15": "D(1)"
+        "16": "D(0)"
+        "17": "POT(X)"
+        "18": "POT(Y)"
+        "19": "AUDIO"
+        "20": "V(SS)"
+        "21": "A(0)"
+        "22": "A(1)"
+        "23": "A(2)"
+        "24": "A(3)"
+        "25": "A(4)"
+        "26": "A(5)"
+        "27": "A(6)"
+        "28": "A(7)"
+        "29": "A(8)"
+        "30": "A(9)"
+        "31": "A(10)"
+        "32": "A(11)"
+        "33": "A(12)"
+        "34": "A(13)"
+        "35": "P PHI(1)"
+        "36": "P PHI(2)"
+        "37": "OPTION"
+        "38": "PHI(2)"
+        "39": "PHI(1)"
+        "40": "V(DD)"
+  - name: "6561-101"
+    category: "mos"
+    title: "MOS 6561-101 VIC (Video Interface Chip) PAL"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "VIC 6561-101 PAL"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_VIC"
+    pins:
+        "1": "NC"
+        "2": "CHROMA"
+        "3": "LUMA/SYNC"
+        "4": "R/NOT(W)"
+        "5": "D(11)"
+        "6": "D(10)"
+        "7": "D(9)"
+        "8": "D(8)"
+        "9": "D(7)"
+        "10": "D(6)"
+        "11": "D(5)"
+        "12": "D(4)"
+        "13": "D(3)"
+        "14": "D(2)"
+        "15": "D(1)"
+        "16": "D(0)"
+        "17": "POT(X)"
+        "18": "POT(Y)"
+        "19": "AUDIO"
+        "20": "V(SS)"
+        "21": "A(0)"
+        "22": "A(1)"
+        "23": "A(2)"
+        "24": "A(3)"
+        "25": "A(4)"
+        "26": "A(5)"
+        "27": "A(6)"
+        "28": "A(7)"
+        "29": "A(8)"
+        "30": "A(9)"
+        "31": "A(10)"
+        "32": "A(11)"
+        "33": "A(12)"
+        "34": "A(13)"
+        "35": "P PHI(1)"
+        "36": "P PHI(2)"
+        "37": "OPTION"
+        "38": "PHI(2)"
+        "39": "PHI(1)"
+        "40": "V(DD)"
 resources:
   - name: "6560.svg"
     url: "/static/chipref/mos/6560.svg"
     size: "12K"
   - name: "6561.svg"
     url: "/static/chipref/mos/6561.svg"
+    size: "12K"
+  - name: "6561e.svg"
+    url: "/static/chipref/mos/6561e.svg"
+    size: "12K"
+  - name: "6561-101.svg"
+    url: "/static/chipref/mos/6561-101.svg"
     size: "12K"
 
 ---
@@ -179,16 +283,29 @@ resources:
                 <tr>
                     <th>Chip</th>
                     <th>Region</th>
+                    <th>Note</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>6560</td>
                     <td>NTSC</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>6561</td>
                     <td>PAL</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6561E</td>
+                    <td>PAL</td>
+                    <td>Ceramic, used in early VIC-20's</td>
+                </tr>
+                <tr>
+                    <td>6561-101</td>
+                    <td>PAL</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
