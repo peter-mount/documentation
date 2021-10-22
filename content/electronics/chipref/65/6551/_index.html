@@ -1,6 +1,6 @@
 ---
 type: "manual"
-title: "MOS 6551 Asynchronous Communication Interface Adapter"
+title: "6551 Asynchronous Communication Interface Adapter"
 linkTitle: "6551 ACIA"
 weight: 65510
 description: "6551 Asynchronous Communication Interface Adapter"
@@ -44,19 +44,200 @@ chip:
         "26": "NOT(IRQ)"
         "27": "PHI(2)"
         "28": "R/NOT(W)"
+  - name: "w65c51s"
+    category: "wdc"
+    title: "WDC W65C51S Asynchronous Communication Interface Adapter"
+    type: "dip"
+    pinCount: 28
+    label: "WDC"
+    subLabel: "W65C51S ACIA"
+    source: "WDC W65C51S Datasheet"
+    pins:
+        "1": "V(SS)"
+        "2": "CS(0)"
+        "3": "CS(1)"
+        "4": "NOT(RES)"
+        "5": "RxC"
+        "6": "XTL(1)"
+        "7": "XTL(0)"
+        "8": "NOT(RTS)"
+        "9": "NOT(CTS)"
+        "10": "TxD"
+        "11": "NOT(DTR)"
+        "12": "RxD"
+        "13": "RS(0)"
+        "14": "RS(1)"
+        "15": "V(DD)"
+        "16": "NOT(DCD)"
+        "17": "NOT(DSR)"
+        "18": "D(0)"
+        "19": "D(1)"
+        "20": "D(2)"
+        "21": "D(3)"
+        "22": "D(4)"
+        "23": "D(5)"
+        "24": "D(6)"
+        "25": "D(7)"
+        "26": "NOT(IRQ)"
+        "27": "PHI(2)"
+        "28": "R/NOT(W)"
+  - name: "w65c51n"
+    category: "wdc"
+    title: "WDC W65C51N Asynchronous Communication Interface Adapter"
+    type: "dip"
+    pinCount: 28
+    label: "WDC"
+    subLabel: "W65C51N ACIA"
+    source: "WDC W65C51N Datasheet"
+    pins:
+        "1": "V(SS)"
+        "2": "CS(0)"
+        "3": "NOT(CS(1))"
+        "4": "NOT(RES)"
+        "5": "RxC"
+        "6": "XTL(1)"
+        "7": "XTL(0)"
+        "8": "NOT(RTS)"
+        "9": "NOT(CTS)"
+        "10": "TxD"
+        "11": "NOT(DTR)"
+        "12": "RxD"
+        "13": "RS(0)"
+        "14": "RS(1)"
+        "15": "V(DD)"
+        "16": "NOT(DCD)"
+        "17": "NOT(DSR)"
+        "18": "D(0)"
+        "19": "D(1)"
+        "20": "D(2)"
+        "21": "D(3)"
+        "22": "D(4)"
+        "23": "D(5)"
+        "24": "D(6)"
+        "25": "D(7)"
+        "26": "NOT(IRQ)"
+        "27": "PHI(2)"
+        "28": "R/NOT(W)"
+  - name: "w65c51n-plcc"
+    category: "wdc"
+    title: "WDC W65C51N Asynchronous Communication Interface Adapter"
+    type: "plcc"
+    pinCount: 28
+    label: "WDC"
+    subLabel: "W65C51N ACIA"
+    source: "WDC W65C51N Datasheet"
+    note: "EOL use QFP"
+    pinOffset: -4
+    pins:
+        "1": "V(SS)"
+        "2": "CS(0)"
+        "3": "NOT(CS(1))"
+        "4": "NOT(RES)"
+        "5": "RxC"
+        "6": "XTL(1)"
+        "7": "XTL(0)"
+        "8": "NOT(RTS)"
+        "9": "NOT(CTS)"
+        "10": "TxD"
+        "11": "NOT(DTR)"
+        "12": "RxD"
+        "13": "RS(0)"
+        "14": "RS(1)"
+        "15": "V(DD)"
+        "16": "NOT(DCD)"
+        "17": "NOT(DSR)"
+        "18": "D(0)"
+        "19": "D(1)"
+        "20": "D(2)"
+        "21": "D(3)"
+        "22": "D(4)"
+        "23": "D(5)"
+        "24": "D(6)"
+        "25": "D(7)"
+        "26": "NOT(IRQ)"
+        "27": "PHI(2)"
+        "28": "R/NOT(W)"
+  - name: "w65c51n-lqfp"
+    category: "wdc"
+    title: "WDC W65C51N Asynchronous Communication Interface Adapter"
+    type: "lqfp"
+    pinCount: 32
+    label: "WDC"
+    subLabel: "W65C51N ACIA"
+    source: "WDC W65C51N Datasheet"
+    pinOffset: 0
+    pins:
+        "1": "RxC"
+        "2": "XTL(1)"
+        "3": "XTL(0)"
+        "4": "NOT(RTS)"
+        "5": "NOT(CTS)"
+        "6": "TxD"
+        "7": "NOT(DTR)"
+        "8": "NC"
+        "9": "RxD"
+        "10": "RS(0)"
+        "11": "RS(1)"
+        "12": "V(DD)"
+        "13": "V(DD)"
+        "14": "NOT(DCD)"
+        "15": "NOT(DSR)"
+        "16": "D(0)"
+        "17": "D(1)"
+        "18": "D(2)"
+        "19": "D(3)"
+        "20": "D(4)"
+        "21": "D(5)"
+        "22": "D(6)"
+        "23": "D(7)"
+        "24": "NC"
+        "25": "NOT(IRQ)"
+        "26": "PHI(2)"
+        "27": "R/NOT(W)"
+        "28": "V(SS)"
+        "29": "V(SS)"
+        "30": "CS(0)"
+        "31": "NOT(CS(1))"
+        "32": "NOT(RES)"
 resources:
   - name: "6551.svg"
     url: "/static/chipref/mos/6551.svg"
     size: "8K"
-
+  - name: "w65c51s.svg"
+    url: "/static/chipref/wdc/w65c51s.svg"
+    size: "8K"
+  - name: "w65c51n.svg"
+    url: "/static/chipref/wdc/w65c51n.svg"
+    size: "8K"
+  - name: "w65c51n-plcc.svg"
+    url: "/static/chipref/wdc/w65c51n-plcc.svg"
+    size: "8K"
+  - name: "w65c51n-lqfp.svg"
+    url: "/static/chipref/wdc/w65c51n-lqfp.svg"
+    size: "12K"
+notes:
+  - "The W65C51S is a drop in replacement to the original MOS6551"
+  - "For the W65C51N, the CS1 pin is inverted in the datasheet compared to the W65C51S or MOS6551"
+  - "The W65C51N 28 pin PLCC is marked as EOL & to use the 32 pin LQFP as a replacement"
 ---
 <div class="container">
     <div class="row">
-        <div class="col-8">
-
-        </div>
         <div class="col-4">
             <img src="/static/chipref/mos/6551.svg"/>
+        </div>
+        <div class="col-4">
+            <img src="/static/chipref/wdc/w65c51s.svg"/>
+        </div>
+        <div class="col-4">
+            <img src="/static/chipref/wdc/w65c51n.svg"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <img src="/static/chipref/wdc/w65c51n-plcc.svg"/>
+        </div>
+        <div class="col-6">
+            <img src="/static/chipref/wdc/w65c51n-lqfp.svg"/>
         </div>
     </div>
 </div>
