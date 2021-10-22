@@ -1,0 +1,865 @@
+---
+type: "manual"
+title: "MOS 6560 VIC"
+linkTitle: "6560 VIC NTSC"
+weight: 65600
+description: "The 6560 VIC (Video Interface Chip)"
+chip:
+  - name: "6560"
+    category: "mos"
+    title: "MOS 6560 VIC (Video Interface Chip) NTSC"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "VIC 6560 NTSC"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_VIC"
+    pins:
+        "1": "NC"
+        "2": "CHROMA"
+        "3": "LUMA/SYNC"
+        "4": "R/NOT(W)"
+        "5": "D(11)"
+        "6": "D(10)"
+        "7": "D(9)"
+        "8": "D(8)"
+        "9": "D(7)"
+        "10": "D(6)"
+        "11": "D(5)"
+        "12": "D(4)"
+        "13": "D(3)"
+        "14": "D(2)"
+        "15": "D(1)"
+        "16": "D(0)"
+        "17": "POT(X)"
+        "18": "POT(Y)"
+        "19": "AUDIO"
+        "20": "V(SS)"
+        "21": "A(0)"
+        "22": "A(1)"
+        "23": "A(2)"
+        "24": "A(3)"
+        "25": "A(4)"
+        "26": "A(5)"
+        "27": "A(6)"
+        "28": "A(7)"
+        "29": "A(8)"
+        "30": "A(9)"
+        "31": "A(10)"
+        "32": "A(11)"
+        "33": "A(12)"
+        "34": "A(13)"
+        "35": "P PHI(1)"
+        "36": "P PHI(2)"
+        "37": "OPTION"
+        "38": "PHI(2)"
+        "39": "PHI(1)"
+        "40": "V(DD)"
+  - name: "6561"
+    category: "mos"
+    title: "MOS 6561 VIC (Video Interface Chip) PAL"
+    type: "dip"
+    pinCount: 40
+    label: "MOS"
+    subLabel: "VIC 6561 PAL"
+    source: "https://en.wikipedia.org/wiki/MOS_Technology_VIC"
+    pins:
+        "1": "NC"
+        "2": "CHROMA"
+        "3": "LUMA/SYNC"
+        "4": "R/NOT(W)"
+        "5": "D(11)"
+        "6": "D(10)"
+        "7": "D(9)"
+        "8": "D(8)"
+        "9": "D(7)"
+        "10": "D(6)"
+        "11": "D(5)"
+        "12": "D(4)"
+        "13": "D(3)"
+        "14": "D(2)"
+        "15": "D(1)"
+        "16": "D(0)"
+        "17": "POT(X)"
+        "18": "POT(Y)"
+        "19": "AUDIO"
+        "20": "V(SS)"
+        "21": "A(0)"
+        "22": "A(1)"
+        "23": "A(2)"
+        "24": "A(3)"
+        "25": "A(4)"
+        "26": "A(5)"
+        "27": "A(6)"
+        "28": "A(7)"
+        "29": "A(8)"
+        "30": "A(9)"
+        "31": "A(10)"
+        "32": "A(11)"
+        "33": "A(12)"
+        "34": "A(13)"
+        "35": "P PHI(1)"
+        "36": "P PHI(2)"
+        "37": "OPTION"
+        "38": "PHI(2)"
+        "39": "PHI(1)"
+        "40": "V(DD)"
+resources:
+  - name: "6560.svg"
+    url: "/static/chipref/mos/6560.svg"
+    size: "12K"
+  - name: "6561.svg"
+    url: "/static/chipref/mos/6561.svg"
+    size: "12K"
+
+---
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert-info m-md-2">
+                This is the VIC chip used in the Commodore VIC-20.
+                For the Commodore 64 you want to look at the
+                <a href="../6567/">6567 VIC-II</a>.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="alert-info m-md-2">
+                Taken from the original Commodore mos technology datasheet<br/>
+                OCR Source: <a href="http://archive.6502.org/datasheets/mos_6560_6561_vic.pdf">Archive.org
+                mos_6560_6561_vic.pdf</a>.
+                Some spelling mistakes may remain due to the poor quality of the source material.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h2>6560/6561 VIDEO INTERFACE CHIP</h2>
+            <h3>GENERAL DESCRIPTION</h3>
+            <p>
+                The 6560 Video Interface Chip (VIC) is designed for color video graphics applications
+                such as low cost CRT terminals, biomedical monitors, control system displays and arcade or
+                home video games.
+            </p>
+            <p>
+                It provides all of the circuitry necessary for generating color programmable character graphics with high screen resolution.
+                VIC also incorporates sound effects and A/D converters for use in a video game environment.
+            </p>
+            <h3>FEATURES</h3>
+            <ul>
+                <li>Fully expandable system with a 16K byte address space</li>
+                <li>System uses industry standard 8 bit wide ROMS and 4 bit wide RAMS</li>
+                <li>Mask programmable sync, generation, NTSC-6560, PAL-6561</li>
+                <li>On-chip color generation (16 colors)</li>
+                <li>Up to 600 independently programmable and movable background locations on a standard TV</li>
+                <li>Screen centering capability</li>
+                <li>Screen grid size up to 192 Horizontal by 200 Vertical dots</li>
+                <li>Two selectable graphic character sizes</li>
+                <li>On-chip sound system including:
+                    <ul>
+                        <li>Three independent, programmable tone generators</li>
+                        <li>White noise generator</li>
+                        <li>Amplitude modulator</li>
+                    </ul>
+                </li>
+                <li>Two on-chip 8 bit AID converters</li>
+                <li>On-chip DMA and address generation</li>
+                <li>No CPU wait states or screen hash during screen refresh</li>
+                <li>Interlaced/Non-interlaced switch</li>
+                <li>16 addressable control registers</li>
+                <li>Light gun/pen for target games</li>
+                <li>2 modes of color operation</li>
+            </ul>
+        </div>
+        <div class="col-6">
+            <img src="/static/chipref/mos/6560.svg"/>
+            <h2>Variants</h2>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Chip</th>
+                    <th>Region</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>6560</td>
+                    <td>NTSC</td>
+                </tr>
+                <tr>
+                    <td>6561</td>
+                    <td>PAL</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>THEORY OF OPERATION</h3>
+            <p>
+                In order to produce programmable color characters, VIC accesses external memory
+                which can be divided into three areas: character pointers, display characters and color
+                pointers. The character pointer area is a block of bytes in RAM (typically 506 bytes called the
+                Video Matrix) in which each byte points to a particular character to be displayed. The
+                character area consists of a set of 8 or 16 byte blocks (usually called cells) which contain the
+                actual dot patterns to be displayed. These character cells can be located in either RAM or
+                ROM depending on how the objects are to be displayed or moved on the screen. The color
+                pointer area is a block of nybbles in RAM (typically 506-4 bit nybbles called the Color Matrix).
+                The 4 bit color pointers are used to define the color of any character which is to be displayed
+                and to select one of the two color modes.
+            </p>
+            <p>
+                It is the task of an external microprocessor to organize the Video Matrix, Color Matrix
+                and Character Cells into the proper format to display the data desired on-screen.
+            </p>
+            <img class="float-right" src="figure1.png" alt="Typical Video Matrix"/>
+            <p>
+                To understand the operation of VIC more completely, consider the diagram shown in
+                Figure 1. This is a typical Video Matrix, in which 22 characters horizontally by 23 characters
+                vertically are to be displayed, yielding a total of 506 character display locations, with a screen
+                resolution of 176 horizontal by 184 vertical dots. Each one of these character display locations
+                has a corresponding character pointer, or index, which specifies (points at) a character to be
+                displayed in that particular location. In the example shown, rectangle (B,15) has a character
+                index of 2B. This means character number 2B is to be displayed in that rectangle. VIC will
+                fetch the character index value 2B and perform an address computation to locate the desired
+                character to be displayed. The computation is quite simple. If 8 x 8 character cells are
+                selected, the index is left shifted 3 times (multiply by 8) and the starting address of the
+                character cells, found in VIC Control Register CR5, is added to the left shifted value. In this
+                case, the character cell starting address is 3400 (in HEX) which is added to the left shifted
+                value of the character index to yield the actual character location in memory of 3558 (in HEX).
+                Note here that the actual character displayed is an eight dot by eight dot matrix which can be
+                stored in either ROM or RAM. Also, the number of times that any particular character can be
+                displayed is unlimited. By using the same character index (2B for example) elsewhere on the
+                grid, the character data will be displayed again. Alternately, through the use of a simple software driver, VIC can be used as a bit mapped display system provided enough RAM is
+                available (approximately 4K bytes of cell RAM).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>REGISTER DESCRIPTION</h3>
+            <p>
+                There are sixteen eight-bit control registers within the 6560 which enable the microprocessor to control all the operating modes of VIC.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="memoryMap">
+                <caption>VIC Control Registers</caption>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>B<sub>7</sub></th>
+                    <th>B<sub>6</sub></th>
+                    <th>B<sub>5</sub></th>
+                    <th>B<sub>4</sub></th>
+                    <th>B<sub>3</sub></th>
+                    <th>B<sub>2</sub></th>
+                    <th>B<sub>1</sub></th>
+                    <th>B<sub>0</sub></th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>CR<sub>0</sub></td>
+                    <td>00</td>
+                    <td>I</td>
+                    <td>S<sub>X</sub><sup>6</sup></td>
+                    <td>S<sub>X</sub><sup>5</sup></td>
+                    <td>S<sub>X</sub><sup>4</sup></td>
+                    <td>S<sub>X</sub><sup>3</sup></td>
+                    <td>S<sub>X</sub><sup>2</sup></td>
+                    <td>S<sub>X</sub><sup>1</sup></td>
+                    <td>S<sub>X</sub><sup>0</sup></td>
+                    <td>Screen Origin X</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>1</sub></td>
+                    <td>01</td>
+                    <td>S<sub>Y</sub><sup>7</sup></td>
+                    <td>S<sub>Y</sub><sup>6</sup></td>
+                    <td>S<sub>Y</sub><sup>5</sup></td>
+                    <td>S<sub>Y</sub><sup>4</sup></td>
+                    <td>S<sub>Y</sub><sup>3</sup></td>
+                    <td>S<sub>Y</sub><sup>2</sup></td>
+                    <td>S<sub>Y</sub><sup>1</sup></td>
+                    <td>S<sub>Y</sub><sup>0</sup></td>
+                    <td>Screen Origin Y</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>2</sub></td>
+                    <td>02</td>
+                    <td>B<sub>v</sub><sup>9</sup></td>
+                    <td>M<sub>6</sub></td>
+                    <td>M<sub>5</sub></td>
+                    <td>M<sub>4</sub></td>
+                    <td>M<sub>3</sub></td>
+                    <td>M<sub>2</sub></td>
+                    <td>M<sub>1</sub></td>
+                    <td>M<sub>0</sub></td>
+                    <td>No of Video Matrix Columns</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>3</sub></td>
+                    <td>03</td>
+                    <td>R<sub>0</sub></td>
+                    <td>N<sub>5</sub></td>
+                    <td>N<sub>4</sub></td>
+                    <td>N<sub>3</sub></td>
+                    <td>N<sub>2</sub></td>
+                    <td>N<sub>1</sub></td>
+                    <td>N<sub>0</sub></td>
+                    <td>D</td>
+                    <td>No of Video Matrix Rows</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>4</sub></td>
+                    <td>04</td>
+                    <td>R<sub>8</sub></td>
+                    <td>R<sub>7</sub></td>
+                    <td>R<sub>6</sub></td>
+                    <td>R<sub>5</sub></td>
+                    <td>R<sub>4</sub></td>
+                    <td>R<sub>3</sub></td>
+                    <td>R<sub>2</sub></td>
+                    <td>R<sub>1</sub></td>
+                    <td>Raster Value</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>5</sub></td>
+                    <td>05</td>
+                    <td>B<sub>V</sub><sup>13</sup></td>
+                    <td>B<sub>V</sub><sup>12</sup></td>
+                    <td>B<sub>V</sub><sup>11</sup></td>
+                    <td>B<sub>V</sub><sup>10</sup></td>
+                    <td>B<sub>C</sub><sup>13</sup></td>
+                    <td>B<sub>C</sub><sup>12</sup></td>
+                    <td>B<sub>C</sub><sup>11</sup></td>
+                    <td>B<sub>C</sub><sup>10</sup></td>
+                    <td>Base Address Control</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>6</sub></td>
+                    <td>06</td>
+                    <td>L<sub>H</sub><sup>7</sup></td>
+                    <td>L<sub>H</sub><sup>6</sup></td>
+                    <td>L<sub>H</sub><sup>5</sup></td>
+                    <td>L<sub>H</sub><sup>4</sup></td>
+                    <td>L<sub>H</sub><sup>3</sup></td>
+                    <td>L<sub>H</sub><sup>2</sup></td>
+                    <td>L<sub>H</sub><sup>1</sup></td>
+                    <td>L<sub>H</sub><sup>0</sup></td>
+                    <td>Light Pen Horizontal</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>7</sub></td>
+                    <td>07</td>
+                    <td>L<sub>V</sub><sup>7</sup></td>
+                    <td>L<sub>V</sub><sup>6</sup></td>
+                    <td>L<sub>V</sub><sup>5</sup></td>
+                    <td>L<sub>V</sub><sup>4</sup></td>
+                    <td>L<sub>V</sub><sup>3</sup></td>
+                    <td>L<sub>V</sub><sup>2</sup></td>
+                    <td>L<sub>V</sub><sup>1</sup></td>
+                    <td>L<sub>V</sub><sup>0</sup></td>
+                    <td>Light Pen Vertical</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>8</sub></td>
+                    <td>08</td>
+                    <td>P<sub>X</sub><sup>7</sup></td>
+                    <td>P<sub>X</sub><sup>6</sup></td>
+                    <td>P<sub>X</sub><sup>5</sup></td>
+                    <td>P<sub>X</sub><sup>4</sup></td>
+                    <td>P<sub>X</sub><sup>3</sup></td>
+                    <td>P<sub>X</sub><sup>2</sup></td>
+                    <td>P<sub>X</sub><sup>1</sup></td>
+                    <td>P<sub>X</sub><sup>0</sup></td>
+                    <td>POT X</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>9</sub></td>
+                    <td>09</td>
+                    <td>P<sub>Y</sub><sup>7</sup></td>
+                    <td>P<sub>Y</sub><sup>6</sup></td>
+                    <td>P<sub>Y</sub><sup>5</sup></td>
+                    <td>P<sub>Y</sub><sup>4</sup></td>
+                    <td>P<sub>Y</sub><sup>3</sup></td>
+                    <td>P<sub>Y</sub><sup>2</sup></td>
+                    <td>P<sub>Y</sub><sup>1</sup></td>
+                    <td>P<sub>Y</sub><sup>0</sup></td>
+                    <td>POT Y</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>10</sub></td>
+                    <td>0A</td>
+                    <td>S<sub>1</sub></td>
+                    <td>F<sub>1</sub><sup>6</sup></td>
+                    <td>F<sub>1</sub><sup>5</sup></td>
+                    <td>F<sub>1</sub><sup>4</sup></td>
+                    <td>F<sub>1</sub><sup>3</sup></td>
+                    <td>F<sub>1</sub><sup>2</sup></td>
+                    <td>F<sub>1</sub><sup>1</sup></td>
+                    <td>F<sub>1</sub><sup>0</sup></td>
+                    <td>F<sub>IN</sub><sup>1</sup></td>
+                </tr>
+                <tr>
+                    <td>CR<sub>11</sub></td>
+                    <td>0B</td>
+                    <td>S<sub>2</sub></td>
+                    <td>F<sub>2</sub><sup>6</sup></td>
+                    <td>F<sub>2</sub><sup>5</sup></td>
+                    <td>F<sub>2</sub><sup>4</sup></td>
+                    <td>F<sub>2</sub><sup>3</sup></td>
+                    <td>F<sub>2</sub><sup>2</sup></td>
+                    <td>F<sub>2</sub><sup>1</sup></td>
+                    <td>F<sub>2</sub><sup>0</sup></td>
+                    <td>F<sub>IN</sub><sup>2</sup></td>
+                </tr>
+                <tr>
+                    <td>CR<sub>12</sub></td>
+                    <td>0C</td>
+                    <td>S<sub>3</sub></td>
+                    <td>F<sub>3</sub><sup>6</sup></td>
+                    <td>F<sub>3</sub><sup>5</sup></td>
+                    <td>F<sub>3</sub><sup>4</sup></td>
+                    <td>F<sub>3</sub><sup>3</sup></td>
+                    <td>F<sub>3</sub><sup>2</sup></td>
+                    <td>F<sub>3</sub><sup>1</sup></td>
+                    <td>F<sub>3</sub><sup>0</sup></td>
+                    <td>F<sub>IN</sub><sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td>CR<sub>13</sub></td>
+                    <td>0D</td>
+                    <td>S<sub>4</sub></td>
+                    <td>F<sub>4</sub><sup>6</sup></td>
+                    <td>F<sub>4</sub><sup>5</sup></td>
+                    <td>F<sub>4</sub><sup>4</sup></td>
+                    <td>F<sub>4</sub><sup>3</sup></td>
+                    <td>F<sub>4</sub><sup>2</sup></td>
+                    <td>F<sub>4</sub><sup>1</sup></td>
+                    <td>F<sub>4</sub><sup>0</sup></td>
+                    <td>F<sub>IN</sub><sup>4</sup></td>
+                </tr>
+                <tr>
+                    <td>CR<sub>14</sub></td>
+                    <td>0E</td>
+                    <td>C<sub>A</sub><sup>3</sup></td>
+                    <td>C<sub>A</sub><sup>2</sup></td>
+                    <td>C<sub>A</sub><sup>1</sup></td>
+                    <td>C<sub>A</sub><sup>0</sup></td>
+                    <td>A<sub>3</sub></td>
+                    <td>A<sub>2</sub></td>
+                    <td>A<sub>1</sub></td>
+                    <td>A<sub>0</sub></td>
+                    <td>Amplitude</td>
+                </tr>
+                <tr>
+                    <td>CR<sub>15</sub></td>
+                    <td>0F</td>
+                    <td>C<sub>B</sub><sup>3</sup></td>
+                    <td>C<sub>B</sub><sup>2</sup></td>
+                    <td>C<sub>B</sub><sup>1</sup></td>
+                    <td>C<sub>B</sub><sup>0</sup></td>
+                    <td>R</td>
+                    <td>C<sub>E</sub><sup>2</sup></td>
+                    <td>C<sub>E</sub><sup>1</sup></td>
+                    <td>C<sub>E</sub><sup>0</sup></td>
+                    <td>Color Control</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>EXPLANATION OF CONTROL REGISTER FUNCTIONS</h3>
+            <table class="generic">
+                <tr>
+                    <td>CR<sub>0</sub></td>
+                    <td>
+                        Bits 0-6 determine how far from the left-hand side of the T.V. screen the first column
+                        of characters will appear. It is used to Horizontally center various sizes of video
+                        matrices on-screen. Bit 7 selects interlaced scan mode (I = 1).
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>1</sub></td>
+                    <td>
+                        Determines how far from the top of the T.V. screen the first row of characters will
+                        appear. It is similarly used to vertically center various sizes of video matrices onscreen.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>2</sub></td>
+                    <td>
+                        Bits 0-6 set the number of columns in the Video Matrix. Bit 7 is part of the Video
+                        Matrix address found in CR<sub>5</sub>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>3</sub></td>
+                    <td>
+                        Bits 1-6 set the number of rows in the Video Matrix. Bit 0 is used to select either
+                        8 x 8 character matrices (D = 0) or 16 x 8 character matrices (D = 1). Bit 7 is part of
+                        the RASTER value found in CR<sub>4</sub>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>4</sub></td>
+                    <td>
+                        Contains the number of the line currently being scanned by the T.V. raster beam
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>5</sub></td>
+                    <td>
+                        Bits 0-3 determine the starting address of the character cell space. (Note that these
+                        bits form bits A<sub>13</sub> through A<sub>10</sub> of the actual address.)
+                        Bits 4-7 (along with Bit 7 of CR<sub>2</sub>) determine the starting address of the Video Matrix
+                        (these bits form bits A<sub>13</sub> through A<sub>9</sub> of the actual address)
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>6</sub></td>
+                    <td>
+                        Contains the latched horizontal position of the light gun/pen.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>7</sub></td>
+                    <td>
+                        Contains the latched vertical position of the light gun/p
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>8</sub></td>
+                    <td>
+                        Contains the digitized value of POT<sub>X</sub>.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>9</sub></td>
+                    <td>
+                        Contains the digitized value of POT<sub>Y</sub>.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>A</sub></td>
+                    <td>
+                        Bits 0-6 set the frequency of the first audio oscillator.
+                        <br/>
+                        Bit 7 turns the oscillator on ( = 1) or off ( = 0)
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>B</sub></td>
+                    <td>
+                        Same as CR<sub>A</sub> for second audio oscillator
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>C</sub></td>
+                    <td>
+                        Same as CR<sub>A</sub> for third audio oscillator.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>D</sub></td>
+                    <td>
+                        Same as CR<sub>A</sub>, but sets frequency of noise source.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>E</sub></td>
+                    <td>
+                        Bits 0-3 set the volume of the composite audio signal (Note that at least one sound
+                        generator must be turned on for any sound to be produced).
+                        <br/>Bits 4-7 contain the Auxiliary color code used in conjunction with the “Multicolor” mode of operation.
+                    </td>
+                </tr>
+                <tr>
+                    <td>CR<sub>F</sub></td>
+                    <td>
+                        Bits 4-7 select 1 of 16 colors for the background common to all characters.
+                        (Essentially, they set the color of the background area within the Video Matrix.)
+                        <br/>
+                        Bits 0-2 select 1 of 8 colors for the exterior border area of the screen (all area outside the
+                        Video Matrix).
+                        <br/>
+                        Bit 3 determines whether the Video Matrix will be displayed as different colored characters on a common background color (R = 1) or inverted (R = 0),
+                        that is, all characters will be the same color (the background color in CRF) while
+                        each character’s background will now be a different color, determined by the code
+                        in the Color RAM.
+                        <br/>
+                        Note that the R bit has no effect when Multicolor mode is
+                        selected and that CR<sub>F</sub> also functions differently in this mode.
+                        Refer to the section called “Operating Modes” for complete information.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>COLOR OPERATING MODES</h3>
+            <p>
+                VIC incorporates two modes of color operation. HI-RES (high resolution) mode and
+                Multicolor mode. Basically, the operating mode affects how the Character Cell information
+                will be translated into dots on the TV screen. The operating mode is determined by the MSB
+                of the color pointer associated with each character location in the Video Matrix. If the MSB of
+                a character’s color pointer is zero, then that character will be displayed in HI-RES mode.
+                Alternately, if the MSB is one, the character will be displayed in Multicolor mode
+            </p>
+            <p>
+                With HI-RES mode selected, there is a one-to-one correspondence between Character
+                Cell bits and the dots displayed on-screen. That is, all one bits of a character will be displayed
+                in one color, and all zero bits in another color. The foreground color of the character is
+                specified by the remaining 3 bits of the character’s color pointer,
+                while the character’s background color is specified by Register F (CR<sub>F</sub>).
+            </p>
+            <p>
+                With Multicolor mode selected, each TWO bits of a character cell correspond to ONE
+                dot on-screen and the color of that dot is determined by the two-bit code. Unlike HI-RES
+                mode, in which only two colors can be displayed in a single character, Multicolor mode allows
+                four colors per character; however, since two bits of cell data now correspond to a single dot
+                on-screen, the horizontal resolution is half that of the HI-RES mode. That is, each 8x8
+                Character Cell in memory maps onto an 8x4 character on-screen (8 lines of 4 dots each). Note
+                that the amount of memory required for these 8x4 Multicolor characters is the same as that
+                for 8x8 HI-RES characters, the data is simply mapped differently on-screen.
+            </p>
+            <p>
+                In Multicolor mode, the two bits which make up a dot select one of four colors for that
+                dot. The four codes created by these two bits tell VIC where to find the color information for
+                the dot. The color of the dot can be either the Background color (in C R F), the Exterior Border
+                color in (CRF), the Auxiliary color (in C R E) or the Foreground color (bits 0 thru 2 of the
+                character’s color pointer).
+            </p>
+            <p>
+                The Multicolor mode color select codes are:
+            </p>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Mode</th>
+                    <th>Colour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>00</td><td>Background color (CR<sub>F</sub>)</td></tr>
+                <tr><td>01</td><td>Exterior Border color (CR<sub>F</sub>)</td></tr>
+                <tr><td>10</td><td>Foreground color (Color RAM)</td></tr>
+                <tr><td>11</td><td>Auxiliary color (CR<sub>E</sub>)</td></tr>
+                </tbody>
+            </table>
+            <p>
+                Note that the two-bit code is NOT itself a color code, rather it is a pointer to four different
+                color codes, allowing greater color flexibility, as each code pointed to has either 3 or 4-bit
+                resolution
+            </p>
+            <img src="vic-reg-use1.png"/>
+            <img src="vic-reg-use2.png"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>6560 PIN SIGNAL DESCRIPTION</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>• Address Bus— Pins 21 thru 34</h4>
+            <p>
+                The 14 bit address bus (A<sub>0</sub> thru A<sub>13</sub>) is bidirectional.
+                During P∅<sub>2</sub> = 1, the address pins are in the input mode.
+                In this mode the microprocessor can access any of the sixteen VIC Control Registers.
+                The high order pins of the Address Bus (A<sub>8</sub> thru A<sub>13</sub>) act as Chip Select pins in this
+                input mode.
+                A true chip select condition occurs when A<sub>13</sub> = A<sub>11</sub> = A<sub>10</sub> = A<sub>9</sub> = A<sub>8</sub> = 0 and A<sub>12</sub> = 1,
+                which equates to a VIC chip select address of 1000 in HEX.
+                The lower order 4 bits of the address bus (A<sub>0</sub> thru A<sub>3</sub>) are used as the control register select portion of the input address
+            </p>
+            <p>
+                During P∅<sub>1</sub> = 1, the VIC address pins will be in the output mode if data (either Character
+                Pointer or Character Cell) is to be fetched. In this mode, VIC will put out the address of the
+                memory location to be fetched. The address from VIC will be valid 50ns after the rising edge
+                of P∅<sub>1</sub> and remain valid until the rising edge of P∅<sub>2</sub>.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>• Read/Write— Pin 4</h4>
+            <p>
+                This signal is an input only on the 6560 and controls the flow of data between VIC and
+                the microprocessor. When the R/<span class="not">W</span> signal is low and the VIC chip select conditions have been
+                satisfied, the microprocessor can write data into the selected VIC Control Register.
+                If the R/<span class="not">W</span>
+                signal is high and the chip select conditions have been met, the microprocessor can read
+                data from the selected VIC Control Register
+            </p>
+            <p>
+                It is important to note that all VIC/microprocessor data transfers can only occur when
+                P∅<sub>2</sub>=1. During P∅<sub>1</sub> the VIC will be fetching data from memory for display and the R/<span class="not">W</span>
+                signal must be held high to ensure that VIC will not write into any memory location
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>Data Bus— Pins 5 thru 16</h4>
+            <p>
+                The 12 bit data bus of the 6560, DB0 thru DB11f is divided into two sections. The lower
+                order eight bits, DB0 thru DB7, are used both to interface to the microprocessor and fetch data
+                needed for display, while the higher order 4 bits are used exclusively for retrieving color and
+                mode information. The operation of the lower order eight bits (DB0 thru DB7) can also be
+                separated into two categories: microprocessor interface and video data interface. During
+                P 0 2=1, DB7 thru DB0 are used exclusively for data transmission between the microprocessor and VIC. During P 0 1 = 1, DB7 thru DB0 are used for fetching display data.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>CLOCKS</h4>
+
+            <h5>Master Oscillator Clock Inputs— 0 A and 0 2, Pins 39 and 38</h5>
+            <p>
+                The 6560 requires a 14.31818 MHz (NTSC), TWO Phase Clock. The clock signals must be
+                five (5) volts and non-overlapping. The 6561 requires a 4.436187 M H z clock for PAL standard
+            </p>
+
+            <h5>System Clocks— P 0 1 and P 0 2, Pins 35 and 36</h5>
+            <p>
+                These clocks are the master timing generator for the VIC System. They are five volt, nonoverlapping 1.02 MH z clocks capable of driving the capacitance of the 6512 microprocessor.
+            </p>
+
+            <h5> Memory Clock— 0 M (Option), Pin 37</h5>
+            <p>
+                This is a single phase 2.04 MHz clock used when memories in the VIC System require a
+                strobe after the address bus is valid.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h4>Analog to Digital Converters— POTX and POTY, Pins 17 and 18</h4>
+            <p>
+                These input pins are used to convert potentiometer position into a microprocessor
+                readable 8 bit HEX number. This is accomplished by a simple RC time constant integration
+                technique. The potentiometer is used to charge an external capacitor tied to the pot pin. Refer
+                to application note No.1 (insert).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>Composite Sound— Pin 19</h4>
+            <p>
+                This pin provides the output of the sound synthesizer portion of the 6560 shown in the
+                VIC Block Diagram. It is a high impedance output (approximately 1Kfi) and must be buffered
+                and amplified externally to drive a speaker
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>Composite Sync and Luminance— Pin 3</h4>
+            <p>
+                This pin is an open drain output which provides all the necessary video synchronization
+                and luminance information required by a standard television. Refer to application note No. 1
+                (insert).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>Composite Color— Pin 2</h4>
+            <p>
+                This signal provides the necessary color information required by a standard television to
+                receive a full color picture. The composite color pin is a high impedance output buffer which
+                provides the reference burst signal plus the color encoded phase and amplitude information
+                at the proper 3.579545 M H z frequency. Refer to application note No. 1 (insert).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Reset— (Option), Pin 37</h3>
+            <p>
+                This input signal is used to synchronize the horizontal and vertical sync counter to an external signal.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Bus Available— (Option), Pin 37</h3>
+            <p>
+                This output signal indicates the state of VIC with respect to the video memory fetch. The
+                pin will go low 2 ^sec. before VIC performs any memory access and will remain low until the
+                entire screen has been refreshed.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Light Gun/Pen— (Option), Pin 37</h3>
+            <p>
+                This input signal causes the current dot position being scanned onto the screen to be
+                latched into control registers 6 and 7, upon a negative going edge. This pin would be used in
+                conjunction with a photo detector for use in a “target shoot” type game or for light pen applications. Refer to application note No. 1 (insert).
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3>AVAILABLE AUXILIARY/BACKGROUND COLORS</h3>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Value</th>
+                    <th>Colour</th>
+                    <th>Value</th>
+                    <th>Colour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>0</td><td>Black</td><td>8</td><td>Orange</td></tr>
+                <tr><td>1</td><td>White</td><td>9</td><td>Light Orange</td></tr>
+                <tr><td>2</td><td>Red</td><td>A</td><td>Pink</td></tr>
+                <tr><td>3</td><td>Cyan</td><td>B</td><td>Light Cyan</td></tr>
+                <tr><td>4</td><td>Magenta</td><td>C</td><td>Light Magenta</td></tr>
+                <tr><td>5</td><td>Green</td><td>D</td><td>Light Green</td></tr>
+                <tr><td>6</td><td>Blue</td><td>E</td><td>Light Blue</td></tr>
+                <tr><td>7</td><td>Yellow</td><td>F</td><td>Light Yellow</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h3>AVAILABLE BORDER/CHACTER COLORS</h3>
+            <table class="memoryMap">
+                <thead>
+                <tr>
+                    <th>Value</th>
+                    <th>Colour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>0</td><td>Black</td></tr>
+                <tr><td>1</td><td>White</td></tr>
+                <tr><td>2</td><td>Red</td></tr>
+                <tr><td>3</td><td>Cyan</td></tr>
+                <tr><td>4</td><td>Magenta</td></tr>
+                <tr><td>5</td><td>Green</td></tr>
+                <tr><td>6</td><td>Blue</td></tr>
+                <tr><td>7</td><td>Yellow</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
