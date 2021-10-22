@@ -16,6 +16,7 @@
 ARG prefix
 FROM ${prefix}debian:11-slim AS base
 ARG aptrepo
+ARG npmrepo
 
 # Needed post node15 otherwise npm will install at / & thats no longer permitted
 WORKDIR /root
