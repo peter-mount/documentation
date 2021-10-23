@@ -35,7 +35,7 @@ chip:
         "19": "CB(2)"
         "20": "V(CC)"
         "21": "NOT(IRQ)"
-        "22": "R/W"
+        "22": "R/NOT(W)"
         "23": "NOT(CS(2))"
         "24": "CS(1)"
         "25": "PHI(2)"
@@ -54,12 +54,134 @@ chip:
         "38": "RS(0)"
         "39": "CA(2)"
         "40": "CA(1)"
+  - name: "w65c22"
+    category: "wdc"
+    title: "WDC W65C22 Versatile Interface Adapter"
+    type: "dip"
+    pinCount: 40
+    label: "WDC"
+    subLabel: "W65C22 VIA"
+    source: "https://www.westerndesigncenter.com/wdc/documentation/w65c22.pdf"
+    pins:
+        "1": "V(SS)"
+        "2": "PA(0)"
+        "3": "PA(1)"
+        "4": "PA(2)"
+        "5": "PA(3)"
+        "6": "PA(4)"
+        "7": "PA(5)"
+        "8": "PA(6)"
+        "9": "PA(7)"
+        "10": "PB(0)"
+        "11": "PB(1)"
+        "12": "PB(2)"
+        "13": "PB(3)"
+        "14": "PB(4)"
+        "15": "PB(5)"
+        "16": "PB(6)"
+        "17": "PB(7)"
+        "18": "CB(1)"
+        "19": "CB(2)"
+        "20": "V(DD)"
+        "21": "NOT(IRQ)"
+        "22": "R/NOT(W)"
+        "23": "NOT(CS(2))"
+        "24": "CS(1)"
+        "25": "PHI(2)"
+        "26": "D(7)"
+        "27": "D(6)"
+        "28": "D(5)"
+        "29": "D(4)"
+        "30": "D(3)"
+        "31": "D(2)"
+        "32": "D(1)"
+        "33": "D(0)"
+        "34": "NOT(RES)"
+        "35": "RS(3)"
+        "36": "RS(2)"
+        "37": "RS(1)"
+        "38": "RS(0)"
+        "39": "CA(2)"
+        "40": "CA(1)"
+  - name: "w65c22-plcc"
+    category: "wdc"
+    title: "WDC W65C22 Versatile Interface Adapter"
+    type: "plcc"
+    pinCount: 44
+    label: "WDC"
+    subLabel: "W65C22 VIA"
+    source: "https://www.westerndesigncenter.com/wdc/documentation/w65c22.pdf"
+    pinOffset: -6
+    pins:
+        "1": "V(SS)"
+        "2": "PA(0)"
+        "3": "PA(1)"
+        "4": "PA(2)"
+        "5": "PA(3)"
+        "6": "PA(4)"
+        "7": "PA(5)"
+        "8": "PA(6)"
+        "9": "PA(7)"
+        "10": "PB(0)"
+        "11": "NC"
+        "12": "PB(1)"
+        "13": "PB(2)"
+        "14": "PB(3)"
+        "15": "PB(4)"
+        "16": "PB(5)"
+        "17": "PB(6)"
+        "18": "PB(7)"
+        "19": "CB(1)"
+        "20": "CB(2)"
+        "21": "V(DD)"
+        "22": "NC"
+        "23": "NOT(IRQ)"
+        "24": "R/NOT(W)"
+        "25": "NOT(CS(2))"
+        "26": "CS(1)"
+        "27": "PHI(2)"
+        "28": "D(7)"
+        "29": "D(6)"
+        "30": "D(5)"
+        "31": "D(4)"
+        "32": "D(3)"
+        "33": "NC"
+        "34": "D(2)"
+        "35": "D(1)"
+        "36": "D(0)"
+        "37": "NOT(RES)"
+        "38": "NC"
+        "39": "RS(3)"
+        "40": "RS(2)"
+        "41": "RS(1)"
+        "42": "RS(0)"
+        "43": "CA(2)"
+        "44": "CA(1)"
 resources:
   - name: "6522.svg"
     url: "/static/chipref/mos/6522.svg"
     size: "12K"
+  - name: "w65c22.svg"
+    url: "/static/chipref/wdc/w65c22.svg"
+    size: "12K"
+  - name: "w65c22-plcc.svg"
+    url: "/static/chipref/wdc/w65c22-plcc.svg"
+    size: "16K"
 ---
 <div class="container">
+    <div class="row">
+        <div class="col-5">
+            <img src="/static/chipref/mos/6522.svg"/>
+        </div>
+        <div class="col-5">
+            <img src="/static/chipref/wdc/w65c22.svg"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <img src="/static/chipref/wdc/w65c22-plcc.svg"/>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="alert-info m-md-2">
@@ -71,7 +193,7 @@ resources:
         </div>
     </div>
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             <h2>MCS6522 VERSATILE INTERFACE ADAPTER</h2>
 
             <h3>DESCRIPTION</h3>
@@ -98,9 +220,6 @@ resources:
                 <li>CMOS compatible peripheral control lines.</li>
                 <li>Expanded "handshake" capability allows very positive control of data transfers between processor and peripheral devices.</li>
             </ul>
-        </div>
-        <div class="col-4">
-            <img src="/static/chipref/mos/6522.svg"/>
         </div>
     </div>
     <div class="row">
