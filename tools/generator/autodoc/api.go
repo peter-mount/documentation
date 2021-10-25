@@ -4,6 +4,7 @@ import (
   "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/autodoc"
   "github.com/peter-mount/documentation/tools/util/autodoc/asm"
   "github.com/peter-mount/documentation/tools/util/task"
@@ -69,4 +70,42 @@ func (a *Api) autodocHandler() autodoc.Handler {
       return nil
     })
   }
+}
+
+// generateIndex generates the API indices
+func (a *Api) generateIndex(ctx context.Context) error {
+  task.GetQueue(ctx).
+      AddTask(task.Of().
+        Then(a.SortByAddr).
+        Then(a.generateIndexFile).
+        WithValue("filename", "api").
+        WithValue("title", "API by Address").
+        WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey)).
+      AddTask(task.Of().
+        Then(a.SortByName).
+        Then(a.generateIndexFile).
+        WithValue("filename", "apiname").
+        WithValue("title", "API by Name").
+        WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
+
+  return nil
+}
+
+func (a *Api) generateIndexFile(ctx context.Context) error {
+  book := generator.GetBook(ctx)
+
+  //dirName := book.ContentPath("reference")
+  fileName := ctx.Value("filename").(string)
+  title := ctx.Value("title").(string)
+
+  r := Output{Nometa: true}
+  for _, o := range a.api {
+    r.Api = append(r.Api, o.params)
+  }
+
+  return util.ReferenceFileBuilder(title, title, "manual", 10).
+    Yaml(r).
+    WrapAsFrontMatter().
+    FileHandler().
+    Write(util.ReferenceFilename(book.ContentPath(), fileName, "_index.html"), book.Modified())
 }
