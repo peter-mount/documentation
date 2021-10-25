@@ -16,7 +16,6 @@ type BBC struct {
   generator *generator.Generator // Generator
   excel     *generator.Excel     // Excel
   extracted bool                 // True once extract() has run
-  api       []*Api               // MOS API calls
   osbyte    []*Osbyte            // OSBYTE calls
   osword    []*Osword            // OSWORD calls
 }
@@ -75,7 +74,6 @@ func (b *BBC) extract(ctx context.Context) error {
     PathNotContain("/reference/").
     PathHasSuffix(".html").
       Then(hugo.FrontMatterActionOf().
-        OtherExists("api", b.extractApi).
         OtherExists("osbyte", b.extractOsbyte).
         OtherExists("osword", b.extractOsword).
         Walk(ctx)).
