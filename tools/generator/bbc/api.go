@@ -2,13 +2,10 @@ package bbc
 
 import (
   "context"
-  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "log"
-  "sort"
   "strconv"
-  "strings"
 )
 
 type Api struct {
@@ -53,102 +50,4 @@ func (b *BBC) extractApi(ctx context.Context, _ *hugo.FrontMatter) error {
       return nil
     })
   })
-}
-
-func (b *BBC) writeAPIIndex(ctx context.Context) error {
-  book := generator.GetBook(ctx)
-
-  sort.SliceStable(b.api, func(i, j int) bool {
-    return b.api[i].call < b.api[j].call
-  })
-
-  r := Output{Nometa: true}
-  for _, o := range b.api {
-    r.Api = append(r.Api, o.params)
-  }
-
-  return util.ReferenceFileBuilder(
-    "MOS API by address",
-    "MOS API by address",
-    "manual",
-    10,
-  ).
-    Yaml(r).
-    WrapAsFrontMatter().
-    FileHandler().
-    Write(util.ReferenceFilename(book.ContentPath(), "api", "_index.html"), book.Modified())
-}
-
-func (b *BBC) writeAPINameIndex(ctx context.Context) error {
-  book := generator.GetBook(ctx)
-
-  sort.SliceStable(b.api, func(i, j int) bool {
-    return strings.ToLower(b.api[i].Name) < strings.ToLower(b.api[j].Name)
-  })
-
-  r := Output{Nometa: true}
-  for _, o := range b.api {
-    r.Api = append(r.Api, o.params)
-  }
-
-  return util.ReferenceFileBuilder(
-    "MOS API by name",
-    "MOS API by name",
-    "manual",
-    10,
-  ).
-    Yaml(r).
-    WrapAsFrontMatter().
-    FileHandler().
-    Write(util.ReferenceFilename(book.ContentPath(), "apiName", "_index.html"), book.Modified())
-}
-
-func (b *BBC) writeAPITable(ctx context.Context) error {
-  book := generator.GetBook(ctx)
-
-  // Work with a copy as this could be changed once excel runs
-  api := append([]*Api{}, b.api...)
-  sort.SliceStable(api, func(i, j int) bool {
-    return api[i].call < api[j].call
-  })
-
-  return util.WithTable().
-    AsCSV(book.StaticPath("api.csv"), book.Modified()).
-    AsExcel(b.excel.Get(book.ID, book.Modified())).
-      Do(&util.Table{
-        Title: "api",
-        Columns: []string{
-          "Function",
-          "Address",
-          "Vector",
-          "Description",
-          "Entry A",
-          "Entry X",
-          "Entry Y",
-          "Exit A",
-          "Exit X",
-          "Exit Y",
-          "Exit C",
-        },
-        RowCount: len(api),
-        GetRow: func(r int) interface{} {
-          return api[r]
-        },
-        Transform: func(i interface{}) []interface{} {
-          o := i.(*Api)
-          return []interface{}{
-            o.Name,
-            o.Addr,
-            o.Indirect,
-            o.Title,
-            o.Entry.A,
-            o.Entry.X,
-            o.Entry.Y,
-            o.Exit.A,
-            o.Exit.X,
-            o.Exit.Y,
-            o.Exit.C,
-          }
-        },
-      })
 }

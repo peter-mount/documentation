@@ -51,15 +51,6 @@ func (b *BBC) Init(k *kernel.Kernel) error {
 
 func (b *BBC) Start() error {
   b.generator.
-      Register("bbcAPIIndex",
-        task.Of().
-          RunOnce(&b.extracted, b.extract).
-          Then(b.writeAPIIndex).
-          Then(b.writeAPITable)).
-      Register("bbcAPINameIndex",
-        task.Of().
-          RunOnce(&b.extracted, b.extract).
-          Then(b.writeAPINameIndex)).
       Register("bbcOsbyteIndex",
         task.Of().
           RunOnce(&b.extracted, b.extract).
