@@ -80,14 +80,12 @@ func (h *Headers) task(ctx context.Context) error {
 
   task.GetQueue(ctx).
       AddTask(task.Of().
-          Then(func(ctx context.Context) error {
-            return autodoc.For(dirName, fileName, book.Modified(), ctx).
-              Using(asm.BeebAsm).
-              Using(asm.ZAsm).
-              InvokeTopic("Headers", buildHeaderFile).
-              Invoke(h.AutodocHandler()).
-              Do()
-          }).
+          Then(autodoc.For(dirName, fileName, book.Modified(), ctx).
+            Using(asm.BeebAsm).
+            Using(asm.ZAsm).
+            InvokeTopic("Headers", buildHeaderFile).
+            Invoke(h.AutodocHandler()).
+            Do).
         WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
 
   return nil

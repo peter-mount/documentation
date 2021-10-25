@@ -29,7 +29,7 @@ type Builder interface {
   // Used to generate multiple versions of the same data. Most Builder implementations should panic if this is called.
   Using(p Provider) Builder
   // Do runs the Builder to produce the output file(s)
-  Do() error
+  Do(ctx context.Context) error
   // Hex convert a value to Hexadecimal in their specific format
   Hex(interface{}) string
 }
@@ -147,9 +147,9 @@ func (u *unionBuilder) InvokeTopic(t string, h TopicHandler) Builder {
   return u
 }
 
-func (u *unionBuilder) Do() error {
+func (u *unionBuilder) Do(ctx context.Context) error {
   for _, b := range u.src {
-    err := b.Do()
+    err := b.Do(ctx)
     if err != nil {
       return err
     }

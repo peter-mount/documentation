@@ -49,7 +49,7 @@ func (b *zAsm) InvokeTopic(t string, h autodoc.TopicHandler) autodoc.Builder {
   return b.Invoke(h(t, b.fileName))
 }
 
-func (b *zAsm) Do() error {
+func (b *zAsm) Do(_ context.Context) error {
   return autodoc.CloseBuilder(b.err, b.w, b.fileName, b.modified, b.ctx)
 }
 

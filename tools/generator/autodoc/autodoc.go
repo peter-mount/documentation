@@ -76,7 +76,8 @@ func (s *Autodoc) getApi(ctx context.Context) *Api {
   a := NewApi()
   s.apis[book.ID] = a
 
-  s.generator.AddPriorityTask(20, task.Of(a.task).
+  s.generator.AddPriorityTask(20, task.Of().
+    Then(a.generateSource).
     WithValue(generator.BookKey, book).
     WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 

@@ -1,6 +1,7 @@
 package autodoc
 
 import (
+  "context"
   "sort"
   "strings"
 )
@@ -18,14 +19,16 @@ type ApiEntry struct {
 
 type ApiEntryHandler func(*ApiEntry) error
 
-func (a *Api) SortByName() {
+func (a *Api) SortByName(_ context.Context) error {
   sort.SliceStable(a.api, func(i, j int) bool {
     return strings.ToLower(a.api[i].Name) < strings.ToLower(a.api[j].Name)
   })
+  return nil
 }
 
-func (a *Api) SortByAddr() {
+func (a *Api) SortByAddr(_ context.Context) error {
   sort.SliceStable(a.api, func(i, j int) bool {
     return a.api[i].call < a.api[j].call
   })
+  return nil
 }

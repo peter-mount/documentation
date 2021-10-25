@@ -41,8 +41,8 @@ func (a *Api) ForEach(h ApiEntryHandler) error {
   return nil
 }
 
-// task is a Task for generating the output
-func (a *Api) task(ctx context.Context) error {
+// generateSource is a Task for generating source code
+func (a *Api) generateSource(ctx context.Context) error {
   book := generator.GetBook(ctx)
 
   dirName := book.ContentPath("reference/include")
@@ -50,21 +50,19 @@ func (a *Api) task(ctx context.Context) error {
 
   task.GetQueue(ctx).
       AddTask(task.Of().
-          Then(func(ctx context.Context) error {
-            a.SortByAddr()
-            return autodoc.For(dirName, fileName, book.Modified(), ctx).
-              Using(asm.BeebAsm).
-              Using(asm.ZAsm).
-              InvokeTopic("API", buildHeaderFile).
-              Invoke(a.AutodocHandler()).
-              Do()
-          }).
+        Then(a.SortByAddr).
+          Then(autodoc.For(dirName, fileName, book.Modified(), ctx).
+            Using(asm.BeebAsm).
+            Using(asm.ZAsm).
+            InvokeTopic("API", buildHeaderFile).
+            Invoke(a.autodocHandler()).
+            Do).
         WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
 
   return nil
 }
 
-func (a *Api) AutodocHandler() autodoc.Handler {
+func (a *Api) autodocHandler() autodoc.Handler {
   return func(ctx context.Context, b autodoc.Builder) error {
     return a.ForEach(func(e *ApiEntry) error {
       b.Function(e.Name, b.Hex(e.Addr), e.Title)
