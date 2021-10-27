@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="docker-mirror" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+     width="512px" height="512px"
+     viewBox="60 20 390 480" xml:space="preserve">
+    <style type="text/css">
+        .flowChart {font-family:Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;}
+        g.label rect {fill:none;stroke:black;}
+        g.label text {font-size:10px;text-anchor:middle;}
+    </style>
+    <g class="flowChart">
+        <g class="label" transform="translate(256 50)">
+            <rect x="-50" y="-20" width="100" height="30"/>
+            <text y="-2">Inspect Manifest</text>
+        </g>
+        <g class="label" transform="translate(256 80)">
+            <rect x="0" y="0" width="50" height="50" transform="rotate(45)"/>
+            <text y="32">Manifest</text>
+            <text y="44">present</text>
+            <text y="56">?</text>
+        </g>
+        <g class="label" transform="translate(202 110)"><text>Yes</text></g>
+        <g class="label" transform="translate(310 110)"><text>No</text></g>
+        <g class="label" transform="translate(384 200)">
+            <rect x="-60" y="-20" width="120" height="40"/>
+            <text y="-2">Pull Plain Docker</text>
+            <text y="10">single-arch image</text>
+        </g>
+        <g class="label" transform="translate(128 200)">
+            <rect x="-60" y="-20" width="120" height="40"/>
+            <text y="-2">Extract all</text>
+            <text y="10">Linux architectures</text>
+        </g>
+        <g class="label" transform="translate(128 265)">
+            <rect x="-60" y="-20" width="120" height="30"/>
+            <text y="-7">Pull image for</text>
+            <text y="5">each architecture</text>
+        </g>
+        <g class="label" transform="translate(128 320)">
+            <rect x="-60" y="-20" width="120" height="30"/>
+            <text y="-2">Tag &amp; Push images</text>
+        </g>
+        <g class="label" transform="translate(128 370)">
+            <rect x="-60" y="-20" width="120" height="40"/>
+            <text y="-2">Create new manifest</text>
+            <text y="10">containing all images</text>
+        </g>
+        <g class="label" transform="translate(128 430)">
+            <rect x="-60" y="-20" width="120" height="30"/>
+            <text y="-2">Push manifest</text>
+        </g>
+        <g class="label" transform="translate(256 480)">
+            <rect x="-50" y="-20" width="100" height="30" rx="15" ry="15"/>
+            <text y="-2">Completed</text>
+        </g>
+        <path d="M 256 60 l0 20
+        M 290 115.5 l 94 0 l0 65
+        M 220 115.5 l -95 0 l 0 65
+        M 128 220 l 0 25
+        M 128 275 l 0 25
+        M 128 330 l 0 20
+        M 128 390 l 0 20
+        M 128 440 l 0 10 l 128 0 l 0 10
+        M 384 220 l 0 230 l -128 0 l 0 10" stroke="black" fill="none"/>
+    </g>
+</svg>

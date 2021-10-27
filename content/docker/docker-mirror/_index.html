@@ -1,0 +1,81 @@
+---
+type: "manual"
+title: "Docker Mirror"
+linkTitle: "docker-mirror"
+description: "A tool to mirror docker images"
+categories:
+  - docker
+  - go project
+  - projects
+---
+<div class="printPageBreakAvoid">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <code>docker-mirror</code> is a simple tool to mirror docker images between repositories, usually
+                    from the public docker hub to a local internal repository.
+                </p>
+                <p>
+                    You would do this if you use an image frequently.
+                    For example I mirror the <code>golang:alpine</code> as I run a lot of builds using golang to compile
+                    multiple projects, so it makes sense to have a local mirror of that image.
+                </p>
+                <p>
+                    This has multiple benefits:
+                </p>
+                <ol>
+                    <li>
+                        Builds are faster as any pull's occur locally removing the internet or your, usually slower
+                        than Ethernet internet connection.
+                    </li>
+                    <li>
+                        Docker now have limits on how often you can pull an image over a set period of time.
+                        If you have an image used across multiple machines this can quickly push you over the limit.
+                    </li>
+                    <li>
+                        If your internet connection goes down, or the public repository is unavailable you can still
+                        work
+                    </li>
+                </ol>
+                <h3>Prerequisites</h3>
+                <p>
+                    Because this utility uses the
+                    <a href="https://docs.docker.com/engine/reference/commandline/manifest/" target="_blank">docker manifest</a>
+                    command you need to enable experimental features to the Docker CLI.
+                </p>
+                <p>
+                    You also need to be logged in to the destination repository when running the tool with an account
+                    that allows you to push to that repository.
+                </p>
+                <h3>Isn't this the same as docker pull?</h3>
+                <p>
+                    In most instances you can do exactly the same thing with the following 3 docker commands:
+                </p>
+                <pre>docker pull golang:alpine
+docker tag library/golang:alpine docker.example.com/library/golang:alpine
+docker push docker.example.com/library/golang:alpine</pre>
+                <p>
+                    However this works only for images built for the same architecture as the machine running those
+                    commands.
+                </p>
+                <p>
+                    If you have a muti-architecture environment, or need to support multiple architectures like amd64 &
+                    arm then this is where docker-mirror becomes useful as it will automatically mirror all
+                    architectures an image supports.
+                </p>
+                <h3>Doesn't docker already support a local mirror?</h3>
+                <p>
+                    Yes it does, however it doesn't work due to a bug with docker
+                    <a href="https://github.com/moby/moby/issues/30880" target="_blank">#30880</a> causes it to fail for
+                    non-root users.
+                </p>
+                <h3>Where's the source?</h3>
+                <p>
+                    The source for this tool is on github at
+                    <a href="https://github.com/peter-mount/docker-mirror" target="_blank">https://github.com/peter-mount/docker-mirror</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

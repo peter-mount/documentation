@@ -1,0 +1,46 @@
+---
+type: "manual"
+title: "Using a mirrored image"
+linkTitle: "Using a Mirrored Image"
+description: "How to use a mirrored image"
+weight: 20
+---
+<div class="printPageBreakAvoid">
+    <p>
+        If you've mirrored an image to your local repository then you can just use that instead of the
+        public reference.
+    </p>
+    <p>
+        For example, if you mirrored the <code>golang:alpine</code> image to <code>docker.example.com</code>
+        then just reference it as <code>docker.example.com/library/golang:alpine</code>
+    </p>
+    <h2>How to use both public & mirrored images in the same Dockerfile</h2>
+    <p>
+        If, like myself, you have a lot of Open Sourced projects you want to have a single Dockerfile which anyone
+        can run without having access to, or even knowledge of your private repository.
+    </p>
+    <p>The solution to this is to use build arguments.</p>
+    <p>
+        Here's an example from one of my Dockerfiles <em>(actually from the
+        <a href="https://github.com/peter-mount/documentation/blob/master/Dockerfile" target="_blank">Dockerfile</a>
+        that builds this actual site)</em>:
+    </p>
+    <pre>ARG prefix
+FROM ${prefix}golang:alpine AS build</pre>
+    <p>
+        Here we have a build argument <code>prefix</code> and in the FROM line we've prefixed the source image name,
+        so where we want to use <code>golang:alpine</code> we've defined it as <code>${prefix}golang:alpine</code>.
+    </p>
+    <p>
+        When someone runs the build, <code>prefix</code> defaults to "" so they get the public <code>golang:alpine</code> image.
+    </p>
+    <p>
+        However, locally you can run docker build passing the prefix to your local repository:
+    </p>
+    <pre>docker build --build-arg prefix=docker.example.com/library/ -t myproject:latest .</pre>
+    <p>
+        As you've now set the prefix to point to your local repository then the build will now use the local
+        <code>docker.example.com/library/golang:alpine</code> image instead of the public one.
+    </p>
+</div>
+

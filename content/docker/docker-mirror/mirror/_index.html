@@ -1,0 +1,48 @@
+---
+type: "manual"
+title: "Mirroring an Image"
+linkTitle: "Mirror Image"
+description: "How to mirror an image to a local docker repository"
+weight: 10
+---
+<div class="printPageBreakAvoid">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <p>
+                    To mirror an image simply run the command
+                </p>
+                <pre>docker-mirror -d docker.example.com golang:alpine</pre>
+                <p>
+                    Where <code>docker.example.com</code> is the url to your local repository and
+                    <code>golang:alpine</code> is the image you want to mirror.
+                </p>
+                <p>
+                    Once complete your mirror of the image can be retrieved with the tag
+                    <code>docker.example.com/library/golang:alpine</code>
+                </p>
+                <h3>Note about libraries</h3>
+                <p>
+                    In the above example the <code>golang:alpine</code> image is pushed as <code>library/golang:alpine</code>.
+                    This is because in docker the source image is in the <code>library</code> project, so if an image
+                    does not contain a project then it gets the library project inserted during the pull.
+                </p>
+                <p>
+                    If you pulled from a different project then you would get a path you would expect.
+                </p>
+                <p>
+                    For example, mirroring <code>area51/example:latest</code> would mirror it as <code>docker.example.com/area51/example:latest</code>
+                </p>
+            </div>
+            <div class="col-5">
+                <div class="text-center">
+                    <img src="flow.svg" alt="Flowchart of mirror process"/>
+                </div>
+                <div class="text-center">
+                    <small>Flow chart showing what docker-mirror does to perform the mirror</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
