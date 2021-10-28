@@ -25,8 +25,10 @@ weight: 20
         <a href="https://github.com/peter-mount/documentation/blob/master/Dockerfile" target="_blank">Dockerfile</a>
         that builds this actual site)</em>:
     </p>
-    <pre>ARG prefix
-FROM ${prefix}golang:alpine AS build</pre>
+{{< highlight go "linenos=inline" >}}
+ARG prefix
+FROM ${prefix}golang:alpine AS build
+{{< / highlight >}}
     <p>
         Here we have a build argument <code>prefix</code> and in the FROM line we've prefixed the source image name,
         so where we want to use <code>golang:alpine</code> we've defined it as <code>${prefix}golang:alpine</code>.
@@ -37,7 +39,9 @@ FROM ${prefix}golang:alpine AS build</pre>
     <p>
         However, locally you can run docker build passing the prefix to your local repository:
     </p>
-    <pre>docker build --build-arg prefix=docker.example.com/library/ -t myproject:latest .</pre>
+{{< highlight go "linenos=inline" >}}
+docker build --build-arg prefix=docker.example.com/library/ -t myproject:latest .
+{{< / highlight >}}
     <p>
         As you've now set the prefix to point to your local repository then the build will now use the local
         <code>docker.example.com/library/golang:alpine</code> image instead of the public one.

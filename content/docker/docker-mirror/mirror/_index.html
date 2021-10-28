@@ -12,7 +12,9 @@ weight: 10
                 <p>
                     To mirror an image simply run the command
                 </p>
-                <pre>docker-mirror -d docker.example.com golang:alpine</pre>
+{{< highlight go "linenos=inline" >}}
+docker-mirror -d docker.example.com golang:alpine
+{{< / highlight >}}
                 <p>
                     Where <code>docker.example.com</code> is the url to your local repository and
                     <code>golang:alpine</code> is the image you want to mirror.

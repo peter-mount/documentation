@@ -52,9 +52,11 @@ categories:
                 <p>
                     In most instances you can do exactly the same thing with the following 3 docker commands:
                 </p>
-                <pre>docker pull golang:alpine
+{{< highlight go "linenos=inline" >}}
+docker pull golang:alpine
 docker tag library/golang:alpine docker.example.com/library/golang:alpine
-docker push docker.example.com/library/golang:alpine</pre>
+docker push docker.example.com/library/golang:alpine
+{{< / highlight >}}
                 <p>
                     However this works only for images built for the same architecture as the machine running those
                     commands.
