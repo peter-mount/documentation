@@ -1,0 +1,41 @@
+---
+type: "manual"
+title: "Docker Ignore"
+linkTitle: ".dockerignore"
+description: "Limiting what is visible to a build"
+weight: 10
+categories:
+  - docker
+---
+<div class="printPageBreakAvoid">
+    <p>
+        One feature that is widely ignored is <code>.dockerignore</code>
+        but implementing this can speed up your builds by limiting what is sent
+        to docker before the build starts.
+    </p>
+    <p>
+        The format of <code>.dockerignore</code> is pretty simple &amp; is documented
+        <a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file" target="_blank">here</a>
+        but it can be pretty basic.
+    </p>
+    <p>
+        For example, this site is built by a docker container however we only need two directories &amp; a single file
+        to be passed to docker to perform the build so our <code>.dockerignore</code> is pretty basic:
+    </p>
+{{< highlight go "linenos=inline" >}}
+*
+!bin
+!tools
+!go.mod
+{{< / highlight >}}
+    <p>
+        Here we first exclude everything then add exclusion rules to include the bin &amp; tools directories and the
+        go.mod file.
+        The speed improvement is noticeable. For this site it's currently 300MB but with those 3 simple lines only
+        207KB is sent to docker.
+    </p>
+    <p>
+        You'll note that Dockerfile isn't passed to the build context as it's not needed there.
+        It's actually advised to never send it to the build context, something most dev's don't realise.
+    </p>
+</div>

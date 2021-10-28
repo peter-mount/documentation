@@ -1,0 +1,68 @@
+---
+type: "manual"
+title: "Build Staging"
+linkTitle: "Build Staging"
+description: "Break up your builds into stages"
+weight: 20
+categories:
+  - docker
+---
+<div class="printPageBreakAvoid">
+    <p>
+        One common pattern developers use for a Dockerfile is do everything at once.
+        This might be fine for simple images but if you are compiling the application then
+        this is bad as you can easily bloat the final image with either the source code
+        or even the compilers needed to build but not to run.
+    </p>
+    <p>
+        The solution to this is to use stages.
+        Here you break up your build into separate stages.
+        The earlier stages do the compiling of your application whilst the
+        last one contains your application.
+    </p>
+    <p>
+        The last stage always becomes the final built image.
+    </p>
+    <p>
+        For example:
+    </p>
+{{< highlight go "linenos=inline" >}}
+FROM golang:alpine AS build
+RUN apk add --no-cache tzdata
+
+WORKDIR /work
+
+RUN go env -w GOFLAGS=-mod=mod
+COPY go.mod .
+RUN go mod download
+
+COPY src/ src/
+RUN CGO_ENABLED=0 go build -o /dest/exampleapp src/bin/main.go
+
+FROM debian:11-slim AS final
+COPY --from=build /dest/* /usr/local/bin/
+WORKDIR /work
+{{< / highlight >}}
+    <p>
+        Here we have two stages:
+    </p>
+    <ul>
+        <li>
+            Lines 1&hellip;11 is the first stage, and it uses the <code>golang:alpine</code> image to compile an example
+            application which it stores the built binary under the /dest/ directory.
+        </li>
+        <li>
+            Lines 13&hellip;15 is the second and last stage.
+            It uses the <code>debian:11-slim</code> image, copies the built application from the
+            first stage into /usr/local/bin
+        </li>
+    </ul>
+    <p>
+        The final image is now a lot smaller as it doesn't have any of the compilers installed.
+    </p>
+    <p>
+        This is a simple example of build staging.
+        There are other techniques you can use with this like ordering stages and
+        intermediate stages to reduce the number of layers.
+    </p>
+</div>

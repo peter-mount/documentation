@@ -1,0 +1,80 @@
+---
+type: "manual"
+title: "Stage Ordering"
+linkTitle: "Stage Ordering"
+description: "Ordering stages to be more efficient"
+weight: 22
+categories:
+  - docker
+---
+<div class="printPageBreakAvoid">
+    <p>
+        One common issue with complex Dockerfiles is that your final image might require
+        additional packages installed. If this is a lot it can slow down your build.
+    </p>
+    <p>
+        A technique here is to break up your final image, create a stage early on in
+        your Dockerfile which prepares the final image, installing any required
+        packages, then your compilation stages.
+    </p>
+    <p>
+        The last stage will be based on the first stage and installs your build
+        artefacts.
+    </p>
+    <p>
+        The benefit of this is that whilst you are developing your image the first
+        stages are cached by docker, so unless something changes they don't get
+        run again and later stages then use the cache.
+    </p>
+    <p>
+        For example:
+    </p>
+{{< highlight go "linenos=inline" >}}
+FROM debian:11-slim AS base
+WORKDIR /root
+RUN apt-get update &&\
+    apt-get install -y ca-certificates chromium nodejs npm &&\
+    npm install npm@latest -g &&\
+    npm install -g postcss postcss-cli &&\
+    npm install autoprefixer &&\
+    chmod -R +rx /root &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.npmrc
+
+FROM golang:alpine AS build
+RUN apk add --no-cache tzdata
+
+WORKDIR /work
+
+RUN go env -w GOFLAGS=-mod=mod
+COPY go.mod .
+RUN go mod download
+
+COPY src/ src/
+RUN CGO_ENABLED=0 go build -o /dest/exampleapp src/bin/main.go
+
+FROM base AS final
+COPY --from=build /dest/* /usr/local/bin/
+WORKDIR /work
+{{< / highlight >}}
+    <p>
+        Here we now have three stages:
+    </p>
+    <ul>
+        <li>
+            Lines 1&hellip;9 is the first stage based on <code>debian:11-slim</code> and we install
+            chromium and nodejs.
+        </li>
+        <li>
+            Lines 11&hellip;21 is the second stage, which compiles our application using go.
+        </li>
+        <li>
+            Lines 23&hellip;25 is the third and last stage forming our final image.
+            Here it uses the first stage as the base and just copies the built application from the
+            second stage into /usr/local/bin
+        </li>
+    </ul>
+    <p>
+        The main benefit here is that if you change something in the source, only those steps after the
+        <code>COPY src/ src/</code> line will be run, everything else is in the cache.
+    </p>
+</div>
