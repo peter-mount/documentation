@@ -94,28 +94,74 @@ description: "How to configure a repository mirror for APT"
                         it.
                     </li>
                 </ol>
-                <p>
-                    With the Debian example you should also create a mirror of the debian security repository at the
-                    same time:
-                </p>
-                <table class="memoryMap">
-                    <thead>
-                    <tr>
-                        <th>Field</th>
-                        <th>Value</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr><td>Name</td><td>apt-debian-security</td></tr>
-                    <tr><td>Distribution</td><td>bionic</td></tr>
-                    <tr><td>Remote Storage</td><td>http://security.debian.org/debian-security</td></tr>
-                    <tr><td>Blob store</td><td>debian</td></tr>
-                    </tbody>
-                </table>
             </div>
             <div class="col-5">
                 <img src="blank-config.png" alt="Blank APT config panel"/>
             </div>
         </div>
     </div>
+
+    <h2>Common repositories to mirror</h2>
+    <p>
+        The following table lists the repositories mirror covering <code>Debian</code>, <code>Ubuntu</code> and
+        <code>Raspberry PI OS</code>:
+    </p>
+    <table class="memoryMap">
+        <thead>
+        <tr>
+            <th>Distribution</th>
+            <th>Name</th>
+            <th>Remote storage</th>
+            <th>Blob store</th>
+            <th>Distribution</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="2">Debian</td>
+            <td>apt-debian</td>
+            <td>http://deb.debian.org/debian</td>
+            <td rowspan="2">debian</td>
+            <td rowspan="2">buster</td>
+        </tr>
+        <tr>
+            <td>apt-debian-security</td>
+            <td>http://security.debian.org/debian-security</td>
+        </tr>
+
+        <tr>
+            <td rowspan="2">Raspian /<br/>Raspberry PI OS</td>
+            <td>apt-raspbian</td>
+            <td>http://raspbian.raspberrypi.org/raspbian/</td>
+            <td rowspan="2">raspbian</td>
+            <td rowspan="2">buster</td>
+        </tr>
+        <tr>
+            <td>apt-raspbian-archive</td>
+            <td>http://archive.raspberrypi.org/debian/</td>
+        </tr>
+
+        <tr>
+            <td rowspan="2">Ubuntu</td>
+            <td>apt-ubuntu-archive</td>
+            <td>http://gb.archive.ubuntu.com/ubuntu</td>
+            <td rowspan="2">ubuntu</td>
+            <td rowspan="2">focal</td>
+        </tr>
+        <tr>
+            <td>apt-ubuntu-ports</td>
+            <td>http://ports.ubuntu.com/ubuntu-ports</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert-info">
+        For ubuntu my <code>apt-ubuntu-archive</code> proxy goes to <code>gb.archive.ubuntu.com</code> as I'm in the UK.
+        If you are using a different endpoint due to being elsewhere in the world you should be using the same one
+        instead of the GB one.
+    </div>
+    <h2>Using the mirror</h2>
+    <p>
+        Once you have configured your repositories, you can then proceed to configure your machines to use them.
+        This is described in the <a href="../../using/">Using Repository mirrors</a> section.
+    </p>
 </div>

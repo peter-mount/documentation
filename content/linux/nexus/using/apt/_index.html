@@ -1,0 +1,68 @@
+---
+type: "manual"
+title: "APT repository mirrors"
+linkTitle: "APT on Linux"
+description: "How to configure a Linux machine to use APT repository mirrors"
+---
+<div class="printPageBreakAvoid">
+
+    <h2>Configuring APT to use them</h2>
+    <div class="alert-warning">
+        Make certain you make a backup of the files you will be editing below in-case you make a mistake.
+        <p>Not doing so could cause you not to be able to make any further updates to your machine!</p>
+    </div>
+
+    <p>
+        To switch over to using your new proxy you need to edit the apt sources files under <code>/etc/apt/</code>
+        then run <code>apt-get update</code>.
+    </p>
+    <p>
+        If you have followed the naming conventions above you can go in to <code>/etc/apt/sources.list</code> and replace
+        any reference to the remote storage url in nexus with the new path.
+    </p>
+    <p>
+        You should also do this for anything in the <code>/etc/apt/sources.list.d/</code> directory - but only those
+        you have configured a proxy for!
+    </p>
+    <p>
+        For example, if your local nexus is accessible at <code>http://10.11.12.13:8081/</code> then
+        for the apt-ubuntu-archive proxy
+        changing <code>http://gb.archive.ubuntu.com/ubuntu</code> in sources.list with
+        <code>http://10.11.12.13:8081/repository/apt-ubuntu-archive/</code>
+    </p>
+
+    <p>
+        For example:
+    </p>
+
+{{< highlight go "linenos=inline" >}}
+deb http://gb.archive.ubuntu.com/ubuntu focal main restricted
+deb http://gb.archive.ubuntu.com/ubuntu focal-updates main restricted
+{{< / highlight >}}
+    <p>becomes:</p>
+{{< highlight go "linenos=inline" >}}
+deb http://10.11.12.13:8081/repository/apt-ubuntu-archive/ focal main restricted
+deb http://10.11.12.13:8081/repository/apt-ubuntu-archive/ focal-updates main restricted
+{{< / highlight >}}
+    <div class="alert-info">
+        Do not change the distribution field, e.g. <code>focal-updates</code> above.
+        They should match that of the remote repository.
+        Do not replace them with the value in the proxy!
+    </div>
+    <p>
+        If like me, you have https configured, then you should be using the correct https address and not the 8081 port.
+    </p>
+
+    <p>
+        Now run an update:
+    </p>
+{{< highlight go "linenos=inline" >}}
+sudo apt-get update
+{{< / highlight >}}
+</div>
+
+<p>
+    Apt should now access your local proxy. If this completes without any errors then any future upgrade or install
+    will now use the proxy instead.
+</p>
+
