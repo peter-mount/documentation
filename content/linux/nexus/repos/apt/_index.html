@@ -6,6 +6,116 @@ description: "How to configure a repository mirror for APT"
 ---
 <div class="printPageBreakAvoid">
     <p>
-        <code>APT</code> repository mirrors are easy to
+        <code>APT</code> repository mirrors are easy to configure.
     </p>
+    <p>
+        Here we will create a repository for the default Debian repository located at
+        <code>http://deb.debian.org/debian</code>
+    </p>
+    <h2>Create blob store</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <p>
+                    You only need to do this once per group of repositories.
+                </p>
+                <p>
+                    So for Debian then create a blob store called <code>debian</code>,
+                    for Ubuntu then create <code>ubuntu</code> etc.
+                    Then for each mirror you create then reuse the same blob store for each group.
+                </p>
+                <ol>
+                    <li>
+                        Log in to Nexus and go to the admin page via the <i class="fa fa-cog"></i> icon in
+                        the top nav bar.
+                    </li>
+                    <li>
+                        Select blob store, then <strong><i class="fa fa-plus-circle"></i> Create blob store</strong>
+                    </li>
+                    <li>
+                        Under Type select File
+                    </li>
+                    <li>
+                        Under Name enter <code>debian</code>
+                    </li>
+                    <li>
+                        Select <strong>Create blob store</strong> to create it.
+                    </li>
+                </ol>
+            </div>
+            <div class="col-5">
+                <img src="blank-blob.png" alt="Blank create blob panel"/>
+            </div>
+        </div>
+    </div>
+
+    <h2>Create mirror</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <ol>
+                    <li>
+                        Log in to Nexus and go to the admin page via the <i class="fa fa-cog"></i> icon in
+                        the top nav bar.
+                    </li>
+                    <li>
+                        Select Repositories then the <strong><i class="fa fa-plus-circle"></i> Create
+                        Repository</strong>
+                    </li>
+                    <li>
+                        Select <code>apt (proxy)</code> as the repository type.
+                    </li>
+                    <li>
+                        <p>
+                            Now fill in the required fields.
+                        </p>
+                        <p>
+                            Here we will use Debian as an example:
+                        </p>
+                        <ol>
+                            <li>
+                                For name enter <code>apt-debian</code>
+                            </li>
+                            <li>
+                                For Distribution <code>buster</code>
+                                <em>- note this isn't as important as you might think but it is required</em>
+                            </li>
+                            <li>
+                                For Remote storage enter the repository url <code>http://deb.debian.org/debian</code>
+                            </li>
+                            <li>
+                                For Blob store select the one you created earlier,
+                                <code>debian</code> if you are following my naming conventions.
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        Once it's all filled in select <strong>Save</strong> and the Repositories list should now show
+                        it.
+                    </li>
+                </ol>
+                <p>
+                    With the Debian example you should also create a mirror of the debian security repository at the
+                    same time:
+                </p>
+                <table class="memoryMap">
+                    <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Name</td><td>apt-debian-security</td></tr>
+                    <tr><td>Distribution</td><td>bionic</td></tr>
+                    <tr><td>Remote Storage</td><td>http://security.debian.org/debian-security</td></tr>
+                    <tr><td>Blob store</td><td>debian</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-5">
+                <img src="blank-config.png" alt="Blank APT config panel"/>
+            </div>
+        </div>
+    </div>
 </div>
