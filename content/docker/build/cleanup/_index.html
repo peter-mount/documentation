@@ -1,0 +1,51 @@
+---
+type: "manual"
+title: "Cleaning up the build host"
+linkTitle: "Cleaning up afterwards"
+description: "Cleaning up after builds"
+weight: 80
+categories:
+  - docker
+---
+<div class="printPageBreakAvoid">
+  <p>
+    When docker performs a built it caches each generated layer so that subsequent builds
+    run faster as, if a layer has not changed and all earlier layers in the Dockerfile were taken
+    from the cache then it will reuse that layer.
+  </p>
+  <p>
+    This is brilliant during development, but it can end up filling your disk due to old layers occupying space.
+  </p>
+  <p>
+    To solve this you need to periodically clean up old unused layers.
+  </p>
+
+  <h2>Manual process</h2>
+  <p>
+    The easiest way is to run the following commands every so often.
+    These will remove any image not in active use by a running container.
+  </p>
+{{< highlight go "linenos=inline" >}}
+docker container prune -f
+docker image prune --all -f
+{{< / highlight >}}
+
+  <h2>Automatic process</h2>
+  <p>
+    The better way, more so if you run dedicated build hosts, is to set up a crontab to
+    perform the cleanup periodically.
+  </p>
+  <p>
+    The following crontab is what I use.
+  </p>
+{{< highlight go "linenos=inline" >}}
+50 * * * * docker container prune -f --filter "until=4h"
+55 * * * * docker image prune --all -f --filter "until=4h"
+59 * * * * docker volume prune -f
+{{< / highlight >}}
+  <p>
+    It runs every hour and removes any container or image if they are unused and are older than 4 hours old.
+    This works well on both dedicated build servers and my local machine.
+  </p>
+
+</div>
