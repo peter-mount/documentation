@@ -1,0 +1,66 @@
+---
+type: "manual"
+title: "Configure Repository mirror"
+linkTitle: "Configure Repository mirror"
+description: "Configure repository mirrors"
+weight: 50
+---
+<div class="printPageBreakAvoid">
+    <p>
+        Now we have a working installation it's time to set up mirrors for package repositories.
+    </p>
+    <h2>Naming conventions</h2>
+    <p>
+        Although you can call the repositories anything you want, it's advisable to keep to a naming convention.
+        The number of repositories will grow over time, and it will become obvious later which repository is for which
+        package manager.
+    </p>
+    <p>
+        Because of this I advise the following:
+    </p>
+    <ul>
+        <li>
+            Keep repository names lower case and use <code>-</code> as a word separator. Never use a space.
+        </li>
+        <li>
+            The first word in a repository name should be the type,<br/>
+            e.g. <code>apt</code> for an apt repository,
+            <code>npm</code> for a node/npm repository etc.
+        </li>
+        <li>
+            The second word in a repository name should be the distribution.<br/>
+            For example, <code>apt-debian</code> for Debian,
+            <code>apt-ubuntu</code> for Ubuntu
+            or <code>apt-raspbian</code> for Raspberry PI OS.
+        </li>
+        <li>
+            Any subsequent words in the name would be for specific repository names.<br/>
+            e.g. <code>apt-debian-security</code> for the Debian security repository.
+        </li>
+    </ul>
+    <p>
+        Keeping to this scheme will make it easier to maintain as well as keeping like repositories next to each other
+        within the Nexus UI.
+    </p>
+
+    <h2>Object Stores</h2>
+    <p>
+        Each repository mirror requires an object store to store the cached artefacts.
+        It's advisable to create a new object store for each type of repository.
+    </p>
+    <p>
+        So for any mirror whose name starts with <code>apt-debian</code> then create a keystore called
+        <code>debian</code> and use it as the backing store for all of them.
+        Do the same for Ubuntu, Raspberry PI OS etc.
+    </p>
+    <p>
+        If you are mirroring third party repositories like NVidia or OBS then you can either create an object store
+        for each or create one called <code>thirdparty</code> and use that for those smaller repositories.
+        The naming is up to you, but it can help in keeping artefacts separate & not have individual large stores.
+    </p>
+
+    <h2>Configuring a repository mirror</h2>
+    <p>
+        The following subsections list how to configure each repository type:
+    </p>
+</div>

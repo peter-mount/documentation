@@ -1,0 +1,146 @@
+---
+type: "manual"
+title: "Installation"
+linkTitle: "Installation"
+description: "How to install Nexus into docker"
+weight: 1
+---
+<div class="printPageBreakAvoid">
+    <div class="alert-info">
+        First ensure you have docker up and running on the host you want to run this on.
+    </div>
+    <p>
+        Here we will build a container based on the official <code>sonatype/nexus3</code> image and then configure
+        systemd to ensure that it is started on startup.
+    </p>
+    <p>
+        We build our own image as we need to modify how it logs.
+        If we don't do this then nexus's logs will go to the system's own logging and not it's own.
+    </p>
+
+    <h2>Building the container</h2>
+    <p>
+        Create a new directory and copy the following into a <code>Dockerfile</code> file:
+    </p>
+{{< highlight go "linenos=inline" >}}
+ARG nexusVersion
+FROM sonatype/nexus3:${nexusVersion}
+
+WORKDIR /opt/sonatype/nexus
+USER root
+RUN echo "-Djava.util.prefs.userRoot=/opt/sonatype/nexus" >>bin/nexus.vmoptions &&\
+    sed -i 's|<appender-ref ref="console"/>||g' etc/logback/logback.xml
+USER nexus
+{{< / highlight >}}
+
+    <p>
+        Next run the following to build the image:
+        <em>Substitute 3.36.0 with the current version</em>
+    </p>
+{{< highlight go "linenos=inline" >}}
+docker build -t nexus:latest --build-arg nexusVersion=3.36.0
+{{< / highlight >}}
+
+    <p>
+        What this does is pull the official image for the specified version,
+        modify the userRoot to /opt/sonatype/nexus inside the container
+        and remove the console logging appender.
+        Without the latter the Nexus logs would be echoed to systemd and the host's logging.
+    </p>
+
+    <h2>Configure SystemD</h2>
+    <p>
+        Next we need to configure systemd, so create <code>/etc/systemd/system/nexus.service</code> with the following:
+    </p>
+{{< highlight go "linenos=inline" >}}
+[Unit]
+Description=Nexus
+After=network.target, docker.service
+Require=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+LimitNOFILE=32767
+LimitNPROC=32767
+Environment=IMAGE=nexus:latest
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --name %n \
+  -v /usr/local/nexus:/opt/sonatype/sonatype-work \
+  -e NEXUS_CONTEXT= \
+  -p 8081-8083:8081-8083 \
+  ${IMAGE}
+ExecStop=/usr/bin/docker stop %n
+
+[Install]
+WantedBy=multi-user.target
+{{< / highlight >}}
+
+    <p>
+        Here the main parts are:
+    </p>
+    <p>
+        Line 11 is the image name you used when building the image
+    </p>
+    <p>
+        Line 16 defines the volume. Here we are going to use <code>/usr/local/nexus</code> on the host to store the
+        repositories and configuration.
+        You can change this to anything you like. Usually it's under /usr/local but put it where you have
+        plenty of space, or on a dedicated volume.
+    </p>
+    <p>
+        Line 18 lists the ports we want to expose to the network.
+        Normally 8081 is enough for httpd but as we also use Nexus as a docker repository we need additional ports.
+    </p>
+
+    <p>
+        Make certain the directory on the host defined on Line 16 exists, then start nexus for the first time:
+    </p>
+
+{{< highlight go "linenos=inline" >}}
+sudo mkdir -p /usr/local/nexus
+sudo systemctl daemon-reload
+sudo systemctl start nexus
+tail -F /usr/local/nexus/nexus3/log/nexus.log
+{{< / highlight >}}
+
+    <p>
+        If all goes well you should see nexus logging in the <code>nexus3/log/nexus.log</code> file within the volume.
+    </p>
+    <p>
+        You should then be able to connect to port 8081 on your machine, e.g. <code>http://10.11.12.13:8081/</code>
+    </p>
+
+    <div class="alert-warning">
+        You must now change the default password!
+        The default user is <code>admin</code> and the password <code>admin123</code>.
+    </div>
+
+    <h2>To start nexus after a reboot</h2>
+    <p>
+        When you are happy with the setup simply run <code>sudo systemctl enable nexus</code> then nexus will start
+        automatically after a reboot.
+    </p>
+
+    <h2>Configure for HTTPS</h2>
+    <p>
+        What's described above is good enough for most home lab networks, however ideally you should also configure it
+        for https.
+    </p>
+    <p>
+        I'm not going to describe that here but I run <a href="https://traefik.io/traefik/" target="_blank">Traefik</a>
+        as a docker container with <a href="https://www.letsencrypt.org/" target="_blank">Lets Encrypt</a>, IPv6 and
+        access rules to get proper HTTPS certificates working.
+    </p>
+    <p>
+        The configuration is almost identical as above - as long as the Traefik container can see the ports of the
+        Nexus container then the <code>-p</code> line in the <code>systemd/nexus.service</code> file can be removed so
+        access is only via the proxy.
+    </p>
+    <p>
+        Other alternatives to Traefik like <a href="http://www.haproxy.org/" target="_blank">HAProxy</a> or even
+        <a href="https://httpd.apache.org/" target="_blank">Apache HTTPD</a> are available.
+    </p>
+</div>

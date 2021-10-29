@@ -1,0 +1,22 @@
+---
+type: "manual"
+title: "Setting up a local package repository"
+linkTitle: "Local Package Repository"
+description: "Installing and configuring Nexus 3 as a local package repository"
+categories:
+  - linux
+---
+<div class="printPageBreakAvoid">
+    <p>
+        If you have a large number of machines locally,
+        or use <a href="../../docker/build/">Docker</a> builds a lot then running a local
+        package repository can help in reducing both the download times for packages and reduce the bandwidth
+        used both on your internet connection and at the remote repositories.
+    </p>
+    <p>
+        In this guide I will show how to setup
+        <a href="https://www.sonatype.com/products/repository-oss" target="_blank">Sonatype Nexus Repository OSS</a>
+        in a docker container and use it as a target for all of your Linux boxes so that when they perform
+        an update they use a local cached version of packages, leaving the retrieval & updating of the cache to Nexus.
+    </p>
+</div>
