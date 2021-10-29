@@ -29,10 +29,12 @@ categories:
 !go.mod
 {{< / highlight >}}
     <p>
-        Here we first exclude everything then add exclusion rules to include the bin &amp; tools directories and the
+        Here we first exclude everything with <code>*</code> on line 1 then add exclusion rules (lines starting with <code>!</code>) to include the bin &amp; tools directories and the
         go.mod file.
-        The speed improvement is noticeable. For this site it's currently 300MB but with those 3 simple lines only
-        207KB is sent to docker.
+    </p>
+    <p>
+        The speed improvement is noticeable. For this site it's currently 300MB but with those four simple lines only
+        207KB is now sent to docker instead of everything.
     </p>
     <p>
         You'll note that Dockerfile isn't passed to the build context as it's not needed there.
