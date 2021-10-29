@@ -1,0 +1,74 @@
+---
+type: "manual"
+title: "Installing Packages"
+linkTitle: "Installing Packages"
+description: "Installing Packages efficiently"
+weight: 50
+categories:
+  - docker
+---
+<div class="printPageBreakAvoid">
+  <p>
+    One cause of bloated images is where additional packages are required to a base image.
+    The developer will install them as they would on a real system not realising that the
+    downloaded packages are being cached and get included in the final image.
+  </p>
+  <p>
+    The solution to this is pretty simple, either tell the package manager not to cache
+    them or ensure the package installation files are removed once installation has been completed.
+  </p>
+
+  <h2>Alpine</h2>
+  <p>
+    When using the <code>alpine</code> base images, or images based on it, you can simply
+    tell the <code>apk</code> command not to cache by passing the <code>--no-cache</code> parameter:
+  </p>
+{{< highlight go "linenos=inline" >}}
+FROM golang:alpine as build
+
+RUN apk add --no-cache curl git tzdata zip
+{{< / highlight >}}
+
+  <h2>Debian/Ubuntu</h2>
+  <p>
+    For images that use <code>apt</code> or <code>apt-get</code> it's a little bit more complicated.
+    Here you need to do an update first, install and then finally remove the packages in the same command:
+  </p>
+{{< highlight go "linenos=inline" >}}
+FROM debian:11-slim
+RUN apt-get update &&\
+    apt-get install -y ca-certificates chromium nodejs npm &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+{{< / highlight >}}
+  <p>
+    Here it runs an update first as the image would not have the current remote repository state available.
+    Then it performs the installation of the required packages.
+    Finally, it removes all traces of the files written by apt.
+  </p>
+  <p>
+    This last step is the important part here but keeping them all on the same <code>RUN</code> command ensures that
+    just one layer is generated for this step.
+  </p>
+  <p>
+    Don't try to do too much in this step as the result will be cached so subsequent builds will use the same image
+    until either something changes earlier in the Dockerfile. This will save a lot of repeated downloading.
+  </p>
+  <p>
+    See <a href="../stageorder/">Stage Ordering</a> for another example of this and why it's better to do package
+    installation early on in a Dockerfile.
+  </p>
+
+  <div class="alert-success">
+    <p>
+      When using <code>apt</code> or <code>apt-get</code> in Dockerfiles I'd advice you always use
+      <code>apt-get</code> as it can handle being run from a script.
+      The <code>apt</code> command doesn't like running without a tty so will write a warning to the output stating so.
+    </p>
+    <p>
+      Also with <code>apt-get install</code> and related commands,
+      always include the <code>-y</code> parameter so that it doesn't try to prompt asking if you want to continue.
+      This would apply to any type script not just Dockerfile.
+    </p>
+  </div>
+
+</div>
