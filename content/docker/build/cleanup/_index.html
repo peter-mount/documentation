@@ -36,7 +36,7 @@ docker image prune --all -f
     perform the cleanup periodically.
   </p>
   <p>
-    The following crontab is what I use.
+    The following crontab is what I use:
   </p>
 {{< highlight go "linenos=inline" >}}
 50 * * * * docker container prune -f --filter "until=4h"
