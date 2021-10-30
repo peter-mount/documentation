@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "NPM repository mirrors"
+linkTitle: "NPM for NodeJS"
+description: "How to configure NPM use an NPM repository mirror"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        Configuring NPM to use Nexus as a proxy is simple.
+    </p>
+    <p>
+        First ensure you've created the <a href="../../repos/npm/">NPM proxy</a>.
+    </p>
+    <p>
+        Next, edit or create the file <code>.npmrc</code> in your home directory with the following line:
+    </p>
+{{< highlight go "linenos=inline" >}}
+registry=http://10.11.12.13:8081/repository/npm-proxy
+{{< / highlight >}}
+    <p>
+        Where <code>10.11.12.13</code> is where you have deployed Nexus and
+        <code>npm-proxy</code> is what you called your NPM proxy.
+        If you've configured a group then use the group's name instead, e.g. <code>npm-group</code>
+    </p>
+    <p>
+        Obviously if you've configured https and dns then use that and not port 8081.
+    </p>
+    <p>
+        Now any time you run <code>npm</code> it will use your proxy.
+    </p>
+</div>
