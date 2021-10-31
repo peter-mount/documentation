@@ -269,74 +269,11 @@ All these parameters can potentially take any value between 0 and 255, and so co
             <td class="dashright">&nbsp;</td>
         </tr>
 
-        <tr>
-            <td class="bt">248</td>
-            <td class="brtb" rowspan="7"></td>
-            <td class="grey brtb" rowspan="7" colspan="7">File name padded with spaces</td>
-            <td class="blue bt"><small class="left">7</small></td>
-            <td class="blue btb" rowspan="2" colspan="6">Load address</td>
-            <td class="blue brt"><small class="right">0</small></td>
-            <td class="rotright brtb" rowspan="8">First file</td>
-        </tr>
-        <tr>
-            <td>249</td>
-            <td class="blue bb"><small class="left">15</small></td>
-            <td class="blue brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>250</td>
-            <td class="orange"><small class="left">7</small></td>
-            <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
-            <td class="orange br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>251</td>
-            <td class="orange bb"><small class="left">15</small></td>
-            <td class="orange brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>252</td>
-            <td class="grey"><small class="left">7</small></td>
-            <td class="grey" rowspan="2" colspan="6">File length</td>
-            <td class="grey br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>253</td>
-            <td class="grey bb"><small class="left">15</small></td>
-            <td class="grey brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>254</td>
-            <td class="orange brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Exec
-            </td>
-            <td class="grey brb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-            </td>
-            <td class="blue brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Load
-            </td>
-            <td class="green blrt" colspan="2">
-                <small class="left">9</small>
-                <small class="right">8</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="bb">255</td>
-            <td class="grey brb">Lk.</td>
-            <td class="grey brb" colspan="7">Directory</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Start sector</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
-
         </tbody>
     </table>
+    <p>
+        All unused bits must be kept clear.
+    </p>
 </div>
 
 <div class="printPageBreakAvoid">
@@ -355,18 +292,22 @@ All these parameters can potentially take any value between 0 and 255, and so co
             <p>
                 A binary-coded decimal (BCD) value where each hex nibble takes a value from 0 to 9.
                 This starts at &00 and is incremented each time the catalogue is rewritten.
-                Provides a simple version control system and allows applications to confirm that their internal copies
-                of the
-                catalogue are up to date.
-                The cycle number is stored in sector 1 byte 4.
+            </p>
+            <p>
+                It provides a simple version control system and allows applications to confirm that their internal copies
+                of the catalogue are up-to-date.
             </p>
         </div>
         <div class="col-6">
-            <h4>File offset</h4>
+            <h4>Number of files</h4>
             <p>
-                The offset to the last valid file entry in each sector of the catalogue.
-                It is therefore 8 times the number of files.
-                There may be up to 31 files on the disc. The file offset is stored in sector 1 byte 5.
+                The number of files counter is stored in sector 1 byte 5 as bits 3&hellip;7.
+            </p>
+            <p>
+                Bits 0&hellip;2 are 0 making the entire byte the offset to the last valid entry in the catalog.
+            </p>
+            <p>
+                There may be up to 31 files on the disc.
             </p>
         </div>
     </div>
@@ -457,7 +398,6 @@ All these parameters can potentially take any value between 0 and 255, and so co
         The total number of sectors on this side of the disc.
         This is a 10-bit field with the low 8 bits in sector 1 byte 7, and the others in the low two bits of sector 1
         byte 6.
-        The unused bits of the latter (bits 2, 3, 6 and 7) must be cleared.
     </p>
 </div>
 
