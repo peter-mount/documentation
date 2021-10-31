@@ -1,0 +1,305 @@
+---
+type: "manual"
+title: "Angus Duggan HDFS"
+linkTitle: "Duggan HDFS"
+description: "Alternate DFS for the BBC Micro"
+categories:
+  - bbc
+  - filesystem
+no_list: true
+---
+<p>
+  Angus Duggan's HDFS shares the same basic file structure as <a href="../dfs/">Acorn's DFS</a>.
+</p>
+<p>
+  Sector 1 byte 6 bit 3 is set for HDFS with but 2 clear for single-sided and set for double-sided disks.
+</p>
+
+<p>
+  HDFS subdirectories follow the same format as the main catalogue.
+</p>
+
+<div class="printPageBreakAvoid">
+  <h3>Catalog format</h3>
+
+  <p>
+    This is the structure of the catalogue header:
+  </p>
+
+  <table class="diskMap">
+    <thead>
+    <tr>
+      <th rowspan="2">Byte</th>
+      <th colspan="8">Track 0 Sector 0</th>
+      <th colspan="8">Track 0 Sector 1</th>
+      <th rowspan="2"></th>
+    </tr>
+    <tr>
+      <th>7</th>
+      <th>6</th>
+      <th>5</th>
+      <th>4</th>
+      <th>3</th>
+      <th>2</th>
+      <th>1</th>
+      <th>0</th>
+
+      <th>7</th>
+      <th>6</th>
+      <th>5</th>
+      <th>4</th>
+      <th>3</th>
+      <th>2</th>
+      <th>1</th>
+      <th>0</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+      <td>0</td>
+      <td class="green brb"><span class="left">10</span>Sect</td>
+      <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or spaces</td>
+      <td class="unused brb" rowspan="4"></td>
+      <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or spaces</td>
+      <td class="brb" rowspan="8"></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td class="unused brb" rowspan="7"></td>
+    </tr>
+    <tr>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td class="grey brb" colspan="5">Number of files</td>
+      <td class="unused brb" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td class="unused brb" colspan="2"></td>
+      <td class="orange brb" colspan="2">Boot Opts</td>
+      <td class="yellow brb">1</td>
+      <td class="yellow brb">Sides</td>
+      <td class="green blr" colspan="2"><small class="left">9</small><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td class="green bb"><small class="left">7</small></td>
+      <td class="green bb" colspan="6">Sectors in volume</td>
+      <td class="green brb"><small class="right">0</small></td>
+    </tr>
+
+    <tr>
+      <td class="bt">8</td>
+      <td class="green brtb"><small class="left">10</small>Sect</td>
+      <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+      <td class="blue"><small class="left">7</small></td>
+      <td class="blue bb" rowspan="2" colspan="6">Load address</td>
+      <td class="blue br"><small class="right">0</small></td>
+      <td class="rotright brb" rowspan="8">Last file</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td class="grey brtb"><small class="left">18</small>Len</td>
+      <td class="blue bb"><small class="left">15</small></td>
+      <td class="blue brb"><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td class="unused brb"></td>
+      <td class="orange"><small class="left">7</small></td>
+      <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+      <td class="orange br"><small class="right">0</small></td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td class="yellow brtb">IsDir</td>
+      <td class="orange bb"><small class="left">15</small></td>
+      <td class="orange brb"><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td class="yellow brtb not">Read</td>
+      <td class="grey"><small class="left">7</small></td>
+      <td class="grey" rowspan="2" colspan="6">File length</td>
+      <td class="grey br"><small class="right">0</small></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td class="yellow brtb not">Write</td>
+      <td class="grey bb"><small class="left">15</small></td>
+      <td class="grey brb"><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td class="yellow brtb not">Exec</td>
+      <td class="orange brtb" colspan="2">
+        <small class="left">17</small>
+        <small class="right">16</small>
+        Exec
+      </td>
+      <td class="grey brb" colspan="2">
+        <small class="left">17</small>
+        <small class="right">16</small>
+      </td>
+      <td class="blue brtb" colspan="2">
+        <small class="left">17</small>
+        <small class="right">16</small>
+        Load
+      </td>
+      <td class="green blrt" colspan="2">
+        <small class="left">9</small>
+        <small class="right">8</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="bb">15</td>
+      <td class="grey brb">Lk.</td>
+      <td class="grey brb" colspan="7">Directory</td>
+      <td class="green bb"><small class="left">7</small></td>
+      <td class="green bb" colspan="6">Start sector</td>
+      <td class="green brb"><small class="right">0</small></td>
+    </tr>
+
+    <tr>
+      <td class="dashleft">&nbsp;</td>
+      <td colspan="16"></td>
+      <td class="dashright">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td class="bt">248</td>
+      <td class="green brtb"><small class="left">10</small>Sect</td>
+      <td class="grey brtb" rowspan="7" colspan="7">File name padded with spaces</td>
+      <td class="blue bt"><small class="left">7</small></td>
+      <td class="blue btb" rowspan="2" colspan="6">Load address</td>
+      <td class="blue brt"><small class="right">0</small></td>
+      <td class="rotright brtb" rowspan="8">First file</td>
+    </tr>
+    <tr>
+      <td>249</td>
+      <td class="grey brtb"><small class="left">18</small>Len</td>
+      <td class="blue bb"><small class="left">15</small></td>
+      <td class="blue brb"><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>250</td>
+      <td class="unused brb"></td>
+      <td class="orange"><small class="left">7</small></td>
+      <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+      <td class="orange br"><small class="right">0</small></td>
+    </tr>
+    <tr>
+      <td>251</td>
+      <td class="yellow brtb">IsDir</td>
+      <td class="orange bb"><small class="left">15</small></td>
+      <td class="orange brb"><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>252</td>
+      <td class="yellow brtb not">Read</td>
+      <td class="grey"><small class="left">7</small></td>
+      <td class="grey" rowspan="2" colspan="6">File length</td>
+      <td class="grey br"><small class="right">0</small></td>
+    </tr>
+    <tr>
+      <td>253</td>
+      <td class="yellow brtb not">Write</td>
+      <td class="grey bb"><small class="left">15</small></td>
+      <td class="grey brb"><small class="right">8</small></td>
+    </tr>
+    <tr>
+      <td>254</td>
+      <td class="yellow brtb not">Exec</td>
+      <td class="orange brtb" colspan="2">
+        <small class="left">17</small>
+        <small class="right">16</small>
+        Exec
+      </td>
+      <td class="grey brb" colspan="2">
+        <small class="left">17</small>
+        <small class="right">16</small>
+      </td>
+      <td class="blue brtb" colspan="2">
+        <small class="left">17</small>
+        <small class="right">16</small>
+        Load
+      </td>
+      <td class="green blrt" colspan="2">
+        <small class="left">9</small>
+        <small class="right">8</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="bb">255</td>
+      <td class="grey brb">Lk.</td>
+      <td class="grey brb" colspan="7">Directory</td>
+      <td class="green bb"><small class="left">7</small></td>
+      <td class="green bb" colspan="6">Start sector</td>
+      <td class="green brb"><small class="right">0</small></td>
+    </tr>
+
+    </tbody>
+  </table>
+  <h3>Notes:</h3>
+  <ul>
+    <li>
+      For the volume header, bytes 0&hellip;7 of both sectors:
+      <ul>
+        <li>
+          Track 0 sector 0 byte 0 bit 7 is bit 10 of the number of sectors in the volume.
+        </li>
+        <li>
+          Track 0 sector 1 byte 6 bit 3 is set. Bit 2 is the number of sides-1, 0=single sided, 1=double sided.
+        </li>
+      </ul>
+    </li>
+    <li>
+      For a file entries:
+      <ul>
+        <li>
+          <code>Sect</code> is bit 10 of the start sector.
+        </li>
+        <li>
+          <code>Len</code> is bit 18 of the file length.
+        </li>
+        <li>
+          <code>IsDir</code> defines if the entry is a file or a subdirectory.
+        </li>
+        <li>
+          If the <code class="not">Read</code>, <code class="not">Write</code>
+          or <code class="not">Exec</code> attributes are set then the file can <strong>not</strong> be read,
+          written or executed respectively.
+        </li>
+      </ul>
+    </li>
+    <li>
+      For a directory entry, the directory has the same layout as the main Catalog, except the volume title becomes the
+      directory name<sup><code>[Citation needed]</code></sup>.
+    </li>
+  </ul>
+</div>
+
+<h3>Sources</h3>
+<p>
+  This section is based loosely on the following:
+</p>
+<ul>
+  <li>
+    <a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format</a> -
+    beebwiki.mdfs.net
+  </li>
+  <li>
+    <a href="https://mdfs.net/Docs/Comp/Disk/Format/DFS" target="_blank">Acorn, Watford, Solidisk and Duggan DFS
+      Filesystem Structure</a> mdfs.net
+  </li>
+</ul>

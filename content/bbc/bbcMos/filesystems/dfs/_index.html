@@ -4,6 +4,7 @@ title: "Acorn Disk File System"
 linkTitle: "Acorn DFS"
 description: "The original Acorn Disk File System (DFS)"
 categories:
+  - bbc
   - filesystem
 ---
 <h2>Physical format</h2>
@@ -92,7 +93,7 @@ All these parameters can potentially take any value between 0 and 255, and so co
 
         <tr>
             <td>0</td>
-            <td class="yellow brb"></td>
+            <td class="unused brb" rowspan="8"></td>
             <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or spaces</td>
             <td class="unused brb" rowspan="4"></td>
             <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or spaces</td>
@@ -100,7 +101,6 @@ All these parameters can potentially take any value between 0 and 255, and so co
         </tr>
         <tr>
             <td>1</td>
-            <td class="unused brb" rowspan="7"></td>
         </tr>
         <tr>
             <td>2</td>
@@ -133,7 +133,7 @@ All these parameters can potentially take any value between 0 and 255, and so co
 
         <tr>
             <td class="bt">8</td>
-            <td class="yellow brb" rowspan="2"></td>
+            <td class="brb" rowspan="7"></td>
             <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
             <td class="blue"><small class="left">7</small></td>
             <td class="blue bb" rowspan="2" colspan="6">Load address</td>
@@ -147,14 +147,12 @@ All these parameters can potentially take any value between 0 and 255, and so co
         </tr>
         <tr>
             <td>10</td>
-            <td class="unused brb"></td>
             <td class="orange"><small class="left">7</small></td>
             <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
             <td class="orange br"><small class="right">0</small></td>
         </tr>
         <tr>
             <td>11</td>
-            <td class="yellow brb" rowspan="4"></td>
             <td class="orange bb"><small class="left">15</small></td>
             <td class="orange brb"><small class="right">8</small></td>
         </tr>
@@ -201,7 +199,7 @@ All these parameters can potentially take any value between 0 and 255, and so co
 
         <tr>
             <td class="bt">16</td>
-            <td class="yellow brb" rowspan="2"></td>
+            <td class="brb" rowspan="7"></td>
             <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
             <td class="blue"><small class="left">7</small></td>
             <td class="blue bb" rowspan="2" colspan="6">Load address</td>
@@ -215,14 +213,12 @@ All these parameters can potentially take any value between 0 and 255, and so co
         </tr>
         <tr>
             <td>18</td>
-            <td class="unused brb"></td>
             <td class="orange"><small class="left">7</small></td>
             <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
             <td class="orange br"><small class="right">0</small></td>
         </tr>
         <tr>
             <td>19</td>
-            <td class="yellow brb" rowspan="4"></td>
             <td class="orange bb"><small class="left">15</small></td>
             <td class="orange brb"><small class="right">8</small></td>
         </tr>
@@ -275,7 +271,7 @@ All these parameters can potentially take any value between 0 and 255, and so co
 
         <tr>
             <td class="bt">248</td>
-            <td class="yellow brtb" rowspan="2"></td>
+            <td class="brtb" rowspan="7"></td>
             <td class="grey brtb" rowspan="7" colspan="7">File name padded with spaces</td>
             <td class="blue bt"><small class="left">7</small></td>
             <td class="blue btb" rowspan="2" colspan="6">Load address</td>
@@ -289,14 +285,12 @@ All these parameters can potentially take any value between 0 and 255, and so co
         </tr>
         <tr>
             <td>250</td>
-            <td class="unused brb"></td>
             <td class="orange"><small class="left">7</small></td>
             <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
             <td class="orange br"><small class="right">0</small></td>
         </tr>
         <tr>
             <td>251</td>
-            <td class="yellow brb" rowspan="4"></td>
             <td class="orange bb"><small class="left">15</small></td>
             <td class="orange brb"><small class="right">8</small></td>
         </tr>
