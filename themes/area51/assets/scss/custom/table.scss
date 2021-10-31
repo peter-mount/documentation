@@ -257,3 +257,110 @@ table.resources {
         }
     }
 }
+
+table.diskMap {
+    display: block;
+    //overflow-x: auto;
+    margin-bottom: 1em;
+    break-inside: avoid;
+
+    caption {
+        caption-side: top;
+    }
+
+    thead {
+        tr {
+            border: 1px solid grey;
+            th {
+                text-align: center;
+                border: 1px solid grey;
+            }
+        }
+
+        tr:first-child th:first-child,
+        tr:first-child th:last-child,
+        tr:last-child th {
+          width: 3em;
+        }
+
+        tr:first-child th:first-child {
+            //transform: rotate(-90deg);
+            writing-mode: vertical-rl;
+        }
+    }
+
+    tbody {
+        tr {
+
+            td {
+                font-size: 75%;
+                text-align: center;
+            }
+
+            td:first-child,
+            td.blrtb,
+            td.blrt,
+            td.blr,
+            td.bl {
+                border-left: 1px solid grey;
+            }
+
+            td:first-child,
+            td.blrtb,
+            td.blrt,
+            td.blr,
+            td.brb,
+            td.brtb,
+            td.br {
+                border-right: 1px solid grey;
+            }
+
+            td.blrt,
+            td.brtb,
+            td.bt {
+                border-top: 1px solid grey;
+            }
+
+            td.blrtb,
+            td.brtb,
+            td.brb,
+            td.bb {
+                border-bottom: 1px solid grey;
+            }
+
+            td.dashleft {
+                border-left: 1px dashed grey;
+                border-right: 0;
+            }
+
+            td.dashright {
+                border-left: 0;
+                border-right: 1px dashed grey;
+            }
+
+            // Unused op code shows with a background TODO do we need this?
+            td.unused {
+              background: #fff;
+            }
+            td.grey {
+                background: #f0f0f0;
+            }
+            td.blue {
+                background: #c0e0ff;
+            }
+            td.orange {
+                background: #ffe0c0;
+            }
+            td.yellow {
+                background: #ffffc0;
+            }
+
+            td.rotright {
+                //transform: rotate(90deg);
+                writing-mode: vertical-rl;
+            }
+
+        }
+    }
+
+}

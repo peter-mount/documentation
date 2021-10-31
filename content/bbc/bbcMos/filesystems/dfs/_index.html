@@ -1,0 +1,539 @@
+---
+type: "manual"
+title: "Acorn Disk File System"
+linkTitle: "DFS"
+description: "The original Acorn Disk File System (DFS)"
+weight: 50
+categories:
+  - filesystem
+---
+
+<p>
+This section is based loosely on the following:
+<a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format - beebwiki.mdfs.net</a>.
+</p>
+
+<h2>Physical format</h2>
+<p>
+Acorn DFS is a single sided, single density 40 or 80 track format.
+A double sided disc can hold two DFS volumes.
+Each track carries ten 256 byte sectors numbered from 0 to 9.
+</p>
+
+<h3>Sector ID's</h3>
+<p>
+Each sector is given an ID at format time; the parameters of the ID, listed below, are used by the DFS and the floppy
+disc controller to address sectors.
+</p>
+<ul>
+<li>
+    C, the cylinder number ranges from 0 on the outermost track to 39 or 79 on the innermost track.
+</li>
+    <li>
+        H, the head number = 0.
+        Acorn DFS ignores this after formatting.<br/>
+        Some DFS formatters set it to 1 on the upper surface of the disc (corresponding to drives 2 or 3.)
+</li>
+    <li>
+        R, the record number runs sequentially from 0 to 9 within each track.<br/>
+        There is a standard track skew of 3;
+        that is, the sectors having R = 0 are the first sector of the first track,
+        the fourth sector of the second track, the seventh of the third, the tenth of the fourth, and so on.
+</li>
+    <li>
+        N, the record length = 1, showing that the sector length is 27 + 1, or 256 bytes.
+    </li>
+</ul>
+<p>
+All these parameters can potentially take any value between 0 and 255, and so confuse Acorn DFS and some non-standard controllers.
+    Some copy protection schemes make use of this feature.
+</p>
+
+<div class="printPageBreakAvoid">
+    <h2>Catalog</h2>
+
+    <p>
+        The catalog is located in sectors 0 & 1 on Track 0. It is capable of holding just 31 entries.
+    </p>
+
+    <p>
+        Formatting a disk on the real hardware only needs to write to these two sectors (via `*FORM40` or `*FORM80`) but a blank
+    catalogue simply needs these two sectors blanked and the disk sice field initialised.
+    </p>
+
+    <h3>Catalog format</h3>
+
+    <p>
+        This is the structure of the catalogue header:
+    </p>
+
+    <table class="diskMap">
+        <thead>
+        <tr>
+            <th rowspan="2">Byte</th>
+            <th colspan="8">Track 0 Sector 0</th>
+            <th colspan="8">Track 0 Sector 1</th>
+            <th rowspan="2"></th>
+        </tr>
+        <tr>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0</td>
+            <td class="yellow brb"></td>
+            <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or spaces</td>
+            <td class="unused brb" rowspan="4"></td>
+            <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or spaces</td>
+            <td class="brb" rowspan="8"></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td class="unused brb" rowspan="7"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="grey brb" colspan="8">BCD catalogue cycle number</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td class="grey brb" colspan="5">Number of files</td>
+            <td class="unused brb" colspan="3"></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td class="unused brb" colspan="2"></td>
+            <td class="grey brb" colspan="2">Boot</td>
+            <td class="yellow brb" colspan="2"></td>
+            <td class="grey blr" colspan="2"></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td class="grey brb" colspan="8">Sectors in volume</td>
+        </tr>
+        <tr>
+            <td class="bt">8</td>
+            <td class="yellow brb" rowspan="2"></td>
+            <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+            <td class="blue brb" rowspan="2" colspan="8">Load address</td>
+            <td class="rotright brb" rowspan="8">Last file</td>
+        </tr>
+
+        <tr>
+            <td>9</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td class="unused brb"></td>
+            <td class="orange brb" rowspan="2" colspan="8">Execution address</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td class="yellow brb" rowspan="4"></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td class="grey br" rowspan="2" colspan="8">File length</td>
+        </tr>
+        <tr>
+            <td>13</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td class="orange brtb" colspan="2">E.</td>
+            <td class="grey brb" colspan="2"></td>
+            <td class="blue brtb" colspan="2">L.</td>
+            <td class="grey blrt" colspan="2"></td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td class="grey brb">Lk.</td>
+            <td class="grey brb" colspan="7">Directory</td>
+            <td class="grey brb" colspan="8">Start sector</td>
+        </tr>
+
+        <tr>
+            <td class="bt">16</td>
+            <td class="yellow brb" rowspan="2"></td>
+            <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+            <td class="blue brb" rowspan="2" colspan="8">Load address</td>
+            <td class="rotright brb" rowspan="8">Second to last file</td>
+        </tr>
+        <tr>
+            <td>17</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td class="unused brb"></td>
+            <td class="orange brb" rowspan="2" colspan="8">Execution address</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td class="yellow brb" rowspan="4"></td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td class="grey br" rowspan="2" colspan="8">File length</td>
+        </tr>
+        <tr>
+            <td>21</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td class="orange brtb" colspan="2">E.</td>
+            <td class="grey brb" colspan="2"></td>
+            <td class="blue brtb" colspan="2">L.</td>
+            <td class="grey blrt" colspan="2"></td>
+        </tr>
+        <tr>
+            <td class="bb">23</td>
+            <td class="grey brb">Lk.</td>
+            <td class="grey brb" colspan="7">Directory</td>
+            <td class="grey brb" colspan="8">Start sector</td>
+        </tr>
+
+        <tr>
+            <td class="dashleft">&nbsp;</td>
+            <td colspan="16"></td>
+            <td class="dashright">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td class="bt">248</td>
+            <td class="yellow brtb" rowspan="2"></td>
+            <td class="grey brtb" rowspan="7" colspan="7">File name padded with spaces</td>
+            <td class="blue brtb" rowspan="2" colspan="8">Load address</td>
+            <td class="rotright brtb" rowspan="8">First file</td>
+        </tr>
+        <tr>
+            <td>249</td>
+        </tr>
+        <tr>
+            <td>250</td>
+            <td class="unused brb"></td>
+            <td class="orange brb" rowspan="2" colspan="8">Execution address</td>
+        </tr>
+        <tr>
+            <td>251</td>
+            <td class="yellow brb" rowspan="4"></td>
+        </tr>
+        <tr>
+            <td>252</td>
+            <td class="grey br" rowspan="2" colspan="8">File length</td>
+        </tr>
+        <tr>
+            <td>253</td>
+        </tr>
+        <tr>
+            <td>254</td>
+            <td class="orange brtb" colspan="2">E.</td>
+            <td class="grey brb" colspan="2"></td>
+            <td class="blue brtb" colspan="2">L.</td>
+            <td class="grey blrt" colspan="2"></td>
+        </tr>
+        <tr>
+            <td class="bb">255</td>
+            <td class="grey brb">Lk.</td>
+            <td class="grey brb" colspan="7">Directory</td>
+            <td class="grey brb" colspan="8">Start sector</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>Disc title</h4>
+    <p>
+        Up to 12 printable ASCII characters, padded with NULs (&00) or spaces.
+        The first eight characters are placed in sector 0 bytes 0 to 7, the last four characters in sector 1 bytes 0 to
+        3.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>Cycle number</h4>
+    <p>
+        A binary-coded decimal (BCD) value where each hex nibble takes a value from 0 to 9.
+        This starts at &00 and is incremented each time the catalogue is rewritten.
+        Provides a simple version control system and allows applications to confirm that their internal copies of the
+        catalogue are up to date.
+        The cycle number is stored in sector 1 byte 4.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>File offset</h4>
+    <p>
+        The offset to the last valid file entry in each sector of the catalogue.
+        It is therefore 8 times the number of files.
+        There may be up to 31 files on the disc. The file offset is stored in sector 1 byte 5.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>Boot option</h4>
+    <p>Selects the action to be taken when the disc is booted. The field uses two bits of byte 6 in sector 1:</p>
+
+    <table class="memoryMap">
+        <thead>
+            <tr><th>Bit 5</th><th>Bit 4</th><th>Action</th>
+        </thead>
+        <tbody>
+        <tr><td>0</td><td>0</td><td> No action</td></tr>
+        <tr><td>0</td><td>1</td><td><code>*LOAD $.!BOOT</code></td></tr>
+        <tr><td>1</td><td>0</td><td><code>*RUN $.!BOOT</code></td></tr>
+        <tr><td>1</td><td>1</td><td><code>*EXEC $.!BOOT</code></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>Disc size</h4>
+    <p>
+        The total number of sectors on this side of the disc.
+        This is a 10-bit field with the low 8 bits in sector 1 byte 7, and the others in the low two bits of sector 1
+        byte 6.
+        The unused bits of the latter (bits 2, 3, 6 and 7) must be cleared.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>File descriptor fields</h4>
+    <p>
+        There is room for 31 file entries in the catalogue.
+        Each entry takes up eight bytes in each of the two catalogue sectors.
+    </p>
+
+    <p>
+        Files must be listed in descending order of start sector with no gaps in the catalogue.
+        Empty files should be given a start sector of 2.
+        Files cannot be fragmented but there may be free sectors between files.
+    </p>
+
+    <p>
+        The rest of each sector represents the files. Each file is represented by a block of 8 bytes in each sector
+        offset by 8.
+        So the last file starts at offset 8, second to last at 16 & so on.
+    </p>
+
+    <h4>File name</h4>
+    <p>
+        One to seven valid file name characters stored in sector 0 bytes 8 to 14.
+    </p>
+    <p>
+        Valid characters are the printable ASCII characters between &20 and &7E inclusive, except . : " # * and space.
+        The field is padded with spaces.
+    </p>
+    <p>
+        When opening a file the DFS searches for it by name.
+    </p>
+
+    <h4>Directory</h4>
+    <p>
+        One valid file name character stored in the low 7 bits of sector 0 byte 15 Identifies the directory (namespace)
+        to which the file belongs.
+    </p>
+    <p>
+        DFS directories are like those in ADFS, DOS or Linux except they cannot nest (they are all root directories) and they share the volume catalogue.
+    </p>
+    <p>
+        The combination of file name and directory must be unique in the volume.
+    </p>
+
+    <h4>Attribute</h4>
+    <p>If the top bit of sector 0 byte 15 is set, then the file is locked and may not be altered or deleted.</p>
+
+    <h4>Load address</h4>
+    <p>An 18 bit address in memory where the file should be *LOADed by default. The low 8 bits are in sector 1 byte 8;
+        the next 8 bits in sector 1 byte 9; the top two bits are in bits 2 and 3 of sector 1 byte 14. If the file is not
+        meant for *LOADing (e.g. a sequential file or text) all 18 bits should be set.</p>
+
+    <h4>Execution address</h4>
+    <p>An 18 bit address in memory to be jumped to when the file is *RUN. This need not be within the bounds of the
+        loaded file. The low 8 bits are in sector 1 byte 10; the next 8 bits in sector 1 byte 11; the top two bits are
+        in bits 6 and 7 of sector 1 byte 14. If the file is a sequential file or text then all 18 bits should be
+        set.</p>
+
+    <h4>File length</h4>
+    <p>An 18 bit value giving the number of bytes in the file. The low 8 bits are in sector 1 byte 12; the next 8 bits
+        in sector 1 byte 13; the top two bits are in bits 4 and 5 of sector 1 byte 14.</p>
+
+    <h4>Start sector</h4>
+    <p>The 10 bit logical block address of the first sector that contains the file. The low 8 bits are in sector 1 byte
+        15; the top two bits are in bits 0 and 1 of sector 1 byte 14. The cylinder and record numbers are the result and
+        remainder, respectively, when the LBA is divided by 10. A start sector of 0 or 1 is invalid as the file would
+        overlap the catalogue.</p>
+
+    <h4>Note on load and execution addresses</h4>
+    <p>
+        If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and OSFILE will return
+        the address ORed with &FFFF0000 in its parameter block. Otherwise it is an address in second processor memory
+        and OSFILE will return the address as is. In practice the bits are sometimes found clear when they should be
+        set.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h2>Identifying and validating a DFS disc image</h2>
+    <p>
+        Unlike its successor ADFS, the DFS format contains no self-identification strings or checksums, so recognising a
+        disc or disc image as Acorn DFS is a complex and unreliable process.
+    </p>
+    <p>
+        If one has a floppy disc in hand it is often enough to confirm that the physical format is the same (see above)
+        as Acorn DFS is the majority producer. On the other hand DFS disc image files are normally given the extension
+        .ssd or .dsd, indicating a single or double sided disc image respectively.
+    </p>
+    <p>
+        Often the task is to identify which format variant a disc or image contains. This is more a matter of finding
+        valid catalogues in the appropriate locations.
+    </p>
+
+    <h3>To check that a pair of sectors contains a valid standard DFS catalogue</h3>
+    <ul>
+        <li>Firstly confirm that all bits marked white or cream in the above diagram are zeroes; if not, the catalogue
+            can be rejected immediately.
+        </li>
+        <li>Check also that the file offset is a multiple of 8.</li>
+        <li>The disc size must be between 2 and 800 sectors inclusive, although the format allows up to 1023 sectors,
+            and disk images may contain up to this many.
+        </li>
+        <li>The disc title consists of printable ASCII characters, padded with NULs or spaces.</li>
+        <li>For each file entry in use:
+            <ul>
+                <li>The file name field must contain one to seven valid characters and be padded with spaces. Valid
+                    characters are the printable ASCII characters between &20 and &7E inclusive, except . : " # * and
+                    space.
+                </li>
+                <li>The directory character (without the attribute bit) must be a valid file name character.</li>
+                <li>The file name (taking the directory character into account) must be unique.</li>
+                <li>The start sector must be more than 1 and less than the disc size.</li>
+            </ul>
+        </li>
+        <li>Skipping over zero-length files:
+            <ul>
+                <li>The start sectors must run in strictly descending order.</li>
+                <li>No file may overlap the one before it in the catalogue. That is, start_sector_2 + ((length_2 + 255)
+                    DIV 256) ≤ start_sector_1.
+                </li>
+                <li>No file may overshoot the end of the disc. That is, start_sector + ((length + 255) DIV 256) ≤
+                    disc_size. Equivalently, the first file in the catalogue must not overlap the imaginary file whose
+                    start sector field is the disc size field.
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>Further heuristics</h3>
+    <p>
+        Any catalogue complying with the above is a valid DFS catalogue; however, only a tiny subset of these look like
+        catalogues seen in real life. As an informal test a pair of sectors that match many of the following is more
+        likely to be a catalogue:
+    </p>
+    <ul>
+        <li>The disc size is 400 sectors (40 tracks) or 800 sectors (80 tracks.)</li>
+        <li>There is a file named !BOOT in directory $.</li>
+        <li>The 16th and 17th bits of the load and execution (exec) addresses are all clear or all set in each file
+            entry.
+        </li>
+        <li>There are few directories, or a few unique names in several directories.</li>
+        <li>Most directory characters are $ (the default.)</li>
+        <li>Some files have load addresses of the form &3nn00 (nn=0E, 11, 19, 1B, 1D, 1F or 21) and exec addresses of
+            &3801F or &38023. (BASIC programs.)
+        </li>
+        <li>Some files have load and exec addresses the same, usually &xx00 or &3xx00, and often have length &yy00.
+            (Screen dumps and machine code images.)
+        </li>
+        <li>Some files have load and exec addresses of 0, &30000 or &3FFFF (Text and sequential data.)</li>
+        <li>Many files are less than 2K; few files more than 20K; no files more than 64K except text and sequential
+            data.
+        </li>
+        <li>The file names have very few lowercase letters.</li>
+        <li>The file names contain commonly-occurring pairs of letters.</li>
+    </ul>
+
+    <h3>Variants</h3>
+    <h4>Acorn System DFS</h4>
+    <p>
+        Discs for the System series have an identical catalogue format to those for the BBC Micro, except all entries
+        are in a directory " " (space), disks do not have a cycle number, and files do not have bits 16 and 17 of load
+        and execution addresses[1]. The places they would occupy are reserved and must be cleared. A BASIC program named
+        DCONV, on the Utility disc, performs this task.
+    </p>
+
+    <h4>Watford 62 DFS</h4>
+    <p>
+        This system places a second catalogue in sectors 2 and 3 of track 0, allowing 62 files on one volume. To
+        identify the second catalogue it sets its title to 12 × &AA bytes.
+    </p>
+    <p>
+        Without due care a system running Acorn DFS can corrupt a Watford disc as it is unaware of the extra files. On
+        such a system the user may run a *SWAP utility to exchange the catalogues. In practice there is a special entry
+        in the first catalogue (directory !, name !!!!!!!, length &200, start sector 2) protecting the second one from
+        being overwritten.
+    </p>
+    <p>
+        If any file in the first catalogue starts before sector 4 and it is not the special file, the disc is not a
+        Watford DFS disc.
+    </p>
+
+    <h4>Opus DDOS</h4>
+    <p>
+        This is a double density format, but it is mentioned here as the volume catalogues are based on Acorn DFS.
+    </p>
+    <p>
+        DDOS discs are partitioned into between one and eight volumes. Track 0 is reserved for the DFS-style volume
+        catalogues, plus a disc catalogue unique to DDOS.
+    </p>
+    <p>
+        In each volume catalogue:
+    <ul>
+        <li>The start sector may be any number less than the disc size, as DDOS adds a partition offset and so the
+            catalogue is not in the same space as the files.
+        </li>
+        <li>The disc size is the size of the current volume. It is an 11 bit quantity, the top bit being in bit 2 of
+            sector 1 byte 6.
+            <br/><strong>If and only if this bit is set:</strong>
+            <ul>
+                <li>The file length steals an extra bit from the execution address of each file (bit 6 of sector 1 byte
+                    14+n.)
+                </li>
+                <li>The start sector steals an extra bit from the load address of each file (bit 2 of sector 1 byte
+                    14+n.)
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>Watford DDFS</h4>
+    <p>
+        This is also a double density format with catalogues similar to Acorn DFS. It uses 19 bit file lengths and 11
+        bit LBAs throughout, but the 'extra' bits are stored in the top bits of the disc title and file names, which are
+        cleared in Acorn DFS.
+    </p>
+
+</div>
