@@ -295,6 +295,14 @@ table.diskMap {
             td {
                 font-size: 75%;
                 text-align: center;
+
+                .left {
+                    float: left;
+                }
+
+                .right {
+                    float: right;
+                }
             }
 
             td:first-child,
@@ -308,6 +316,7 @@ table.diskMap {
             td:first-child,
             td.blrtb,
             td.blrt,
+            td.brt,
             td.blr,
             td.brb,
             td.brtb,
@@ -315,8 +324,11 @@ table.diskMap {
                 border-right: 1px solid grey;
             }
 
+            td.blt,
             td.blrt,
+            td.brt,
             td.brtb,
+            td.btb,
             td.bt {
                 border-top: 1px solid grey;
             }
@@ -324,6 +336,7 @@ table.diskMap {
             td.blrtb,
             td.brtb,
             td.brb,
+            td.btb,
             td.bb {
                 border-bottom: 1px solid grey;
             }
@@ -353,6 +366,9 @@ table.diskMap {
             }
             td.yellow {
                 background: #ffffc0;
+            }
+            td.green {
+                background: #c0ffc0;
             }
 
             td.rotright {

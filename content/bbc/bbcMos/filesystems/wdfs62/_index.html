@@ -1,0 +1,42 @@
+---
+type: "manual"
+title: "Watford 62 Disk File System"
+linkTitle: "Watford 62 DFS"
+weight: 61
+description: "Alternate DFS for the BBC Micro"
+redirect: "../wdfs/"
+categories:
+  - filesystem
+no_list: true
+---
+<p>
+    Watford 62 DFS is identical to <a href="../wdfs/">Watford DFS</a> except it places a second catalogue in
+    sectors 2 and 3 of track 0, allowing 62 files on one volume.
+    To identify the second catalogue it sets its title to 12 × &AA bytes.
+</p>
+<p>
+    Without due care a system running <a href="../dfs/">Acorn DFS</a> can corrupt a Watford disc as it is unaware of the
+    extra files.
+    On such a system the user may run a <code>*SWAP</code> utility to exchange the catalogues.
+    In practice there is a special entry in the first catalogue (directory !, name !!!!!!!, length &200, start sector 2)
+    protecting the second one from being overwritten.
+</p>
+<p>
+    If any file in the first catalogue starts before sector 4, and it is not the special file, the disc is not a Watford
+    DFS disc.
+</p>
+
+<h3>Sources</h3>
+<p>
+    This section is based loosely on the following:
+</p>
+<ul>
+    <li>
+        <a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format</a> -
+        beebwiki.mdfs.net
+    </li>
+    <li>
+        <a href="https://mdfs.net/Docs/Comp/Disk/Format/DFS" target="_blank">Acorn, Watford, Solidisk and Duggan DFS
+            Filesystem Structure</a> mdfs.net
+    </li>
+</ul>

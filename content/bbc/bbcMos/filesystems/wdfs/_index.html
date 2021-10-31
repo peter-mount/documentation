@@ -1,0 +1,220 @@
+---
+type: "manual"
+title: "Watford Disk File System"
+linkTitle: "Watford DFS"
+description: "Alternate DFS for the BBC Micro"
+weight: 60
+categories:
+  - filesystem
+no_list: true
+---
+<p>
+  The Watford DFS uses the same structure as <a href="../dfs/">Acorn's DFS</a> with some additional attributes:
+</p>
+<p>
+  In byte 6 of Sector 1, bit 2 is clear and 3 is clear for Acorn & WDFS for disks up to 256K,
+  but set for WDFS and disks larger than 256K.
+</p>
+<p>
+  Watford DFS use 19-bit file lengths and 11-bit sector numbers making the largest possible disk
+  being 512K and the largest file size of 512K-1.
+</p>
+
+<h3>Catalog format</h3>
+<p>
+  The disk layout is identical to <a href="../dfs/">Acorn DFS</a> with
+  some differences shown below:
+</p>
+
+<table class="diskMap">
+  <thead>
+  <tr>
+    <th rowspan="2">Byte</th>
+    <th colspan="8">Track 0 Sector 0</th>
+    <th colspan="8">Track 0 Sector 1</th>
+    <th rowspan="2"></th>
+  </tr>
+  <tr>
+    <th>7</th>
+    <th>6</th>
+    <th>5</th>
+    <th>4</th>
+    <th>3</th>
+    <th>2</th>
+    <th>1</th>
+    <th>0</th>
+
+    <th>7</th>
+    <th>6</th>
+    <th>5</th>
+    <th>4</th>
+    <th>3</th>
+    <th>2</th>
+    <th>1</th>
+    <th>0</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr>
+    <td>0</td>
+    <td class="yellow brb"></td>
+    <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or spaces</td>
+    <td class="unused brb" rowspan="4"></td>
+    <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or spaces</td>
+    <td class="brb" rowspan="8"></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td class="unused brb" rowspan="7"></td>
+  </tr>
+  <tr>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td class="grey brb" colspan="5">Number of files</td>
+    <td class="unused brb" colspan="3"></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td class="unused brb" colspan="2"></td>
+    <td class="orange brb" colspan="2">Boot Opts</td>
+    <td class="yellow brb">0</td>
+    <td class="green blr" colspan="3"><small class="left">10</small><small class="right">8</small></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td class="green bb"><small class="left">7</small></td>
+    <td class="green bb" colspan="6">Sectors in volume</td>
+    <td class="green brb"><small class="right">0</small></td>
+  </tr>
+
+  <tr>
+    <td class="dashleft">&nbsp;</td>
+    <td colspan="16"></td>
+    <td class="dashright">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="bt">8</td>
+    <td class="yellow brtb" rowspan="2"></td>
+    <td class="grey brtb" rowspan="7" colspan="7">File name padded with spaces</td>
+    <td class="blue bt"><small class="left">7</small></td>
+    <td class="blue btb" rowspan="2" colspan="6">Load address</td>
+    <td class="blue brt"><small class="right">0</small></td>
+    <td class="rotright brtb" rowspan="8">Last file</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td class="blue bb"><small class="left">15</small></td>
+    <td class="blue brb"><small class="right">8</small></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td class="unused brb"></td>
+    <td class="orange"><small class="left">7</small></td>
+    <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+    <td class="orange br"><small class="right">0</small></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td class="yellow brb" rowspan="2"></td>
+    <td class="orange bb"><small class="left">15</small></td>
+    <td class="orange brb"><small class="right">8</small></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td class="grey"><small class="left">7</small></td>
+    <td class="grey" rowspan="2" colspan="6">File length</td>
+    <td class="grey br"><small class="right">0</small></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td class="grey brb"><small class="left">18</small>Len</td>
+    <td class="grey bb"><small class="left">15</small></td>
+    <td class="grey brb"><small class="right">8</small></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td class="green brb"><small class="left">10</small>Sect</td>
+    <td class="orange brtb" colspan="2">
+      <small class="left">17</small>
+      <small class="right">16</small>
+      Exec
+    </td>
+    <td class="grey brb" colspan="2">
+      <small class="left">17</small>
+      <small class="right">16</small>
+    </td>
+    <td class="blue brtb" colspan="2">
+      <small class="left">17</small>
+      <small class="right">16</small>
+      Load
+    </td>
+    <td class="green blrt" colspan="2">
+      <small class="left">9</small>
+      <small class="right">8</small>
+    </td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td class="grey brb">Lk.</td>
+    <td class="grey brb" colspan="7">Directory</td>
+    <td class="green bb"><small class="left">7</small></td>
+    <td class="green bb" colspan="6">Start sector</td>
+    <td class="green brb"><small class="right">0</small></td>
+  </tr>
+
+  <tr>
+    <td class="dashleft">&nbsp;</td>
+    <td colspan="16"></td>
+    <td class="dashright">&nbsp;</td>
+  </tr>
+
+  </tbody>
+</table>
+
+<h4>
+  Differences between Acorn DFS and WDFS
+</h4>
+<ul>
+  <li>
+    Sector 1 byte 6 bit 3 is always 0 like Acorn DFS
+  </li>
+  <li>
+    Sector 1 byte 6 bit 2 is bit 10 of the disk size / sectors in volume.
+    0=max 256K, 1=max 512K
+  </li>
+  <li>
+    Len in byte 5 of the filename is bit 18 of the File Length.
+  </li>
+  <li>
+    Len in byte 6 of the filename is bit 10 of the Start Sector.
+  </li>
+  <li>
+    Lk. in byte 7 is the same as for Acorn DFS
+  </li>
+</ul>
+
+<h3>Sources</h3>
+<p>
+  This section is based loosely on the following:
+</p>
+<ul>
+  <li>
+    <a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format</a> -
+    beebwiki.mdfs.net
+  </li>
+  <li>
+    <a href="https://mdfs.net/Docs/Comp/Disk/Format/DFS" target="_blank">Acorn, Watford, Solidisk and Duggan DFS
+      Filesystem Structure</a> mdfs.net
+  </li>
+</ul>
