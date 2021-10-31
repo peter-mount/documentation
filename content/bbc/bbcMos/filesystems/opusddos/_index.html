@@ -1,0 +1,51 @@
+---
+type: "manual"
+title: "Opus DDOS"
+linkTitle: "Opus DDOS"
+description: "Alternate DFS for the BBC Micro"
+categories:
+- filesystem
+no_list: true
+---
+<p>
+    This is a double density format, but it is mentioned here as the volume catalogues are based on
+    <a href="../dfs/">Acorn DFS</a>.
+</p>
+<p>
+    DDOS discs are partitioned into between one and eight volumes. Track 0 is reserved for the DFS-style volume
+    catalogues, plus a disc catalogue unique to DDOS.
+</p>
+<p>
+    In each volume catalogue:
+<ul>
+    <li>The start sector may be any number less than the disc size, as DDOS adds a partition offset and so the
+        catalogue is not in the same space as the files.
+    </li>
+    <li>The disc size is the size of the current volume. It is an 11 bit quantity, the top bit being in bit 2 of
+        sector 1 byte 6.
+        <br/><strong>If and only if this bit is set:</strong>
+        <ul>
+            <li>The file length steals an extra bit from the execution address of each file (bit 6 of sector 1 byte
+                14+n.)
+            </li>
+            <li>The start sector steals an extra bit from the load address of each file (bit 2 of sector 1 byte
+                14+n.)
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<h3>Sources</h3>
+<p>
+    This section is based loosely on the following:
+</p>
+<ul>
+    <li>
+        <a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format</a> -
+        beebwiki.mdfs.net
+    </li>
+    <li>
+        <a href="https://mdfs.net/Docs/Comp/Disk/Format/DFS" target="_blank">Acorn, Watford, Solidisk and Duggan DFS
+            Filesystem Structure</a> mdfs.net
+    </li>
+</ul>

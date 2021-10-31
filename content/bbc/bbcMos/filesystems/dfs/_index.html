@@ -3,7 +3,6 @@ type: "manual"
 title: "Acorn Disk File System"
 linkTitle: "Acorn DFS"
 description: "The original Acorn Disk File System (DFS)"
-weight: 50
 categories:
   - filesystem
 ---
@@ -487,61 +486,135 @@ All these parameters can potentially take any value between 0 and 255, and so co
         So the last file starts at offset 8, second to last at 16 & so on.
     </p>
 
-    <h4>File name</h4>
-    <p>
-        One to seven valid file name characters stored in sector 0 bytes 8 to 14.
-    </p>
-    <p>
-        Valid characters are the printable ASCII characters between &20 and &7E inclusive, except . : " # * and space.
-        The field is padded with spaces.
-    </p>
-    <p>
-        When opening a file the DFS searches for it by name.
-    </p>
+    <div class="row">
+        <div class="col-6">
+            <h4>File name</h4>
+            <p>
+                One to seven valid file name characters stored in sector 0 bytes 8 to 14.
+            </p>
+            <p>
+                Valid characters are the printable ASCII characters between &20 and &7E inclusive, except . : " # * and
+                space.
+            </p>
+            <p>
+                The field is padded with spaces.
+            </p>
+            <p>
+                Bit 7 should always be clear but are used for other file systems as extra storage,
+                either adding a bit to another field such as <a href="../wdfs/">WDFS</a>
+                or file permissions as in <a href="../hdfs/">HDFS</a>.
+            </p>
+            <p>
+                When opening a file the DFS searches for it by name.
+            </p>
 
-    <h4>Directory</h4>
-    <p>
-        One valid file name character stored in the low 7 bits of sector 0 byte 15 Identifies the directory (namespace)
-        to which the file belongs.
-    </p>
-    <p>
-        DFS directories are like those in ADFS, DOS or Linux except they cannot nest (they are all root directories) and they share the volume catalogue.
-    </p>
-    <p>
-        The combination of file name and directory must be unique in the volume.
-    </p>
+        </div>
+        <div class="col-6">
 
-    <h4>Attribute</h4>
-    <p>If the top bit of sector 0 byte 15 is set, then the file is locked and may not be altered or deleted.</p>
+            <h4>Directory</h4>
+            <p>
+                One valid file name character stored in the low 7 bits of sector 0 byte 15 Identifies the directory
+                (namespace) to which the file belongs.
+            </p>
+            <p>
+                DFS directories are like those in ADFS, DOS or Linux except they cannot nest (they are all root
+                directories) and they share the volume catalogue.
+            </p>
+            <p>
+                The combination of file name and directory must be unique in the volume.
+            </p>
 
-    <h4>Load address</h4>
-    <p>An 18 bit address in memory where the file should be *LOADed by default. The low 8 bits are in sector 1 byte 8;
-        the next 8 bits in sector 1 byte 9; the top two bits are in bits 2 and 3 of sector 1 byte 14. If the file is not
-        meant for *LOADing (e.g. a sequential file or text) all 18 bits should be set.</p>
+            <h4>Locked Attribute</h4>
+            <p>If the top bit of the directory is set, then the file is locked and may not be altered or
+                deleted.</p>
+        </div>
+    </div>
 
-    <h4>Execution address</h4>
-    <p>An 18 bit address in memory to be jumped to when the file is *RUN. This need not be within the bounds of the
-        loaded file. The low 8 bits are in sector 1 byte 10; the next 8 bits in sector 1 byte 11; the top two bits are
-        in bits 6 and 7 of sector 1 byte 14. If the file is a sequential file or text then all 18 bits should be
-        set.</p>
+    <div class="row">
+        <div class="col-6">
+            <h4>Load address</h4>
+            <p>
+                An 18 bit address in memory where the file should be *LOADed by default.
+                The low 8 bits are in sector 1 byte 8;
+                the next 8 bits in sector 1 byte 9; the top two bits are in bits 2 and 3 of sector 1 byte 14.
+            </p>
+            <p>
+                If the file is not meant for *LOADing (e.g. a sequential file or text) all 18 bits should be set.
+            </p>
+        </div>
+        <div class="col-6">
 
-    <h4>File length</h4>
-    <p>An 18 bit value giving the number of bytes in the file. The low 8 bits are in sector 1 byte 12; the next 8 bits
-        in sector 1 byte 13; the top two bits are in bits 4 and 5 of sector 1 byte 14.</p>
+            <h4>Execution address</h4>
+            <p>
+                An 18 bit address in memory to be jumped to when the file is *RUN.
+                This need not be within the bounds of the loaded file.
+                The low 8 bits are in sector 1 byte 10; the next 8 bits in sector 1 byte 11; the top two bits are
+                in bits 6 and 7 of sector 1 byte 14.
+            </p>
+            <p>
+                If the file is a sequential file or text then all 18 bits should be set.
+            </p>
+        </div>
+    </div>
 
-    <h4>Start sector</h4>
-    <p>The 10 bit logical block address of the first sector that contains the file. The low 8 bits are in sector 1 byte
-        15; the top two bits are in bits 0 and 1 of sector 1 byte 14. The cylinder and record numbers are the result and
-        remainder, respectively, when the LBA is divided by 10. A start sector of 0 or 1 is invalid as the file would
-        overlap the catalogue.</p>
+    <div class="row">
+        <div class="col-6">
+            <h4>File length</h4>
+            <p>
+                An 18 bit value giving the number of bytes in the file.
+            </p>
+            <p>
+                The low 8 bits are in sector 1 byte 12; the next 8 bits
+                in sector 1 byte 13; the top two bits are in bits 4 and 5 of sector 1 byte 14.
+            </p>
 
-    <h4>Note on load and execution addresses</h4>
-    <p>
-        If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and OSFILE will return
-        the address ORed with &FFFF0000 in its parameter block. Otherwise it is an address in second processor memory
-        and OSFILE will return the address as is. In practice the bits are sometimes found clear when they should be
-        set.
-    </p>
+        </div>
+        <div class="col-6">
+
+            <h4>Start sector</h4>
+            <p>
+                The 10 bit logical block address of the first sector that contains the file.
+                The low 8 bits are in sector 1 byte 15; the top two bits are in bits 0 and 1 of sector 1 byte 14.
+                The cylinder and record numbers are the result and remainder, respectively, when the LBA is divided by 10.
+            </p>
+            <p>
+                A start sector of 0 or 1 is invalid as the file would overlap the catalogue.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+
+            <h4>Note on load and execution addresses</h4>
+            <p>
+                If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and OSFILE
+                will return the address ORed with &FFFF0000 in its parameter block.
+            </p>
+            <p>
+                Otherwise it is an address in second processor memory and OSFILE will return the address as is.
+            </p>
+            <p>
+                In practice the bits are sometimes found clear when they should be set.
+            </p>
+
+        </div>
+        <div class="col-6">
+
+            <h4>Issues with early versions of DFS</h4>
+            <p>
+                Some early DFSs allow the user to write disk titles or filenames with bit 7 set.
+            </p>
+            <p>
+                This may cause these entries to appear to erroneously have
+                <a href="../hdfs/">HDFS</a> or
+                <a href="../wdfs/">WDFS</a> attributes.
+            </p>
+            <p>
+                Most DFSs disallow top-bit set filenames and disk titles.
+            </p>
+        </div>
+    </div>
 </div>
 
 <div class="printPageBreakAvoid">
@@ -623,87 +696,21 @@ All these parameters can potentially take any value between 0 and 255, and so co
         <li>The file names contain commonly-occurring pairs of letters.</li>
     </ul>
 
-    <h3>Variants</h3>
-    <h4>Acorn System DFS</h4>
-    <p>
-        Discs for the System series have an identical catalogue format to those for the BBC Micro, except all entries
-        are in a directory " " (space), disks do not have a cycle number, and files do not have bits 16 and 17 of load
-        and execution addresses[1]. The places they would occupy are reserved and must be cleared. A BASIC program named
-        DCONV, on the Utility disc, performs this task.
-    </p>
-
-    <h4>Watford 62 DFS</h4>
-    <p>
-        This system places a second catalogue in sectors 2 and 3 of track 0, allowing 62 files on one volume. To
-        identify the second catalogue it sets its title to 12 × &AA bytes.
-    </p>
-    <p>
-        Without due care a system running Acorn DFS can corrupt a Watford disc as it is unaware of the extra files. On
-        such a system the user may run a *SWAP utility to exchange the catalogues. In practice there is a special entry
-        in the first catalogue (directory !, name !!!!!!!, length &200, start sector 2) protecting the second one from
-        being overwritten.
-    </p>
-    <p>
-        If any file in the first catalogue starts before sector 4 and it is not the special file, the disc is not a
-        Watford DFS disc.
-    </p>
-
-    <h4>Opus DDOS</h4>
-    <p>
-        This is a double density format, but it is mentioned here as the volume catalogues are based on Acorn DFS.
-    </p>
-    <p>
-        DDOS discs are partitioned into between one and eight volumes. Track 0 is reserved for the DFS-style volume
-        catalogues, plus a disc catalogue unique to DDOS.
-    </p>
-    <p>
-        In each volume catalogue:
-    <ul>
-        <li>The start sector may be any number less than the disc size, as DDOS adds a partition offset and so the
-            catalogue is not in the same space as the files.
-        </li>
-        <li>The disc size is the size of the current volume. It is an 11 bit quantity, the top bit being in bit 2 of
-            sector 1 byte 6.
-            <br/><strong>If and only if this bit is set:</strong>
-            <ul>
-                <li>The file length steals an extra bit from the execution address of each file (bit 6 of sector 1 byte
-                    14+n.)
-                </li>
-                <li>The start sector steals an extra bit from the load address of each file (bit 2 of sector 1 byte
-                    14+n.)
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-    <h4>Watford DDFS</h4>
-    <p>
-        This is also a double density format with catalogues similar to Acorn DFS. It uses 19 bit file lengths and 11
-        bit LBAs throughout, but the 'extra' bits are stored in the top bits of the disc title and file names, which are
-        cleared in Acorn DFS.
-    </p>
-
 </div>
 
-<p>
-    Some early DFSs allow the user to write disk titles or filenames with bit 7 set.
-    This may cause these entries to appear to erroneously have
-    <a href="../hdfs/">HDFS</a> or
-    <a href="../wdfs/">WDFS</a> attributes.
-    Most DFSs disallow top-bit set filenames and disk titles.
-</p>
-
-<h3>Sources</h3>
-<p>
-    This section is based loosely on the following:
-</p>
-<ul>
-    <li>
-        <a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format</a> -
-        beebwiki.mdfs.net
-    </li>
-    <li>
-        <a href="https://mdfs.net/Docs/Comp/Disk/Format/DFS" target="_blank">Acorn, Watford, Solidisk and Duggan DFS
-            Filesystem Structure</a> mdfs.net
-    </li>
-</ul>
+<div class="printPageBreakAvoid">
+    <h3>Sources</h3>
+    <p>
+        This section is based loosely on the following:
+    </p>
+    <ul>
+        <li>
+            <a href="http://beebwiki.mdfs.net/Acorn_DFS_disc_format" target="_blank">Acorn DFS disk format</a> -
+            beebwiki.mdfs.net
+        </li>
+        <li>
+            <a href="https://mdfs.net/Docs/Comp/Disk/Format/DFS" target="_blank">Acorn, Watford, Solidisk and Duggan DFS
+                Filesystem Structure</a> mdfs.net
+        </li>
+    </ul>
+</div>

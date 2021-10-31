@@ -1,22 +1,21 @@
 ---
 type: "manual"
-title: "Watford Disk File System"
-linkTitle: "Watford DFS"
+title: "Acorn System Disk File System"
+linkTitle: "Acorn System DFS"
 description: "Alternate DFS for the BBC Micro"
 categories:
   - filesystem
 no_list: true
 ---
 <p>
-  The Watford DFS uses the same structure as <a href="../dfs/">Acorn's DFS</a> with some additional attributes:
+  Discs for the System series have an identical catalogue format to those for the
+  <a href="../dfs/">BBC Micro</a>, except all entries are in a directory " " (space),
+  disks do not have a cycle number, and files do not have bits 16 and 17 of load
+  and execution addresses.
 </p>
 <p>
-  In byte 6 of Sector 1, bit 2 is clear and 3 is clear for Acorn & WDFS for disks up to 256K,
-  but set for WDFS and disks larger than 256K.
-</p>
-<p>
-  Watford DFS use 19-bit file lengths and 11-bit sector numbers making the largest possible disk
-  being 512K and the largest file size of 512K-1.
+  The places they would occupy are reserved and must be cleared. A BASIC program named
+  DCONV, on the Utility disc, performs this task.
 </p>
 
 <h3>Catalog format</h3>
@@ -75,7 +74,7 @@ no_list: true
   </tr>
   <tr>
     <td>4</td>
-    <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
+    <td class="unused brb" colspan="8">Reserved</td>
   </tr>
   <tr>
     <td>5</td>
@@ -86,8 +85,8 @@ no_list: true
     <td>6</td>
     <td class="unused brb" colspan="2"></td>
     <td class="orange brb" colspan="2">Boot Opts</td>
-    <td class="yellow brb">0</td>
-    <td class="green blr" colspan="3"><small class="left">10</small><small class="right">8</small></td>
+    <td class="unused brb" colspan="2"></td>
+    <td class="green blr" colspan="2"><small class="left">9</small><small class="right">8</small></td>
   </tr>
   <tr>
     <td class="bb">7</td>
@@ -104,7 +103,7 @@ no_list: true
 
   <tr>
     <td class="bt">8</td>
-    <td class="yellow brtb" rowspan="2"></td>
+    <td class="unused brtb" rowspan="7"></td>
     <td class="grey brtb" rowspan="7" colspan="7">File name padded with spaces</td>
     <td class="blue bt"><small class="left">7</small></td>
     <td class="blue btb" rowspan="2" colspan="6">Load address</td>
@@ -118,14 +117,12 @@ no_list: true
   </tr>
   <tr>
     <td>10</td>
-    <td class="unused brb"></td>
     <td class="orange"><small class="left">7</small></td>
     <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
     <td class="orange br"><small class="right">0</small></td>
   </tr>
   <tr>
     <td>11</td>
-    <td class="yellow brb" rowspan="2"></td>
     <td class="orange bb"><small class="left">15</small></td>
     <td class="orange brb"><small class="right">8</small></td>
   </tr>
@@ -137,27 +134,17 @@ no_list: true
   </tr>
   <tr>
     <td>13</td>
-    <td class="grey brb"><small class="left">18</small>Len</td>
     <td class="grey bb"><small class="left">15</small></td>
     <td class="grey brb"><small class="right">8</small></td>
   </tr>
   <tr>
     <td>14</td>
-    <td class="green brb"><small class="left">10</small>Sect</td>
-    <td class="orange brtb" colspan="2">
-      <small class="left">17</small>
-      <small class="right">16</small>
-      Exec
-    </td>
+    <td class="unused brtb" colspan="2">Reserved</td>
     <td class="grey brb" colspan="2">
       <small class="left">17</small>
       <small class="right">16</small>
     </td>
-    <td class="blue brtb" colspan="2">
-      <small class="left">17</small>
-      <small class="right">16</small>
-      Load
-    </td>
+    <td class="unused brtb" colspan="2">Reserved</td>
     <td class="green blrt" colspan="2">
       <small class="left">9</small>
       <small class="right">8</small>
@@ -166,7 +153,7 @@ no_list: true
   <tr>
     <td class="bb">15</td>
     <td class="grey brb">Lk.</td>
-    <td class="grey brb" colspan="7">Directory</td>
+    <td class="grey brb" colspan="7">Ascii Space (0x20, 32)</td>
     <td class="green bb"><small class="left">7</small></td>
     <td class="green bb" colspan="6">Start sector</td>
     <td class="green brb"><small class="right">0</small></td>
@@ -182,21 +169,14 @@ no_list: true
 </table>
 
 <h4>
-  Differences between Acorn DFS and WDFS
+  Differences between Acorn DFS and System DFS
 </h4>
 <ul>
   <li>
-    Sector 1 byte 6 bit 3 is always 0 like Acorn DFS
+    The Reserved entries must be clear.
   </li>
   <li>
-    Sector 1 byte 6 bit 2 is bit 10 of the disk size / sectors in volume.
-    0=max 256K, 1=max 512K
-  </li>
-  <li>
-    Len in byte 5 of the filename is bit 18 of the File Length.
-  </li>
-  <li>
-    Len in byte 6 of the filename is bit 10 of the Start Sector.
+    The disk type in bits 2 and 3 of sector 1 byte 6 must be clear as with DFS.
   </li>
   <li>
     Lk. in byte 7 is the same as for Acorn DFS
