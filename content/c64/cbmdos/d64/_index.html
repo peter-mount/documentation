@@ -1,0 +1,250 @@
+---
+type: "manual"
+title: "D64 Image Format"
+linkTitle: "D64 Image Format"
+description: "CBM DOS as a single image for Emulators"
+weight: 80
+categories:
+  - c64
+  - file format
+---
+<p>
+    The <code>.D64</code> disk image format follows the format as defined for
+    <a href="..">CBM DOS</a>.
+    Images of this format can be used in Emulators like
+    <a href="https://vice-emu.sourceforge.io/" target="_blank">VICE</a>
+    and the <a href="https://github.com/pi1541/Pi1541" target="_blank">PI1541</a> attached to a real C64.
+</p>
+<p>
+    As stated in <a href="../layout">Physical Layout</a>, Track numbers start from 1 but Sectors in a track start from
+    0.
+</p>
+<p>
+    35 track images are exactly 174848 bytes long whilst a 40 track image is exactly 196608 bytes.
+</p>
+<p>
+    The table below shows the position of the start of each 256 byte sector within the <code>.D64</code> file.
+</p>
+
+<table class="memoryMap">
+    <thead>
+    <tr>
+        <th>Track</th>
+        <th>Sector</th>
+        <th>Sectors In</th>
+        <th>D64 Offset</th>
+        <th>Track</th>
+        <th>Sector</th>
+        <th>Sectors In</th>
+        <th>D64 Offset</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>21</td>
+        <td>0</td>
+        <td>0x00000</td>
+        <td>21</td>
+        <td>19</td>
+        <td>414</td>
+        <td>0x19E00</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>21</td>
+        <td>21</td>
+        <td>0x01500</td>
+        <td>22</td>
+        <td>19</td>
+        <td>433</td>
+        <td>0x1B100</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>21</td>
+        <td>42</td>
+        <td>0x02A00</td>
+        <td>23</td>
+        <td>19</td>
+        <td>452</td>
+        <td>0x1C400</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>21</td>
+        <td>63</td>
+        <td>0x03F00</td>
+        <td>24</td>
+        <td>19</td>
+        <td>471</td>
+        <td>0x1D700</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>21</td>
+        <td>84</td>
+        <td>0x05400</td>
+        <td>25</td>
+        <td>18</td>
+        <td>490</td>
+        <td>0x1EA00</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>21</td>
+        <td>105</td>
+        <td>0x06900</td>
+        <td>26</td>
+        <td>18</td>
+        <td>508</td>
+        <td>0x1FC00</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>21</td>
+        <td>126</td>
+        <td>0x07E00</td>
+        <td>27</td>
+        <td>18</td>
+        <td>526</td>
+        <td>0x20E00</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>21</td>
+        <td>147</td>
+        <td>0x09300</td>
+        <td>28</td>
+        <td>18</td>
+        <td>544</td>
+        <td>0x22000</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>21</td>
+        <td>168</td>
+        <td>0x0A800</td>
+        <td>29</td>
+        <td>18</td>
+        <td>562</td>
+        <td>0x23200</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>21</td>
+        <td>189</td>
+        <td>0x0BD00</td>
+        <td>30</td>
+        <td>18</td>
+        <td>580</td>
+        <td>0x24400</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>21</td>
+        <td>210</td>
+        <td>0x0D200</td>
+        <td>31</td>
+        <td>17</td>
+        <td>598</td>
+        <td>0x25600</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>21</td>
+        <td>231</td>
+        <td>0x0E700</td>
+        <td>32</td>
+        <td>17</td>
+        <td>615</td>
+        <td>0x26700</td>
+    </tr>
+    <tr>
+        <td>13</td>
+        <td>21</td>
+        <td>252</td>
+        <td>0x0FC00</td>
+        <td>33</td>
+        <td>17</td>
+        <td>632</td>
+        <td>0x27800</td>
+    </tr>
+    <tr>
+        <td>14</td>
+        <td>21</td>
+        <td>273</td>
+        <td>0x11100</td>
+        <td>34</td>
+        <td>17</td>
+        <td>649</td>
+        <td>0x28900</td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td>21</td>
+        <td>294</td>
+        <td>0x12600</td>
+        <td>35</td>
+        <td>17</td>
+        <td>666</td>
+        <td>0x29A00</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>21</td>
+        <td>315</td>
+        <td>0x13B00</td>
+        <td class="orange">36<sup>*</sup></td>
+        <td class="orange">17</td>
+        <td class="orange">683</td>
+        <td class="orange">0x2AB00</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>21</td>
+        <td>336</td>
+        <td>0x15000</td>
+        <td class="orange">37<sup>*</sup></td>
+        <td class="orange">17</td>
+        <td class="orange">700</td>
+        <td class="orange">0x2BC00</td>
+    </tr>
+    <tr>
+        <td class="blue">18<sup>&dagger;</sup></td>
+        <td class="blue">19</td>
+        <td class="blue">357</td>
+        <td class="blue">0x16500</td>
+        <td class="orange">38<sup>*</sup></td>
+        <td class="orange">17</td>
+        <td class="orange">717</td>
+        <td class="orange">0x2CD00</td>
+    </tr>
+    <tr>
+        <td>19</td>
+        <td>19</td>
+        <td>376</td>
+        <td>0x17800</td>
+        <td class="orange">39<sup>*</sup></td>
+        <td class="orange">17</td>
+        <td class="orange">734</td>
+        <td class="orange">0x2DE00</td>
+    </tr>
+    <tr>
+        <td>20</td>
+        <td>19</td>
+        <td>395</td>
+        <td>0x18B00</td>
+        <td class="orange">40<sup>*</sup></td>
+        <td class="orange">17</td>
+        <td class="orange">751</td>
+        <td class="orange">0x2EF00</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>
+    &dagger; Track 18 is reserved for the <a href="../directory">Directory</a> and
+    <a href="../bam">Block Allocation Map</a>.<br/>
+    * Track's 36&hellip;40 are only available on 40 track images.
+</p>

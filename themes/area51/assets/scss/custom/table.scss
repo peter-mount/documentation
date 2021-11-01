@@ -218,6 +218,27 @@ table.hexGrid {
             }
         }
     }
+
+    // Unused op code shows with a background TODO do we need this?
+    td.unused {
+      background: #fff;
+    }
+    td.grey {
+        background: #f0f0f0;
+    }
+    td.blue {
+        background: #c0e0ff;
+    }
+    td.orange {
+        background: #ffe0c0;
+    }
+    td.yellow {
+        background: #ffffc0;
+    }
+    td.green {
+        background: #c0ffc0;
+    }
+
 }
 
 table.resources {
