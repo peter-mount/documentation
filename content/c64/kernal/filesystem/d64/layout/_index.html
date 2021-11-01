@@ -1,0 +1,87 @@
+---
+type: "manual"
+title: "Physical layout"
+linkTitle: "Physical layout"
+description: "Physical Disk Layout for the 1540/1541"
+categories:
+ - c64
+weight: 10
+no_list: true
+---
+
+<div class="row">
+  <div class="col-6">
+    <p>
+      The original media (a 5.25" disk) has the tracks laid out in circles, with track 1 on the very outside of the disk
+      (closest to the sides) to track 35 being on the inside of the disk (closest to the inner hub ring).
+    </p>
+    <p>
+      Commodore, in their infinite wisdom, varied the number of sectors per track and data densities across the disk to
+      optimize available storage.
+    </p>
+    <p>
+      Since the outside diameter of a circle is the largest (versus closer to the center), the outside tracks have the
+      largest amount of storage.
+    </p>
+
+    <p>
+      Track counting starts at 1, not 0, and goes up to 35.
+    </p>
+
+    <p>
+      Sector counting starts at 0, not 1, for the first sector, therefore a track with 21 sectors will go from 0 to 20.
+    </p>
+  </div>
+  <div class="col-5">
+    <table class="memoryMap">
+      <thead>
+      <tr>
+        <th colspan="2">Track</th>
+        <th>Sectors/Track</th>
+        <th># Sectors</th>
+        <th>Storage in bytes</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>01</td>
+        <td>17</td>
+        <td>21</td>
+        <td>357</td>
+        <td>7820</td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td>24</td>
+        <td>19</td>
+        <td>133</td>
+        <td>7170</td>
+      </tr>
+      <tr>
+        <td>25</td>
+        <td>30</td>
+        <td>18</td>
+        <td>108</td>
+        <td>6300</td>
+      </tr>
+      <tr>
+        <td>31</td>
+        <td>40<sup>*</sup></td>
+        <td>17</td>
+        <td>85</td>
+        <td>6020</td>
+      </tr>
+      </tbody>
+    </table>
+    <p>
+      * Standard CBM DOS disks had only 35 tracks.
+    </p>
+    <p>
+      Track's 36&hellip;40 are only valid for 40 track disks, although with low-level programming
+      the 1541 drive could access tracks 36&hellip;40.
+    </p>
+    <p>
+      Some copy-protection schemes did this.
+    </p>
+  </div>
+</div>
