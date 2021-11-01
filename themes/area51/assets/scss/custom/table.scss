@@ -351,6 +351,11 @@ table.diskMap {
                 border-right: 1px dashed grey;
             }
 
+            td.dashleftright {
+                border-left: 1px dashed grey;
+                border-right: 1px dashed grey;
+            }
+
             // Unused op code shows with a background TODO do we need this?
             td.unused {
               background: #fff;

@@ -1,0 +1,513 @@
+---
+type: "manual"
+title: "Block Availability Map"
+linkTitle: "BAM"
+description: "Directory track 18 sector 0, the BAM and disk details"
+categories:
+  - c64
+weight: 22
+no_list: true
+---
+<p>
+  Track 18 sector 0 contains the Block Availability Map (BAM) and details about the disk including it's title.
+</p>
+
+<div class="row">
+  <div class="col-6">
+    <h3>Track 18 Sector 0</h3>
+    <table class="diskMap">
+      <thead>
+      <tr>
+        <th rowspan="2">Byte</th>
+        <th colspan="8">Content</th>
+        <th rowspan="2"></th>
+      </tr>
+      <tr>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>00</td>
+        <td class="blue"><small class="left">15</small></td>
+        <td class="bb blue" colspan="6" rowspan="2">Location of first directory sector</td>
+        <td class="br blue" ><small class="right">8</small></td>
+        <td class="brb rotright" rowspan="4">Header</td>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td class="bb blue"><small class="left">7</small></td>
+        <td class="brb blue" ><small class="right">0</small></td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td class="brb green" colspan="8">DOS version type, normally 0x41 "A"</td>
+      </tr>
+      <tr>
+        <td class="bb">03</td>
+        <td class="brb unused" colspan="8"></td>
+      </tr>
+
+      <tr>
+        <td>04</td>
+        <td class="brb orange" colspan="8">Free sector count Track 1</td>
+        <td class="brb rotright" rowspan="40">Block Availability Map</td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>06</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">07</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb blue">S18</td>
+        <td class="brb blue">S19</td>
+        <td class="brb blue">S20</td>
+        <td class="brb unused" colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>08</td>
+        <td class="brb orange" colspan="8">Free sector count Track 2</td>
+      </tr>
+      <tr>
+        <td>09</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>0A</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">0B</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb blue">S18</td>
+        <td class="brb blue">S19</td>
+        <td class="brb blue">S20</td>
+        <td class="brb unused" colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td class="dashleft">&nbsp;</td>
+        <td colspan="7"></td>
+        <td class="dashright">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td class="bt">44</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 17</td>
+      </tr>
+      <tr>
+        <td>45</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>46</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">47</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb blue">S18</td>
+        <td class="brb blue">S19</td>
+        <td class="brb blue">S20</td>
+        <td class="brb unused" colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>48</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 18</td>
+      </tr>
+      <tr>
+        <td>49</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>4A</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">4B</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb blue">S18</td>
+        <td class="brb unused" colspan="5"></td>
+      </tr>
+
+      <tr>
+        <td class="dashleft">&nbsp;</td>
+        <td colspan="7"></td>
+        <td class="dashright">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td class="bt">60</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 24</td>
+      </tr>
+      <tr>
+        <td>61</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>62</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">63</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb blue">S18</td>
+        <td class="brb unused" colspan="5"></td>
+      </tr>
+
+      <tr>
+        <td class="bt">64</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 25</td>
+      </tr>
+      <tr>
+        <td>65</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>66</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">67</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb unused" colspan="6"></td>
+      </tr>
+
+      <tr>
+        <td class="dashleft">&nbsp;</td>
+        <td colspan="7"></td>
+        <td class="dashright">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td class="bt">78</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 30</td>
+      </tr>
+      <tr>
+        <td>79</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>7A</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">7B</td>
+        <td class="brb blue">S16</td>
+        <td class="brb blue">S17</td>
+        <td class="brb unused" colspan="6"></td>
+      </tr>
+
+      <tr>
+        <td class="bt">7C</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 31</td>
+      </tr>
+      <tr>
+        <td>7D</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>7E</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">7F</td>
+        <td class="brb blue">S16</td>
+        <td class="brb unused" colspan="7"></td>
+      </tr>
+
+      <tr>
+        <td class="dashleft">&nbsp;</td>
+        <td colspan="7"></td>
+        <td class="dashright">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td class="bt">8C</td>
+        <td class="brtb orange" colspan="8">Free sector count Track 35</td>
+      </tr>
+      <tr>
+        <td>8D</td>
+        <td class="brb blue">S0</td>
+        <td class="brb blue">S1</td>
+        <td class="brb blue">S2</td>
+        <td class="brb blue">S3</td>
+        <td class="brb blue">S4</td>
+        <td class="brb blue">S5</td>
+        <td class="brb blue">S6</td>
+        <td class="brb blue">S7</td>
+      </tr>
+      <tr>
+        <td>8E</td>
+        <td class="brb blue">S8</td>
+        <td class="brb blue">S9</td>
+        <td class="brb blue">S10</td>
+        <td class="brb blue">S11</td>
+        <td class="brb blue">S12</td>
+        <td class="brb blue">S13</td>
+        <td class="brb blue">S14</td>
+        <td class="brb blue">S15</td>
+      </tr>
+      <tr>
+        <td class="bb">8F</td>
+        <td class="brb blue">S16</td>
+        <td class="brb unused" colspan="7"></td>
+      </tr>
+
+      <tr>
+        <td class="bt">90</td>
+        <td class="green brb" colspan="8" rowspan="16">Disk Name padded with 0xA0</td>
+        <td class="rotright brb" rowspan="27">Disk title & type</td>
+      </tr>
+      <tr><td>91</td></tr>
+      <tr><td>92</td></tr>
+      <tr><td>93</td></tr>
+      <tr><td>94</td></tr>
+      <tr><td>95</td></tr>
+      <tr><td>96</td></tr>
+      <tr><td>97</td></tr>
+      <tr><td>98</td></tr>
+      <tr><td>99</td></tr>
+      <tr><td>9A</td></tr>
+      <tr><td>9B</td></tr>
+      <tr><td>9C</td></tr>
+      <tr><td>9D</td></tr>
+      <tr><td>9E</td></tr>
+      <tr><td class="bb">9F</td></tr>
+
+      <tr>
+        <td>A0</td>
+        <td class="brb unused" rowspan="2" colspan="8">Unused set to 0xA0A0</td>
+      </tr>
+      <tr><td class="bb">A1</td></tr>
+
+      <tr>
+        <td>A2</td>
+        <td class="orange"><small class="left">7</small></td>
+        <td class="bb orange" rowspan="2" colspan="6">Disk ID</td>
+        <td class="br orange"><small class="right">0</small></td>
+      </tr>
+
+      <tr>
+        <td class="bb">A3</td>
+        <td class="bb orange"><small class="left">15</small></td>
+        <td class="brb orange"><small class="right">8</small></td>
+      </tr>
+
+      <tr>
+        <td class="bb">A4</td>
+        <td class="brb unused" colspan="8">Unused set to 0xA0</td>
+      </tr>
+
+      <tr>
+        <td>A5</td>
+        <td class="brb blue" rowspan="2" colspan="8">DOS type, usually ASCII "2A"</td>
+      </tr>
+      <tr><td class="bb">A6</td></tr>
+
+      <tr>
+        <td>A7</td>
+        <td class="brb unused" rowspan="4" colspan="8">Unused set to 0xA0</td>
+      </tr>
+      <tr><td>A8</td></tr>
+      <tr><td>A9</td></tr>
+      <tr><td class="bb">AA</td></tr>
+
+      <tr>
+        <td class="btb">AB</td>
+        <td class="brtb unused" rowspan="3" colspan="8">0x00, used for BAM on third party DOS 40 track disks</td>
+        <td class="rotright brb" rowspan="3">Reserved</td>
+      </tr>
+
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td class="btb">FF</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <h3>Offset for each Track BAM entry</h3>
+    <table class="memoryMap">
+      <thead>
+      <tr>
+        <th>Track</th>
+        <th>Offset</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td>01</td><td>04</td></tr>
+      <tr><td>02</td><td>08</td></tr>
+      <tr><td>03</td><td>0C</td></tr>
+      <tr><td>04</td><td>10</td></tr>
+      <tr><td>05</td><td>14</td></tr>
+      <tr><td>06</td><td>18</td></tr>
+      <tr><td>07</td><td>1C</td></tr>
+      <tr><td>08</td><td>20</td></tr>
+      <tr><td>09</td><td>24</td></tr>
+      <tr><td>10</td><td>28</td></tr>
+      <tr><td>11</td><td>2C</td></tr>
+      <tr><td>12</td><td>30</td></tr>
+      <tr><td>13</td><td>34</td></tr>
+      <tr><td>14</td><td>38</td></tr>
+      <tr><td>15</td><td>3C</td></tr>
+      <tr><td>16</td><td>40</td></tr>
+      <tr><td>17</td><td>44</td></tr>
+      <tr><td>18</td><td>48</td></tr>
+      <tr><td>19</td><td>4C</td></tr>
+      <tr><td>20</td><td>50</td></tr>
+      <tr><td>21</td><td>54</td></tr>
+      <tr><td>22</td><td>58</td></tr>
+      <tr><td>23</td><td>5C</td></tr>
+      <tr><td>24</td><td>60</td></tr>
+      <tr><td>25</td><td>64</td></tr>
+      <tr><td>26</td><td>68</td></tr>
+      <tr><td>27</td><td>6C</td></tr>
+      <tr><td>28</td><td>70</td></tr>
+      <tr><td>29</td><td>74</td></tr>
+      <tr><td>30</td><td>78</td></tr>
+      <tr><td>31</td><td>7C</td></tr>
+      <tr><td>32</td><td>80</td></tr>
+      <tr><td>33</td><td>84</td></tr>
+      <tr><td>34</td><td>88</td></tr>
+      <tr><td>35</td><td>8C</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
