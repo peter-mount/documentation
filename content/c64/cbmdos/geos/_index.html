@@ -1,0 +1,396 @@
+---
+type: "manual"
+title: "GEOS Extensions"
+linkTitle: "GEOS Extensions"
+description: "GEOS VLIR (Variable Length Index Record)"
+categories:
+  - c64
+  - filesystem
+---
+<p>
+  Later on in the life of the C64, the GEOS OS came out. It  was  a  system
+  much like many other windowing OS's (MAC  OS,  Windows)  in  that  it  used
+  icons, windows, a mouse pointer and resource drivers. In order  to  contain
+  all the information needed for the windowing system (icon, window position,
+  creation time/date), a new filetype called VLIR was  needed  and  directory
+  changes were made. While GEOS files might not be of interest to many of the
+  emulator users, it is likely that these  files  will  be  encountered,  and
+  knowledge of them would be helpful.
+</p>
+<p>
+  There are actually two types of GEOS files, VLIR  and  SEQuential.  Don't
+  confuse the GEOS SEQuential type with that of the standard  D64  SEQ  file.
+  They are related, but not the same.  VLIR  are  described  in  more  detail
+  following this paragraph. GEOS SEQuential files  are  all  non-VLIR  files,
+  including normal PRG, USR and SEQ types.
+</p>
+<p>
+  GEOS files usually have an entity  attached  called  an  INFO  block.  It
+  contains ICON info, author, file description, load  address  etc.  However,
+  just because an INFO block does not exist for a given file, does  not  mean
+  that the file is not a GEOS file.
+</p>
+<p>
+  Each GEOS VLIR file or application is comprised of many  separate  chains
+  (called RECORDS) for different sections of the app/file. Each RECORD can be
+  loaded in separately and overtop of other ones. Below  is  a  dump  of  the
+  first directory sector of the GEOS 2.0 disk. Note  the  first  entry  seems
+  normal enough, but the rest have additional  information  in  the  normally
+  unused section of the entry.
+</p>
+
+<div class="row">
+  <div class="col-6">
+    <h3>Directory entry</h3>
+    <table class="diskMap">
+      <thead>
+      <tr>
+        <th rowspan="2">Byte</th>
+        <th colspan="8">Content</th>
+      </tr>
+      <tr>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>00</td>
+        <td class="blue"><small class="left">15</small></td>
+        <td class="bb blue" colspan="6" rowspan="2">
+          As per CBM DOS, Location of next directory sector<br/>
+          or 0x0000 for last sector or not first file
+        </td>
+        <td class="br blue" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td class="bb blue"><small class="left">7</small></td>
+        <td class="brb blue" ><small class="right">0</small></td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td class="brb orange">Closed</td>
+        <td class="brb yellow">Locked</td>
+        <td class="brb grey">Save</td>
+        <td class="brb unused"></td>
+        <td class="brb grey" colspan="4"><small class="left">3</small><small class="right">0</small>CBM File Type</td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td class="green"><small class="left">15</small></td>
+        <td class="bb green" colspan="6" rowspan="2">Location of first sector of file</td>
+        <td class="br green" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td>04</td>
+        <td class="bb green"><small class="left">7</small></td>
+        <td class="brb green" ><small class="right">0</small></td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td class="brb" rowspan="16"></td>
+        <td class="brb orange" colspan="7" rowspan="16">Filename in PETASCII padded with 0xA0</td>
+      </tr>
+      <tr><td>06</td></tr>
+      <tr><td>07</td></tr>
+      <tr><td>08</td></tr>
+      <tr><td>09</td></tr>
+      <tr><td>0A</td></tr>
+      <tr><td>0B</td></tr>
+      <tr><td>0C</td></tr>
+      <tr><td>0D</td></tr>
+      <tr><td>0E</td></tr>
+      <tr><td>0F</td></tr>
+      <tr><td>10</td></tr>
+      <tr><td>11</td></tr>
+      <tr><td>12</td></tr>
+      <tr><td>13</td></tr>
+      <tr><td>14</td></tr>
+      <tr>
+        <td>15</td>
+        <td class="green"><small class="left">15</small></td>
+        <td class="bb green" colspan="6" rowspan="2">Location of info block</td>
+        <td class="br green" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td class="bb green"><small class="left">7</small></td>
+        <td class="brb green" ><small class="right">0</small></td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td class="brb blue" colspan="8">GEOS file structure, 00=Sequential 01=VLIR file</small></td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td class="brb yellow" colspan="8">GEOS file type</td>
+      </tr>
+      <tr><td>19</td>
+        <td class="brb green" colspan="8">Year (1900+value)</td>
+      </tr>
+      <tr><td>1A</td>
+        <td class="unused" colspan="4"></td>
+        <td class="blrtb blue" colspan="4">Month (1-12)</td>
+      </tr>
+      <tr><td>1B</td>
+        <td class="unused" colspan="3"></td>
+        <td class="blrtb yellow" colspan="5">Day (1-31)</td>
+      </tr>
+      <tr><td>1C</td>
+        <td class="unused" colspan="3"></td>
+        <td class="blrtb green" colspan="5">Hour (0-23)</td>
+      </tr>
+      <tr><td>1D</td>
+        <td class="unused" colspan="2"></td>
+        <td class="blrtb blue" colspan="6">Minute (1-59)</td>
+      </tr>
+      <tr>
+        <td>1E</td>
+        <td class="bt orange"><small class="left">7</small></td>
+        <td class="btb orange" colspan="6" rowspan="2">File size in sectors</td>
+        <td class="br orange" ><small class="right">0</small></td>
+      </tr>
+      <tr>
+        <td class="brb">1F</td>
+        <td class="bb orange"><small class="left">15</small></td>
+        <td class="brb orange" ><small class="right">8</small></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <h3>Info block</h3>
+    <table class="diskMap">
+      <thead>
+      <tr>
+        <th rowspan="2">Byte</th>
+        <th colspan="8">Content</th>
+      </tr>
+      <tr>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>00</td>
+        <td class="blue"><small class="left">15</small></td>
+        <td class="bb blue" colspan="6" rowspan="2">
+          Always 0x00, 0xFF as this is 1 sector long
+        </td>
+        <td class="br blue" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td class="bb">01</td>
+        <td class="bb blue"><small class="left">7</small></td>
+        <td class="brb blue" ><small class="right">0</small></td>
+      </tr>
+
+      <tr>
+        <td>02</td>
+        <td class="brb yellow" colspan="8" rowspan="3">
+          Information sector ID
+          Always 0x03 0x15, 0xBF
+        </td>
+      </tr>
+      <tr>
+        <td>03</td>
+      </tr>
+      <tr>
+        <td class="bb">04</td>
+      </tr>
+
+      <tr>
+        <td>05</td>
+        <td class="brb green" colspan="8" rowspan="3">
+          Icon bitmap in sprite format, 63 bytes
+        </td>
+      </tr>
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bb">43</td>
+      </tr>
+
+      <tr>
+        <td class="bb">44</td>
+        <td class="brb unused" colspan="4"></td>
+        <td class="brb grey" colspan="4">CBM File Type</td>
+      </tr>
+
+      <tr>
+        <td class="bb">45</td>
+        <td class="brb yellow" colspan="8">GEOS file type</td>
+      </tr>
+
+      <tr>
+        <td class="bb">46</td>
+        <td class="brb blue" colspan="8">GEOS file structure</td>
+      </tr>
+
+      <tr>
+        <td>47</td>
+        <td class="orange"><small class="left">15</small></td>
+        <td class="bb orange" colspan="6" rowspan="2">Program load address</td>
+        <td class="br orange" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td class="bb">48</td>
+        <td class="bb orange"><small class="left">7</small></td>
+        <td class="brb orange" ><small class="right">0</small></td>
+      </tr>
+
+      <tr>
+        <td>49</td>
+        <td class="green"><small class="left">15</small></td>
+        <td class="bb green" colspan="6" rowspan="2">Program end address<br>Accessories only</td>
+        <td class="br green" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td class="bb">4A</td>
+        <td class="bb green"><small class="left">7</small></td>
+        <td class="brb green" ><small class="right">0</small></td>
+      </tr>
+
+      <tr>
+        <td>4B</td>
+        <td class="yellow"><small class="left">15</small></td>
+        <td class="bb yellow" colspan="6" rowspan="2">Program start address</td>
+        <td class="br yellow" ><small class="right">8</small></td>
+      </tr>
+      <tr>
+        <td class="bb">4C</td>
+        <td class="bb yellow"><small class="left">7</small></td>
+        <td class="brb yellow" ><small class="right">0</small></td>
+      </tr>
+
+      <tr>
+        <td>4D</td>
+        <td class="brb green" colspan="8" rowspan="3">
+          Class text, terminated with 0x00
+        </td>
+      </tr>
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bb">60</td>
+      </tr>
+
+      <tr>
+        <td>61</td>
+        <td class="brb blue" colspan="8" rowspan="3">
+          Author, terminated with 0x00
+        </td>
+      </tr>
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bb">74</td>
+      </tr>
+
+      <tr>
+        <td>75</td>
+        <td class="brb orange" colspan="8" rowspan="3">
+          If document name of application that created it
+        </td>
+      </tr>
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bb">88</td>
+      </tr>
+
+      <tr>
+        <td>89</td>
+        <td class="brb unused" colspan="8" rowspan="3">
+          Free for applications, unreserved
+        </td>
+      </tr>
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bb">9F</td>
+      </tr>
+
+      <tr>
+        <td>A0</td>
+        <td class="brb green" colspan="8" rowspan="3">
+          Description, terminated with 0x00
+        </td>
+      </tr>
+      <tr>
+        <td class="dashleftright">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bb">FF</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  The CBM File Type, GEOS file type and GEOS file structure fields are duplicated in
+  both structures
+</p>
+
+<h3>CBM DOS file type</h3>
+<p>
+  REL files are not permitted with GEOS.
+  If byte 0x18 in the directory entry is 0x00 then it's a standard
+  CBM DOS file, otherwise it's a GEOS file.
+</p>
+
+<h3>GEOS File type</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Value</th>
+    <th>Type</th>
+    <th>Value</th>
+    <th>Type</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><td>00</td><td>Normal C64 file</td>
+    <td>08</td><td>Font File</td></tr>
+  <tr><td>01</td><td>BASIC</td>
+    <td>09</td><td>Printer Driver</td></tr>
+  <tr><td>02</td><td>Assembler</td>
+    <td>0A</td><td>Input Driver</td></tr>
+  <tr><td>03</td><td>Data file</td>
+    <td>0B</td><td>Disk Driver</td></tr>
+  <tr><td>04</td><td>System file</td>
+    <td>0C</td><td>System Boot file</td></tr>
+  <tr><td>05</td><td>Desk Accessory</td>
+    <td>0D</td><td>Temporary</td></tr>
+  <tr><td>06</td><td>Application</td>
+    <td>0E</td><td>Auto-Execute file</td></tr>
+  <tr><td>07</td><td>Application Data</td>
+    <td class="grey">0F</td><td class="grey">Undefined</td></tr>
+  </tbody>
+</table>
+<p>File types 0x0F&hellip;0xFF are undefined.</p>
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="https://ist.uwaterloo.ca/~schepers/formats/GEOS.TXT" target="_blank">GEOS.TXT</a></li>
+</ul>
