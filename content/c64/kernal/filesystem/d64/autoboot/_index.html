@@ -41,23 +41,38 @@ categories:
 
   <tr>
     <td>03</td>
-    <td class="blue brb" rowspan="2" colspan="2">Load address</td>
-    <td class="brb" rowspan="2" colspan="5">Appears to be the load address for the boot loader</td>
+    <td class="blue brb" rowspan="2" colspan="2">Additional sectors</td>
+    <td class="brb" rowspan="2" colspan="5">Track/Sector address or 0x0000 for none</td>
   </tr>
   <tr><td class="bb">04</td></tr>
 
   <tr>
     <td>05</td>
-    <td class="orange brb" rowspan="4" colspan="2">Unknown</td>
-    <td class="brb" rowspan="4" colspan="5"></td>
+    <td class="blue brb" colspan="2">Bank</td>
+    <td class="brb" colspan="5">Bank for additional sectors, default 0x00</td>
   </tr>
-  <tr><td>06</td></tr>
-  <tr><td>07</td></tr>
-  <tr><td class="bb">08</td></tr>
 
   <tr>
-    <td>09</td>
-    <td class="undefined brb" rowspan="3" colspan="2">Boot Loader</td>
+    <td>06</td>
+    <td class="blue brb" colspan="2">Load count</td>
+    <td class="brb" colspan="5">Number of sectors to load, default 0x00</td>
+  </tr>
+
+  <tr>
+    <td>07</td>
+    <td class="orange brb" colspan="2">Boot message</td>
+    <td class="brb" colspan="5">0x00 terminated string, can be just 0x00 for "BOOTING..."</td>
+  </tr>
+
+  <tr>
+    <td>08+b</td>
+    <td class="green brb" colspan="2">Program name</td>
+    <td class="brb" colspan="5">0x00 terminated string, can be just 0x00 for none</td>
+  </tr>
+
+  <tr>
+    <td>09+b+p</td>
+    <td class="blue brb" rowspan="3" colspan="2">Boot Loader</td>
     <td class="brb" rowspan="3" colspan="5">Boot Loader code, padded with 0x00</td>
   </tr>
 
@@ -72,7 +87,41 @@ categories:
   </tbody>
 </table>
 
-<h3>Example boot sector</h3>
+<h3>Example 1</h3>
+<p>
+  This is from <a href="https://www.lemon64.com/forum/viewtopic.php?t=54219" target="_blank">lemon64.com</a>
+  which has an example of a boot sector in DASM.
+</p>
+<p>
+  In this instance it autoboot's CPM:
+</p>
+
+{{< book/sourceCode title="Boot loader:">}}
+{{< book/asm comment="C128 boot sector. (T1, S0)">}}
+{{< book/asm comment="Compile without a load address. {-f3}">}}
+{{< book/asm param="processor 6502">}}
+{{< book/asm op="org" param="0x0b00">}}
+{{< book/asm op="byte" param="\"CBM\"" comment="Autoboo signature">}}
+{{< book/asm op="word" param="0x0000" comment="Load address for additional sectors. (T1, S1)">}}
+{{< book/asm op="byte" param="0x00" comment="Bank number for additional sectors." >}}
+{{< book/asm op="byte" param="0x00" comment="Number of sectors to load." >}}
+{{< book/asm op="byte" param="\"\", 0x00" comment="Boot message: \"BOOTING...\"" >}}
+{{< book/asm op="byte" param="\"\", 0x00" comment="Program to load on boot." >}}
+{{< book/asm label="start" op="ldx" param="#&amp;lt;cmd-1" comment="Address of command -1" >}}
+{{< book/asm op="ldy" param="#&amp;gt;cmd" >}}
+{{< book/asm op="jmp" param="0xafa5" comment="Execute BASIC command" >}}
+{{< book/asm label="cmd" op="byte" param="\"OPEN1,8,15,\", $22" >}}
+{{< book/asm op="byte" param="\"CD:CPM.D64\", $22" >}}
+{{< book/asm op="byte" param="\":CLOSE1:BOOT\"" >}}
+{{< book/asm op="org" param="0xbff, 0x00" comment="Fill with 0x00 to make 256 bytes" >}}
+{{< book/asm op="byte" param="0x00" >}}
+{{< /book/sourceCode >}}
+
+<h3>Example 2</h3>
+<p>
+  This is from <a href="http://ist.uwaterloo.ca/~schepers/formats/C128BOOT.TXT" target="_blank">C128BOOT.txt</a>
+  which seems to be different to the above.
+</p>
 
 <table class="diskMap">
   <thead>
@@ -143,10 +192,4 @@ categories:
 {{< book/asm op="LDA" param="#0x4E" comment="and 0xFF00 to 0x4e">}}
 {{< book/asm op="STA" param="0xFF00" >}}
 {{< book/asm op="JMP" param="bootloader" comment="Restart the boot loader">}}
-
 {{< /book/sourceCode >}}
-
-<h3>Sources</h3>
-<ul>
-  <li><a href="http://ist.uwaterloo.ca/~schepers/formats/C128BOOT.TXT" target="_blank">C128BOOT.txt</a></li>
-</ul>
