@@ -1,0 +1,152 @@
+---
+type: "manual"
+title: "Auto boot"
+linkTitle: "Autoboot C128"
+description: "Making a disk bootable on the C128"
+weight: 90
+categories:
+  - c128
+---
+<p>
+  On the Commodore C128 it was possible to auto-boot a floppy disk that's in the drive when the system is powered up.
+  This does NOT work on the C64.
+</p>
+<p>
+  This only works if Track 1 Sector 0 is allocated and contains a specific signature.
+</p>
+
+<div class="alert-warning">
+  I don't have a C128 so I cannot confirm this, only know of this functionality as it's mentioned in some documentation
+  about the disk format and even then they are not 100% certain if even this is accurate.
+</div>
+
+<h3>Boot sector format</h3>
+
+<table class="diskMap">
+  <thead>
+  <tr>
+    <th>Byte</th>
+    <th colspan="2">Content</th>
+    <th colspan="5">Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>00</td>
+    <td class="green brb" rowspan="3" colspan="2">Signature</td>
+    <td class="brb" rowspan="3" colspan="5">Auto-boot Signature "CBM"</td>
+  </tr>
+  <tr><td>01</td></tr>
+  <tr><td class="bb">02</td></tr>
+
+  <tr>
+    <td>03</td>
+    <td class="blue brb" rowspan="2" colspan="2">Load address</td>
+    <td class="brb" rowspan="2" colspan="5">Appears to be the load address for the boot loader</td>
+  </tr>
+  <tr><td class="bb">04</td></tr>
+
+  <tr>
+    <td>05</td>
+    <td class="orange brb" rowspan="4" colspan="2">Unknown</td>
+    <td class="brb" rowspan="4" colspan="5"></td>
+  </tr>
+  <tr><td>06</td></tr>
+  <tr><td>07</td></tr>
+  <tr><td class="bb">08</td></tr>
+
+  <tr>
+    <td>09</td>
+    <td class="undefined brb" rowspan="3" colspan="2">Boot Loader</td>
+    <td class="brb" rowspan="3" colspan="5">Boot Loader code, padded with 0x00</td>
+  </tr>
+
+  <tr>
+    <td class="dashleftright">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="bb">FF</td>
+  </tr>
+
+  </tbody>
+</table>
+
+<h3>Example boot sector</h3>
+
+<table class="diskMap">
+  <thead>
+  <tr>
+    <th></th>
+    <th>00</th>
+    <th>01</th>
+    <th>02</th>
+    <th>03</th>
+    <th>04</th>
+    <th>05</th>
+    <th>06</th>
+    <th>07</th>
+    <th>08</th>
+    <th>09</th>
+    <th>0A</th>
+    <th>0B</th>
+    <th>0C</th>
+    <th>0D</th>
+    <th>0E</th>
+    <th>0F</th>
+  </tr>
+  </thead>
+  <tr>
+    <td>00</td>
+    <td class="bb green">43</td><td class="bb green">42</td><td class="brb green">4D</td>
+    <td class="bb blue">00</td><td class="brb blue">0C</td>
+    <td class="bb orange">00</td><td class="bb orange">02</td><td class="bb orange">00</td><td class="brb orange">00</td>
+    <td>A5</td><td>D7</td>
+    <td>C9</td><td>80</td>
+    <td>F0</td><td>03</td>
+    <td>20</td>
+    <td class="rotright blrb" rowspan="2">Code</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>5F</td><td>FF</td>
+    <td>A9</td><td>05</td><td>8D</td><td>06</td><td>D5</td><td>A9</td><td>4E</td><td>8D</td><td>00</td><td>FF</td><td>4C</td><td>00</td><td>0C</td>
+    <td class="unused blt"></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td class="btb unused" rowspan="3" colspan="15">All 0x00</td>
+    <td class="brb" rowspan="3"></td>
+    <td class="rotright blrb" rowspan="3">Blank</td>
+  </tr>
+
+  <tr>
+    <td class="dashleftright">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="bb">F0</td>
+  </tr>
+</table>
+
+<p>
+  The code for the above loader is:
+</p>
+{{< book/sourceCode title="Boot loader:">}}
+{{< book/asm op="ORG" param="0x0c00" comment="start at 0x0c00 as defined in bytes 3 & 4 of boot sector">}}
+{{< book/asm label="bootloader" op="LDA" param="0xD7" comment="If 0xD7 = 0x80 then do some initialisation">}}
+{{< book/asm op="CMP" param="#0x80" >}}
+{{< book/asm op="BEQ" param="init" >}}
+{{< book/asm op="JSR" param="0xFF5F" comment="Call unknown OS call but why JSR not JMP?">}}
+{{< book/asm label="init" op="LDA" param="#0x05" comment="Initialise 0xD506 to 5">}}
+{{< book/asm op="STA" param="0xD506" >}}
+{{< book/asm op="LDA" param="#0x4E" comment="and 0xFF00 to 0x4e">}}
+{{< book/asm op="STA" param="0xFF00" >}}
+{{< book/asm op="JMP" param="bootloader" comment="Restart the boot loader">}}
+
+{{< /book/sourceCode >}}
+
+<h3>Sources</h3>
+<ul>
+  <li><a href="http://ist.uwaterloo.ca/~schepers/formats/C128BOOT.TXT" target="_blank">C128BOOT.txt</a></li>
+</ul>

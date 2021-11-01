@@ -1,0 +1,147 @@
+---
+type: "manual"
+title: "File format"
+linkTitle: "File format"
+description: "How files are stored on the disk"
+categories:
+  - c64
+weight: 25
+no_list: true
+---
+<p>
+  In the <a href="../directory/">directory</a> a file's location on the disk is stored with
+  the first Track/Sector it occupies and the file length is in sectors not bytes.
+</p>
+
+<div class="row">
+  <div class="col-6">
+    <p>
+      This is done because on the disk a file is a linked list of sectors with each sector consisting of
+      two bytes containing the Track/Sector of the next sector then 254 bytes of data.
+    </p>
+    <p>
+      The last sector of the file is marked when the Track ID is set to 0.
+      When this happens the Sector portion indicates how many bytes remain for the file,
+      a value from 1 to 254 bytes.
+    </p>
+  </div>
+  <div class="col-6">
+    <table class="diskMap">
+      <thead>
+      <tr>
+        <th rowspan="2">Byte</th>
+        <th colspan="5">First sectors</th>
+        <th colspan="5">Last sector</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>00</td>
+        <td class="orange"><small class="left">15</small></td>
+        <td class="bb orange" colspan="3" rowspan="2">Next sector location</td>
+        <td class="br orange" ><small class="right">8</small></td>
+        <td class="brb green" colspan="5">EOF marker</td>
+        <td class="rotright brb" rowspan="2">Header</td>
+      </tr>
+      <tr>
+        <td class="bb">01</td>
+        <td class="bb orange"><small class="left">7</small></td>
+        <td class="brb orange" ><small class="right">0</small></td>
+        <td class="brb blue" colspan="5">Number of bytes</td>
+      </tr>
+      <tr>
+        <td class="bb">02</td>
+        <td class="blrb yellow" rowspan="4" colspan="5">254 bytes data</td>
+        <td class="brb yellow" rowspan="2" colspan="5">remaining bytes data</td>
+        <td class="rotright brb" rowspan="4">Data</td>
+      </tr>
+      <tr>
+        <td>nn</td>
+      </tr>
+
+      <tr>
+        <td class="dashleft">&nbsp;</td>
+        <td class="brb unused" rowspan="2" colspan="5">Undefined</td>
+      </tr>
+
+      <tr>
+        <td class="bb">FF</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>Example</h3>
+<div class="row">
+  <div class="col-6">
+    <p>
+      Let's imaging we have a file that's 1322 bytes long spread over 6 sectors.
+      The first sector of the file is stored at Track 17 Sector 21.
+    </p>
+    <p>
+      In the directory we have the start sector set to 17/21.
+    </p>
+  </div>
+  <div class="col-6">
+    <table class="memoryMap">
+      <thead>
+      <tr>
+        <th colspan="2">1</th>
+        <th colspan="2">2</th>
+        <th colspan="2">3</th>
+        <th colspan="2">4</th>
+        <th colspan="2">5</th>
+        <th colspan="2">6</th>
+      </tr>
+      <tr>
+        <th>T</th>
+        <th>S</th>
+        <th>T</th>
+        <th>S</th>
+        <th>T</th>
+        <th>S</th>
+        <th>T</th>
+        <th>S</th>
+        <th>T</th>
+        <th>S</th>
+        <th>T</th>
+        <th>S</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>17</td>
+        <td>0</td>
+        <td>17</td>
+        <td>10</td>
+        <td>17</td>
+        <td>20</td>
+        <td>17</td>
+        <td>1</td>
+        <td>17</td>
+        <td>11</td>
+        <td>0</td>
+        <td>52</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  The first 2 bytes of that sector consists of 17 and 0 indicating the next sector is track 17 sector 0.
+  The rest of that sector is 254 bytes of data.
+</p>
+<p>
+  The second sector at Track 17 Sector 0 consists of 17 and 10 which points to the third sector.
+  It also has 254 bytes.
+</p>
+<p>
+  The sixth and final sector has Track set to 0. This is not a valid track as they start from 1, so it marks this sector
+  as the final one in the file.
+</p>
+<p>
+  Here, the sectorId is taken as the number of bytes in this sector which contains data, 52 bytes in this instance.
+  All other bytes in the sector after the data is ignored.
+</p>

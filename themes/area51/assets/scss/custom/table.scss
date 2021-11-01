@@ -308,7 +308,9 @@ table.diskMap {
             td:first-child,
             td.blrtb,
             td.blrt,
+            td.blrb,
             td.blr,
+            td.blt,
             td.bl {
                 border-left: 1px solid grey;
             }
@@ -316,6 +318,7 @@ table.diskMap {
             td:first-child,
             td.blrtb,
             td.blrt,
+            td.blrb,
             td.brt,
             td.blr,
             td.brb,
@@ -328,12 +331,14 @@ table.diskMap {
             td.blrt,
             td.brt,
             td.brtb,
+            td.blt,
             td.btb,
             td.bt {
                 border-top: 1px solid grey;
             }
 
             td.blrtb,
+            td.blrb,
             td.brtb,
             td.brb,
             td.btb,

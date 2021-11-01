@@ -382,8 +382,8 @@ no_list: true
       </tr>
       <tr>
         <td class="bb">8F</td>
-        <td class="brb blue">S16</td>
         <td class="brb unused" colspan="7"></td>
+        <td class="brb blue">S16</td>
       </tr>
 
       <tr>
@@ -511,3 +511,17 @@ no_list: true
     </table>
   </div>
 </div>
+
+<h3>How BAM entries work</h3>
+<p>
+  Each track has a BAM entry, which consists of 4 bytes.
+  The first byte is the number of free sectors on that track.
+</p>
+<p>
+  The next three bytes form a bit map of the available sectors in little endian format.
+  A 1 represents a free sector, whilst a 0 represents an allocated sector.
+</p>
+<p>
+  As there are 24 bits available but tracks range from 16 to 21 sectors then the unavailable
+  sectors are marked as allocated, i.e. 0.
+</p>
