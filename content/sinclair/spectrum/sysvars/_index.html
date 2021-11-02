@@ -1,0 +1,455 @@
+---
+type: "manual"
+title: "System Variables"
+linkTitle: "System variables"
+description: "System variables"
+weight: 40
+categories:
+  - spectrum
+#no_list: true
+api:
+  - name: "SWAP"
+    addr: "5B00"
+    title: "Paging subroutine"
+  - name: "STOO"
+    addr: "5B10"
+    title: "Paging subroutine. Entered with interrupts disabled and AF, BC on the stack."
+  - name: "YOUNGER"
+    addr: "5B21"
+    title: "Paging subroutine"
+  - name: "REGNUOY"
+    addr: "5B2A"
+    title: "Paging subroutine"
+  - name: "ONERR"
+    addr: "5B3A"
+    title: "Paging subroutine"
+  - name: "RAMRST"
+    addr: "5B5D"
+    title: "RST 8 instruction used by ROM 1 to report old errors to ROM 3"
+memorymap:
+  - address: "5B52"
+    length: 2
+    name: "OLDHL"
+    desc: "Temp store while switching roms"
+  - address: "5B54"
+    length: 2
+    name: "OLDBC"
+    desc: "Temp store while switching roms"
+  - address: "5B56"
+    length: 2
+    name: "OLDAF"
+    desc: "Temp store while switching roms"
+  - address: "5B58"
+    length: 2
+    name: "TARGET"
+    desc: "Subroutine address in ROM 3"
+  - address: "5B5A"
+    length: 2
+    name: "RETADDR"
+    desc: "Return address in ROM1"
+  - address: "5B5C"
+    length: 1
+    name: "BANKM"
+    desc: "Copy last byte output to Port 7FFD"
+  - address: "5B5E"
+    length: 1
+    name: "RAMERR"
+    desc: "Error passed from ROM 1 to 3 via RAMRST. Also used by SAVE/LOAD as temp drive store"
+  - address: "5B5F"
+    length: 2
+    name: "BAUD"
+    desc: "RS232 bit period in T states/26. Set by FORMAT LINE"
+  - address: "5B61"
+    length: 2
+    name: "SERFL"
+    desc: "Second-character-received flag & data"
+  - address: "5B63"
+    length: 1
+    name: "COL"
+    desc: "Current column from 1 to width"
+  - address: "5B64"
+    length: 1
+    name: "WIDTH"
+    desc: "Paper column width"
+    default: 80
+  - address: "5B65"
+    length: 1
+    name: "TVPARS"
+    desc: "Number of inline parameters expected by RS232"
+  - address: "5B66"
+    length: 1
+    name: "FLAGS3"
+    desc: "Various Flags"
+    val:
+      "Bit 2": "Set when tokens are expanded on printing"
+      "Bit 3": "Set if print output is RS232"
+      "Bit 4": "Set if a disk interface is present"
+      "Bit 5": "Set if drive B: is present"
+  - address: "5B67"
+    length: 1
+    name: "BANK678"
+    desc: "Copy of last byte output to port 1FFD"
+  - address: "5B68"
+    length: 1
+    name: "XLOC"
+    desc: "Hold X location when using the unexpanded COPY command"
+  - address: "5B69"
+    length: 1
+    name: "YLOC"
+    desc: "Hold Y location when using the unexpanded COPY command"
+  - address: "5B6A"
+    length: 2
+    name: "OLDSP"
+    desc: "Old SP (stack pointer) when TSTACK is in use."
+  - address: "5B6C"
+    length: 2
+    name: "SYNRET"
+    desc: "Return address for ONERR"
+  - address: "5B6E"
+    length: 5
+    name: "LASTTV"
+    desc: "Last value printed by calculator"
+  - address: "5B73"
+    length: 2
+    name: "RCLINE"
+    desc: "Current line being renumbered"
+  - address: "5B75"
+    length: 2
+    name: "RCSTART"
+    desc: "Starting line number for renumbering"
+    default: "10"
+  - address: "5B77"
+    length: 2
+    name: "RCSTEP"
+    desc: "Incremental value for renumbering"
+    default: "10"
+  - address: "5B79"
+    length: 1
+    name: "LODDRV"
+    desc: "Drive for LOAD VERIFY or MERGE"
+    val:
+      "T": "For tape"
+      "A": "Drive A"
+      "B": "Drive B"
+      "M": "Ram Disk"
+  - address: "5B7A"
+    length: 1
+    name: "SAVDRV"
+    desc: "Drive for SAVE"
+    val:
+      "T": "For tape"
+      "A": "Drive A"
+      "B": "Drive B"
+      "M": "Ram Disk"
+  - address: "5B7B"
+    length: 1
+    name: "DUMPLF"
+    desc: "Holds the number of 1/216ths user for line feeds in 'COPY EXP'. If a dump cannot fit A4 set to 8 to reduce size of dump."
+    default: "9"
+  - address: "5B7C"
+    length: 8
+    name: "STRIP1"
+    desc: "Stripe 1 bitmap"
+  - address: "5B84"
+    length: 8
+    name: "STRIP2"
+    desc: "Strip2 2 bitmap. Extends to 5B8B"
+  - address: "5BFF"
+    length: -115
+    name: "TSTACK"
+    desc: "Temp stack (Grows DOWN from here). Used when Page 7 is switched in at top of memory while editing or using +3DOS. It can grow down to STRIP1 safely giving 115 bytes"
+  - address: "5C00"
+    length: 8
+    name: "KSTATE"
+    desc: "Used for reading keyboard"
+  - address: "5C08"
+    length: 1
+    name: "LASTK"
+    desc: "Stores newly pressed key"
+  - address: "5C09"
+    length: 1
+    name: "REPDEL"
+    desc: "Time in 1/50s before key repeats"
+    default: "35"
+  - address: "5C0A"
+    length: 1
+    name: "REPPER"
+    desc: "Delay in 1/50s between key repeats"
+    default: "5"
+  - address: "5C0D"
+    length: 1
+    name: "KDATA"
+    desc: "Stores 2nd byte of colour controls entered from keyboard"
+  - address: "5C0E"
+    length: 2
+    name: "TVDATA"
+    desc: "Stores bytes of colour, AT and TAB controls going to TV"
+  - address: "5C10"
+    length: 38
+    name: "STRMS"
+    desc: "Addresses of channels attached to streams"
+  - address: "5C36"
+    length: 2
+    name: "CHARS"
+    desc: "256 less than address of character set starting with space and up to (C)."
+  - address: "5C38"
+    length: 1
+    name: "RASP"
+    desc: "Length of warning buzz"
+  - address: "5C39"
+    length: 1
+    name: "PIP"
+    desc: "Length of keyboard click"
+  - address: "5C3A"
+    length: 1
+    name: "ERRNR"
+    desc: "1 less than report code. Starts at 255 for -1"
+  - address: "5C3B"
+    length: 1
+    name: "FLAGS"
+    desc: "Various flags for BASIC"
+  - address: "5C3C"
+    length: 1
+    name: "TVFLAG"
+    desc: "Flags associated with the TV"
+  - address: "5C3D"
+    length: 2
+    name: "ERRSP"
+    desc: "Address of item on machine stack to be used as error return"
+  - address: "5C3F"
+    length: 2
+    name: "LISTSP"
+    desc: "Address of return address from automatic listing"
+  - address: "5C41"
+    length: 1
+    name: "MODE"
+    desc: "Specifies K, L, C, E or G cursor"
+  - address: "5C42"
+    length: 2
+    name: "NEWPPC"
+    desc: "Line to be jumped to"
+  - address: "5C44"
+    length: 1
+    name: "NSPPC"
+    desc: "Statement number in line to be jumped to. Poking first NEWPPC then NSPPC forces a jump to a specific statement in a line."
+  - address: "5C45"
+    length: 2
+    name: "PPC"
+    desc: "Line number of statement currently being executed"
+  - address: "5C47"
+    length: 1
+    name: "SUBPPC"
+    desc: "Number within line of statement currently being executed"
+  - address: "5C48"
+    length: 1
+    name: "BORDCR"
+    desc: "Border colour multiplied by 8; also contains attributes normally used for lower half of the screen"
+  - address: "5C49"
+    length: 2
+    name: "EPPC"
+    desc: "Number of current line (with program cursor)"
+  - address: "5C4B"
+    length: 2
+    name: "VARS"
+    desc: "Address of variables"
+  - address: "5C4D"
+    length: 2
+    name: "DEST"
+    desc: "Address of variable in assignment"
+  - address: "5C4F"
+    length: 2
+    name: "CHANS"
+    desc: "Address of channel data"
+  - address: "5C51"
+    length: 2
+    name: "CHURCHL"
+    desc: "Address of information currently being used for IO"
+  - address: "5C53"
+    length: 2
+    name: "PROG"
+    desc: "Address of BASIC program"
+  - address: "5C55"
+    length: 2
+    name: "NXTLIN"
+    desc: "Address of next line in program"
+  - address: "5C57"
+    length: 2
+    name: "DATADD"
+    desc: "Address of terminator of last DATA item"
+  - address: "5C59"
+    length: 2
+    name: "ELINE"
+    desc: "Address of command being typed in"
+  - address: "5C5B"
+    length: 2
+    name: "KCUR"
+    desc: "Address of cursor"
+  - address: "5C5D"
+    length: 2
+    name: "CHADD"
+    desc: "Address of next character after the argument of PEEK or the NEWLINE at the end of a POKE statement."
+  - address: "5C5F"
+    length: 2
+    name: "XPTR"
+    desc: "Address of character after the [] marker"
+  - address: "5C61"
+    length: 2
+    name: "WORKSP"
+    desc: "Address of temporary workspace"
+  - address: "5C63"
+    length: 2
+    name: "STKBOT"
+    desc: "Address of bottom of calculator stack"
+  - address: "5C65"
+    length: 2
+    name: "STKEND"
+    desc: "Address of start of space space"
+  - address: "5C67"
+    length: 1
+    name: "BREG"
+    desc: "Calculators B register"
+  - address: "5C68"
+    length: 2
+    name: "MEM"
+    desc: "Address of area used for calculators memory, usually MEMBOT"
+    default: "MEMBOT"
+  - address: "5C6A"
+    length: 1
+    name: "FLAGS2"
+    desc: "More flags"
+    val:
+      "Bit 3": "Set when CAPS SHIFT or CAPS LOCK is on"
+  - address: "5C6B"
+    length: 1
+    name: "DFSZ"
+    desc: "Number of lines (including one blank) in lower part of the screen"
+  - address: "5C6C"
+    length: 2
+    name: "STOP"
+    desc: "Number of the top program line in automatic listings"
+  - address: "5C6E"
+    length: 2
+    name: "OLDPPC"
+    desc: "Line number to which CONTINUE jumps"
+  - address: "5C70"
+    length: 1
+    name: "OSPPC"
+    desc: "Number within line of statement to which CONTINUE jumps"
+  - address: "5C71"
+    length: 1
+    name: "FLAGX"
+    desc: "Various flags"
+  - address: "5C72"
+    length: 2
+    name: "STRLEN"
+    desc: "Length of string type destination in assignment"
+  - address: "5C74"
+    length: 2
+    name: "TADDR"
+    desc: "Address of next item in syntax table"
+  - address: "5C76"
+    length: 2
+    name: "SEED"
+    desc: "The seed for the RNG. Variable set using RANDOMIZE"
+  - address: "5C78"
+    length: 3
+    name: "FRAMES"
+    desc: "3 byte (least significant first) frame counter incremented every 20ms"
+  - address: "5C7B"
+    length: 2
+    name: "UDG"
+    desc: "Address of first user defined graphic"
+  - address: "5C7D"
+    length: 1
+    name: "COORDX"
+    desc: "X coordinate of last point plotted"
+  - address: "5C7E"
+    length: 1
+    name: "COORDY"
+    desc: "Y coordinate of last point plotted"
+  - address: "5C7F"
+    length: 1
+    name: "PPOSN"
+    desc: "33 column number of printer position"
+  - address: "5C80"
+    length: 2
+    name: "PRCC"
+    desc: "Full address of next position for LPRINT. Only used for ZX printer, not in 128K mode."
+  - address: "5C82"
+    length: 2
+    name: "ECHOE"
+    desc: "33 column number & 24 line number of end of input buffer"
+  - address: "5C84"
+    length: 2
+    name: "DFCC"
+    desc: "Address in display file of PRINT position"
+  - address: "5C86"
+    length: 2
+    name: "DFCCL"
+    desc: "Like DFCC but for lower part of screen"
+  - address: "5C88"
+    length: 2
+    name: "SPOSN"
+    desc: "33 col & 24 line number for PRINT position"
+  - address: "5C8A"
+    length: 2
+    name: "SPOSNL"
+    desc: "Like SPOSN but for lower part of screen"
+  - address: "5C8C"
+    length: 1
+    name: "SCRCT"
+    desc: "Counts scrolls, always 1 more than number of scrolls to perform before scroll."
+  - address: "5C8D"
+    length: 1
+    name: "ATTRP"
+    desc: "Permanent current colours"
+  - address: "5C8E"
+    length: 1
+    name: "MASKP"
+    desc: "Used for transparent colour. Any bit that is 1 shows bit taken from screen and not ATTRP"
+  - address: "5C8F"
+    length: 1
+    name: "ATTRT"
+    desc: "Like ATTRP but for temporary colours"
+  - address: "5C90"
+    length: 1
+    name: "MASKT"
+    desc: "Like MASKP but for temporary colours"
+  - address: "5C91"
+    length: 1
+    name: "PFLAG"
+    desc: "More flags"
+  - address: "5C92"
+    length: 30
+    name: "MEMBOT"
+    desc: "Calculators memory area used to store numbers not convenient to store on the calculator stack"
+  - address: "5CB0"
+    length: 2
+    name: "NMIADD"
+    desc: "Address of users NMI routine. Older machines NMI didn't work well so was marked as UNUSED so can cause issues on +3 if user code uses this"
+  - address: "5CB2"
+    length: 2
+    name: "RAMTOP"
+    desc: "Address of last byte of BASIC system area"
+  - address: "5CB4"
+    length: 2
+    name: "PRAMT"
+    desc: "Address of last byte of physical RAM"
+  - address: "5CB6"
+    name: "SYSVAREND"
+    desc: "Start of Channel information, usually value in (CHANS)"
+# Our entries based on other pages/docs
+  - address: "5CC0"
+    length: 12
+    name: "RESERVED_MMAP"
+    desc: "Marked reserved in 48k memory map"
+  - address: "5CCB"
+    name: "BASE_AVAIL_MEM"
+    desc: "Base of available memory"
+
+notes:
+  - "Variables between 5B00 and 5BFF are new to 128k & +3. On 48K it is the printer buffer & sometimes used for code but will break newer machines."
+  - "Last variable is at 5CB4 so from 5CB6 up is free according to +3 docs but 48k docs don't show that"
+  - "5CC0 to 5CCA is marked as reserved in some 48K docs"
+  - "48K memory maps show 5CCB as start of memory"
+---
