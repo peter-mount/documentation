@@ -23,3 +23,4 @@ node_modules
 build-toolset.sh
 public
 publish-deploy-uat.sh
+/static/static/gen/

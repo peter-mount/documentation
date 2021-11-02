@@ -1,0 +1,27 @@
+# CBM DOS disk format
+file: "static/static/gen/c64/cbmdos-disk.svg"
+width: 500
+height: 500
+floppyDisk:
+  # CBM Dos is a 35 track disk but it's possible to use tracks 36-40 so
+  # we include them
+  tracks: 40
+  # Disk media colour
+  colour: "#666"
+  # Track defs with sectors per track & colour
+  trackDefs:
+    - start: 1
+      sectors: 21
+      colour: "#c0ffc0"
+    - start: 18
+      sectors: 19
+      colour: "#c0e0ff"
+    - start: 25
+      sectors: 18
+      colour: "#ffe0c0"
+    - start: 31
+      sectors: 17
+      colour: "#ffffc0"
+    - start: 36
+      sectors: 17
+      colour: "#f0f0f0"

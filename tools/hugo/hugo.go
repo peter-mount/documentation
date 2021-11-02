@@ -29,7 +29,12 @@ func (h *Hugo) Init(k *kernel.Kernel) error {
 func (h *Hugo) Start() error {
   if *h.cleanup {
     // Remove all of our temp dirs
-    return util.StringSliceOf("public", "static/static/book", "static/static/chipref").ForEach(os.RemoveAll)
+    return util.StringSliceOf(
+      "public",
+      "static/static/book",
+      "static/static/chipref",
+      "static/static/gen",
+    ).ForEach(os.RemoveAll)
   }
 
   return nil

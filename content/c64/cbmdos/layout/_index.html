@@ -26,12 +26,20 @@ no_list: true
     <p>
       Track counting starts at 1, not 0, and goes up to 35.
     </p>
+    <p>
+      Track's 36&hellip;40 are only valid for 40 track disks, although with low-level programming
+      the 1541 drive could access tracks 36&hellip;40.
+    </p>
+    <p>
+      Some copy-protection schemes did this.
+    </p>
 
     <p>
       Sector counting starts at 0, not 1, for the first sector, therefore a track with 21 sectors will go from 0 to 20.
     </p>
   </div>
   <div class="col-5">
+    <img src="/static/gen/c64/cbmdos-disk.svg" alt="Track layout" style="width: 80%;object-fit:scale-down;"/>
     <table class="memoryMap">
       <thead>
       <tr>
@@ -42,52 +50,45 @@ no_list: true
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr class="green">
         <td>01</td>
         <td>17</td>
         <td>21</td>
         <td>357</td>
         <td>7820</td>
       </tr>
-      <tr>
+      <tr class="blue">
         <td>18</td>
         <td>24</td>
         <td>19</td>
         <td>133</td>
         <td>7170</td>
       </tr>
-      <tr>
+      <tr class="orange">
         <td>25</td>
         <td>30</td>
         <td>18</td>
         <td>108</td>
         <td>6300</td>
       </tr>
-      <tr>
+      <tr class="yellow">
         <td>31</td>
         <td>35</td>
         <td>17</td>
         <td>85</td>
         <td>6020</td>
       </tr>
-      <tr>
-        <td class="blue">36<sup>*</sup></td>
-        <td class="blue">40<sup>*</sup></td>
-        <td class="blue">17</td>
-        <td class="blue">85</td>
-        <td class="blue">6020</td>
+      <tr class="grey">
+        <td>36<sup>*</sup></td>
+        <td>40<sup>*</sup></td>
+        <td>17</td>
+        <td>85</td>
+        <td>6020</td>
       </tr>
       </tbody>
     </table>
     <p>
       * Standard CBM DOS disks had only 35 tracks.
-    </p>
-    <p>
-      Track's 36&hellip;40 are only valid for 40 track disks, although with low-level programming
-      the 1541 drive could access tracks 36&hellip;40.
-    </p>
-    <p>
-      Some copy-protection schemes did this.
     </p>
   </div>
 </div>

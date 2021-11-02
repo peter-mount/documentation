@@ -219,26 +219,6 @@ table.hexGrid {
         }
     }
 
-    // Unused op code shows with a background TODO do we need this?
-    td.unused {
-      background: #fff;
-    }
-    td.grey {
-        background: #f0f0f0;
-    }
-    td.blue {
-        background: #c0e0ff;
-    }
-    td.orange {
-        background: #ffe0c0;
-    }
-    td.yellow {
-        background: #ffffc0;
-    }
-    td.green {
-        background: #c0ffc0;
-    }
-
 }
 
 table.resources {
@@ -383,32 +363,46 @@ table.diskMap {
                 border-right: 1px dashed grey;
             }
 
-            // Unused op code shows with a background TODO do we need this?
-            td.unused {
-              background: #fff;
-            }
-            td.grey {
-                background: #f0f0f0;
-            }
-            td.blue {
-                background: #c0e0ff;
-            }
-            td.orange {
-                background: #ffe0c0;
-            }
-            td.yellow {
-                background: #ffffc0;
-            }
-            td.green {
-                background: #c0ffc0;
-            }
-
             td.rotright {
                 //transform: rotate(90deg);
                 writing-mode: vertical-rl;
             }
 
         }
+
     }
 
 }
+
+table.diskMap,
+table.memoryMap,
+table.hexGrid {
+
+    // Unused op code shows with a background TODO do we need this?
+    tr.unused,
+    td.unused {
+      background: #fff;
+    }
+    tr.grey,
+    td.grey {
+        background: #f0f0f0;
+    }
+    tr.blue,
+    td.blue {
+        background: #c0e0ff;
+    }
+    tr.orange,
+    td.orange {
+        background: #ffe0c0;
+    }
+    tr.yellow,
+    td.yellow {
+        background: #ffffc0;
+    }
+    tr.green,
+    td.green {
+        background: #c0ffc0;
+    }
+
+}
+
