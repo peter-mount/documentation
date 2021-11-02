@@ -1,0 +1,93 @@
+---
+type: "manual"
+title: "Spectrum 128K Memory Map"
+linkTitle: "128K"
+description: "Spectrum 128K Memory Map"
+categories:
+  - spectrum
+  - memoryMap
+#no_list: true
+notes:
+  - Odd ram banks are contended with the ULA (even though it can only use banks 5 and 7).
+  - Even banks are not contended so time critical code should run within those banks.
+  - Bank 5 is always mapped at 4000 and Bank 2 at 8000 regardless of what bank is mapped at C000
+  - Selecting the alternate screen in Bank 7 only tells the ULA to use it. It will not be placed at 4000
+---
+<p>
+    The memory of the 128K / +2 is organised like below:
+</p>
+
+<table class="memoryMap2">
+    <tbody>
+    <tr>
+        <td class="btb">0000<br/>3FFF</td>
+        <td class="grey brtb">ROM 0<br/>128k Editor</td>
+        <td class="unused brtb">ROM 1<br/>48K Basic</td>
+    </tr>
+
+    <tr>
+        <td class="bb">4000</br>7FFF</td>
+        <td class="green brb">Bank 5<br/>Screen #1</td>
+    </tr>
+    <tr>
+        <td class="bb">8000<br/>BFFF</td>
+        <td class="green brb">Bank 2<br/>&nbsp;</td>
+    </tr>
+    <tr>
+        <td class="bb">C000<br/>FFFF</td>
+        <td class="green brb">Bank 0<br/>&nbsp;</td>
+        <td class="orange brtb">Bank 1<br/>&nbsp;</td>
+        <td class="orange brtb">Bank 2<br/>&nbsp;</td>
+        <td class="orange brtb">Bank 3<br/>&nbsp;</td>
+        <td class="orange brtb">Bank 4<br/>&nbsp;</td>
+        <td class="orange brtb">Bank 5<br/>Screen #1</td>
+        <td class="orange brtb">Bank 6<br/>&nbsp;</td>
+        <td class="orange brtb">Bank 7<br/>Screen #2</td>
+    </tr>
+
+    </tbody>
+</table>
+<p>
+    The memory is paged by writing to port 0x7FFD:
+</p>
+<table class="memoryMap2">
+    <thead>
+    <tr>
+        <th>Port</th>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="bb">7FFD</td>
+        <td class="unused brb" colspan="2"></td>
+        <td class="orange brb">DIS</td>
+        <td class="grey brb">ROM</td>
+        <td class="yellow brb">SCR</td>
+        <td class="green brb" colspan="3">RAM</td>
+    </tr>
+    </tbody>
+</table>
+<ul>
+    <li>
+        RAM - The ram bank to page into 0xC000&hellip;0x7FFFF
+    </li>
+    <li>
+        SCR set to 0 to display screen #1 in bank 5.<sup>[3]</sup>
+        Set to 1 to display screen #2 in bank 7.<sup>[4]</sup>
+    </li>
+    <li>
+        ROM set selects the 48K Basic rom, clear the 128K editor.
+    </li>
+    <li>
+        DIS if set disables ram paging so that extra memory cannot be used in 48K mode.
+        Once set it cannot be disabled until the machine is reset.
+    </li>
+</ul>

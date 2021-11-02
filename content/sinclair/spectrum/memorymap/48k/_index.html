@@ -10,22 +10,72 @@ categories:
 ---
 <div class="container">
   <div class="row">
-    <table class="memoryMap">
+    <table class="memoryMap2">
       <thead>
       <tr>
         <th>Address</th>
-        <th>48K</th>
+        <th colspan="9">Content</th>
       </tr>
       </thead>
       <tbody>
       <tr>
-        <td>0x0000</td>
-        <td>ROM</td>
+        <td class="bb">0x0000</td>
+        <td class="grey bb" colspan="8">ROM</td>
+        <td class="grey brb"></td>
       </tr>
+
       <tr>
         <td>0x4000</td>
-        <td>Screen Memory</td>
+        <td class="blue brb" colspan="8">Screen Memory</td>
+        <td class="grey brb rotright" rowspan="6">Contended RAM</td>
       </tr>
+      <tr>
+        <td class="bb">0x5800</td>
+        <td class="blue brb" colspan="8">Screen Colour data</td>
+      </tr>
+
+      <tr>
+        <td class="bb">0x5B00</td>
+        <td class="orange brb" colspan="8">Printer buffer</td>
+      </tr>
+
+      <tr>
+        <td class="bb">0x5C00</td>
+        <td class="yellow brb" colspan="8">System Variables</td>
+      </tr>
+
+      <tr>
+        <td class="bb">0x5CC0</td>
+        <td class="grey brb" colspan="8">Reserved</td>
+      </tr>
+
+      <tr>
+        <td>0x5CCB</td>
+        <td class="unused brb" rowspan="5" colspan="8">Available Memory</td>
+      </tr>
+      <tr>
+        <td class="bt">0x8000</td>
+        <td class="grey brb rotright" rowspan="6">Un-Contended RAM</td>
+      </tr>
+      <tr>
+        <td>0xA000</td>
+      </tr>
+      <tr>
+        <td>0xC000</td>
+      </tr>
+      <tr>
+        <td class="bb">0xE000</td>
+      </tr>
+
+      <tr>
+        <td class="bt">0xFF58</td>
+        <td class="grey brb" rowspan="2" colspan="8">Reserved</td>
+      </tr>
+
+      <tr>
+        <td class="bb">0xFFFF</td>
+      </tr>
+
       </tbody>
     </table>
   </div>
