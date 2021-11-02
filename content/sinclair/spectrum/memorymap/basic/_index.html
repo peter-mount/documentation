@@ -1,0 +1,138 @@
+---
+type: "manual"
+title: "Spectrum Basic Memory Map"
+linkTitle: "Basic"
+description: "Spectrum Basic Memory Map"
+categories:
+  - spectrum
+  - memoryMap
+#no_list: true
+---
+<p>
+    The following table shows the memory map of the Spectrum as seen by BASIC.
+</p>
+<table class="memoryMap2">
+    <thead>
+    <tr>
+        <th>Address</th>
+        <th colspan="4">48K</th>
+        <th colspan="4">128K</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="bb">4000</td>
+        <td class="brb blue" colspan="8">Display File</td>
+    </tr>
+    <tr>
+        <td class="bb">5800</td>
+        <td class="brb blue" colspan="8">Display Attributes</td>
+    </tr>
+    <tr>
+        <td class="bb">5B00</td>
+        <td class="brb grey" colspan="4">Printer Buffer</td>
+        <td class="br orange" colspan="4"></td>
+    </tr>
+    <tr>
+        <td class="bb">5C00</td>
+        <td class="br orange" colspan="8">System variables</td>
+    </tr>
+    <tr>
+        <td class="bb">5CB6<br/>CHANS</td>
+        <td class="brtb yellow" colspan="8">Channel Information</td>
+    </tr>
+
+    <tr>
+        <td>PROG</td>
+        <td class="brb " colspan="8">0x80h</td>
+    </tr>
+
+    <tr>
+        <td class="bb"></td>
+        <td class="brb green" colspan="8">Basic Program</td>
+    </tr>
+
+    <tr>
+        <td>VARS</td>
+        <td class="brb yellow" colspan="8">Variables</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td class="brb " colspan="8">0x80h</td>
+    </tr>
+
+    <tr>
+        <td class="bb"></td>
+        <td class="brb grey" colspan="8">Command or program line being edited</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td class="brb " colspan="8">NL</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td class="brb " colspan="8">0x80h</td>
+    </tr>
+
+    <tr>
+        <td class="bb">WORKSP</td>
+        <td class="brb grey" colspan="8">INPUT data</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td class="brb " colspan="8">NL</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td class="brb grey" colspan="8">Temporary workspace</td>
+    </tr>
+
+    <tr>
+        <td class="bt">STKBOT</td>
+        <td class="brb yellow" colspan="8" rowspan="2">Calculator stack</td>
+    </tr>
+
+    <tr>
+        <td class="bb">STKEND</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td class="brb " colspan="8">Spare</td>
+    </tr>
+
+    <tr>
+        <td class="bt">SP</td>
+        <td class="brb orange" colspan="8">Machine stack</td>
+    </tr>
+
+    <tr>
+        <td class="bt">&nbsp;</td>
+        <td class="brb orange" colspan="8" rowspan="2">Gosub stack</td>
+    </tr>
+
+    <tr>
+        <td class="bb">RAMTOP</td>
+    </tr>
+
+    <tr>
+        <td class="bb"></td>
+        <td class="brb"colspan="8">0x3E</td>
+    </tr>
+
+    <tr>
+        <td>UDG</td>
+        <td class="brb"colspan="8" rowspan="2">User defined graphics</td>
+    </tr>
+
+    <tr>
+        <td class="bb">PRAMT</td>
+    </tr>
+
+    </tbody>
+</table>
