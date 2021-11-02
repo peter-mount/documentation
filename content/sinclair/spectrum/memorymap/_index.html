@@ -1,0 +1,101 @@
+---
+type: "manual"
+title: "Spectrum Memory Map Overview"
+linkTitle: "Memory Map"
+description: "Spectrum Memory Map"
+weight: 19
+categories:
+- spectrum
+- memoryMap
+#no_list: true
+---
+<p>
+    The following table is an overview of the Spectrum Memory map.
+</p>
+<table class="memoryMap2">
+    <thead>
+    <tr>
+        <th>Address</th>
+        <th>48K</th>
+        <th colspan="8">128K / +2</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>0000</td>
+        <td class="brb" rowspan="4">ROM</td>
+        <td class="brb yellow" rowspan="4" colspan="4">ROM 0<br/>128K Editor</td>
+        <td class="brb orange" rowspan="4" colspan="4">ROM 1<br/>48K Editor</td>
+    </tr>
+    <tr>
+        <td>1000</td>
+    </tr>
+    <tr>
+        <td>2000</td>
+    </tr>
+    <tr>
+        <td class="bb">3000</td>
+    </tr>
+    <tr>
+        <td>4000</td>
+        <td class="brb green no">Screen</td>
+        <td class="brb green" colspan="8" rowspan="4">RAM Bank 5</td>
+    </tr>
+    <tr>
+        <td>5000</td>
+        <td class="brb green" rowspan="3">OS vars & free memory</td>
+    </tr>
+    <tr>
+        <td>6000</td>
+    </tr>
+    <tr>
+        <td class="bb">7000</td>
+    </tr>
+    <tr>
+        <td>8000</td>
+        <td class="brb blue" rowspan="8">free memory</td>
+        <td class="brb blue" colspan="8" rowspan="4">RAM Bank 2</td>
+    </tr>
+    <tr>
+        <td>9000</td>
+    </tr>
+    <tr>
+        <td>A000</td>
+    </tr>
+    <tr>
+        <td class="bb">B000</td>
+    </tr>
+    <tr>
+        <td>C000</td>
+        <td class="yellow brb" rowspan="4">RAM Bank 0</td>
+        <td class="yellow brb" rowspan="4">RAM Bank 1</td>
+        <td class="blue brb" rowspan="4">RAM Bank 2</td>
+        <td class="yellow brb" rowspan="4">RAM Bank 3</td>
+        <td class="yellow brb" rowspan="4">RAM Bank 4</td>
+        <td class="green brb" rowspan="4">RAM Bank 5<br/>Screen #1</td>
+        <td class="yellow brb" rowspan="4">RAM Bank 6</td>
+        <td class="yellow brb" rowspan="4">RAM Bank 7<br/>Screen #2</td>
+    </tr>
+    <tr>
+        <td>D000</td>
+    </tr>
+    <tr>
+        <td>E000</td>
+    </tr>
+    <tr>
+        <td class="bb">F000</td>
+    </tr>
+    </tbody>
+</table>
+<h2>Memory Contention</h2>
+<p>
+  Some memory is  contended with the ULA, with the latter having priority whenever the screen is being updated.
+  Time critical code needs to run in uncontended RAM.
+</p>
+<p>
+  On the 48K memory between 0x4000&hellip;0x7FFF is contended with the ULS whilst 0x8000&hellip;0xFFFF is not.
+</p>
+<p>
+  On the 128K and +2, odd numbered RAM banks are contended with the ULA.
+  Time critical code should run in even numbered RAM banks.
+</p>

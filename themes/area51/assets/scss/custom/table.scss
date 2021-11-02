@@ -259,6 +259,12 @@ table.resources {
     }
 }
 
+table.diskMap thead tr:first-child th:first-child {
+    //transform: rotate(-90deg);
+    writing-mode: vertical-rl;
+}
+
+table.memoryMap2,
 table.diskMap {
     display: block;
     //overflow-x: auto;
@@ -284,10 +290,7 @@ table.diskMap {
           width: 3em;
         }
 
-        tr:first-child th:first-child {
-            //transform: rotate(-90deg);
-            writing-mode: vertical-rl;
-        }
+
     }
 
     tbody {
@@ -376,6 +379,7 @@ table.diskMap {
 
 table.diskMap,
 table.memoryMap,
+table.memoryMap2,
 table.hexGrid {
 
     // Unused op code shows with a background TODO do we need this?
