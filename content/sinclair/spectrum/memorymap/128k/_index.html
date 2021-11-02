@@ -1,8 +1,8 @@
 ---
 type: "manual"
-title: "Spectrum 128K Memory Map"
-linkTitle: "128K"
-description: "Spectrum 128K Memory Map"
+title: "Spectrum 128K/+2 Memory Map"
+linkTitle: "128K/+2"
+description: "Spectrum 128K/+2 Memory Map"
 categories:
   - spectrum
   - memoryMap
@@ -14,7 +14,8 @@ notes:
   - Selecting the alternate screen in Bank 7 only tells the ULA to use it. It will not be placed at 4000
 ---
 <p>
-    The memory of the 128K / +2 is organised like below:
+    The memory of the 128K and +2 is organised like below.
+    Note the <a href="../plus3/">+2A and +3</a> are different.
 </p>
 
 <table class="memoryMap2">
@@ -48,7 +49,14 @@ notes:
     </tbody>
 </table>
 <p>
-    The memory is paged by writing to port 0x7FFD:
+    RAM Banks 1, 3, 4 and 6 and most of 7 are used for the ram disk.
+    The rest of bank 7 contains editor scratch pads.
+</p>
+<p>
+    The memory is paged by writing to port 0x7FFD.
+</p>
+<p>
+    This port is write only, so a copy is stored in ram at address 0x5B5C.
 </p>
 <table class="memoryMap2">
     <thead>
@@ -62,6 +70,7 @@ notes:
         <th>2</th>
         <th>1</th>
         <th>0</th>
+        <th>Ram Copy</th>
     </tr>
     </thead>
     <tbody>
@@ -72,6 +81,7 @@ notes:
         <td class="grey brb">ROM</td>
         <td class="yellow brb">SCR</td>
         <td class="green brb" colspan="3">RAM</td>
+        <td class="brb">5B5C</td>
     </tr>
     </tbody>
 </table>
@@ -91,3 +101,13 @@ notes:
         Once set it cannot be disabled until the machine is reset.
     </li>
 </ul>
+{{< book/sourceCode title="Typical bank switch on a 128:">}}
+{{< book/asm op="LD" param="A,(0x5B5C)" comment="Get previous port value" >}}
+{{< book/asm op="AND" param="0xF8" >}}
+{{< book/asm op="OR" param="4" comment="Select bank 4">}}
+{{< book/asm op="LD" param="BC,0x7FFD" comment="Port address">}}
+{{< book/asm op="DI" comment="Disable interrupts">}}
+{{< book/asm op="LD" param="(0x5B5C),A" comment="Update memory copy of port" >}}
+{{< book/asm op="OUT" param="(C),A" commant="Update actual port" >}}
+{{< book/asm op="EI" comment="Enable interrupts" >}}
+{{< /book/sourceCode >}}

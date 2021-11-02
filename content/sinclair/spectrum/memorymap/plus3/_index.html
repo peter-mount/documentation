@@ -1,0 +1,160 @@
+---
+type: "manual"
+title: "Spectrum +2A/+3 Memory Map"
+linkTitle: "+2A/+3"
+description: "Spectrum +2A/+3 Memory Map"
+categories:
+  - spectrum
+  - memoryMap
+#no_list: true
+---
+<p>
+    The memory of the +2A and +3 are similar to the <a href="../128k/">128K and +2</a>.
+    The main difference is that these models have four ROMs rather than two and additional memory configurations.
+</p>
+<p>
+    The memory is paged by writing to port 0x7FFD and port 0x1FFD.
+    Port 0x7FFD is almost identical to the 128 except that ROM is now the lower bit.
+</p>
+<p>
+    Both of these ports are write only, so a copy is stored in ram at address 0x5B5C for 7FFD and 0x5B67 for port 1FFD.
+</p>
+<table class="memoryMap2">
+    <thead>
+    <tr>
+        <th>Port</th>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+        <th>Ram Copy</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="bb" rowspan="2">1FFD</td>
+        <td class="unused brb" colspan="3" rowspan="2"></td>
+        <td class="brb blue" rowspan="2">Printer<br/>Strobe</td>
+        <td class="brb green" rowspan="2">Disk<br/>Motor</td>
+        <td class="grey brb"><small class="right">1</small>ROM</td>
+        <td class="unused brb"></td>
+        <td class="orange brb">0</td>
+        <td class="brb" rowspan="2">5B67</td>
+    </tr>
+    <tr>
+        <td class="grey brb" colspan="2">Memory Mode</td>
+        <td class="orange brb">1</td>
+    </tr>
+    <tr>
+        <td class="bb">7FFD</td>
+        <td class="unused brb" colspan="2"></td>
+        <td class="orange brb">DIS</td>
+        <td class="grey brb"><small class="right">0</small>ROM</td>
+        <td class="yellow brb">SCR</td>
+        <td class="green brb" colspan="3">RAM</td>
+        <td class="brb">5B5C</td>
+    </tr>
+    </tbody>
+</table>
+<ul>
+    <li>
+        Bit 0 of port 0X1FFD selects the paging mode. If 0 then it's normal but 1 selects an alternate memory map.
+        <h4>Normal mode</h4>
+        <ul>
+            <li>
+                RAM - The ram bank to page into 0xC000&hellip;0x7FFFF
+            </li>
+            <li>
+                ROM set selects the rom. It's split as 2 bits on each port with bit 0 from 7FFD bit 4 and bit 1 from 1FFD bit 2.
+                <table class="memoryMap">
+                    <thead>
+                    <tr>
+                        <th>Rom ID</th>
+                        <th>Rom Selected</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>0</td><td>128K editor, menu system and self test</td></tr>
+                    <tr><td>1</td><td>128k syntax checker</td></tr>
+                    <tr><td>2</td><td>+3DOS</td></tr>
+                    <tr><td>3</td><td>48K Basic</td></tr>
+                    </tbody>
+                </table>
+                <p>
+                    The IDs are such that, if 128K code changes rom (as they don't know about the new register)
+                    then they would still get the correct rom as bit 0 is from the original port and bit1 would
+                    normally be clear at that point.
+                </p>
+            </li>
+        </ul>
+        <h4>Special mode</h4>
+        <p>
+            In special mode, the RAM bits are ignored and bits 1 and 2 of port 0x1FFD control a memory map layout
+        </p>
+        <table class="memoryMap2">
+            <thead>
+            <tr>
+                <th>Address</th>
+                <th>Mode 0</th>
+                <th>Mode 1</th>
+                <th>Mode 2</th>
+                <th>Mode 3</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="bb">0000</td>
+                <td class="brb">Bank 0<br/>&nbsp;</td>
+                <td class="brb">Bank 4<br/>&nbsp;</td>
+                <td class="brb">Bank 4<br/>&nbsp;</td>
+                <td class="brb">Bank 4<br/>&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="bb">4000</td>
+                <td class="brb orange">Bank 1<br/>&nbsp;</td>
+                <td class="brb green">Bank 5<br/>Screen #1</td>
+                <td class="brb green">Bank 5<br/>Screen #1</td>
+                <td class="brb green">Bank 7<br/>Screen #2</td>
+            </tr>
+            <tr>
+                <td class="bb">8000</td>
+                <td class="brb">Bank 2<br/>&nbsp;</td>
+                <td class="brb">Bank 6<br/>&nbsp;</td>
+                <td class="brb">Bank 6<br/>&nbsp;</td>
+                <td class="brb">Bank 6<br/>&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="bb">C000</td>
+                <td class="brb orange">Bank 3<br/>&nbsp;</td>
+                <td class="brb green">Bank 7<br/>Screen #2</td>
+                <td class="brb orange">Bank 3<br/>&nbsp;</td>
+                <td class="brb orange">Bank 3<br/>&nbsp;</td>
+            </tr>
+            </tbody>
+        </table>
+    </li>
+    <li>
+        SCR set to 0 to display screen #1 in bank 5.
+        Set to 1 to display screen #2 in bank 7.
+    </li>
+    <li>
+        DIS if set disables ram paging so that extra memory cannot be used in 48K mode.
+        Once set it cannot be disabled until the machine is reset.
+    </li>
+    <li>
+        Disk Motor turns on/off the disk drive motor.
+    </li>
+    <li>
+        Printer Strobe controls the printer port
+    </li>
+</ul>
+
+<h3>Plus 3</h3>
+<p>
+    On the Plus 3 ram bankes 1, 3, 4 and 6 are used for the disk cache and RAM disk.
+    Bank 7 contains the editor scratch pads and +3DOS workspace.
+</p>
