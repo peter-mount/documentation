@@ -39,16 +39,15 @@ type TrackDef struct {
   Colour  string `yaml:"colour"`
 }
 
-func (td TrackDef) drawTrackEdge(r int, canvas *svg.SVG) {
+func (td TrackDef) drawTrack(r int, canvas *svg.SVG) {
   canvas.Circle(0, 0, r, "fill='"+td.Colour+"'")
 }
 
-func (td TrackDef) drawTrack(r int, canvas *svg.SVG) {
-  td.drawTrackEdge(r, canvas)
+func (td TrackDef) drawSector(r1, r2 int, canvas *svg.SVG) {
   da := math.Pi * (2.0 / float64(td.Sectors))
   for s := 0; s < td.Sectors; s++ {
     sx, sy := math.Sincos(float64(s) * da)
-    canvas.Line(0, 0, int(float64(r)*sx), -int(float64(r)*sy))
+    canvas.Line(int(float64(r1)*sx), -int(float64(r1)*sy), int(float64(r2)*sx), -int(float64(r2)*sy))
   }
 }
 
@@ -70,11 +69,21 @@ func (d DiskDefinition) Write(s *File, canvas *svg.SVG) error {
   // Disk media
   track(d.radius, d.Colour)
 
+  // Tracks
   for t := 1; t <= d.Tracks; t++ {
     d.drawTrack(t, canvas)
   }
-  // Next track if it existed
+
+  // Next track if it existed, defines boundary
   track(d.trackRadius(d.Tracks+1), d.Colour)
+
+  // sectors
+  t2:=d.Tracks+1
+  for i := len(d.Def) - 1; i >= 0; i-- {
+    td2:=d.Def[i]
+    td2.drawSector(d.trackRadius(td2.Start),d.trackRadius(t2),canvas)
+    t2=td2.Start
+  }
 
   // Spindle
   track(20, "#fff")
