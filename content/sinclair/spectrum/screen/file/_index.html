@@ -33,9 +33,9 @@ memorymap:
   it's actually pretty logical. You can tell this weirdness is down to how the ULA works internally.
 </p>
 
-<h2>Calculating the address</h2>
+<h3>Calculating the characters address</h3>
 <p>
-  If you have
+  If you have:
 </p>
 <ul>
   <li><code>R</code> with the screen row (0&hellip;23)</li>
@@ -105,5 +105,169 @@ msb := 0x40 OR (R AND 0x18) OR N
 {{< /highlight >}}
 
 <p>
-  An example for Z80 <a href="../../../asm/screen/getcharaddr/">Machine Code</a> is available.
+  An example routine in <a href="../../../asm/screen/getcharaddr/">Z80 Machine Code</a> for this calculation is
+  available to download.
+</p>
+
+<h3>Addresses of bytes within the same character</h3>
+<div class="row">
+  <div class="col-6">
+<p>
+  If you calculate the address of the top row of the character (i.e. <code>N</code>=0) then, when rendering the
+  character to the screen you just need to increment the upper byte of the address.
+</p>
+    <p>
+      This works as the lower 3 bits of the upper byte represent the row for the character.
+    </p>
+    <p>
+      The adjacent table shows the addresses for each row of the first 5 characters on row 0 of the screen.
+    </p>
+  </div>
+  <div class="col-6">
+<table class="memoryMap3">
+  <thead>
+  <tr>
+    <th rowspan="2">Char Row</th>
+    <th colspan="6">Address</th>
+  </tr>
+  <tr>
+    <th>Char 0</th>
+    <th>Char 1</th>
+    <th>Char 2</th>
+    <th>Char 3</th>
+    <th>Char 4</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="brb">0</td>
+    <td class="brb blue">4000</td>
+    <td class="brb green">4001</td>
+    <td class="brb orange">4002</td>
+    <td class="brb yellow">4003</td>
+    <td class="brb grey">4004</td>
+  </tr>
+  <tr>
+    <td class="brb">1</td>
+    <td class="brb blue">4100</td>
+    <td class="brb green">4101</td>
+    <td class="brb orange">4102</td>
+    <td class="brb yellow">4103</td>
+    <td class="brb grey">4104</td>
+  </tr>
+  <tr>
+    <td class="brb">2</td>
+    <td class="brb blue">4200</td>
+    <td class="brb green">4201</td>
+    <td class="brb orange">4202</td>
+    <td class="brb yellow">4203</td>
+    <td class="brb grey">4204</td>
+  </tr>
+  <tr>
+    <td class="brb">3</td>
+    <td class="brb blue">4300</td>
+    <td class="brb green">4301</td>
+    <td class="brb orange">4302</td>
+    <td class="brb yellow">4303</td>
+    <td class="brb grey">4304</td>
+  </tr>
+  <tr>
+    <td class="brb">4</td>
+    <td class="brb blue">4400</td>
+    <td class="brb green">4401</td>
+    <td class="brb orange">4402</td>
+    <td class="brb yellow">4403</td>
+    <td class="brb grey">4404</td>
+  </tr>
+  <tr>
+    <td class="brb">5</td>
+    <td class="brb blue">4500</td>
+    <td class="brb green">4501</td>
+    <td class="brb orange">4502</td>
+    <td class="brb yellow">4503</td>
+    <td class="brb grey">4504</td>
+  </tr>
+  <tr>
+    <td class="brb">6</td>
+    <td class="brb blue">4600</td>
+    <td class="brb green">4601</td>
+    <td class="brb orange">4602</td>
+    <td class="brb yellow">4603</td>
+    <td class="brb grey">4604</td>
+  </tr>
+  <tr>
+    <td class="brb">7</td>
+    <td class="brb blue">4700</td>
+    <td class="brb green">4701</td>
+    <td class="brb orange">4702</td>
+    <td class="brb yellow">4703</td>
+    <td class="brb grey">4704</td>
+  </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
+<h3>Get address of the next character</h3>
+<p>
+  You can get the address of the next character simply by adding one to the lower byte of the address.
+  Be careful however when wrapping around the end of the line as, after the first 8 lines the address will fail.
+</p>
+<p>
+  Ideally you should calculate the address again at the start of each line.
+</p>
+<p>
+  This might explain why the original spectrum editor was 8 lines long, as you only needed to set the high byte to an
+  appropriate 8-line block in memory and set the low byte to the offset in the line being edited to get that
+  characters screen address.
+</p>
+
+<h4>A simple 256 character editor</h4>
+<div class="row">
+  <div class="col-6">
+    <p>
+      As mentioned above, you could use one third of the screen as a simple editor which is capable of displaying 256
+      characters.
+    </p>
+  </div>
+  <div class="col-6">
+    <table class="memoryMap3">
+      <thead>
+      <tr>
+        <th>Address</th>
+        <th>MSB</th>
+        <th colspan="2">Rows</th>
+        <th>Screen&nbsp;position</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="blue">
+        <td class="brb">4000</td>
+        <td class="brb">0x40</td>
+        <td class="bb">0</td>
+        <td class="brb">7</td>
+        <td class="brb">Top third</td>
+      </tr>
+      <tr class="green">
+        <td class="brb">4800</td>
+        <td class="brb">0x48</td>
+        <td class="bb">8</td>
+        <td class="brb">15</td>
+        <td class="brb">Middle third</td>
+      </tr>
+      <tr class="orange">
+        <td class="brb">5000</td>
+        <td class="brb">0x50</td>
+        <td class="bb">16</td>
+        <td class="brb">23</td>
+        <td class="brb">Bottom third</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  As long as you restrict yourself to one third of the screen you can simply calculate the address within this simple
+  editor by selecting the high byte for the required section of the screen and use the characters position in the line
+  as the low byte.
 </p>
