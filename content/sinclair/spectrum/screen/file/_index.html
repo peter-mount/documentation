@@ -40,7 +40,7 @@ memorymap:
 <ul>
   <li><code>R</code> with the screen row (0&hellip;23)</li>
   <li><code>C</code> with the column (0&hellip;31)</li>
-  <li><code>N</code> for the byte offset within the character</li>
+  <li><code>N</code> for the byte offset within the character (0&hellip;7)</li>
 </ul>
 <p>
   then you can calculate the address using the following table:
@@ -97,13 +97,18 @@ memorymap:
 </table>
 
 <p>
-   The formula is simple:
+  The formula is simple:
+  $$ Address = \left( \overbrace{ ( 0x40 | ( R \And 0x18 ) | N ) }^{MSB} \ll 8 \right) | \left( \overbrace{ ( ( R \And 0x07) \ll 5 ) | C }^{LSB} \right) $$
 </p>
+
+<h5>Pseudo code:</h5>
+
 {{< highlight go "linenos=inline" >}}
 lsb := ((R << 5) AND 0xC0) OR C
 msb := 0x40 OR (R AND 0x18) OR N
 {{< /highlight >}}
 
+<h5>Machine Code:</h5>
 <p>
   An example routine in <a href="../../../asm/screen/getcharaddr/">Z80 Machine Code</a> for this calculation is
   available to download.
@@ -112,10 +117,10 @@ msb := 0x40 OR (R AND 0x18) OR N
 <h3>Addresses of bytes within the same character</h3>
 <div class="row">
   <div class="col-6">
-<p>
-  If you calculate the address of the top row of the character (i.e. <code>N</code>=0) then, when rendering the
-  character to the screen you just need to increment the upper byte of the address.
-</p>
+    <p>
+      If you calculate the address of the top row of the character (i.e. <code>N</code>=0) then, when rendering the
+      character to the screen you just need to increment the upper byte of the address.
+    </p>
     <p>
       This works as the lower 3 bits of the upper byte represent the row for the character.
     </p>
@@ -124,87 +129,87 @@ msb := 0x40 OR (R AND 0x18) OR N
     </p>
   </div>
   <div class="col-6">
-<table class="memoryMap3">
-  <thead>
-  <tr>
-    <th rowspan="2">Char Row</th>
-    <th colspan="6">Address</th>
-  </tr>
-  <tr>
-    <th>Char 0</th>
-    <th>Char 1</th>
-    <th>Char 2</th>
-    <th>Char 3</th>
-    <th>Char 4</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td class="brb">0</td>
-    <td class="brb blue">4000</td>
-    <td class="brb green">4001</td>
-    <td class="brb orange">4002</td>
-    <td class="brb yellow">4003</td>
-    <td class="brb grey">4004</td>
-  </tr>
-  <tr>
-    <td class="brb">1</td>
-    <td class="brb blue">4100</td>
-    <td class="brb green">4101</td>
-    <td class="brb orange">4102</td>
-    <td class="brb yellow">4103</td>
-    <td class="brb grey">4104</td>
-  </tr>
-  <tr>
-    <td class="brb">2</td>
-    <td class="brb blue">4200</td>
-    <td class="brb green">4201</td>
-    <td class="brb orange">4202</td>
-    <td class="brb yellow">4203</td>
-    <td class="brb grey">4204</td>
-  </tr>
-  <tr>
-    <td class="brb">3</td>
-    <td class="brb blue">4300</td>
-    <td class="brb green">4301</td>
-    <td class="brb orange">4302</td>
-    <td class="brb yellow">4303</td>
-    <td class="brb grey">4304</td>
-  </tr>
-  <tr>
-    <td class="brb">4</td>
-    <td class="brb blue">4400</td>
-    <td class="brb green">4401</td>
-    <td class="brb orange">4402</td>
-    <td class="brb yellow">4403</td>
-    <td class="brb grey">4404</td>
-  </tr>
-  <tr>
-    <td class="brb">5</td>
-    <td class="brb blue">4500</td>
-    <td class="brb green">4501</td>
-    <td class="brb orange">4502</td>
-    <td class="brb yellow">4503</td>
-    <td class="brb grey">4504</td>
-  </tr>
-  <tr>
-    <td class="brb">6</td>
-    <td class="brb blue">4600</td>
-    <td class="brb green">4601</td>
-    <td class="brb orange">4602</td>
-    <td class="brb yellow">4603</td>
-    <td class="brb grey">4604</td>
-  </tr>
-  <tr>
-    <td class="brb">7</td>
-    <td class="brb blue">4700</td>
-    <td class="brb green">4701</td>
-    <td class="brb orange">4702</td>
-    <td class="brb yellow">4703</td>
-    <td class="brb grey">4704</td>
-  </tr>
-  </tbody>
-</table>
+    <table class="memoryMap3">
+      <thead>
+      <tr>
+        <th rowspan="2">Char Row</th>
+        <th colspan="6">Address</th>
+      </tr>
+      <tr>
+        <th>Char 0</th>
+        <th>Char 1</th>
+        <th>Char 2</th>
+        <th>Char 3</th>
+        <th>Char 4</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="brb">0</td>
+        <td class="brb blue">4000</td>
+        <td class="brb green">4001</td>
+        <td class="brb orange">4002</td>
+        <td class="brb yellow">4003</td>
+        <td class="brb grey">4004</td>
+      </tr>
+      <tr>
+        <td class="brb">1</td>
+        <td class="brb blue">4100</td>
+        <td class="brb green">4101</td>
+        <td class="brb orange">4102</td>
+        <td class="brb yellow">4103</td>
+        <td class="brb grey">4104</td>
+      </tr>
+      <tr>
+        <td class="brb">2</td>
+        <td class="brb blue">4200</td>
+        <td class="brb green">4201</td>
+        <td class="brb orange">4202</td>
+        <td class="brb yellow">4203</td>
+        <td class="brb grey">4204</td>
+      </tr>
+      <tr>
+        <td class="brb">3</td>
+        <td class="brb blue">4300</td>
+        <td class="brb green">4301</td>
+        <td class="brb orange">4302</td>
+        <td class="brb yellow">4303</td>
+        <td class="brb grey">4304</td>
+      </tr>
+      <tr>
+        <td class="brb">4</td>
+        <td class="brb blue">4400</td>
+        <td class="brb green">4401</td>
+        <td class="brb orange">4402</td>
+        <td class="brb yellow">4403</td>
+        <td class="brb grey">4404</td>
+      </tr>
+      <tr>
+        <td class="brb">5</td>
+        <td class="brb blue">4500</td>
+        <td class="brb green">4501</td>
+        <td class="brb orange">4502</td>
+        <td class="brb yellow">4503</td>
+        <td class="brb grey">4504</td>
+      </tr>
+      <tr>
+        <td class="brb">6</td>
+        <td class="brb blue">4600</td>
+        <td class="brb green">4601</td>
+        <td class="brb orange">4602</td>
+        <td class="brb yellow">4603</td>
+        <td class="brb grey">4604</td>
+      </tr>
+      <tr>
+        <td class="brb">7</td>
+        <td class="brb blue">4700</td>
+        <td class="brb green">4701</td>
+        <td class="brb orange">4702</td>
+        <td class="brb yellow">4703</td>
+        <td class="brb grey">4704</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
