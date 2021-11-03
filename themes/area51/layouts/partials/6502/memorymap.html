@@ -1,11 +1,15 @@
 {{- if isset .Params "memorymap" -}}
+{{- $hasAddr := 0 -}}
 {{- $hasLen := 0 -}}
 {{- $hasName := 0 -}}
+{{- $hasVal := 0 -}}
 {{- $hasFormat := 0 -}}
 {{- $hasDefaultVal := 0 -}}
 {{- range $.Params.memorymap -}}
+{{- with .address}}{{$hasAddr =1}}{{end -}}
 {{- with .length}}{{$hasLen =1}}{{end -}}
 {{- with .name}}{{$hasName =1}}{{end -}}
+{{- with .value}}{{$hasVal =1}}{{end -}}
 {{- with .format}}{{$hasFormat =1}}{{end -}}
 {{- with .default}}{{$hasDefaultVal =1}}{{end -}}
 {{- end -}}
@@ -13,12 +17,15 @@
     <table class="memory">
         <thead>
         <tr>
-            <th>Address</th>
+            {{- if $hasAddr -}}<th>Address</th>{{- end -}}
             {{- if $hasLen -}}
             <th>Len</th>
             {{- end -}}
             {{- if $hasName -}}
             <th>Name</th>
+            {{- end -}}
+            {{- if $hasVal -}}
+            <th>Value</th>
             {{- end -}}
             {{- if $hasFormat -}}
             <th>Bit 7</th>
@@ -39,13 +46,17 @@
         <tbody>
         {{- range $.Params.memorymap -}}
         <tr>
-
+            {{- if $hasAddr -}}
             <td {{- if isset . "offset"}} class="offset"{{end}}>{{.address}}</td>
+            {{- end -}}
             {{- if $hasLen -}}
             <td>{{.length}}</td>
             {{- end -}}
             {{- if $hasName -}}
             <td>{{.name}}</td>
+            {{- end -}}
+            {{- if $hasVal -}}
+            <td>{{.value}}</td>
             {{- end -}}
 
             {{- if $hasFormat -}}
