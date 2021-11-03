@@ -6,14 +6,14 @@ description: "The display pixel format"
 weight: 20
 categories:
   - spectrum
-no_list: true
+#no_list: true
 memorymap:
   - address: "4000"
     length: 0x1800
     name: "DISPLAYFILE"
     desc: "The start of the standard Spectrum's standard screen"
-
 ---
+
 <p>
   The display file contains the pixel data for the screen.
 </p>
@@ -22,12 +22,84 @@ memorymap:
 </p>
 <p>
   Be aware, the rows are not stored linearly, but in a way that has been optimised for the ULA.
-  So the first 256 bytes represents the first byte of each character in the first 8 rows, then the second byte
-  and so on.
 </p>
 <p>
-  This weird at first layout will be described in full further down.
+  The first 256 bytes in memory represents the first byte of each character in the first 8 rows,
+  then the second byte of each character, and so on.
+  Once the first 8 rows have been done it repeats twice more for the next 8 rows then the last 8.
 </p>
 <p>
-  Sinclair always took the cheap route whenever possible so the memory layout is a bit odd at first.
+  Although the memory map for the spectrum screen seems weird with its layout,
+  it's actually pretty logical. You can tell this weirdness is down to how the ULA works internally.
+</p>
+
+<h2>Calculating the address</h2>
+<p>
+  If you have
+</p>
+<ul>
+  <li><code>R</code> with the screen row (0&hellip;23)</li>
+  <li><code>C</code> with the column (0&hellip;31)</li>
+  <li><code>N</code> for the byte offset within the character</li>
+</ul>
+<p>
+  then you can calculate the address using the following table:
+</p>
+
+<table class="memoryMap2">
+  <thead>
+  <tr>
+    <th colspan="16">Address</th>
+  </tr>
+  <tr>
+    <th>15</th>
+    <th>14</th>
+    <th>13</th>
+    <th>12</th>
+    <th>11</th>
+    <th>10</th>
+    <th>9</th>
+    <th>8</th>
+    <th>7</th>
+    <th>6</th>
+    <th>5</th>
+    <th>4</th>
+    <th>3</th>
+    <th>2</th>
+    <th>1</th>
+    <th>0</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="brb orange">0</td>
+    <td class="brb orange">1</td>
+    <td class="brb orange">0</td>
+    <td class="bb green">R<sub>4</sub></td>
+    <td class="brb green">R<sub>3</sub></td>
+    <td class="bb yellow">N<sub>2</sub></td>
+    <td class="bb yellow">N<sub>1</sub></td>
+    <td class="brb yellow">N<sub>0</sub></td>
+    <td class="bb green">R<sub>2</sub></td>
+    <td class="bb green">R<sub>1</sub></td>
+    <td class="brb green">R<sub>0</sub></td>
+    <td class="bb blue">C<sub>4</sub></td>
+    <td class="bb blue">C<sub>3</sub></td>
+    <td class="bb blue">C<sub>2</sub></td>
+    <td class="bb blue">C<sub>1</sub></td>
+    <td class="brb blue">C<sub>0</sub></td>
+  </tr>
+  </tbody>
+</table>
+
+<p>
+   The formula is simple:
+</p>
+{{< highlight go "linenos=inline" >}}
+lsb := ((R << 5) AND 0xC0) OR C
+msb := 0x40 OR (R AND 0x18) OR N
+{{< /highlight >}}
+
+<p>
+  An example for Z80 <a href="../../../asm/screen/getcharaddr/">Machine Code</a> is available.
 </p>

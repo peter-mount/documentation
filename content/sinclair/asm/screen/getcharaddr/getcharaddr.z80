@@ -1,0 +1,50 @@
+; Calculates the actual bitmap address for a character in BC (row,col) into HL.
+;
+; Although the memory map for the spectrum screen seems weird with it's layout,
+; it's actually pretty logical. You can tell this weirdness is down to how the ULA works internally.
+;
+; Address format:
+;           H       L
+;       010rrnnn rrrccccc       where r=row, c=column & n is the byte of the character definition.
+;
+; So, to calculate the address of a character
+;       High byte = &40 or (row and &18)
+;       Low byte  = (row<<5) or column
+;
+; That would then be the top byte of the character.
+; To get the next byte in the character just increment the high byte
+; (e.g. n=1) & so on for the next 7 bytes.
+;
+; To get the next character's address then simply increment the low byte.
+; Be careful however when wrapping around the end of the line as, after
+; the first 8 lines the address will fail.
+;
+; Ideally you should calculate the address again at the start of each line.
+;
+; This might explain why the original spectrum editor was 8 lines long.
+;
+; On Entry:
+;   BC      b=row, c=col in Spectrum 32x24 characters
+;
+; On Exit:
+;   HL      address of top row if character definition in screen
+;   BC      unchanged
+;   A       undefined
+;
+getSpectrumCharPos:             ; Get Spectrum char pos (bc) into HL for physical screen address
+    ld      a, b                ; first calculate high byte - get row
+    and     &18                 ; Mask bits 4 & 5 from row
+    or      &40                 ; set bit 6, this gives us the upper memory address
+    ld      h, a                ; Set H
+
+    ld      a, b                ; get row
+    sla     a                   ; Shift left 5 to form low address
+    sla     a
+    sla     a
+    sla     a
+    sla     a                   ; HA is now the address of the start of line
+
+    or      c                   ; Add column value
+    ld      l, a                ; HL now address of top row of character
+
+    ret

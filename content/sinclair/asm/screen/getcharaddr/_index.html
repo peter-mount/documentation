@@ -1,0 +1,30 @@
+---
+type: "manual"
+title: "Get address of character on screen"
+linkTitle: "Get Char Addr"
+description: "Calculate the true address on screen of a character"
+categories:
+  - spectrum
+
+resources:
+  - name: "getcharaddr.z80"
+    url: "/sinclair/asm/screen/getcharaddr/getcharaddr.z80"
+    size: "4K"
+---
+
+<p>
+  Calculating the start address for a character might sound complicated due to its weird memory layout, but it is
+  actually pretty simple.
+</p>
+<p>
+  The way the address is calculated is described with the <a href="../../../spectrum/screen/file/">Display File</a>,
+  however the following code allows you to calculate the address in Z80 machine code.
+</p>
+
+<p>A link to download this routine is available under Resources at the top right of the page:</p>
+
+{{< book/include src="content/sinclair/asm/screen/getcharaddr/getcharaddr.z80" >}}
+
+<p>
+  Note: This code is actually from my Teletext Mode 7 emulator for the Spectrum
+</p>
