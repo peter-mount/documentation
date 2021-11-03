@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "Set the border colour"
+linkTitle: "Set Border"
+description: "Example code to set the border colour on the Spectrum's screen"
+categories:
+  - spectrum
+---
+<p>
+  The border colour is managed by the ULA.
+  Changing the border colour is simply writing the required colour to the ULA whilst
+  storing a copy in the <code>BORDCR</code> system variable at 0x5C48 so that the OS also knows what the colour is.
+</p>
+
+<p>
+  In this example we set the Border to black
+</p>
+
+{{< book/sourceCode title="Set the Spectrum Screen Border:">}}
+{{< book/asm label="setBorder" >}}
+{{< book/asm op="LD" param="A,0x00" comment="Set border to black" >}}
+{{< book/asm op="LD" param="(BORDCR),A" comment="Set OS copy of border colour">}}
+{{< book/asm op="OUT" param="(&FE),A" comment="Set hardware border colour">}}
+{{< book/asm op="RET" >}}
+{{< /book/sourceCode >}}

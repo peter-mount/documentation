@@ -36,7 +36,7 @@ categories:
 {{< book/asm >}}
 {{< book/asm comment="Set the border colour">}}
 {{< book/asm op="SUB" param="A" comment="Set border to black. SUB A is shorter than LD A,0" >}}
-{{< book/asm op="LD" param="(&5C48),A" comment="Set OS copy of border colour">}}
+{{< book/asm op="LD" param="(BORDCR),A" comment="Set OS copy of border colour">}}
 {{< book/asm op="OUT" param="(&FE),A" comment="Set hardware border colour">}}
 {{< book/asm >}}
 {{< book/asm op="RET" >}}
@@ -77,7 +77,7 @@ categories:
 {{< book/asm >}}
 {{< book/asm comment="Set the border colour">}}
 {{< book/asm op="SUB" param="A" comment="Set border to black. SUB A is shorter than LD A,0" >}}
-{{< book/asm op="LD" param="(&5C48),A" comment="Set OS copy of border colour">}}
+{{< book/asm op="LD" param="(BORDCR),A" comment="Set OS copy of border colour">}}
 {{< book/asm op="OUT" param="(&FE),A" comment="Set hardware border colour">}}
 {{< book/asm >}}
 {{< book/asm op="RET" >}}
