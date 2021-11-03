@@ -265,6 +265,7 @@ table.diskMap thead tr:first-child th:first-child {
 }
 
 table.memoryMap2,
+table.memoryMap3,
 table.diskMap {
     display: block;
     //overflow-x: auto;
@@ -319,7 +320,6 @@ table.diskMap {
                 border-left: 1px solid grey;
             }
 
-            td:first-child,
             td.blrtb,
             td.blrt,
             td.blrb,
@@ -379,7 +379,18 @@ table.diskMap {
 
 table.diskMap,
 table.memoryMap,
+table.memoryMap2 {
+    tbody {
+        td:first-child {
+            border-right: 1px solid grey;
+        }
+    }
+}
+
+table.diskMap,
+table.memoryMap,
 table.memoryMap2,
+table.memoryMap3,
 table.hexGrid {
 
     // Unused op code shows with a background TODO do we need this?
