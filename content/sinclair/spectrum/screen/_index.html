@@ -1,0 +1,68 @@
+---
+type: "manual"
+title: "Screen"
+linkTitle: "Screen"
+description: "The Spectrum's screen memory layout"
+weight: 30
+categories:
+  - spectrum
+#no_list: true
+---
+<h2>Screen Layout</h2>
+<p>
+  The screen has a fixed resolution of 256x192 pixels or 32x24 characters.
+  Colour is restricted to 8x8 pixel squares equivalent to each character.
+</p>
+<p>
+  It is located in memory at address 0x4000&hellip;0x5AFF and is split into two parts:
+</p>
+<div>
+  <table class="memoryMap2">
+    <thead>
+    <tr>
+      <th>Address</th>
+      <th>Name</th>
+      <th colspan="8">Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>4000</td>
+      <td class="br">DISPLAYFILE</td>
+      <td class="blue brb" colspan="8" rowspan="2">Screen Memory</td>
+    </tr>
+    <tr>
+      <td class="bb">57FF</td>
+      <td class="brb"></td>
+    </tr>
+    <tr>
+      <td>5800</td>
+      <td class="br">DISPLAYATTR</td>
+      <td class="green brb" colspan="8" rowspan="2">Screen Colour data</td>
+    </tr>
+
+    <tr>
+      <td class="bb">5AFF</td>
+      <td class="brb"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>128K Spectrum's</h3>
+<p>
+  The 128K Spectrum's have a second screen in RAM Bank #7 which can be used as an alternate to the default one
+  which is in RAM Bank #5. The memory layout is the same except for where it appears in the
+  memory map.
+</p>
+<p>
+  This section will refer to the default memory location as used by all Spectrum's.
+</p>
+<p>
+  If you want to use the alternate screen then you need to change the base address to that of the correct bank.
+  These are shown in the memory map's:
+</p>
+<ul>
+  <li><a href="../memorymap/128k/">Spectrum 128K and +2</a> also for +2A and +3 in Normal Mode</li>
+  <li><a href="../memorymap/plus3/">Spectrum +2A and +3</a> when in Special Mode</li>
+</ul>

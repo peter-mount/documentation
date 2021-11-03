@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "Display Attributes"
+linkTitle: "Attributes"
+description: "The display attributes specifying colour information"
+weight: 30
+categories:
+  - spectrum
+no_list: true
+memorymap:
+  - address: "5800"
+    length: 0x300
+    name: "DISPLAYATTR"
+    desc: "The display attributes holding colour information"
+
+---
+
+<p>
+  The display attribute section contains the colour information and occupies addresses 0x5800&hellip;0x5AFF.
+</p>
+<p>
+  It's a direct map of the characters on the screen, arranged in 24 rows, each 32 characters long.
+  Each byte consists of the Foreground (INK) and Background (PAPER) colour for all pixels contained
+  within the equivalent position in the Display File.
+</p>

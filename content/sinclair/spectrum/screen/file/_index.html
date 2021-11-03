@@ -1,0 +1,33 @@
+---
+type: "manual"
+title: "Display File"
+linkTitle: "Display File"
+description: "The display pixel format"
+weight: 20
+categories:
+  - spectrum
+no_list: true
+memorymap:
+  - address: "4000"
+    length: 0x1800
+    name: "DISPLAYFILE"
+    desc: "The start of the standard Spectrum's standard screen"
+
+---
+<p>
+  The display file contains the pixel data for the screen.
+</p>
+<p>
+  Arranged in a map of 192 rows, each 32 bytes long. Each byte contains 8 pixels.
+</p>
+<p>
+  Be aware, the rows are not stored linearly, but in a way that has been optimised for the ULA.
+  So the first 256 bytes represents the first byte of each character in the first 8 rows, then the second byte
+  and so on.
+</p>
+<p>
+  This weird at first layout will be described in full further down.
+</p>
+<p>
+  Sinclair always took the cheap route whenever possible so the memory layout is a bit odd at first.
+</p>
