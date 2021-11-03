@@ -1,0 +1,64 @@
+---
+type: "manual"
+title: "BASIC Loader"
+linkTitle: "BASIC Loader"
+description: "BASIC .TAP loader"
+categories:
+  - spectrum
+tags:
+  - Z80 Example
+resources:
+  - name: "loader.z80"
+    url: "/sinclair/asm/loaders/tap/loader.z80"
+    size: "4K"
+  - name: "loader.tap"
+    url: "/sinclair/asm/loaders/tap/loader.tap"
+    size: "80B"
+  - name: "headers.z80"
+    url: "/sinclair/spectrum/reference/include/zasm/headers.z80"
+    size: "8K"
+no_list: true
+---
+
+<p>
+  This shows the source for the BASIC .TAP loader for use with the <code>zasm</code> assembler.
+</p>
+
+<p>
+  To compile run the following commands in a Linux shell to download the sources and compile the loader:
+</p>
+
+{{< highlight go "linenos=inline" >}}
+wget https://area51.dev/sinclair/spectrum/reference/include/zasm/headers.z80
+wget https://area51.dev/sinclair/asm/loaders/tap/loader.z80
+zasm loader.z80
+{{< /highlight >}}
+<p>
+    The commands do the following:
+</p>
+<ol>
+    <li>
+        Download <a href="../../../../spectrum/reference/include/zasm/headers/">headers.z80</a> which contains the
+        definitions for the Spectrum BASIC tokens we require.
+    </li>
+    <li>
+        Download <code>loader.z80</code> which is the source shown below.
+    </li>
+    <li>
+        Compiles our loader generating <code>loader.tap</code>.
+    </li>
+</ol>
+
+<p>
+    The generated <code>loader.tap</code> can now be used with your own <code>.TAP</code> file as long as it loads at
+    address 24000 and its entry point is also at that same address.
+</p>
+<p>
+    All you need to do is concatenate both <code>.TAP</code> files with <code>loader.tap</code> first.
+    The <a href="../#helloworld">Hello World example</a> shows how this is done.
+</p>
+<p>
+    Links to the required files are shown in the resources panel at the top right of this page.
+</p>
+
+{{< book/include src="content/sinclair/asm/loaders/tap/loader.z80" >}}

@@ -1,0 +1,174 @@
+---
+type: "manual"
+title: "TAP Format"
+linkTitle: "TAP"
+description: ""
+categories:
+  - spectrum
+tags:
+  - spectrum File Format
+---
+<p>
+  The <code>.TAP</code> file format is a container used to store data in a format identical to the Spectrum's
+  <code>SAVE</code> rom routine.
+</p>
+
+<p>
+  <code>.TAP</code> files can be concatenated together so forming a new tape is as easy as joining multiple
+  <code>.TAP</code> files together to form a new one.
+  For example on Linux or MacOS:
+</p>
+{{< highlight go "linenos=inline" >}}
+cat part1.tap part2.tap > final.tap
+{{< /highlight >}}
+
+<p>In DOS and Windows:</p>
+{{< highlight go "linenos=inline" >}}
+copy /b part1.tap + part2.tap final.tap
+{{< /highlight >}}
+
+<p>
+  At a bare minimum, a <code>.TAP</code> file consists of two blocks; a header block followed by a data block.
+</p>
+<p>
+  Each block consists of the Block Wrapper which then contains data within it.
+</p>
+
+<div class="row">
+  <div class="col-6">
+    <h2>Block Wrapper</h2>
+    <p>
+      Header and Data blocks consists of a 2-byte word with the length of the block (including the checksum),
+      the block type, then the block's data and finishing with a single checksum byte.
+    </p>
+    <p>
+      The block type is either 0x00 for a Header and 0xFF for a Data block.
+    </p>
+    <p>
+      The checksum byte is in reality a binary XOR of all bytes in the block and not a true checksum.
+    </p>
+  </div>
+  <div class="col-6">
+    <table class="memoryMap2">
+      <thead>
+      <tr>
+        <th>Byte</th>
+        <th colspan="8">Field&nbsp;Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td></td><td class="br green" colspan="8"><small class="left">7</small><small class="right">0</small>Length of block</td></tr>
+      <tr><td class="bb"></td><td class="brb green" colspan="8"><small class="left">15</small><small class="right">8</small><em>n</em></td></tr>
+      <tr><td class="brb">0</td><td class="brb yellow" colspan="8">Block Type</td></tr>
+      <tr><td>1</td><td class="br unused" colspan="8"><em>n-2</em> bytes of data</td></tr>
+      <tr><td class="dashleftright">&nbsp;</td><td class="dashright" colspan="8">&nbsp;</td></tr>
+      <tr><td class="btb"><em>n</em>-1</td><td class="brtb orange" colspan="8">Check sum byte</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <h2>Header Block</h2>
+    <p>The header block defines the type, filename, length and additional information about the file.</p>
+    <p>
+      The file name is up to 10 characters padded with spaces.
+    </p>
+    <p>
+      The length at offset 11 is the number of bytes data in the data block. This excludes the block type and checksum
+      byte.
+    </p>
+    <p>
+      Parameter's 1 and 2 are determined by the file type. If not used then they are set to 0.
+    </p>
+  </div>
+  <div class="col-6">
+    <table class="memoryMap2">
+      <thead>
+      <tr>
+        <th>Byte</th>
+        <th colspan="8">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td class="brb">0</td><td class="brb green" colspan="8">File Type</td></tr>
+      <tr><td>1</td><td class="brb yellow" rowspan="5" colspan="8">File Name padded with spaces</td></tr>
+      <tr><td>2</td></tr>
+      <tr><td class="dashleftright">&nbsp;</td></tr>
+      <tr><td>9</td></tr>
+      <tr><td class="bb">10</td></tr>
+      <tr><td>11</td><td class="br blue" colspan="8"><small class="left">7</small><small class="right">0</small>Length of data block</td></tr>
+      <tr><td class="bb">12</td><td class="brb blue" colspan="8"><small class="left">15</small><small class="right">8</small></td></tr>
+      <tr><td>13</td><td class="br orange" colspan="8"><small class="left">7</small><small class="right">0</small>Parameter 1</td></tr>
+      <tr>
+        <td class="bb">14</td>
+        <td class="brb orange" colspan="2"><small class="left">15</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td class="blrtb unused" colspan="4">&nbsp;Name for types 1 and 2&nbsp;</td>
+        <td class="brb orange" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small class="right">8</small></td>
+      </tr>
+      <tr><td>15</td><td class="br grey" colspan="8"><small class="left">7</small><small class="right">0</small>Parameter 2</td></tr>
+      <tr><td class="bb">16</td><td class="brb grey" colspan="8"><small class="left">15</small><small class="right">8</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<table class="memoryMap2">
+  <thead>
+  <tr>
+    <th>Type</th>
+    <th colspan="3">File&nbsp;Description</th>
+    <th colspan="3">Param 1</th>
+    <th colspan="3">Param 2</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="green">
+    <td class="brb">0</td>
+    <td class="brb" colspan="3">BASIC Program</td>
+    <td class="brb" colspan="3">Line number to start</td>
+    <td class="brb" colspan="3">Start of variable area relative to program start</td>
+  </tr>
+  <tr class="grey">
+    <td class="brb">1</td>
+    <td class="brb" colspan="3">Number Array</td>
+    <td class="brb" colspan="3">
+      Variable name, e.g. if <code>DIM a()</code> then this is 0x80 a=0x81, y=0x99
+    </td>
+    <td class="brb" colspan="3"></td>
+  </tr>
+  <tr class="grey">
+    <td class="brb">2</td>
+    <td class="brb" colspan="3">Character Array</td>
+    <td class="brb" colspan="3">
+      Variable name, e.g. if <code>DIM a$()</code> then this is 0x80 a=0xC1, y=0xD9
+    </td>
+    <td class="brb" colspan="3"></td>
+  </tr>
+  <tr class="orange">
+    <td class="brb">3</td>
+    <td class="brb" colspan="3">CODE</td>
+    <td class="brb" colspan="3">Start when saved</td>
+    <td class="brb" colspan="3">32768</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Data Block</h2>
+<p>
+  For BASIC programs (type 0) the data block consists of a series of lines stored as it is in memory, i.e. in it's tokenised state.
+</p>
+<p>
+  For CODE files it consists of the raw bytes in the order they appear in memory.
+</p>
+<p>
+  For both array types they have a specific structure which won't be described here as they are not of any real use
+  outside a basic program. Only types 0 and 3 are of any use these days.
+</p>
+
+<h2>Examples</h2>
+<p>
+  An example of creating a <code>.TAP</code> file is <a href="../../asm/loaders/tap/">available</a>, which shows
+  a basic loader which then loads a Machine code program.
+</p>

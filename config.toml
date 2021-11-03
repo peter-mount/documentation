@@ -180,10 +180,11 @@ errorColor = "#CD5C5C"
   left = "$$"
   right = "$$"
   display = true
-[[params.katex.options.delimiters]]
-  left = "$"
-  right = "$"
-  display = false
+# Disable this version as it interferes with generic assembly code
+#[[params.katex.options.delimiters]]
+#  left = "$"
+#  right = "$"
+#  display = false
 [[params.katex.options.delimiters]]
   left = "\\("
   right = "\\)"

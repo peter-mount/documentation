@@ -1,0 +1,51 @@
+; ***************************************************************************
+; Hello world example showing how to use the TAP format and our simple
+; BASIC boot loader that has been recompiled into TAP format.
+;
+; Author: Peter Mount, Area51.dev & Contributors
+; URL: https://area51.dev/sinclair/asm/loaders/tap/
+; ***************************************************************************
+
+; for zasm we need to tell it to generate a tap file
+#target tap
+
+; code_start will be where our code will be compiled to
+code_start equ 24000
+
+; ***************************************************************************
+; Header block containing the block name and the size of the machine code
+; ***************************************************************************
+
+#code CODE_HEADER,0,17,0
+        defb    3                       ; Indicates binary data
+        defb    "helloworld"            ; the block name, 10 bytes long
+        defw    code_end-code_start     ; length of data block which follows
+        defw    code_start              ; default location for the data
+        defw    0                       ; unused
+
+; ***************************************************************************
+; Data block containing a actual machine code program:
+;
+; Here we simply print the "Hello World!" message to the screen.
+; ***************************************************************************
+
+#code CODE_DATA, code_start,*,0xff
+
+; This is the code_start address 24000 0x5DC0
+        ld      a,2                     ; set print channel to Screen:
+        call    0x1601
+
+        ld      hl,msg                  ; message start address
+loop:   ld      a,(hl)                  ; get next byte
+        and     a                       ; check for null
+        ret     z                       ; stop when we get a null
+        inc     hl                      ; move to next character
+        rst     2                       ; print the character
+        jr      loop                    ; jump back to the loop
+
+msg:    dm      13, "Hello World!", 13, 0
+
+; End of code marker needed for the CODE_HEADER
+code_end:
+
+; Anything after this point will not be included in the .tap file
