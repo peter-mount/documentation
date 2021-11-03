@@ -5,6 +5,15 @@ linkTitle: "Clear Screen"
 description: "Example code to clear the Spectrum's screen"
 categories:
   - spectrum
+tags:
+  - z80example
+resources:
+  - name: "clearscreen1.z80"
+    url: "/sinclair/asm/screen/cls/clearscreen1.z80"
+    size: "2K"
+  - name: "clearscreen2.z80"
+    url: "/sinclair/asm/screen/cls/clearscreen2.z80"
+    size: "2K"
 ---
 
 <p>
@@ -20,27 +29,7 @@ categories:
   <li>Sets the screen border to black</li>
 </ol>
 
-{{< book/sourceCode title="Clear the Spectrum Screen:">}}
-{{< book/asm label="clearScreen" >}}
-{{< book/asm comment="Clear the pixel data">}}
-{{< book/asm op="LD" param="HL,DISPLAYFILE" comment="Start of screen memory at 0x4000" >}}
-{{< book/asm op="LD" param="(HL),L" comment="Set first byte to 0, works as L is 0 at this point" >}}
-{{< book/asm op="LD" param="DE,DISPLAYFILE+1" comment="Set Destination address as next byte">}}
-{{< book/asm op="LD" param="BC,6144" comment="Number of bytes to copy, screen size">}}
-{{< book/asm op="LDIR" comment="Clear the display file">}}
-{{< book/asm >}}
-{{< book/asm comment="Clear the colour attributes">}}
-{{< book/asm op="LD" param="(HL),&07" comment="Colour: white text black background here" >}}
-{{< book/asm op="LD" param="BC,767" comment="Number of bytes to copy, attr size -1">}}
-{{< book/asm op="LDIR" comment="Clear the attributes file">}}
-{{< book/asm >}}
-{{< book/asm comment="Set the border colour">}}
-{{< book/asm op="SUB" param="A" comment="Set border to black. SUB A is shorter than LD A,0" >}}
-{{< book/asm op="LD" param="(BORDCR),A" comment="Set OS copy of border colour">}}
-{{< book/asm op="OUT" param="(&FE),A" comment="Set hardware border colour">}}
-{{< book/asm >}}
-{{< book/asm op="RET" >}}
-{{< /book/sourceCode >}}
+{{< book/include src="content/sinclair/asm/screen/cls/clearscreen1.z80" >}}
 
 <h4>Important note here:</h4>
 <p>
@@ -59,29 +48,7 @@ categories:
   <code>LDIR</code> as in the next example:
 </p>
 
-{{< book/sourceCode title="Longer clearScreen does not corrupt DISPLAYATTR:">}}
-{{< book/asm label="clearScreen" >}}
-{{< book/asm comment="Clear the pixel data">}}
-{{< book/asm op="LD" param="HL,DISPLAYFILE" comment="Start of screen memory at 0x4000" >}}
-{{< book/asm op="LD" param="(HL),L" comment="Set first byte to 0, works as L is 0 at this point" >}}
-{{< book/asm op="LD" param="DE,DISPLAYFILE+1" comment="Set Destination address as next byte">}}
-{{< book/asm op="LD" param="BC,6143" comment="Number of bytes to copy, screen size">}}
-{{< book/asm op="LDIR" comment="Clear the display file">}}
-{{< book/asm >}}
-{{< book/asm comment="Clear the colour attributes">}}
-{{< book/asm op="INC" param="HL" comment="Move HL and DE forward 1 byte as DISPLAYATTR is next" >}}
-{{< book/asm op="INC" param="DE" >}}
-{{< book/asm op="LD" param="(HL),&07" comment="Colour: white text black background here" >}}
-{{< book/asm op="LD" param="BC,767" comment="Number of bytes to copy, attr size -1">}}
-{{< book/asm op="LDIR" comment="Clear the attributes file">}}
-{{< book/asm >}}
-{{< book/asm comment="Set the border colour">}}
-{{< book/asm op="SUB" param="A" comment="Set border to black. SUB A is shorter than LD A,0" >}}
-{{< book/asm op="LD" param="(BORDCR),A" comment="Set OS copy of border colour">}}
-{{< book/asm op="OUT" param="(&FE),A" comment="Set hardware border colour">}}
-{{< book/asm >}}
-{{< book/asm op="RET" >}}
-{{< /book/sourceCode >}}
+{{< book/include src="content/sinclair/asm/screen/cls/clearscreen2.z80" >}}
 
 <p>
   There are faster but longer methods of clearing the screen which I won't go into here.

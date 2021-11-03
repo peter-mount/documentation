@@ -1,0 +1,36 @@
+; ***************************************************************************
+; Clear the Spectrum Screen
+;
+; Example 1
+;
+; Author: Peter Mount, Area51.dev & Contributors
+; URL: https://area51.dev/sinclair/asm/screen/getcharaddr/
+; ***************************************************************************
+;
+; Clear the Spectrum screen, setting the border to black and white text on
+; a black background
+;
+; On Exit:
+;   A   Undefined
+;   BC  Undefined
+;   DE  Undefined
+;   HL  Undefined
+;
+clearScreen:
+                                ; Clear the pixel data
+    ld      hl,DISPLAYFILE      ; Start of screen memory
+    ld      (hl),&00            ; Set first byte to 0
+    ld      de,DISPLAYFILE+1    ; Destination as next byte
+    ld      bc, 6144            ; Number of bytes to copy
+    ldir                        ; Copy from hl to de bc times
+
+                                ; Clear the colour attributes
+    ld      (hl),&07            ; White text black Background
+    ld      bc, 767             ; Number of bytes to copy, attr size -1
+    ldir                        ; Clear the attributes
+
+    ld      a, 0                ; Set border to black
+    ld      (BORDCR),a          ; set OS copy of colour
+    out     (&fe),a             ; set hardware colour
+
+    ret

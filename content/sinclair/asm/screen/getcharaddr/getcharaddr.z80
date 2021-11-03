@@ -1,17 +1,28 @@
-; Calculates the actual bitmap address for a character in BC (row,col) into HL.
+; ***************************************************************************
+; Calculates the actual screen address for a character in BC (row,col)
+; returning that address in HL.
 ;
-; Although the memory map for the spectrum screen seems weird with it's layout,
-; it's actually pretty logical. You can tell this weirdness is down to how the ULA works internally.
+; Author: Peter Mount, Area51.dev & Contributors
+; URL: https://area51.dev/sinclair/asm/screen/getcharaddr/
+; ***************************************************************************
+;
+; Although the memory layout for the spectrum screen seems weird,
+; it's actually pretty logical. You can tell this weirdness is down to how
+; the ULA works internally with the way the addressing is mapped, as shown
+; at https://area51.dev/sinclair/spectrum/screen/file/
 ;
 ; Address format:
 ;           H       L
-;       010rrnnn rrrccccc       where r=row, c=column & n is the byte of the character definition.
+;       010rrnnn rrrccccc    where r=row,
+;                                  c=column,
+;                                  n=row in the character definition.
 ;
-; So, to calculate the address of a character
+; To calculate the address of a character:
 ;       High byte = &40 or (row and &18)
 ;       Low byte  = (row<<5) or column
 ;
 ; That would then be the top byte of the character.
+;
 ; To get the next byte in the character just increment the high byte
 ; (e.g. n=1) & so on for the next 7 bytes.
 ;
@@ -21,7 +32,10 @@
 ;
 ; Ideally you should calculate the address again at the start of each line.
 ;
-; This might explain why the original spectrum editor was 8 lines long.
+; This might explain why the original spectrum editor was 8 lines long, as you
+; only needed to set the high byte to the 8-line block in memory and set the
+; low byte to the offset in the line being edited to get that characters
+; screen address.
 ;
 ; On Entry:
 ;   BC      b=row, c=col in Spectrum 32x24 characters
