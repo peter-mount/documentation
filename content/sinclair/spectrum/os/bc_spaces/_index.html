@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "Make BC Spaces"
+linkTitle: "Make BC Spaces"
+description: "Creates BC free locations in the workspace"
+subtopic: "rst"
+categories:
+  - spectrum
+  - spectrumAPI
+api:
+  - name: "RST_6"
+    addr: "0030"
+    title: "FP Calculator"
+    alt: "RST 6 on all machines"
+---
+<p>
+    <code>RST 6</code> reserves memory in the workspace
+</p>
+
+<h3>On Entry</h3>
+<p>
+  <code>BC</code> holds the number of bytes to create
+</p>
+
+<h3>On Exit</h3>
+<p>
+  <code>DE</code> holds the first byte of the new free space.
+</p>
+<p>
+  <code>HL</code> holds the last byte of the new free space.
+</p>

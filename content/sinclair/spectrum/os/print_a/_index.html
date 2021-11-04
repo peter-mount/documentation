@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "PRINT_A"
+linkTitle: "PRINT_A"
+description: "Write A to current output channel"
+subtopic: "rst"
+categories:
+  - spectrum
+  - spectrumAPI
+api:
+  - name: "RST_2"
+    addr: "0010"
+    title: "Print A to the output stream"
+    alt: "RST 2 on all machines"
+---
+<p>
+    <code>RST 2</code> is usually used to write to the current channel, usually the screen.
+</p>
+
+<p>
+  Internally, <code>RST 2</code> calls the routine in the <code>CHURCHL</code> vector,
+  returning with all registers preserved unless an error occurred.
+</p>
+
+<h2>Implementing custom channels</h2>
+<p>
+  Because the rom code uses the <code>CHURCHL</code> vector you can easily replace the
+  current output channel with your own code.
+</p>
+<p>
+  My Teletext emulator does this to allow code to write to the new screen using <code>RST 2</code>.
+</p>

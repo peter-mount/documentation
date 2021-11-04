@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "Collect Character restarts"
+linkTitle: "Coll Char"
+description: "Collect Character and Collect Next Character restarts"
+subtopic: "rst"
+categories:
+  - spectrum
+  - spectrumAPI
+api:
+  - name: "RST_3"
+    addr: "0018"
+    title: "Collect character"
+    alt: "RST 3 on all machines"
+  - name: "RST_4"
+    addr: "0020"
+    title: "Collect Next character"
+    alt: "RST 4 on all machines"
+---
+<p>
+    <code>RST 3</code> returns the character addressed by <code>CHADD</code> returning it if it's printable.
+    If it is not printable then <code>CHADD</code> is incremented until a printable character is found.
+</p>
+
+<p>
+    <code>RST 4</code> increments <code>CHADD</code> first before returning the next printable character.
+</p>
+
+<p>
+    These two resets are used in multiple places in the ROM, the BASIC tokenizer being one of them.
+</p>

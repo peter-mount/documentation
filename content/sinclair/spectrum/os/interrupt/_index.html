@@ -1,0 +1,24 @@
+---
+type: "manual"
+title: "Maskable Interrupt"
+linkTitle: "Mask Interrupt"
+description: "The Maskable Interrupt Handler"
+subtopic: "rst"
+categories:
+  - spectrum
+  - spectrumAPI
+api:
+  - name: "RST_7"
+    addr: "0038"
+    title: "Maskable Interrupt Handler"
+    alt: "RST 7 on all machines"
+---
+<p>
+    <code>RST 7</code> is also the Maskable Interrupt handler
+</p>
+<p>
+    It increments the real time clock in the <code>FRAMES</code> variable once every 20ms (UK).
+</p>
+<p>
+    It also scans the keyboard.
+</p>
