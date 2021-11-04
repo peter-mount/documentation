@@ -1,0 +1,58 @@
+---
+type: "manual"
+title: "Block Transfer"
+linkTitle: "Block Transfer"
+weight: 3
+description: "Move blocks of memory"
+tags:
+  - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - Increment
+  - Decrement
+code_dest:
+  - Single
+  - Repeat
+codes:
+  - op: "LDI"
+    code: "EDA0"
+    colour: yellow
+    match: "Single Increment"
+  - op: "LDIR"
+    code: "EDB0"
+    colour: yellow
+    match: "Repeat Increment"
+  - op: "LDD"
+    code: "EDA8"
+    colour: yellow
+    match: "Single Decrement"
+  - op: "LDDR"
+    code: "EDB8"
+    colour: yellow
+    match: "Repeat Decrement"
+---
+<p>
+  The Block transfer instructions allow for data to be moved around in memory.
+</p>
+
+<p>
+  The programmer needs to configure the 16 bit registers to define the properties of the move:
+</p>
+<ul>
+  <li><code>HL</code> is the source address to copy from</li>
+  <li><code>DE</code> is the destination address to copy from</li>
+  <li><code>BC</code> is the number of bytes to copy</li>
+</ul>
+
+<p>
+  The instructions then perform the equivalent of the following:
+</p>
+<ol>
+  <li>Copy a byte of memory from <code>(HL)</code> to <code>(DE)</code></li>
+  <li>Decrement BC by one</li>
+  <li>HL and DE are either incremented (for LDI/LDIR) or decremented (for LDD/LDDR) by one.</li>
+  <li>The LDIR and LDDR instructions will loop back to step one if BC is not 0</li>
+</ol>

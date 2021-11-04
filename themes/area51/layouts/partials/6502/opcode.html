@@ -79,6 +79,9 @@
 {{- /* rows defaults to code_axis but code_dest can replace it */ -}}
 {{- $rows := $.Params.code_axis -}}
 {{- if isset $.Params "code_dest"}}{{ $rows = $.Params.code_dest }}{{end -}}
+{{- $includeOp := isset .Params "code_includeop" -}}
+{{- $sourceLabel := "Source" }}{{if isset .Params "code_source"}}{{$sourceLabel = .Params.code_source}}{{end -}}
+{{- $destLabel := "Destination" }}{{if isset .Params "code_destination"}}{{$destLabel = .Params.code_destination}}{{end -}}
 
 {{- /* Dicts for valid rows/cols and one containing actual cells. Used so we don't scan too many times */ -}}
 {{- $validRows := dict -}}
@@ -117,11 +120,14 @@
 
 <table class="memoryMap3">
     <thead>
+    {{- if ne $sourceLabel "" -}}
+        <tr>
+            <th class="bnone" rowspan="2" colspan="{{if ne $destLabel ""}}2{{else}}1{{end}}"></th>
+            <th colspan="{{len $.Params.code_axis}}">{{$sourceLabel}}</th>
+        </tr>
+    {{- end -}}
     <tr>
-        <th class="bnone" rowspan="2" colspan="2"></th>
-        <th colspan="{{len $.Params.code_axis}}">Source</th>
-    </tr>
-    <tr>
+        {{- if eq $sourceLabel ""}}<th class="bnone"></th>{{end -}}
         {{- range $colId, $v := $.Params.code_axis -}}
             {{- $colKey := printf "%d" $colId -}}
             {{- if index $validCols $colKey -}}
@@ -137,7 +143,11 @@
         {{- $rowValid := index $validRows $lineKey -}}
         {{- if $rowValid -}}
         <tr>
-            {{- if eq $lineNo 0 }}<td class="rotright brtb" rowspan="{{$rowCount}}"><strong>Destination</strong></td>{{end -}}
+            {{- if eq $lineNo 0 -}}
+                {{- if ne $destLabel "" -}}
+                    <td class="rotright brtb" rowspan="{{$rowCount}}"><strong>{{$destLabel}}</strong></td>
+                {{- end -}}
+            {{- end -}}
             <td class="brtb"><strong>{{$dest}}</strong></td>
             {{- range $colId, $src := $.Params.code_axis -}}
                 {{- /* Scan each column, skip if invalid */ -}}
@@ -152,7 +162,12 @@
                         {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
                     {{- end -}}
 
-                    <td class="brb {{$col}}">{{- if ne $opcode "" }}{{$opcode.code}}{{end -}}</td>
+                    <td class="brb {{$col}} nowrap">
+                        {{- if ne $opcode "" -}}
+                        {{- if $includeOp -}}<strong>{{$opcode.op}}</strong><br/>{{- end -}}
+                        {{- $opcode.code -}}
+                        {{- end -}}
+                    </td>
             {{- end -}}
 
             {{- end -}}
