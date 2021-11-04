@@ -19,6 +19,7 @@ type Opcode struct {
   Bytes         *OpcodeType
   Cycles        *OpcodeType
   Notes         []int
+  Colour        string
 }
 
 type OpcodeType struct {

@@ -135,6 +135,8 @@ table.memoryMap {
 }
 
 table.memoryMap,
+table.memoryMap2,
+table.memoryMap3,
 table.hexGrid {
     display: block;
     overflow-x: auto;
@@ -369,6 +371,10 @@ table.diskMap {
             td.dashleftright {
                 border-left: 1px dashed grey;
                 border-right: 1px dashed grey;
+            }
+
+            td.bnone {
+                border: 0;
             }
 
             td.rotright {

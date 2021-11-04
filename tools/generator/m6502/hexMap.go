@@ -24,6 +24,7 @@ type HexCell struct {
   Link       string // Optional link to a page from this cell
   Size       int    // Size in bytes
   Cycles     int    // Cycle count
+  Colour     string // Optional colour information
   Extension  bool   // if true then this is a prefix to another HexMap
 }
 
@@ -80,6 +81,7 @@ func (hg *HexGrid) Opcode(a ...*Opcode) *HexGrid {
         c.Addressing = o.Addressing
         c.Size = o.Bytes.Int()
         c.Cycles = o.Cycles.Int()
+        c.Colour = o.Colour
       }
     }
   }
@@ -136,6 +138,7 @@ func (g *HexMap) opcode(a ...*Opcode) {
       c.Addressing = o.Addressing
       c.Size = o.Bytes.Int()
       c.Cycles = o.Cycles.Int()
+      c.Colour = o.Colour
     }
   }
 }
@@ -148,7 +151,9 @@ func (g *HexMap) write(slice util.StringSlice) (util.StringSlice, error) {
       if c.Label != "" {
         slice = append(slice, fmt.Sprintf("        op: %q", fix(c.Index)))
       }
-      if !c.Extension {
+      if c.Extension {
+        slice = append(slice, fmt.Sprintf("        colour: %q", "grey"))
+      } else {
         if c.Addressing != "" {
           slice = append(slice, fmt.Sprintf("        addressing: %q", c.Addressing))
         }
@@ -160,6 +165,9 @@ func (g *HexMap) write(slice util.StringSlice) (util.StringSlice, error) {
         }
         if c.Cycles > 0 {
           slice = append(slice, fmt.Sprintf("        cycles: %d", c.Cycles))
+        }
+        if c.Colour != "" {
+          slice = append(slice, fmt.Sprintf("        colour: %q", c.Colour))
         }
       }
     }

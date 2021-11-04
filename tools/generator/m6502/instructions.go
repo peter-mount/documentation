@@ -68,6 +68,7 @@ func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}
       Op:            util.DecodeString(e["op"], defaultOp),
       Addressing:    util.DecodeString(e["addressing"], ""),
       Compatibility: util.NewSortedMap().Decode(e["compatibility"]),
+      Colour:        util.DecodeString(e["colour"], ""),
     }
 
     op.Bytes = i.decodeOpType(n, e["bytes"])
@@ -90,6 +91,10 @@ func (i *Instructions) writeOpCodes(prefix string, codes []*Opcode) util.FileBui
         "    addressing: "+op.Addressing,
         "    compatibility:",
       )
+
+      if op.Colour != "" {
+        a = append(a, "    colour: \""+op.Colour+"\"")
+      }
 
       // Compatibility table is just the existence of the keys.
       // Sorted so we keep the same order each time
