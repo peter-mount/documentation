@@ -11,7 +11,7 @@ import (
 
 func delayOpTask(t task.Task) task.Task {
   return func(ctx context.Context) error {
-    task.GetQueue(ctx).AddPriorityTask(45,
+    task.GetQueue(ctx).AddPriorityTask(25,
       task.Of(t).
         WithContext(ctx, generator.BookKey))
     return nil

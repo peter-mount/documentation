@@ -8,6 +8,8 @@ import (
   "github.com/peter-mount/documentation/tools/util/autodoc"
   "github.com/peter-mount/documentation/tools/util/autodoc/asm"
   "github.com/peter-mount/documentation/tools/util/task"
+  "os"
+  "path"
 )
 
 // Api manages the collation of API calls in a book
@@ -44,22 +46,41 @@ func (a *Api) ForEach(h ApiEntryHandler) error {
 
 // generateSource is a Task for generating source code
 func (a *Api) generateSource(ctx context.Context) error {
+  if len(a.api) > 0 {
+    book := generator.GetBook(ctx)
+
+    dirName := book.ContentPath("reference/include")
+    fileName := "api"
+
+    task.GetQueue(ctx).
+        AddTask(task.Of().
+          Then(a.SortByAddr).
+            Then(autodoc.For(dirName, fileName, book.Modified(), ctx).
+              Using(asm.BeebAsm).
+              Using(asm.ZAsm).
+              InvokeTopic("API", buildHeaderFile).
+              Invoke(a.autodocHandler()).
+              Do).
+          WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
+
+  }
+
+  return nil
+}
+
+func (a *Api) generateResource(ctx context.Context) error {
   book := generator.GetBook(ctx)
 
-  dirName := book.ContentPath("reference/include")
-  fileName := "api"
+  dirName := book.ContentPath("reference")
+
+  if err := os.MkdirAll(dirName, 0755); err != nil {
+    return err
+  }
 
   task.GetQueue(ctx).
-      AddTask(task.Of().
-        Then(a.SortByAddr).
-          Then(autodoc.For(dirName, fileName, book.Modified(), ctx).
-            Using(asm.BeebAsm).
-            Using(asm.ZAsm).
-            InvokeTopic("API", buildHeaderFile).
-            Invoke(a.autodocHandler()).
-            Do).
-        WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
-
+      AddTask(
+        autodoc.GenerateReferenceIndices(path.Join(dirName, "_index.html"), book.Modified()).
+          WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
   return nil
 }
 
@@ -74,20 +95,23 @@ func (a *Api) autodocHandler() autodoc.Handler {
 
 // generateIndex generates the API indices
 func (a *Api) generateIndex(ctx context.Context) error {
-  task.GetQueue(ctx).
-      AddTask(task.Of().
-        Then(a.SortByAddr).
-        Then(a.generateIndexFile).
-        WithValue("filename", "api").
-        WithValue("title", "API by Address").
-        WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey)).
-      AddTask(task.Of().
-        Then(a.SortByName).
-        Then(a.generateIndexFile).
-        WithValue("filename", "apiname").
-        WithValue("title", "API by Name").
-        WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
+  if len(a.api) > 0 {
 
+    task.GetQueue(ctx).
+        AddTask(task.Of().
+          Then(a.SortByAddr).
+          Then(a.generateIndexFile).
+          WithValue("filename", "api").
+          WithValue("title", "API by Address").
+          WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey)).
+        AddTask(task.Of().
+          Then(a.SortByName).
+          Then(a.generateIndexFile).
+          WithValue("filename", "apiname").
+          WithValue("title", "API by Name").
+          WithContext(ctx, generator.BookKey, autodoc.ResourceManagerKey))
+
+  }
   return nil
 }
 
