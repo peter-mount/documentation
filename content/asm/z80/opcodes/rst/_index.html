@@ -1,0 +1,191 @@
+---
+type: "manual"
+title: "RST"
+linkTitle: "RST"
+weight: 3
+description: "Invoke a Reset"
+tags:
+  - z80 instruction
+codes:
+  - code: C7
+    op: "RST 0"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: CF
+    op: "RST 1"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: D7
+    op: "RST 2"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: DF
+    op: "RST 3"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: E7
+    op: "RST 4"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: EF
+    op: "RST 5"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: F7
+    op: "RST 6"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+  - code: FF
+    op: "RST 7"
+    addressing: imp
+    bytes:
+      value: 1
+    cycles:
+      value: 3
+---
+<h2>RST <em>t</em></h2>
+<p>
+  <code>RST</code> performs a reset. Specifically it calls a routine at one of 8 addresses at the base of memory.
+  It is the equivalent of performing a <code>CALL</code> to that address except the <code>RST</code> instruction is just
+  1 byte compared to 3 for <code>CALL</code> and is slightly faster.
+</p>
+
+<p>
+  <code>RST 0</code> is the equivalent of a software reset as this maps to address 0x0000 which is where the processor
+  starts running when it powers up.
+</p>
+
+<p>
+  <code>RST 7</code> is the Maskable Interrupt Handler.
+</p>
+
+<p>
+  The other <code>RST</code> instructions are available to the underlying operating system.
+</p>
+
+<h3>Instruction format</h3>
+<p>
+  Syntax: <code>RST</code> <em>t</em>
+</p>
+<table class="memoryMap2">
+  <thead>
+  <tr>
+    <th>7</th>
+    <th>6</th>
+    <th>5</th>
+    <th>4</th>
+    <th>3</th>
+    <th>2</th>
+    <th>1</th>
+    <th>0</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="brb">1</td>
+    <td class="brb">1</td>
+    <td class="brb orange" colspan="3">t</td>
+    <td class="brb">1</td>
+    <td class="brb">1</td>
+    <td class="brb">1</td>
+  </tr>
+  </tbody>
+</table>
+
+<h4 class="card-title">Issues with RST instructions</h4>
+<p>
+  Assemblers use different conventions for the <code>RST</code> instruction.
+  Some use numbers 0&hellip;7 whilst others use the address of the code invoked.
+  They are all equivalent, as there are just 8 possible instruction codes.
+</p>
+
+<table class="memoryMap2">
+  <thead>
+  <tr>
+    <th>Address</th>
+    <th>OP&nbsp;Code</th>
+    <th colspan="3">RST&nbsp;Instruction</th>
+    <th colspan="2">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="orange">
+    <td class="bb">0000</td>
+    <td class="brb">C7</td>
+    <td class="brb" colspan="3">RST 0</td>
+    <td class="brb">Reset machine</td>
+  </tr>
+  <tr class="unused">
+    <td class="bb">0008</td>
+    <td class="brb">CF</td>
+    <td class="brb">RST 1</td>
+    <td class="brb" colspan="2">RST 8</td>
+    <td class="brb" rowspan="6">Operating System Specific</td>
+  </tr>
+  <tr class="unused">
+    <td class="bb">0010</td>
+    <td class="brb">D7</td>
+    <td class="brb">RST 2</td>
+    <td class="brb">RST $10</td>
+    <td class="brb">RST 16</td>
+  </tr>
+  <tr class="unused">
+    <td class="bb">0018</td>
+    <td class="brb">DF</td>
+    <td class="brb">RST 3</td>
+    <td class="brb">RST $18</td>
+    <td class="brb">RST 24</td>
+  </tr>
+  <tr class="unused">
+    <td class="bb">0020</td>
+    <td class="brb">E7</td>
+    <td class="brb">RST 4</td>
+    <td class="brb">RST $20</td>
+    <td class="brb">RST 32</td>
+  </tr>
+  <tr class="unused">
+    <td class="bb">0028</td>
+    <td class="brb">EF</td>
+    <td class="brb">RST 5</td>
+    <td class="brb">RST $28</td>
+    <td class="brb">RST 40</td>
+  </tr>
+  <tr class="unused">
+    <td class="bb">0030</td>
+    <td class="brb">F7</td>
+    <td class="brb">RST 6</td>
+    <td class="brb">RST $30</td>
+    <td class="brb">RST 48</td>
+  </tr>
+  <tr class="orange">
+    <td class="bb">0038</td>
+    <td class="brb">FF</td>
+    <td class="brb">RST 7</td>
+    <td class="brb">RST $38</td>
+    <td class="brb">RST 56</td>
+    <td class="brb">Interrupt Handler</td>
+  </tr>
+  </tbody>
+</table>
+
