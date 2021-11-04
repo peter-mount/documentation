@@ -66,7 +66,7 @@ func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
   return h
 }
 
-func (s *Autodoc) getApi(ctx context.Context) *Api {
+func (s *Autodoc) GetApi(ctx context.Context) *Api {
   book := generator.GetBook(ctx)
 
   if a, exists := s.apis[book.ID]; exists {

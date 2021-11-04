@@ -2,6 +2,7 @@ package m6502
 
 import (
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/generator/autodoc"
   "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   util2 "github.com/peter-mount/go-kernel/util"
@@ -10,6 +11,7 @@ import (
 type M6502 struct {
   generator    *generator.Generator // Generator
   excel        *generator.Excel     // Excel
+  autodoc      *autodoc.Autodoc     // ResourceManager
   extracted    util2.Set            // Set of book ID's so that we run once per book
   instructions util2.Map            // Map of extracted data
 }
@@ -30,6 +32,12 @@ func (s *M6502) Init(k *kernel.Kernel) error {
     return err
   }
   s.excel = service.(*generator.Excel)
+
+  service, err = k.AddService(&autodoc.Autodoc{})
+  if err != nil {
+    return err
+  }
+  s.autodoc = service.(*autodoc.Autodoc)
 
   return nil
 }

@@ -61,7 +61,7 @@ func (s *Autodoc) extractMemoryMap(ctx context.Context, fm *hugo.FrontMatter) er
 
 func (s *Autodoc) extractApi(ctx context.Context, fm *hugo.FrontMatter) error {
 
-  api := s.getApi(ctx)
+  api := s.GetApi(ctx)
   // TODO add comment here
 
   return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {

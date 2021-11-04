@@ -19,6 +19,8 @@ func delayOpTask(t task.Task) task.Task {
 }
 
 func (s *M6502) writeOpsIndex(ctx context.Context) error {
+  _ = s.autodoc.GetApi(ctx)
+
   book := generator.GetBook(ctx)
   inst := s.Instructions(book)
 
@@ -37,6 +39,8 @@ func (s *M6502) writeOpsIndex(ctx context.Context) error {
 }
 
 func (s *M6502) writeOpsHexIndex(ctx context.Context) error {
+  _ = s.autodoc.GetApi(ctx)
+
   book := generator.GetBook(ctx)
   inst := s.Instructions(book)
 
@@ -58,6 +62,8 @@ func (s *M6502) writeOpsHexIndex(ctx context.Context) error {
 }
 
 func (s *M6502) writeOpsHexGrid(ctx context.Context) error {
+  _ = s.autodoc.GetApi(ctx)
+
   book := generator.GetBook(ctx)
   inst := s.Instructions(book)
 
