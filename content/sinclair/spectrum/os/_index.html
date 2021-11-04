@@ -4,7 +4,7 @@ title: "OS Calls"
 linkTitle: "OS Calls"
 description: "Operating System calls"
 weight: 20
-#no_list: true
+no_list: true
 ---
 <p>
     Unlike most manufacturers, the spectrum rom doesn't have many standard rom entry points with most of them undocumented.
@@ -13,20 +13,109 @@ weight: 20
 <p>
     For example, all 48K Spectrum's had the same ROM, so you were almost guaranteed to be able to use the same routine
     on different machines.
-</p>
-<p>
     However, the 128K introduced 2 roms so there had to be differences.
-</p>
-<p>
     With the +2A/+3 came 4 roms and to complicate things there exists an English and Spanish version of these roms with
     different addresses.
 </p>
+
 <p>
     Unless otherwise specified, the entry points in this section will be for the 48K Spectrum as that has more
     documentation available.
 </p>
+
+<p>
+    The only common entry points (known so far) are the RST entry points, as these are also used by the
+    processor's <code>RST</code> instruction.
+</p>
+<div class="row">
+    {{< book/section-index subtopic="rst" title="Restart RST" >}}
+    <div class="col-8 sectionIndex">
+        <h4 class="card-title">Issues with RST instructions</h4>
+        <p>
+            Even this isn't standardised in documentation, with some calls referenced by different numbers.
+        </p>
+
+        <p>
+            For example, the calculator is referenced as <code>RST&nbsp;5</code>, <code>RST&nbsp;40</code>
+            and <code>RST&nbsp;$28</code> in different places even though they are identical instructions.
+        </p>
+
+        <table class="memoryMap2">
+            <thead>
+            <tr>
+                <th>Address</th>
+                <th>OP&nbsp;Code</th>
+                <th colspan="3">RST Instruction</th>
+                <th colspan="2">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="orange">
+                <td class="bb">0000</td>
+                <td class="brb">C7</td>
+                <td class="brb" colspan="3">RST 0</td>
+                <td class="brb">Reset machine</td>
+            </tr>
+            <tr class="orange">
+                <td class="bb">0008</td>
+                <td class="brb">CF</td>
+                <td class="brb">RST 1</td>
+                <td class="brb" colspan="2">RST 8</td>
+                <td class="brb">Error handler</td>
+            </tr>
+            <tr class="green">
+                <td class="bb">0010</td>
+                <td class="brb">D7</td>
+                <td class="brb">RST 2</td>
+                <td class="brb">RST $10</td>
+                <td class="brb">RST 16</td>
+                <td class="brb">Print A</td>
+            </tr>
+            <tr class="blue">
+                <td class="bb">0018</td>
+                <td class="brb">DF</td>
+                <td class="brb">RST 3</td>
+                <td class="brb">RST $18</td>
+                <td class="brb">RST 24</td>
+                <td class="brb" rowspan="2">Get Character</td>
+            </tr>
+            <tr class="blue">
+                <td class="bb">0020</td>
+                <td class="brb">E7</td>
+                <td class="brb">RST 4</td>
+                <td class="brb">RST $20</td>
+                <td class="brb">RST 32</td>
+            </tr>
+            <tr class="yellow">
+                <td class="bb">0028</td>
+                <td class="brb">EF</td>
+                <td class="brb">RST 5</td>
+                <td class="brb">RST $28</td>
+                <td class="brb">RST 40</td>
+                <td class="brb">Calculator</td>
+            </tr>
+            <tr class="grey">
+                <td class="bb">0030</td>
+                <td class="brb">F7</td>
+                <td class="brb">RST 6</td>
+                <td class="brb">RST $30</td>
+                <td class="brb">RST 48</td>
+                <td class="brb">Reserve Workspace</td>
+            </tr>
+            <tr class="orange">
+                <td class="bb">0038</td>
+                <td class="brb">FF</td>
+                <td class="brb">RST 7</td>
+                <td class="brb">RST $38</td>
+                <td class="brb">RST 56</td>
+                <td class="brb">Interrupt Handler</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
-        {{< book/section-index subtopic="rst" title="Restart RST" >}}
     </div>
 </div>
