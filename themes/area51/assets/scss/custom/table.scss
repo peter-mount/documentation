@@ -416,6 +416,10 @@ table.hexGrid {
     td.blue {
         background: #c0e0ff;
     }
+    tr.darkblue,
+    td.darkblue {
+        background: #b0b0cf;
+    }
     tr.orange,
     td.orange {
         background: #ffe0c0;
@@ -428,7 +432,15 @@ table.hexGrid {
     td.green {
         background: #c0ffc0;
     }
-
+    tr.red,
+    td.red {
+        background: #ffc0c0;
+    }
+    tr.purple,
+    td.purple {
+        background: #6300FF;
+        color: #FFFFFF;
+    }
 }
 
 table.summary {
