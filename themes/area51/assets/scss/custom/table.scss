@@ -421,3 +421,39 @@ table.hexGrid {
 
 }
 
+table.summary {
+    thead {
+        tr {
+            th {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+            }
+        }
+        tr:first-child {
+            border-top: 1px solid black;
+        }
+        tr:last-child {
+            border-bottom: 1px solid black;
+        }
+    }
+    tbody {
+        tr {
+            border-bottom: 1px solid black;
+
+            td {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+            }
+
+            td:first-child {
+                text-align: center;
+                vertical-align: middle;
+                font-weight: bold;
+            }
+
+            td:not(:first-child) {
+                text-align: left;
+            }
+        }
+    }
+}

@@ -5,3 +5,135 @@ linkTitle: "Instruction Set"
 weight: 20
 description: "Instruction Set"
 ---
+<h2>Instruction Notation Summary</h2>
+<table class="summary">
+    <thead>
+    <tr>
+        <th>Notation</th>
+        <th colspan="8">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><em>r</em></td>
+        <td>
+            Identifies any of the registers <strong>A</strong>, <strong>B</strong>, <strong>C</strong>, <strong>D</strong>,
+            <strong>E</strong>, <strong>H</strong> or <strong>L</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td>(<em>HL</em>)</td>
+        <td>
+            Identifies the contents of the memory location whose address is specified by the contents of the
+            <strong>HL</strong> register pair.
+        </td>
+    </tr>
+
+    <tr>
+        <td>(<em>IX</em> + <em>d</em>)</td>
+        <td>
+            Identifies the contents of the memory location, whose address is specified by the contents of the
+            Index register pair <strong>IX</strong> plus the signed displacement <strong>d</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td>(<em>IY</em> + <em>d</em>)</td>
+        <td>
+            Identifies the contents of the memory location, whose address is specified by the contents of the
+            Index register pair <strong>IY</strong> plus the signed displacement <strong>d</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>n</em></td>
+        <td>
+            Identifies a one-byte unsigned integer expression in the range (0 to 255)
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>nn</em></td>
+        <td>
+            Identifies a two-byte unsigned integer expression in the range
+            (0 to 65535) (0x0000 to 0xFFFF)
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>b</em></td>
+        <td>
+            Identifies a one-byte signed integer expression in the range
+            (-128 to +127)
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>e</em></td>
+        <td>
+            Identifies a one-byte signed integer expression in the range
+            (-126 to +129) for relative jump offset from current location
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>cc</em></td>
+        <td>
+            Identifies the status of the Flag Register as any of (
+            <strong>NZ</strong>, <strong>Z</strong>, <strong>NC</strong>, <strong>C</strong>, <strong>PO</strong>,
+            <strong>PE</strong>, <strong>P</strong> or <strong>M</strong>
+            ) for the conditional jumps, calls, and return instructions
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>qq</em></td>
+        <td>
+            Identifies any of the register pairs <strong>BC</strong>, <strong>DE</strong>, <strong>HL</strong> or
+            <strong>AF</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>ss</em></td>
+        <td>
+            Identifies any of the register pairs <strong>BC</strong>, <strong>DE</strong>, <strong>HL</strong> or
+            <strong>SP</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>pp</em></td>
+        <td>
+            Identifies any of the register pairs <strong>BC</strong>, <strong>DE</strong>, <strong>IX</strong> or
+            <strong>SP</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>rr</em></td>
+        <td>
+            Identifies any of the register pairs <strong>BC</strong>, <strong>DE</strong>, <strong>IY</strong> or
+            <strong>SP</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>s</em></td>
+        <td>
+            Identifies any of <strong>r</strong>, <strong>n</strong>, <strong>(HL)</strong>, <strong>(IX+d)</strong> or
+            <strong>(IY+d)</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td><em>m</em></td>
+        <td>
+            Identifies any of <strong>r</strong>, <strong>(HL)</strong>, <strong>(IX+d)</strong> or
+            <strong>(IY+d)</strong>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
