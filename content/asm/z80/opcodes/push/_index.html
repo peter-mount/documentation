@@ -6,8 +6,18 @@ weight: 3
 description: "Push Pull onto the stack"
 tags:
   - z80 instruction
-codes:
+code_format: "%[2]s %[3]s"
+code_axis:
+  - AF
+  - BC
+  - DE
+  - HL
+  - IX
+code_dest:
+  - PUSH
+  - POP
 
+codes:
   - op: "PUSH AF"
     code: "F6"
     colour: yellow

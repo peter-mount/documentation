@@ -71,13 +71,18 @@
 </div>
 {{- else -}}
 {{- $opprefix := $.Params.op -}}
+{{- $codeFormat := "%s %[2]s, %[3]s" -}}
+{{- if isset .Params "code_format"}}{{$codeFormat = .Params.code_format }}{{end -}}
+
+{{- $rows := $.Params.code_axis -}}
+{{- if isset $.Params "code_dest"}}{{ $rows = $.Params.code_dest }}{{end -}}
 
 {{- $rowCount := 0 -}}
-    {{- range $dest := $.Params.code_axis -}}
+    {{- range $dest := $rows -}}
         {{- $rowValid := 0 -}}
         {{- range $src := $.Params.code_axis -}}
             {{- range $op := $.Params.codes -}}
-            {{- $opc := printf "%s %s, %s" $opprefix $dest $src -}}
+            {{- $opc := printf $codeFormat $opprefix $dest $src -}}
             {{- if eq $opc $op.op}}{{$rowValid = 1}}{{end -}}
             {{- end -}}
         {{- end -}}
@@ -85,7 +90,6 @@
 {{- end -}}
 
 <table class="memoryMap3">
-    <caption>Syntax: <strong>{{$opprefix}}</strong> <em>DEST</em>, <em>SOURCE</em></caption>
     <thead>
     <tr>
         <th class="bnone" rowspan="2" colspan="2"></th>
@@ -96,11 +100,11 @@
     </tr>
     </thead>
     <tbody>
-    {{- range $lineNo, $dest := $.Params.code_axis -}}
+    {{- range $lineNo, $dest := $rows -}}
         {{- $rowValid := 0 -}}
         {{- range $src := $.Params.code_axis -}}
             {{- range $op := $.Params.codes -}}
-            {{- $opc := printf "%s %s, %s" $opprefix $dest $src -}}
+            {{- $opc := printf $codeFormat $opprefix $dest $src -}}
             {{- if eq $opc $op.op}}{{$rowValid = 1}}{{end -}}
             {{- end -}}
         {{- end -}}
@@ -111,7 +115,7 @@
         {{- range $src := $.Params.code_axis -}}
         {{- $opcode := "" -}}
         {{- range $op := $.Params.codes -}}
-        {{- $opc := printf "%s %s, %s" $opprefix $dest $src -}}
+        {{- $opc := printf $codeFormat $opprefix $dest $src -}}
         {{- if eq $opc $op.op}}{{$opcode = $op}}{{end -}}
         {{- end -}}
         {{- $col := "" -}}

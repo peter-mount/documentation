@@ -6,6 +6,19 @@ weight: 3
 description: "Invoke a Reset"
 tags:
   - z80 instruction
+code_format: "%[2]s %[3]s"
+code_axis:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+code_dest:
+  - RST
+
 codes:
   - code: C7
     op: "RST 0"
