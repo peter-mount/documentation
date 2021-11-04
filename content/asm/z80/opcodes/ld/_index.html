@@ -6,284 +6,449 @@ weight: 3
 description: "Load registers, data & memory"
 tags:
   - z80 instruction
+#hide_codes: true
+op: "LD"
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(BC)"
+  - "(DE)"
+  - "(nn)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - "nn"
+  - BC
+  - DE
+  - HL
+  - IX
+  - IY
+  - SP
+  - I
+  - R
 codes:
 
   - op: "LD A, I"
     code: "ED57"
+    colour: grey
   - op: "LD A, R"
     code: "ED5F"
+    colour: grey
+  - op: "LD I, A"
+    code: "ED47"
+    colour: grey
+  - op: "LD R, A"
+    code: "ED4F"
+    colour: grey
 
   - op: "LD A, A"
     code: "7F"
+    colour: grey
   - op: "LD A, B"
     code: "78"
+    colour: green
   - op: "LD A, C"
     code: "79"
+    colour: green
   - op: "LD A, D"
     code: "7A"
+    colour: green
   - op: "LD A, E"
     code: "7B"
+    colour: green
   - op: "LD A, H"
     code: "7C"
+    colour: green
   - op: "LD A, L"
     code: "7D"
+    colour: green
   - op: "LD A, (HL)"
     code: "7E"
+    colour: yellow
   - op: "LD A, (BC)"
     code: "0A"
+    colour: yellow
   - op: "LD A, (DE)"
     code: "1A"
+    colour: yellow
   - op: "LD A, (IX+d)"
     code: "DD7E"
+    colour: yellow
   - op: "LD A, (IY+d)"
     code: "FD7E"
+    colour: yellow
   - op: "LD A, (nn)"
     code: "3A"
+    colour: yellow
   - op: "LD A, n"
     code: "3E"
+    colour: blue
 
   - op: "LD B, A"
     code: "47"
+    colour: green
   - op: "LD B, B"
     code: "40"
+    colour: grey
   - op: "LD B, C"
     code: "41"
+    colour: green
   - op: "LD B, D"
     code: "42"
+    colour: green
   - op: "LD B, E"
     code: "43"
+    colour: green
   - op: "LD B, H"
     code: "44"
+    colour: green
   - op: "LD B, L"
     code: "44"
+    colour: green
   - op: "LD B, (HL)"
     code: "46"
+    colour: yellow
   - op: "LD B, (IX+d)"
     code: "DD46"
+    colour: yellow
   - op: "LD B, (IY+d)"
     code: "FD46"
+    colour: yellow
   - op: "LD B, n"
     code: "06"
+    colour: blue
 
   - op: "LD C, A"
     code: "4F"
+    colour: green
   - op: "LD C, B"
     code: "48"
+    colour: green
   - op: "LD C, C"
     code: "49"
+    colour: grey
   - op: "LD C, D"
     code: "4A"
+    colour: green
   - op: "LD C, E"
     code: "4B"
+    colour: green
   - op: "LD C, H"
     code: "4C"
+    colour: green
   - op: "LD C, L"
     code: "4D"
+    colour: green
   - op: "LD C, (HL)"
     code: "4E"
+    colour: yellow
   - op: "LD C, (IX+d)"
     code: "DD4E"
+    colour: yellow
   - op: "LD C, (IY+d)"
     code: "FD4E"
+    colour: yellow
   - op: "LD C, n"
     code: "0E"
+    colour: blue
 
   - op: "LD D, A"
     code: "57"
+    colour: green
   - op: "LD D, B"
     code: "50"
+    colour: green
   - op: "LD D, C"
     code: "51"
+    colour: green
   - op: "LD D, D"
     code: "52"
+    colour: grey
   - op: "LD D, E"
     code: "53"
+    colour: green
   - op: "LD D, H"
     code: "54"
+    colour: green
   - op: "LD D, L"
     code: "54"
+    colour: green
   - op: "LD D, (HL)"
     code: "56"
+    colour: yellow
   - op: "LD D, (IX+d)"
     code: "DD56"
+    colour: yellow
   - op: "LD D, (IY+d)"
     code: "FD56"
+    colour: yellow
   - op: "LD D, n"
     code: "16"
+    colour: blue
 
   - op: "LD E, A"
     code: "5F"
+    colour: green
   - op: "LD E, B"
     code: "58"
+    colour: green
   - op: "LD E, C"
     code: "59"
+    colour: green
   - op: "LD E, D"
     code: "5A"
+    colour: green
   - op: "LD E, E"
     code: "5B"
+    colour: grey
   - op: "LD E, H"
     code: "5C"
+    colour: green
   - op: "LD E, L"
     code: "5D"
+    colour: green
   - op: "LD E, (HL)"
     code: "5E"
+    colour: yellow
   - op: "LD E, (IX+d)"
     code: "DD5E"
+    colour: yellow
   - op: "LD E, (IY+d)"
     code: "FD5E"
+    colour: yellow
   - op: "LD E, n"
     code: "1E"
+    colour: blue
 
   - op: "LD H, A"
     code: "67"
+    colour: green
   - op: "LD H, B"
     code: "60"
+    colour: green
   - op: "LD H, C"
     code: "61"
+    colour: green
   - op: "LD H, D"
     code: "62"
+    colour: green
   - op: "LD H, E"
     code: "63"
+    colour: green
   - op: "LD H, H"
     code: "64"
+    colour: grey
   - op: "LD H, L"
     code: "64"
+    colour: green
   - op: "LD H, (HL)"
     code: "66"
+    colour: yellow
   - op: "LD H, (IX+d)"
     code: "DD66"
+    colour: yellow
   - op: "LD H, (IY+d)"
     code: "FD66"
+    colour: yellow
   - op: "LD H, n"
     code: "26"
+    colour: blue
 
   - op: "LD L, A"
     code: "6F"
+    colour: green
   - op: "LD L, B"
     code: "68"
+    colour: green
   - op: "LD L, C"
     code: "69"
+    colour: green
   - op: "LD L, D"
     code: "6A"
+    colour: green
   - op: "LD L, E"
     code: "6B"
+    colour: green
   - op: "LD L, H"
     code: "6C"
+    colour: green
   - op: "LD L, L"
     code: "6D"
+    colour: grey
   - op: "LD L, (HL)"
     code: "6E"
+    colour: yellow
   - op: "LD L, (IX+d)"
     code: "DD6E"
+    colour: yellow
   - op: "LD L, (IY+d)"
     code: "FD6E"
+    colour: yellow
   - op: "LD L, n"
     code: "2E"
+    colour: blue
 
   - op: "LD (HL), A"
     code: "77"
+    colour: yellow
   - op: "LD (HL), B"
     code: "70"
+    colour: yellow
   - op: "LD (HL), C"
     code: "71"
+    colour: yellow
   - op: "LD (HL), D"
     code: "72"
+    colour: yellow
   - op: "LD (HL), E"
     code: "73"
+    colour: yellow
   - op: "LD (HL), H"
     code: "74"
+    colour: yellow
   - op: "LD (HL), L"
     code: "74"
+    colour: yellow
   - op: "LD (HL), n"
     code: "36"
+    colour: blue
 
   - op: "LD (BC), A"
     code: "02"
+    colour: yellow
 
   - op: "LD (DE), A"
     code: "12"
+    colour: yellow
 
   - op: "LD (IX+d), A"
     code: "DD77"
+    colour: yellow
   - op: "LD (IX+d), B"
     code: "DD70"
+    colour: yellow
   - op: "LD (IX+d), C"
     code: "DD71"
+    colour: yellow
   - op: "LD (IX+d), D"
     code: "DD72"
+    colour: yellow
   - op: "LD (IX+d), E"
     code: "DD73"
+    colour: yellow
   - op: "LD (IX+d), H"
     code: "DD74"
+    colour: yellow
   - op: "LD (IX+d), L"
     code: "DD74"
+    colour: yellow
   - op: "LD (IX+d), n"
     code: "DD36"
+    colour: blue
 
   - op: "LD (IY+d), A"
     code: "FD77"
+    colour: yellow
   - op: "LD (IY+d), B"
     code: "FD70"
+    colour: yellow
   - op: "LD (IY+d), C"
     code: "FD71"
+    colour: yellow
   - op: "LD (IY+d), D"
     code: "FD72"
+    colour: yellow
   - op: "LD (IY+d), E"
     code: "FD73"
+    colour: yellow
   - op: "LD (IY+d), H"
     code: "FD74"
+    colour: yellow
   - op: "LD (IY+d), L"
     code: "FD74"
+    colour: yellow
   - op: "LD (IY+d), n"
     code: "FD36"
+    colour: blue
 
   - op: "LD (nn), A"
     code: "32"
-
-  - op: "LD I, A"
-    code: "ED47"
-
-  - op: "LD R, A"
-    code: "ED4F"
+    colour: yellow
 
   - op: "LD BC, nn"
     code: "01"
+    colour: blue
   - op: "LD BC, (nn)"
     code: "ED4B"
+    colour: yellow
 
   - op: "LD DE, nn"
     code: "11"
+    colour: blue
   - op: "LD DE, (nn)"
     code: "ED5B"
+    colour: yellow
 
   - op: "LD HL, nn"
     code: "21"
+    colour: blue
   - op: "LD HL, (nn)"
     code: "2A"
+    colour: yellow
 
   - op: "LD SP, HL"
     code: "F9"
+    colour: green
   - op: "LD SP, IX"
     code: "DDF9"
+    colour: green
   - op: "LD SP, IY"
     code: "FDF9"
+    colour: green
   - op: "LD SP, nn"
     code: "31"
+    colour: blue
   - op: "LD SP, (nn)"
     code: "ED7B"
+    colour: yellow
+
+  - op: "LD IX, nn"
+    colour: blue
+  - op: "LD IX, (nn)"
+    code: "DD2A"
+    colour: yellow
+
+  - op: "LD IY, nn"
+    code: "FD21"
+    colour: blue
+  - op: "LD IY, (nn)"
+    code: "FD2A"
+    colour: yellow
 
   - op: "LD (nn), BC"
     code: "ED43"
+    colour: yellow
   - op: "LD (nn), DE"
     code: "ED53"
+    colour: yellow
   - op: "LD (nn), HL"
     code: "22"
+    colour: yellow
   - op: "LD (nn), SP"
     code: "ED73"
+    colour: yellow
   - op: "LD (nn), IX"
     code: "DD22"
+    colour: yellow
   - op: "LD (nn), IY"
     code: "FD22"
+    colour: yellow
 
 ---
 <p>

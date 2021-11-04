@@ -1,6 +1,8 @@
 {{- if isset .Params "flags" }}{{ partial "6502/flags.html" .Params.flags }}{{end -}}
+{{- if isset .Params "hide_codes" -}}{{- else -}}
 {{- if isset .Params "codes" -}}
 {{- $opcode := $.Params.codes -}}
+{{- if isset .Params "code_axis" | not -}}
 {{- if isset .Params "notitle" | not -}}
 <div class="printPageBreakAvoid">
     <h3>Instructions</h3>
@@ -67,6 +69,79 @@
         </tbody>
     </table>
 </div>
+{{- else -}}
+{{- $opprefix := $.Params.op -}}
+
+{{- $rowCount := 0 -}}
+    {{- range $dest := $.Params.code_axis -}}
+        {{- $rowValid := 0 -}}
+        {{- range $src := $.Params.code_axis -}}
+            {{- range $op := $.Params.codes -}}
+            {{- $opc := printf "%s %s, %s" $opprefix $dest $src -}}
+            {{- if eq $opc $op.op}}{{$rowValid = 1}}{{end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- if $rowValid -}}{{ $rowCount := add $rowCount 1 }}{{- end -}}
+{{- end -}}
+
+<table class="memoryMap3">
+    <caption>Syntax: <strong>{{$opprefix}}</strong> <em>DEST</em>, <em>SOURCE</em></caption>
+    <thead>
+    <tr>
+        <th class="bnone" rowspan="2" colspan="2"></th>
+        <th colspan="{{len $.Params.code_axis}}">Source</th>
+    </tr>
+    <tr>
+        {{- range $.Params.code_axis}}<th>{{.}}</th>{{end -}}
+    </tr>
+    </thead>
+    <tbody>
+    {{- range $lineNo, $dest := $.Params.code_axis -}}
+        {{- $rowValid := 0 -}}
+        {{- range $src := $.Params.code_axis -}}
+            {{- range $op := $.Params.codes -}}
+            {{- $opc := printf "%s %s, %s" $opprefix $dest $src -}}
+            {{- if eq $opc $op.op}}{{$rowValid = 1}}{{end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- if $rowValid -}}
+    <tr>
+        {{- if eq $lineNo 0 }}<td class="rotright brtb" rowspan="{{$rowCount}}"><strong>Destination</strong></td>{{end -}}
+        <td class="brtb"><strong>{{$dest}}</strong></td>
+        {{- range $src := $.Params.code_axis -}}
+        {{- $opcode := "" -}}
+        {{- range $op := $.Params.codes -}}
+        {{- $opc := printf "%s %s, %s" $opprefix $dest $src -}}
+        {{- if eq $opc $op.op}}{{$opcode = $op}}{{end -}}
+        {{- end -}}
+        {{- $col := "" -}}
+        {{- if ne $opcode "" -}}
+            {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
+        {{- end -}}
+        <td class="brb {{$col}}">{{- if ne $opcode "" }}{{$opcode.code}}{{end -}}</td>
+        {{- end -}}
+    </tr>
+    {{- end -}}
+    {{- end -}}
+    </tbody>
+</table>
+<table class="memoryMap3">
+    <tbody>
+    <tr>
+        <td class="green blrtb">Register</td>
+        <td>&nbsp;</td>
+        <td class="yellow blrtb">Memory</td>
+        <td>&nbsp;</td>
+        <td class="blue blrtb">Implicit</td>
+        <td>&nbsp;</td>
+        <td class="orange blrtb">Undefined</td>
+        <td>&nbsp;</td>
+        <td class="grey blrtb">Special</td>
+    </tr>
+    </tbody>
+</table>
+{{- end -}}
+{{- end -}}
 {{- end -}}
 
 {{- if isset $.Params "notes" -}}

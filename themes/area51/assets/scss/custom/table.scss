@@ -278,11 +278,16 @@ table.diskMap {
 
     thead {
         tr {
-            border: 1px solid grey;
+            //border: 1px solid grey;
             th {
                 text-align: center;
                 border: 1px solid grey;
             }
+
+            th.bnone {
+                border: 0;
+            }
+
         }
 
         tr:first-child th:first-child,
@@ -370,7 +375,6 @@ table.diskMap {
                 //transform: rotate(90deg);
                 writing-mode: vertical-rl;
             }
-
         }
 
     }
