@@ -2,17 +2,16 @@ package m6502
 
 import (
   "github.com/peter-mount/documentation/tools/generator"
-  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
+  util2 "github.com/peter-mount/go-kernel/util"
 )
 
 type M6502 struct {
-  generator *generator.Generator // Generator
-  excel     *generator.Excel     // Excel
-  extracted bool                 // true once extract has run
-  opCodes   []*Opcode
-  notes     *util.Notes
+  generator    *generator.Generator // Generator
+  excel        *generator.Excel     // Excel
+  extracted    util2.Set            // Set of book ID's so that we run once per book
+  instructions util2.Map            // Map of extracted data
 }
 
 func (s *M6502) Name() string {
@@ -36,19 +35,22 @@ func (s *M6502) Init(k *kernel.Kernel) error {
 }
 
 func (s *M6502) Start() error {
+  s.extracted = util2.NewHashSet()
+  s.instructions = util2.NewSyncMap()
+
   s.generator.
       Register("6502OpsIndex",
         task.Of().
-          RunOnce(&s.extracted, s.extractOpcodes).
-          Then(s.writeOpsIndex)).
+          Then(s.extractOpcodes).
+          Then(delayOpTask(s.writeOpsIndex))).
       Register("6502OpsHexIndex",
         task.Of().
-          RunOnce(&s.extracted, s.extractOpcodes).
-          Then(s.writeOpsHexIndex)).
+          Then(s.extractOpcodes).
+          Then(delayOpTask(s.writeOpsHexIndex))).
       Register("6502OpsHexGrid",
         task.Of().
-          RunOnce(&s.extracted, s.extractOpcodes).
-          Then(s.writeOpsHexGrid))
+          Then(s.extractOpcodes).
+          Then(delayOpTask(s.writeOpsHexGrid)))
 
   return nil
 }

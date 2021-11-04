@@ -7,14 +7,19 @@ import (
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
   "log"
-  "strconv"
 )
 
 func (s *M6502) extractOpcodes(ctx context.Context) error {
   book := generator.GetBook(ctx)
+  instructions := s.Instructions(book)
 
-  s.opCodes = nil
-  s.notes = util.NewNotes()
+  // Only run once per Book ID
+  if s.extracted.Contains(book.ID) {
+    return nil
+  }
+
+  // Prevent us running again for this Book
+  s.extracted.Add(book.ID)
 
   log.Println("Scanning 6502 opcodes")
   err := walk.NewPathWalker().
@@ -23,23 +28,22 @@ func (s *M6502) extractOpcodes(ctx context.Context) error {
     PathHasSuffix(".html").
       Then(hugo.FrontMatterActionOf().
         Then(s.extract).
-        WithNotes(s.notes).
+        WithNotes(instructions.notes).
+        Context(InstructionsKey, instructions).
         Walk(ctx)).
     Walk(book.ContentPath())
   if err != nil {
     return err
   }
 
-  for _, op := range s.opCodes {
-    op.Bytes.resolve(s.notes)
-    op.Cycles.resolve(s.notes)
+  for _, op := range instructions.opCodes {
+    op.Bytes.resolve(instructions.notes)
+    op.Cycles.resolve(instructions.notes)
   }
 
-  s.normalise()
+  instructions.normalise()
+  instructions.validateOpcodes()
 
-  s.validateOpcodes()
-
-  s.extracted = true
   return nil
 }
 
@@ -51,57 +55,12 @@ func (s *M6502) extract(ctx context.Context, fm *hugo.FrontMatter) error {
     }
 
     notes := ctx.Value("notes").(*util.Notes)
+    instructions := GetInstructions(ctx)
 
     _ = util.ForEachInterface(codes, func(e1 interface{}) error {
-      s.extractOp(defaultOp, notes, e1)
+      instructions.extractOp(defaultOp, notes, e1)
       return nil
     })
   }
   return nil
-}
-
-func (s *M6502) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
-  o := &OpcodeType{}
-
-  _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
-    _ = util.IfMapEntry(e, "value", func(v interface{}) error {
-      o.Value = util.DecodeString(v, "")
-      return nil
-    })
-
-    return util.IfMapEntry(e, "notes", func(v interface{}) error {
-      return util.ForEachInterface(v, func(ae interface{}) error {
-        if i, ok := ae.(int); ok {
-          note := n.GetId(i)
-          if note != nil {
-            o.NoteId = append(o.NoteId, note.Value)
-          }
-        }
-        return nil
-      })
-    })
-  })
-
-  return o
-}
-
-func (s *M6502) extractOp(defaultOp string, n *util.Notes, e1 interface{}) {
-  _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
-    opcode := util.DecodeString(e["code"], "")
-    order, _ := strconv.ParseInt(opcode, 16, 32)
-    op := &Opcode{
-      Order:         int(order),
-      Code:          opcode,
-      Op:            util.DecodeString(e["op"], defaultOp),
-      Addressing:    util.DecodeString(e["addressing"], ""),
-      Compatibility: util.NewSortedMap().Decode(e["compatibility"]),
-    }
-
-    op.Bytes = s.decodeOpType(n, e["bytes"])
-    op.Cycles = s.decodeOpType(n, e["cycles"])
-
-    s.opCodes = append(s.opCodes, op)
-
-    return nil
-  })
 }

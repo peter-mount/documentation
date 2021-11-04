@@ -71,10 +71,10 @@ func (o *OpcodeType) Normalise() {
   })
 }
 
-func (s *M6502) normalise() {
-  s.notes.Normalise()
+func (i *Instructions) normalise() {
+  i.notes.Normalise()
 
-  for _, o := range s.opCodes {
+  for _, o := range i.opCodes {
     o.Bytes.Normalise()
     o.Cycles.Normalise()
   }

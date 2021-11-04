@@ -2,22 +2,33 @@ package m6502
 
 import (
   "context"
-  "fmt"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/task"
   "sort"
 )
 
+func delayOpTask(t task.Task) task.Task {
+  return func(ctx context.Context) error {
+    task.GetQueue(ctx).AddPriorityTask(45,
+      task.Of(t).
+        WithContext(ctx, generator.BookKey))
+    return nil
+  }
+}
+
 func (s *M6502) writeOpsIndex(ctx context.Context) error {
   book := generator.GetBook(ctx)
+  inst := s.Instructions(book)
 
-  sort.SliceStable(s.opCodes, func(i, j int) bool {
-    return s.opCodes[i].Order < s.opCodes[j].Order
+  sort.SliceStable(inst.opCodes, func(i, j int) bool {
+    return inst.opCodes[i].Order < inst.opCodes[j].Order
   })
 
   return s.writeFile(
     book,
+    inst,
     "codes",
     "opcodes",
     "Instruction List by opcode",
@@ -27,16 +38,18 @@ func (s *M6502) writeOpsIndex(ctx context.Context) error {
 
 func (s *M6502) writeOpsHexIndex(ctx context.Context) error {
   book := generator.GetBook(ctx)
+  inst := s.Instructions(book)
 
-  sort.SliceStable(s.opCodes, func(i, j int) bool {
-    if s.opCodes[i].Op == s.opCodes[j].Op {
-      return s.opCodes[i].Addressing < s.opCodes[j].Addressing
+  sort.SliceStable(inst.opCodes, func(i, j int) bool {
+    if inst.opCodes[i].Op == inst.opCodes[j].Op {
+      return inst.opCodes[i].Addressing < inst.opCodes[j].Addressing
     }
-    return s.opCodes[i].Op < s.opCodes[j].Op
+    return inst.opCodes[i].Op < inst.opCodes[j].Op
   })
 
   return s.writeFile(
     book,
+    inst,
     "codes",
     "instructions",
     "Instruction List by name",
@@ -46,58 +59,25 @@ func (s *M6502) writeOpsHexIndex(ctx context.Context) error {
 
 func (s *M6502) writeOpsHexGrid(ctx context.Context) error {
   book := generator.GetBook(ctx)
+  inst := s.Instructions(book)
 
   return util.ReferenceFileBuilder("Opcode Matrix", "Instructions shown in an Opcode Matrix", "manual", 10).
       Then(NewHexGrid().
-        Opcode(s.opCodes...).
+        Opcode(inst.opCodes...).
         FileBuilder()).
     WrapAsFrontMatter().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), "hexgrid", "_index.html"), book.Modified())
 }
 
-func (s *M6502) writeOpCodes(prefix string, codes []*Opcode) util.FileBuilder {
-  return func(a util.StringSlice) (util.StringSlice, error) {
-    a = append(a, prefix+":")
-
-    for _, op := range codes {
-      a = append(a,
-        "  - code: \""+op.Code+"\"",
-        "    op: \""+op.Op+"\"",
-        "    addressing: "+op.Addressing,
-        "    compatibility:",
-      )
-
-      // Compatibility table is just the existence of the keys.
-      // Sorted so we keep the same order each time
-      _ = op.Compatibility.
-        Keys().
-        Sort().
-          ForEach(func(k string) error {
-            a = append(a, fmt.Sprintf("      %v: true", k))
-            return nil
-          })
-
-      a = op.Bytes.append("    ", "bytes", a)
-      a = op.Cycles.append("    ", "cycles", a)
-    }
-
-    a = append(a, "notes:")
-    for _, n := range s.notes.Notes {
-      a = append(a, fmt.Sprintf("  - \"%s\" # %d", n.Value, n.Key))
-    }
-    return a, nil
-  }
-}
-
-func (s *M6502) writeFile(book *hugo.Book, prefix, name, title, desc string) error {
+func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, title, desc string) error {
   err := util.ReferenceFileBuilder(
     title,
     desc,
     "manual",
     10,
   ).
-    Then(s.writeOpCodes(prefix, s.opCodes)).
+    Then(inst.writeOpCodes(prefix, inst.opCodes)).
     WrapAsFrontMatter().
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), name, "_index.html"), book.Modified())
@@ -106,7 +86,7 @@ func (s *M6502) writeFile(book *hugo.Book, prefix, name, title, desc string) err
   }
 
   // Use a copy as we reorder s.opCodes so when excel is processed later it gets just the last ordering
-  codes := append([]*Opcode{}, s.opCodes...)
+  codes := append([]*Opcode{}, inst.opCodes...)
 
   return util.WithTable().
     AsCSV(book.StaticPath(name+".csv"), book.Modified()).
