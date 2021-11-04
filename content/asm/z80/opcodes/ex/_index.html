@@ -1,0 +1,66 @@
+---
+type: "manual"
+title: "Exchanges"
+linkTitle: "Exchange"
+weight: 3
+description: "Exchange registers"
+tags:
+  - z80 instruction
+code_format: "EX %[2]s, %[3]s"
+code_axis:
+  - AF
+  - "AF'"
+  - DE
+  - HL
+  - IX
+  - IY
+  - "(SP)"
+  - "AF,BC,DE,HL,IX,IY"
+  - "AF',BC',DE',HL',IX',IY'"
+
+codes:
+  - op: "EX AF, AF'"
+    code: "08"
+    colour: green
+  - op: "EX DE, HL"
+    code: "EB"
+    colour: green
+  - op: "EX (SP), HL"
+    code: "E3"
+    colour: yellow
+  - op: "EX (SP), IX"
+    code: "DDE3"
+    colour: yellow
+  - op: "EX (SP), IY"
+    code: "FDE3"
+    colour: yellow
+  - op: "EXX"
+    code: "D9"
+    colour: green
+    match: "EX AF,BC,DE,HL,IX,IY, AF',BC',DE',HL',IX',IY'"
+---
+<p>
+  These instructions exchange values between registers.
+</p>
+
+<p>
+  <code>EX AF, AF'</code> (0x08) allows the programmer to switch between the two pairs of Accumulator flag
+  registers.
+</p>
+
+<p>
+  <code>EX DE, HL</code> (0xEB) exchanges the values between those two registers.
+</p>
+
+<p>
+  <code>EXX</code> (0xD9) allows the programmer to switch between the duplicate set of six general-purpose registers.
+</p>
+
+<p>
+  Internally these instructions toggles a flip-flop which determines which register or register set is the active one.
+  This minimises how long the instruction takes as no data is transferred - just a single bit changes state.
+</p>
+
+<p>
+  <code>EX (SP),HL</code> exchanges HL with the last value pushed on the stack.
+</p>

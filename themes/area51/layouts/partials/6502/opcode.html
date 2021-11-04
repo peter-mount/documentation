@@ -70,24 +70,50 @@
     </table>
 </div>
 {{- else -}}
-{{- $opprefix := $.Params.op -}}
+
+{{- /* Copy of params */ -}}
+{{- $opPrefix := $.Params.op -}}
 {{- $codeFormat := "%s %[2]s, %[3]s" -}}
 {{- if isset .Params "code_format"}}{{$codeFormat = .Params.code_format }}{{end -}}
 
+{{- /* rows defaults to code_axis but code_dest can replace it */ -}}
 {{- $rows := $.Params.code_axis -}}
 {{- if isset $.Params "code_dest"}}{{ $rows = $.Params.code_dest }}{{end -}}
 
-{{- $rowCount := 0 -}}
-    {{- range $dest := $rows -}}
-        {{- $rowValid := 0 -}}
-        {{- range $src := $.Params.code_axis -}}
-            {{- range $op := $.Params.codes -}}
-            {{- $opc := printf $codeFormat $opprefix $dest $src -}}
-            {{- if eq $opc $op.op}}{{$rowValid = 1}}{{end -}}
+{{- /* Dicts for valid rows/cols and one containing actual cells. Used so we don't scan too many times */ -}}
+{{- $validRows := dict -}}
+{{- $validCols := dict -}}
+{{- $values := dict -}}
+
+{{- /* Scan opcodes, fill the dicts & calculate rowCount */ -}}
+{{- range $lineNo, $dest := $rows -}}
+    {{- $lineKey := printf "%d" $lineNo -}}
+    {{- range $colId, $src := $.Params.code_axis -}}
+        {{- $colKey := printf "%d" $colId -}}
+        {{- range $op := $.Params.codes -}}
+            {{- /* Form match pattern then compare against op. match overrides op */ -}}
+            {{- $opc := printf $codeFormat $opPrefix $dest $src -}}
+            {{- $match := $op.op -}}
+            {{- if isset $op "match" }}{{$match = $op.match}}{{end -}}
+
+            {{- if eq $opc $match -}}
+
+                {{- /* Mark row and column as valid */ -}}
+                {{- $d := dict $lineKey 1 -}}
+                {{- $validRows = merge $validRows $d -}}
+
+                {{- $d := dict $colKey 1 -}}
+                {{- $validCols = merge $validCols $d -}}
+
+                {{- $cellKey := printf "%d %d" $lineKey $colId -}}
+                {{- $d := dict $cellKey $op -}}
+                {{- $values = merge $values $d -}}
             {{- end -}}
         {{- end -}}
-    {{- if $rowValid -}}{{ $rowCount := add $rowCount 1 }}{{- end -}}
+    {{- end -}}
 {{- end -}}
+
+{{- $rowCount := len $validRows -}}
 
 <table class="memoryMap3">
     <thead>
@@ -96,36 +122,42 @@
         <th colspan="{{len $.Params.code_axis}}">Source</th>
     </tr>
     <tr>
-        {{- range $.Params.code_axis}}<th>{{.}}</th>{{end -}}
+        {{- range $colId, $v := $.Params.code_axis -}}
+            {{- $colKey := printf "%d" $colId -}}
+            {{- if index $validCols $colKey -}}
+                <th>{{ $v }}</th>
+            {{- end -}}
+        {{- end -}}
     </tr>
     </thead>
     <tbody>
     {{- range $lineNo, $dest := $rows -}}
-        {{- $rowValid := 0 -}}
-        {{- range $src := $.Params.code_axis -}}
-            {{- range $op := $.Params.codes -}}
-            {{- $opc := printf $codeFormat $opprefix $dest $src -}}
-            {{- if eq $opc $op.op}}{{$rowValid = 1}}{{end -}}
+        {{- /* Scan each row, skip if invalid */ -}}
+        {{- $lineKey := printf "%d" $lineNo -}}
+        {{- $rowValid := index $validRows $lineKey -}}
+        {{- if $rowValid -}}
+        <tr>
+            {{- if eq $lineNo 0 }}<td class="rotright brtb" rowspan="{{$rowCount}}"><strong>Destination</strong></td>{{end -}}
+            <td class="brtb"><strong>{{$dest}}</strong></td>
+            {{- range $colId, $src := $.Params.code_axis -}}
+                {{- /* Scan each column, skip if invalid */ -}}
+                {{- $colKey := printf "%d" $colId -}}
+                {{- if index $validCols $colKey -}}
+                    {{- /* Get the cell at this position */ -}}
+                    {{- $cellKey := printf "%d %d" $lineKey $colId -}}
+                    {{- $opcode := index $values $cellKey -}}
+
+                    {{- $col := "" -}}
+                    {{- if ne $opcode "" -}}
+                        {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
+                    {{- end -}}
+
+                    <td class="brb {{$col}}">{{- if ne $opcode "" }}{{$opcode.code}}{{end -}}</td>
             {{- end -}}
+
+            {{- end -}}
+        </tr>
         {{- end -}}
-    {{- if $rowValid -}}
-    <tr>
-        {{- if eq $lineNo 0 }}<td class="rotright brtb" rowspan="{{$rowCount}}"><strong>Destination</strong></td>{{end -}}
-        <td class="brtb"><strong>{{$dest}}</strong></td>
-        {{- range $src := $.Params.code_axis -}}
-        {{- $opcode := "" -}}
-        {{- range $op := $.Params.codes -}}
-        {{- $opc := printf $codeFormat $opprefix $dest $src -}}
-        {{- if eq $opc $op.op}}{{$opcode = $op}}{{end -}}
-        {{- end -}}
-        {{- $col := "" -}}
-        {{- if ne $opcode "" -}}
-            {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
-        {{- end -}}
-        <td class="brb {{$col}}">{{- if ne $opcode "" }}{{$opcode.code}}{{end -}}</td>
-        {{- end -}}
-    </tr>
-    {{- end -}}
     {{- end -}}
     </tbody>
 </table>
