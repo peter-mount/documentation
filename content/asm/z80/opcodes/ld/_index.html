@@ -1,9 +1,9 @@
 ---
 type: "manual"
-title: "Load and Exchange"
-linkTitle: "Load Exchange"
+title: "Load"
+linkTitle: "LD"
 weight: 3
-description: "Load and Exchange registers, data & memory"
+description: "Load registers, data & memory"
 tags:
   - z80 instruction
 codes:
@@ -245,6 +245,45 @@ codes:
 
   - op: "LD R, A"
     code: "ED4F"
+
+  - op: "LD BC, nn"
+    code: "01"
+  - op: "LD BC, (nn)"
+    code: "ED4B"
+
+  - op: "LD DE, nn"
+    code: "11"
+  - op: "LD DE, (nn)"
+    code: "ED5B"
+
+  - op: "LD HL, nn"
+    code: "21"
+  - op: "LD HL, (nn)"
+    code: "2A"
+
+  - op: "LD SP, HL"
+    code: "F9"
+  - op: "LD SP, IX"
+    code: "DDF9"
+  - op: "LD SP, IY"
+    code: "FDF9"
+  - op: "LD SP, nn"
+    code: "31"
+  - op: "LD SP, (nn)"
+    code: "ED7B"
+
+  - op: "LD (nn), BC"
+    code: "ED43"
+  - op: "LD (nn), DE"
+    code: "ED53"
+  - op: "LD (nn), HL"
+    code: "22"
+  - op: "LD (nn), SP"
+    code: "ED73"
+  - op: "LD (nn), IX"
+    code: "DD22"
+  - op: "LD (nn), IY"
+    code: "FD22"
 
 ---
 <p>
