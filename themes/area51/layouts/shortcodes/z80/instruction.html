@@ -1,0 +1,5 @@
+<div>
+    {{- with $.Get "operation"}}<p>\({{.|safeHTML}}\)</p>{{end -}}
+    {{- with $.Get "overview"}}<p>{{.|safeHTML}}</p>{{end -}}
+    {{- $.Inner -}}
+</div>
