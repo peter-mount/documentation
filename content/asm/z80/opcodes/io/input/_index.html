@@ -1,0 +1,80 @@
+---
+type: "manual"
+title: "Input"
+linkTitle: "Input"
+weight: 3
+description: "Input instructions"
+tags:
+  - z80 instruction
+code_includeop: true
+code_format: "%[2]s %[3]s"
+code_source: "Destination"
+code_destination: ""
+code_axis:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+  - "E"
+  - "H"
+  - "L"
+  - "(HL)"
+code_dest:
+  - "IN n"
+  - "IN (C)"
+  - "INI"
+  - "INIR"
+  - "IND"
+  - "INDR"
+codes:
+  - op: "IN A,n"
+    code: "DB"
+    colour: grey
+    match: "IN n A"
+  - op: "IN A,(C)"
+    code: "ED7B"
+    colour: grey
+    match: "IN (C) A"
+  - op: "IN B,(C)"
+    code: "ED40"
+    colour: grey
+    match: "IN (C) B"
+  - op: "IN C,(C)"
+    code: "ED48"
+    colour: grey
+    match: "IN (C) C"
+  - op: "IN D,(C)"
+    code: "ED50"
+    colour: grey
+    match: "IN (C) D"
+  - op: "IN E,(C)"
+    code: "ED58"
+    colour: grey
+    match: "IN (C) E"
+  - op: "IN H,(C)"
+    code: "ED60"
+    colour: grey
+    match: "IN (C) H"
+  - op: "IN L,(C)"
+    code: "ED68"
+    colour: grey
+    match: "IN (C) L"
+
+  - op: "INI"
+    code: "EDA2"
+    colour: grey
+    match: "INI (HL)"
+  - op: "INIR"
+    code: "EDB2"
+    colour: grey
+    match: "INIR (HL)"
+  - op: "IND"
+    code: "EDAA"
+    colour: grey
+    match: "IND (HL)"
+  - op: "INDR"
+    code: "EDBA"
+    colour: grey
+    match: "INDR (HL)"
+
+---
