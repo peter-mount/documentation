@@ -1,0 +1,247 @@
+---
+type: "manual"
+title: "Arithmetic"
+linkTitle: "Arithmetic"
+weight: 3
+description: "Arithmetic"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "ADD A"
+  - "ADD HL"
+  - "ADD IX"
+  - "ADD IY"
+  - "ADC A"
+  - "ADC HL"
+  - "SUB A"
+  - "SBC A"
+  - "SBC HL"
+codes:
+  - op: "ADD A,A"
+    code: "87"
+    colour: green
+  - op: "ADD A,B"
+    code: "80"
+    colour: green
+  - op: "ADD A,C"
+    code: "81"
+    colour: green
+  - op: "ADD A,D"
+    code: "82"
+    colour: green
+  - op: "ADD A,E"
+    code: "83"
+    colour: green
+  - op: "ADD A,H"
+    code: "84"
+    colour: green
+  - op: "ADD A,L"
+    code: "85"
+    colour: green
+  - op: "ADD A,(HL)"
+    code: "86"
+    colour: yellow
+  - op: "ADD A,(IX+d)"
+    code: "DD86"
+    colour: yellow
+  - op: "ADD A,(IY+d)"
+    code: "FD86"
+    colour: yellow
+  - op: "ADD A,n"
+    code: "C6"
+    colour: blue
+
+  - op: "ADD HL,BC"
+    code: "09"
+    colour: green
+  - op: "ADD HL,DE"
+    code: "19"
+    colour: green
+  - op: "ADD HL,HL"
+    code: "29"
+    colour: green
+  - op: "ADD HL,SP"
+    code: "39"
+    colour: green
+
+  - op: "ADD IX,BC"
+    code: "DD09"
+    colour: green
+  - op: "ADD IX,DE"
+    code: "DD19"
+    colour: green
+  - op: "ADD IX,SP"
+    code: "DD39"
+    colour: green
+  - op: "ADD IX,IX"
+    code: "DD29"
+    colour: green
+
+  - op: "ADD IY,BC"
+    code: "FD09"
+    colour: green
+  - op: "ADD IY,DE"
+    code: "FD19"
+    colour: green
+  - op: "ADD IY,SP"
+    code: "FD39"
+    colour: green
+  - op: "ADD IY,IY"
+    code: "FD29"
+    colour: green
+
+  - op: "ADC A,A"
+    code: "8F"
+    colour: green
+  - op: "ADC A,B"
+    code: "88"
+    colour: green
+  - op: "ADC A,C"
+    code: "89"
+    colour: green
+  - op: "ADC A,D"
+    code: "8A"
+    colour: green
+  - op: "ADC A,E"
+    code: "8B"
+    colour: green
+  - op: "ADC A,H"
+    code: "8C"
+    colour: green
+  - op: "ADC A,L"
+    code: "8D"
+    colour: green
+  - op: "ADC A,(HL)"
+    code: "8E"
+    colour: yellow
+  - op: "ADC A,(IX+d)"
+    code: "DD8E"
+    colour: yellow
+  - op: "ADC A,(IY+d)"
+    code: "FD8E"
+    colour: yellow
+  - op: "ADC A,n"
+    code: "CE"
+    colour: blue
+
+  - op: "ADC HL,BC"
+    code: "ED4A"
+    colour: green
+  - op: "ADC HL,DE"
+    code: "ED5A"
+    colour: green
+  - op: "ADC HL,HL"
+    code: "ED6A"
+    colour: green
+  - op: "ADC HL,SP"
+    code: "ED7A"
+    colour: green
+
+  - op: "SUB A,A"
+    code: "97"
+    colour: green
+  - op: "SUB A,B"
+    code: "90"
+    colour: green
+  - op: "SUB A,C"
+    code: "91"
+    colour: green
+  - op: "SUB A,D"
+    code: "92"
+    colour: green
+  - op: "SUB A,E"
+    code: "93"
+    colour: green
+  - op: "SUB A,H"
+    code: "94"
+    colour: green
+  - op: "SUB A,L"
+    code: "95"
+    colour: green
+  - op: "SUB A,(HL)"
+    code: "96"
+    colour: yellow
+  - op: "SUB A,(IX+d)"
+    code: "DD96"
+    colour: yellow
+  - op: "SUB A,(IY+d)"
+    code: "FD96"
+    colour: yellow
+  - op: "SUB A,n"
+    code: "D6"
+    colour: blue
+
+  - op: "SBC A,A"
+    code: "9F"
+    colour: green
+  - op: "SBC A,B"
+    code: "98"
+    colour: green
+  - op: "SBC A,C"
+    code: "99"
+    colour: green
+  - op: "SBC A,D"
+    code: "9A"
+    colour: green
+  - op: "SBC A,E"
+    code: "9B"
+    colour: green
+  - op: "SBC A,H"
+    code: "9C"
+    colour: green
+  - op: "SBC A,L"
+    code: "9D"
+    colour: green
+  - op: "SBC A,(HL)"
+    code: "9E"
+    colour: yellow
+  - op: "SBC A,(IX+d)"
+    code: "DD9E"
+    colour: yellow
+  - op: "SBC A,(IY+d)"
+    code: "FD9E"
+    colour: yellow
+  - op: "SBC A,n"
+    code: "DE"
+    colour: blue
+
+  - op: "SBC HL,BC"
+    code: "ED42"
+    colour: green
+  - op: "SBC HL,DE"
+    code: "ED52"
+    colour: green
+  - op: "SBC HL,HL"
+    code: "ED62"
+    colour: green
+  - op: "SBC HL,SP"
+    code: "ED72"
+    colour: green
+
+---
+
+<p>
+  The <code>ADD</code> and <code>SUB</code> instructions perform addition or subtraction.
+</p>
+<p>
+  The <code>ADC</code> and <code>SBC</code> instructions also includes the Carry flag as part of the operation.
+</p>
