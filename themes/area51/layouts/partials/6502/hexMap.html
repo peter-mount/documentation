@@ -1,4 +1,8 @@
 {{- if isset .Params "hexgrid" -}}
+
+{{- /* dict holding which colours are in use so legend becomes dynamic */ -}}
+{{- $colours := dict -}}
+
 {{- range $prefix, $grid := $.Params.hexgrid -}}
 <div class="row">
     <table class="hexGrid">
@@ -19,6 +23,10 @@
             <th>{{ printf "%X" $h }}</th>
             {{- range $l, $c := $r -}}
             {{- if ne $c.label "" -}}
+
+            {{- /* Store colour so we can restrict the legend */ -}}
+            {{- $d := dict $c.colour 1 }}{{ $colours = merge $colours $d -}}
+
             <td class="{{$c.colour}}">
                 <div>
                     <span class="op">{{- partial "6502/instruction.html" (dict "op" $c.label "mode" $c.addressing) -}}</span>
@@ -39,7 +47,7 @@
     </table>
 </div>
 
-{{- if eq $prefix "00" -}}
+{{- end -}}
 <table class="memoryMap2">
     <caption>Opcode Matrix Legend</caption>
     <tbody>
@@ -52,28 +60,26 @@
                 <span class="cycles">Cycle count</span>
             </div>
         </td>
-        <td class="bnone">&nbsp;</td>
-        <td class="green blrtb">Register</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="yellow blrtb">Memory</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="blue blrtb">Implicit</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="orange blrtb">Math</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="darkgreen blrtb">Logic</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="darkblue blrtb">Flow</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="red blrtb">Interrupt</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="grey blrtb">Special</td>
-        <td class="bnone">&nbsp;</td>
-        <td class="unused blrtb">Undefined</td>
+
+        {{- if index $colours "green" -}}<td class="bnone">&nbsp;</td><td class="green blrtb">Register</td>{{- end -}}
+
+        {{- if index $colours "yellow" -}}<td class="bnone">&nbsp;</td><td class="yellow blrtb">Memory</td>{{- end -}}
+
+        {{- if index $colours "blue" -}}<td class="bnone">&nbsp;</td><td class="blue blrtb">Implicit</td>{{- end -}}
+
+        {{- if index $colours "orange" -}}<td class="bnone">&nbsp;</td><td class="orange blrtb">Math</td>{{- end -}}
+
+        {{- if index $colours "darkgreen" -}}<td class="bnone">&nbsp;</td><td class="darkgreen blrtb">Logic</td>{{- end -}}
+
+        {{- if index $colours "darkblue" -}}<td class="bnone">&nbsp;</td><td class="darkblue blrtb">Flow</td>{{- end -}}
+
+        {{- if index $colours "red" -}}<td class="bnone">&nbsp;</td><td class="red blrtb">Interrupt</td>{{- end -}}
+
+        {{- if index $colours "grey" -}}<td class="bnone">&nbsp;</td><td class="grey blrtb">Special</td>{{- end -}}
+
+        {{- if index $colours "" -}}<td class="bnone">&nbsp;</td><td class="unused blrtb">Undefined</td>{{- end -}}
+
     </tr>
     </tbody>
 </table>
-    {{- end -}}
-
-    {{- end -}}
 {{- end -}}
