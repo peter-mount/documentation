@@ -1,0 +1,37 @@
+---
+type: "manual"
+title: "Block Search"
+linkTitle: "Block Search"
+weight: 3
+description: "Search memory"
+tags:
+  - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - Increment
+  - Decrement
+code_dest:
+  - Single
+  - Repeat
+codes:
+  - op: "CPI"
+    code: "EDA1"
+    colour: yellow
+    match: "Single Increment"
+  - op: "CPIR"
+    code: "EDB1"
+    colour: yellow
+    match: "Repeat Increment"
+  - op: "CPD"
+    code: "EDA9"
+    colour: yellow
+    match: "Single Decrement"
+  - op: "CPDR"
+    code: "EDB9"
+    colour: yellow
+    match: "Repeat Decrement"
+
+---
