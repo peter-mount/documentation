@@ -2,6 +2,19 @@
 
 {{- /* dict holding which colours are in use so legend becomes dynamic */ -}}
 {{- $colours := dict -}}
+{{- range $prefix, $grid := $.Params.hexgrid -}}
+    {{- range $h, $r := $grid -}}
+        {{- range $l, $c := $r -}}
+            {{- /* Store cell colour so we can restrict the legend to whats visible */ -}}
+            {{- $col := "" -}}
+            {{- if ne $c.label "" -}}
+                {{- $col = $c.colour -}}
+            {{- end -}}
+            {{- $d := dict $col 1 -}}
+            {{- $colours = merge $colours $d -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
 
 {{- range $prefix, $grid := $.Params.hexgrid -}}
 <div class="row">
@@ -24,9 +37,6 @@
             {{- range $l, $c := $r -}}
             {{- if ne $c.label "" -}}
 
-            {{- /* Store colour so we can restrict the legend */ -}}
-            {{- $d := dict $c.colour 1 }}{{ $colours = merge $colours $d -}}
-
             <td class="{{$c.colour}}">
                 <div>
                     <span class="op">{{- partial "6502/instruction.html" (dict "op" $c.label "mode" $c.addressing) -}}</span>
@@ -47,7 +57,7 @@
     </table>
 </div>
 
-{{- end -}}
+{{- if eq $prefix "00" -}}
 <table class="memoryMap2">
     <caption>Opcode Matrix Legend</caption>
     <tbody>
@@ -82,4 +92,7 @@
     </tr>
     </tbody>
 </table>
+{{- end -}}
+
+{{- end -}}
 {{- end -}}
