@@ -1,17 +1,32 @@
+{{- define "decodeLine" -}}
+    {{- $line := split . " " -}}
+    {{- $def := index $line 0 -}}
+    {{- range split $def "" -}}
+        {{- if eq . "0" }}<td class="brtb">0</td>{{end -}}
+        {{- if eq . "1" }}<td class="brtb">1</td>{{end -}}
+        {{- if eq . "r" }}<td class="brtb green" colspan="3">r</td>{{end -}}
+        {{- if eq . "R" }}<td class="brtb green" colspan="3">r'</td>{{end -}}
+    {{- end -}}
+    {{- with index $line 1 -}}<td class="bnone">{{.}}</td>{{end -}}
+{{- end -}}
+
 <table class="memoryMap3">
-    <thead>
-    <tr>
-        <th>7</th>
-        <th>6</th>
-        <th>5</th>
-        <th>4</th>
-        <th>3</th>
-        <th>2</th>
-        <th>1</th>
-        <th>0</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{- $.Inner -}}
-    </tbody>
-</table>
+<thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
+<tbody>
+{{- with $.Get "def" -}}
+    {{- $def := $.Get "def" -}}
+    {{- range $linedef := split $def "/" -}}
+        <tr>
+            {{- $linedef = trim $linedef " " -}}
+            {{- if eq $linedef "dd" }}{{template "decodeLine" "11011101 DD" -}}
+            {{- else if eq $linedef "d" }}<td class="brtb orange" colspan="8">d</td>
+            {{- else if eq $linedef "n" }}<td class="brtb blue" colspan="8">n</td>
+            {{- else -}}
+                {{- template "decodeLine" $linedef -}}
+            {{- end -}}
+        </tr>
+    {{- end -}}
+{{- end -}}
+
+{{- $.Inner -}}
+</tbody></table>
