@@ -37,8 +37,8 @@
 {{- range $prefix, $grid := $.Params.hexgrid -}}
 <div class="row">
     <table class="hexGrid">
-        {{- if ne $prefix "00" -}}
-        <caption>Opcodes with prefix {{ $prefix }}</caption>
+        {{- if ne $prefix "" -}}
+        <caption>Opcodes with prefix 0x{{ $prefix | upper}}</caption>
         {{- end -}}
         <thead>
         <tr>
