@@ -39,7 +39,9 @@ func (c *HexCell) fromOpcode(o *Opcode) {
   c.Addressing = o.Addressing
   c.Size = o.Bytes.Int()
   c.Cycles = o.Cycles.Int()
-  c.Colour = o.Colour
+  if c.Colour == "" {
+    c.Colour = o.Colour
+  }
 }
 
 // fromOpcodeIgnoreExtension same as fromOpcode except Do not overwrite Extension flag
@@ -76,6 +78,7 @@ func (hg *HexGrid) resolve(code string) *HexMap {
     c.Extension = true
     c.Label = "Instruction Prefix" //fmt.Sprintf("Prefix 0x%s", prefix)
     c.Index = prefix
+    c.Colour = "brown"
 
     prefix = strings.ReplaceAll(prefix, "nn", "")
   }
@@ -98,7 +101,6 @@ func (hg *HexGrid) resolve(code string) *HexMap {
     g.Data = append(g.Data, r)
   }
 
-  log.Printf("*** Prefix %q", prefix)
   g.Parent = hg.m[prefix]
   hg.m[prefix] = g
 
@@ -113,23 +115,9 @@ func (hg *HexGrid) Cell(code string) *HexCell {
 func (hg *HexGrid) Opcode(a ...*Opcode) *HexGrid {
   for _, o := range a {
     if o != nil {
-      /*      i := strings.Index(o.Code, "nn")
-              if i > -1 {
-                // Special case where Z80 has FDCBnnCC so we want to locate FDCB with
-                // prefix FDCBnn
-                log.Println("**** ", o)
-                c := o.Code[:i]
-                log.Println(c)
-                m := hg.resolve(c)
-                log.Println(m)
-                log.Println(m.cell(c))
-                hg.Cell(c).
-                  fromOpcodeIgnoreExtension(o)
-              } else {
-      */hg.Cell(o.Code).
+      hg.Cell(o.Code).
         fromOpcodeIgnoreExtension(o)
-      /*      }
-       */}
+    }
   }
   return hg
 }
@@ -206,9 +194,7 @@ func (g *HexMap) write(slice util.StringSlice) (util.StringSlice, error) {
       if c.Label != "" {
         slice = append(slice, fmt.Sprintf("        op: %q", c.Index))
       }
-      if c.Extension {
-        slice = append(slice, fmt.Sprintf("        colour: %q", "grey"))
-      } else {
+      if !c.Extension {
         if c.Addressing != "" {
           slice = append(slice, fmt.Sprintf("        addressing: %q", c.Addressing))
         }
@@ -221,9 +207,9 @@ func (g *HexMap) write(slice util.StringSlice) (util.StringSlice, error) {
         if c.Cycles > 0 {
           slice = append(slice, fmt.Sprintf("        cycles: %d", c.Cycles))
         }
-        if c.Colour != "" {
-          slice = append(slice, fmt.Sprintf("        colour: %q", c.Colour))
-        }
+      }
+      if c.Colour != "" {
+        slice = append(slice, fmt.Sprintf("        colour: %q", c.Colour))
       }
     }
   }
