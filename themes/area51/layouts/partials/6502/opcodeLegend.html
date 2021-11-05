@@ -5,10 +5,15 @@
     <tr>
         <td class="legend">
             <div>
-                <span class="op">Opcode <em>Address mode</em></span>
+                {{- if index $colours "op" -}}
+                <span class="op">Instruction</em></span>
                 <span class="code">Opcode hex</span>
-                <span class="size">Size bytes</span>
-                <span class="cycles">Cycle count</span>
+                {{- else -}}
+                Opcode hex
+                {{- end -}}
+                {{- if index $colours "size" -}}<span class="size">Size bytes</span>{{- end -}}
+
+                {{- if index $colours "cycles" -}}<span class="cycles">Cycle count</span>{{- end -}}
             </div>
         </td>
 

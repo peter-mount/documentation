@@ -114,6 +114,34 @@
                 {{- $cellKey := printf "%d %d" $lineKey $colId -}}
                 {{- $d := dict $cellKey $op -}}
                 {{- $values = merge $values $d -}}
+
+
+                {{- /* Store colour so we can restrict the legend */ -}}
+                {{- $col := "" -}}
+                {{- if isset $op "colour" }}{{$col = $op.colour}}{{end -}}
+                {{- $d := dict $col 1 }}{{ $colours = merge $colours $d -}}
+
+                {{- /* Set other attrs if set for legend */ -}}
+                {{- with $op.op -}}
+                    {{- $d := dict "op" $includeOp -}}
+                    {{- $colours = merge $colours $d -}}
+                {{- end -}}
+
+                {{- /* Size is either bytes or size depends on where it is */ -}}
+                {{- with $op.bytes -}}
+                    {{- $d := dict "size" 1 -}}
+                    {{- $colours = merge $colours $d -}}
+                {{- end -}}
+                {{- with $op.size -}}
+                    {{- $d := dict "size" 1 -}}
+                    {{- $colours = merge $colours $d -}}
+                {{- end -}}
+
+                {{- with $op.cycles -}}
+                    {{- $d := dict "cycles" 1 -}}
+                    {{- $colours = merge $colours $d -}}
+                {{- end -}}
+
             {{- end -}}
         {{- end -}}
     {{- end -}}
@@ -164,9 +192,6 @@
                     {{- if ne $opcode "" -}}
                         {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
                     {{- end -}}
-
-                    {{- /* Store colour so we can restrict the legend */ -}}
-                    {{- $d := dict $col 1 }}{{ $colours = merge $colours $d -}}
 
                     <td class="brb {{$col}} nowrap">
                         {{- if ne $opcode "" -}}

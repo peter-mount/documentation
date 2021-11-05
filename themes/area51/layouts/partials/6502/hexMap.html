@@ -6,12 +6,30 @@
     {{- range $h, $r := $grid -}}
         {{- range $l, $c := $r -}}
             {{- /* Store cell colour so we can restrict the legend to whats visible */ -}}
+            {{- /* Unlike others we want a default "" here if c.colour is unset */ -}}
             {{- $col := "" -}}
             {{- if ne $c.label "" -}}
                 {{- $col = $c.colour -}}
             {{- end -}}
             {{- $d := dict $col 1 -}}
             {{- $colours = merge $colours $d -}}
+
+            {{- /* Set other attrs if set for legend */ -}}
+            {{- with $c.op -}}
+                {{- $d := dict "op" 1 -}}
+                {{- $colours = merge $colours $d -}}
+            {{- end -}}
+
+            {{- with $c.size -}}
+                {{- $d := dict "size" . -}}
+                {{- $colours = merge $colours $d -}}
+            {{- end -}}
+
+            {{- with $c.cycles -}}
+                {{- $d := dict "cycles" . -}}
+                {{- $colours = merge $colours $d -}}
+            {{- end -}}
+
         {{- end -}}
     {{- end -}}
 {{- end -}}
