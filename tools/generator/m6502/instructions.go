@@ -92,10 +92,6 @@ func (i *Instructions) writeOpCodes(prefix string, codes []*Opcode) util.FileBui
         "    compatibility:",
       )
 
-      if op.Colour != "" {
-        a = append(a, "    colour: \""+op.Colour+"\"")
-      }
-
       // Compatibility table is just the existence of the keys.
       // Sorted so we keep the same order each time
       _ = op.Compatibility.
@@ -108,6 +104,10 @@ func (i *Instructions) writeOpCodes(prefix string, codes []*Opcode) util.FileBui
 
       a = op.Bytes.append("    ", "bytes", a)
       a = op.Cycles.append("    ", "cycles", a)
+
+      if op.Colour != "" {
+        a = append(a, "    colour: \""+op.Colour+"\"")
+      }
     }
 
     a = append(a, "notes:")
