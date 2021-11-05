@@ -20,14 +20,16 @@ code_axis:
   - "(IX+d)"
   - "(IY+d)"
 code_dest:
-  - "RLC"
-  - "RLC "
-  - "RRC"
-  - "RRC "
   - "RL"
   - "RL "
+  - "RLC"
+  - "RLC "
+  - "RLD "
   - "RR"
   - "RR "
+  - "RRC"
+  - "RRC "
+  - "RRD "
   - "SLA "
   - "SRA "
   - "SRL "
@@ -134,6 +136,10 @@ codes:
     code: "FDCBnn16"
     colour: yellow
 
+  - op: "RLD (HL)"
+    code: "ED6F"
+    colour: yellow
+
   - op: "RRA"
     code: "1F"
     colour: green
@@ -166,6 +172,103 @@ codes:
     colour: yellow
   - op: "RR (IY+d)"
     code: "FDCBnn1E"
+    colour: yellow
+
+  - op: "RRD (HL)"
+    code: "ED67"
+    colour: yellow
+
+  - op: "SLA A"
+    code: "CB27"
+    colour: green
+  - op: "SLA B"
+    code: "CB20"
+    colour: green
+  - op: "SLA C"
+    code: "CB21"
+    colour: green
+  - op: "SLA D"
+    code: "CB22"
+    colour: green
+  - op: "SLA E"
+    code: "CB23"
+    colour: green
+  - op: "SLA H"
+    code: "CB24"
+    colour: green
+  - op: "SLA L"
+    code: "CB25"
+    colour: green
+  - op: "SLA (HL)"
+    code: "CB26"
+    colour: yellow
+  - op: "SLA (IX+d)"
+    code: "DDCBnn26"
+    colour: yellow
+  - op: "SLA (IY+d)"
+    code: "FDCBnn26"
+    colour: yellow
+
+  - op: "SRA A"
+    code: "CB2F"
+    colour: green
+  - op: "SRA B"
+    code: "CB28"
+    colour: green
+  - op: "SRA C"
+    code: "CB29"
+    colour: green
+  - op: "SRA D"
+    code: "CB2A"
+    colour: green
+  - op: "SRA E"
+    code: "CB2B"
+    colour: green
+  - op: "SRA H"
+    code: "CB2C"
+    colour: green
+  - op: "SRA L"
+    code: "CB2D"
+    colour: green
+  - op: "SRA (HL)"
+    code: "CB2E"
+    colour: yellow
+  - op: "SRA (IX+d)"
+    code: "DDCBnn2E"
+    colour: yellow
+  - op: "SRA (IY+d)"
+    code: "FDCBnn2E"
+    colour: yellow
+
+  - op: "SRL A"
+    code: "CB3F"
+    colour: green
+  - op: "SRL B"
+    code: "CB38"
+    colour: green
+  - op: "SRL C"
+    code: "CB39"
+    colour: green
+  - op: "SRL D"
+    code: "CB3A"
+    colour: green
+  - op: "SRL E"
+    code: "CB3B"
+    colour: green
+  - op: "SRL H"
+    code: "CB3C"
+    colour: green
+  - op: "SRL L"
+    code: "CB3D"
+    colour: green
+  - op: "SRL (HL)"
+    code: "CB3E"
+    colour: yellow
+  - op: "SRL (IX+d)"
+    code: "DDCBnn3E"
+    colour: yellow
+  - op: "SRL (IY+d)"
+    code: "FDCBnn3E"
     colour: yellow
 
 ---
