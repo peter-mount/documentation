@@ -35,6 +35,12 @@ code_dest:
   - "SUB A"
   - "SBC A"
   - "SBC HL"
+  - "AND A"
+  - "XOR A"
+  - "OR A"
+  - "CP"
+  - "INC"
+  - "DEC"
 codes:
   - op: "ADD A,A"
     code: "87"
@@ -235,6 +241,286 @@ codes:
     colour: green
   - op: "SBC HL,SP"
     code: "ED72"
+    colour: green
+
+  - op: "AND A,A"
+    code: "A7"
+    colour: green
+  - op: "AND A,B"
+    code: "A0"
+    colour: green
+  - op: "AND A,C"
+    code: "A1"
+    colour: green
+  - op: "AND A,D"
+    code: "A2"
+    colour: green
+  - op: "AND A,E"
+    code: "A3"
+    colour: green
+  - op: "AND A,H"
+    code: "A4"
+    colour: green
+  - op: "AND A,L"
+    code: "A5"
+    colour: green
+  - op: "AND A,(HL)"
+    code: "A6"
+    colour: yellow
+  - op: "AND A,(IX+d)"
+    code: "DDA6"
+    colour: yellow
+  - op: "AND A,(IY+d)"
+    code: "FDA6"
+    colour: yellow
+  - op: "AND A,n"
+    code: "E6"
+    colour: blue
+
+  - op: "XOR A,A"
+    code: "AF"
+    colour: green
+  - op: "XOR A,B"
+    code: "A8"
+    colour: green
+  - op: "XOR A,C"
+    code: "A9"
+    colour: green
+  - op: "XOR A,D"
+    code: "AA"
+    colour: green
+  - op: "XOR A,E"
+    code: "AB"
+    colour: green
+  - op: "XOR A,H"
+    code: "AC"
+    colour: green
+  - op: "XOR A,L"
+    code: "AD"
+    colour: green
+  - op: "XOR A,(HL)"
+    code: "AE"
+    colour: yellow
+  - op: "XOR A,(IX+d)"
+    code: "DDAE"
+    colour: yellow
+  - op: "XOR A,(IY+d)"
+    code: "FDAE"
+    colour: yellow
+  - op: "XOR A,n"
+    code: "EE"
+    colour: blue
+
+  - op: "OR A,A"
+    code: "B7"
+    colour: green
+  - op: "OR A,B"
+    code: "B0"
+    colour: green
+  - op: "OR A,C"
+    code: "B1"
+    colour: green
+  - op: "OR A,D"
+    code: "B2"
+    colour: green
+  - op: "OR A,E"
+    code: "B3"
+    colour: green
+  - op: "OR A,H"
+    code: "B4"
+    colour: green
+  - op: "OR A,L"
+    code: "B5"
+    colour: green
+  - op: "OR A,(HL)"
+    code: "B6"
+    colour: yellow
+  - op: "OR A,(IX+d)"
+    code: "DDB6"
+    colour: yellow
+  - op: "OR A,(IY+d)"
+    code: "FDB6"
+    colour: yellow
+  - op: "OR A,n"
+    code: "F6"
+    colour: blue
+
+    # match "CP,A" to fake the blank dest
+  - op: "CP A"
+    match: "CP,A"
+    code: "BF"
+    colour: green
+  - op: "CP B"
+    match: "CP,B"
+    code: "B8"
+    colour: green
+  - op: "CP C"
+    match: "CP,C"
+    code: "B9"
+    colour: green
+  - op: "CP D"
+    match: "CP,D"
+    code: "BA"
+    colour: green
+  - op: "CP E"
+    match: "CP,E"
+    code: "BB"
+    colour: green
+  - op: "CP H"
+    match: "CP,H"
+    code: "BC"
+    colour: green
+  - op: "CP L"
+    match: "CP,L"
+    code: "BD"
+    colour: green
+  - op: "CP (HL)"
+    match: "CP,(HL)"
+    code: "BE"
+    colour: yellow
+  - op: "CP (IX+d)"
+    match: "CP,(IX+d)"
+    code: "DDBE"
+    colour: yellow
+  - op: "CP (IY+d)"
+    match: "CP,(IY+d)"
+    code: "FDBE"
+    colour: yellow
+  - op: "CP n"
+    match: "CP,n"
+    code: "FE"
+    colour: blue
+
+  - op: "INC"
+    match: "INC,A"
+    code: "3C"
+    colour: green
+  - op: "INC"
+    match: "INC,B"
+    code: "04"
+    colour: green
+  - op: "INC"
+    match: "INC,C"
+    code: "0C"
+    colour: green
+  - op: "INC"
+    match: "INC,D"
+    code: "14"
+    colour: green
+  - op: "INC"
+    match: "INC,E"
+    code: "1C"
+    colour: green
+  - op: "INC"
+    match: "INC,H"
+    code: "24"
+    colour: green
+  - op: "INC"
+    match: "INC,L"
+    code: "2C"
+    colour: green
+  - op: "INC (HL)"
+    match: "INC,(HL)"
+    code: "34"
+    colour: yellow
+  - op: "INC (IX+d)"
+    match: "INC,(IX+d)"
+    code: "DD34"
+    colour: yellow
+  - op: "INC (IY+d)"
+    match: "INC,(IY+d)"
+    code: "FD34"
+    colour: yellow
+
+  - op: "INC BC"
+    match: "INC,BC"
+    code: "03"
+    colour: green
+  - op: "INC DE"
+    match: "INC,DE"
+    code: "13"
+    colour: green
+  - op: "INC HL"
+    match: "INC,HL"
+    code: "23"
+    colour: green
+  - op: "INC SP"
+    match: "INC,SP"
+    code: "33"
+    colour: green
+  - op: "INC IX"
+    match: "INC,IX"
+    code: "DD23"
+    colour: green
+  - op: "INC IY"
+    match: "INC,IY"
+    code: "FD23"
+    colour: green
+
+  - op: "DEC"
+    match: "DEC,A"
+    code: "3D"
+    colour: green
+  - op: "DEC"
+    match: "DEC,B"
+    code: "05"
+    colour: green
+  - op: "DEC"
+    match: "DEC,C"
+    code: "0D"
+    colour: green
+  - op: "DEC"
+    match: "DEC,D"
+    code: "15"
+    colour: green
+  - op: "DEC"
+    match: "DEC,E"
+    code: "1D"
+    colour: green
+  - op: "DEC"
+    match: "DEC,H"
+    code: "25"
+    colour: green
+  - op: "DEC"
+    match: "DEC,L"
+    code: "2D"
+    colour: green
+  - op: "DEC (HL)"
+    match: "DEC,(HL)"
+    code: "35"
+    colour: yellow
+  - op: "DEC (IX+d)"
+    match: "DEC,(IX+d)"
+    code: "DD35"
+    colour: yellow
+  - op: "DEC (IY+d)"
+    match: "DEC,(IY+d)"
+    code: "FD35"
+    colour: yellow
+
+  - op: "DEC BC"
+    match: "DEC,BC"
+    code: "DB"
+    colour: green
+  - op: "DEC DE"
+    match: "DEC,DE"
+    code: "1B"
+    colour: green
+  - op: "DEC HL"
+    match: "DEC,HL"
+    code: "2B"
+    colour: green
+  - op: "DEC SP"
+    match: "DEC,SP"
+    code: "3B"
+    colour: green
+  - op: "DEC IX"
+    match: "DEC,IX"
+    code: "DD2B"
+    colour: green
+  - op: "DEC IY"
+    match: "DEC,IY"
+    code: "FD2B"
     colour: green
 
 ---
