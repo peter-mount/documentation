@@ -6,7 +6,11 @@
         {{- if eq . "1" }}<td class="brtb">1</td>{{end -}}
         {{- if eq . "d" -}}
             <td class="brtb green" colspan="2">dd</td>
-            {{- $.s.Set "register16" 1 -}}
+            {{- $.s.Set "registerD" 1 -}}
+        {{- end -}}
+        {{- if eq . "q" -}}
+            <td class="brtb green" colspan="2">qq</td>
+            {{- $.s.Set "registerQ" 1 -}}
         {{- end -}}
         {{- if eq . "r" -}}
             <td class="brtb green" colspan="3">r</td>
@@ -75,7 +79,7 @@
     </table>
     {{- end -}}
 
-    {{- with $scratch.Get "register16" -}}
+    {{- with $scratch.Get "registerD" -}}
     <table class="memoryMap3">
         <caption>Registers</caption>
         <thead><tr><th>Pair</th><th>dd</th></tr></thead>
@@ -84,6 +88,19 @@
         <tr><td>DE</td><td>01</td></tr>
         <tr><td>HL</td><td>10</td></tr>
         <tr><td>SP</td><td>11</td></tr>
+        </tbody>
+    </table>
+    {{- end -}}
+
+    {{- with $scratch.Get "registerQ" -}}
+    <table class="memoryMap3">
+        <caption>Registers</caption>
+        <thead><tr><th>Pair</th><th>qq</th></tr></thead>
+        <tbody>
+        <tr><td>BC</td><td>00</td></tr>
+        <tr><td>DE</td><td>01</td></tr>
+        <tr><td>HL</td><td>10</td></tr>
+        <tr><td>AF</td><td>11</td></tr>
         </tbody>
     </table>
     {{- end -}}
