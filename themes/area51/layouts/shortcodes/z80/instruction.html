@@ -47,8 +47,11 @@
     {{- range $linedef := split $def "/" -}}
         <tr>
             {{- $linedef = trim $linedef " " -}}
-            {{- if eq $linedef "d" -}}
+            {{- if eq $linedef "" -}}<td colspan="8" class="bnone">&nbsp;</td>
+            {{- else if eq $linedef "d" -}}
                 {{- template "z80Instruction8bit" (dict "c" "orange" "l" "d") -}}
+            {{- else if hasPrefix $linedef "l " -}}
+                <td colspan="8" class="bnone text-left">{{substr $linedef 2}}</td>
             {{- else if eq $linedef "n" -}}
                 {{- template "z80Instruction8bit" (dict "c" "blue" "l" "n") -}}
             {{- else if eq $linedef "nn" -}}
