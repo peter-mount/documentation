@@ -1,0 +1,13 @@
+---
+type: "manual"
+title: "LD r, s"
+linkTitle: "LD r, s"
+---
+{{< z80/instruction
+    operation="r \longleftarrow s"
+    def="/l LD r, r'/01rR//l LD r,n/00r110/n//l LD r,A/11101101 ED/01001111 4F//l LD r, (HL)/01r110//l LD r, (IX+d)/11011101 DD/01r110/d//l LD r, (IY+d)/11111101 FD/01r110/d"
+>}}
+<p>
+    Takes the value of register <strong>r'</strong> and stores it in <strong>r</strong>.
+</p>
+{{< /z80/instruction >}}
