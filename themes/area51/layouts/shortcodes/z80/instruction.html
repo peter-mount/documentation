@@ -58,6 +58,8 @@
                 {{- template "z80Instruction16bit" (dict "c" "blue" "l" "nn") -}}
             {{- else if eq $linedef "(nn)" -}}
                 {{- template "z80Instruction16bit" (dict "c" "yellow" "l" "nn") -}}
+            {{- else if hasPrefix $linedef "q " -}}
+                <td colspan="8" class="bnone text-left">\({{substr $linedef 2 |safeHTML}}\)</td>
             {{- else -}}
                 {{- template "z80InstructionDecodeLine" (dict "d" $linedef "s" $scratch) -}}
             {{- end -}}
