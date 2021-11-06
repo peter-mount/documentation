@@ -1,0 +1,18 @@
+---
+type: "manual"
+title: "SUB s"
+linkTitle: "SUB s"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    operation="A \longleftarrow A - s"
+    def="/l SUB r/10010r//l SUB n/11010110 D6/n//l SUB (HL)/10010110 96//l SUB (IX+d)/11011101 DD/10010110 96/d//l SUB (IX+d)/11111101 FD/10010110 96/d"
+>}}
+<p>
+    This s operand is any of r, n, (HL), (IX+d), or (IY+d).
+</p>
+<p>
+    These possible op code/operand combinations are assembled as follows in the object code:
+</p>
+{{< /z80/instruction >}}
