@@ -1,0 +1,18 @@
+---
+type: "manual"
+title: "ADD A, s"
+linkTitle: "ADD A, s"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    operation="A \longleftarrow A + s"
+    def="/l ADD A, r/10000r//l ADD A, n/11000110 C6/n//l ADD A, (HL)/10000110 86//l ADD A, (IX+d)/11011101 DD/10000110 86/d//l ADD A, (IY+d)/11111101 FD/10000110 86/d"
+>}}
+<p>
+    This s operand is any of r, n, (HL), (IX+d), or (IY+d).
+</p>
+<p>
+    These possible op code/operand combinations are assembled as follows in the object code:
+</p>
+{{< /z80/instruction >}}

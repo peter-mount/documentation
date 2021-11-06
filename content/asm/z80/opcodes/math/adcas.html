@@ -6,11 +6,11 @@ tags:
   - z80 instruction
 ---
 {{< z80/instruction
-    operation="A \longleftarrow A + s + CY"
+    operation="A \longleftarrow A + s + Carry"
     def="/l ADC A,r/10000r//l ADC A,n/11001110 CE/n//l ADC A, (HL)/10001110 8E//l ADC A, (IX + d)/11011110 DD/10001110 8E/d//l ADC A, (IY + d)/11111110 FD/10001110 8E/d"
 >}}
 <p>
-    This s operand is any of r, n, (HL), (IX+d), or (lY+d) as defined for the analogous ADD instruction.
+    This s operand is any of r, n, (HL), (IX+d), or (IY+d) as defined for the analogous ADD instruction.
 </p>
 <p>
     These possible op code/operand combinations are assembled as follows in the object code:
