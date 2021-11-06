@@ -1,5 +1,59 @@
+{{- define "z80InstructionDecodeLine" -}}
+    {{- $line := split $.d " " -}}
+    {{- $def := index $line 0 -}}
+    {{- range split $def "" -}}
+        {{- if eq . "0" }}<td class="brtb">0</td>{{end -}}
+        {{- if eq . "1" }}<td class="brtb">1</td>{{end -}}
+        {{- if eq . "r" -}}
+            <td class="brtb green" colspan="3">r</td>
+            {{- $.s.Set "register" 1 -}}
+        {{- end -}}
+        {{- if eq . "R" -}}
+            <td class="brtb green" colspan="3">r'</td>
+            {{- $.s.Set "register" 1 -}}
+        {{- end -}}
+    {{- end -}}
+    {{- with index $line 1 -}}<td class="bnone">{{.}}</td>{{end -}}
+{{- end -}}
+
+{{- $scratch := newScratch -}}
+
 <div>
     {{- with $.Get "operation"}}<p>\({{.|safeHTML}}\)</p>{{end -}}
     {{- with $.Get "overview"}}<p>{{.|safeHTML}}</p>{{end -}}
     {{- $.Inner -}}
+
+    {{- with $def := $.Get "def" -}}
+<table class="memoryMap3">
+<thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
+<tbody>
+    {{- range $linedef := split $def "/" -}}
+        <tr>
+            {{- $linedef = trim $linedef " " -}}
+            {{- if eq $linedef "d" }}<td class="brtb orange" colspan="8">d</td>
+            {{- else if eq $linedef "n" }}<td class="brtb blue" colspan="8">n</td>
+            {{- else -}}
+                {{- template "z80InstructionDecodeLine" (dict "d" $linedef "s" $scratch) -}}
+            {{- end -}}
+        </tr>
+    {{- end -}}
+</tbody></table>
+    {{- end -}}
+
+    {{- with $scratch.Get "register" -}}
+    <table class="memoryMap3">
+        <caption>Registers</caption>
+        <thead><tr><th>Register</th><th>r</th></tr></thead>
+        <tbody>
+        <tr><td>A</td><td>111</td></tr>
+        <tr><td>B</td><td>000</td></tr>
+        <tr><td>C</td><td>001</td></tr>
+        <tr><td>D</td><td>010</td></tr>
+        <tr><td>E</td><td>011</td></tr>
+        <tr><td>H</td><td>100</td></tr>
+        <tr><td>L</td><td>101</td></tr>
+        </tbody>
+    </table>
+    {{- end -}}
+
 </div>
