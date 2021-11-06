@@ -1,0 +1,12 @@
+---
+type: "manual"
+title: "LDIR"
+linkTitle: "LDIR"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    operation="\begin{rcases} (DE) \longleftarrow (HL) \\ DE \longleftarrow DE + 1 \\ HL \longleftarrow HL + 1 \\ BC \longleftarrow BC - 1 \end{rcases} \text{while } BC \not = 0"
+    def="11101101 ED/10110000 B0"
+>}}
+{{< /z80/instruction >}}

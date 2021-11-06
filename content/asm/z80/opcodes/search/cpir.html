@@ -1,0 +1,12 @@
+---
+type: "manual"
+title: "CPIR"
+linkTitle: "CPIR"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    operation="\begin{rcases} A - (HL) \\ HL \longleftarrow HL + 1 \\ BC \longleftarrow BC - 1 \end{rcases} \text{while } BC \not = 0 \And A \not = (HL)"
+    def="11101101 ED/10100001 A1"
+>}}
+{{< /z80/instruction >}}
