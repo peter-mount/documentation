@@ -16,6 +16,15 @@
     {{- with index $line 1 -}}<td class="bnone">{{.}}</td>{{end -}}
 {{- end -}}
 
+{{- define "z80Instruction8bit" -}}
+<td class="brtb {{.c}}" colspan="8">{{.l}}</td>
+{{- end -}}
+
+{{- define "z80Instruction16bit" -}}
+<td class="bt {{.c}}"><span class="left">7</span></td><td class="btb {{.c}}" colspan="6" rowspan="2">{{.l}}</td><td class="brt {{.c}}"><span class="right">0</span></td></tr>
+<tr><td class="bb {{.c}}"><span class="left">15</span></td><td class="brb {{.c}}"><span class="right">8</span></td>
+{{- end -}}
+
 {{- $scratch := newScratch -}}
 
 <div>
@@ -24,14 +33,20 @@
     {{- $.Inner -}}
 
     {{- with $def := $.Get "def" -}}
-<table class="memoryMap3">
+<table class="memoryMap4">
 <thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
 <tbody>
     {{- range $linedef := split $def "/" -}}
         <tr>
             {{- $linedef = trim $linedef " " -}}
-            {{- if eq $linedef "d" }}<td class="brtb orange" colspan="8">d</td>
-            {{- else if eq $linedef "n" }}<td class="brtb blue" colspan="8">n</td>
+            {{- if eq $linedef "d" -}}
+                {{- template "z80Instruction8bit" (dict "c" "orange" "l" "d") -}}
+            {{- else if eq $linedef "n" -}}
+                {{- template "z80Instruction8bit" (dict "c" "blue" "l" "n") -}}
+            {{- else if eq $linedef "nn" -}}
+                {{- template "z80Instruction16bit" (dict "c" "blue" "l" "nn") -}}
+            {{- else if eq $linedef "(nn)" -}}
+                {{- template "z80Instruction16bit" (dict "c" "yellow" "l" "nn") -}}
             {{- else -}}
                 {{- template "z80InstructionDecodeLine" (dict "d" $linedef "s" $scratch) -}}
             {{- end -}}
