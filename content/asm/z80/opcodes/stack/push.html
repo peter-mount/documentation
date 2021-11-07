@@ -1,0 +1,12 @@
+---
+type: "manual"
+title: "PUSH"
+linkTitle: "PUSH"
+description: "Push register to stack"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    def="/q (SP-2) \longleftarrow qq_l, (SP-1) \longleftarrow qq_h/l PUSH qq/11q0101//q (SP-2) \longleftarrow IX_l, (SP-1) \longleftarrow IX_h/l PUSH IX/11011101 DD/11100101 E5//q (SP-2) \longleftarrow IY_l, (SP-1) \longleftarrow IY_h/l PUSH IY/11111101 FD/11100101 E5"
+>}}
+{{< /z80/instruction >}}
