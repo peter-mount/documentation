@@ -20,6 +20,12 @@
             <td class="brtb green" colspan="3">r'</td>
             {{- $.s.Set "register" 1 -}}
         {{- end -}}
+        {{- if eq . "D" -}}
+            <td class="brtb brown">D</td>
+        {{- end -}}
+        {{- if eq . "L" -}}
+            <td class="brtb red">L</td>
+        {{- end -}}
     {{- end -}}
     {{- with index $line 1 -}}<td class="bnone">{{.}}</td>{{end -}}
 {{- end -}}
