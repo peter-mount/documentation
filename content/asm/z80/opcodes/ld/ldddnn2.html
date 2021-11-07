@@ -6,11 +6,6 @@ tags:
   - z80 instruction
 ---
 {{< z80/instruction
-    operation="dd_h \longleftarrow (nn+1), dd_l \longleftarrow (nn), "
-    def="11101101 ED/01d1011/(nn)"
+    def="/q H \longleftarrow (nn+1), L \longleftarrow (nn)/l LD HL, (nn)/00101010 2A/(nn)//q dd_h \longleftarrow (nn+1), dd_l \longleftarrow (nn)/l LD dd, (nn)/11101101 ED/01d1011/(nn)//q IX_h \longleftarrow (nn+1), IX_l \longleftarrow (nn)/l LD IX, (nn)/11011101 DD/00101010 2A/(nn)//q IY_h \longleftarrow (nn+1), IY_l \longleftarrow (nn)/l LD IY, (nn)/11111101 FD/00101010 2A/(nn)"
 >}}
 {{< /z80/instruction >}}
-
-<div class="alert-info">
-    See also <a href="../ldhlnn/">LD HL, (nn)</a> which is 1 byte shorter than this instruction.
-</div>

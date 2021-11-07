@@ -1,11 +1,11 @@
 ---
 type: "manual"
-title: "LD (HL), n"
-linkTitle: "LD (HL), n"
+title: "LD (dd), n"
+linkTitle: "LD (dd), n"
 ---
 {{< z80/instruction
-    operation="(HL) \longleftarrow n"
-    def="00110110 36/n"
+    operation=""
+    def="/q (HL) \longleftarrow n/l LD (HL), n/00110110 36/n//q ( IX + d ) \longleftarrow n/q LD (IX+d), n//q ( IY + d ) \longleftarrow n/l LD (IY+d), n/11111101 FD/00110110 36/d/n"
 >}}
 <p>
     Takes the 8-but value <strong>n</strong> and stores it in the memory location pointed to by <strong>HL</strong>.
