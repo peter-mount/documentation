@@ -1,0 +1,20 @@
+---
+type: "manual"
+title: "RLD"
+linkTitle: "RLD"
+description: "Rotate bit pairs in A and (HL) left"
+tags:
+  - z80 instruction
+---
+<img src="../rld.svg" alt="Visualisation of the RLD instruction"/>
+
+{{< z80/instruction
+    def="11101101 ED/01101111 6F"
+>}}
+{{< /z80/instruction >}}
+<p>
+    The contents of the low-order four bits (bits 3, 2, 1, and 0) of the memory location (HL) are copied to the high-order four bits (7, 6, 5, and 4) of that same memory location;
+    the previous contents of those high-order four bits are copied to the low-order four bits of the Accumulator (Register A);
+    and the previous contents of the low-order four bits of the Accumulator are copied to the low-order four bits of memory location (HL).
+    The contents of the high-order bits of the Accumulator are unaffected.
+</p>
