@@ -30,3 +30,16 @@ codes:
     colour: red
 
 ---
+{{< z80/instruction
+def="/q -/l NOP/00000000 00/q -/l HALT/01110110 76//q IFF \longleftarrow S/l DI | EI/1111S011//l IM n/11101101 ED/010Q110"
+>}}
+{{< /z80/instruction >}}
+<table class="memoryMap3">
+  <caption>Interrupt Mode</caption>
+  <thead><tr><th>Mode</th><th>qq</th><th>Opcode</th></tr></thead>
+  <tbody>
+  <tr><td>IM0</td><td>00</td><td>0xED46</td></tr>
+  <tr><td>IM1</td><td>10</td><td>0xED56</td></tr>
+  <tr><td>IM2</td><td>11</td><td>0xED5E</td></tr>
+  </tbody>
+</table>
