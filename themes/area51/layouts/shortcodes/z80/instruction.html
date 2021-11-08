@@ -8,6 +8,16 @@
             <td class="brtb red" colspan="3">b</td>
             {{- $.s.Set "bit" 1 -}}
         {{- end -}}
+        {{- if eq . "c" -}}
+            <td class="brtb red" colspan="3">ccc</td>
+            {{- $.s.Set "cond" 1 -}}
+            {{- $.s.Set "cond3" 1 -}}
+        {{- end -}}
+        {{- if eq . "C" -}}
+            <td class="brtb red" colspan="2">cc</td>
+            {{- $.s.Set "cond" 1 -}}
+            {{- $.s.Set "cond2" 1 -}}
+        {{- end -}}
         {{- if eq . "d" -}}
             <td class="brtb green" colspan="2">dd</td>
             {{- $.s.Set "registerD" 1 -}}
@@ -75,6 +85,8 @@
             {{- if eq $linedef "" -}}<td colspan="8" class="bnone">&nbsp;</td>
             {{- else if eq $linedef "d" -}}
                 {{- template "z80Instruction8bit" (dict "c" "orange" "l" "d") -}}
+            {{- else if eq $linedef "e-2" -}}
+                {{- template "z80Instruction8bit" (dict "c" "orange" "l" "e-2") -}}
             {{- else if hasPrefix $linedef "l " -}}
                 <td colspan="8" class="bnone text-left">{{substr $linedef 2}}</td>
             {{- else if eq $linedef "n" -}}
@@ -158,6 +170,78 @@
         <tr><td>DE</td><td>01</td></tr>
         <tr><td>HL</td><td>10</td></tr>
         <tr><td>AF</td><td>11</td></tr>
+        </tbody>
+    </table>
+    {{- end -}}
+
+    {{- with $scratch.Get "cond" -}}
+    <table class="memoryMap3">
+        <caption>Conditions</caption>
+        <thead>
+        <tr>
+            {{- with $scratch.Get "cond2" -}}
+            <th>cc</th>
+            {{- end -}}
+            {{- with $scratch.Get "cond3" -}}
+            <th>ccc</th>
+            {{- end -}}
+            <th>Abbrev</th>
+            <th>Condition</th>
+            <th>Flag</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {{- with $scratch.Get "cond2" -}}<td>00</td>{{- end -}}
+            {{- with $scratch.Get "cond3" -}}<td>000</td>{{- end -}}
+            <td>NZ</td>
+            <td>Non Zero</td>
+            <td rowspan="2">Z</td>
+        </tr>
+        <tr>
+            {{- with $scratch.Get "cond2" -}}<td>01</td>{{- end -}}
+            {{- with $scratch.Get "cond3" -}}<td>001</td>{{- end -}}
+            <td>Z</td>
+            <td>Zero</td>
+        </tr>
+        <tr>
+            {{- with $scratch.Get "cond2" -}}<td>10</td>{{- end -}}
+            {{- with $scratch.Get "cond3" -}}<td>010</td>{{- end -}}
+            <td>NC</td>
+            <td>No Carry</td>
+            <td rowspan="2">C</td>
+        </tr>
+        <tr>
+            {{- with $scratch.Get "cond2" -}}<td>11</td>{{- end -}}
+            {{- with $scratch.Get "cond3" -}}<td>011</td>{{- end -}}
+            <td>C</td>
+            <td>Carry</td>
+        </tr>
+        {{- with $scratch.Get "cond3" -}}
+        <tr>
+            {{- with $scratch.Get "cond2" -}}<td rowspan="4" class="bnone">&nbsp;</td>{{- end -}}
+            <td class="bl">100</td>
+            <td>PO</td>
+            <td>Parity Odd</td>
+            <td rowspan="2">P/V</td>
+        </tr>
+        <tr>
+            <td>101</td>
+            <td>PE</td>
+            <td>Parity Even</td>
+        </tr>
+        <tr>
+            <td>110</td>
+            <td>P</td>
+            <td>Sign Positive</td>
+            <td rowspan="2">S</td>
+        </tr>
+        <tr>
+            <td>111</td>
+            <td>M</td>
+            <td>Sign Negative</td>
+        </tr>
+        {{- end -}}
         </tbody>
     </table>
     {{- end -}}
