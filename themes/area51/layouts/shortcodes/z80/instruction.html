@@ -8,6 +8,14 @@
             <td class="brtb green" colspan="2">dd</td>
             {{- $.s.Set "registerD" 1 -}}
         {{- end -}}
+        {{- if eq . "m" -}}
+            <td class="brtb green" colspan="2">mm</td>
+            {{- $.s.Set "registerM" 1 -}}
+        {{- end -}}
+        {{- if eq . "p" -}}
+            <td class="brtb green" colspan="2">pp</td>
+            {{- $.s.Set "registerP" 1 -}}
+        {{- end -}}
         {{- if eq . "q" -}}
             <td class="brtb green" colspan="2">qq</td>
             {{- $.s.Set "registerQ" 1 -}}
@@ -47,7 +55,8 @@
 
 {{- $scratch := newScratch -}}
 
-<div>
+<div class="row">
+<div class="col-7">
     {{- with $.Get "operation"}}<p>\({{.|safeHTML}}\)</p>{{end -}}
     {{- with $.Get "overview"}}<p>{{.|safeHTML}}</p>{{end -}}
     {{- $.Inner -}}
@@ -79,7 +88,8 @@
     {{- end -}}
 </tbody></table>
     {{- end -}}
-
+</div>
+<div class="col-4">
     {{- with $scratch.Get "register" -}}
     <table class="memoryMap3">
         <caption>Registers</caption>
@@ -109,6 +119,32 @@
     </table>
     {{- end -}}
 
+    {{- with $scratch.Get "registerM" -}}
+    <table class="memoryMap3">
+        <caption>Registers</caption>
+        <thead><tr><th>Pair</th><th>mm</th></tr></thead>
+        <tbody>
+        <tr><td>BC</td><td>00</td></tr>
+        <tr><td>DE</td><td>01</td></tr>
+        <tr><td>IY</td><td>10</td></tr>
+        <tr><td>SP</td><td>11</td></tr>
+        </tbody>
+    </table>
+    {{- end -}}
+
+    {{- with $scratch.Get "registerP" -}}
+    <table class="memoryMap3">
+        <caption>Registers</caption>
+        <thead><tr><th>Pair</th><th>pp</th></tr></thead>
+        <tbody>
+        <tr><td>BC</td><td>00</td></tr>
+        <tr><td>DE</td><td>01</td></tr>
+        <tr><td>IX</td><td>10</td></tr>
+        <tr><td>SP</td><td>11</td></tr>
+        </tbody>
+    </table>
+    {{- end -}}
+
     {{- with $scratch.Get "registerQ" -}}
     <table class="memoryMap3">
         <caption>Registers</caption>
@@ -121,5 +157,5 @@
         </tbody>
     </table>
     {{- end -}}
-
+</div>
 </div>

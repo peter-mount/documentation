@@ -1,18 +1,12 @@
 ---
 type: "manual"
-title: "SBC A, s"
-linkTitle: "SBC A, s"
+title: "SBC Subtract with Carry"
+linkTitle: "SBC"
+description: "Subtraction with Carry"
 tags:
   - z80 instruction
 ---
 {{< z80/instruction
-    operation="A \longleftarrow A - s - Carry"
-    def="/l SBC A, r/10011r//l SBC A,n/11011110 DE//l SBC A, (HL)/10011110 9E//l SBC A, (IX+d)/11011101 DD/10011110 9E/d//l SBC A, (IY+d)/11111101 FD/10011110 9E/d"
+    def="/q A \longleftarrow A - r - Carry/l SBC A, r/10011r//q A \longleftarrow A - n - Carry/l SBC A,n/11011110 DE//q A \longleftarrow A - (HL) - Carry/l SBC A, (HL)/10011110 9E//q A \longleftarrow A - (IX+d) - Carry/l SBC A, (IX+d)/11011101 DD/10011110 9E/d//q A \longleftarrow A - (IY+d) - Carry/l SBC A, (IY+d)/11111101 FD/10011110 9E/d//q A \longleftarrow A - ss - Carry/l SBC HL, ss/11101101 ED/01d0010"
 >}}
-<p>
-    This s operand is any of r, n, (HL), (IX+d), or (IY+d).
-</p>
-<p>
-    These possible op code/operand combinations are assembled as follows in the object code:
-</p>
 {{< /z80/instruction >}}

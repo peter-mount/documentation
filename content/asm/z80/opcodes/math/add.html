@@ -1,18 +1,12 @@
 ---
 type: "manual"
-title: "ADD A, s"
-linkTitle: "ADD A, s"
+title: "ADD without carry"
+linkTitle: "ADD"
+description: "Addition without carry"
 tags:
   - z80 instruction
 ---
 {{< z80/instruction
-    operation="A \longleftarrow A + s"
-    def="/l ADD A, r/10000r//l ADD A, n/11000110 C6/n//l ADD A, (HL)/10000110 86//l ADD A, (IX+d)/11011101 DD/10000110 86/d//l ADD A, (IY+d)/11111101 FD/10000110 86/d"
+    def="/q A \longleftarrow A + r/l ADD A, r/10000r//q A \longleftarrow A + n/l ADD A, n/11000110 C6/n//q A \longleftarrow A + (HL)/l ADD A, (HL)/10000110 86//q A \longleftarrow A + (IX+d)/l ADD A, (IX+d)/11011101 DD/10000110 86/d//q A \longleftarrow A + (IY+d)/l ADD A, (IY+d)/11111101 FD/10000110 86/d//q HL \longleftarrow HL + dd/l ADD HL, dd/00d1001//q IX \longleftarrow IX + pp/l ADD IX, pp/11011101 DD/00p1001/q IY \longleftarrow IY + mm/l ADD IY, mm/11111101 FD/00m1001"
 >}}
-<p>
-    This s operand is any of r, n, (HL), (IX+d), or (IY+d).
-</p>
-<p>
-    These possible op code/operand combinations are assembled as follows in the object code:
-</p>
 {{< /z80/instruction >}}
