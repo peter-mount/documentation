@@ -1,0 +1,84 @@
+---
+type: "manual"
+title: "SBC Subtract with Carry"
+linkTitle: "SBC"
+description: "Subtraction with Carry"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "SBC A"
+  - "SBC HL"
+codes:
+
+  - op: "SBC A,A"
+    code: "9F"
+    colour: green
+  - op: "SBC A,B"
+    code: "98"
+    colour: green
+  - op: "SBC A,C"
+    code: "99"
+    colour: green
+  - op: "SBC A,D"
+    code: "9A"
+    colour: green
+  - op: "SBC A,E"
+    code: "9B"
+    colour: green
+  - op: "SBC A,H"
+    code: "9C"
+    colour: green
+  - op: "SBC A,L"
+    code: "9D"
+    colour: green
+  - op: "SBC A,(HL)"
+    code: "9E"
+    colour: yellow
+  - op: "SBC A,(IX+d)"
+    code: "DD9E"
+    colour: yellow
+  - op: "SBC A,(IY+d)"
+    code: "FD9E"
+    colour: yellow
+  - op: "SBC A,n"
+    code: "DE"
+    colour: blue
+
+  - op: "SBC HL,BC"
+    code: "ED42"
+    colour: green
+  - op: "SBC HL,DE"
+    code: "ED52"
+    colour: green
+  - op: "SBC HL,HL"
+    code: "ED62"
+    colour: green
+  - op: "SBC HL,SP"
+    code: "ED72"
+    colour: green
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A - r - Carry/l SBC A, r/10011r//q A \longleftarrow A - n - Carry/l SBC A,n/11011110 DE//q A \longleftarrow A - (HL) - Carry/l SBC A, (HL)/10011110 9E//q A \longleftarrow A - (IX+d) - Carry/l SBC A, (IX+d)/11011101 DD/10011110 9E/d//q A \longleftarrow A - (IY+d) - Carry/l SBC A, (IY+d)/11111101 FD/10011110 9E/d//q A \longleftarrow A - ss - Carry/l SBC HL, ss/11101101 ED/01d0010"
+>}}
+{{< /z80/instruction >}}

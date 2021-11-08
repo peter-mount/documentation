@@ -1,0 +1,83 @@
+---
+type: "manual"
+title: "CP"
+linkTitle: "CP"
+description: "Comparison"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "CP"
+codes:
+
+    # match "CP,A" to fake the blank dest
+  - op: "CP A"
+    match: "CP,A"
+    code: "BF"
+    colour: green
+  - op: "CP B"
+    match: "CP,B"
+    code: "B8"
+    colour: green
+  - op: "CP C"
+    match: "CP,C"
+    code: "B9"
+    colour: green
+  - op: "CP D"
+    match: "CP,D"
+    code: "BA"
+    colour: green
+  - op: "CP E"
+    match: "CP,E"
+    code: "BB"
+    colour: green
+  - op: "CP H"
+    match: "CP,H"
+    code: "BC"
+    colour: green
+  - op: "CP L"
+    match: "CP,L"
+    code: "BD"
+    colour: green
+  - op: "CP (HL)"
+    match: "CP,(HL)"
+    code: "BE"
+    colour: yellow
+  - op: "CP (IX+d)"
+    match: "CP,(IX+d)"
+    code: "DDBE"
+    colour: yellow
+  - op: "CP (IY+d)"
+    match: "CP,(IY+d)"
+    code: "FDBE"
+    colour: yellow
+  - op: "CP n"
+    match: "CP,n"
+    code: "FE"
+    colour: blue
+
+---
+{{< z80/instruction
+    operation="A - s"
+    def="/l CP r/10111r//l CP n/11111110 FE/n//l CP (HL)/10111110 BE//l CP (IX+d)/11011101 DD/10111110 BE/d//l CP (IY+d)/11111101 FD/10111110 BE/d"
+>}}
+{{< /z80/instruction >}}

@@ -1,0 +1,71 @@
+---
+type: "manual"
+title: "XOR"
+linkTitle: "XOR"
+description: "Binary Exclusive OR"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "XOR A"
+codes:
+
+  - op: "XOR A,A"
+    code: "AF"
+    colour: green
+  - op: "XOR A,B"
+    code: "A8"
+    colour: green
+  - op: "XOR A,C"
+    code: "A9"
+    colour: green
+  - op: "XOR A,D"
+    code: "AA"
+    colour: green
+  - op: "XOR A,E"
+    code: "AB"
+    colour: green
+  - op: "XOR A,H"
+    code: "AC"
+    colour: green
+  - op: "XOR A,L"
+    code: "AD"
+    colour: green
+  - op: "XOR A,(HL)"
+    code: "AE"
+    colour: yellow
+  - op: "XOR A,(IX+d)"
+    code: "DDAE"
+    colour: yellow
+  - op: "XOR A,(IY+d)"
+    code: "FDAE"
+    colour: yellow
+  - op: "XOR A,n"
+    code: "EE"
+    colour: blue
+
+---
+{{< z80/instruction
+    operation="A \longleftarrow A \oplus s"
+    def="/l XOR r/10101r//l XOR n/11101110 EE/n//l XOR (HL)/10101110 AE//l XOR (IX+d)/11011101 DD/10101110 AE/d//l XOR (IY+d)/11111101 FD/10101110 AE/d"
+>}}
+{{< /z80/instruction >}}

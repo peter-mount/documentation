@@ -1,0 +1,102 @@
+---
+type: "manual"
+title: "INC Increment"
+linkTitle: "INC"
+description: "Increment by 1"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "INC"
+codes:
+
+  - op: "INC A"
+    match: "INC,A"
+    code: "3C"
+    colour: green
+  - op: "INC B"
+    match: "INC,B"
+    code: "04"
+    colour: green
+  - op: "INC C"
+    match: "INC,C"
+    code: "0C"
+    colour: green
+  - op: "INC D"
+    match: "INC,D"
+    code: "14"
+    colour: green
+  - op: "INC E"
+    match: "INC,E"
+    code: "1C"
+    colour: green
+  - op: "INC H"
+    match: "INC,H"
+    code: "24"
+    colour: green
+  - op: "INC L"
+    match: "INC,L"
+    code: "2C"
+    colour: green
+  - op: "INC (HL)"
+    match: "INC,(HL)"
+    code: "34"
+    colour: yellow
+  - op: "INC (IX+d)"
+    match: "INC,(IX+d)"
+    code: "DD34"
+    colour: yellow
+  - op: "INC (IY+d)"
+    match: "INC,(IY+d)"
+    code: "FD34"
+    colour: yellow
+
+  - op: "INC BC"
+    match: "INC,BC"
+    code: "03"
+    colour: green
+  - op: "INC DE"
+    match: "INC,DE"
+    code: "13"
+    colour: green
+  - op: "INC HL"
+    match: "INC,HL"
+    code: "23"
+    colour: green
+  - op: "INC SP"
+    match: "INC,SP"
+    code: "33"
+    colour: green
+  - op: "INC IX"
+    match: "INC,IX"
+    code: "DD23"
+    colour: green
+  - op: "INC IY"
+    match: "INC,IY"
+    code: "FD23"
+    colour: green
+
+---
+{{< z80/instruction
+    def="/q s \longleftarrow r + 1/l INC r/00r100//q (HL) \longleftarrow (HL) + 1/l INC (HL)/00110100 34//q (IX+d) \longleftarrow (IX+d) + 1/l INC (IX+d)/11011101 DD/00110100 34/d//q (IY+d) \longleftarrow (IY+d) + 1/l INC (IY+d)/11111101 FD/00110100 34/d//q dd \longleftarrow dd + 1/l INC qq/00d0011//q IX \longleftarrow IX + 1/l INC IX/11011101 DD/00100011 23//q IY \longleftarrow IY + 1/l INC IY/11111101 FD/00100011 23"
+>}}
+{{< /z80/instruction >}}

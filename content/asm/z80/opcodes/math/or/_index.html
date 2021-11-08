@@ -1,0 +1,71 @@
+---
+type: "manual"
+title: "OR"
+linkTitle: "OR"
+description: "Binary OR"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "OR A"
+codes:
+
+  - op: "OR A,A"
+    code: "B7"
+    colour: green
+  - op: "OR A,B"
+    code: "B0"
+    colour: green
+  - op: "OR A,C"
+    code: "B1"
+    colour: green
+  - op: "OR A,D"
+    code: "B2"
+    colour: green
+  - op: "OR A,E"
+    code: "B3"
+    colour: green
+  - op: "OR A,H"
+    code: "B4"
+    colour: green
+  - op: "OR A,L"
+    code: "B5"
+    colour: green
+  - op: "OR A,(HL)"
+    code: "B6"
+    colour: yellow
+  - op: "OR A,(IX+d)"
+    code: "DDB6"
+    colour: yellow
+  - op: "OR A,(IY+d)"
+    code: "FDB6"
+    colour: yellow
+  - op: "OR A,n"
+    code: "F6"
+    colour: blue
+
+---
+{{< z80/instruction
+    operation="A \longleftarrow A \lor s"
+    def="/l OR r/10110r//l OR n/11110110 F6/n//l OR (HL)/10110110 B6//l OR (IX+d)/11011101 DD/10110110 B6/d//l OR (IY+d)/11111101 FD/10110110 B6/d"
+>}}
+{{< /z80/instruction >}}

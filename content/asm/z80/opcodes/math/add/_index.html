@@ -1,0 +1,111 @@
+---
+type: "manual"
+title: "ADD without carry"
+linkTitle: "ADD"
+description: "Addition without carry"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "ADD A"
+  - "ADD HL"
+  - "ADD IX"
+  - "ADD IY"
+codes:
+  - op: "ADD A,A"
+    code: "87"
+    colour: green
+  - op: "ADD A,B"
+    code: "80"
+    colour: green
+  - op: "ADD A,C"
+    code: "81"
+    colour: green
+  - op: "ADD A,D"
+    code: "82"
+    colour: green
+  - op: "ADD A,E"
+    code: "83"
+    colour: green
+  - op: "ADD A,H"
+    code: "84"
+    colour: green
+  - op: "ADD A,L"
+    code: "85"
+    colour: green
+  - op: "ADD A,(HL)"
+    code: "86"
+    colour: yellow
+  - op: "ADD A,(IX+d)"
+    code: "DD86"
+    colour: yellow
+  - op: "ADD A,(IY+d)"
+    code: "FD86"
+    colour: yellow
+  - op: "ADD A,n"
+    code: "C6"
+    colour: blue
+
+  - op: "ADD HL,BC"
+    code: "09"
+    colour: green
+  - op: "ADD HL,DE"
+    code: "19"
+    colour: green
+  - op: "ADD HL,HL"
+    code: "29"
+    colour: green
+  - op: "ADD HL,SP"
+    code: "39"
+    colour: green
+
+  - op: "ADD IX,BC"
+    code: "DD09"
+    colour: green
+  - op: "ADD IX,DE"
+    code: "DD19"
+    colour: green
+  - op: "ADD IX,SP"
+    code: "DD39"
+    colour: green
+  - op: "ADD IX,IX"
+    code: "DD29"
+    colour: green
+
+  - op: "ADD IY,BC"
+    code: "FD09"
+    colour: green
+  - op: "ADD IY,DE"
+    code: "FD19"
+    colour: green
+  - op: "ADD IY,SP"
+    code: "FD39"
+    colour: green
+  - op: "ADD IY,IY"
+    code: "FD29"
+    colour: green
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A + r/l ADD A, r/10000r//q A \longleftarrow A + n/l ADD A, n/11000110 C6/n//q A \longleftarrow A + (HL)/l ADD A, (HL)/10000110 86//q A \longleftarrow A + (IX+d)/l ADD A, (IX+d)/11011101 DD/10000110 86/d//q A \longleftarrow A + (IY+d)/l ADD A, (IY+d)/11111101 FD/10000110 86/d//q HL \longleftarrow HL + dd/l ADD HL, dd/00d1001//q IX \longleftarrow IX + pp/l ADD IX, pp/11011101 DD/00p1001//q IY \longleftarrow IY + mm/l ADD IY, mm/11111101 FD/00m1001"
+>}}
+{{< /z80/instruction >}}

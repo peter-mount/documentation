@@ -1,0 +1,84 @@
+---
+type: "manual"
+title: "ADC Add with Carry"
+linkTitle: "ADC"
+description: "Addition with carry"
+tags:
+  - z80 instruction
+code_format: "%[2]s,%[3]s"
+code_destination: ""
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "ADC A"
+  - "ADC HL"
+codes:
+
+  - op: "ADC A,A"
+    code: "8F"
+    colour: green
+  - op: "ADC A,B"
+    code: "88"
+    colour: green
+  - op: "ADC A,C"
+    code: "89"
+    colour: green
+  - op: "ADC A,D"
+    code: "8A"
+    colour: green
+  - op: "ADC A,E"
+    code: "8B"
+    colour: green
+  - op: "ADC A,H"
+    code: "8C"
+    colour: green
+  - op: "ADC A,L"
+    code: "8D"
+    colour: green
+  - op: "ADC A,(HL)"
+    code: "8E"
+    colour: yellow
+  - op: "ADC A,(IX+d)"
+    code: "DD8E"
+    colour: yellow
+  - op: "ADC A,(IY+d)"
+    code: "FD8E"
+    colour: yellow
+  - op: "ADC A,n"
+    code: "CE"
+    colour: blue
+
+  - op: "ADC HL,BC"
+    code: "ED4A"
+    colour: green
+  - op: "ADC HL,DE"
+    code: "ED5A"
+    colour: green
+  - op: "ADC HL,HL"
+    code: "ED6A"
+    colour: green
+  - op: "ADC HL,SP"
+    code: "ED7A"
+    colour: green
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A + r + Carry/l ADC A,r/10000r//q A \longleftarrow A + n + Carry/l ADC A,n/11001110 CE/n//q A \longleftarrow A + (HL) + Carry/l ADC A, (HL)/10001110 8E//q A \longleftarrow A + (IX+d) + Carry/l ADC A, (IX + d)/11011101 DD/10001110 8E/d//q A \longleftarrow A + (IY+d) + Carry/l ADC A, (IY + d)/11111101 FD/10001110 8E/d//q HL \longleftarrow HL + ss + Carry/l ADC HL, dd/11101101 ED/01d1010"
+>}}
+{{< /z80/instruction >}}
