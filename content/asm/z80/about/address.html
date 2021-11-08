@@ -1,0 +1,93 @@
+---
+type: "manual"
+title: "Addresses"
+linkTitle: "Addresses"
+weight: 20
+description: "The addresses used ny the Z80"
+---
+<p>
+    The Z80 uses a fixed set of addresses in Page 0 of the address space:
+</p>
+<div>
+    <table class="memoryMap3">
+        <thead>
+        <tr>
+            <th>Address</th>
+            <th colspan="2">Purpose</th>
+            <th colspan="6">Usual usage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0000</td>
+            <td colspan="2">Reset machine</td>
+            <td colspan="6">
+                Either the <span class="not">RESET</span> pin is held low,
+                initial power on or the <code>RST 0</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0008</td>
+            <td colspan="2">RST 1</td>
+            <td class="text-left">
+                <code>RST 1</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0010</td>
+            <td colspan="2">RST 2</td>
+            <td class="text-left">
+                <code>RST 2</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0018</td>
+            <td colspan="2">RST 3</td>
+            <td class="text-left">
+                <code>RST 3</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0020</td>
+            <td colspan="2">RST 4</td>
+            <td class="text-left">
+                <code>RST 4</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0028</td>
+            <td colspan="2">RST 5</td>
+            <td class="text-left">
+                <code>RST 5</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0030</td>
+            <td colspan="2">RST 6</td>
+            <td class="text-left">
+                <code>RST 6</code> instruction is invoked.
+            </td>
+        </tr>
+        <tr>
+            <td>0038</td>
+            <td colspan="2">RST 7 or <span class="not">INT</span></td>
+            <td class="text-left">
+                <code>RST 7</code> instruction is invoked.
+                Also the Maskable Interrupt handler when in Interrupt Mode 1
+            </td>
+        </tr>
+        <tr>
+            <td>0066</td>
+            <td colspan="2"><span class="not">NMI</span> Handler</td>
+            <td class="text-left">
+                <span class="not">NMI</span> interrupt handler
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<p>
+    Addresses 0x0000&hellip;0x003F are used by the 8 <code>RST</code> instructions with 8 bytes available for each.
+    <code>RST 0</code> is also the start address for when the processor powers on or is reset.
+</p>
