@@ -7,7 +7,6 @@ import (
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/task"
-  "log"
   "sort"
   "strconv"
   "strings"
@@ -22,6 +21,16 @@ func delayOpTask(t task.Task) task.Task {
   }
 }
 
+func decodeOpcode(s string) int64 {
+  s = strings.ReplaceAll(s, "nn", "00")
+  for len(s) < 8 {
+    s = s + "00"
+  }
+  if i, err1 := strconv.ParseInt(s, 16, 64); err1 == nil {
+    return i
+  }
+  return -1
+}
 func (s *M6502) writeOpsIndex(ctx context.Context) error {
   _ = s.autodoc.GetApi(ctx)
 
@@ -32,17 +41,7 @@ func (s *M6502) writeOpsIndex(ctx context.Context) error {
     a := inst.opCodes[i].Code
     b := inst.opCodes[j].Code
 
-    if ai, err1 := strconv.ParseInt(strings.ReplaceAll(a, "nn", ""), 16, 64); err1 == nil {
-      if bi, err2 := strconv.ParseInt(strings.ReplaceAll(b, "nn", ""), 16, 64); err2 == nil {
-        return ai < bi
-      } else {
-        log.Println("b", b, err2)
-      }
-    } else {
-      log.Println("a", a, err1)
-    }
-
-    return a<b
+    return decodeOpcode(a) < decodeOpcode(b)
   })
 
   return s.writeFile(
@@ -51,7 +50,7 @@ func (s *M6502) writeOpsIndex(ctx context.Context) error {
     "codes",
     "opcodes",
     "Instruction List by opcode",
-    "6502 instructions by hex opcode",
+    "",
   )
 }
 
@@ -74,7 +73,7 @@ func (s *M6502) writeOpsHexIndex(ctx context.Context) error {
     "codes",
     "instructions",
     "Instruction List by name",
-    "6502 instructions by name",
+    "",
   )
 }
 
@@ -105,11 +104,7 @@ func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, tit
       Then(func(slice util.StringSlice) (util.StringSlice, error) {
         slice = append(slice, "<div class='opIndex'>", "<table>")
         for _, op := range inst.opCodes {
-          slice = append(slice, fmt.Sprintf(
-            "<tr><td>%s</td><td>%s</td></tr>",
-            op.Op,
-            op.Code,
-          ))
+          slice = append(slice, fmt.Sprintf("<tr><td>%s</td><td>%s</td></tr>", op.Op, op.Code))
         }
         slice = append(slice, "</table>", "</div>")
         return slice, nil

@@ -64,19 +64,9 @@ func (hg *HexGrid) resolve(code string) *HexMap {
     // Mark Cell as an extension
     prefix = code[:len(code)-2]
 
-    // Why Zilog did this but the Z80 has an oddity where we have the operand inside the opcode.
-    // For example "RLC (IX+d)" is DDCBnn06 where DDCB is the prefix but the RLC command is 06 AFTER
-    // the byte holding +d. Really odd as other IX codes like "LD H,(IX+d)" is DD66nn
-    // So to handle this if we see the nn then we fudge it so the HexMap is for the part before nn
-    // & contains the codes after the nn.
-    lookupPrefix := prefix
-    if strings.HasSuffix(prefix, "nn") {
-      lookupPrefix = lookupPrefix[:len(lookupPrefix)-2]
-    }
-
-    c := hg.Cell(lookupPrefix)
+    c := hg.Cell(prefix)
     c.Extension = true
-    c.Label = "Instruction Prefix" //fmt.Sprintf("Prefix 0x%s", prefix)
+    c.Label = "Instruction Prefix"
     c.Index = prefix
     c.Colour = "brown"
 
@@ -109,7 +99,8 @@ func (hg *HexGrid) resolve(code string) *HexMap {
 
 // Cell resolves the appropriate HexCell for the opCode
 func (hg *HexGrid) Cell(code string) *HexCell {
-  return hg.resolve(code).cell(code)
+  // Remove nn, so we only index against Hex characters in the opcode
+  return hg.resolve(strings.ReplaceAll(code, "nn", "")).cell(code)
 }
 
 func (hg *HexGrid) Opcode(a ...*Opcode) *HexGrid {
