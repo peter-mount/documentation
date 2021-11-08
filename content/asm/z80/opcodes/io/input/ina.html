@@ -1,0 +1,23 @@
+---
+type: "manual"
+title: "IN A, (n)"
+linkTitle: "IN A,(n)"
+description: "Read from port and store in A"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    operation="A \longleftarrow (n)"
+    def="11011011 DB/n"
+>}}
+{{< /z80/instruction >}}
+<p>
+    This instruction places <em>n</em> onto the bottom half (A0&hellip;A7) of the address bus to select
+    the I/O device at one of 256 possible ports.
+</p>
+<p>
+    The contents of the Accumulator also appear on the top half (A8&hellip;A15) of the address bus at this time.
+</p>
+<p>
+    One byte from the selected port is placed on the data bus and written to the Accumulator (Register A).
+</p>
