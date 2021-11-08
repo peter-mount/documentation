@@ -2,9 +2,49 @@
 type: "manual"
 title: "OUT (C), r"
 linkTitle: "OUT (C),r"
+weight: 20
 description: "Write r to a port"
 tags:
   - z80 instruction
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s,%[3]s"
+code_axis:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+  - "E"
+  - "H"
+  - "L"
+  - "(HL)"
+code_dest:
+  - "OUT (C)"
+codes:
+
+  - op: "OUT (C),A"
+    code: "ED79"
+    colour: grey
+  - op: "OUT (C),B"
+    code: "ED41"
+    colour: grey
+  - op: "OUT (C),C"
+    code: "ED49"
+    colour: grey
+  - op: "OUT (C),D"
+    code: "ED51"
+    colour: grey
+  - op: "OUT (C),E"
+    code: "ED59"
+    colour: grey
+  - op: "OUT (C),H"
+    code: "ED61"
+    colour: grey
+  - op: "OUT (C),L"
+    code: "ED69"
+    colour: grey
+
 ---
 {{< z80/instruction
     operation="(C) \longleftarrow r"

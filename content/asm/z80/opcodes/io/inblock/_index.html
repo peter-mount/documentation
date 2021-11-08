@@ -1,12 +1,41 @@
 ---
 type: "manual"
 title: "Block read from port"
-linkTitle: "Block IN"
+linkTitle: "IN block"
+weight: 15
 tags:
   - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - "Increment"
+  - "Decrement"
+code_dest:
+  - "Single"
+  - "Repeat"
+codes:
+  - op: "INI"
+    code: "EDA2"
+    colour: grey
+    match: "Single Increment"
+  - op: "INIR"
+    code: "EDB2"
+    colour: grey
+    match: "Repeat Increment"
+  - op: "IND"
+    code: "EDAA"
+    colour: grey
+    match: "Single Decrement"
+  - op: "INDR"
+    code: "EDBA"
+    colour: grey
+    match: "Repeat Decrement"
+
 ---
 {{< z80/instruction
-operation="\begin{rcases} (HL) \longleftarrow (C)\\HL \longleftarrow HL+1 \text{ if } D = 0\\HL \longleftarrow HL-1 \text{ if } D = 1\\B \longleftarrow B-1 \end{rcases} \text{repeat while} L=1 \And B \not = 0"
+operation="\begin{rcases} (HL) \longleftarrow (C)\\HL \longleftarrow HL+1 \text{ if } D = 0\\HL \longleftarrow HL-1 \text{ if } D = 1\\B \longleftarrow B-1 \end{rcases} \text{repeat while } L=1 \And B \not = 0"
 def="11101101 ED/101LD010"
 >}}
 {{< /z80/instruction >}}

@@ -1,12 +1,42 @@
 ---
 type: "manual"
 title: "Block write to port"
-linkTitle: "Block OUT"
+linkTitle: "OUT block"
+weight: 25
 tags:
   - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - "Increment"
+  - "Decrement"
+code_dest:
+  - "Single"
+  - "Repeat"
+codes:
+
+  - op: "OUTI"
+    code: "EDA3"
+    colour: grey
+    match: "Single Increment"
+  - op: "OUTIR"
+    code: "EDB3"
+    colour: grey
+    match: "Repeat Increment"
+  - op: "OUTD"
+    code: "EDAB"
+    colour: grey
+    match: "Single Decrement"
+  - op: "OUTDR"
+    code: "EDBB"
+    colour: grey
+    match: "Repeat Decrement"
+
 ---
 {{< z80/instruction
-operation="\begin{rcases} (C) \longleftarrow (HL)\\HL \longleftarrow HL+1 \text{ if } D = 0\\HL \longleftarrow HL-1 \text{ if } D = 1\\B \longleftarrow B-1 \end{rcases} \text{repeat while} L=1 \And B \not = 0"
+operation="\begin{rcases} (C) \longleftarrow (HL)\\HL \longleftarrow HL+1 \text{ if } D = 0\\HL \longleftarrow HL-1 \text{ if } D = 1\\B \longleftarrow B-1 \end{rcases} \text{repeat while } L=1 \And B \not = 0"
 def="11101101 ED/101LD011"
 >}}
 {{< /z80/instruction >}}

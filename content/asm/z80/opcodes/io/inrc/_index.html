@@ -2,9 +2,55 @@
 type: "manual"
 title: "IN r,(C)"
 linkTitle: "IN r,(C)"
+weight: 10
 description: "Read from port in C and store in a specific register"
 tags:
   - z80 instruction
+code_includeop: true
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_axis:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+  - "E"
+  - "H"
+  - "L"
+  - "(HL)"
+code_dest:
+  - "IN (C)"
+codes:
+  - op: "IN A,(C)"
+    code: "ED7B"
+    colour: grey
+    match: "IN (C) A"
+  - op: "IN B,(C)"
+    code: "ED40"
+    colour: grey
+    match: "IN (C) B"
+  - op: "IN C,(C)"
+    code: "ED48"
+    colour: grey
+    match: "IN (C) C"
+  - op: "IN D,(C)"
+    code: "ED50"
+    colour: grey
+    match: "IN (C) D"
+  - op: "IN E,(C)"
+    code: "ED58"
+    colour: grey
+    match: "IN (C) E"
+  - op: "IN H,(C)"
+    code: "ED60"
+    colour: grey
+    match: "IN (C) H"
+  - op: "IN L,(C)"
+    code: "ED68"
+    colour: grey
+    match: "IN (C) L"
+
 notes:
   - "IN F, (C) documented in Zilog Z80 CPU User Manual, 2016 edition Page 296"
 ---

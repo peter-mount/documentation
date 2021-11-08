@@ -2,9 +2,30 @@
 type: "manual"
 title: "OUT (n), A"
 linkTitle: "OUT (n),A"
+weight: 20
 description: "Write A to a port"
 tags:
   - z80 instruction
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s,%[3]s"
+code_axis:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+  - "E"
+  - "H"
+  - "L"
+  - "(HL)"
+code_dest:
+  - "OUT n"
+codes:
+  - op: "OUT n,A"
+    code: "D3"
+    colour: grey
+
 ---
 {{< z80/instruction
     operation="(n) \longleftarrow A"

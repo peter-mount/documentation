@@ -2,9 +2,30 @@
 type: "manual"
 title: "IN A, (n)"
 linkTitle: "IN A,(n)"
+weight: 10
 description: "Read from port and store in A"
 tags:
   - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_axis:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+  - "E"
+  - "H"
+  - "L"
+  - "(HL)"
+code_dest:
+  - "IN n"
+  - "IN (C)"
+codes:
+  - op: "IN A,n"
+    code: "DB"
+    colour: grey
+    match: "IN n A"
 ---
 {{< z80/instruction
     operation="A \longleftarrow (n)"
