@@ -179,7 +179,7 @@
                     <td class="rotright brtb" rowspan="{{$rowCount}}"><strong>{{$destLabel}}</strong></td>
                 {{- end -}}
             {{- end -}}
-            <td class="brtb"><strong>{{$dest}}</strong></td>
+            <td class="brtb nowrap"><strong>{{$dest}}</strong></td>
             {{- range $colId, $src := $.Params.code_axis -}}
                 {{- /* Scan each column, skip if invalid */ -}}
                 {{- $colKey := printf "%d" $colId -}}
