@@ -4,6 +4,10 @@
     {{- range split $def "" -}}
         {{- if eq . "0" }}<td class="brtb">0</td>{{end -}}
         {{- if eq . "1" }}<td class="brtb">1</td>{{end -}}
+        {{- if eq . "b" -}}
+            <td class="brtb red" colspan="3">b</td>
+            {{- $.s.Set "bit" 1 -}}
+        {{- end -}}
         {{- if eq . "d" -}}
             <td class="brtb green" colspan="2">dd</td>
             {{- $.s.Set "registerD" 1 -}}
@@ -157,5 +161,17 @@
         </tbody>
     </table>
     {{- end -}}
-</div>
+
+    {{- with $scratch.Get "bit" -}}
+    <table class="memoryMap3">
+        <caption>Bits</caption>
+        <thead><tr><th>Bit</th><th>b</th><th>Bit</th><th>b</th></tr></thead>
+        <tbody>
+        <tr><td>0</td><td>000</td><td>4</td><td>100</td></tr>
+        <tr><td>1</td><td>001</td><td>5</td><td>101</td></tr>
+        <tr><td>2</td><td>010</td><td>6</td><td>110</td></tr>
+        <tr><td>3</td><td>011</td><td>7</td><td>111</td></tr>
+        </tbody>
+    </table>
+    {{- end -}}</div>
 </div>

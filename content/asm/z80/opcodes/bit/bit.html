@@ -1,0 +1,16 @@
+---
+type: "manual"
+title: "BIT"
+linkTitle: "BIT"
+description: "Test if a specific bit is set"
+tags:
+  - z80 instruction
+---
+
+{{< z80/instruction
+    def="/q Z \longleftarrow \overline{r_b}/l BIT b, r/11001011 CB/01br//q Z \longleftarrow \overline{(HL)_b}/l BIT b, (HL)/11001011 CB/01b110//q Z \longleftarrow \overline{(IX+d)_b}/l BIT b, (IX+d)/11011101 DD/11001011 CB/d/01b110//q Z \longleftarrow \overline{(IY+d)_b}/l BIT b, (IY+d)/11111101 FD/11001011 CB/d/01b110"
+>}}
+{{< /z80/instruction >}}
+<p>
+    Z is set if the specified bit in the source is 0, otherwise it is cleared.
+</p>
