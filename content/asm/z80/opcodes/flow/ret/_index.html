@@ -1,0 +1,77 @@
+---
+type: "manual"
+title: "Return from Subroutine"
+linkTitle: "RET"
+weight: 40
+tags:
+  - z80 instruction
+code_source: ""
+code_destination: ""
+code_format: "%[2]s %[3]s"
+code_includeop: true
+code_axis:
+  - "Uncond"
+  - "C"
+  - "NC"
+  - "Z"
+  - "NZ"
+  - "PE"
+  - "PO"
+  - "N"
+  - "P"
+  - "B!=0"
+code_dest:
+  - "JP nn"
+  - "JP (HL)"
+  - "JP (IX)"
+  - "JP (IY)"
+  - "JR e"
+  - "CALL nn"
+  - "DJNZ e"
+  - "RET"
+  - "RETI"
+  - "RETN"
+codes:
+
+  - op: "RET "
+    code: "C9"
+    match: "RET Uncond"
+    colour: darkblue
+  - op: "RET C"
+    code: "D8"
+    match: "RET C"
+    colour: darkblue
+  - op: "RET NC"
+    code: "D0"
+    match: "RET NC"
+    colour: darkblue
+  - op: "RET Z"
+    code: "C8"
+    match: "RET Z"
+    colour: darkblue
+  - op: "RET NZ"
+    code: "C0"
+    match: "RET NZ"
+    colour: darkblue
+  - op: "RET PE"
+    code: "E8"
+    match: "RET PE"
+    colour: darkblue
+  - op: "RET PO"
+    code: "E0"
+    match: "RET PO"
+    colour: darkblue
+  - op: "RET N"
+    code: "F8"
+    match: "RET N"
+    colour: darkblue
+  - op: "RET P"
+    code: "F0"
+    match: "RET P"
+    colour: darkblue
+
+---
+{{< z80/instruction
+    def="/q PC_l \longleftarrow (SP) \\ PC_h \longleftarrow (SP+1) \\ SP \longleftarrow SP+2/l RET/11001001//q \begin{rcases} PC_l \longleftarrow (SP) \\ PC_h \longleftarrow (SP+1) \\ SP \longleftarrow SP+2 \end{rcases} \text{ if } ccc = true/l RET ccc/11c000"
+>}}
+{{< /z80/instruction >}}

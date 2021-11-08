@@ -1,0 +1,99 @@
+---
+type: "manual"
+title: "Jump absolute"
+linkTitle: "JP"
+weight: 10
+tags:
+  - z80 instruction
+code_source: ""
+code_destination: ""
+code_format: "%[2]s %[3]s"
+code_includeop: true
+code_axis:
+  - "Uncond"
+  - "C"
+  - "NC"
+  - "Z"
+  - "NZ"
+  - "PE"
+  - "PO"
+  - "N"
+  - "P"
+  - "B!=0"
+code_dest:
+  - "JP nn"
+  - "JP (HL)"
+  - "JP (IX)"
+  - "JP (IY)"
+  - "JR e"
+  - "CALL nn"
+  - "DJNZ e"
+  - "RET"
+  - "RETI"
+  - "RETN"
+codes:
+  - op: "JP nn"
+    code: "C3"
+    match: "JP nn Uncond"
+    colour: darkblue
+  - op: "JP (HL)"
+    code: "E9"
+    match: "JP (HL) Uncond"
+    colour: darkblue
+  - op: "JP (IX)"
+    code: "DDE9"
+    match: "JP (IX) Uncond"
+    colour: darkblue
+  - op: "JP (IY)"
+    code: "FDE9"
+    match: "JP (IY) Uncond"
+    colour: darkblue
+
+  - op: "JP C,nn"
+    code: "DA"
+    match: "JP nn C"
+    colour: darkblue
+  - op: "JP NC,nn"
+    code: "D2"
+    match: "JP nn NC"
+    colour: darkblue
+  - op: "JP Z,nn"
+    code: "CA"
+    match: "JP nn Z"
+    colour: darkblue
+  - op: "JP NZ,nn"
+    code: "C2"
+    match: "JP nn NZ"
+    colour: darkblue
+  - op: "JP PE,nn"
+    code: "EA"
+    match: "JP nn PE"
+    colour: darkblue
+  - op: "JP PO,nn"
+    code: "E2"
+    match: "JP nn PO"
+    colour: darkblue
+  - op: "JP N,nn"
+    code: "FA"
+    match: "JP nn N"
+    colour: darkblue
+  - op: "JP P,nn"
+    code: "F2"
+    match: "JP nn P"
+    colour: darkblue
+
+---
+{{< z80/instruction
+    def="/q PC \longleftarrow nn/l JP nn/11000011 C3/nn//q \begin{rcases} PC \longleftarrow nn \end{rcases} \text {if } ccc = true/11c010/nn//q PC \longleftarrow HL/l JP (HL)/11101001 E9//q PC \longleftarrow IX/l JP (IX)/11011101 DD/11101001 E9//q PC \longleftarrow IY/l JP (IY)/11111101 FD/11101001 E9"
+>}}
+{{< /z80/instruction >}}
+
+<h3>Jumps to 16bit registers</h3>
+<p>
+    Although the instruction <code>JP (HL)</code> looks like it's using indirect addressing, it doesn't.
+    It takes the address in <code>HL</code> as the new <code>PC</code>, so it should be read as if it's
+    <code>JP HL</code>.
+</p>
+<p>
+    The same applies for <code>JP (IX)</code> and  <code>JP (IY)</code> - the actual register is used not the value at that address.
+</p>

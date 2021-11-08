@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "Return from Interrupt"
+linkTitle: "Interrupts"
+weight: 50
+tags:
+  - z80 instruction
+code_source: ""
+code_destination: ""
+code_format: "%[2]s %[3]s"
+code_includeop: true
+code_axis:
+  - "Uncond"
+  - "C"
+  - "NC"
+  - "Z"
+  - "NZ"
+  - "PE"
+  - "PO"
+  - "N"
+  - "P"
+  - "B!=0"
+code_dest:
+  - "JP nn"
+  - "JP (HL)"
+  - "JP (IX)"
+  - "JP (IY)"
+  - "JR e"
+  - "CALL nn"
+  - "DJNZ e"
+  - "RET"
+  - "RETI"
+  - "RETN"
+codes:
+
+  - op: "RETI"
+    code: "ED4D"
+    match: "RETI Uncond"
+    colour: darkblue
+  - op: "RETN"
+    code: "ED45"
+    match: "RETN Uncond"
+    colour: darkblue
+
+---
+{{< z80/instruction
+    def="/q PC_l \longleftarrow (SP) \\ PC_h \longleftarrow (SP+1) \\ SP \longleftarrow SP+2/l RETI/11101101 ED/01001101 4D//q PC_l \longleftarrow (SP) \\ PC_h \longleftarrow (SP+1) \\ SP \longleftarrow SP+2 \\ IFF_1 \longleftarrow IFF_2/l RETN/11101101 ED/01000101 45"
+>}}
+{{< /z80/instruction >}}
