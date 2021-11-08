@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="-5 -20 150 70" width="15em">
+    <defs>
+        <path id="arrow" d="M0 0 l 10 -2.5 l 0 5 l -10 -2.5" fill="black"/>
+    </defs>
+    <g transform="translate(10 10)" fill="none" stroke="black" font-size="70%">
+        <g id="byte">
+            <rect x="10" y="0" width="30" height="14"/>
+            <text x="11.5" y="11.5" fill="black">7</text>
+            <text x="31.5" y="11.5" fill="black">4</text>
+            <rect x="40" y="0" width="30" height="14"/>
+            <text x="41.5" y="11.5" fill="black">3</text>
+            <text x="61.5" y="11.5" fill="black">0</text>
+        </g>
+        <use xlink:href="#byte" x="65" y="0"/>
+        <g id="A">
+            <path d="M 85 15 l 0 15 l -30 0 l 0 -15"/>
+            <path d="M 85 15 l 5 10 l -10 0 l 5 -10" fill="black"/>
+        </g>
+        <use xlink:href="#A" x="40"/>
+        <use xlink:href="#A" x="40"/>
+
+        <g id="B">
+            <path d="M 55 0 l 0 -15 l 65 0 l 0 15"/>
+            <path d="M 55 0 l 5 -10 l -10 0 l 5 10" fill="black"/>
+        </g>
+
+    </g>
+</svg>
