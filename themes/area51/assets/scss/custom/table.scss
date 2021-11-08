@@ -134,6 +134,20 @@ table.memoryMap {
     }
 }
 
+/* hexGrid didn't fit correctly, turned out to be margins but this
+   is here in case we need to reduce the font again
+
+@media print {
+    table.memoryMap,
+    table.memoryMap2,
+    table.memoryMap3,
+    table.hexGrid {
+        // Reduce font size to fit the grid on an A4 page
+        font-size: 90%;
+    }
+}
+*/
+
 table.memoryMap,
 table.memoryMap2,
 table.memoryMap3,
@@ -145,6 +159,11 @@ table.hexGrid {
 
     caption {
         caption-side: top;
+    }
+
+    th.topLeft {
+        border-left:0 !important;
+        border-top:0 !important;
     }
 
     // All cells have border & centered

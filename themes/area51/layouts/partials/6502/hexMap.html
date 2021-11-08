@@ -34,15 +34,16 @@
     {{- end -}}
 {{- end -}}
 
+<div class="container">
 {{- range $prefix, $grid := $.Params.hexgrid -}}
-<div class="row">
+<div class="row printPageBreakAvoid">
     <table class="hexGrid">
         {{- if ne $prefix "" -}}
         <caption>Opcodes with prefix 0x{{ $prefix | upper}}</caption>
         {{- end -}}
         <thead>
         <tr>
-            <th></th>
+            <th class="topLeft"></th>
             {{- range seq 0 15 -}}
             <th>{{ printf "%X" . }}</th>
             {{- end -}}
@@ -76,6 +77,6 @@
 </div>
 
 {{- if eq $prefix "" -}}{{ partial "6502/opcodeLegend.html" $colours }}{{- end -}}
-
 {{- end -}}
+</div>
 {{- end -}}
