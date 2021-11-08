@@ -59,20 +59,13 @@ codes:
 
 <p>
   The Block transfer instructions allow for data to be moved around in memory.
-</p>
-
-<p>
   The programmer needs to configure the 16 bit registers to define the properties of the move:
+  <code>HL</code> is the source address to copy from;
+  <code>BC</code> is the number of bytes to copy.
 </p>
-<ul>
-  <li><code>HL</code> is the source address to copy from</li>
-  <li><code>BC</code> is the number of bytes to copy</li>
-</ul>
 <p>
   For block copy operations <code>LDI*</code> and <code>LDD*</code> then
-  <code>DE</code> is set to the destination address to copy to.
-</p>
-<p>
+  <code>DE</code> is also set to the destination address of the copy.
   For block compare operations <code>CPI*</code> and <code>CPD*</code> then
   <code>A</code> is set to the value to search for.
 </p>
@@ -94,28 +87,36 @@ def="11101101 ED/101LD00S"
   If BC=0 at start of a repeatable instruction then 65536 iterations will occur.
 </p>
 
-<h2>Block copy</h2>
-<p>
-  The <code>LD*</code> instructions then perform the equivalent of the following:
-</p>
-<ol>
-  <li>Copy a byte of memory from <code>(HL)</code> to <code>(DE)</code></li>
-  <li>Decrement <code>BC</code> by one</li>
-  <li><code>HL</code> and <code>DE</code> are either incremented (for LDI/LDIR) or decremented (for LDD/LDDR) by one.</li>
-  <li>The <code>LDIR</code> and <code>LDDR</code> instructions will loop back to step one if \( BC \not = 0 \)</li>
-</ol>
+<div class="row">
+  <div class="col-6">
+    <h2>Block copy</h2>
+    <p>
+      The <code>LD*</code> instructions then perform the equivalent of the following:
+    </p>
+    <ol>
+      <li>Copy a byte of memory from <code>(HL)</code> to <code>(DE)</code></li>
+      <li>Decrement <code>BC</code> by one</li>
+      <li><code>HL</code> and <code>DE</code> are either incremented (for LDI/LDIR) or decremented (for LDD/LDDR) by
+        one.
+      </li>
+      <li>The <code>LDIR</code> and <code>LDDR</code> instructions will loop back to step one if \( BC \not = 0 \)</li>
+    </ol>
+  </div>
+  <div class="col-6">
+    <h2>Block compare</h2>
 
-<h2>Block compare</h2>
-
-<p>
-  The <code>CP*</code> instructions compare memory against the Accumulator
-</p>
-<ol>
-  <li>Calculate difference between <code>A</code> and content of memory in <code>(HL)</code> to set/clear Z flag</li>
-  <li>Decrement <code>BC</code> by one</li>
-  <li><code>HL</code> is either incremented (for CPI/CPIR) or decremented (for CPD/CPDR) by one.</li>
-  <li>
-    The CPIR and CPDR instructions will loop back to step one if \( A-(HL) \not = 0 \And BC \not = 0 \)<br/>
-    If the value was found them HL will be set to the byte after or before it depending on the direction being used.
-  </li>
-</ol>
+    <p>
+      The <code>CP*</code> instructions compare memory against the Accumulator
+    </p>
+    <ol>
+      <li>Calculate difference between <code>A</code> and content of memory in <code>(HL)</code> to set/clear Z flag
+      </li>
+      <li>Decrement <code>BC</code> by one</li>
+      <li><code>HL</code> is either incremented (for CPI/CPIR) or decremented (for CPD/CPDR) by one.</li>
+      <li>
+        The CPIR and CPDR instructions will loop back to step one if \( A-(HL) \not = 0 \And BC \not = 0 \)<br/>
+        If the value was found them HL will be set to the byte after or before it depending on the direction being used.
+      </li>
+    </ol>
+  </div>
+</div>
