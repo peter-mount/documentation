@@ -78,7 +78,7 @@ codes:
 </p>
 
 {{< z80/instruction
-operation="\begin{rcases} \begin{rcases} A - (HL) \end{rcases} \text{ if } S=1 \\ HL \longleftarrow HL \begin{cases} + 1 \text{ if } D = 0 \\- 1 \text{ if } D = 1\end{cases} \\ \begin{rcases} DE \longleftarrow DE \begin{cases} + 1 \text{ if } D = 0 \\- 1 \text{ if } D = 1\end{cases} \end{rcases} \text{ if } S=0 \\ BC \longleftarrow BC - 1 \end{rcases} \text{repeat while } L = 1 \And \begin{cases} BC \not = 0 \text{ if } S=0 \\ BC \not = 0 \And A \not = (HL) \text{ if } S=1 \end{cases}"
+operation="\begin{rcases} A - (HL) \text{ if } S=1 \\ HL \longleftarrow HL+1 \text{ if } D = 0\\HL \longleftarrow HL-1 \text{ if } D = 1\\ DE \longleftarrow DE+1 \text{ if } D=0 \And S=0\\DE \longleftarrow DE-1 \text{ if } D=1 \And S=0\\BC \longleftarrow BC-1 \end{rcases} \text{repeat while } \begin{cases} L=1\\BC \not = 0\\ A \not = (HL) \text{ if } S=1 \end{cases}"
 def="11101101 ED/101LD00S"
 >}}
 {{< /z80/instruction >}}
