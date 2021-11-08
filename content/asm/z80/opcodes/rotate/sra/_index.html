@@ -1,0 +1,80 @@
+---
+type: "manual"
+title: "SRA Rotate bits right with Carry"
+linkTitle: "SRA"
+description: "Rotate bits right with carry, bit 7 remains unchanged"
+tags:
+  - z80 instruction
+code_format: "%[2]s%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+code_dest:
+  - "RL"
+  - "RL "
+  - "RLC"
+  - "RLC "
+  - "RLD "
+  - "RR"
+  - "RR "
+  - "RRC"
+  - "RRC "
+  - "RRD "
+  - "SLA "
+  - "SRA "
+  - "SRL "
+codes:
+
+  - op: "SRA A"
+    code: "CB2F"
+    colour: green
+  - op: "SRA B"
+    code: "CB28"
+    colour: green
+  - op: "SRA C"
+    code: "CB29"
+    colour: green
+  - op: "SRA D"
+    code: "CB2A"
+    colour: green
+  - op: "SRA E"
+    code: "CB2B"
+    colour: green
+  - op: "SRA H"
+    code: "CB2C"
+    colour: green
+  - op: "SRA L"
+    code: "CB2D"
+    colour: green
+  - op: "SRA (HL)"
+    code: "CB2E"
+    colour: yellow
+  - op: "SRA (IX+d)"
+    code: "DDCBnn2E"
+    colour: yellow
+  - op: "SRA (IY+d)"
+    code: "FDCBnn2E"
+    colour: yellow
+
+---
+<img src="/asm/z80/opcodes/rotate/sra/sra.svg" alt="Visualisation of the SRA instruction"/>
+
+{{< z80/instruction
+    def="/l SRA r/11001011 CB/00101r//l SRA (HL)/11001011 CB/00101110 2E//l SRA (IX+d)/11011101 DD/11001011 CB/d/00101110 2E//l SRA (IY+d)/11111101 FD/11001011 CB/d/00101110 2E"
+>}}
+<p>
+    An arithmetic shift right 1 bit position is performed on the contents of operand.
+    The contents of bit 0 are copied to the Carry flag and the previous contents of bit 7 remain unchanged.
+</p>
+{{< /z80/instruction >}}

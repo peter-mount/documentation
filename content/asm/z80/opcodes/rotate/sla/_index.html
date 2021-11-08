@@ -1,0 +1,76 @@
+---
+type: "manual"
+title: "SLA Shift bits left with Carry"
+linkTitle: "SLA"
+description: "Shift bits left with carry"
+tags:
+  - z80 instruction
+code_format: "%[2]s%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+code_dest:
+  - "RL"
+  - "RL "
+  - "RLC"
+  - "RLC "
+  - "RLD "
+  - "RR"
+  - "RR "
+  - "RRC"
+  - "RRC "
+  - "RRD "
+  - "SLA "
+  - "SRA "
+  - "SRL "
+codes:
+
+  - op: "SLA A"
+    code: "CB27"
+    colour: green
+  - op: "SLA B"
+    code: "CB20"
+    colour: green
+  - op: "SLA C"
+    code: "CB21"
+    colour: green
+  - op: "SLA D"
+    code: "CB22"
+    colour: green
+  - op: "SLA E"
+    code: "CB23"
+    colour: green
+  - op: "SLA H"
+    code: "CB24"
+    colour: green
+  - op: "SLA L"
+    code: "CB25"
+    colour: green
+  - op: "SLA (HL)"
+    code: "CB26"
+    colour: yellow
+  - op: "SLA (IX+d)"
+    code: "DDCBnn26"
+    colour: yellow
+  - op: "SLA (IY+d)"
+    code: "FDCBnn26"
+    colour: yellow
+
+---
+<img src="/asm/z80/opcodes/rotate/sla/sla.svg" alt="Visualisation of the SLA instruction"/>
+
+{{< z80/instruction
+    def="/l SLA r/11001011 CB/00100r//l SLA (HL)/11001011 CB/00100110 26//l SLA (IX+d)/11011101 DD/11001011 CB/d/00100110 26//l SLA (IY+d)/11111101 FD/11001011 CB/d/00100110 26"
+>}}
+{{< /z80/instruction >}}

@@ -5,8 +5,43 @@ linkTitle: "RRD"
 description: "Rotate bit pairs in A and (HL) right"
 tags:
   - z80 instruction
+code_format: "%[2]s%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+code_dest:
+  - "RL"
+  - "RL "
+  - "RLC"
+  - "RLC "
+  - "RLD "
+  - "RR"
+  - "RR "
+  - "RRC"
+  - "RRC "
+  - "RRD "
+  - "SLA "
+  - "SRA "
+  - "SRL "
+codes:
+
+  - op: "RRD (HL)"
+    code: "ED67"
+    colour: yellow
+
 ---
-<img src="../rrd.svg" alt="Visualisation of the RRD instruction"/>
+<img src="/asm/z80/opcodes/rotate/rrd/rrd.svg" alt="Visualisation of the RRD instruction"/>
 
 {{< z80/instruction
     def="11101101 ED/01100111 67"

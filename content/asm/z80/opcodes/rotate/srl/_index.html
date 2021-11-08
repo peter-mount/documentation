@@ -1,0 +1,76 @@
+---
+type: "manual"
+title: "SRL Rotate bits right with Carry"
+linkTitle: "SRL"
+description: "Rotate bits right with carry, bit 7 is reset"
+tags:
+  - z80 instruction
+code_format: "%[2]s%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+code_dest:
+  - "RL"
+  - "RL "
+  - "RLC"
+  - "RLC "
+  - "RLD "
+  - "RR"
+  - "RR "
+  - "RRC"
+  - "RRC "
+  - "RRD "
+  - "SLA "
+  - "SRA "
+  - "SRL "
+codes:
+
+  - op: "SRL A"
+    code: "CB3F"
+    colour: green
+  - op: "SRL B"
+    code: "CB38"
+    colour: green
+  - op: "SRL C"
+    code: "CB39"
+    colour: green
+  - op: "SRL D"
+    code: "CB3A"
+    colour: green
+  - op: "SRL E"
+    code: "CB3B"
+    colour: green
+  - op: "SRL H"
+    code: "CB3C"
+    colour: green
+  - op: "SRL L"
+    code: "CB3D"
+    colour: green
+  - op: "SRL (HL)"
+    code: "CB3E"
+    colour: yellow
+  - op: "SRL (IX+d)"
+    code: "DDCBnn3E"
+    colour: yellow
+  - op: "SRL (IY+d)"
+    code: "FDCBnn3E"
+    colour: yellow
+
+---
+<img src="/asm/z80/opcodes/rotate/srl/srl.svg" alt="Visualisation of the SRL instruction"/>
+
+{{< z80/instruction
+    def="/l SRL r/11001011 CB/00111r//l SRL (HL)/11001011 CB/00111110 3E//l SRL (IX+d)/11011101 DD/11001011 CB/d/00111110 3E//l SRL (IY+d)/11111101 FD/11001011 CB/d/00111110 3E"
+>}}
+{{< /z80/instruction >}}

@@ -1,0 +1,79 @@
+---
+type: "manual"
+title: "RRC Rotate bits right with Carry"
+linkTitle: "RRC"
+description: "Rotate bits left with carry"
+tags:
+  - z80 instruction
+code_format: "%[2]s%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+code_dest:
+  - "RL"
+  - "RL "
+  - "RLC"
+  - "RLC "
+  - "RLD "
+  - "RR"
+  - "RR "
+  - "RRC"
+  - "RRC "
+  - "RRD "
+  - "SLA "
+  - "SRA "
+  - "SRL "
+codes:
+
+  - op: "RRCA"
+    code: "0F"
+    colour: green
+  - op: "RRC A"
+    code: "CB0F"
+    colour: green
+  - op: "RRC B"
+    code: "CB08"
+    colour: green
+  - op: "RRC C"
+    code: "CB09"
+    colour: green
+  - op: "RRC D"
+    code: "CB0A"
+    colour: green
+  - op: "RRC E"
+    code: "CB0B"
+    colour: green
+  - op: "RRC H"
+    code: "CB0C"
+    colour: green
+  - op: "RRC L"
+    code: "CB0D"
+    colour: green
+  - op: "RRC (HL)"
+    code: "CB0E"
+    colour: yellow
+  - op: "RRC (IX+d)"
+    code: "DDCBnn0E"
+    colour: yellow
+  - op: "RRC (IY+d)"
+    code: "FDCBnn0E"
+    colour: yellow
+
+---
+<img src="/asm/z80/opcodes/rotate/rrc/rrc.svg" alt="Visualisation of the RRC instruction"/>
+
+{{< z80/instruction
+    def="/l RRCA/00001111 0F//l RRC r/11001011 CB/00001r//l RRC (HL)/11001011 CB/00001110 0E//l RRC (IX+d)/11011101 DD/11001011 CB/d/00001110 0E//l RRC (IY+d)/11111101 FD/11001011 CB/d/00001110 0E"
+>}}
+{{< /z80/instruction >}}
