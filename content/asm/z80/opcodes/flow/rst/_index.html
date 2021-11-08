@@ -2,7 +2,7 @@
 type: "manual"
 title: "RST"
 linkTitle: "RST"
-weight: 3
+weight: 45
 description: "Invoke a Reset"
 tags:
   - z80 instruction
@@ -88,30 +88,12 @@ codes:
     cycles:
       value: 3
 ---
-<h2>RST <em>t</em></h2>
 <p>
   <code>RST</code> performs a reset. Specifically it calls a routine at one of 8 addresses at the base of memory.
   It is the equivalent of performing a <code>CALL</code> to that address except the <code>RST</code> instruction is just
   1 byte compared to 3 for <code>CALL</code> and is slightly faster.
 </p>
 
-<p>
-  <code>RST 0</code> is the equivalent of a software reset as this maps to address 0x0000 which is where the processor
-  starts running when it powers up.
-</p>
-
-<p>
-  <code>RST 7</code> is the Maskable Interrupt Handler.
-</p>
-
-<p>
-  The other <code>RST</code> instructions are available to the underlying operating system.
-</p>
-
-<h3>Instruction format</h3>
-<p>
-  Syntax: <code>RST</code> <em>b</em>
-</p>
 {{< z80/instruction
 operation="(SP-1) \longleftarrow PC_h \\(SP-2) \longleftarrow PC_l \\SP \longleftarrow SP-2 \\PC_h \longleftarrow 0\\PC_l \longleftarrow b*8"
 def="11b111"
@@ -189,7 +171,7 @@ def="11b111"
     <td class="brb">RST 7</td>
     <td class="brb">RST $38</td>
     <td class="brb">RST 56</td>
-    <td class="brb">Interrupt Handler</td>
+    <td class="brb">Interrupt Handler in Mode 1</td>
   </tr>
   </tbody>
 </table>
