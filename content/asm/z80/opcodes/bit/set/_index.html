@@ -1,0 +1,292 @@
+---
+type: "manual"
+title: "SET"
+linkTitle: "SET"
+description: "Set a specific bit"
+tags:
+  - z80 instruction
+
+code_format: "%[2]s,%[3]s"
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+code_destination: "Bit"
+code_dest:
+  - "SET 0"
+  - "SET 1"
+  - "SET 2"
+  - "SET 3"
+  - "SET 4"
+  - "SET 5"
+  - "SET 6"
+  - "SET 7"
+codes:
+
+  - op: "SET 0,A"
+    code: "CBC7"
+    colour: green
+  - op: "SET 0,B"
+    code: "CBC0"
+    colour: green
+  - op: "SET 0,C"
+    code: "CBC1"
+    colour: green
+  - op: "SET 0,D"
+    code: "CBC2"
+    colour: green
+  - op: "SET 0,E"
+    code: "CBC3"
+    colour: green
+  - op: "SET 0,H"
+    code: "CBC4"
+    colour: green
+  - op: "SET 0,L"
+    code: "CBC5"
+    colour: green
+  - op: "SET 0,(HL)"
+    code: "CBC6"
+    colour: yellow
+
+  - op: "SET 1,A"
+    code: "CBCF"
+    colour: green
+  - op: "SET 1,B"
+    code: "CBC8"
+    colour: green
+  - op: "SET 1,C"
+    code: "CBC9"
+    colour: green
+  - op: "SET 1,D"
+    code: "CBCA"
+    colour: green
+  - op: "SET 1,E"
+    code: "CBCB"
+    colour: green
+  - op: "SET 1,H"
+    code: "CBCC"
+    colour: green
+  - op: "SET 1,L"
+    code: "CBCD"
+    colour: green
+  - op: "SET 1,(HL)"
+    code: "CBCE"
+    colour: yellow
+
+  - op: "SET 2,A"
+    code: "CBD7"
+    colour: green
+  - op: "SET 2,B"
+    code: "CBD0"
+    colour: green
+  - op: "SET 2,C"
+    code: "CBD1"
+    colour: green
+  - op: "SET 2,D"
+    code: "CBD2"
+    colour: green
+  - op: "SET 2,E"
+    code: "CBD3"
+    colour: green
+  - op: "SET 2,H"
+    code: "CBD4"
+    colour: green
+  - op: "SET 2,L"
+    code: "CBD5"
+    colour: green
+  - op: "SET 2,(HL)"
+    code: "CBD6"
+    colour: yellow
+
+  - op: "SET 3,A"
+    code: "CBDF"
+    colour: green
+  - op: "SET 3,B"
+    code: "CBD8"
+    colour: green
+  - op: "SET 3,C"
+    code: "CBD9"
+    colour: green
+  - op: "SET 3,D"
+    code: "CBDA"
+    colour: green
+  - op: "SET 3,E"
+    code: "CBDB"
+    colour: green
+  - op: "SET 3,H"
+    code: "CBDC"
+    colour: green
+  - op: "SET 3,L"
+    code: "CBDD"
+    colour: green
+  - op: "SET 3,(HL)"
+    code: "CBDE"
+    colour: yellow
+
+  - op: "SET 4,A"
+    code: "CBE7"
+    colour: green
+  - op: "SET 4,B"
+    code: "CBE0"
+    colour: green
+  - op: "SET 4,C"
+    code: "CBE1"
+    colour: green
+  - op: "SET 4,D"
+    code: "CBE2"
+    colour: green
+  - op: "SET 4,E"
+    code: "CBE3"
+    colour: green
+  - op: "SET 4,H"
+    code: "CBE4"
+    colour: green
+  - op: "SET 4,L"
+    code: "CBE5"
+    colour: green
+  - op: "SET 4,(HL)"
+    code: "CBE6"
+    colour: yellow
+
+  - op: "SET 5,A"
+    code: "CBEF"
+    colour: green
+  - op: "SET 5,B"
+    code: "CBE8"
+    colour: green
+  - op: "SET 5,C"
+    code: "CBE9"
+    colour: green
+  - op: "SET 5,D"
+    code: "CBEA"
+    colour: green
+  - op: "SET 5,E"
+    code: "CBEB"
+    colour: green
+  - op: "SET 5,H"
+    code: "CBEC"
+    colour: green
+  - op: "SET 5,L"
+    code: "CBED"
+    colour: green
+  - op: "SET 5,(HL)"
+    code: "CBEE"
+    colour: yellow
+
+  - op: "SET 6,A"
+    code: "CBF7"
+    colour: green
+  - op: "SET 6,B"
+    code: "CBF0"
+    colour: green
+  - op: "SET 6,C"
+    code: "CBF1"
+    colour: green
+  - op: "SET 6,D"
+    code: "CBF2"
+    colour: green
+  - op: "SET 6,E"
+    code: "CBF3"
+    colour: green
+  - op: "SET 6,H"
+    code: "CBF4"
+    colour: green
+  - op: "SET 6,L"
+    code: "CBF5"
+    colour: green
+  - op: "SET 6,(HL)"
+    code: "CBF6"
+    colour: yellow
+
+  - op: "SET 7,A"
+    code: "CBFF"
+    colour: green
+  - op: "SET 7,B"
+    code: "CBF8"
+    colour: green
+  - op: "SET 7,C"
+    code: "CBF9"
+    colour: green
+  - op: "SET 7,D"
+    code: "CBFA"
+    colour: green
+  - op: "SET 7,E"
+    code: "CBFB"
+    colour: green
+  - op: "SET 7,H"
+    code: "CBFC"
+    colour: green
+  - op: "SET 7,L"
+    code: "CBFD"
+    colour: green
+  - op: "SET 7,(HL)"
+    code: "CBFE"
+    colour: yellow
+
+  - op: "SET 0,(IX+d)"
+    code: "DDCBnnC6"
+    colour: yellow
+  - op: "SET 1,(IX+d)"
+    code: "DDCBnnCE"
+    colour: yellow
+  - op: "SET 2,(IX+d)"
+    code: "DDCBnnD6"
+    colour: yellow
+  - op: "SET 3,(IX+d)"
+    code: "DDCBnnDE"
+    colour: yellow
+  - op: "SET 4,(IX+d)"
+    code: "DDCBnnE6"
+    colour: yellow
+  - op: "SET 5,(IX+d)"
+    code: "DDCBnnEE"
+    colour: yellow
+  - op: "SET 6,(IX+d)"
+    code: "DDCBnnF6"
+    colour: yellow
+  - op: "SET 7,(IX+d)"
+    code: "DDCBnnFE"
+    colour: yellow
+
+  - op: "SET 0,(IY+d)"
+    code: "FDCBnnC6"
+    colour: yellow
+  - op: "SET 1,(IY+d)"
+    code: "FDCBnnCE"
+    colour: yellow
+  - op: "SET 2,(IY+d)"
+    code: "FDCBnnD6"
+    colour: yellow
+  - op: "SET 3,(IY+d)"
+    code: "FDCBnnDE"
+    colour: yellow
+  - op: "SET 4,(IY+d)"
+    code: "FDCBnnE6"
+    colour: yellow
+  - op: "SET 5,(IY+d)"
+    code: "FDCBnnEE"
+    colour: yellow
+  - op: "SET 6,(IY+d)"
+    code: "FDCBnnF6"
+    colour: yellow
+  - op: "SET 7,(IY+d)"
+    code: "FDCBnnFE"
+    colour: yellow
+
+---
+
+{{< z80/instruction
+    def="/q r_b \longleftarrow 1/l SET b, r/11001011 CB/11br//q (HL)_b \longleftarrow 1/l SET b, (HL)/11001011 CB/11b110//q (IX+d)_b \longleftarrow 1/l SET b, (IX+d)/11011101 DD/11001011 CB/d/11b110//q (IY+d)_b \longleftarrow 1/l SET b, (IY+d)/11111101 FD/11001011 CB/d/11b110"
+>}}
+{{< /z80/instruction >}}
+<p>
+    Z is set if the specified bit in the source is 0, otherwise it is cleared.
+</p>
