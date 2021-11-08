@@ -1,0 +1,18 @@
+---
+type: "manual"
+title: "SRA Rotate bits right with Carry"
+linkTitle: "SRA"
+description: "Rotate bits right with carry, bit 7 remains unchanged"
+tags:
+  - z80 instruction
+---
+<img src="../sra.svg" alt="Visualisation of the SRA instruction"/>
+
+{{< z80/instruction
+    def="/l SRA r/11001011 CB/00101r//l SRA (HL)/11001011 CB/00101110 2E//l SRA (IX+d)/11011101 DD/11001011 CB/d/00101110 2E//l SRA (IY+d)/11111101 FD/11001011 CB/d/00101110 2E"
+>}}
+<p>
+    An arithmetic shift right 1 bit position is performed on the contents of operand.
+    The contents of bit 0 are copied to the Carry flag and the previous contents of bit 7 remain unchanged.
+</p>
+{{< /z80/instruction >}}

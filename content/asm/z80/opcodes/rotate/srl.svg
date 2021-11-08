@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="-5 0 180 30" width="15em">
+    <defs>
+        <path id="arrow" d="M10 0 l -10 -2.5 l 0 5 l 10 -2.5" fill="black"/>
+    </defs>
+    <g transform="translate(10 10)" fill="none" stroke="black" font-size="70%">
+        <!-- Carry Flag -->
+        <rect x="140" y="0" width="20" height="14"/>
+        <text x="141.5" y="11.5" fill="black">CY</text>
+
+        <!-- Bits 7..0 -->
+        <rect x="30" y="0" width="90" height="14"/>
+        <text x="31.5" y="11.5" fill="black">7</text>
+        <text x="111.5" y="11.5" fill="black">0</text>
+
+        <!-- bit 0 to carry -->
+        <line x1="120" x2="140" y1="7.5" y2="7.5"/>
+        <use xlink:href="#arrow" x="130" y="7.5"/>
+
+        <!-- bit 7 to 0 -->
+        <line x1="40" x2="110" y1="7.5" y2="7.5"/>
+        <use xlink:href="#arrow" x="100" y="7.5"/>
+
+        <!-- Zero -->
+        <rect x="-10" y="0" width="20" height="14"/>
+        <text x="-3.5" y="11.5" fill="black">0</text>
+        <line x1="10" x2="30" y1="7.5" y2="7.5"/>
+        <use xlink:href="#arrow" x="20" y="7.5"/>
+
+    </g>
+</svg>
