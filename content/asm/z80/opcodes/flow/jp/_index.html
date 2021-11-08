@@ -33,7 +33,7 @@ code_dest:
   - "RETN"
 codes:
   - op: "JP nn"
-    code: "C3"
+    code: "C3nnnn"
     match: "JP nn Uncond"
     colour: darkblue
   - op: "JP (HL)"
@@ -50,35 +50,35 @@ codes:
     colour: darkblue
 
   - op: "JP C,nn"
-    code: "DA"
+    code: "DAnnnn"
     match: "JP nn C"
     colour: darkblue
   - op: "JP NC,nn"
-    code: "D2"
+    code: "D2nnnn"
     match: "JP nn NC"
     colour: darkblue
   - op: "JP Z,nn"
-    code: "CA"
+    code: "CAnnnn"
     match: "JP nn Z"
     colour: darkblue
   - op: "JP NZ,nn"
-    code: "C2"
+    code: "C2nnnn"
     match: "JP nn NZ"
     colour: darkblue
   - op: "JP PE,nn"
-    code: "EA"
+    code: "EAnnnn"
     match: "JP nn PE"
     colour: darkblue
   - op: "JP PO,nn"
-    code: "E2"
+    code: "E2nnnn"
     match: "JP nn PO"
     colour: darkblue
   - op: "JP N,nn"
-    code: "FA"
+    code: "FAnnnn"
     match: "JP nn N"
     colour: darkblue
   - op: "JP P,nn"
-    code: "F2"
+    code: "F2nnnn"
     match: "JP nn P"
     colour: darkblue
 

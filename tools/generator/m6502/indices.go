@@ -7,7 +7,10 @@ import (
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/task"
+  "log"
   "sort"
+  "strconv"
+  "strings"
 )
 
 func delayOpTask(t task.Task) task.Task {
@@ -26,7 +29,20 @@ func (s *M6502) writeOpsIndex(ctx context.Context) error {
   inst := s.Instructions(book)
 
   sort.SliceStable(inst.opCodes, func(i, j int) bool {
-    return inst.opCodes[i].Order < inst.opCodes[j].Order
+    a := inst.opCodes[i].Code
+    b := inst.opCodes[j].Code
+
+    if ai, err1 := strconv.ParseInt(strings.ReplaceAll(a, "nn", ""), 16, 64); err1 == nil {
+      if bi, err2 := strconv.ParseInt(strings.ReplaceAll(b, "nn", ""), 16, 64); err2 == nil {
+        return ai < bi
+      } else {
+        log.Println("b", b, err2)
+      }
+    } else {
+      log.Println("a", a, err1)
+    }
+
+    return a<b
   })
 
   return s.writeFile(

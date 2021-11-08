@@ -37,31 +37,35 @@ code_axis:
   - R
 codes:
   - op: "LD A, (nn)"
-    code: "3A"
+    code: "3Annnn"
     colour: yellow
 
   - op: "LD BC, (nn)"
-    code: "ED4B"
+    code: "ED4Bnnnn"
     colour: yellow
 
   - op: "LD DE, (nn)"
-    code: "ED5B"
+    code: "ED5Bnnnn"
     colour: yellow
 
   - op: "LD HL, (nn)"
-    code: "2A"
+    code: "ED6Bnnnn"
+    colour: yellow
+
+  - op: "LD HL, (nn)"
+    code: "2Annnn"
     colour: yellow
 
   - op: "LD SP, (nn)"
-    code: "ED7B"
+    code: "ED7Bnnnn"
     colour: yellow
 
   - op: "LD IX, (nn)"
-    code: "DD2A"
+    code: "DD2Annnn"
     colour: yellow
 
   - op: "LD IY, (nn)"
-    code: "FD2A"
+    code: "FD2Annnn"
     colour: yellow
 
 ---
