@@ -45,6 +45,10 @@ codes:
 <p>
   These instructions exchange values between registers.
 </p>
+{{< z80/instruction
+def="/q AF \longleftrightarrow AF'/l EX AF, AF'/00001000 08//q BC \longleftrightarrow BC', DE \longleftrightarrow DE', HL \longleftrightarrow HL'/l EXX/11011001 D9//q DE \longleftrightarrow HL/l EX DE, HL/11101011 EB//q H \longleftrightarrow (SP+1), L \longleftrightarrow (SP)/l EX (SP), HL/11100011 E3//q IX_h \longleftrightarrow (SP+1), IX_l \longleftrightarrow (SP)/l EX (SP), IX/11011101 DD/11100011 E3//q IY_h \longleftrightarrow (SP+1), IY_l \longleftrightarrow (SP)/l EX (SP), IY/11111101 FD/11100011 E3"
+>}}
+{{< /z80/instruction >}}
 
 <p>
   <code>EX AF, AF'</code> (0x08) allows the programmer to switch between the two pairs of Accumulator flag
