@@ -2,6 +2,7 @@ package m6502
 
 import (
   "context"
+  "fmt"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
@@ -83,8 +84,20 @@ func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, tit
     "manual",
     10,
   ).
-    Then(inst.writeOpCodes(prefix, inst.opCodes)).
+    //Then(inst.writeOpCodes(prefix, inst.opCodes)).
     WrapAsFrontMatter().
+      Then(func(slice util.StringSlice) (util.StringSlice, error) {
+        slice = append(slice, "<div class='opIndex'>", "<table>")
+        for _, op := range inst.opCodes {
+          slice = append(slice, fmt.Sprintf(
+            "<tr><td>%s</td><td>%s</td></tr>",
+            op.Op,
+            op.Code,
+          ))
+        }
+        slice = append(slice, "</table>", "</div>")
+        return slice, nil
+      }).
     FileHandler().
     Write(util.ReferenceFilename(book.ContentPath(), name, "_index.html"), book.Modified())
   if err != nil {
