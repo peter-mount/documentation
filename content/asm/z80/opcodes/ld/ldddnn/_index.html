@@ -1,0 +1,62 @@
+---
+type: "manual"
+title: "LD dd, nn"
+linkTitle: "LD dd, nn"
+description: "Load 16-bit number"
+tags:
+  - z80 instruction
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "LD %[3]s, %[2]s"
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(BC)"
+  - "(DE)"
+  - "(nn)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - "nn"
+  - BC
+  - DE
+  - HL
+  - IX
+  - IY
+  - SP
+  - I
+  - R
+codes:
+  - op: "LD BC, nn"
+    code: "01"
+    colour: blue
+  - op: "LD DE, nn"
+    code: "11"
+    colour: blue
+  - op: "LD HL, nn"
+    code: "21"
+    colour: blue
+  - op: "LD SP, nn"
+    code: "31"
+    colour: blue
+  - op: "LD IX, nn"
+    code: "DD21"
+    colour: blue
+  - op: "LD IY, nn"
+    code: "FD21"
+    colour: blue
+
+---
+{{< z80/instruction
+    def="/q dd \longleftarrow nn/l LD dd, nn/00d0001/nn//q IX \longleftarrow nn/l LD IX, nn/11011101 DD/00100001 21/nn//q IY \longleftarrow nn/l LD IY, nn/11111101 FD/00100001 21/nn"
+>}}
+{{< /z80/instruction >}}

@@ -1,0 +1,54 @@
+---
+type: "manual"
+title: "LD SP, s"
+linkTitle: "LD SP, s"
+description: "Set Stack Pointer from register"
+tags:
+  - z80 instruction
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "LD %[2]s, %[3]s"
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(BC)"
+  - "(DE)"
+  - "(nn)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - "nn"
+  - BC
+  - DE
+  - HL
+  - IX
+  - IY
+  - SP
+  - I
+  - R
+codes:
+
+  - op: "LD SP, HL"
+    code: "F9"
+    colour: green
+  - op: "LD SP, IX"
+    code: "DDF9"
+    colour: green
+  - op: "LD SP, IY"
+    code: "FDF9"
+    colour: green
+
+---
+{{< z80/instruction
+    def="/q SP \longleftarrow HL/l LD SP,HL/11111001 F9//q SP \longleftarrow IX/l LD SP, IX/11011101 DD/11111001 F9//q SP \longleftarrow IY/l LD SP, IY/11111101 FD/11111001 F9"
+>}}
+{{< /z80/instruction >}}

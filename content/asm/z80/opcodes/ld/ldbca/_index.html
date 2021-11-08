@@ -1,0 +1,116 @@
+---
+type: "manual"
+title: "LD (dd), s"
+linkTitle: "LD (dd), s"
+description: "Store register into memory via register"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "LD %[2]s, %[3]s"
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(BC)"
+  - "(DE)"
+  - "(nn)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - "nn"
+  - BC
+  - DE
+  - HL
+  - IX
+  - IY
+  - SP
+  - I
+  - R
+codes:
+
+  - op: "LD (HL), A"
+    code: "77"
+    colour: yellow
+  - op: "LD (HL), B"
+    code: "70"
+    colour: yellow
+  - op: "LD (HL), C"
+    code: "71"
+    colour: yellow
+  - op: "LD (HL), D"
+    code: "72"
+    colour: yellow
+  - op: "LD (HL), E"
+    code: "73"
+    colour: yellow
+  - op: "LD (HL), H"
+    code: "74"
+    colour: yellow
+  - op: "LD (HL), L"
+    code: "75"
+    colour: yellow
+
+  - op: "LD (BC), A"
+    code: "02"
+    colour: yellow
+
+  - op: "LD (DE), A"
+    code: "12"
+    colour: yellow
+
+  - op: "LD (IX+d), A"
+    code: "DD77"
+    colour: yellow
+  - op: "LD (IX+d), B"
+    code: "DD70"
+    colour: yellow
+  - op: "LD (IX+d), C"
+    code: "DD71"
+    colour: yellow
+  - op: "LD (IX+d), D"
+    code: "DD72"
+    colour: yellow
+  - op: "LD (IX+d), E"
+    code: "DD73"
+    colour: yellow
+  - op: "LD (IX+d), H"
+    code: "DD74"
+    colour: yellow
+  - op: "LD (IX+d), L"
+    code: "DD75"
+    colour: yellow
+
+  - op: "LD (IY+d), A"
+    code: "FD77"
+    colour: yellow
+  - op: "LD (IY+d), B"
+    code: "FD70"
+    colour: yellow
+  - op: "LD (IY+d), C"
+    code: "FD71"
+    colour: yellow
+  - op: "LD (IY+d), D"
+    code: "FD72"
+    colour: yellow
+  - op: "LD (IY+d), E"
+    code: "FD73"
+    colour: yellow
+  - op: "LD (IY+d), H"
+    code: "FD74"
+    colour: yellow
+  - op: "LD (IY+d), L"
+    code: "FD75"
+    colour: yellow
+---
+{{< z80/instruction
+def="/q (BC) \longleftarrow A/l LD (BC), A/00000010 02//q (DE) \longleftarrow A/l LD (DE), A/00010010 12//q (HL) \longleftarrow r/l LD (HL), r/01110r//q ( IX + d ) \longleftarrow r/l LD (IX+d), r/11011101 DD/01110r/d//q ( IY + d ) \longleftarrow r/l LD (IY+d), r/11111101 FD/01110r/d/"
+>}}
+{{< /z80/instruction >}}
+

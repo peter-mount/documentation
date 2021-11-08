@@ -3,6 +3,31 @@ type: "manual"
 title: "LD (dd), n"
 linkTitle: "LD (dd), n"
 description: "Load number into memory"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "LD %[3]s, %[2]s"
+code_axis:
+  - "(HL)"
+  - "n"
+  - "(IX+d)"
+  - "(IY+d)"
+
+codes:
+  - op: "LD (HL), n"
+    code: "36"
+    colour: blue
+  - op: "LD (IX+d), n"
+    code: "DD36"
+    colour: blue
+  - op: "LD (IY+d), n"
+    code: "FD36"
+    colour: blue
+
+
+
 ---
 {{< z80/instruction
     operation=""
