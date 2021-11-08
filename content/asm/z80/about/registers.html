@@ -1,0 +1,106 @@
+---
+type: "manual"
+title: "Z80 Registers"
+linkTitle: "Registers"
+weight: 10
+description: "About the Registers available on the Z80"
+---
+<p xmlns="http://www.w3.org/1999/html">
+    The Z80 contains 208 bits of memory that are available to the programmer as registers.
+</p>
+
+<div>
+    <table class="memoryMap4">
+        <caption>Z80 Registers</caption>
+        <thead>
+        <tr>
+            <th colspan="4">Register Set</th>
+            <th colspan="2" rowspan="2">Special Purpose Registers</th>
+        </tr>
+        <tr>
+            <th colspan="2">Main</th>
+            <th colspan="2">Alternate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="blr">Accumulator</td>
+            <td class="blr">Flags</td>
+            <td class="blr">Accumulator</td>
+            <td class="blr">Flags</td>
+            <td class="blr">Interrupt Vector</td>
+            <td class="blr">Memory Refresh</td>
+        </tr>
+        <tr>
+            <td class="brb">A</td>
+            <td class="brb">F</td>
+            <td class="brb">A'</td>
+            <td class="brb">F'</td>
+            <td class="brb">I</td>
+            <td class="brb">R</td>
+        </tr>
+        <tr>
+            <td class="bb">B</td>
+            <td class="brb">C</td>
+            <td class="bb">B'</td>
+            <td class="brb">C'</td>
+            <td class="brb">Index Register IX</td>
+            <td class="brb">Index Register IY</td>
+        </tr>
+        <tr>
+            <td class="bb">D</td>
+            <td class="brb">E</td>
+            <td class="bb">D'</td>
+            <td class="brb">E'</td>
+            <td class="brb" colspan="2">Stack Pointer SP</td>
+        </tr>
+        <tr>
+            <td class="bb">H</td>
+            <td class="brb">H</td>
+            <td class="bb">H'</td>
+            <td class="brb">L'</td>
+            <td class="brb" colspan="2">Program Counter PC</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h3>Accumulator and Flag registers</h3>
+<p>
+    The Z80 provides two independent 8-bit accumulators each with an associated flag register.
+    The programmer can switch between the two pairs with the
+    <a href="../../opcodes/ex/exafaf/">EX AF, AF'</a> instruction.
+</p>
+
+<h3>General Purpose registers</h3>
+<p>
+    Two matched sets of general purpose registers are available, each set containing six 8-bit registers:
+    B, C, D, E, H and L.
+</p>
+<p>
+    These registers are also arranged to provide 3 16-bit registers:
+    BC, DE and HL.
+</p>
+<p>
+    The HL register pair is usually used for addressing memory and has more instructions available to it for
+    this purpose than BC or DE register pairs.
+</p>
+<p>
+    The programmer can switch between the main (BC, DE and HL) and alternate (BC', DE' and HL') set of general purpose registers with the
+    <a href="../../opcodes/ex/exx/">EXX</a> instruction.
+</p>
+
+<h3>PC Program Counter</h3>
+<p>
+    The program counter holds the 16-bit address of the current instruction being fetched from memory.
+    The Program Counter is automatically incremented after its contents are transferred to the address lines.
+    When a program jump occurs, the new value is automatically placed in the Program Counter, overriding the incrementer.
+</p>
+
+<h3>SP Stack Pointer</h3>
+<p>
+    The stack pointer holds the 16-bit address of the current top of a stack located anywhere in external system RAM.
+    The external stack memory is organized as a last-in first-out (LIFO) file.
+    Data can be pushed onto the stack using the <a href="../../opcodes/stack/push/">PUSH</a> instructions
+    or popped off of the stack using the <a href="../../opcodes/stack/pop/">POP</a> instructions.
+</p>
