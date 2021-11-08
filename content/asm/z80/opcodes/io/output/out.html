@@ -1,0 +1,34 @@
+---
+type: "manual"
+title: "Block write to port"
+linkTitle: "Block OUT"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+operation="\begin{rcases} (C) \longleftarrow (HL)\\HL \longleftarrow HL+1 \text{ if } D = 0\\HL \longleftarrow HL-1 \text{ if } D = 1\\B \longleftarrow B-1 \end{rcases} \text{repeat while} L=1 \And B \not = 0"
+def="11101101 ED/101LD011"
+>}}
+{{< /z80/instruction >}}
+<p>
+    <strong>D</strong> 0=Increment, 1=Decrement <code>HL</code> after each iteration
+</p>
+<p>
+    <strong>L</strong> If set then if \(B \not = 0\) then \(PC \longleftarrow PC-2\) so that the
+    instruction is repeated.
+</p>
+
+<p>
+    The contents of Register C are placed on the bottom half (A0&hellip;A7) of the address
+    bus to select the I/O device at one of 256 possible ports.
+</p>
+<p>
+    Register B can be used as a byte counter, and its contents are placed on the top half (A8&hellip;15)
+    of the address bus at this time.
+</p>
+<p>
+    Then one byte from the address pointed to by <code>HL</code> is placed on the data bus and written to the port.
+</p>
+<p>
+    Finally, the byte counter is decremented and register pair HL is incremented.
+</p>

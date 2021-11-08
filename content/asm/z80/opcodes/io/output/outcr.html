@@ -1,0 +1,23 @@
+---
+type: "manual"
+title: "OUT (C), r"
+linkTitle: "OUT (C),r"
+description: "Write r to a port"
+tags:
+  - z80 instruction
+---
+{{< z80/instruction
+    operation="(C) \longleftarrow r"
+    def="11101101 ED/01r001/n"
+>}}
+{{< /z80/instruction >}}
+<p>
+    The contents of Register C are placed on the bottom half (A0&hellip;7) of the address bus to select the I/O device at one of 256 possible ports.
+</p>
+<p>
+    The contents of Register B are placed on the top half (A8&hellip;A15) of the address bus at this time.
+</p>
+<p>
+<p>
+    Then the byte contained in r is placed on the data bus and written to the selected peripheral device.
+</p>
