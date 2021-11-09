@@ -1,0 +1,122 @@
+---
+type: "manual"
+title: "Undocumented Math instructions with the IY register"
+linkTitle: "IY Math"
+weight: 10
+description: "Undocumented math instructions for IY register"
+tags:
+  - z80 instruction
+code_format: "%[3]s %[2]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IY+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IY
+  - IYh
+  - IYl
+  - INC
+  - DEC
+  - "ADD A"
+  - "ADC A"
+  - SUB
+  - "SBC A"
+  - AND
+  - XOR
+  - OR
+  - CP
+codes:
+
+  - op: "INC IYh"
+    code: "FD24"
+    colour: undocumented
+
+  - op: "DEC IYh"
+    code: "FD25"
+    colour: undocumented
+
+  - op: "INC IYl"
+    code: "FD2C"
+    colour: undocumented
+
+  - op: "DEC IYl"
+    code: "FD2D"
+    colour: undocumented
+
+  - op: "ADD A,IYh"
+    match: "ADD A IYh"
+    code: "FD84"
+    colour: undocumented
+  - op: "ADD A,IYl"
+    match: "ADD A IYl"
+    code: "FD85"
+    colour: undocumented
+
+  - op: "ADC A,IYh"
+    match: "ADC A IYh"
+    code: "FD8C"
+    colour: undocumented
+  - op: "ADC A,IYl"
+    match: "ADC A IYl"
+    code: "FD8D"
+    colour: undocumented
+
+  - op: "SUB IYh"
+    code: "FD94"
+    colour: undocumented
+  - op: "SUB IYl"
+    code: "FD95"
+    colour: undocumented
+
+  - op: "SBC A,IYh"
+    match: "SBC A IYh"
+    code: "FD94"
+    colour: undocumented
+  - op: "SBC A,IYl"
+    match: "SBC A IYl"
+    code: "FD95"
+    colour: undocumented
+
+  - op: "AND IYh"
+    code: "FDA4"
+    colour: undocumented
+  - op: "AND IYl"
+    code: "FDA5"
+    colour: undocumented
+
+  - op: "XOR IYh"
+    code: "FDAC"
+    colour: undocumented
+  - op: "XOR IYl"
+    code: "FDAD"
+    colour: undocumented
+
+  - op: "OR IYh"
+    code: "FDB4"
+    colour: undocumented
+  - op: "OR IYl"
+    code: "FDB5"
+    colour: undocumented
+
+  - op: "CP IYh"
+    code: "FDBC"
+    colour: undocumented
+  - op: "CP IYl"
+    code: "FDBD"
+    colour: undocumented
+
+---

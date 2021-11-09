@@ -1,0 +1,148 @@
+---
+type: "manual"
+title: "LD IY undocumented instructions"
+linkTitle: "IY LD"
+weight: 10
+description: "Undocumented instructions for LD IY"
+tags:
+  - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IY+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IY
+  - IYh
+  - IYl
+  - INC
+  - DEC
+  - ADD A
+  - ADC A
+  - SUB
+  - SBC
+  - AND
+  - XOR
+  - OR
+  - CP
+codes:
+
+  - op: "LD IYh,n"
+    match: "IYh n"
+    code: "FD26nn"
+    colour: undocumented
+
+  - op: "LD IYl,n"
+    match: "IYl n"
+    code: "FD2Enn"
+    colour: undocumented
+
+  - op: "LD B,IYh"
+    match: "B IYh"
+    code: "FD44"
+    colour: undocumented
+  - op: "LD B,IYl"
+    match: "B IYl"
+    code: "FD45"
+    colour: undocumented
+
+  - op: "LD C,IYh"
+    match: "C IYh"
+    code: "FD4C"
+    colour: undocumented
+  - op: "LD C,IYl"
+    match: "B IYl"
+    code: "FD4D"
+    colour: undocumented
+
+  - op: "LD D,IYh"
+    match: "D IYh"
+    code: "FD54"
+    colour: undocumented
+  - op: "LD D,IYl"
+    match: "D IYl"
+    code: "FD55"
+    colour: undocumented
+
+  - op: "LD E,IYh"
+    match: "E IYh"
+    code: "FD5C"
+    colour: undocumented
+  - op: "LD E,IYl"
+    match: "E IYl"
+    code: "FD5D"
+    colour: undocumented
+
+  - op: "LD IYh,B"
+    match: "IYh B"
+    code: "FD60"
+    colour: undocumented
+  - op: "LD IYh,C"
+    match: "IYh C"
+    code: "FD61"
+    colour: undocumented
+  - op: "LD IYh,D"
+    match: "IYh D"
+    code: "FD62"
+    colour: undocumented
+  - op: "LD IYh,E"
+    match: "IYh E"
+    code: "FD63"
+    colour: undocumented
+  - op: "LD IYh,IHh"
+    match: "IYh IYh"
+    code: "FD64"
+    colour: undocumented
+  - op: "LD IYh,IHl"
+    match: "IYh IYl"
+    code: "FD65"
+    colour: undocumented
+  - op: "LD IYh,A"
+    match: "IYh A"
+    code: "FD67"
+    colour: undocumented
+
+  - op: "LD IYl,B"
+    match: "IYl B"
+    code: "FD68"
+    colour: undocumented
+  - op: "LD IYl,C"
+    match: "IYl C"
+    code: "FD69"
+    colour: undocumented
+  - op: "LD IYl,D"
+    match: "IYl D"
+    code: "FD6A"
+    colour: undocumented
+  - op: "LD IYl,E"
+    match: "IYl E"
+    code: "FD6B"
+    colour: undocumented
+  - op: "LD IYl,IHh"
+    match: "IYl IYh"
+    code: "FD6C"
+    colour: undocumented
+  - op: "LD IYl,IHl"
+    match: "IYl IYl"
+    code: "FD6D"
+    colour: undocumented
+  - op: "LD IYl,A"
+    match: "IYl A"
+    code: "FD6F"
+    colour: undocumented
+
+---
