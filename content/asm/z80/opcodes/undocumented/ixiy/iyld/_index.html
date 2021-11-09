@@ -20,7 +20,6 @@ code_axis:
   - L
   - "(HL)"
   - "(IY+d)"
-  - "(IY+d)"
   - "n"
   - BC
   - DE
@@ -51,6 +50,15 @@ codes:
     code: "FD2Enn"
     colour: undocumented
 
+  - op: "LD A,IYh"
+    match: "A IYh"
+    code: "FD7C"
+    colour: undocumented
+  - op: "LD A,IYl"
+    match: "A IYl"
+    code: "FD7D"
+    colour: undocumented
+
   - op: "LD B,IYh"
     match: "B IYh"
     code: "FD44"
@@ -65,7 +73,7 @@ codes:
     code: "FD4C"
     colour: undocumented
   - op: "LD C,IYl"
-    match: "B IYl"
+    match: "C IYl"
     code: "FD4D"
     colour: undocumented
 
