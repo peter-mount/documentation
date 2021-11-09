@@ -470,6 +470,11 @@ table.hexGrid {
         background: #6300FF;
         color: #FFFFFF;
     }
+    td.undocumented,
+    tr.darkred,
+    td.darkred {
+        background: #bf6060;
+    }
 }
 
 table.summary {

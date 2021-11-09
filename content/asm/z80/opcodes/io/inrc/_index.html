@@ -19,6 +19,7 @@ code_axis:
   - "H"
   - "L"
   - "(HL)"
+  - "F"
 code_dest:
   - "IN (C)"
 codes:
@@ -51,6 +52,11 @@ codes:
     colour: grey
     match: "IN (C) L"
 
+  - op: "IN F,(C)"
+    code: "ED70"
+    colour: undocumented
+    match: "IN (C) F"
+
 notes:
   - "IN F, (C) documented in Zilog Z80 CPU User Manual, 2016 edition Page 296"
 ---
@@ -73,6 +79,6 @@ notes:
     For <code>IN r, (C)</code> there's an undocumented code where r=%110 which sets the flag register.
 </p>
 <p>
-    For an undocumented code, this is actually in Zilog's Z80 CPU User Manual, 2016 edition Page 296
-    so isn't that "undocumented".
+    For an undocumented code, this is actually in Zilog's Z80 CPU User Manual, 2016 edition Page 296,
+    so it isn't that "undocumented".
 </p>
