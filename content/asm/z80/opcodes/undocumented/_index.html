@@ -37,6 +37,51 @@ description: "Undocumented instructions - use with care"
 </p>
 
 <div class="printPageBreakAvoid mb-4">
+    <h3>Overview</h3>
+    <p>
+        Most of the undocumented instructions fall under some simple rules:
+    </p>
+    <h4>CB</h4>
+    <p>
+        Only codes 0xCB30&hellip;0xCB37 are undocumented but implement a <a href="sll/">Shift Logical Left</a>
+        instruction where bit 0 is set post shift.
+    </p>
+
+    <h4>DDCB & FDCB</h4>
+    <p>
+        For opcodes with the 0xDDCB and 0xFDCB prefixes the instructions store the result in one of the 8-bit registers
+        based on the lower 3 bits of the opcode:
+        B=000, C=001, D=010, E=011, H=100, L=101 and A=111.
+    </p>
+    <p>
+        The officially documented codes all have 110 as the lower 3 bits and do not store the result in any register.
+    </p>
+    <p>
+        All of these instructions with the 0xDDCB prefix operate against the IX register (IY for 0xFDBC).
+    </p>
+    <p>
+        The only exception to this rule is opcodes 0x40&hellip;0x7F which are the bit text operations.
+        As these only test the memory location they do not create a result so all the undocumented versions are
+        identical to the official instructions.
+    </p>
+
+    <h4>DD & FD</h4>
+    <p>
+        Officially the 0xDD and 0xFD prefixes cause any instruction that references <code>(HL)</code> to instead work
+        against the IX & IY registers with a displacement, 0xDD for IX and 0xFD for IY.
+    </p>
+    <p>
+        The undocumented instructions allows for instructions that refer to just H or L can also be used to access
+        the upper or lower 8-bit components of IX and IY themselves.
+    </p>
+
+    <h4>ED</h4>
+    <p>
+        There are a few undocumented instructions with this prefix but they simply emulate existing instructions.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid mb-4">
     <h3>When is undocumented actually documented?</h3>
     <p>
         One oddity is the undocumented instruction <code>IN F,(C)</code><sub>0xED70</sub> which performs an IN from an
