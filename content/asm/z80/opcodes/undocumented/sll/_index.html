@@ -1,0 +1,78 @@
+---
+type: "manual"
+title: "SLL Shift Left Logical"
+linkTitle: "SLL"
+weight: 10
+description: "Undocumented instruction to perform a logical left shift"
+tags:
+- z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+dd)"
+  - "(IY+dd)"
+  - SLL
+codes:
+
+  - op: "SLL A"
+    code: "CB37"
+    colour: undocumented
+  - op: "SLL B"
+    code: "CB30"
+    colour: undocumented
+  - op: "SLL C"
+    code: "CB31"
+    colour: undocumented
+  - op: "SLL D"
+    code: "CB32"
+    colour: undocumented
+  - op: "SLL E"
+    code: "CB33"
+    colour: undocumented
+  - op: "SLL H"
+    code: "CB34"
+    colour: undocumented
+  - op: "SLL L"
+    code: "CB35"
+    colour: undocumented
+  - op: "SLL (HL)"
+    code: "CB36"
+    colour: undocumented
+
+  - op: "SLL (IX+dd)"
+    code: "DDCBnn36"
+    colour: undocumented
+  - op: "SLL (IY+dd)"
+    code: "FDCBnn36"
+    colour: undocumented
+
+---
+<p>
+    The block CB30&hellip;CB37 is missing from the official list.
+</p>
+<p>
+    These instructions, usually denoted by the mnemonic SLL, Shift Left Logical, shift left the operand and make bit 0
+    always one.
+</p>
+<p>
+    These instructions are quite commonly used.
+    For example, Bounder and Enduro Racer use them.
+</p>
+<p>
+  Some documents list this as <code>SL1</code> instead of <code>SLL</code> due to it setting bit 0.
+</p>
+
+{{< z80/instruction
+    def="/l SLL r/11001011 CB/00000r//l SLL (HL)/11001011 CB/00000110 06//l SLL (IX+d)/11011101 DD/11001011 CB/d/00000110 06//l SLL (IY+d)/11111101 FD/11001011 CB/d/00000110 06"
+>}}
+{{< /z80/instruction >}}
