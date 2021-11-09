@@ -1,0 +1,88 @@
+---
+type: "manual"
+title: "RR Rotate bits right with Carry and store in register"
+linkTitle: "RR"
+description: "Undocumented Rotate bits right with carry and store in register"
+tags:
+  - z80 instruction
+code_format: "RR %[3]s,%[2]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(IX+d)"
+  - "(IY+d)"
+codes:
+
+  - op: "RR A,(IX+d)"
+    code: "DDCBnn1F"
+    colour: undocumented
+  - op: "RR A,(IY+d)"
+    code: "FDCBnn0F"
+    colour: undocumented
+
+  - op: "RR B,(IX+d)"
+    code: "DDCBnn18"
+    colour: undocumented
+  - op: "RR B,(IY+d)"
+    code: "FDCBnn08"
+    colour: undocumented
+
+  - op: "RR C,(IX+d)"
+    code: "DDCBnn19"
+    colour: undocumented
+  - op: "RR C,(IY+d)"
+    code: "FDCBnn09"
+    colour: undocumented
+
+  - op: "RR D,(IX+d)"
+    code: "DDCBnn1A"
+    colour: undocumented
+  - op: "RR D,(IY+d)"
+    code: "FDCBnn0A"
+    colour: undocumented
+
+  - op: "RR E,(IX+d)"
+    code: "DDCBnn1B"
+    colour: undocumented
+  - op: "RR E,(IY+d)"
+    code: "FDCBnn0B"
+    colour: undocumented
+
+  - op: "RR H,(IX+d)"
+    code: "DDCBnn1C"
+    colour: undocumented
+  - op: "RR H,(IY+d)"
+    code: "FDCBnn0C"
+    colour: undocumented
+
+  - op: "RR L,(IX+d)"
+    code: "DDCBnn1D"
+    colour: undocumented
+  - op: "RR L,(IY+d)"
+    code: "FDCBnn0D"
+    colour: undocumented
+
+---
+<p>
+  This instruction performs an <code>RR (IX+dd)</code> or <code>RR (IX+dd)</code> operation but then also stores
+  the result in a register as well as in the memory location.
+</p>
+<p>
+  <img src="/asm/z80/opcodes/rotate/rr/rr.svg" alt="Visualisation of the RR instruction"/>
+</p>
+{{< z80/instruction
+    def="/l RR r,(IX+d)/11011101 DD/11001011 CB/d/00011r//l RR r,(IY+d)/11111101 FD/11001011 CB/d/00011r"
+>}}
+{{< /z80/instruction >}}
+
+<p>
+  Note: r=%110 does exist. It doesn't do a copy into a register as it's the existing official, documented instruction.
+</p>
