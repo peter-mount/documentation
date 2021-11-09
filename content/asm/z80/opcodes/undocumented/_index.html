@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "Undocumented Instructions"
+linkTitle: "Undocumented"
+weight: 95
+description: "Undocumented instructions - use with care"
+---
+<p>
+    Like most early microprocessors, the Z80 has it's own set of undocumented instructions.
+</p>
+<p>
+    Most of these either do something that's not useful, or they do something that would at first seem
+    to be odd in why they were implemented in the first place.
+</p>
+<p>
+    In most instances, they exist due to how the processor is implemented in silicon.
+    Where an instruction is decoded, there are free bits so if something tried to use that code then
+    the processor would just do as it's told as it wouldn't know otherwise.
+</p>
+<div class="alert-warning">
+    <p>
+        Be aware, these usually work on a physical chip due to it requiring the actual instruction decoding to
+        provide these instructions.
+    </p>
+    <p>
+        They will most likely not work in an emulator as they would perform the decoding in software using lookup
+        tables, so wouldn't implement anything that's not documented.
+    </p>
+</div>
+<p>
+    These may or may not work on actual chips.
+    For example, on the 6502 there were plenty of undocumented instructions that were replaced in the 65C02 with
+    NOP instructions.
+</p>
+<p>
+    These are provided here for reference only.
+</p>
+
+<h3>When is undocumented actually documented?</h3>
+<p>
+    One oddity is the undocumented instruction <code>IN F,(C)</code><sub>0xED70</sub> which performs an IN from an I/O
+    port but stores the result into the Flags register.
+</p>
+<p>
+    This instruction is actually documented in Zilogs own documentation (2016 PDF).
+</p>
+<p>
+    For this reason, that instruction is listed on the <code>IN r,(C)</code> page and not in this section.
+</p>
