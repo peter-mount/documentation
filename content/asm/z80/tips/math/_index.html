@@ -1,0 +1,24 @@
+---
+type: "manual"
+title: "Math"
+linkTitle: "Math"
+description: "Optimising mathematics"
+---
+
+<h2>Basic Arithmetic</h2>
+
+<h3>A=-B</h3>
+<p>A simple one, we want to set A to be -B.</p>
+<p>The logical way is to load A with B then negate it:</p>
+
+{{< book/sourceCode>}}
+{{< book/asm op="LD" param="A,B" code="78" comment="Set A to B" >}}
+{{< book/asm op="NEG" code="ED44" comment="Negate A to get A=-B" >}}
+{{< /book/sourceCode >}}
+
+<p>But a quicker and shorter way is:</p>
+
+{{< book/sourceCode>}}
+{{< book/asm op="XOR" param="A" code="AF" comment="A=0" >}}
+{{< book/asm op="SUB" param="B" code="90" comment="A=0-B = -B" >}}
+{{< /book/sourceCode >}}

@@ -1,0 +1,125 @@
+---
+type: "manual"
+title: "Comparisons"
+linkTitle: "Comparisons"
+description: "Optimising comparing numbers"
+---
+
+<h2>Compare number</h2>
+<p>
+    With <code>CP</code> it's easy to test for less than (&lt;), equals(=), not equals(!=) or
+    greater-than-equals(&gt;=) because of how the C and Z flags are used:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="CP" param="15" comment="test A against 15" >}}
+{{< book/asm op="RET" param="C" comment="Return if A < 15" >}}
+{{< book/asm op="RET" param="NC" comment="Return if A >= 15" >}}
+{{< book/asm op="RET" param="Z" comment="Return if A = 15" >}}
+{{< book/asm op="RET" param="NZ" comment="Return if A != 15" >}}
+{{< /book/sourceCode >}}
+
+<p class="mt-3">
+    The following shows how to get the other two tests, Less-Than-Equals (&lt;=) and Greater-Than(&gt;):
+</p>
+
+<h3>A &lt;= n</h3>
+<p>
+    This is a simple one. As <code>CP</code> tests against A-n then if A=N then Z is set but if A &lt; n then C is set.
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="CP" param="15" comment="test for A<=15" >}}
+{{< book/asm op="RET" param="C" comment="Return if A<15" >}}
+{{< book/asm op="RET" param="Z" comment="Return if A=15" >}}
+{{< /book/sourceCode >}}
+
+<p class="mt-3">
+    To optimise this we should test against n+1 instead. Doing this means we can just use the Carry flag
+    as it would be set when A < n+1:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="CP" param="15+1" comment="test for A<16" >}}
+{{< book/asm op="RET" param="C" comment="Return if A<16" >}}
+{{< /book/sourceCode >}}
+
+<h3 class="mt-3">A &gt; n</h3>
+<p>
+    This is the opposite problem. Here Carry is clear when A&gt;=n, so to get A&gt;n
+    we first need to test for equals using the Z flag and if that's not set then
+    check for the Carry flag to be clear:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="CP" param="15" comment="test for A>15" >}}
+{{< book/asm op="JR" param="Z, skip" comment="Skip if A=15" >}}
+{{< book/asm op="RET" param="NC" comment="Return if A>=15" >}}
+{{< book/asm label="skip" comment="Continue as A was <= 15" >}}
+{{< /book/sourceCode >}}
+
+<p class="mt-3">
+    Like the previous example, this can be optimised simply by adding 1 and then testing for A &gt;= (n+1) instead:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="CP" param="15+1" comment="test for A>=16" >}}
+{{< book/asm op="RET" param="NC" comment="Return if A>=16" >}}
+{{< /book/sourceCode >}}
+
+<h2 class="mt-3">Wasteful CP</h2>
+<p>
+    It's easy to forget that some instructions set the flags based on the result so frequently
+    you do not need to use <code>CP</code> to test for a condition when the result is already known:
+</p>
+<p>
+    Here we check for bit 1 of A is set and if it is we exit the subroutine:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="AND" param="1" code="E601" comment="A=A AND 0x01" >}}
+{{< book/asm op="CP" param="1" code="FE01" comment="Is A set to 1" >}}
+{{< book/asm op="RET" param="Z" code="C8" comment="Return is A is now 1" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    Here the <code>CP</code> isn't required as <code>AND</code> will set Z if A=0,
+    so we can remove the <code>CP</code> and use <code>NZ</code> instead saving 2 bytes:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="AND" param="1" code="E601" comment="A=A AND 0x01" >}}
+{{< book/asm op="RET" param="NZ" code="C8" comment="Return is A is now 1" >}}
+{{< /book/sourceCode >}}
+<h3 class="mt-3">Testing Bit 0 of A</h3>
+<p>
+    With this example, we can also test bit 1 of A by shifting it right 1 bit then testing the carry flag.
+    This saves an additional byte:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="RRA" code="1F" comment="Shift A right 1 bit, C=original bit 0" >}}
+{{< book/asm op="RET" param="C" code="C8" comment="Return as bit 0 of A was set" >}}
+{{< /book/sourceCode >}}
+
+<p class="mt-3">
+    This would also apply if we were using the <code>BIT</code> instruction:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="BIT" param="0,A" code="CB47" comment="Test if BIT 0 is set" >}}
+{{< book/asm op="RET" param="NZ" code="C8" comment="Return as bit 0 of A was set" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    Using <code>RRA</code> would be faster & saves 1 byte but it destroys A.
+    If you need to keep A intact then keep the BIT instruction.
+</p>
+
+<h3>Testing Bit 7 of A</h3>
+<p>
+    Here, if we are testing if bit 7 of A is set, but we don't need A afterwards then instead of:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="BIT" param="7,A" code="CB7F" comment="Test if BIT 7 is set" >}}
+{{< book/asm op="RET" param="NZ" code="C8" comment="Return as bit 7 of A was set" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    We can just use <code>RLA</code> and test the Carry flag:
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="RLA" code="17" comment="Shift A left 1 bit, C=original bit 7" >}}
+{{< book/asm op="RET" param="C" code="C8" comment="Return as bit 7 of A was set" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    The downside of this is it destroys the contents of A.
+</p>

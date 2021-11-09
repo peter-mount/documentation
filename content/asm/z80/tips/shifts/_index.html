@@ -1,0 +1,53 @@
+---
+type: "manual"
+title: "Bit Shifting"
+linkTitle: "Bit Shift"
+description: "Optimising bit shifting"
+---
+<p>
+    Bit shifting, be it rotating left or right is so common it's easy to create slow code if you are not careful.
+</p>
+
+<h2>Shift BC, DE or HL left one bit</h2>
+<p>
+    This is a 16 bit shift left operation.
+    The first thought would be, especially if you have a 6502 background like myself, is to shift L left 1 bit, clearing bit 0 with
+    carry set to the original bit 7 state, then shift H left 1 bit pulling in carry into bit 0:
+</p>
+
+{{< book/sourceCode>}}
+{{< book/asm op="SLA" param="L" code="CB25" comment="Shift L left, set bit 0 to 0" >}}
+{{< book/asm op="RL" param="H" code="CB14" comment="Shift H left, set bit 0 to original bit 7 from L" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    However any shift left operation is the same as multiplying the value by 2 or just adding to itself,
+    and the Z80 has a single byte operation to do this.
+</p>
+{{< book/sourceCode>}}
+{{< book/asm op="ADD" param="HL,HL" code="29" comment="Shift HL left 1 bit" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    The same applies for BC or DE.
+    If you need to shift a 16-bit register left one bit then always use <code>ADD</code>.
+</p>
+
+<h2>Shift 8-bit register left one bit</h2>
+<p>
+    This might seem odd but the same optimisation can be done for any of the 8-bit registers.
+    You can either use <code>SLA</code> or you can just add the register to itself.
+</p>
+{{< book/sourceCode >}}
+{{< book/asm comment="Shift A left one bit, set bit 0 to 0" >}}
+{{< book/asm op="SLA" param="A" code="CB27" comment="2 bytes 8 t-states" >}}
+{{< book/asm op="ADD" param="A,A" code="87" comment="1 byte 4 t-states" >}}
+{{< /book/sourceCode >}}
+<p class="mt-3">
+    Here we can halve both the code size and the time taken to perform the shift.
+</p>
+<p>
+    The downside with <code>ADD</code> is that the original bit 7 of the register is lost.
+    <code>SLA</code> will preserve it in the Carry flag.
+</p>
+<p>
+    Other than that it's identical, with Z set if the register is now 0 and S set if the new bit 7 is set.
+</p>
