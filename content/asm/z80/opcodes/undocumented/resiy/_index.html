@@ -259,7 +259,7 @@ For example the official <code>RES 0,(IY+nn)</code> instruction resets bit 0 on 
 however the undocumented <code>RES B,0,(IY+nn)</code><sub>0xFDCBnn00</sub> instruction does the same thing but then
 copies the result into the B register.
 </p>
-{{< z80/instruction operation="(IY+d)_b \longleftarrow 0 \ r \longleftarrow (IY+d)" def="11111101 FD/11001011 CB/d/10br" >}}{{< /z80/instruction >}}
+{{< z80/instruction operation="(IY+d)_b \longleftarrow 0 \\ r \longleftarrow (IY+d)" def="11111101 FD/11001011 CB/d/10br" >}}{{< /z80/instruction >}}
 <p>Z is set if the specified bit in the source is 0, otherwise it is cleared.</p>
 <p>The result is stored both in memory and the specified register.</p>
 <p>r=%110 does exist, it is the official documented operation with no auto-copy to a register.</p>
