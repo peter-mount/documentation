@@ -1,0 +1,265 @@
+---
+type: "manual"
+title: "RES Reset bit in (IY+d) and copy into register"
+linkTitle: "RES r,(IY+d)"
+description: "Undocumented Reset bit in (IY+d) and copy into register r"
+tags:
+  - z80 instruction
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(IY+d)"
+  - "(IY+d)"
+  - "BIT 0"
+  - "BIT 1"
+  - "BIT 2"
+  - "BIT 3"
+  - "BIT 4"
+  - "BIT 5"
+  - "BIT 6"
+  - "BIT 7"
+code_destination: ""
+code_source: ""
+code_format: "%[2]s,%[3]s"
+code_includeop: true
+codes:
+  - op: "RES B,0,(IY+nn)"
+    code: "FDCBnn80"
+    colour: undocumented
+    match: "B,BIT 0"
+  - op: "RES B,1,(IY+nn)"
+    code: "FDCBnn88"
+    colour: undocumented
+    match: "B,BIT 1"
+  - op: "RES B,2,(IY+nn)"
+    code: "FDCBnn90"
+    colour: undocumented
+    match: "B,BIT 2"
+  - op: "RES B,3,(IY+nn)"
+    code: "FDCBnn98"
+    colour: undocumented
+    match: "B,BIT 3"
+  - op: "RES B,4,(IY+nn)"
+    code: "FDCBnnA0"
+    colour: undocumented
+    match: "B,BIT 4"
+  - op: "RES B,5,(IY+nn)"
+    code: "FDCBnnA8"
+    colour: undocumented
+    match: "B,BIT 5"
+  - op: "RES B,6,(IY+nn)"
+    code: "FDCBnnB0"
+    colour: undocumented
+    match: "B,BIT 6"
+  - op: "RES B,7,(IY+nn)"
+    code: "FDCBnnB8"
+    colour: undocumented
+    match: "B,BIT 7"
+  - op: "RES C,0,(IY+nn)"
+    code: "FDCBnn81"
+    colour: undocumented
+    match: "C,BIT 0"
+  - op: "RES C,1,(IY+nn)"
+    code: "FDCBnn89"
+    colour: undocumented
+    match: "C,BIT 1"
+  - op: "RES C,2,(IY+nn)"
+    code: "FDCBnn91"
+    colour: undocumented
+    match: "C,BIT 2"
+  - op: "RES C,3,(IY+nn)"
+    code: "FDCBnn99"
+    colour: undocumented
+    match: "C,BIT 3"
+  - op: "RES C,4,(IY+nn)"
+    code: "FDCBnnA1"
+    colour: undocumented
+    match: "C,BIT 4"
+  - op: "RES C,5,(IY+nn)"
+    code: "FDCBnnA9"
+    colour: undocumented
+    match: "C,BIT 5"
+  - op: "RES C,6,(IY+nn)"
+    code: "FDCBnnB1"
+    colour: undocumented
+    match: "C,BIT 6"
+  - op: "RES C,7,(IY+nn)"
+    code: "FDCBnnB9"
+    colour: undocumented
+    match: "C,BIT 7"
+  - op: "RES D,0,(IY+nn)"
+    code: "FDCBnn82"
+    colour: undocumented
+    match: "D,BIT 0"
+  - op: "RES D,1,(IY+nn)"
+    code: "FDCBnn8A"
+    colour: undocumented
+    match: "D,BIT 1"
+  - op: "RES D,2,(IY+nn)"
+    code: "FDCBnn92"
+    colour: undocumented
+    match: "D,BIT 2"
+  - op: "RES D,3,(IY+nn)"
+    code: "FDCBnn9A"
+    colour: undocumented
+    match: "D,BIT 3"
+  - op: "RES D,4,(IY+nn)"
+    code: "FDCBnnA2"
+    colour: undocumented
+    match: "D,BIT 4"
+  - op: "RES D,5,(IY+nn)"
+    code: "FDCBnnAA"
+    colour: undocumented
+    match: "D,BIT 5"
+  - op: "RES D,6,(IY+nn)"
+    code: "FDCBnnB2"
+    colour: undocumented
+    match: "D,BIT 6"
+  - op: "RES D,7,(IY+nn)"
+    code: "FDCBnnBA"
+    colour: undocumented
+    match: "D,BIT 7"
+  - op: "RES E,0,(IY+nn)"
+    code: "FDCBnn83"
+    colour: undocumented
+    match: "E,BIT 0"
+  - op: "RES E,1,(IY+nn)"
+    code: "FDCBnn8B"
+    colour: undocumented
+    match: "E,BIT 1"
+  - op: "RES E,2,(IY+nn)"
+    code: "FDCBnn93"
+    colour: undocumented
+    match: "E,BIT 2"
+  - op: "RES E,3,(IY+nn)"
+    code: "FDCBnn9B"
+    colour: undocumented
+    match: "E,BIT 3"
+  - op: "RES E,4,(IY+nn)"
+    code: "FDCBnnA3"
+    colour: undocumented
+    match: "E,BIT 4"
+  - op: "RES E,5,(IY+nn)"
+    code: "FDCBnnAB"
+    colour: undocumented
+    match: "E,BIT 5"
+  - op: "RES E,6,(IY+nn)"
+    code: "FDCBnnB3"
+    colour: undocumented
+    match: "E,BIT 6"
+  - op: "RES E,7,(IY+nn)"
+    code: "FDCBnnBB"
+    colour: undocumented
+    match: "E,BIT 7"
+  - op: "RES H,0,(IY+nn)"
+    code: "FDCBnn84"
+    colour: undocumented
+    match: "H,BIT 0"
+  - op: "RES H,1,(IY+nn)"
+    code: "FDCBnn8C"
+    colour: undocumented
+    match: "H,BIT 1"
+  - op: "RES H,2,(IY+nn)"
+    code: "FDCBnn94"
+    colour: undocumented
+    match: "H,BIT 2"
+  - op: "RES H,3,(IY+nn)"
+    code: "FDCBnn9C"
+    colour: undocumented
+    match: "H,BIT 3"
+  - op: "RES H,4,(IY+nn)"
+    code: "FDCBnnA4"
+    colour: undocumented
+    match: "H,BIT 4"
+  - op: "RES H,5,(IY+nn)"
+    code: "FDCBnnAC"
+    colour: undocumented
+    match: "H,BIT 5"
+  - op: "RES H,6,(IY+nn)"
+    code: "FDCBnnB4"
+    colour: undocumented
+    match: "H,BIT 6"
+  - op: "RES H,7,(IY+nn)"
+    code: "FDCBnnBC"
+    colour: undocumented
+    match: "H,BIT 7"
+  - op: "RES L,0,(IY+nn)"
+    code: "FDCBnn85"
+    colour: undocumented
+    match: "L,BIT 0"
+  - op: "RES L,1,(IY+nn)"
+    code: "FDCBnn8D"
+    colour: undocumented
+    match: "L,BIT 1"
+  - op: "RES L,2,(IY+nn)"
+    code: "FDCBnn95"
+    colour: undocumented
+    match: "L,BIT 2"
+  - op: "RES L,3,(IY+nn)"
+    code: "FDCBnn9D"
+    colour: undocumented
+    match: "L,BIT 3"
+  - op: "RES L,4,(IY+nn)"
+    code: "FDCBnnA5"
+    colour: undocumented
+    match: "L,BIT 4"
+  - op: "RES L,5,(IY+nn)"
+    code: "FDCBnnAD"
+    colour: undocumented
+    match: "L,BIT 5"
+  - op: "RES L,6,(IY+nn)"
+    code: "FDCBnnB5"
+    colour: undocumented
+    match: "L,BIT 6"
+  - op: "RES L,7,(IY+nn)"
+    code: "FDCBnnBD"
+    colour: undocumented
+    match: "L,BIT 7"
+  - op: "RES A,0,(IY+nn)"
+    code: "FDCBnn87"
+    colour: undocumented
+    match: "A,BIT 0"
+  - op: "RES A,1,(IY+nn)"
+    code: "FDCBnn8F"
+    colour: undocumented
+    match: "A,BIT 1"
+  - op: "RES A,2,(IY+nn)"
+    code: "FDCBnn97"
+    colour: undocumented
+    match: "A,BIT 2"
+  - op: "RES A,3,(IY+nn)"
+    code: "FDCBnn9F"
+    colour: undocumented
+    match: "A,BIT 3"
+  - op: "RES A,4,(IY+nn)"
+    code: "FDCBnnA7"
+    colour: undocumented
+    match: "A,BIT 4"
+  - op: "RES A,5,(IY+nn)"
+    code: "FDCBnnAF"
+    colour: undocumented
+    match: "A,BIT 5"
+  - op: "RES A,6,(IY+nn)"
+    code: "FDCBnnB7"
+    colour: undocumented
+    match: "A,BIT 6"
+  - op: "RES A,7,(IY+nn)"
+    code: "FDCBnnBF"
+    colour: undocumented
+    match: "A,BIT 7"
+---
+<p>There are a few undocumented instructions that performs an action and then copies the result into a register.</p>
+<p>
+For example the official <code>RES 0,(IY+nn)</code> instruction resets bit 0 on a specific memory address,
+however the undocumented <code>RES B,0,(IY+nn)</code><sub>0xFDCBnn00</sub> instruction does the same thing but then
+copies the result into the B register.
+</p>
+{{< z80/instruction operation="(IY+d)_b \longleftarrow 0 \ r \longleftarrow (IY+d)" def="11111101 FD/11001011 CB/d/10br" >}}{{< /z80/instruction >}}
+<p>Z is set if the specified bit in the source is 0, otherwise it is cleared.</p>
+<p>The result is stored both in memory and the specified register.</p>
+<p>r=%110 does exist, it is the official documented operation with no auto-copy to a register.</p>
