@@ -148,7 +148,7 @@
 {{- end -}}
 
 {{- $rowCount := len $validRows -}}
-
+<div>
 <table class="memoryMap3">
     <thead>
     {{- if ne $sourceLabel "" -}}
@@ -208,6 +208,7 @@
     </tbody>
 </table>
 {{ partial "6502/opcodeLegend.html" $colours }}
+</div>
 {{- end -}}
 {{- end -}}
 {{- end -}}
