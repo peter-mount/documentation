@@ -517,3 +517,13 @@ table.summary {
 div.opIndex {
     columns: 4;
 }
+
+// Used in instruction lists to indicate an undocumented opcode. colour is there due to PDF not showing lighter that
+// much lighter, so grey font colour emphasised that it's not a normal entry.
+tr.undocumented {
+    td {
+        color: grey;
+        font-weight: lighter;
+        font-style: italic;
+    }
+}

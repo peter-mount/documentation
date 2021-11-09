@@ -104,7 +104,11 @@ func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, tit
       Then(func(slice util.StringSlice) (util.StringSlice, error) {
         slice = append(slice, "<div class='opIndex'>", "<table>")
         for _, op := range inst.opCodes {
-          slice = append(slice, fmt.Sprintf("<tr><td>%s</td><td>%s</td></tr>", op.Op, op.Code))
+          class := ""
+          if op.Colour == "undocumented" {
+            class = " class=\"" + op.Colour + "\""
+          }
+          slice = append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, op.Op, op.Code))
         }
         slice = append(slice, "</table>", "</div>")
         return slice, nil
