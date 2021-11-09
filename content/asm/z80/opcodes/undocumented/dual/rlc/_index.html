@@ -71,8 +71,13 @@ codes:
     colour: undocumented
 
 ---
-<img src="/asm/z80/opcodes/rotate/rlc/rlc.svg" alt="Visualisation of the RLC instruction"/>
-
+<p>
+  This instruction performs an <code>RLC (IX+dd)</code> or <code>RLC (IX+dd)</code> operation but then also stores
+  the result in a register as well as in the memory location.
+</p>
+<p>
+  <img src="/asm/z80/opcodes/rotate/rlc/rlc.svg" alt="Visualisation of the RLC instruction"/>
+</p>
 {{< z80/instruction
     def="/l RLC r,(IX+d)/11011101 DD/11001011 CB/d/00000r//l RLC r,(IY+d)/11111101 FD/11001011 CB/d/00000r"
 >}}
