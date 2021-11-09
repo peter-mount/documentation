@@ -1,0 +1,17 @@
+---
+type: "manual"
+title: "Dual Operations"
+linkTitle: "Dual Ops"
+weight: 10
+description: "Undocumented instructions that perform two actions at the same time"
+tags:
+- z80 instruction
+---
+<p>
+    There are a few undocumented instructions that performs an action and then copies the result into a register.
+</p>
+<p>
+    For example the official <code>RLC (IX+nn)</code><sub>0xDDCBnn06</sub> instruction operates on a specific memory address,
+    however the undocumented <code>RLC B,(IX+nn)</code><sub>0xDDCBnn00</sub> instruction does the same thing but then
+    copies the result into the B register.
+</p>

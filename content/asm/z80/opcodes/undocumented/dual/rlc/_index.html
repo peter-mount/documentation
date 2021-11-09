@@ -1,0 +1,83 @@
+---
+type: "manual"
+title: "RLC Rotate bits left with Carry and store in register"
+linkTitle: "RLC"
+description: "Undocumented Rotate bits left with carry and store in register"
+tags:
+  - z80 instruction
+code_format: "RLC %[3]s,%[2]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(IX+d)"
+  - "(IY+d)"
+codes:
+
+  - op: "RLC A,(IX+d)"
+    code: "DDCBnn07"
+    colour: undocumented
+  - op: "RLC A,(IY+d)"
+    code: "FDCBnn07"
+    colour: undocumented
+
+  - op: "RLC B,(IX+d)"
+    code: "DDCBnn00"
+    colour: undocumented
+  - op: "RLC B,(IY+d)"
+    code: "FDCBnn00"
+    colour: undocumented
+
+  - op: "RLC C,(IX+d)"
+    code: "DDCBnn01"
+    colour: undocumented
+  - op: "RLC C,(IY+d)"
+    code: "FDCBnn01"
+    colour: undocumented
+
+  - op: "RLC D,(IX+d)"
+    code: "DDCBnn02"
+    colour: undocumented
+  - op: "RLC D,(IY+d)"
+    code: "FDCBnn02"
+    colour: undocumented
+
+  - op: "RLC E,(IX+d)"
+    code: "DDCBnn03"
+    colour: undocumented
+  - op: "RLC E,(IY+d)"
+    code: "FDCBnn03"
+    colour: undocumented
+
+  - op: "RLC H,(IX+d)"
+    code: "DDCBnn04"
+    colour: undocumented
+  - op: "RLC H,(IY+d)"
+    code: "FDCBnn04"
+    colour: undocumented
+
+  - op: "RLC L,(IX+d)"
+    code: "DDCBnn05"
+    colour: undocumented
+  - op: "RLC L,(IY+d)"
+    code: "FDCBnn05"
+    colour: undocumented
+
+---
+<img src="/asm/z80/opcodes/rotate/rlc/rlc.svg" alt="Visualisation of the RLC instruction"/>
+
+{{< z80/instruction
+    def="/l RLCA/00000111 07//l RLC r/11001011 CB/00000r//l RLC (HL)/11001011 CB/00000110 06//l RLC (IX+d)/11011101 DD/11001011 CB/d/00000110 06//l RLC (IY+d)/11111101 FD/11001011 CB/d/00000110 06"
+>}}
+{{< /z80/instruction >}}
+
+<p>
+  Note: r=%110 does exist. It doesn't do a copy into a register as it's the existing official, documented instruction.
+</p>
