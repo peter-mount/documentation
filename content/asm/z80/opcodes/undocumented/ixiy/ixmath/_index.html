@@ -1,0 +1,125 @@
+---
+type: "manual"
+title: "Undocumented Math instructions with the IX register"
+linkTitle: "IX Math"
+weight: 10
+description: "Undocumented math instructions for IX register"
+tags:
+  - z80 instruction
+code_format: "%[3]s %[2]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+  - IXh
+  - IXl
+  - IYh
+  - IYl
+  - INC
+  - DEC
+  - "ADD A"
+  - "ADC A"
+  - SUB
+  - "SBC A"
+  - AND
+  - XOR
+  - OR
+  - CP
+codes:
+
+  - op: "INC IXh"
+    code: "DD24"
+    colour: undocumented
+
+  - op: "DEC IXh"
+    code: "DD25"
+    colour: undocumented
+
+  - op: "INC IXl"
+    code: "DD2C"
+    colour: undocumented
+
+  - op: "DEC IXl"
+    code: "DD2D"
+    colour: undocumented
+
+  - op: "ADD A,IXh"
+    match: "ADD A IXh"
+    code: "DD84"
+    colour: undocumented
+  - op: "ADD A,IXl"
+    match: "ADD A IXl"
+    code: "DD85"
+    colour: undocumented
+
+  - op: "ADC A,IXh"
+    match: "ADC A IXh"
+    code: "DD8C"
+    colour: undocumented
+  - op: "ADC A,IXl"
+    match: "ADC A IXl"
+    code: "DD8D"
+    colour: undocumented
+
+  - op: "SUB IXh"
+    code: "DD94"
+    colour: undocumented
+  - op: "SUB IXl"
+    code: "DD95"
+    colour: undocumented
+
+  - op: "SBC A,IXh"
+    match: "SBC A IXh"
+    code: "DD94"
+    colour: undocumented
+  - op: "SBC A,IXl"
+    match: "SBC A IXl"
+    code: "DD95"
+    colour: undocumented
+
+  - op: "AND IXh"
+    code: "DDA4"
+    colour: undocumented
+  - op: "AND IXl"
+    code: "DDA5"
+    colour: undocumented
+
+  - op: "XOR IXh"
+    code: "DDAC"
+    colour: undocumented
+  - op: "XOR IXl"
+    code: "DDAD"
+    colour: undocumented
+
+  - op: "OR IXh"
+    code: "DDB4"
+    colour: undocumented
+  - op: "OR IXl"
+    code: "DDB5"
+    colour: undocumented
+
+  - op: "CP IXh"
+    code: "DDBC"
+    colour: undocumented
+  - op: "CP IXl"
+    code: "DDBD"
+    colour: undocumented
+
+---

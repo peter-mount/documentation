@@ -1,0 +1,20 @@
+---
+type: "manual"
+title: "IX and IY registers"
+linkTitle: "IX/IY registers"
+weight: 10
+description: "Undocumented instructions for IX and IY registers"
+tags:
+  - z80 instruction
+---
+<p>
+    If an opcode works with the Registers HL, H or L then if that opcode is prefixed by 0xDD then it will also
+    work on the appropriate IX, IX<sub>h</sub> or IX<sub>l</sub> registers, with some exceptions.
+</p>
+<p>
+    The 0xFD prefix would also work but for the IY, IY<sub>h</sub> or IY<sub>l</sub> registers
+</p>
+<p>
+    The exceptions are instructions like <code>LD H,IX<sub>h</sub></code> or <code>LD L,IY<sub>h</sub></code> where it
+    isn't clear from the opcode which register the 0xFD or 0xDD prefix should operate against.
+</p>

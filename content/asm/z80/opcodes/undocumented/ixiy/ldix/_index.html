@@ -1,0 +1,151 @@
+---
+type: "manual"
+title: "LD IX undocumented instructions"
+linkTitle: "IX LD"
+weight: 10
+description: "Undocumented instructions for LD IX"
+tags:
+  - z80 instruction
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+  - IXh
+  - IXl
+  - IYh
+  - IYl
+  - INC
+  - DEC
+  - ADD A
+  - ADC A
+  - SUB
+  - SBC
+  - AND
+  - XOR
+  - OR
+  - CP
+codes:
+
+  - op: "LD IXh,n"
+    match: "IXh n"
+    code: "DD26nn"
+    colour: undocumented
+
+  - op: "LD IXl,n"
+    match: "IXl n"
+    code: "DD2Enn"
+    colour: undocumented
+
+  - op: "LD B,IXh"
+    match: "B IXh"
+    code: "DD44"
+    colour: undocumented
+  - op: "LD B,IXl"
+    match: "B IXl"
+    code: "DD45"
+    colour: undocumented
+
+  - op: "LD C,IXh"
+    match: "C IXh"
+    code: "DD4C"
+    colour: undocumented
+  - op: "LD C,IXl"
+    match: "B IXl"
+    code: "DD4D"
+    colour: undocumented
+
+  - op: "LD D,IXh"
+    match: "D IXh"
+    code: "DD54"
+    colour: undocumented
+  - op: "LD D,IXl"
+    match: "D IXl"
+    code: "DD55"
+    colour: undocumented
+
+  - op: "LD E,IXh"
+    match: "E IXh"
+    code: "DD5C"
+    colour: undocumented
+  - op: "LD E,IXl"
+    match: "E IXl"
+    code: "DD5D"
+    colour: undocumented
+
+  - op: "LD IXh,B"
+    match: "IXh B"
+    code: "DD60"
+    colour: undocumented
+  - op: "LD IXh,C"
+    match: "IXh C"
+    code: "DD61"
+    colour: undocumented
+  - op: "LD IXh,D"
+    match: "IXh D"
+    code: "DD62"
+    colour: undocumented
+  - op: "LD IXh,E"
+    match: "IXh E"
+    code: "DD63"
+    colour: undocumented
+  - op: "LD IXh,IHh"
+    match: "IXh IXh"
+    code: "DD64"
+    colour: undocumented
+  - op: "LD IXh,IHl"
+    match: "IXh IXl"
+    code: "DD65"
+    colour: undocumented
+  - op: "LD IXh,A"
+    match: "IXh A"
+    code: "DD67"
+    colour: undocumented
+
+  - op: "LD IXl,B"
+    match: "IXl B"
+    code: "DD68"
+    colour: undocumented
+  - op: "LD IXl,C"
+    match: "IXl C"
+    code: "DD69"
+    colour: undocumented
+  - op: "LD IXl,D"
+    match: "IXl D"
+    code: "DD6A"
+    colour: undocumented
+  - op: "LD IXl,E"
+    match: "IXl E"
+    code: "DD6B"
+    colour: undocumented
+  - op: "LD IXl,IHh"
+    match: "IXl IXh"
+    code: "DD6C"
+    colour: undocumented
+  - op: "LD IXl,IHl"
+    match: "IXl IXl"
+    code: "DD6D"
+    colour: undocumented
+  - op: "LD IXl,A"
+    match: "IXl A"
+    code: "DD6F"
+    colour: undocumented
+
+---
