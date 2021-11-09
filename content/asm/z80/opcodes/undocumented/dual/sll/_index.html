@@ -1,0 +1,91 @@
+---
+type: "manual"
+title: "SLL Shift left Logical and store in register"
+linkTitle: "SLL"
+description: "Undocumented Shift left logical and store in register"
+tags:
+  - z80 instruction
+code_format: "SLL %[3]s,%[2]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(IX+d)"
+  - "(IY+d)"
+codes:
+
+  - op: "SLL A,(IX+d)"
+    code: "DDCBnn37"
+    colour: undocumented
+  - op: "SLL A,(IY+d)"
+    code: "FDCBnn37"
+    colour: undocumented
+
+  - op: "SLL B,(IX+d)"
+    code: "DDCBnn30"
+    colour: undocumented
+  - op: "SLL B,(IY+d)"
+    code: "FDCBnn30"
+    colour: undocumented
+
+  - op: "SLL C,(IX+d)"
+    code: "DDCBnn31"
+    colour: undocumented
+  - op: "SLL C,(IY+d)"
+    code: "FDCBnn31"
+    colour: undocumented
+
+  - op: "SLL D,(IX+d)"
+    code: "DDCBnn32"
+    colour: undocumented
+  - op: "SLL D,(IY+d)"
+    code: "FDCBnn32"
+    colour: undocumented
+
+  - op: "SLL E,(IX+d)"
+    code: "DDCBnn33"
+    colour: undocumented
+  - op: "SLL E,(IY+d)"
+    code: "FDCBnn33"
+    colour: undocumented
+
+  - op: "SLL H,(IX+d)"
+    code: "DDCBnn34"
+    colour: undocumented
+  - op: "SLL H,(IY+d)"
+    code: "FDCBnn34"
+    colour: undocumented
+
+  - op: "SLL L,(IX+d)"
+    code: "DDCBnn35"
+    colour: undocumented
+  - op: "SLL L,(IY+d)"
+    code: "FDCBnn35"
+    colour: undocumented
+
+---
+<p>
+  This instruction performs an <code>SLL (IX+dd)</code> or <code>SLL (IX+dd)</code> operation but then also stores
+  the result in a register as well as in the memory location.
+</p>
+<p>
+  Note: This is an undocumented extension to an undocumented instruction.
+</p>
+<p>
+  <img src="/asm/z80/opcodes/undocumented/sll/sll.svg" alt="Visualisation of the SLL instruction"/>
+</p>
+{{< z80/instruction
+    def="/l SLL r,(IX+d)/11011101 DD/11001011 CB/d/00110r//l SLL r,(IY+d)/11111101 FD/11001011 CB/d/00110r"
+>}}
+{{< /z80/instruction >}}
+
+<p>
+  Note: r=%110 does exist. It doesn't do a copy into a register as it's the existing official, documented instruction.
+</p>

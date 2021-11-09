@@ -1,0 +1,88 @@
+---
+type: "manual"
+title: "SRL Rotate bits right with Carry and store in register"
+linkTitle: "SRL"
+description: "Undocumented Rotate bits right with carry and store in register"
+tags:
+  - z80 instruction
+code_format: "SRL %[3]s,%[2]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(IX+d)"
+  - "(IY+d)"
+codes:
+
+  - op: "SRL A,(IX+d)"
+    code: "DDCBnn3F"
+    colour: undocumented
+  - op: "SRL A,(IY+d)"
+    code: "FDCBnn3F"
+    colour: undocumented
+
+  - op: "SRL B,(IX+d)"
+    code: "DDCBnn38"
+    colour: undocumented
+  - op: "SRL B,(IY+d)"
+    code: "FDCBnn38"
+    colour: undocumented
+
+  - op: "SRL C,(IX+d)"
+    code: "DDCBnn39"
+    colour: undocumented
+  - op: "SRL C,(IY+d)"
+    code: "FDCBnn39"
+    colour: undocumented
+
+  - op: "SRL D,(IX+d)"
+    code: "DDCBnn3A"
+    colour: undocumented
+  - op: "SRL D,(IY+d)"
+    code: "FDCBnn3A"
+    colour: undocumented
+
+  - op: "SRL E,(IX+d)"
+    code: "DDCBnn3B"
+    colour: undocumented
+  - op: "SRL E,(IY+d)"
+    code: "FDCBnn3B"
+    colour: undocumented
+
+  - op: "SRL H,(IX+d)"
+    code: "DDCBnn3C"
+    colour: undocumented
+  - op: "SRL H,(IY+d)"
+    code: "FDCBnn3C"
+    colour: undocumented
+
+  - op: "SRL L,(IX+d)"
+    code: "DDCBnn3D"
+    colour: undocumented
+  - op: "SRL L,(IY+d)"
+    code: "FDCBnn3D"
+    colour: undocumented
+
+---
+<p>
+  This instruction performs an <code>SRL (IX+dd)</code> or <code>SRL (IX+dd)</code> operation but then also stores
+  the result in a register as well as in the memory location.
+</p>
+<p>
+  <img src="/asm/z80/opcodes/rotate/srl/srl.svg" alt="Visualisation of the SRL instruction"/>
+</p>
+{{< z80/instruction
+    def="/l SRL r,(IX+d)/11011101 DD/11001011 CB/d/00111r//l SRL r,(IY+d)/11111101 FD/11001011 CB/d/00111r"
+>}}
+{{< /z80/instruction >}}
+
+<p>
+  Note: r=%110 does exist. It doesn't do a copy into a register as it's the existing official, documented instruction.
+</p>
