@@ -13,7 +13,6 @@ import (
 type Config struct {
   Webserver  WebserverConfig `yaml:"webserver"` // Webserver
   PDF        PDF             `yaml:"pdf"`       // Common PDF template, can be overridden per book
-  //Books      Books           `yaml:"books"`     // Array of book definitions
   configFile *string         `yaml:"-"`         // Config file name
 }
 

@@ -65,7 +65,7 @@ func (p *PDF) Run() error {
 func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
   url := p.config.WebPath("%s/_print/", strings.ToLower(book.WebPath()))
 
-  pdf := book.PDF
+  pdf := p.config.PDF
 
   return chromedp.Tasks{
     chromedp.Navigate(url),

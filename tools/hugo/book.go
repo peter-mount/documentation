@@ -28,7 +28,6 @@ type Book struct {
   BookCopyright `yaml:",inline"`                     // Copyright of book
   ID            string           `yaml:"id"`         // ID of the book, e.g. "bbc" or "6502"
   FrontImage    BookCopyright    `yaml:"frontImage"` // Copyright of front image
-  PDF           PDF              `yaml:"pdf"`        // Custom PDF config for just this book
   Generate      util.StringSlice `yaml:"generate"`   // List of generators to run on this book
   modified      time.Time        `yaml:"-"`          // Last Modified time
   contentPath   string
