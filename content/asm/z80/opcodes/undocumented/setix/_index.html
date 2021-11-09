@@ -1,0 +1,265 @@
+---
+type: "manual"
+title: "SET bit in (IX+d) and copy into register"
+linkTitle: "SET r,(IX+d)"
+description: "Undocumented SET bit in (IX+d) and copy into register r"
+tags:
+  - z80 instruction
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(IX+d)"
+  - "(IX+d)"
+  - "BIT 0"
+  - "BIT 1"
+  - "BIT 2"
+  - "BIT 3"
+  - "BIT 4"
+  - "BIT 5"
+  - "BIT 6"
+  - "BIT 7"
+code_destination: ""
+code_source: ""
+code_format: "%[2]s,%[3]s"
+code_includeop: true
+codes:
+  - op: "SET B,0,(IX+nn)"
+    code: "DDCBnnC0"
+    colour: undocumented
+    match: "B,BIT 0"
+  - op: "SET B,1,(IX+nn)"
+    code: "DDCBnnC8"
+    colour: undocumented
+    match: "B,BIT 1"
+  - op: "SET B,2,(IX+nn)"
+    code: "DDCBnnD0"
+    colour: undocumented
+    match: "B,BIT 2"
+  - op: "SET B,3,(IX+nn)"
+    code: "DDCBnnD8"
+    colour: undocumented
+    match: "B,BIT 3"
+  - op: "SET B,4,(IX+nn)"
+    code: "DDCBnnE0"
+    colour: undocumented
+    match: "B,BIT 4"
+  - op: "SET B,5,(IX+nn)"
+    code: "DDCBnnE8"
+    colour: undocumented
+    match: "B,BIT 5"
+  - op: "SET B,6,(IX+nn)"
+    code: "DDCBnnF0"
+    colour: undocumented
+    match: "B,BIT 6"
+  - op: "SET B,7,(IX+nn)"
+    code: "DDCBnnF8"
+    colour: undocumented
+    match: "B,BIT 7"
+  - op: "SET C,0,(IX+nn)"
+    code: "DDCBnnC1"
+    colour: undocumented
+    match: "C,BIT 0"
+  - op: "SET C,1,(IX+nn)"
+    code: "DDCBnnC9"
+    colour: undocumented
+    match: "C,BIT 1"
+  - op: "SET C,2,(IX+nn)"
+    code: "DDCBnnD1"
+    colour: undocumented
+    match: "C,BIT 2"
+  - op: "SET C,3,(IX+nn)"
+    code: "DDCBnnD9"
+    colour: undocumented
+    match: "C,BIT 3"
+  - op: "SET C,4,(IX+nn)"
+    code: "DDCBnnE1"
+    colour: undocumented
+    match: "C,BIT 4"
+  - op: "SET C,5,(IX+nn)"
+    code: "DDCBnnE9"
+    colour: undocumented
+    match: "C,BIT 5"
+  - op: "SET C,6,(IX+nn)"
+    code: "DDCBnnF1"
+    colour: undocumented
+    match: "C,BIT 6"
+  - op: "SET C,7,(IX+nn)"
+    code: "DDCBnnF9"
+    colour: undocumented
+    match: "C,BIT 7"
+  - op: "SET D,0,(IX+nn)"
+    code: "DDCBnnC2"
+    colour: undocumented
+    match: "D,BIT 0"
+  - op: "SET D,1,(IX+nn)"
+    code: "DDCBnnCA"
+    colour: undocumented
+    match: "D,BIT 1"
+  - op: "SET D,2,(IX+nn)"
+    code: "DDCBnnD2"
+    colour: undocumented
+    match: "D,BIT 2"
+  - op: "SET D,3,(IX+nn)"
+    code: "DDCBnnDA"
+    colour: undocumented
+    match: "D,BIT 3"
+  - op: "SET D,4,(IX+nn)"
+    code: "DDCBnnE2"
+    colour: undocumented
+    match: "D,BIT 4"
+  - op: "SET D,5,(IX+nn)"
+    code: "DDCBnnEA"
+    colour: undocumented
+    match: "D,BIT 5"
+  - op: "SET D,6,(IX+nn)"
+    code: "DDCBnnF2"
+    colour: undocumented
+    match: "D,BIT 6"
+  - op: "SET D,7,(IX+nn)"
+    code: "DDCBnnFA"
+    colour: undocumented
+    match: "D,BIT 7"
+  - op: "SET E,0,(IX+nn)"
+    code: "DDCBnnC3"
+    colour: undocumented
+    match: "E,BIT 0"
+  - op: "SET E,1,(IX+nn)"
+    code: "DDCBnnCB"
+    colour: undocumented
+    match: "E,BIT 1"
+  - op: "SET E,2,(IX+nn)"
+    code: "DDCBnnD3"
+    colour: undocumented
+    match: "E,BIT 2"
+  - op: "SET E,3,(IX+nn)"
+    code: "DDCBnnDB"
+    colour: undocumented
+    match: "E,BIT 3"
+  - op: "SET E,4,(IX+nn)"
+    code: "DDCBnnE3"
+    colour: undocumented
+    match: "E,BIT 4"
+  - op: "SET E,5,(IX+nn)"
+    code: "DDCBnnEB"
+    colour: undocumented
+    match: "E,BIT 5"
+  - op: "SET E,6,(IX+nn)"
+    code: "DDCBnnF3"
+    colour: undocumented
+    match: "E,BIT 6"
+  - op: "SET E,7,(IX+nn)"
+    code: "DDCBnnFB"
+    colour: undocumented
+    match: "E,BIT 7"
+  - op: "SET H,0,(IX+nn)"
+    code: "DDCBnnC4"
+    colour: undocumented
+    match: "H,BIT 0"
+  - op: "SET H,1,(IX+nn)"
+    code: "DDCBnnCC"
+    colour: undocumented
+    match: "H,BIT 1"
+  - op: "SET H,2,(IX+nn)"
+    code: "DDCBnnD4"
+    colour: undocumented
+    match: "H,BIT 2"
+  - op: "SET H,3,(IX+nn)"
+    code: "DDCBnnDC"
+    colour: undocumented
+    match: "H,BIT 3"
+  - op: "SET H,4,(IX+nn)"
+    code: "DDCBnnE4"
+    colour: undocumented
+    match: "H,BIT 4"
+  - op: "SET H,5,(IX+nn)"
+    code: "DDCBnnEC"
+    colour: undocumented
+    match: "H,BIT 5"
+  - op: "SET H,6,(IX+nn)"
+    code: "DDCBnnF4"
+    colour: undocumented
+    match: "H,BIT 6"
+  - op: "SET H,7,(IX+nn)"
+    code: "DDCBnnFC"
+    colour: undocumented
+    match: "H,BIT 7"
+  - op: "SET L,0,(IX+nn)"
+    code: "DDCBnnC5"
+    colour: undocumented
+    match: "L,BIT 0"
+  - op: "SET L,1,(IX+nn)"
+    code: "DDCBnnCD"
+    colour: undocumented
+    match: "L,BIT 1"
+  - op: "SET L,2,(IX+nn)"
+    code: "DDCBnnD5"
+    colour: undocumented
+    match: "L,BIT 2"
+  - op: "SET L,3,(IX+nn)"
+    code: "DDCBnnDD"
+    colour: undocumented
+    match: "L,BIT 3"
+  - op: "SET L,4,(IX+nn)"
+    code: "DDCBnnE5"
+    colour: undocumented
+    match: "L,BIT 4"
+  - op: "SET L,5,(IX+nn)"
+    code: "DDCBnnED"
+    colour: undocumented
+    match: "L,BIT 5"
+  - op: "SET L,6,(IX+nn)"
+    code: "DDCBnnF5"
+    colour: undocumented
+    match: "L,BIT 6"
+  - op: "SET L,7,(IX+nn)"
+    code: "DDCBnnFD"
+    colour: undocumented
+    match: "L,BIT 7"
+  - op: "SET A,0,(IX+nn)"
+    code: "DDCBnnC7"
+    colour: undocumented
+    match: "A,BIT 0"
+  - op: "SET A,1,(IX+nn)"
+    code: "DDCBnnCF"
+    colour: undocumented
+    match: "A,BIT 1"
+  - op: "SET A,2,(IX+nn)"
+    code: "DDCBnnD7"
+    colour: undocumented
+    match: "A,BIT 2"
+  - op: "SET A,3,(IX+nn)"
+    code: "DDCBnnDF"
+    colour: undocumented
+    match: "A,BIT 3"
+  - op: "SET A,4,(IX+nn)"
+    code: "DDCBnnE7"
+    colour: undocumented
+    match: "A,BIT 4"
+  - op: "SET A,5,(IX+nn)"
+    code: "DDCBnnEF"
+    colour: undocumented
+    match: "A,BIT 5"
+  - op: "SET A,6,(IX+nn)"
+    code: "DDCBnnF7"
+    colour: undocumented
+    match: "A,BIT 6"
+  - op: "SET A,7,(IX+nn)"
+    code: "DDCBnnFF"
+    colour: undocumented
+    match: "A,BIT 7"
+---
+<p>There are a few undocumented instructions that performs an action and then copies the result into a register.</p>
+<p>
+For example the official <code>SET 0,(IX+nn)</code> instruction sets bit 0 on a specific memory address,
+however the undocumented <code>SET B,0,(IX+nn)</code><sub>0xDDCBnn00</sub> instruction does the same thing but then
+copies the result into the B register.
+</p>
+{{< z80/instruction operation="(IX+d)_b \longleftarrow 0 \\ r \longleftarrow (IX+d)" def="11111101 DD/11001011 CB/d/11br" >}}{{< /z80/instruction >}}
+<p>Z is set if the specified bit in the source is 0, otherwise it is cleared.</p>
+<p>The result is stored both in memory and the specified register.</p>
+<p>r=%110 does exist, it is the official documented operation with no auto-copy to a register.</p>
