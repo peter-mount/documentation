@@ -61,8 +61,7 @@ notes:
   - "IN F, (C) documented in Zilog Z80 CPU User Manual, 2016 edition Page 296"
 ---
 {{< z80/instruction
-    operation="r \longleftarrow (C)"
-    def="11101101 ED/01r000"
+    def="/q r \longleftarrow (C)/l IN r, (C)/11101101 ED/01r000//q F \longleftarrow (C)/l IN F, (C)/11101101 ED/01110000 70"
 >}}
 {{< /z80/instruction >}}
 <p>
@@ -80,5 +79,6 @@ notes:
 </p>
 <p>
     For an undocumented code, this is actually in Zilog's Z80 CPU User Manual, 2016 edition Page 296,
-    so it isn't that "undocumented".
+    so it isn't that "undocumented"
+    For this reason it's included on this page and not in the Undocumented instruction section.
 </p>
