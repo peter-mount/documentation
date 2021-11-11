@@ -1,0 +1,26 @@
+---
+type: "manual"
+title: Line In
+linkTitle: Line-In
+---
+
+<h2>Line In Passthrough</h2>
+<p>
+    Normally when you connect a device to the line-in socket you cannot hear the audio being received in the speakers.
+</p>
+<p>
+    For example, I sometimes plug in a traditional audio source like a record player into line-in, so I need to do this
+    to hear what's playing.
+</p>
+<p>
+    For Ubuntu 20.04, one way to get the line-in audio being played on the speakers as received is to load the
+    <code>module-loopback</code> module with the following command:
+</p>
+
+{{< highlight go "linenos=inline" >}}
+pactl load-module module-loopback
+{{< /highlight >}}
+
+<p>
+    Audio from line-in should appear instantly.
+</p>
