@@ -1,0 +1,15 @@
+{{- define "miscBinary" -}}
+    {{- $len := int $.len -}}
+    {{- $len = sub $len 1 -}}
+    {{- $val := int $.val -}}
+    {{- range $b := seq $len 0 -}}
+        {{- $p := pow 2 $b -}}
+        {{- $v := div $val $p -}}
+        {{- $v = mod $v 2 -}}
+        {{- printf "%d" $v -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $len := $.Get "len" }}
+{{- $val := $.Get "val" -}}
+{{- template "miscBinary" (dict "len" $len "val" $val ) -}}

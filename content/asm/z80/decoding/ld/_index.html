@@ -8,7 +8,7 @@ weight: 10
 
 {{< z80/instruction
 caption="Opcode format"
-def="00BxN Set_1"
+def="00Bxb Set_1"
 innerAfter="1">}}
 <table class="memoryMap4">
     <caption>Set 1</caption>
@@ -24,11 +24,13 @@ innerAfter="1">}}
     </tr>
     </thead>
     <tbody>
+
     <tr>
-        <td class="brb" rowspan="2">0</td>
-        <td class="brb">0</td>
+    {{< misc/bintable len="5" val="2" >}}
         <td class="brb">LD A,(BC)</td>
+    {{< /misc/bintable >}}
     </tr>
+
     <tr>
         <td class="brb">1</td>
         <td class="brb">LD A,(DE)</td>

@@ -261,33 +261,38 @@
         <caption>Bits</caption>
         <thead>
         <tr>
-            <th{{if $b4}} colspan="2"{{end}}>Value</th>
+            <th colspan="2">Value</th>
             {{- if $b4 -}}<th>N</th>{{- end -}}
             {{- if $b3 -}}<th>b</th>{{- end -}}
             {{- if $b2 -}}<th>B</th>{{- end -}}
         </tr>
         </thead>
         <tbody>
-        <tr><td{{if $b4}} colspan="2"{{end}}>0</td>{{- if $b4 -}}<td>0000</td>{{- end -}}{{- if $b3 -}}<td>000</td>{{- end -}}{{- if $b2 -}}<td>00</td>{{- end -}}</tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>1</td>{{- if $b4 -}}<td>0001</td>{{- end -}}{{- if $b3 -}}<td>001</td>{{- end -}}{{- if $b2 -}}<td>01</td>{{- end -}}</tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>2</td>{{- if $b4 -}}<td>0010</td>{{- end -}}{{- if $b3 -}}<td>010</td>{{- end -}}{{- if $b2 -}}<td>10</td>{{- end -}}</tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>3</td>{{- if $b4 -}}<td>0011</td>{{- end -}}{{- if $b3 -}}<td>011</td>{{- end -}}{{- if $b2 -}}<td>11</td>{{- end -}}</tr>
-        {{- if or $b4 $b3 -}}
-        <tr><td{{if $b4}} colspan="2"{{end}}>4</td>{{- if $b4 -}}<td>0100</td>{{- end -}}{{- if $b3 -}}<td>100</td>{{- end -}}</tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>5</td>{{- if $b4 -}}<td>0101</td>{{- end -}}{{- if $b3 -}}<td>101</td>{{- end -}}</tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>6</td>{{- if $b4 -}}<td>0110</td>{{- end -}}{{- if $b3 -}}<td>110</td>{{- end -}}</tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>7</td>{{- if $b4 -}}<td>0111</td>{{- end -}}{{- if $b3 -}}<td>111</td>{{- end -}}</tr>
+
+        {{- $max := 0 -}}
+        {{- if $b2 }}{{$max = 3}}{{end -}}
+        {{- if $b3 }}{{$max = 7}}{{end -}}
+        {{- if $b4 }}{{$max = 15}}{{end -}}
+
+        {{- range $v := seq 0 $max -}}
+        <tr>
+            {{- if lt $v 10 -}}<td colspan="2">{{$v}}</td>{{else}}<td>{{$v}}</td><td>{{printf "%X" $v}}</td>{{end -}}
+            {{- if $b4 -}}
+                <td>{{template "miscBinary" (dict "len" 4 "val" $v)}}</td>
+            {{- end -}}
+            {{- if $b3 -}}
+                {{- if lt $v 8 -}}
+                    <td>{{template "miscBinary" (dict "len" 3 "val" $v)}}</td>
+                {{- end -}}
+            {{- end -}}
+            {{- if $b2 -}}
+                {{- if lt $v 4 -}}
+                    <td>{{template "miscBinary" (dict "len" 2 "val" $v)}}</td>
+                {{- end -}}
+            {{- end -}}
+        </tr>
         {{- end -}}
-        {{- if $b4 -}}
-        <tr><td{{if $b4}} colspan="2"{{end}}>8</td><td>1000</td></tr>
-        <tr><td{{if $b4}} colspan="2"{{end}}>9</td><td>1001</td></tr>
-        <tr><td>10</td><td>A</td><td>1010</td></tr>
-        <tr><td>11</td><td>B</td><td>1011</td></tr>
-        <tr><td>12</td><td>C</td><td>1100</td></tr>
-        <tr><td>13</td><td>D</td><td>1101</td></tr>
-        <tr><td>14</td><td>E</td><td>1110</td></tr>
-        <tr><td>15</td><td>F</td><td>1111</td></tr>
-        {{- end -}}
+
         </tbody>
     </table>
     {{- end -}}</div>
