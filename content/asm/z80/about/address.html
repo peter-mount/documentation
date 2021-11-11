@@ -9,77 +9,80 @@ description: "The addresses used ny the Z80"
     The Z80 uses a fixed set of addresses in Page 0 of the address space:
 </p>
 <div>
-    <table class="memoryMap3">
+    <table class="memoryMap4">
         <thead>
         <tr>
             <th>Address</th>
-            <th colspan="2">Purpose</th>
-            <th colspan="6">Usual usage</th>
+            <th colspan="2">Instruction</th>
+            <th colspan="6">Usage</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>0000</td>
-            <td colspan="2">Reset machine</td>
-            <td colspan="6">
-                Either the <span class="not">RESET</span> pin is held low,
-                initial power on or the <code>RST 0</code> instruction is invoked.
-            </td>
+            <td rowspan="3" class="bb align-text-top">0000</td>
+            <td colspan="2" rowspan="3" class="bb align-text-top">RST 0</td>
+            <td colspan="6" class="blr text-left">Initial power on</td>
         </tr>
         <tr>
-            <td>0008</td>
-            <td colspan="2">RST 1</td>
-            <td class="text-left">
+            <td colspan="6" class="blr text-left"><code>RST 0</code> instruction is invoked.</td>
+        </tr>
+        <tr>
+            <td colspan="6" class="blrb text-left"><span class="not">RESET</span> pin is held low</td>
+        </tr>
+        <tr>
+            <td class="bb">0008</td>
+            <td class="bb" colspan="2">RST 1</td>
+            <td class="blrb text-left">
                 <code>RST 1</code> instruction is invoked.
             </td>
         </tr>
         <tr>
-            <td>0010</td>
-            <td colspan="2">RST 2</td>
-            <td class="text-left">
+            <td class="bb">0010</td>
+            <td class="bb" colspan="2">RST 2</td>
+            <td class="blrb text-left">
                 <code>RST 2</code> instruction is invoked.
             </td>
         </tr>
         <tr>
-            <td>0018</td>
-            <td colspan="2">RST 3</td>
-            <td class="text-left">
+            <td class="bb">0018</td>
+            <td class="bb" colspan="2">RST 3</td>
+            <td class="blrb text-left">
                 <code>RST 3</code> instruction is invoked.
             </td>
         </tr>
         <tr>
-            <td>0020</td>
-            <td colspan="2">RST 4</td>
-            <td class="text-left">
+            <td class="bb">0020</td>
+            <td class="bb" colspan="2">RST 4</td>
+            <td class="blrb text-left">
                 <code>RST 4</code> instruction is invoked.
             </td>
         </tr>
         <tr>
-            <td>0028</td>
-            <td colspan="2">RST 5</td>
-            <td class="text-left">
+            <td class="bb">0028</td>
+            <td class="bb" colspan="2">RST 5</td>
+            <td class="blrb text-left">
                 <code>RST 5</code> instruction is invoked.
             </td>
         </tr>
         <tr>
-            <td>0030</td>
-            <td colspan="2">RST 6</td>
-            <td class="text-left">
+            <td class="bb">0030</td>
+            <td class="bb" colspan="2">RST 6</td>
+            <td class="blrb text-left">
                 <code>RST 6</code> instruction is invoked.
             </td>
         </tr>
         <tr>
-            <td>0038</td>
-            <td colspan="2">RST 7 or <span class="not">INT</span></td>
-            <td class="text-left">
-                <code>RST 7</code> instruction is invoked.
-                Also the Maskable Interrupt handler when in Interrupt Mode 1
-            </td>
+            <td class="bb align-text-top" rowspan="2">0038</td>
+            <td class="bb align-text-top" colspan="2" rowspan="2">RST 7</td>
+            <td class="blr text-left"><code>RST 7</code> instruction is invoked.</td>
         </tr>
         <tr>
-            <td>0066</td>
-            <td colspan="2"><span class="not">NMI</span> Handler</td>
-            <td class="text-left">
+            <td class="blrb text-left"><span class="not">INT</span> Maskable Interrupt handler when in Interrupt Mode 1</td>
+        </tr>
+        <tr>
+            <td class="bb">0066</td>
+            <td class="bb" colspan="2"></td>
+            <td class="blrb text-left">
                 <span class="not">NMI</span> interrupt handler
             </td>
         </tr>
