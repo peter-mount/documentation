@@ -12,9 +12,9 @@ linkTitle: "Capture from WebCam"
 <p>
     To capture images every 10 seconds we can use:
 </p>
-<pre>
-    ffmpeg -f v4l2 -i /dev/video1 -r 1/10 out%08d.jpg
-</pre>
+{{< highlight go "linenos=inline" >}}
+ffmpeg -f v4l2 -i /dev/video1 -r 1/10 out%08d.jpg
+{{< /highlight >}}
 <p>
     Here <code>-i /dev/video1</code> is the camera's device,
     <code>-r 1/10</code> is the capturing framerate, 1 in every 10 seconds

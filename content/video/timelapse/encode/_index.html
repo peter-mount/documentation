@@ -9,9 +9,9 @@ linkTitle: "Encode frames to MP4"
 <p>
     To create an mp4 from these frames:
 </p>
-<pre>
-    ffmpeg -r 30 -start_number 1 -i out%08d.jpeg -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
-</pre>
+{{< highlight go "linenos=inline" >}}
+ffmpeg -r 30 -start_number 1 -i out%08d.jpeg -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
+{{< /highlight >}}
 <p>
     Note there are two <code>-r</code> parameters for the frame rate.
     The first one is the source frame rate.
