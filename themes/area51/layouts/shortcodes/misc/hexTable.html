@@ -1,0 +1,32 @@
+{{- /*
+
+Example of generating a bin/hex table of any number of binary digits
+
+Usage: {{< misc/hexTable len="8" >}}
+
+*/ -}}
+{{- $len := $.Get "len" }}
+{{- $len := int $len -}}
+{{- $max := pow 2 $len -}}
+{{- $max = sub $max 1 -}}
+<table class="memoryMap4">
+    <thead>
+    <tr>
+        {{- $l1 := sub $len 1 -}}
+        {{- range $val := seq $l1 0 -}}
+        <th>{{printf "%d" $val}}</th>
+        {{- end -}}
+        <th>Hex</th>
+        <th>Dec</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{- range $val := seq 0 $max -}}
+        <tr>
+            {{- template "miscBinTable" (dict "len" $len "val" $val ) -}}
+            <td class="brb">{{printf "%X" $val}}</td>
+            <td class="brb">{{printf "%d" $val}}</td>
+        </tr>
+    {{- end -}}
+    </tbody>
+</table>

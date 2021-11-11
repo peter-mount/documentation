@@ -1,0 +1,31 @@
+{{- define "miscBinTable" -}}
+    {{- $val := int $.val -}}
+    {{- $len := int $.len -}}
+    {{- $len = sub $len 1 -}}
+    {{- range $level := seq $len 0 -}}
+        {{- /* cp = 2^level */ -}}
+        {{- $cp := pow 2 $level -}}
+
+        {{- /* cv = 0 or 1 for this bit position */ -}}
+        {{- $cv := div $val $cp -}}
+        {{- $cv = mod $cv 2 -}}
+
+        {{- if gt $level 0 -}}
+            {{- /* Not level 0 else div by zero but this only does the row if val mod cp = 0 */ -}}
+            {{- $d := mod $val $cp -}}
+            {{- if eq $d 0 -}}
+                <td class="brb" rowspan="{{$cp}}">{{$cv}}</td>
+            {{- end -}}
+        {{- else -}}
+            {{- /* Just the low bit */ -}}
+            <td class="brb">{{$cv}}</td>
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $val := $.Get "val" }}
+{{- $len := $.Get "len" }}
+<tr>
+    {{- template "miscBinTable" (dict "len" $len "val" $val ) -}}
+    {{- $.Inner -}}
+</tr>

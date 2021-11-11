@@ -4,6 +4,7 @@ title: "Decoding Instructions"
 linkTitle: "Decoding"
 description: "How to decode instructions from binary"
 weight: 70
+no_list: 1
 ---
 
 <p>
@@ -16,12 +17,39 @@ weight: 70
     due to how the bits are organised.
 </p>
 
+<p>
+    You can use the table below as a starting point.
+</p>
+
+<p>
+    To decode an instruction:
+</p>
+<ul>
+    <li>
+        If the opcode is <a href="cb/">CB</a> then go to that prefix page and decode the next byte.
+    </li>
+    <li>
+        If the opcode is <a href="ddfd/">DD</a>,  or <a href="ddfd/">FD</a> then decode the next byte from this table,
+        but the final instruction will replace HL with either IX or IY depending on the code.
+    </li>
+    <li>
+        Using the table below, locate the pattern that matches the opcode.
+        It's usually best to start from the left (bit 7) and go right until you find the opcode.
+        <p>
+            An <code>X</code> means a bit that can be either 0 or 1, however check adjacent rows first and always take
+            an entry that has a 0 or 1 as higher precedence to the X.
+        </p>
+    </li>
+</ul>
 
 {{< z80/instruction
 caption="Opcode format"
-def="01XXXXXX LD_Instructions/10xxxxxx Arithmetic_Instructions/1x1xx110 Arithmetic_Instructions"
+def="01xxxxxx LD_Instructions/10xxxxxx Arithmetic_Instructions/11xxx110 Arithmetic_Instructions/11001011 CB_Prefix/11x11101 DD_FD_Prefix"
 innerAfter="1"
 LD_Instructions="ld/"
 Arithmetic_Instructions="arithmetic/"
+CB_Prefix="cb/"
+DD_FD_Prefix="ddfd/"
+
 >}}
 {{< /z80/instruction >}}

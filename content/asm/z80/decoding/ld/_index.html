@@ -1,0 +1,47 @@
+---
+type: "manual"
+title: "LD Load instructions"
+linkTitle: "LD"
+description: "How to decode ld instructions from binary"
+weight: 10
+---
+
+{{< z80/instruction
+caption="Opcode format"
+def="00BxN Set_1"
+innerAfter="1">}}
+<table class="memoryMap4">
+    <caption>Set 1</caption>
+    <thead>
+    <tr>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+        <th>Instruction</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="brb" rowspan="2">0</td>
+        <td class="brb">0</td>
+        <td class="brb">LD A,(BC)</td>
+    </tr>
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb">LD A,(DE)</td>
+    </tr>
+    <tr>
+        <td class="brb" rowspan="2">1</td>
+        <td class="brb">0</td>
+        <td class="brb">LD HL,(nn)</td>
+    </tr>
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb">LD A,(nn)</td>
+    </tr>
+    </tbody>
+</table>
+{{< /z80/instruction >}}
