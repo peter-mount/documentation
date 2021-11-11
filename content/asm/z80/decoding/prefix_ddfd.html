@@ -1,0 +1,50 @@
+---
+type: "manual"
+title: "Decoding DD and FD Prefixes"
+linkTitle: "DD/FD Prefix"
+description: "How the DD and FD instruction prefixes work"
+weight: 10
+---
+
+<p>
+    Instructions with either the <code>DD</code> or <code>FD</code> prefixes affect those instructions that operate
+    against the memory addressed by <code>HL</code>,
+    changing them to use either the <code>IX</code> or <code>IY</code> registers with an offset.
+</p>
+<p>
+    Instructions that refer directly to the <code>HL</code> register will then act directly against either
+    <code>IX</code> or <code>IY</code>.
+    For those that refer to <code>(HL)</code>, i.e. the memory pointed to by <code>HL</code>
+    then the instructions use an additional relative offset that's added to either the
+    <code>IX</code> or <code>IY</code> registers, and are written as
+    <code>(IX+d)</code> or <code>(IY+d)</code>.
+</p>
+
+<p>
+    Instructions with the <code>DD</code> prefix use the <code>IX</code> register,
+    whilst the <code>FD</code> prefix uses the <code>IY</code> register.
+</p>
+
+<h2>DDCB and FDCB Prefixes</h2>
+<p>
+    The <code>DD</code> and <code>FD</code> prefixes extends though the <code>CB</code> prefix as it does for normal instructions.
+    Just like the <a href="../prefix_cb/">CB</a> prefix
+</p>
+
+<p>
+    The format of the instruction also changes slightly as they change the behaviour of the existing instructions with
+    the <code>CB</code> prefix.
+    These instructions are all four bytes long with the third byte consisting of the offset.
+</p>
+<p>
+    For example: The <code>RLC (HL)</code> is encoded as <span class="hex">CB06</span>.
+</p>
+<p>
+    With the <code>DD</code> prefix this becomes <code>RLC (IX+d)</code> but the instruction is formatted as
+    <span class="hex">DDCBdd06</span>.
+    With the <code>FD</code> prefix this becomes <code>RLC (IY+d)</code>, formatted as
+    <span class="hex">FDCBdd06</span>.
+</p>
+<p>
+    Note that the offset <code>d</code> is before the final part of the operand, not after as you might expect.
+</p>
