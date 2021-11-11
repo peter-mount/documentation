@@ -9,6 +9,11 @@
         {{- else if eq . "b" -}}
             <td class="brtb red" colspan="3">b</td>
             {{- $.s.Set "bit" 1 -}}
+            {{- $.s.Set "bit3" 1 -}}
+        {{- else if eq . "B" -}}
+            <td class="brtb blue" colspan="2">B</td>
+            {{- $.s.Set "bit" 1 -}}
+            {{- $.s.Set "bit2" 1 -}}
         {{- else if eq . "c" -}}
             <td class="brtb red" colspan="3">ccc</td>
             {{- $.s.Set "cond" 1 -}}
@@ -239,16 +244,22 @@
     {{- with $scratch.Get "bit" -}}
     <table class="memoryMap3">
         <caption>Bits</caption>
-        <thead><tr><th>Bit</th><th>b</th></tr></thead>
+        <thead>
+        <tr>
+            <th>Bit</th>
+            {{- with $scratch.Get "bit3" -}}<th>b</th>{{- end -}}
+            {{- with $scratch.Get "bit2" -}}<th>B</th>{{- end -}}
+        </tr>
+        </thead>
         <tbody>
-        <tr><td>0</td><td>000</td></tr>
-        <tr><td>1</td><td>001</td></tr>
-        <tr><td>2</td><td>010</td></tr>
-        <tr><td>3</td><td>011</td></tr>
-        <tr><td>4</td><td>100</td></tr>
-        <tr><td>5</td><td>101</td></tr>
-        <tr><td>6</td><td>110</td></tr>
-        <tr><td>7</td><td>111</td></tr>
+        <tr><td>0</td>{{- with $scratch.Get "bit3" -}}<td>000</td>{{- end -}}{{- with $scratch.Get "bit2" -}}<td>00</td>{{- end -}}</tr>
+        <tr><td>1</td>{{- with $scratch.Get "bit3" -}}<td>001</td>{{- end -}}{{- with $scratch.Get "bit2" -}}<td>01</td>{{- end -}}</tr>
+        <tr><td>2</td>{{- with $scratch.Get "bit3" -}}<td>010</td>{{- end -}}{{- with $scratch.Get "bit2" -}}<td>10</td>{{- end -}}</tr>
+        <tr><td>3</td>{{- with $scratch.Get "bit3" -}}<td>011</td>{{- end -}}{{- with $scratch.Get "bit2" -}}<td>11</td>{{- end -}}</tr>
+        <tr><td>4</td>{{- with $scratch.Get "bit3" -}}<td>100</td>{{- end -}}</tr>
+        <tr><td>5</td>{{- with $scratch.Get "bit3" -}}<td>101</td>{{- end -}}</tr>
+        <tr><td>6</td>{{- with $scratch.Get "bit3" -}}<td>110</td>{{- end -}}</tr>
+        <tr><td>7</td>{{- with $scratch.Get "bit3" -}}<td>111</td>{{- end -}}</tr>
         </tbody>
     </table>
     {{- end -}}</div>
