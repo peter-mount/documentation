@@ -2,57 +2,47 @@
     {{- $line := split $.d " " -}}
     {{- $def := index $line 0 -}}
     {{- range split $def "" -}}
-        {{- if eq . "0" }}<td class="brtb">0</td>{{end -}}
-        {{- if eq . "1" }}<td class="brtb">1</td>{{end -}}
-        {{- if eq . "b" -}}
+        {{- if eq . "0" -}}
+            <td class="brtb">0</td>
+        {{- else if eq . "1" -}}
+            <td class="brtb">1</td>
+        {{- else if eq . "b" -}}
             <td class="brtb red" colspan="3">b</td>
             {{- $.s.Set "bit" 1 -}}
-        {{- end -}}
-        {{- if eq . "c" -}}
+        {{- else if eq . "c" -}}
             <td class="brtb red" colspan="3">ccc</td>
             {{- $.s.Set "cond" 1 -}}
             {{- $.s.Set "cond3" 1 -}}
-        {{- end -}}
-        {{- if eq . "C" -}}
+        {{- else if eq . "C" -}}
             <td class="brtb red" colspan="2">cc</td>
             {{- $.s.Set "cond" 1 -}}
             {{- $.s.Set "cond2" 1 -}}
-        {{- end -}}
-        {{- if eq . "d" -}}
+        {{- else if eq . "d" -}}
             <td class="brtb green" colspan="2">dd</td>
             {{- $.s.Set "registerD" 1 -}}
-        {{- end -}}
-        {{- if eq . "m" -}}
+        {{- else if eq . "m" -}}
             <td class="brtb green" colspan="2">mm</td>
             {{- $.s.Set "registerM" 1 -}}
-        {{- end -}}
-        {{- if eq . "p" -}}
+        {{- else if eq . "p" -}}
             <td class="brtb green" colspan="2">pp</td>
             {{- $.s.Set "registerP" 1 -}}
-        {{- end -}}
-        {{- if eq . "q" -}}
+        {{- else if eq . "q" -}}
             <td class="brtb green" colspan="2">qq</td>
             {{- $.s.Set "registerQ" 1 -}}
-        {{- end -}}
-        {{- if eq . "r" -}}
+        {{- else if eq . "r" -}}
             <td class="brtb green" colspan="3">r</td>
             {{- $.s.Set "register" 1 -}}
-        {{- end -}}
-        {{- if eq . "R" -}}
+        {{- else if eq . "R" -}}
             <td class="brtb green" colspan="3">r'</td>
             {{- $.s.Set "register" 1 -}}
-        {{- end -}}
-        {{- if eq . "D" -}}
+        {{- else if eq . "D" -}}
             <td class="brtb brown">D</td>
-        {{- end -}}
-        {{- if eq . "L" -}}
+        {{- else if eq . "L" -}}
             <td class="brtb red">L</td>
-        {{- end -}}
-        {{- if eq . "Q" -}}
+        {{- else if eq . "Q" -}}
             <td class="brtb green" colspan="2">QQ</td>
-        {{- end -}}
-        {{- if eq . "S" -}}
-            <td class="brtb orange">S</td>
+        {{- else -}}
+            <td class="brtb orange">{{.}}</td>
         {{- end -}}
     {{- end -}}
     {{- with index $line 1 -}}<td class="bnone">{{.}}</td>{{end -}}
