@@ -50,7 +50,13 @@
             <td class="brtb orange">{{.}}</td>
         {{- end -}}
     {{- end -}}
-    {{- with index $line 1 -}}<td class="bnone">{{.}}</td>{{end -}}
+    {{- with index $line 1 -}}
+        <td class="bnone text-left nowrap">
+            {{- with $.p.Get . -}}<a href="{{.}}">{{- end -}}
+            {{- replace . "_" " " -}}
+            {{- with $.p.Get . -}}</a>{{- end -}}
+        </td>
+    {{- end -}}
 {{- end -}}
 
 {{- define "z80Instruction8bit" -}}
@@ -68,10 +74,11 @@
 <div class="col-7">
     {{- with $.Get "operation"}}<p>\({{.|safeHTML}}\)</p>{{end -}}
     {{- with $.Get "overview"}}<p>{{.|safeHTML}}</p>{{end -}}
-    {{- $.Inner -}}
+    {{- with $.Get "innerAfter" -}}{{- else -}}{{- $.Inner -}}{{- end -}}
 
     {{- with $def := $.Get "def" -}}
 <table class="memoryMap4">
+{{- with $.Get "caption" -}}<caption>{{.}}</caption>{{- end -}}
 <thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
 <tbody>
     {{- range $linedef := split $def "/" -}}
@@ -93,12 +100,13 @@
             {{- else if hasPrefix $linedef "q " -}}
                 <td colspan="8" class="bnone text-left">\({{substr $linedef 2 |safeHTML}}\)</td>
             {{- else -}}
-                {{- template "z80InstructionDecodeLine" (dict "d" $linedef "s" $scratch) -}}
+                {{- template "z80InstructionDecodeLine" (dict "d" $linedef "s" $scratch "p" $) -}}
             {{- end -}}
         </tr>
     {{- end -}}
 </tbody></table>
     {{- end -}}
+    {{- with $.Get "innerAfter" -}}{{- $.Inner -}}{{- end -}}
 </div>
 <div class="col-4">
     {{- with $scratch.Get "register" -}}

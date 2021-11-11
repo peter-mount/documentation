@@ -6,3 +6,22 @@ description: "How to decode instructions from binary"
 weight: 70
 ---
 
+<p>
+    This section lists how the instructions are laid out at the bit level.
+</p>
+<p>
+    Normally if you are manually disassembling code you just need to use the
+    <a href="../reference/opcodes/">list by Opcodes</a>, however this section will be useful if you are implementing
+    a Z80 emulator as you can see how the instruction decoding works including how the undocumented instructions work
+    due to how the bits are organised.
+</p>
+
+
+{{< z80/instruction
+caption="Opcode format"
+def="01XXXXXX LD_Instructions/10xxxxxx Arithmetic_Instructions/1x1xx110 Arithmetic_Instructions"
+innerAfter="1"
+LD_Instructions="ld/"
+Arithmetic_Instructions="arithmetic/"
+>}}
+{{< /z80/instruction >}}

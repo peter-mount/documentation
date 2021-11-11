@@ -1,0 +1,140 @@
+---
+type: "manual"
+title: "Arithmetic Instructions"
+linkTitle: "Arithmetic"
+description: "How to decode arithmetic instructions from binary"
+weight: 10
+---
+<p>
+    Opcodes with bits 7&hellip;5 set to 100 are the arithmetic instructions
+    <code>ADD</code>, <code>ADC</code>, <code>SUB</code> and <code>SBC</code>.
+    As are those starting with 7&hellip;6 set to 11 but ending with bits 2&hellip;0 set to 110.
+    These instructions take an additional numeric operand after the opcode and use that instead of a register as
+    the source.
+</p>
+<p>
+    Those with 7&hellip;5 set to 101 are the logic instructions
+    <code>AND</code>, <code>XOR</code>, <code>OR</code> and <code>CP</code>.
+</p>
+
+
+{{< z80/instruction caption="Opcode format" def="/l Arithmetic with register as source, e.g. ADD A/100AFr//l Logic with register as source, e.g. OR A/101AFr//l 8 bit number as source, e.g. SUB 5/11XAF110/n" innerAfter="1">}}
+
+<table class="memoryMap4">
+    <caption>Lookup for A and F bits</caption>
+    <thead>
+    <tr>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>A</th>
+        <th>F</th>
+        <th>Instruction</th>
+        <th>r</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="brb" rowspan="16">1</td>
+        <td class="brb" rowspan="8">0</td>
+        <td class="brb" rowspan="4">0</td>
+        <td class="brb" rowspan="2">0</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/adc/">ADC r</a></td>
+        <td class="brb nowrap" rowspan="8">
+            register or<br/>
+            110 = (HL)
+        </td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/add/">ADD r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="2">1</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/sbc/">SBC r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/sub/">SUB r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="4">1</td>
+        <td class="brb" rowspan="2">0</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/and/">AND r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/xor/">XOR r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="2">1</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/or/">OR r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/cp/">CP r</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="8">1</td>
+        <td class="brb" rowspan="4">0</td>
+        <td class="brb" rowspan="2">0</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/adc/">ADC n</a></td>
+        <td class="brb nowrap" rowspan="8">Always set to 110</td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/add/">ADD n</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="2">1</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/sbc/">SBC n</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/sub/">SUB n</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="4">1</td>
+        <td class="brb" rowspan="2">0</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/and/">AND n</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/xor/">XOR n</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb" rowspan="2">1</td>
+        <td class="brb">0</td>
+        <td class="brb"><a href="../../opcodes/math/or/">OR n</a></td>
+    </tr>
+
+    <tr>
+        <td class="brb">1</td>
+        <td class="brb"><a href="../../opcodes/math/cp/">CP n</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+{{< /z80/instruction >}}
