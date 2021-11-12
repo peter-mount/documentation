@@ -1,0 +1,34 @@
+---
+type: "manual"
+title: "Decoding ED Prefix"
+linkTitle: "ED Prefix"
+description: "How the ED instruction prefix works"
+weight: 80
+---
+
+<p>
+    Instructions with the ED prefix consist of instructions that are not used as often as those in the main group.
+</p>
+
+{{< z80/lookupTable
+"01xxx000 IN_r_(C) ../../opcodes/io/inrc/"
+"01xxx001 OUT_(C)_r ../../opcodes/io/inrc/"
+"01111001 OUT_(C)_A ../../opcodes/io/inrc/"
+"01110001 "
+"01xx0010 SBC ../../opcodes/math/sbc/"
+"01xx1010 ADC ../../opcodes/math/adc/"
+"01xxx011 LD ../../opcodes/ld/"
+"01010011 "
+"01000100 NEG"
+"01000101 RETN"
+"01001101 RETI"
+"010x0110 IMx"
+"01011110 IM2"
+"01100111 RRD_(HL) ../../opcodes/rotate/rrd/"
+"01101111 RLD_(HL) ../../opcodes/rotate/rld/"
+"010x0111 LD ../../opcodes/ld/"
+"010x1000 LD ../../opcodes/ld/"
+"01101000 LD ../../opcodes/ld/"
+"101xx00x Block_Memory ../../opcodes/block/"
+"101xx01x Block_IO opcodes/io/outblock/"
+>}}
