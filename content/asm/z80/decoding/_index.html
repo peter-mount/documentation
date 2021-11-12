@@ -19,20 +19,29 @@ notes:
     due to how the bits are organised.
 </p>
 
+<h3>How to use these decoding tables</h3>
 <p>
-    You can use the table below as a starting point.
+    To decode an opcode, convert it to binary then run through it from left to right, e.g. start at Bit&nbsp;7 and move
+    towards Bit&nbsp;0.
 </p>
+<p>
+    As you run through the bits, start on the table from the top-left and go down then right as you find each bit.
+    Bits are ordered with 0 first, then 1 & finally x which indicates that bit can be either 0 or 1.
+</p>
+<p>
+    When you find a match then go with that.
+    If more than one entry matches then go for the one higher in the table as that will have higher precedence.
+</p>
+
+<h2>Z80 Instruction Decode table</h2>
 
 <p>
     To decode an instruction:
 </p>
 <ul>
     <li>
-        If the opcode is <a href="cb/">CB</a> then go to that prefix page and decode the next byte.
-    </li>
-    <li>
-        If the opcode is <a href="ddfd/">DD</a>,  or <a href="ddfd/">FD</a> then decode the next byte from this table,
-        but the final instruction will replace HL with either IX or IY depending on the code.
+        If the opcode is <a href="cb/">CB</a>, <a href="ddfd/">DD</a>, <a href="ed/">ED</a> or <a href="ddfd/">FD</a>
+        then go to that prefix page and decode the next byte.
     </li>
     <li>
         Using the table below, locate the pattern that matches the opcode.
