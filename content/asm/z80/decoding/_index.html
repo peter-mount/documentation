@@ -44,10 +44,11 @@ no_list: 1
 
 {{< z80/instruction
 caption="Opcode format"
-def="01xxxxxx LD_Instructions/10xxxxxx Arithmetic_Instructions/11xxx110 Arithmetic_Instructions/11001011 CB_Prefix/11x11101 DD_FD_Prefix/11111001 LD_Instructions"
+def="01xxxxxx LD_Instructions/10xxxxxx Arithmetic_Instructions/11xxx110 Arithmetic_Instructions/11xx0x01 Stack_Instructions/11001011 CB_Prefix/11x11101 DD_FD_Prefix/11111001 LD_Instructions"
 innerAfter="1"
 LD_Instructions="ld/"
 Arithmetic_Instructions="arithmetic/"
+Stack_Instructions="../opcodes/stack/"
 CB_Prefix="cb/"
 DD_FD_Prefix="ddfd/"
 
