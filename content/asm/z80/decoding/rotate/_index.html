@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "Rotate Instructions"
+linkTitle: "Rotate"
+description: "How to decode rotate instructions from binary"
+weight: 10
+---
+
+<p>
+    Only four rotate instructions are defined in the main opcode set, all the rest
+    require the <code>CB</code> prefix.
+</p>
+
+{{< z80/instruction
+caption="Opcode format"
+def="000FD111//00000111 RLCA/00010111 RLA/00000111 RRCA/00011111 RRA"
+RLA="../../opcodes/rotate/rl/"
+RLCA="../../opcodes/rotate/rlc/"
+RRA="../../opcodes/rotate/rr/"
+RRCA="../../opcodes/rotate/rrc/"
+>}}
+{{< /z80/instruction >}}
+
+<div class="row">
+    <div class="col-4">
+        {{< misc/xref caption="F Carry Flag" label="Instruction" key="F" entries="With Carry,Without Carry" >}}
+    </div>
+    <div class="col-4">
+        {{< misc/xref caption="D Direction" label="Instruction" key="D" entries="Left,Right" >}}
+    </div>
+</div>
+
