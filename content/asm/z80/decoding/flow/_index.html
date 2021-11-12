@@ -1,0 +1,27 @@
+---
+type: "manual"
+title: "Program Flow Instructions"
+linkTitle: "Flow"
+description: "How to decode program flow instructions from binary"
+weight: 10
+---
+
+{{< z80/instruction
+caption="Opcode format"
+def="0001D000/e-2//001C000 JR/e-2//11000011 JP/nn//11001001 RET//11001101 CALL/nn//11101001 JP_(HL)//11c000 RET//11c010 JP/nn//11c100 CALL/nn//11b111 RST"
+innerAfter="1"
+DJNZ="../../opcodes/flow/jr/"
+JR="../../opcodes/flow/jr/"
+JP="../../opcodes/flow/jp/"
+CALL="../../opcodes/flow/call/"
+RET="../../opcodes/flow/ret/"
+RST="../../opcodes/flow/rst/"
+>}}
+{{< /z80/instruction >}}
+
+<div class="row">
+    <div class="col-4">
+        {{< misc/xref caption="D" label="Instruction" key="D" entries="DJNZ,JR" >}}
+    </div>
+</div>
+

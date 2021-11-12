@@ -44,16 +44,23 @@ notes:
     </li>
 </ul>
 
-{{< z80/instruction
-caption="Opcode format"
-def="00000000 Nop/01110110 Halt/01xxxxxx LD_Instructions/10xxxxxx Arithmetic_Instructions/11xxx110 Arithmetic_Instructions/11xx0x01 Stack_Instructions/11001011 CB_Prefix/11x11101 DD_FD_Prefix/11111001 LD_Instructions"
-innerAfter="1"
-LD_Instructions="ld/"
-Arithmetic_Instructions="arithmetic/"
-Stack_Instructions="../opcodes/stack/"
-CB_Prefix="cb/"
-DD_FD_Prefix="ddfd/"
-Nop="../opcodes/misc/"
-Halt="../opcodes/misc/"
+{{< z80/lookupTable
+"00000000 Nop ../opcodes/misc/"
+"01110110 Halt ../opcodes/misc/"
+"01xxxxxx LD_Instructions ld/"
+"10xxxxxx Arithmetic_Instructions arithmetic/"
+"11001011 CB_Prefix cb/"
+"0001x000 Flow flow/"
+"00xxx000 Flow flow/"
+"11000011 Flow flow/"
+"11001101 Flow flow/"
+"11x01001 Flow flow/"
+"11xxx000 Flow flow/"
+"11xxx010 Flow flow/"
+"11xxx100 Flow flow/"
+"11xxx111 Flow flow/"
+"11xxx110 Arithmetic_Instructions arithmetic/"
+"11xx0x01 Stack_Instructions ../opcodes/stack/"
+"11x11101 DD_FD_Prefix ddfd/"
+"11111001 LD_Instructions ld/"
 >}}
-{{< /z80/instruction >}}

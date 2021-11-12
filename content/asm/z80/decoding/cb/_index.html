@@ -10,79 +10,19 @@ weight: 80
     Instructions with the CB prefix consist of instructions that manipulate individual bits in a register or memory.
 </p>
 
-{{< z80/instruction
-def="/l Shift operations, B = 0/11001001 CB/00SFDr//l bit operations, B <> 0/11001011 CB/Bbr//l S Shift mode: 0=Rotate 1=Shift/l F Carry mode: 0=With carry, 1=Without carry/l D Direction: 0=left, 1=right"
+{{< z80/lookupTable
+"00000xxx RLC_r ../../opcodes/rotate/rlc/"
+"00001xxx RRC_r ../../opcodes/rotate/rrc/"
+"00010xxx RL ../../opcodes/rotate/rl/"
+"00011xxx RR ../../opcodes/rotate/rr/"
+"00100xxx SLA ../../opcodes/rotate/sla/"
+"00101xxx SRA ../../opcodes/rotate/sra/"
+"00110xxx SLL ../../opcodes/undocumented/sll/"
+"00111xxx SRL ../../opcodes/rotate/srl/"
+"01xxxxxx BIT_b,r ../../opcodes/bit/bit/"
+"10xxxxxx RES_b,r ../../opcodes/bit/res/"
+"11xxxxxx SET_b,r ../../opcodes/bit/set/"
 >}}
-<p>
-    The instructions are defined by the top two bits (6 and 7) of the opcode:
-</p>
-<table class="memoryMap4">
-    <thead>
-    <tr>
-        <th colspan="3">B</th>
-        <th colspan="2">Opcodes</th>
-        <th>Instruction</th>
-        <th colspan="5">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><td class="brb">0</td><td class="bb">0</td><td class="brb">0</td><td class="bb">CB00</td><td class="brb">CB3F</td><td class="brb"></td><td class="brb text-left">Shift and Rotate</td></tr>
-    <tr><td class="brb">1</td><td class="bb">0</td><td class="brb">1</td><td class="bb">CB48</td><td class="brb">CB7F</td>
-        <td class="brb"><a href="../../opcodes/bit/bit/">BIT b,r</a></td>
-        <td class="brb text-left">Test bit state</td></tr>
-    <tr><td class="brb">2</td><td class="bb">1</td><td class="brb">0</td><td class="bb">CB80</td><td class="brb">CBBF</td>
-        <td class="brb"><a href="../../opcodes/bit/res/">RES b,r</a></td>
-        <td class="brb text-left">Reset bit</td></tr>
-    <tr><td class="brb">3</td><td class="bb">1</td><td class="brb">1</td><td class="bb">CBC8</td><td class="brb">CBFF</td>
-        <td class="brb"><a href="../../opcodes/bit/set/">SET b,r</a></td>
-        <td class="brb text-left">Set bit</td></tr>
-    </tbody>
-</table>
-{{< /z80/instruction >}}
-
-<div class="printPageBreakAvoid">
-    <p>
-        For the shift and rotate instructions there's 8 possible combinations which map to the following instructions:
-    </p>
-
-    <table class="memoryMap4">
-        <thead>
-        <tr>
-            <th>S</th>
-            <th>F</th>
-            <th>D</th>
-            <th colspan="2">Opcodes</th>
-            <th>Instruction</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr><td class="bb">0</td><td class="bb">0</td><td class="brb">0</td><td class="bb">CB00</td><td class="brb">CB07</td>
-            <td class="brb"><a href="../../opcodes/rotate/rlc">RLC</a></td>
-        </tr>
-        <tr><td class="bb">0</td><td class="bb">0</td><td class="brb">1</td><td class="bb">CB08</td><td class="brb">CB0F</td>
-            <td class="brb"><a href="../../opcodes/rotate/rrc">RRC</a></td>
-        </tr>
-        <tr><td class="bb">0</td><td class="bb">1</td><td class="brb">0</td><td class="bb">CB10</td><td class="brb">CB17</td>
-            <td class="brb"><a href="../../opcodes/rotate/rl">RL</a></td>
-        </tr>
-        <tr><td class="bb">0</td><td class="bb">1</td><td class="brb">1</td><td class="bb">CB18</td><td class="brb">CB1F</td>
-            <td class="brb"><a href="../../opcodes/rotate/rr">RR</a></td>
-        </tr>
-        <tr><td class="bb">1</td><td class="bb">0</td><td class="brb">0</td><td class="bb">CB20</td><td class="brb">CB27</td>
-            <td class="brb"><a href="../../opcodes/rotate/sla">SLA</a></td>
-        </tr>
-        <tr><td class="bb">1</td><td class="bb">0</td><td class="brb">1</td><td class="bb">CB28</td><td class="brb">CB2F</td>
-            <td class="brb"><a href="../../opcodes/rotate/sra">SRA</a></td>
-        </tr>
-        <tr class="grey"><td class="bb">1</td><td class="bb">1</td><td class="brb">0</td><td class="bb">CB30</td><td class="brb">CB37</td>
-            <td class="brb"><a href="../../opcodes/undocumented/sll"><em>SLL</em></a></td>
-        </tr>
-        <tr><td class="bb">1</td><td class="bb">1</td><td class="brb">1</td><td class="bb">CB38</td><td class="brb">CB3F</td>
-            <td class="brb"><a href="../../opcodes/rotate/srl">SRL</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
 <div class="printPageBreakAvoid">
     <h3>Operations with IX and IY registers</h3>
@@ -93,6 +33,14 @@ def="/l Shift operations, B = 0/11001001 CB/00SFDr//l bit operations, B <> 0/110
         <a href="../ddfd/">FD</a> prefix.
     </p>
 
+    <p>
+        Only instructions with the lower nibble set to 6 or E are documented.
+        The other opcodes are <a href="../../opcodes/undocumented/">undocumented</a>.
+    </p>
+
+</div>
+
+<div class="printPageBreakAvoid">
     <h3>Undocumented SLL instruction</h3>
     <p>
         Op codes <span class="hex">CB30</span>&hellip;<span class="hex">CB37</span> are undocumented;

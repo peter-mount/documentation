@@ -1,0 +1,35 @@
+{{- $scratch := newScratch -}}
+
+{{- /* Create $s as a sorted list of all parameters */ -}}
+{{- $s := slice -}}
+{{- range $pid := (seq 0 (sub (len .Params) 1) ) -}}
+{{- $s = $s | append ($.Get $pid) -}}
+{{- end -}}
+{{- $s = sort $s -}}
+
+<table class="memoryMap4">
+    {{- with $.Get "caption" -}}<caption>{{.}}</caption>{{- end -}}
+    <thead><tr><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
+    <tbody>
+    {{- range $def := $s -}}
+    <tr>
+        {{- $line := split $def " " -}}
+        {{- range split (index $line 0) "" -}}
+            {{- if eq "x" . -}}
+                <td class="brtb orange">{{.}}</td>
+            {{- else -}}
+                <td class="brtb">{{.}}</td>
+            {{- end -}}
+        {{- end -}}
+        {{- with index $line 1 -}}
+            <td class="bnone"></td>
+            <td class="bnone text-left nowrap">
+            {{- with index $line 2 -}}<a href="{{.}}">{{- end -}}
+            {{- replace . "_" " " -}}
+            {{- with index $line 2 -}}</a>{{- end -}}
+        </td>
+        {{- end -}}
+    </tr>
+    {{- end -}}
+    </tbody>
+</table>
