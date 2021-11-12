@@ -8,7 +8,7 @@ weight: 10
 
 {{< z80/instruction
 caption="Opcode format"
-def="/l Set 4/000B001/l Set 1/000B010//l Set 2/001B010/nn//l Set 3/00b110/n"
+def="/l Set 1/000B010//l Set 4/00B0001//l Set 2/001B010/nn//l Set 3/00b110/n//l LD r, r'/01rR//l LD r, (HL)/01r110//l LD SP,HL/11111001"
 innerAfter="1">}}
 
 {{< /z80/instruction >}}
@@ -103,7 +103,7 @@ innerAfter="1">}}
         {{< /misc/tableHeader >}}
     </div>
     <div class="col-6">
-        {{< misc/tableHeader caption="Set 4 set to constant nnn" labels="4,3,Instruction" >}}
+        {{< misc/tableHeader caption="Set 4 set to constant nnn" labels="5,4,Instruction" >}}
         <tr>
             {{< misc/bintable len="2" val="0" start="0">}}
             <td class="brb">LD BC,nn</td>
