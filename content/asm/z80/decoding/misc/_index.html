@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "Miscelaneous Instructions"
+linkTitle: "Misc"
+description: "How to decode IO, EX and Interrupt instructions from binary"
+weight: 10
+---
+
+<p>
+    Only four rotate instructions are defined in the main opcode set, all the rest
+    require the <code>CB</code> prefix.
+</p>
+
+{{< z80/instruction
+caption="Opcode format"
+def="/l IO/1101D011//l EXX/11011001//l EX/1110W011//l Interrupts/1111E011"
+>}}
+{{< /z80/instruction >}}
+
+<div class="row">
+    <div class="col-4">
+        {{< misc/xref caption="D I/O Direction" label="Instruction" key="D" entries="Out,In" >}}
+    </div>
+    <div class="col-4">
+        {{< misc/xref caption="W EX registers" label="Instruction" key="W" entries="DE_HL,(SP)_HL" >}}
+    </div>
+    <div class="col-4">
+        {{< misc/xref caption="E Interrupt Enable" label="Instruction" key="E" entries="DI,EI" >}}
+    </div>
+</div>
+
