@@ -1,0 +1,37 @@
+{{- /*
+
+Usage {{- template "miscXref" (dict "caption" "Registers" "label" "Register" "key" "r" "entries" "B,C,D,E,H,L,_,A") -}}
+
+*/ -}}
+
+{{- define "miscXref" -}}
+{{- $a := split $.entries "," -}}
+
+{{- /* Calculate $len as number of bits to hold array */ -}}
+{{- $l1 := len $a -}}
+{{- $len := 1 -}}
+{{- range $i := seq 8 0 -}}
+{{- $p := pow 2 $i -}}
+{{- if ge $p $l1 }}{{ $len = $i }}{{end -}}
+{{- end -}}
+
+<table class="memoryMap3">
+    <caption>{{$.caption}}</caption>
+    <thead><tr><th>{{$.label}}</th><th>{{$.key}}</th></tr></thead>
+    <tbody>
+    {{- range $i,$v := $a -}}
+    {{- if ne $v "_" -}}
+    <tr><td>{{$v}}</td><td>
+        {{- template "miscBinary" (dict "len" $len "val" $i) -}}
+    </td></tr>
+    {{- end -}}
+    {{- end -}}
+    </tbody>
+</table>
+{{- end -}}
+
+{{- $caption := $.Get "caption" }}
+{{- $label := $.Get "label" }}
+{{- $key := $.Get "key" -}}
+{{- $entries := $.Get "entries" -}}
+{{- template "miscXref" (dict "caption" $caption "label" $label "key" $key "entries" $entries ) -}}

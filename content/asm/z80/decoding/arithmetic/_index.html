@@ -20,21 +20,7 @@ weight: 10
 
 {{< z80/instruction caption="Opcode format" def="/l Arithmetic with register as source, e.g. ADD A/100AFr//l Logic with register as source, e.g. OR A/101AFr//l 8 bit number as source, e.g. SUB 5/11XAF110/n" innerAfter="1">}}
 
-<table class="memoryMap4">
-    <caption>Lookup for A and F bits</caption>
-    <thead>
-    <tr>
-        <th>7</th>
-        <th>6</th>
-        <th>5</th>
-        <th>A</th>
-        <th>F</th>
-        <th>Instruction</th>
-        <th>r</th>
-    </tr>
-    </thead>
-    <tbody>
-
+{{< misc/tableHeader caption="Lookup for A and F bits" labels="7,6,5,A,F,Instruction,r" >}}
     <tr>
     {{< misc/bintable len="5" val="16" >}}
     <td class="brb"><a href="../../opcodes/math/adc/">ADC r</a></td>
@@ -42,101 +28,83 @@ weight: 10
         register or<br/>
         110 = (HL)
     </td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="17" >}}
+        {{< misc/bintable len="5" val="17" >}}
         <td class="brb"><a href="../../opcodes/math/add/">ADD r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="18" >}}
+        {{< misc/bintable len="5" val="18" >}}
         <td class="brb"><a href="../../opcodes/math/sbc/">SBC r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="19" >}}
+        {{< misc/bintable len="5" val="19" >}}
         <td class="brb"><a href="../../opcodes/math/sub/">SUB r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="20" >}}
+        {{< misc/bintable len="5" val="20" >}}
         <td class="brb"><a href="../../opcodes/math/and/">AND r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="21" >}}
+        {{< misc/bintable len="5" val="21" >}}
         <td class="brb"><a href="../../opcodes/math/xor/">XOR r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="22" >}}
+        {{< misc/bintable len="5" val="22" >}}
         <td class="brb"><a href="../../opcodes/math/or/">OR r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="23" >}}
+        {{< misc/bintable len="5" val="23" >}}
         <td class="brb"><a href="../../opcodes/math/cp/">CP r</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="24" >}}
+        {{< misc/bintable len="5" val="24" >}}
         <td class="brb"><a href="../../opcodes/math/adc/">ADC n</a></td>
         <td class="brb nowrap" rowspan="8">Always set to 110</td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="25" >}}
+        {{< misc/bintable len="5" val="25" >}}
         <td class="brb"><a href="../../opcodes/math/add/">ADD n</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="26" >}}
+        {{< misc/bintable len="5" val="26" >}}
         <td class="brb"><a href="../../opcodes/math/sbc/">SBC n</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="27" >}}
+        {{< misc/bintable len="5" val="27" >}}
         <td class="brb"><a href="../../opcodes/math/sub/">SUB n</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="28" >}}
+        {{< misc/bintable len="5" val="28" >}}
         <td class="brb"><a href="../../opcodes/math/and/">AND n</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="29" >}}
+        {{< misc/bintable len="5" val="29" >}}
         <td class="brb"><a href="../../opcodes/math/xor/">XOR n</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="30" >}}
+        {{< misc/bintable len="5" val="30" >}}
         <td class="brb"><a href="../../opcodes/math/or/">OR n</a></td>
-    {{< /misc/bintable >}}
     </tr>
 
     <tr>
-    {{< misc/bintable len="5" val="31" >}}
+        {{< misc/bintable len="5" val="31" >}}
         <td class="brb"><a href="../../opcodes/math/cp/">CP n</a></td>
-    {{< /misc/bintable >}}
     </tr>
-
-    </tbody>
-</table>
+{{< /misc/tableHeader >}}
 
 {{< /z80/instruction >}}

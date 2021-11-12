@@ -1,0 +1,13 @@
+{{- $caption := $.Get "caption" -}}
+<table class="memoryMap4">
+    {{- with $caption }}<caption>{{.}}</caption>{{end -}}
+    <thead>
+        <tr>
+            {{- $labels := $.Get "labels" -}}
+            {{- range $i := split $labels "," }}<th>{{.}}</th>{{end -}}
+        </tr>
+    </thead>
+    <tbody>
+    {{ .Inner }}
+    </tbody>
+</table>

@@ -8,42 +8,121 @@ weight: 10
 
 {{< z80/instruction
 caption="Opcode format"
-def="00Bxb Set_1"
+def="/l Set 4/000B001/l Set 1/000B010//l Set 2/001B010/nn//l Set 3/00b110/n"
 innerAfter="1">}}
-<table class="memoryMap4">
-    <caption>Set 1</caption>
-    <thead>
-    <tr>
-        <th>5</th>
-        <th>4</th>
-        <th>3</th>
-        <th>2</th>
-        <th>1</th>
-        <th>0</th>
-        <th>Instruction</th>
-    </tr>
-    </thead>
-    <tbody>
 
-    <tr>
-    {{< misc/bintable len="5" val="2" >}}
-        <td class="brb">LD A,(BC)</td>
-    {{< /misc/bintable >}}
-    </tr>
-
-    <tr>
-        <td class="brb">1</td>
-        <td class="brb">LD A,(DE)</td>
-    </tr>
-    <tr>
-        <td class="brb" rowspan="2">1</td>
-        <td class="brb">0</td>
-        <td class="brb">LD HL,(nn)</td>
-    </tr>
-    <tr>
-        <td class="brb">1</td>
-        <td class="brb">LD A,(nn)</td>
-    </tr>
-    </tbody>
-</table>
 {{< /z80/instruction >}}
+
+<div class="row">
+    <div class="col-6">
+        {{< misc/tableHeader caption="Set 1 store a in memory" labels="4,3,Instruction" >}}
+        <tr>
+            {{< misc/bintable len="2" val="0" start="0">}}
+            <td class="brb">LD (BC),A</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="2" val="1" >}}
+            <td class="brb">LD (DE),A</td>
+        </tr>
+        <tr>
+            {{< misc/bintable len="2" val="2">}}
+            <td class="brb">LD A,(BC)</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="2" val="3" >}}
+            <td class="brb">LD A,(DE)</td>
+        </tr>
+        {{< /misc/tableHeader >}}
+    </div>
+    <div class="col-6">
+        {{< misc/tableHeader caption="Set 2 store in memory" labels="5,4,Instruction" >}}
+        <tr>
+            {{< misc/bintable len="2" val="0">}}
+            <td class="brb">LD (nn),HL</td>
+        </tr>
+        <tr>
+            {{< misc/bintable len="2" val="1" >}}
+            <td class="brb">LD (nn),A</td>
+        </tr>
+        <tr>
+            {{< misc/bintable len="2" val="2" >}}
+            <td class="brb">LD HL,(nn)</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="2" val="3" >}}
+            <td class="brb">LD A,(nn)</td>
+        </tr>
+        {{< /misc/tableHeader >}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        {{< misc/tableHeader caption="Set 3 set to constant n" labels="4,3,2,Instruction" >}}
+        <tr>
+            {{< misc/bintable len="3" val="0" start="0">}}
+            <td class="brb">LD B,n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="1" >}}
+            <td class="brb">LD C,n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="2" >}}
+            <td class="brb">LD D,n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="3" >}}
+            <td class="brb">LD E,n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="4">}}
+            <td class="brb">LD H,n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="5" >}}
+            <td class="brb">LD L,n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="6" >}}
+            <td class="brb">LD (HL),n</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="3" val="7" >}}
+            <td class="brb">LD A,n</td>
+        </tr>
+        {{< /misc/tableHeader >}}
+    </div>
+    <div class="col-6">
+        {{< misc/tableHeader caption="Set 4 set to constant nnn" labels="4,3,Instruction" >}}
+        <tr>
+            {{< misc/bintable len="2" val="0" start="0">}}
+            <td class="brb">LD BC,nn</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="2" val="1" >}}
+            <td class="brb">LD DE,nn</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="2" val="2" >}}
+            <td class="brb">LD HL,nn</td>
+        </tr>
+
+        <tr>
+            {{< misc/bintable len="2" val="3" >}}
+            <td class="brb">LD SP,nn</td>
+        </tr>
+        {{< /misc/tableHeader >}}
+    </div>
+</div>

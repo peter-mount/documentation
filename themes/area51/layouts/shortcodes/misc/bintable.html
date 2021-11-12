@@ -1,6 +1,18 @@
+{{- /*
+
+    val     Value to represent
+    len     Length in bits
+    start   if present the initial value, use when a table doesn't start with 0
+            or on a even bit count
+*/ -}}
+
 {{- define "miscBinTable" -}}
     {{- $val := int $.val -}}
     {{- $len := int $.len -}}
+
+    {{- $start := 0 -}}
+    {{- if $.start }}{{$start = int $.start}}{{end -}}
+
     {{- $len = sub $len 1 -}}
     {{- range $level := seq $len 0 -}}
         {{- /* cp = 2^level */ -}}
@@ -13,6 +25,10 @@
         {{- if gt $level 0 -}}
             {{- /* Not level 0 else div by zero but this only does the row if val mod cp = 0 */ -}}
             {{- $d := mod $val $cp -}}
+            {{- if ne $start 0 -}}
+                {{- $d = 0 -}}
+                {{- $cp = $start -}}
+            {{- end -}}
             {{- if eq $d 0 -}}
                 <td class="brb" rowspan="{{$cp}}">{{$cv}}</td>
             {{- end -}}
@@ -25,5 +41,5 @@
 
 {{- $val := $.Get "val" }}
 {{- $len := $.Get "len" }}
-{{- template "miscBinTable" (dict "len" $len "val" $val ) -}}
-{{- $.Inner -}}
+{{- $start := $.Get "start" -}}
+{{- template "miscBinTable" (dict "len" $len "val" $val "start" $start ) -}}

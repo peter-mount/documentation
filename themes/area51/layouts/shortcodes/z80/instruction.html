@@ -114,71 +114,23 @@
 </div>
 <div class="col-4">
     {{- with $scratch.Get "register" -}}
-    <table class="memoryMap3">
-        <caption>Registers</caption>
-        <thead><tr><th>Register</th><th>r</th></tr></thead>
-        <tbody>
-        <tr><td>A</td><td>111</td></tr>
-        <tr><td>B</td><td>000</td></tr>
-        <tr><td>C</td><td>001</td></tr>
-        <tr><td>D</td><td>010</td></tr>
-        <tr><td>E</td><td>011</td></tr>
-        <tr><td>H</td><td>100</td></tr>
-        <tr><td>L</td><td>101</td></tr>
-        </tbody>
-    </table>
+    {{- template "miscXref" (dict "caption" "Registers" "label" "Register" "key" "r" "entries" "B,C,D,E,H,L,_,A") -}}
     {{- end -}}
 
     {{- with $scratch.Get "registerD" -}}
-    <table class="memoryMap3">
-        <caption>Registers</caption>
-        <thead><tr><th>Pair</th><th>dd</th></tr></thead>
-        <tbody>
-        <tr><td>BC</td><td>00</td></tr>
-        <tr><td>DE</td><td>01</td></tr>
-        <tr><td>HL</td><td>10</td></tr>
-        <tr><td>SP</td><td>11</td></tr>
-        </tbody>
-    </table>
+    {{- template "miscXref" (dict "caption" "Registers" "label" "PAIR" "key" "dd" "entries" "BC,DE,HL,SP") -}}
     {{- end -}}
 
     {{- with $scratch.Get "registerM" -}}
-    <table class="memoryMap3">
-        <caption>Registers</caption>
-        <thead><tr><th>Pair</th><th>mm</th></tr></thead>
-        <tbody>
-        <tr><td>BC</td><td>00</td></tr>
-        <tr><td>DE</td><td>01</td></tr>
-        <tr><td>IY</td><td>10</td></tr>
-        <tr><td>SP</td><td>11</td></tr>
-        </tbody>
-    </table>
+    {{ template "miscXref" (dict "caption" "Registers" "label" "Pair" "key" "mm" "entries" "BC,DE,IY,SP") -}}
     {{- end -}}
 
     {{- with $scratch.Get "registerP" -}}
-    <table class="memoryMap3">
-        <caption>Registers</caption>
-        <thead><tr><th>Pair</th><th>pp</th></tr></thead>
-        <tbody>
-        <tr><td>BC</td><td>00</td></tr>
-        <tr><td>DE</td><td>01</td></tr>
-        <tr><td>IX</td><td>10</td></tr>
-        <tr><td>SP</td><td>11</td></tr>
-        </tbody>
-    </table>
+    {{ template "miscXref" (dict "caption" "Registers" "label" "Pair" "key" "pp" "entries" "BC,DE,IX,SP") -}}
     {{- end -}}
 
     {{- with $scratch.Get "registerQ" -}}
-    <table class="memoryMap3">
-        <caption>Registers</caption>
-        <thead><tr><th>Pair</th><th>qq</th></tr></thead>
-        <tbody>
-        <tr><td>BC</td><td>00</td></tr>
-        <tr><td>DE</td><td>01</td></tr>
-        <tr><td>HL</td><td>10</td></tr>
-        <tr><td>AF</td><td>11</td></tr>
-        </tbody>
-    </table>
+    {{ template "miscXref" (dict "caption" "Registers" "label" "Pair" "key" "qq" "entries" "BC,DE,HL,AF") -}}
     {{- end -}}
 
     {{- with $scratch.Get "cond" -}}
