@@ -54,6 +54,25 @@ weight: 81
     All of these have either DD or FD as the previous prefix byte and a displacement immediately after them.
 </p>
 
+{{< z80/lookupTable
+"11001011 CB_Prefix cb/"
+"0011010D IncDec ../incdec/"
+"00xx1001 ADD ../arithmetic/"
+"00100001 LD ../../opcodes/ld/"
+"0010xx10 LD ../../opcodes/ld/"
+"00110110 LD ../../opcodes/ld/"
+"01xxx110 LD ../../opcodes/ld/"
+"10xx0110 LD ../../opcodes/ld/"
+"01110xxx LD ../../opcodes/ld/"
+"11111001 LD ../../opcodes/ld/"
+"01110110 "
+"0010X011 INC_DEC ../../opcodes/math/"
+"0100010x INC_DEC ../../opcodes/math/"
+"11100x01 Stack_Instructions ../opcodes/stack/"
+"11100011 EX misc/"
+"11101001 Flow flow/"
+>}}
+
 {{< z80/instruction
 caption="Opcode format"
 def="0011010D IncDec"
