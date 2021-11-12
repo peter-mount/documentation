@@ -1,0 +1,26 @@
+---
+type: "manual"
+title: "Increment Decrement Instructions"
+linkTitle: "INC/DEC"
+description: "How to decode increment and decrement instructions from binary"
+weight: 10
+---
+
+{{< z80/instruction
+caption="Opcode format"
+def="/00XXD011 16-bit//00r10D 8-bit//l (IX+d) or (IY+d)/11Z11101 DD_or_FD_prefix/0011010D/d//l IX or IY/11Z11101 DD_or_FD_prefix/0010D011/nn"
+innerAfter="1">}}
+{{< /z80/instruction >}}
+
+<div class="row">
+    <div class="col-4">
+        {{< misc/xref caption="XX Register" label="Instruction" key="XX" entries="BC,DE,HL,A" >}}
+    </div>
+    <div class="col-4">
+        {{< misc/xref caption="D direction" label="Direction" key="D" entries="INC,DEC" >}}
+    </div>
+    <div class="col-4">
+        {{< misc/xref caption="Z" label="Register" key="Z" entries="IX,IY" >}}
+    </div>
+</div>
+

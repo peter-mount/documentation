@@ -48,3 +48,22 @@ weight: 81
 <p>
     Note that the offset <code>d</code> is before the final part of the operand, not after as you might expect.
 </p>
+
+<h3>Decoder</h3>
+<p>
+    All of these have either DD or FD as the previous prefix byte and a displacement immediately after them.
+</p>
+
+{{< z80/instruction
+caption="Opcode format"
+def="0011010D IncDec"
+innerAfter="1"
+IncDec="../incdec/"
+>}}
+{{< /z80/instruction >}}
+
+<div class="row">
+    <div class="col-4">
+        {{< misc/xref caption="D direction" label="Direction" key="D" entries="INC,DEC" >}}
+    </div>
+</div>
