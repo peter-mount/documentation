@@ -55,7 +55,7 @@ weight: 81
 </p>
 
 {{< z80/lookupTable
-"11001011 CB_Prefix cb/"
+"11001011 CB_Prefix ../cb/"
 "0011010D IncDec ../incdec/"
 "00xx1001 ADD ../arithmetic/"
 "00100001 LD ../../opcodes/ld/"
@@ -68,21 +68,7 @@ weight: 81
 "01110110 "
 "0010X011 INC_DEC ../../opcodes/math/"
 "0100010x INC_DEC ../../opcodes/math/"
-"11100x01 Stack_Instructions ../opcodes/stack/"
-"11100011 EX misc/"
-"11101001 Flow flow/"
+"11100x01 Stack_Instructions ../../opcodes/stack/"
+"11100011 EX ../misc/"
+"11101001 Flow ../flow/"
 >}}
-
-{{< z80/instruction
-caption="Opcode format"
-def="0011010D IncDec"
-innerAfter="1"
-IncDec="../incdec/"
->}}
-{{< /z80/instruction >}}
-
-<div class="row">
-    <div class="col-4">
-        {{< misc/xref caption="D direction" label="Direction" key="D" entries="INC,DEC" >}}
-    </div>
-</div>
