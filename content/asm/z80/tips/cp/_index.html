@@ -5,24 +5,60 @@ linkTitle: "Comparisons"
 description: "Optimising comparing numbers"
 ---
 
-<h2>Compare number</h2>
-<p>
-    With <code>CP</code> it's easy to test for less than (&lt;), equals(=), not equals(!=) or
-    greater-than-equals(&gt;=) because of how the C and Z flags are used:
-</p>
-{{< book/sourceCode>}}
-{{< book/asm op="CP" param="15" comment="test A against 15" >}}
-{{< book/asm op="RET" param="C" comment="Return if A < 15" >}}
-{{< book/asm op="RET" param="NC" comment="Return if A >= 15" >}}
-{{< book/asm op="RET" param="Z" comment="Return if A = 15" >}}
-{{< book/asm op="RET" param="NZ" comment="Return if A != 15" >}}
-{{< /book/sourceCode >}}
-
-<p class="mt-3">
-    The following shows how to get the other two tests, Less-Than-Equals (&lt;=) and Greater-Than(&gt;):
-</p>
+<div class="printPageBreakAvoid">
+    <h3 class="mt-3">A = 0</h3>
+    <p>
+        A common test is to see if A is 0, so you would expect to use <code>CP 0</code> to test for it.
+    </p>
+    <p>
+        For example, take this simple routine which writes a NULL terminated string pointed to by HL to the screen
+        of the Sinclair ZX Spectrum:
+    </p>
+    {{< book/sourceCode>}}
+    {{< book/asm comment="Print null terminated string at HL to the screen" >}}
+    {{< book/asm label="printStr" op="LD" param="A,(HL)" comment="get next byte" >}}
+    {{< book/asm op="CP" param="0" comment="check for null" >}}
+    {{< book/asm op="RET" param="Z" comment="Stop when we get a null" >}}
+    {{< book/asm op="RST" param="2" comment="print the character" >}}
+    {{< book/asm op="INC" param="HL" comment="move to next character" >}}
+    {{< book/asm op="JR" param="printStr" comment="loop back" >}}
+    {{< /book/sourceCode >}}
+    <p class="mt-3">
+        An optimisation here is to replace <code>CP 0</code> with <code>AND A</code>
+    </p>
+    {{< book/sourceCode>}}
+    {{< book/asm comment="Print null terminated string at HL to the screen" >}}
+    {{< book/asm label="printStr" op="LD" param="A,(HL)" comment="get next byte" >}}
+    {{< book/asm op="AND" param="A" comment="check for null" >}}
+    {{< book/asm op="RET" param="Z" comment="Stop when we get a null" >}}
+    {{< book/asm op="RST" param="2" comment="print the character" >}}
+    {{< book/asm op="INC" param="HL" comment="move to next character" >}}
+    {{< book/asm op="JR" param="printStr" comment="loop back" >}}
+    {{< /book/sourceCode >}}
+    <p class="mt-3">
+        This works because <code>AND A</code> doesn't change the accumulator but does set the flags accordingly.
+        It is also quicker and just 1 byte long compared to 2.
+    </p>
+</div>
 
 <div class="printPageBreakAvoid">
+    <h2 class="mt-4">Compare number</h2>
+    <p>
+        With <code>CP</code> it's easy to test for less than (&lt;), equals (=), not equals (!=) or
+        greater-than-equals (&gt;=) because of how the C and Z flags are used:
+    </p>
+    {{< book/sourceCode>}}
+    {{< book/asm op="CP" param="15" comment="test A against 15" >}}
+    {{< book/asm op="RET" param="C" comment="Return if A < 15" >}}
+    {{< book/asm op="RET" param="NC" comment="Return if A >= 15" >}}
+    {{< book/asm op="RET" param="Z" comment="Return if A = 15" >}}
+    {{< book/asm op="RET" param="NZ" comment="Return if A != 15" >}}
+    {{< /book/sourceCode >}}
+
+    <p class="mt-3">
+        The following shows how to get the other two tests, Less-Than-Equals (&lt;=) and Greater-Than(&gt;):
+    </p>
+
     <h3>A &lt;= n</h3>
     <p>
         This is a simple one. As <code>CP</code> tests against A-n then if A=N then Z is set but if A &lt; n then C is
@@ -42,9 +78,7 @@ description: "Optimising comparing numbers"
     {{< book/asm op="CP" param="15+1" comment="test for A<16" >}}
     {{< book/asm op="RET" param="C" comment="Return if A<16" >}}
     {{< /book/sourceCode >}}
-</div>
 
-<div class="printPageBreakAvoid">
     <h3 class="mt-3">A &gt; n</h3>
     <p>
         This is the opposite problem. Here Carry is clear when A&gt;=n, so to get A&gt;n
@@ -73,6 +107,7 @@ description: "Optimising comparing numbers"
         It's easy to forget that some instructions set the flags based on the result so frequently
         you do not need to use <code>CP</code> to test for a condition when the result is already known:
     </p>
+
     <p>
         Here we check for bit 1 of A is set and if it is we exit the subroutine:
     </p>
@@ -92,11 +127,19 @@ description: "Optimising comparing numbers"
 </div>
 
 <div class="printPageBreakAvoid">
-    <h2>Bit testing</h2>
+    <h2 class="mt-3">Testing bits</h2>
+
     <h3 class="mt-3">Testing Bit 0 of A</h3>
     <p>
-        With this example, we can also test bit 1 of A by shifting it right 1 bit then testing the carry flag.
-        This saves an additional byte:
+        The standard method of testing if bit 0 of A is set is to use <code>BIT 0,A</code>:
+    </p>
+    {{< book/sourceCode>}}
+    {{< book/asm op="BIT" param="0,A" code="CB47" comment="Test if BIT 0 is set" >}}
+    {{< book/asm op="RET" param="NZ" code="C8" comment="Return as bit 0 of A was set" >}}
+    {{< /book/sourceCode >}}
+
+    <p>
+        If we don't need A afterwards then we can optimise this by using a right shift instead:
     </p>
     {{< book/sourceCode>}}
     {{< book/asm op="RRA" code="1F" comment="Shift A right 1 bit, C=original bit 0" >}}
@@ -104,20 +147,18 @@ description: "Optimising comparing numbers"
     {{< /book/sourceCode >}}
 
     <p class="mt-3">
-        This would also apply if we were using the <code>BIT</code> instruction:
+        This works as we just shifted bit 0 into the Carry Flag and we save an additional byte in the process.
     </p>
-    {{< book/sourceCode>}}
-    {{< book/asm op="BIT" param="0,A" code="CB47" comment="Test if BIT 0 is set" >}}
-    {{< book/asm op="RET" param="NZ" code="C8" comment="Return as bit 0 of A was set" >}}
-    {{< /book/sourceCode >}}
+
     <p class="mt-3">
-        Using <code>RRA</code> would be faster & saves 1 byte but it destroys A.
+        Using <code>RRA</code> would be faster & saves 1 byte, but it destroys A.
         If you need to keep A intact then keep the BIT instruction.
     </p>
 
     <h3>Testing Bit 7 of A</h3>
     <p>
-        Here, if we are testing if bit 7 of A is set, but we don't need A afterwards then instead of:
+        Just like testing bit 0, with bit 7 we can do the same but shifting right instead.
+        So rather than using <code>BIT 7,A</code> like:
     </p>
     {{< book/sourceCode>}}
     {{< book/asm op="BIT" param="7,A" code="CB7F" comment="Test if BIT 7 is set" >}}

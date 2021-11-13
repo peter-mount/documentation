@@ -2,7 +2,7 @@
 type: "manual"
 title: "Accumulator"
 linkTitle: "Accumulator"
-description: "Optimising using the A register"
+description: "Optimising use of the A register"
 ---
 
 <h2>Setting the Accumulator to 0</h2>
@@ -50,7 +50,7 @@ description: "Optimising using the A register"
     Internally, <code>CP 1</code> just does A-1 but discards the result which is why <code>DEC A</code> works in this instance.
 </p>
 
-<h2>Inverting A - XOR &FF</h2>
+<h2>Inverting A</h2>
 <p>
     If inverting A, i.e. swapping each bit from 1 to 0 and vis-versa then instead of <code>XOR 0xFF</code> use
     <code>CPL</code> instead. It's both faster, 1 byte and that's all that instruction does.
