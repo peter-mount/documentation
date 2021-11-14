@@ -2,9 +2,10 @@
 type: "manual"
 title: "Timing"
 linkTitle: "Timing"
-description: "Things to try to optimise Z80 code"
+description: "How the system clock relates to processor speed"
 weight: 20
 ---
+
 <p>
     The Z80 processor executes instructions as a series of basic operations:
 </p>
@@ -13,17 +14,32 @@ weight: 20
     <li>I/O device access</li>
     <li>Interrupt acknowledge</li>
 </ul>
-<h3>Machine Cycles</h3>
-<p>
-    Each of these operations is known as a Machine cycle (<code>M-cycle</code>).
-    An <code>M-cycle</code> however can take between 3 and 6 clock cycles to execute.
-</p>
 
-<h3>Time Cycles</h3>
 <p>
-    A time cycle (<code>T-cycle</code>) is one cycle of the system clock, from
+    Each of these operations is known as a Machine cycle (<code>M-cycle</code>),
+    which can take between 3 and 6 <code>T-Cycles</code> to execute,
+    although this can be extended by the <span class="not">WAIT</span> signal.
+    A <code>T-cycle</code> (Time Cycle) is one cycle of the system clock.
+</p>
+<p>
+    The following diagram shows an example of a single instruction that reads from memory and writes back.
 </p>
 
 <div class="ml-2">
     <img src="/asm/z80/timing/timing.svg" alt="Visualisation of the timing of a single CPU instruction"/>
 </div>
+
+<h3>Opcode fetch</h3>
+<p>
+    The Opcode fetch takes 4 T-cycles:
+</p>
+
+<div class="ml-2">
+    <img src="/asm/z80/timing/opcodefetch.svg" alt="Visualisation of the timing of fetching an opcode"/>
+</div>
+
+<p>
+    T1 Sets the Address bus <code>A<sub>0&hellip;15</sub></code> to the current value of the program counter.<br/>
+    T2 Reads the opcode during the second half of the cycle.<br/>
+    T3 and T4 has the refresh address set on the Address Bus. This is to allow dynamic ram to be refreshed.
+</p>
