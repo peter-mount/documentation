@@ -6,7 +6,7 @@
      xmlns:xlink="http://www.w3.org/1999/xlink"
      viewBox="0 0 540 240" width="540" height="240">
     <defs>
-        <path id="clk" d="M0 0 l0 -20 l20 0 l0 20 l20 0 l0 20" />
+        <path id="clk" d="M0 0 l0 -20 l20 0 l0 20 l20 0 m0 5 l0 15" />
         <path id="lar" d="M0 0 l 10 -5 l 0 10 l -10 -5" fill="black"/>
         <path id="rar" d="M0 0 l -10 -5 l 0 10 l 10 -5" fill="black"/>
         <text id="t1" x="20" y="98">T1</text>
@@ -37,7 +37,7 @@
         <use xlink:href="#clk" x="440" y="80"/>
 
         <!-- tcycle -->
-        <path d="M40 80 l0 -60 M0 40 l40 0"/>
+        <path d="M40 55 l0 -45 M0 40 l40 0"/>
         <use xlink:href="#lar" x="0" y="40"/>
         <use xlink:href="#rar" x="40" y="40"/>
         <text class="tCycle" x="20" y="30">T Cycle</text>
