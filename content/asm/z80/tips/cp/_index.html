@@ -3,6 +3,7 @@ type: "manual"
 title: "Comparisons"
 linkTitle: "Comparisons"
 description: "Optimising comparing numbers"
+weight: 20
 ---
 
 <div class="printPageBreakAvoid">
@@ -10,7 +11,22 @@ description: "Optimising comparing numbers"
     <p>
         A common test is to see if A is 0, so you would expect to use <code>CP 0</code> to test for it.
     </p>
+
     <p>
+        Just like setting A to 0 we can compare quicker.
+        In this case, instead of <code>CP 0</code> we can just use either <code>OR A</code> or <code>AND A</code>
+        instead.
+        Just 1 byte and 3 T-states faster.
+    </p>
+
+    {{< book/sourceCode>}}
+    {{< book/asm op="CP" param="0" code="FE00" comment="A-0 will set Z if A is also 0" >}}
+    {{< book/asm op="AND" param="A" code="A7" comment="Anything AND itself is itself but Z is set if A is 0" >}}
+    {{< book/asm op="OR" param="A" code="B7" comment="Anything OR itself is itself but Z is set if A is 0" >}}
+    {{< /book/sourceCode >}}
+
+
+    <p class="mt-3">
         For example, take this simple routine which writes a NULL terminated string pointed to by HL to the screen
         of the Sinclair ZX Spectrum:
     </p>
@@ -24,20 +40,34 @@ description: "Optimising comparing numbers"
     {{< book/asm op="JR" param="printStr" comment="loop back" >}}
     {{< /book/sourceCode >}}
     <p class="mt-3">
-        An optimisation here is to replace <code>CP 0</code> with <code>AND A</code>
+        The optimisation here is to replace <code>CP 0</code> with <code>OR A</code>
     </p>
     {{< book/sourceCode>}}
     {{< book/asm comment="Print null terminated string at HL to the screen" >}}
     {{< book/asm label="printStr" op="LD" param="A,(HL)" comment="get next byte" >}}
-    {{< book/asm op="AND" param="A" comment="check for null" >}}
+    {{< book/asm op="OR" param="A" comment="check for null" >}}
     {{< book/asm op="RET" param="Z" comment="Stop when we get a null" >}}
     {{< book/asm op="RST" param="2" comment="print the character" >}}
     {{< book/asm op="INC" param="HL" comment="move to next character" >}}
     {{< book/asm op="JR" param="printStr" comment="loop back" >}}
     {{< /book/sourceCode >}}
+</div>
+
+<div class="printPageBreakAvoid">
+    <h3 class="mt-3">A = 1</h3>
+    <p>
+        Comparing A to 1 can also be done using <code>DEC A</code> instead of <code>CP 1</code>.
+        By decrementing A, the Z flag will be set if A is now 0.
+        Like above its faster and 1 byte, but it also alters A, so it's not really of any use unless you don't care about
+        the value of A after the test.
+    </p>
+    {{< book/sourceCode>}}
+    {{< book/asm op="CP" param="1" code="FE01" comment="A-1 will set Z if A is also 1" >}}
+    {{< book/asm op="DEC" param="A" code="3D" comment="A=A-1, Z is set if A is now 0" >}}
+    {{< /book/sourceCode >}}
+
     <p class="mt-3">
-        This works because <code>AND A</code> doesn't change the accumulator but does set the flags accordingly.
-        It is also quicker and just 1 byte long compared to 2.
+        Internally, <code>CP 1</code> just does A-1 but discards the result which is why <code>DEC A</code> works in this instance.
     </p>
 </div>
 
