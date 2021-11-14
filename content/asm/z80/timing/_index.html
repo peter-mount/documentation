@@ -1,0 +1,29 @@
+---
+type: "manual"
+title: "Timing"
+linkTitle: "Timing"
+description: "Things to try to optimise Z80 code"
+weight: 20
+---
+<p>
+    The Z80 processor executes instructions as a series of basic operations:
+</p>
+<ul>
+    <li>Memory access</li>
+    <li>I/O device access</li>
+    <li>Interrupt acknowledge</li>
+</ul>
+<h3>Machine Cycles</h3>
+<p>
+    Each of these operations is known as a Machine cycle (<code>M-cycle</code>).
+    An <code>M-cycle</code> however can take between 3 and 6 clock cycles to execute.
+</p>
+
+<h3>Time Cycles</h3>
+<p>
+    A time cycle (<code>T-cycle</code>) is one cycle of the system clock, from
+</p>
+
+<div class="ml-2">
+    <img src="/asm/z80/timing/timing.svg" alt="Visualisation of the timing of a single CPU instruction"/>
+</div>

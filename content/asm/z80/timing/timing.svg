@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    SVG diagram of the timing of an example Z80 instruction
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 540 240" width="540" height="240">
+    <defs>
+        <path id="clk" d="M0 0 l0 -20 l20 0 l0 20 l20 0 l0 20" />
+        <path id="lar" d="M0 0 l 10 -5 l 0 10 l -10 -5" fill="black"/>
+        <path id="rar" d="M0 0 l -10 -5 l 0 10 l 10 -5" fill="black"/>
+        <text id="t1" x="20" y="98">T1</text>
+        <text id="t2" x="60" y="98">T2</text>
+        <text id="t3" x="100" y="98">T3</text>
+        <text id="t4" x="140" y="98">T4</text>
+    </defs>
+    <!-- This makes it easier to edit
+    <rect x="0" y="0" width="540" height="240" fill="white" stroke="black"/>
+    -->
+    <g transform="translate(40 0)">
+        <line x1="0" y1="10" x2="0" y2="210"/>
+
+        <!-- System clock -->
+        <text x="-35" y="84" style="text-anchor: start;">CLK</text>
+        <line x1="-10" y1="80" x2="0" y2="80"/>
+        <use xlink:href="#clk" x="0" y="80"/>
+        <use xlink:href="#clk" x="40" y="80"/>
+        <use xlink:href="#clk" x="80" y="80"/>
+        <use xlink:href="#clk" x="120" y="80"/>
+        <use xlink:href="#clk" x="160" y="80"/>
+        <use xlink:href="#clk" x="200" y="80"/>
+        <use xlink:href="#clk" x="240" y="80"/>
+        <use xlink:href="#clk" x="280" y="80"/>
+        <use xlink:href="#clk" x="320" y="80"/>
+        <use xlink:href="#clk" x="360" y="80"/>
+        <use xlink:href="#clk" x="400" y="80"/>
+        <use xlink:href="#clk" x="440" y="80"/>
+
+        <!-- tcycle -->
+        <path d="M40 80 l0 -60 M0 40 l40 0"/>
+        <use xlink:href="#lar" x="0" y="40"/>
+        <use xlink:href="#rar" x="40" y="40"/>
+        <text class="tCycle" x="20" y="30">T Cycle</text>
+
+        <!-- M1 -->
+        <path d="M160 150 l0 -50 M0 130 l160 0"/>
+        <use xlink:href="#lar" x="0" y="130"/>
+        <use xlink:href="#rar" x="160" y="130"/>
+        <text x="80" y="120" >Machine Cycle</text>
+        <text x="80" y="145" >M1</text>
+        <text x="80" y="155" >Opcode Fetch</text>
+        <use xlink:href="#t1" x="0"/>
+        <use xlink:href="#t2" x="0"/>
+        <use xlink:href="#t3" x="0"/>
+        <use xlink:href="#t4" x="0"/>
+
+        <!-- M2 -->
+        <path d="M280 150 l0 -50 M160 130 l120 0"/>
+        <use xlink:href="#lar" x="160" y="130"/>
+        <use xlink:href="#rar" x="280" y="130"/>
+        <text x="220" y="145" >M2</text>
+        <text x="220" y="155" >Memory Read</text>
+        <use xlink:href="#t1" x="160"/>
+        <use xlink:href="#t2" x="160"/>
+        <use xlink:href="#t3" x="160"/>
+
+        <!-- M3 -->
+        <path d="M400 150 l0 -50 M280 130 l120 0"/>
+        <use xlink:href="#lar" x="280" y="130"/>
+        <use xlink:href="#rar" x="400" y="130"/>
+        <text x="340" y="145" >M3</text>
+        <text x="340" y="155" >Memory Write</text>
+        <use xlink:href="#t1" x="280"/>
+        <use xlink:href="#t2" x="280"/>
+        <use xlink:href="#t3" x="280"/>
+
+        <!-- Instruction cycle -->
+        <path d="M400 150 l0 60 M0 190 l400 0"/>
+        <use xlink:href="#lar" x="0" y="190"/>
+        <use xlink:href="#rar" x="400" y="190"/>
+        <text x="200" y="185" >Instruction Cycle</text>
+
+        <!-- next instruction -->
+        <use xlink:href="#t1" x="400"/>
+        <use xlink:href="#t2" x="400"/>
+
+        <!-- Diagram title -->
+        <text class="title" x="200" y="230">Basic CPU Timing Example</text>
+    </g>
+    <style type="text/css"><![CDATA[
+        g {
+            fill: none;
+            stroke: black;
+        }
+        text {
+            font-size: 80%;
+            text-anchor: middle;
+            stroke: none;
+            fill: black;
+            font: Verdana, Helvetica, Arial, sans-serif;
+        }
+        text.tCycle {
+            font-size: 60%;
+        }
+        text.title {
+            font-size: 120%;
+            font-weight: bold;
+        }
+    ]]></style>
+</svg>
