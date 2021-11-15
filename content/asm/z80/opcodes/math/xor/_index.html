@@ -5,9 +5,10 @@ linkTitle: "XOR"
 description: "Binary Exclusive OR"
 tags:
   - z80 instruction
-code_format: "%[2]s,%[3]s"
+code_format: "XOR %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -26,43 +27,64 @@ code_axis:
   - SP
   - IX
   - IY
-code_dest:
-  - "XOR A"
 codes:
 
   - op: "XOR A,A"
     code: "AF"
     colour: green
+    size: 1
+    cycles: 4
   - op: "XOR A,B"
     code: "A8"
     colour: green
+    size: 1
+    cycles: 4
   - op: "XOR A,C"
     code: "A9"
     colour: green
+    size: 1
+    cycles: 4
   - op: "XOR A,D"
     code: "AA"
     colour: green
+    size: 1
+    cycles: 4
   - op: "XOR A,E"
     code: "AB"
     colour: green
+    size: 1
+    cycles: 4
   - op: "XOR A,H"
     code: "AC"
     colour: green
+    size: 1
+    cycles: 4
   - op: "XOR A,L"
     code: "AD"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "XOR A,(HL)"
     code: "AE"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "XOR A,(IX+d)"
-    code: "DDAE"
+    code: "DDAEnn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "XOR A,(IY+d)"
-    code: "FDAE"
+    code: "FDAEnn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "XOR A,n"
     code: "EEnn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
 ---
 {{< z80/instruction

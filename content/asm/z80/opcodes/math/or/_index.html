@@ -5,9 +5,10 @@ linkTitle: "OR"
 description: "Binary OR"
 tags:
   - z80 instruction
-code_format: "%[2]s,%[3]s"
+code_format: "OR %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -26,43 +27,64 @@ code_axis:
   - SP
   - IX
   - IY
-code_dest:
-  - "OR A"
 codes:
 
   - op: "OR A,A"
     code: "B7"
     colour: green
+    size: 1
+    cycles: 4
   - op: "OR A,B"
     code: "B0"
     colour: green
+    size: 1
+    cycles: 4
   - op: "OR A,C"
     code: "B1"
     colour: green
+    size: 1
+    cycles: 4
   - op: "OR A,D"
     code: "B2"
     colour: green
+    size: 1
+    cycles: 4
   - op: "OR A,E"
     code: "B3"
     colour: green
+    size: 1
+    cycles: 4
   - op: "OR A,H"
     code: "B4"
     colour: green
+    size: 1
+    cycles: 4
   - op: "OR A,L"
     code: "B5"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "OR A,(HL)"
     code: "B6"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "OR A,(IX+d)"
-    code: "DDB6"
+    code: "DDB6nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "OR A,(IY+d)"
-    code: "FDB6"
+    code: "FDB6nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "OR A,n"
     code: "F6nn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
 ---
 {{< z80/instruction

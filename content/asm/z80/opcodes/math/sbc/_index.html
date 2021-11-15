@@ -5,9 +5,10 @@ linkTitle: "SBC"
 description: "Subtraction with Carry"
 tags:
   - z80 instruction
-code_format: "%[2]s,%[3]s"
+code_format: "SBC %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -26,57 +27,85 @@ code_axis:
   - SP
   - IX
   - IY
-code_dest:
-  - "SBC A"
-  - "SBC HL"
 codes:
 
   - op: "SBC A,A"
     code: "9F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SBC A,B"
     code: "98"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SBC A,C"
     code: "99"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SBC A,D"
     code: "9A"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SBC A,E"
     code: "9B"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SBC A,H"
     code: "9C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SBC A,L"
     code: "9D"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "SBC A,(HL)"
     code: "9E"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "SBC A,(IX+d)"
-    code: "DD9E"
+    code: "DD9Enn"
     colour: yellow
+    size: 1
+    cycles: 4,4,3,5,3
   - op: "SBC A,(IY+d)"
-    code: "FD9E"
+    code: "FD9Enn"
     colour: yellow
+    size: 1
+    cycles: 4,4,3,5,3
   - op: "SBC A,n"
     code: "DEnn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "SBC HL,BC"
     code: "ED42"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "SBC HL,DE"
     code: "ED52"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "SBC HL,HL"
     code: "ED62"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "SBC HL,SP"
     code: "ED72"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
 
 ---
 {{< z80/instruction
