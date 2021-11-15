@@ -22,6 +22,8 @@ code_axis:
   - "(HL)"
   - "(BC)"
   - "(DE)"
+# This extra entry so we can represent the 2 LD HL,(nn) instructions on the page
+  - "(nn) "
   - "(nn)"
   - "(IX+d)"
   - "(IY+d)"
@@ -36,37 +38,57 @@ code_axis:
   - I
   - R
 codes:
+# Match on alternate line so 3 byte are on one and 4 byte on the other
   - op: "LD A, (nn)"
+    match: "LD A, (nn) "
     code: "3Annnn"
     colour: yellow
+    size: 3
+    cycles: 4,3,3,3
 
   - op: "LD BC, (nn)"
     code: "ED4Bnnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
   - op: "LD DE, (nn)"
     code: "ED5Bnnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
   - op: "LD HL, (nn)"
     code: "ED6Bnnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
+# Match on alternate line as we have 2 LD HL,NN) instructions
   - op: "LD HL, (nn)"
+    match: "LD HL, (nn) "
     code: "2Annnn"
     colour: yellow
+    size: 3
+    cycles: 4,3,3,3,3
 
   - op: "LD SP, (nn)"
     code: "ED7Bnnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
   - op: "LD IX, (nn)"
     code: "DD2Annnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
   - op: "LD IY, (nn)"
     code: "FD2Annnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
 ---
 {{< z80/instruction

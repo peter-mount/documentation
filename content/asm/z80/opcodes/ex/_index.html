@@ -25,22 +25,34 @@ codes:
   - op: "EX AF, AF'"
     code: "08"
     colour: green
+    size: 1
+    cycles: 4
   - op: "EX DE, HL"
     code: "EB"
     colour: green
+    size: 1
+    cycles: 4
   - op: "EX (SP), HL"
     code: "E3"
     colour: yellow
+    size: 1
+    cycles: 4,3,4,3,5
   - op: "EX (SP), IX"
     code: "DDE3"
     colour: yellow
+    size: 2
+    cycles: 4,4,3,4,3,5
   - op: "EX (SP), IY"
     code: "FDE3"
     colour: yellow
+    size: 2
+    cycles: 4,4,3,4,3,5
   - op: "EXX"
     code: "D9"
     colour: green
     match: "EX AF,BC,DE,HL,IX,IY, AF',BC',DE',HL',IX',IY'"
+    size: 1
+    cycles: 4
 ---
 <p>
   These instructions exchange values between registers.

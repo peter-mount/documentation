@@ -19,14 +19,18 @@ codes:
   - op: "LD (HL), n"
     code: "36nn"
     colour: blue
+    size: 2
+    cycles: 4,3,3
   - op: "LD (IX+d), n"
     code: "DD36nnnn"
     colour: blue
+    size: 4
+    cycles: 4,4,3,5,3
   - op: "LD (IY+d), n"
     code: "FD36nnnn"
     colour: blue
-
-
+    size: 4
+    cycles: 4,4,3,5,3
 
 ---
 {{< z80/instruction

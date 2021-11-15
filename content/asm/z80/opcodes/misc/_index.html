@@ -6,28 +6,64 @@ weight: 3
 description: "Miscellaneous instructions"
 tags:
   - z80 instruction
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - NOP
+  - HALT
+  - EI
+  - DI
+  - IM0
+  - IM1
+  - IM2
 codes:
   - op: "NOP"
+    match: "OP NOP"
     code: "00"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "HALT"
+    match: "OP HALT"
     code: "76"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "EI"
+    match: "OP EI"
     code: "FB"
     colour: red
+    size: 1
+    cycles: 4
   - op: "DI"
+    match: "OP DI"
     code: "F3"
     colour: red
+    size: 1
+    cycles: 4
   - op: "IM0"
+    match: "OP IM0"
     code: "ED46"
     colour: red
+    size: 1
+    cycles: 4,4
   - op: "IM1"
+    match: "OP IM1"
     code: "ED56"
     colour: red
+    size: 1
+    cycles: 4,4
   - op: "IM2"
+    match: "OP IM2"
     code: "ED5E"
     colour: red
+    size: 1
+    cycles: 4,4
 
 ---
 {{< z80/instruction

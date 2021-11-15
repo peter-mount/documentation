@@ -9,6 +9,7 @@ tags:
 code_format: "%[2]s %[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - "A"
   - "B"
@@ -19,13 +20,15 @@ code_axis:
   - "L"
   - "(HL)"
 code_dest:
-  - "IN n"
+  - "IN (n)"
   - "IN (C)"
 codes:
-  - op: "IN A,n"
+  - op: "IN A,(n)"
     code: "DBnn"
     colour: grey
-    match: "IN n A"
+    size: 2
+    cycles: 4,3,4
+    match: "IN (n) A"
 ---
 {{< z80/instruction
     operation="A \longleftarrow (n)"

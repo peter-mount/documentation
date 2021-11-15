@@ -6,22 +6,50 @@ weight: 3
 description: "General instructions for the AF register pair"
 tags:
   - z80 instruction
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - DAA
+  - CPL
+  - NEG
+  - CCF
+  - SCF
 codes:
   - op: "DAA"
+    match: "OP DAA"
     code: "27"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CPL"
+    match: "OP CPL"
     code: "2F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "NEG"
+    match: "OP NEG"
     code: "ED44"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CCF"
+    match: "OP CCF"
     code: "3F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "SCF"
+    match: "OP SCF"
     code: "37"
     colour: green
+    size: 1
+    cycles: 4
 
 ---
 {{< z80/instruction

@@ -39,21 +39,33 @@ codes:
   - op: "LD BC, nn"
     code: "01nnnn"
     colour: blue
+    size: 3
+    cycles: 4,3,3
   - op: "LD DE, nn"
     code: "11nnnn"
     colour: blue
+    size: 3
+    cycles: 4,3,3
   - op: "LD HL, nn"
     code: "21nnnn"
     colour: blue
+    size: 3
+    cycles: 4,3,3
   - op: "LD SP, nn"
     code: "31nnnn"
     colour: blue
+    size: 3
+    cycles: 4,3,3
   - op: "LD IX, nn"
     code: "DD21nnnn"
     colour: blue
+    size: 4
+    cycles: 4,4,3,3
   - op: "LD IY, nn"
     code: "FD21nnnn"
     colour: blue
+    size: 4
+    cycles: 4,4,3,3
 
 ---
 {{< z80/instruction

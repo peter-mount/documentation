@@ -20,6 +20,8 @@ code_axis:
   - "(HL)"
   - "(BC)"
   - "(DE)"
+# Hack to show second HL instruction. A is in this row as well so we have 3 byte ops on one and 4 byte on the other
+  - "(nn) "
   - "(nn)"
   - "(IX+d)"
   - "(IY+d)"
@@ -36,27 +38,50 @@ code_axis:
 codes:
 
   - op: "LD (nn), A"
+    match: "LD (nn) , A"
     code: "32nnnn"
     colour: yellow
+    size: 3
+    cycles: 4,3,3,3
+
+# Use hack to show second HL instruction
+  - op: "LD (nn), HL"
+    match: "LD (nn) , HL"
+    code: "22nnnn"
+    colour: yellow
+    size: 3
+    cycles: 4,3,3,3,3
 
   - op: "LD (nn), BC"
     code: "ED43nnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
   - op: "LD (nn), DE"
     code: "ED53nnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
   - op: "LD (nn), HL"
-    code: "22nnnn"
+    code: "ED63nnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
   - op: "LD (nn), SP"
     code: "ED73nnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
   - op: "LD (nn), IX"
     code: "DD22nnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
   - op: "LD (nn), IY"
     code: "FD22nnnn"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,3,3,3
 
 ---
 {{< z80/instruction

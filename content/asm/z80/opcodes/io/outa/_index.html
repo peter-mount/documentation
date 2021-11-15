@@ -20,11 +20,13 @@ code_axis:
   - "L"
   - "(HL)"
 code_dest:
-  - "OUT n"
+  - "OUT (n)"
 codes:
-  - op: "OUT n,A"
+  - op: "OUT (n),A"
     code: "D3nn"
     colour: grey
+    size: 2
+    cycles: 4,3,4
 
 ---
 {{< z80/instruction

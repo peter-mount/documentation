@@ -228,14 +228,16 @@ table.hexGrid {
 
             span.size {
                 left: 0.25em;
-                bottom: 0;
+                bottom: 30%;
                 text-align: left;
+                font-size: 70%;
             }
 
             span.cycles {
                 right: 0.25em;
-                bottom: 0;
+                bottom: 30%;
                 text-align: right;
+                font-size: 70%;
             }
         }
     }

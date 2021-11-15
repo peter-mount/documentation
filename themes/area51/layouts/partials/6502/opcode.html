@@ -148,7 +148,7 @@
 {{- end -}}
 
 {{- $rowCount := len $validRows -}}
-<div>
+<div class="printPageBreakAvoid">
 <table class="memoryMap3">
     <thead>
     {{- if ne $sourceLabel "" -}}
@@ -194,10 +194,21 @@
                     {{- end -}}
 
                     <td class="brb {{$col}} nowrap">
+                        <div>
                         {{- if ne $opcode "" -}}
-                        {{- if $includeOp -}}<strong>{{$opcode.op}}</strong><br/>{{- end -}}
-                        {{- $opcode.code -}}
+                        {{- if $includeOp -}}<span class="op">{{$opcode.op}}</span><br/>{{- end -}}
+                        <span class="code">{{$opcode.code}}</span>
+                        {{- if eq 1 $colours.size -}}<span class="size">{{$opcode.size}}</span>{{- end -}}
+                            {{- if eq 1 $colours.cycles -}}
+                                {{- with $opcode.cycles -}}
+                                    <span class="cycles">
+                                    {{- $total := 0}}{{range split $opcode.cycles ","}}{{ $total = add $total (int .) }}{{end -}}
+                                    {{- $total -}}
+                                    </span>
+                                {{- end -}}
+                            {{- end -}}
                         {{- end -}}
+                        </div>
                     </td>
             {{- end -}}
 

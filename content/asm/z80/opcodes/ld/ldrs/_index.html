@@ -38,259 +38,425 @@ codes:
   - op: "LD A, I"
     code: "ED57"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD A, R"
     code: "ED5F"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD I, A"
     code: "ED47"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD R, A"
     code: "ED4F"
     colour: grey
+    size: 1
+    cycles: 4
 
   - op: "LD A, A"
     code: "7F"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD A, B"
     code: "78"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD A, C"
     code: "79"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD A, D"
     code: "7A"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD A, E"
     code: "7B"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD A, H"
     code: "7C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD A, L"
     code: "7D"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD A, (HL)"
     code: "7E"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD A, (BC)"
     code: "0A"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD A, (DE)"
     code: "1A"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD A, (IX+d)"
     code: "DD7Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD A, (IY+d)"
     code: "FD7Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD A, n"
     code: "3Enn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "LD B, A"
     code: "47"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD B, B"
     code: "40"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD B, C"
     code: "41"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD B, D"
     code: "42"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD B, E"
     code: "43"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD B, H"
     code: "44"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD B, L"
     code: "45"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD B, (HL)"
     code: "46"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD B, (IX+d)"
     code: "DD46nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD B, (IY+d)"
     code: "FD46nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD B, n"
-    code: "06"
+    code: "06nn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "LD C, A"
     code: "4F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD C, B"
     code: "48"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD C, C"
     code: "49"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD C, D"
     code: "4A"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD C, E"
     code: "4B"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD C, H"
     code: "4C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD C, L"
     code: "4D"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD C, (HL)"
     code: "4E"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD C, (IX+d)"
     code: "DD4Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD C, (IY+d)"
     code: "FD4Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD C, n"
     code: "0Enn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "LD D, A"
     code: "57"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD D, B"
     code: "50"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD D, C"
     code: "51"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD D, D"
     code: "52"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD D, E"
     code: "53"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD D, H"
     code: "54"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD D, L"
     code: "55"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD D, (HL)"
     code: "56"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD D, (IX+d)"
     code: "DD56nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD D, (IY+d)"
     code: "FD56nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD D, n"
     code: "16nn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "LD E, A"
     code: "5F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD E, B"
     code: "58"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD E, C"
     code: "59"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD E, D"
     code: "5A"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD E, E"
     code: "5B"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD E, H"
     code: "5C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD E, L"
     code: "5D"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD E, (HL)"
     code: "5E"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD E, (IX+d)"
     code: "DD5Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD E, (IY+d)"
     code: "FD5Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD E, n"
     code: "1Enn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "LD H, A"
     code: "67"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD H, B"
     code: "60"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD H, C"
     code: "61"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD H, D"
     code: "62"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD H, E"
     code: "63"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD H, H"
     code: "64"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD H, L"
     code: "65"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD H, (HL)"
     code: "66"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD H, (IX+d)"
     code: "DD66nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD H, (IY+d)"
     code: "FD66nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD H, n"
     code: "26nn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "LD L, A"
     code: "6F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD L, B"
     code: "68"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD L, C"
     code: "69"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD L, D"
     code: "6A"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD L, E"
     code: "6B"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD L, H"
     code: "6C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "LD L, L"
     code: "6D"
     colour: grey
+    size: 1
+    cycles: 4
   - op: "LD L, (HL)"
     code: "6E"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "LD L, (IX+d)"
     code: "DD6Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD L, (IY+d)"
     code: "FD6Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "LD L, n"
     code: "2Enn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
 ---
 {{< z80/instruction
