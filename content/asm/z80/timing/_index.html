@@ -29,45 +29,51 @@ weight: 20
     <img src="/asm/z80/timing/timing.svg" alt="Visualisation of the timing of a single CPU instruction"/>
 </div>
 
-<h3>Opcode fetch</h3>
-<p>
-    The Opcode fetch takes 4 T-cycles:
-</p>
+<div class="printPageBreakAvoid">
+    <h3>Opcode fetch</h3>
+    <p>
+        The Opcode fetch takes 4 T-cycles:
+    </p>
 
-<div class="ml-2">
-    <img src="/asm/z80/timing/opcodefetch.svg" alt="Visualisation of the timing of fetching an opcode"/>
+    <div class="ml-2">
+        <img src="/asm/z80/timing/opcodefetch.svg" alt="Visualisation of the timing of fetching an opcode"/>
+    </div>
+
+    <p>
+        T1 Sets the Address bus <code>A<sub>0&hellip;15</sub></code> to the current value of the program counter.<br/>
+        T2 Reads the opcode during the second half of the cycle.<br/>
+        T3 and T4 has the refresh address set on the Address Bus. This is to allow dynamic ram to be refreshed.
+    </p>
 </div>
 
-<p>
-    T1 Sets the Address bus <code>A<sub>0&hellip;15</sub></code> to the current value of the program counter.<br/>
-    T2 Reads the opcode during the second half of the cycle.<br/>
-    T3 and T4 has the refresh address set on the Address Bus. This is to allow dynamic ram to be refreshed.
-</p>
+<div class="printPageBreakAvoid">
+    <h3>Memory Access</h3>
+    <p>
+        Memory access cycles are generally three T-cycles long unless wait states are requested by memory via the
+        <span class="not">WAIT</span> signal.
+    </p>
 
-<h3>Memory Access</h3>
-<p>
-    Memory access cycles are generally three T-cycles long unless wait states are requested by memory via the
-    <span class="not">WAIT</span> signal.
-</p>
-
-<p>
-    For a memory read the <span class="not">MREQ</span> and <span class="not">RD</span> signals are pulled low once
-    the address bus is stable.
-</p>
-<div class="ml-2">
-    <img src="/asm/z80/timing/memread.svg" alt="Visualisation of the timing of reading from memory"/>
+    <h4>Memory Read Cycle</h4>
+    <p>
+        For a memory read the <span class="not">MREQ</span> and <span class="not">RD</span> signals are pulled low once
+        the address bus is stable.
+    </p>
+    <div class="ml-2">
+        <img src="/asm/z80/timing/memread.svg" alt="Visualisation of the timing of reading from memory"/>
+    </div>
 </div>
 
-
-<p>
-    For a memory write the <span class="not">MREQ</span> and <span class="not">WR</span> signals are pulled low once
-    the address bus is stable.
-</p>
-
-<p>
-    <span class="not">WR</span> goes inactive half a T-State before the address and data bus contents changed to support
-    different types of memory.
-</p>
-<div class="ml-2">
-    <img src="/asm/z80/timing/memwrite.svg" alt="Visualisation of the timing of writing to memory"/>
+<div class="printPageBreakAvoid">
+    <h4>Memory Write Cycle</h4>
+    <p>
+        For a memory write the <span class="not">MREQ</span> and <span class="not">WR</span> signals are pulled low once
+        the address bus is stable.
+    </p>
+    <div class="ml-2">
+        <img src="/asm/z80/timing/memwrite.svg" alt="Visualisation of the timing of writing to memory"/>
+    </div>
+    <p>
+        <span class="not">WR</span> goes inactive half a T-State before the address and data bus contents are changed
+        to support different types of memory.
+    </p>
 </div>

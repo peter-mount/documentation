@@ -84,7 +84,7 @@
         </g>
 
         <!-- Diagram title -->
-        <text class="title" x="160" y="290">Memory Read Cycle</text>
+        <text class="title" x="160" y="290">Memory Write Cycle</text>
     </g>
     <style type="text/css"><![CDATA[
         g {
