@@ -39,36 +39,60 @@ codes:
   - op: "RRA"
     code: "1F"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "RR A"
     code: "CB1F"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RR B"
     code: "CB18"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RR C"
     code: "CB19"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RR D"
     code: "CB1A"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RR E"
     code: "CB1B"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RR H"
     code: "CB1C"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RR L"
     code: "CB1D"
     colour: green
+    size: 2
+    cycles: 4,4
+
   - op: "RR (HL)"
     code: "CB1E"
     colour: yellow
+    size: 2
+    cycles: 4,4,4,3
   - op: "RR (IX+d)"
     code: "DDCBnn1E"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,5,4,3
   - op: "RR (IY+d)"
     code: "FDCBnn1E"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,5,4,3
 
 ---
 <div class="ml-5">

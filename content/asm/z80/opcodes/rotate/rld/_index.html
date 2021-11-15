@@ -5,7 +5,7 @@ linkTitle: "RLD"
 description: "Rotate bit pairs in A and (HL) left"
 tags:
   - z80 instruction
-code_format: "%[2]s%[3]s"
+code_format: "%[2]s %[3]s"
 code_source: ""
 code_destination: ""
 code_includeop: true
@@ -21,24 +21,15 @@ code_axis:
   - "(IX+d)"
   - "(IY+d)"
 code_dest:
-  - "RL"
-  - "RL "
-  - "RLC"
-  - "RLC "
-  - "RLD "
-  - "RR"
-  - "RR "
-  - "RRC"
-  - "RRC "
-  - "RRD "
-  - "SLA "
-  - "SRA "
-  - "SRL "
+  - "Op"
 codes:
 
   - op: "RLD (HL)"
+    match: "Op (HL)"
     code: "ED6F"
     colour: yellow
+    size: 2
+    cycles: 4,4,3,4,3
 
 ---
 <div class="ml-5">

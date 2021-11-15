@@ -39,36 +39,60 @@ codes:
   - op: "RRCA"
     code: "0F"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "RRC A"
     code: "CB0F"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RRC B"
     code: "CB08"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RRC C"
     code: "CB09"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RRC D"
     code: "CB0A"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RRC E"
     code: "CB0B"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RRC H"
     code: "CB0C"
     colour: green
+    size: 2
+    cycles: 4,4
   - op: "RRC L"
     code: "CB0D"
     colour: green
+    size: 2
+    cycles: 4,4
+
   - op: "RRC (HL)"
     code: "CB0E"
     colour: yellow
+    size: 2
+    cycles: 4,4,4,3
   - op: "RRC (IX+d)"
     code: "DDCBnn0E"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,5,4,3
   - op: "RRC (IY+d)"
     code: "FDCBnn0E"
     colour: yellow
+    size: 4
+    cycles: 4,4,3,5,4,3
 
 ---
 <div class="ml-5">

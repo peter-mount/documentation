@@ -9,6 +9,7 @@ tags:
 code_format: "%[2]s %[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - AF
   - BC
@@ -24,40 +25,64 @@ codes:
   - op: "PUSH AF"
     code: "F5"
     colour: yellow
+    size: 1
+    cycles: 5,3,3
   - op: "PUSH BC"
     code: "C5"
     colour: yellow
+    size: 1
+    cycles: 5,3,3
   - op: "PUSH DE"
     code: "D5"
     colour: yellow
+    size: 1
+    cycles: 5,3,3
   - op: "PUSH HL"
     code: "E5"
     colour: yellow
+    size: 1
+    cycles: 5,3,3
   - op: "PUSH IX"
     code: "DDE5"
     colour: yellow
+    size: 2
+    cycles: 4,5,3,3
   - op: "PUSH IY"
     code: "FDE5"
     colour: yellow
+    size: 2
+    cycles: 4,5,3,3
 
   - op: "POP AF"
     code: "F1"
     colour: yellow
+    size: 1
+    cycles: 4,3,3
   - op: "POP BC"
     code: "C1"
     colour: yellow
+    size: 1
+    cycles: 4,3,3
   - op: "POP DE"
     code: "D1"
     colour: yellow
+    size: 1
+    cycles: 4,3,3
   - op: "POP HL"
     code: "E1"
     colour: yellow
+    size: 1
+    cycles: 4,3,3
   - op: "POP IX"
     code: "DDE1"
     colour: yellow
+    size: 2
+    cycles: 4,4,3,3
   - op: "POP IY"
     code: "FDE1"
     colour: yellow
+    size: 2
+    cycles: 4,4,3,3
 ---
 {{< z80/instruction
     def="/q (SP-2) \longleftarrow qq_l, (SP-1) \longleftarrow qq_h/l PUSH qq/11q0101//q (SP-2) \longleftarrow IX_l, (SP-1) \longleftarrow IX_h/l PUSH IX/11011101 DD/11100101 E5//q (SP-2) \longleftarrow IY_l, (SP-1) \longleftarrow IY_h/l PUSH IY/11111101 FD/11100101 E5//q qq_h \longleftarrow (SP-1), qq_l \longleftarrow (SP)/l POP qq/11q0001//q IX_h \longleftarrow (SP-1), IX_l \longleftarrow (SP)/l POP IX/11011101 DD/11100001 E1//q IY_h \longleftarrow (SP-1), IY_l \longleftarrow (SP)/l POP IY/11111101 FD/11100001 E1"
