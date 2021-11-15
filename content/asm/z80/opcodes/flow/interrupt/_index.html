@@ -10,7 +10,7 @@ code_destination: ""
 code_format: "%[2]s %[3]s"
 code_includeop: true
 code_axis:
-  - "Uncond"
+  - "Op"
   - "C"
   - "NC"
   - "Z"
@@ -20,7 +20,6 @@ code_axis:
   - "N"
   - "P"
   - "B!=0"
-code_dest:
   - "JP nn"
   - "JP (HL)"
   - "JP (IX)"
@@ -35,12 +34,16 @@ codes:
 
   - op: "RETI"
     code: "ED4D"
-    match: "RETI Uncond"
+    match: "Op RETI"
     colour: red
+    size: 2
+    cycles: 4,4,3,3
   - op: "RETN"
     code: "ED45"
-    match: "RETN Uncond"
+    match: "Op RETN"
     colour: red
+    size: 2
+    cycles: 4,4,3,3
 
 ---
 {{< z80/instruction

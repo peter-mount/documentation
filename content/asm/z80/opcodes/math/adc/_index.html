@@ -5,9 +5,10 @@ linkTitle: "ADC"
 description: "Addition with carry"
 tags:
   - z80 instruction
-code_format: "%[2]s,%[3]s"
+code_format: "ADC %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -26,57 +27,86 @@ code_axis:
   - SP
   - IX
   - IY
-code_dest:
-  - "ADC A"
-  - "ADC HL"
 codes:
 
   - op: "ADC A,A"
     code: "8F"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADC A,B"
     code: "88"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADC A,C"
     code: "89"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADC A,D"
     code: "8A"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADC A,E"
     code: "8B"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADC A,H"
     code: "8C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADC A,L"
     code: "8D"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "ADC A,(HL)"
     code: "8E"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "ADC A,(IX+d)"
-    code: "DD8E"
+    code: "DD8Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "ADC A,(IY+d)"
-    code: "FD8E"
+    code: "FD8Enn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
+
   - op: "ADC A,n"
     code: "CEnn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "ADC HL,BC"
     code: "ED4A"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADC HL,DE"
     code: "ED5A"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADC HL,HL"
     code: "ED6A"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADC HL,SP"
     code: "ED7A"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
 
 ---
 {{< z80/instruction

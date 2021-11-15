@@ -8,6 +8,7 @@ tags:
 code_format: "%[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -27,74 +28,107 @@ code_axis:
   - IX
   - IY
 code_dest:
-  - "INC"
+  - "Op"
 codes:
 
   - op: "INC A"
-    match: "INC,A"
+    match: "Op,A"
     code: "3C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "INC B"
-    match: "INC,B"
+    match: "Op,B"
     code: "04"
     colour: green
+    size: 1
+    cycles: 4
   - op: "INC C"
-    match: "INC,C"
+    match: "Op,C"
     code: "0C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "INC D"
-    match: "INC,D"
+    match: "Op,D"
     code: "14"
     colour: green
+    size: 1
+    cycles: 4
   - op: "INC E"
-    match: "INC,E"
+    match: "Op,E"
     code: "1C"
     colour: green
+    size: 1
+    cycles: 4
   - op: "INC H"
-    match: "INC,H"
+    match: "Op,H"
     code: "24"
     colour: green
+    size: 1
+    cycles: 4
   - op: "INC L"
-    match: "INC,L"
+    match: "Op,L"
     code: "2C"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "INC (HL)"
-    match: "INC,(HL)"
+    match: "Op,(HL)"
     code: "34"
     colour: yellow
+    size: 1
+    cycles: 4,4,3
   - op: "INC (IX+d)"
-    match: "INC,(IX+d)"
-    code: "DD34"
+    match: "Op,(IX+d)"
+    code: "DD34nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,4,3
   - op: "INC (IY+d)"
-    match: "INC,(IY+d)"
-    code: "FD34"
+    match: "Op,(IY+d)"
+    code: "FD34nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,4,3
 
   - op: "INC BC"
-    match: "INC,BC"
+    match: "Op,BC"
     code: "03"
     colour: green
+    size: 1
+    cycles: 6
   - op: "INC DE"
-    match: "INC,DE"
+    match: "Op,DE"
     code: "13"
     colour: green
+    size: 1
+    cycles: 6
   - op: "INC HL"
-    match: "INC,HL"
+    match: "Op,HL"
     code: "23"
     colour: green
+    size: 1
+    cycles: 6
   - op: "INC SP"
-    match: "INC,SP"
+    match: "Op,SP"
     code: "33"
     colour: green
+    size: 1
+    cycles: 6
   - op: "INC IX"
-    match: "INC,IX"
+    match: "Op,IX"
     code: "DD23"
     colour: green
+    size: 2
+    cycles: 4,6
   - op: "INC IY"
-    match: "INC,IY"
+    match: "Op,IY"
     code: "FD23"
     colour: green
+    size: 2
+    cycles: 4,6
 
 ---
 {{< z80/instruction

@@ -37,41 +37,66 @@ codes:
     code: "C9"
     match: "RET Uncond"
     colour: darkblue
+    size: 1
+    cycles: 4,3,3
   - op: "RET C"
     code: "D8"
     match: "RET C"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET NC"
     code: "D0"
     match: "RET NC"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET Z"
     code: "C8"
     match: "RET Z"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET NZ"
     code: "C0"
     match: "RET NZ"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET PE"
     code: "E8"
     match: "RET PE"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET PO"
     code: "E0"
     match: "RET PO"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET N"
     code: "F8"
     match: "RET N"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
   - op: "RET P"
     code: "F0"
     match: "RET P"
     colour: darkblue
+    size: 1
+    cycles: 5,3,3
 
 ---
 {{< z80/instruction
     def="/q PC_l \longleftarrow (SP) \\ PC_h \longleftarrow (SP+1) \\ SP \longleftarrow SP+2/l RET/11001001//q \begin{rcases} PC_l \longleftarrow (SP) \\ PC_h \longleftarrow (SP+1) \\ SP \longleftarrow SP+2 \end{rcases} \text{ if } ccc = true/l RET ccc/11c000"
 >}}
 {{< /z80/instruction >}}
+
+<h3>Timing</h3>
+<p>
+  The unconditional RET takes 10 (4,3,3) T-States.
+  The conditional RET takes 17(5,3,3) T-States if the condition is true
+  and 5 T-States if false and no return was performed.
+</p>

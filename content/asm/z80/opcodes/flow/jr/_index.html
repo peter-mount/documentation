@@ -37,27 +37,39 @@ codes:
     code: "18nn"
     match: "JR e Uncond"
     colour: darkblue
+    size: 2
+    cycles: 4,3,5
   - op: "JR C,e"
     code: "38nn"
     match: "JR e C"
     colour: darkblue
+    size: 2
+    cycles: 4,3,5
   - op: "JR NC,e"
     code: "30nn"
     match: "JR e NC"
     colour: darkblue
+    size: 2
+    cycles: 4,3,5
   - op: "JR Z,e"
     code: "28nn"
     match: "JR e Z"
     colour: darkblue
+    size: 2
+    cycles: 4,3,5
   - op: "JR NZ,e"
     code: "20nn"
     match: "JR e NZ"
     colour: darkblue
+    size: 2
+    cycles: 4,3,5
 
   - op: "DJNZ e"
     code: "10nn"
     match: "DJNZ e B!=0"
     colour: darkblue
+    size: 1
+    cycles: 5,3,5
 
 ---
 {{< z80/instruction
@@ -68,4 +80,13 @@ codes:
 <p>
     For relative instructions the offset is taken from the address of the op code so is in the range -126 to 129.
     Assemblers usually account for the difference where the value in memory is e-2.
+</p>
+
+<h3>Timing</h3>
+<p>
+  For JR then when a jump takes place then it takes 12(4,3,5) T-States whilst no jump 7(4,3) T-States.
+</p>
+<p>
+  For DJNZ if the jump takes place then it takes 13 (5,3,5) T-States.
+  If no jump then 8 (5,3) T-States.
 </p>

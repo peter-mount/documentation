@@ -5,9 +5,10 @@ linkTitle: "ADD"
 description: "Addition without carry"
 tags:
   - z80 instruction
-code_format: "%[2]s,%[3]s"
+code_format: "ADD %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -26,84 +27,127 @@ code_axis:
   - SP
   - IX
   - IY
-code_dest:
-  - "ADD A"
-  - "ADD HL"
-  - "ADD IX"
-  - "ADD IY"
 codes:
   - op: "ADD A,A"
     code: "87"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADD A,B"
     code: "80"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADD A,C"
     code: "81"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADD A,D"
     code: "82"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADD A,E"
     code: "83"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADD A,H"
     code: "84"
     colour: green
+    size: 1
+    cycles: 4
   - op: "ADD A,L"
     code: "85"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "ADD A,(HL)"
     code: "86"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "ADD A,(IX+d)"
-    code: "DD86"
+    code: "DD86nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "ADD A,(IY+d)"
-    code: "FD86"
+    code: "FD86nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
+
   - op: "ADD A,n"
     code: "C6nn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
   - op: "ADD HL,BC"
     code: "09"
     colour: green
+    size: 1
+    cycles: 4,4,3
   - op: "ADD HL,DE"
     code: "19"
     colour: green
+    size: 1
+    cycles: 4,4,3
   - op: "ADD HL,HL"
     code: "29"
     colour: green
+    size: 1
+    cycles: 4,4,3
   - op: "ADD HL,SP"
     code: "39"
     colour: green
+    size: 1
+    cycles: 4,4,3
 
   - op: "ADD IX,BC"
     code: "DD09"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADD IX,DE"
     code: "DD19"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADD IX,SP"
     code: "DD39"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADD IX,IX"
     code: "DD29"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
 
   - op: "ADD IY,BC"
     code: "FD09"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADD IY,DE"
     code: "FD19"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADD IY,SP"
     code: "FD39"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
   - op: "ADD IY,IY"
     code: "FD29"
     colour: green
+    size: 2
+    cycles: 4,4,4,3
 
 ---
 {{< z80/instruction

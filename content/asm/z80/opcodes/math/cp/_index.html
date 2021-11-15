@@ -8,6 +8,7 @@ tags:
 code_format: "%[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -27,54 +28,76 @@ code_axis:
   - IX
   - IY
 code_dest:
-  - "CP"
+  - "Op"
 codes:
 
-    # match "CP,A" to fake the blank dest
+    # match "Op,A" to fake the blank dest
   - op: "CP A"
-    match: "CP,A"
+    match: "Op,A"
     code: "BF"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP B"
-    match: "CP,B"
+    match: "Op,B"
     code: "B8"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP C"
-    match: "CP,C"
+    match: "Op,C"
     code: "B9"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP D"
-    match: "CP,D"
+    match: "Op,D"
     code: "BA"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP E"
-    match: "CP,E"
+    match: "Op,E"
     code: "BB"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP H"
-    match: "CP,H"
+    match: "Op,H"
     code: "BC"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP L"
-    match: "CP,L"
+    match: "Op,L"
     code: "BD"
     colour: green
+    size: 1
+    cycles: 4
   - op: "CP (HL)"
-    match: "CP,(HL)"
+    match: "Op,(HL)"
     code: "BE"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "CP (IX+d)"
-    match: "CP,(IX+d)"
-    code: "DDBE"
+    match: "Op,(IX+d)"
+    code: "DDBEnn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "CP (IY+d)"
-    match: "CP,(IY+d)"
-    code: "FDBE"
+    match: "Op,(IY+d)"
+    code: "FDBEnn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "CP n"
-    match: "CP,n"
+    match: "Op,n"
     code: "FEnn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
 ---
 {{< z80/instruction

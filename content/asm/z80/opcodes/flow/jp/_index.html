@@ -36,51 +36,75 @@ codes:
     code: "C3nnnn"
     match: "JP nn Uncond"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP (HL)"
     code: "E9"
     match: "JP (HL) Uncond"
     colour: darkblue
+    size: 1
+    cycles: 4
   - op: "JP (IX)"
     code: "DDE9"
     match: "JP (IX) Uncond"
     colour: darkblue
+    size: 2
+    cycles: 4,4
   - op: "JP (IY)"
     code: "FDE9"
     match: "JP (IY) Uncond"
     colour: darkblue
+    size: 2
+    cycles: 4,4
 
   - op: "JP C,nn"
     code: "DAnnnn"
     match: "JP nn C"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP NC,nn"
     code: "D2nnnn"
     match: "JP nn NC"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP Z,nn"
     code: "CAnnnn"
     match: "JP nn Z"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP NZ,nn"
     code: "C2nnnn"
     match: "JP nn NZ"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP PE,nn"
     code: "EAnnnn"
     match: "JP nn PE"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP PO,nn"
     code: "E2nnnn"
     match: "JP nn PO"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP N,nn"
     code: "FAnnnn"
     match: "JP nn N"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
   - op: "JP P,nn"
     code: "F2nnnn"
     match: "JP nn P"
     colour: darkblue
+    size: 3
+    cycles: 4,3,3
 
 ---
 {{< z80/instruction

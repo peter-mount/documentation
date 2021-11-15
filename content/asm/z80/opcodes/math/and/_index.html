@@ -5,9 +5,10 @@ linkTitle: "AND"
 description: "Binary AND"
 tags:
   - z80 instruction
-code_format: "%[2]s,%[3]s"
+code_format: "AND %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -26,43 +27,64 @@ code_axis:
   - SP
   - IX
   - IY
-code_dest:
-  - "AND A"
 codes:
 
   - op: "AND A,A"
     code: "A7"
     colour: green
+    size: 1
+    cycles: 4
   - op: "AND A,B"
     code: "A0"
     colour: green
+    size: 1
+    cycles: 4
   - op: "AND A,C"
     code: "A1"
     colour: green
+    size: 1
+    cycles: 4
   - op: "AND A,D"
     code: "A2"
     colour: green
+    size: 1
+    cycles: 4
   - op: "AND A,E"
     code: "A3"
     colour: green
+    size: 1
+    cycles: 4
   - op: "AND A,H"
     code: "A4"
     colour: green
+    size: 1
+    cycles: 4
   - op: "AND A,L"
     code: "A5"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "AND A,(HL)"
     code: "A6"
     colour: yellow
+    size: 1
+    cycles: 4,3
   - op: "AND A,(IX+d)"
-    code: "DDA6"
+    code: "DDA6nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "AND A,(IY+d)"
-    code: "FDA6"
+    code: "FDA6nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
   - op: "AND A,n"
     code: "E6nn"
     colour: blue
+    size: 2
+    cycles: 4,3
 
 ---
 {{< z80/instruction

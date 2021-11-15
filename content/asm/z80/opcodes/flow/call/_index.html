@@ -37,41 +37,64 @@ codes:
     code: "CDnnnn"
     match: "CALL nn Uncond"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL C,nn"
     code: "DCnnnn"
     match: "CALL nn C"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL NC,nn"
     code: "D4nnnn"
     match: "CALL nn NC"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL Z,nn"
     code: "CCnnnn"
     match: "CALL nn Z"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL NZ,nn"
     code: "C4nnnn"
     match: "CALL nn NZ"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL PE,nn"
     code: "ECnnnn"
     match: "CALL nn PE"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL PO,nn"
     code: "E4nnnn"
     match: "CALL nn PO"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL N,nn"
     code: "FCnnnn"
     match: "CALL nn N"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
   - op: "CALL P,nn"
     code: "F4nnnn"
     match: "CALL nn P"
     colour: darkblue
+    size: 3
+    cycles: 4,3,4,3,3
 
 ---
 {{< z80/instruction
     def="/q (SP-1) \longleftarrow PC_h\\ (SP-2) \longleftarrow PC_l\\ SP \longleftarrow SP-2\\ PC \longleftarrow nn/l CALL nn/11001101 CD/nn//q \begin{rcases} (SP-1) \longleftarrow PC_h\\ (SP-2) \longleftarrow PC_l\\ SP \longleftarrow SP-2\\ PC \longleftarrow nn \end{rcases} \text{ if } ccc = true/l CALL ccc, nn/11c100 CD/nn"
 >}}
 {{< /z80/instruction >}}
+<h3>Timing</h3>
+<p>
+  All call operation's take 17 (4,3,4,3,3) T-States, except for the conditional ones when the condition
+  has not been met. In those instances it takes 10(4,3,3) T-States.
+</p>

@@ -8,6 +8,7 @@ tags:
 code_format: "%[2]s,%[3]s"
 code_source: ""
 code_destination: ""
+code_includeop: true
 code_axis:
   - A
   - B
@@ -27,74 +28,107 @@ code_axis:
   - IX
   - IY
 code_dest:
-  - "DEC"
+  - "Op"
 codes:
 
   - op: "DEC A"
-    match: "DEC,A"
+    match: "Op,A"
     code: "3D"
     colour: green
+    size: 1
+    cycles: 4
   - op: "DEC B"
-    match: "DEC,B"
+    match: "Op,B"
     code: "05"
     colour: green
+    size: 1
+    cycles: 4
   - op: "DEC C"
-    match: "DEC,C"
+    match: "Op,C"
     code: "0D"
     colour: green
+    size: 1
+    cycles: 4
   - op: "DEC D"
-    match: "DEC,D"
+    match: "Op,D"
     code: "15"
     colour: green
+    size: 1
+    cycles: 4
   - op: "DEC E"
-    match: "DEC,E"
+    match: "Op,E"
     code: "1D"
     colour: green
+    size: 1
+    cycles: 4
   - op: "DEC H"
-    match: "DEC,H"
+    match: "Op,H"
     code: "25"
     colour: green
+    size: 1
+    cycles: 4
   - op: "DEC L"
-    match: "DEC,L"
+    match: "Op,L"
     code: "2D"
     colour: green
+    size: 1
+    cycles: 4
+
   - op: "DEC (HL)"
-    match: "DEC,(HL)"
+    match: "Op,(HL)"
     code: "35"
     colour: yellow
+    size: 1
+    cycles: 4,4,3
   - op: "DEC (IX+d)"
-    match: "DEC,(IX+d)"
-    code: "DD35"
+    match: "Op,(IX+d)"
+    code: "DD35nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,4,3
   - op: "DEC (IY+d)"
-    match: "DEC,(IY+d)"
-    code: "FD35"
+    match: "Op,(IY+d)"
+    code: "FD35nn"
     colour: yellow
+    size: 3
+    cycles: 4,4,3,5,4,3
 
   - op: "DEC BC"
-    match: "DEC,BC"
+    match: "Op,BC"
     code: "0B"
     colour: green
+    size: 1
+    cycles: 6
   - op: "DEC DE"
-    match: "DEC,DE"
+    match: "Op,DE"
     code: "1B"
     colour: green
+    size: 1
+    cycles: 6
   - op: "DEC HL"
-    match: "DEC,HL"
+    match: "Op,HL"
     code: "2B"
     colour: green
+    size: 1
+    cycles: 6
   - op: "DEC SP"
-    match: "DEC,SP"
+    match: "Op,SP"
     code: "3B"
     colour: green
+    size: 1
+    cycles: 6
   - op: "DEC IX"
-    match: "DEC,IX"
+    match: "Op,IX"
     code: "DD2B"
     colour: green
+    size: 2
+    cycles: 4,6
   - op: "DEC IY"
-    match: "DEC,IY"
+    match: "Op,IY"
     code: "FD2B"
     colour: green
+    size: 2
+    cycles: 4,6
 
 ---
 {{< z80/instruction
