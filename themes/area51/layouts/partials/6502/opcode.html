@@ -202,8 +202,12 @@
                             {{- if eq 1 $colours.cycles -}}
                                 {{- with $opcode.cycles -}}
                                     <span class="cycles">
-                                    {{- $total := 0}}{{range split $opcode.cycles ","}}{{ $total = add $total (int .) }}{{end -}}
-                                    {{- $total -}}
+                                        {{- $total := 0}}{{range split $opcode.cycles "," -}}
+                                            {{- if and (ne . "?") (ne . "*") -}}
+                                                {{- $total = add $total (int .) -}}
+                                            {{- end -}}
+                                        {{- end -}}
+                                        {{- $total -}}
                                     </span>
                                 {{- end -}}
                             {{- end -}}

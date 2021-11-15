@@ -56,12 +56,21 @@
             {{- range $l, $c := $r -}}
             {{- if ne $c.label "" -}}
 
-            <td class="{{$c.colour}}">
+            <td class="{{$c.colour}} nowrap">
                 <div>
                     <span class="op">{{- partial "6502/instruction.html" (dict "op" $c.label "mode" $c.addressing) -}}</span>
                     {{- with $c.op }}<span class="code">{{.}}</span>{{ end -}}
                     {{- with $c.size }}<span class="size">{{.}}</span>{{ end -}}
-                    {{- with $c.cycles }}<span class="cycles">{{.}}</span>{{ end -}}
+                    {{- with $c.cycles -}}
+                        <span class="cycles">
+                            {{- $total := 0}}{{range split . "," -}}
+                                            {{- if and (ne . "?") (ne . "*") -}}
+                                                {{- $total = add $total (int .) -}}
+                                            {{- end -}}
+                                        {{- end -}}
+                                        {{- $total -}}
+                        </span>
+                    {{- end -}}
                 </div>
             </td>
             {{- else -}}

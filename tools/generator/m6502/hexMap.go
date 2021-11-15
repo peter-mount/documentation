@@ -27,7 +27,7 @@ type HexCell struct {
   Addressing string  // Addressing id
   Link       string  // Optional link to a page from this cell
   Size       int     // Size in bytes
-  Cycles     int     // Cycle count
+  Cycles     string  // Cycle count
   Colour     string  // Optional colour information
   Extension  bool    // if true then this is a prefix to another HexMap
   Parent     *HexMap // Link to parant Map
@@ -38,7 +38,7 @@ func (c *HexCell) fromOpcode(o *Opcode) {
   c.Index = o.Code
   c.Addressing = o.Addressing
   c.Size = o.Bytes.Int()
-  c.Cycles = o.Cycles.Int()
+  c.Cycles = o.Cycles.String()
   if c.Colour == "" {
     c.Colour = o.Colour
   }
@@ -195,8 +195,8 @@ func (g *HexMap) write(slice util.StringSlice) (util.StringSlice, error) {
         if c.Size > 0 {
           slice = append(slice, fmt.Sprintf("        size: %d", c.Size))
         }
-        if c.Cycles > 0 {
-          slice = append(slice, fmt.Sprintf("        cycles: %d", c.Cycles))
+        if c.Cycles != "" {
+          slice = append(slice, fmt.Sprintf("        cycles: %q", c.Cycles))
         }
       }
       if c.Colour != "" {

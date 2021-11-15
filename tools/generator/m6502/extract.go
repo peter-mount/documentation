@@ -42,7 +42,7 @@ func (s *M6502) extractOpcodes(ctx context.Context) error {
   }
 
   instructions.normalise()
-  instructions.validateOpcodes()
+  //instructions.validateOpcodes()
 
   return nil
 }

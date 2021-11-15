@@ -28,6 +28,13 @@ type OpcodeType struct {
   Notes  []*util.Note // Resolved global note
 }
 
+func (o *OpcodeType) String() string {
+  if o != nil {
+    return o.Value
+  }
+  return ""
+}
+
 func (o *OpcodeType) Int() int {
   if o != nil {
     i, err := strconv.Atoi(o.Value)

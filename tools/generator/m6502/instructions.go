@@ -36,24 +36,30 @@ func (s *M6502) Instructions(b *hugo.Book) *Instructions {
 func (i *Instructions) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
   o := &OpcodeType{}
 
-  _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
-    _ = util.IfMapEntry(e, "value", func(v interface{}) error {
-      o.Value = util.DecodeString(v, "")
-      return nil
-    })
-
-    return util.IfMapEntry(e, "notes", func(v interface{}) error {
-      return util.ForEachInterface(v, func(ae interface{}) error {
-        if i, ok := ae.(int); ok {
-          note := n.GetId(i)
-          if note != nil {
-            o.NoteId = append(o.NoteId, note.Value)
-          }
-        }
+  if s, ok := e1.(string); ok {
+    o.Value = s
+  } else if i, ok := e1.(int); ok {
+    o.Value = strconv.Itoa(i)
+  } else {
+    _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
+      _ = util.IfMapEntry(e, "value", func(v interface{}) error {
+        o.Value = util.DecodeString(v, "")
         return nil
       })
+
+      return util.IfMapEntry(e, "notes", func(v interface{}) error {
+        return util.ForEachInterface(v, func(ae interface{}) error {
+          if i, ok := ae.(int); ok {
+            note := n.GetId(i)
+            if note != nil {
+              o.NoteId = append(o.NoteId, note.Value)
+            }
+          }
+          return nil
+        })
+      })
     })
-  })
+  }
 
   return o
 }
@@ -71,7 +77,12 @@ func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}
       Colour:        util.DecodeString(e["colour"], ""),
     }
 
-    op.Bytes = i.decodeOpType(n, e["bytes"])
+    if e1, exists := e["size"]; exists {
+      op.Bytes = i.decodeOpType(n, e1)
+    } else {
+      op.Bytes = i.decodeOpType(n, e["bytes"])
+    }
+
     op.Cycles = i.decodeOpType(n, e["cycles"])
 
     i.opCodes = append(i.opCodes, op)
