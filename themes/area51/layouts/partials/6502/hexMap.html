@@ -56,7 +56,7 @@
             {{- range $l, $c := $r -}}
             {{- if ne $c.label "" -}}
 
-            <td class="{{$c.colour}} nowrap">
+            <td class="{{$c.colour}}">
                 <div>
                     <span class="op">{{- partial "6502/instruction.html" (dict "op" $c.label "mode" $c.addressing) -}}</span>
                     {{- with $c.op }}<span class="code">{{.}}</span>{{ end -}}
