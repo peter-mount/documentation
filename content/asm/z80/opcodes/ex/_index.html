@@ -18,8 +18,8 @@ code_axis:
   - IX
   - IY
   - "(SP)"
-  - "AF,BC,DE,HL,IX,IY"
-  - "AF',BC',DE',HL',IX',IY'"
+  - "BC,DE,HL"
+  - "BC',DE',HL'"
 
 codes:
   - op: "EX AF, AF'"
@@ -50,7 +50,7 @@ codes:
   - op: "EXX"
     code: "D9"
     colour: green
-    match: "EX AF,BC,DE,HL,IX,IY, AF',BC',DE',HL',IX',IY'"
+    match: "EX BC,DE,HL, BC',DE',HL'"
     size: 1
     cycles: 4
 ---
@@ -72,7 +72,7 @@ def="/q AF \longleftrightarrow AF'/l EX AF, AF'/00001000 08//q BC \longleftright
 </p>
 
 <p>
-  <code>EXX</code> (0xD9) allows the programmer to switch between the duplicate set of six general-purpose registers.
+  <code>EXX</code> (0xD9) allows the programmer to switch BC, DE and HL and BC', DE' and HL' register pairs.
 </p>
 
 <p>
