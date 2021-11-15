@@ -77,3 +77,43 @@ weight: 20
         to support different types of memory.
     </p>
 </div>
+
+<div class="printPageBreakAvoid">
+    <h3>I/O Cycles</h3>
+    <p>
+        I/O operations are similar to memory, except the <span class="not">IORQ</span> signal is used instead of
+        <span class="not">MREQ</span> to indicate that devices not memory should respond.
+    </p>
+    <p>
+        Also an additional wait state is inserted after T-State 2.
+        The reason for this single wait state insertion is that during I/O operations, the period from when the
+        <span class="not">IORQ</span> signal goes active until the CPU must sample the <span class="not">WAIT</span>
+        line is short.
+        Without this extra state, sufficient time does not exist for an I/O port to decode its address and activate the
+        <span class="not">WAIT</span> line if a wait is required.
+        Additionally, without this wait state, it is difficult to design MOS I/O devices that can operate at full CPU
+        speed.
+        During this wait state period, the <span class="not">WAIT</span> request signal is sampled.
+    </p>
+
+    <h4>I/O Read Cycle</h4>
+    <p>
+        During a read I/O operation, the <span class="not">RD</span> line is used to enable the addressed port onto the
+        data bus, just as in the case of a memory read.
+    </p>
+    <div class="ml-2">
+        <img src="/asm/z80/timing/ioread.svg" alt="Visualisation of the timing of reading from a device"/>
+    </div>
+
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>I/O Write Cycle</h4>
+    <p>
+        During a write I/O operation, the <span class="not">WR</span> line is used to enable the addressed port onto the
+        data bus, just as in the case of a memory write.
+    </p>
+    <div class="ml-2">
+        <img src="/asm/z80/timing/iowrite.svg" alt="Visualisation of the timing of writing to a device"/>
+    </div>
+</div>
