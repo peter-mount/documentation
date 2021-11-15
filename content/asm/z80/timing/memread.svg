@@ -4,9 +4,9 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="0 0 500 330" width="500" height="330">
+     viewBox="0 0 410 300" width="410" height="300">
     <defs>
-        <path id="clk" d="M0 0 l2 -20 l38 0 l2 20 l38 0 m0 220 l0 -270"/>
+        <path id="clk" d="M0 0 l2 -20 l38 0 l2 20 l38 0 m0 190 l0 -240"/>
         <path id="lar" d="M0 0 l 10 -5 l 0 10 l -10 -5" fill="black"/>
         <path id="rar" d="M0 0 l -10 -5 l 0 10 l 10 -5" fill="black"/>
         <text id="t1" x="40" y="40">T1</text>
@@ -15,10 +15,10 @@
         <text id="t4" x="280" y="40">T4</text>
     </defs>
     <!-- This makes it easier to edit
-    <rect x="0" y="0" width="500" height="330" fill="white" stroke="black"/>
+    <rect x="0" y="0" width="410" height="300" fill="white" stroke="black"/>
     -->
     <g transform="translate(60 0)">
-        <line x1="0" y1="10" x2="0" y2="300"/>
+        <line x1="0" y1="10" x2="0" y2="270"/>
 
         <!-- System clock -->
         <g>
@@ -28,72 +28,63 @@
             <use xlink:href="#clk" x="80" y="80"/>
             <use xlink:href="#clk" x="160" y="80"/>
             <use xlink:href="#clk" x="240" y="80"/>
-            <use xlink:href="#clk" x="320" y="80"/>
             <use xlink:href="#t1"/>
             <use xlink:href="#t2"/>
             <use xlink:href="#t3"/>
-            <use xlink:href="#t4"/>
-            <use xlink:href="#t1" x="320"/>
+            <use xlink:href="#t1" x="240"/>
         </g>
 
         <!-- Address bus -->
         <g transform="translate(0,100)">
             <text class="left" x="-15" y="9">Addr</text>
-            <path id="addr" d="M-10 -5 l20 0 l5 20 l155 0 l5 -20 l155 0 l5 20 l80 0"/>
+            <path id="addr" d="M-10 -5 l20 0 l5 20 l235 0 l5 -20 l75 0"/>
             <use xlink:href="#addr" transform="scale(1,-1)" y="-10"/>
-            <text x="50" y="9">PC</text>
-            <text x="250" y="9">Refresh Address</text>
+            <text x="140" y="9">Memory Address</text>
         </g>
 
         <!-- MReq -->
         <g transform="translate(0,130)">
             <text class="left not" x="-15" y="9">MREQ</text>
-            <path d="M-10 -5 l50 0 l5 20 l125 0 l5 -20 l30 0 l5 20 l70 0 l5 -20 l80 0 l5 20 l50 0"/>
+            <path d="M-10 -5 l50 0 l5 20 l160 0 l5 -20 l70 0 l5 20 l50 0"/>
         </g>
 
         <!-- RD -->
         <g transform="translate(0,160)">
             <text class="left not" x="-15" y="9">RD</text>
-            <path d="M-10 -5 l50 0 l5 20 l125 0 l5 -20 l245 0"/>
+            <path d="M-10 -5 l50 0 l5 20 l160 0 l5 -20 l125 0"/>
         </g>
 
-        <!-- M1 -->
+        <!-- WR -->
         <g transform="translate(0,190)">
-            <text class="left not" x="-15" y="9">M1</text>
-            <path d="M-10 -5 l20 0 l5 20 l155 0 l5 -20 l155 0 l5 20 l5 0"/>
+            <text class="left not" x="-15" y="9">WR</text>
+            <path d="M-10 -5 l345 0"/>
+            <path class="dot" d="M-10 15 l345 0"/>
         </g>
 
         <!-- Databus -->
         <g transform="translate(0,220)">
             <text class="left" x="-15" y="9">Data</text>
-            <path d="M-10 0 l140 0 l5 -10 l30 0 l5 10 l160 0 M130 0 l5 10 l30 0 l5 -10"/>
-            <text x="150" y="4">IN</text>
+            <path d="M-10 0 l190 0 l5 -10 l30 0 l5 10 l115 0 M180 0 l5 10 l30 0 l5 -10"/>
+            <text x="200" y="4">IN</text>
         </g>
 
         <!-- WAIT -->
         <g transform="translate(0,250)">
             <text class="left not" x="-15" y="9">WAIT</text>
-            <path class="dash" d="M-10 -5 l105 0 m40 0 l250 0"/>
-            <path class="dot" d="M-10 15 l100 0 m60 0 l240 0"/>
+            <path class="dot" d="M-10 -5 l105 0 m40 0 l200 0 M-10 15 l100 0 m55 0 l190 0"/>
             <path d="M90 15 l5 0 l5 -20 l30 0 l5 20 l10 0 "/>
-        </g>
-
-        <!-- RFSH -->
-        <g transform="translate(0,280)">
-            <text class="left not" x="-15" y="9">RFSH</text>
-            <path d="M-10 -5 l190 0 l5 20 l145 0 l5 -20 l10 0 "/>
         </g>
 
         <!-- M1 label -->
         <g>
-            <path d="M0 20 l320 0 m0 -10 l0 20"/>
+            <path d="M0 20 l240 0 m0 -10 l0 20"/>
             <use xlink:href="#lar" x="0" y="20"/>
-            <use xlink:href="#rar" x="320" y="20"/>
-            <text x="160" y="15">M1 Cycle</text>
+            <use xlink:href="#rar" x="240" y="20"/>
+            <text x="120" y="15">Memory Read Cycle</text>
         </g>
 
         <!-- Diagram title -->
-        <text class="title" x="200" y="320">Instruction Opcode Fetch</text>
+        <text class="title" x="160" y="290">Memory Read Cycle</text>
     </g>
     <style type="text/css"><![CDATA[
         g {
