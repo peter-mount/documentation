@@ -1,0 +1,103 @@
+---
+type: "manual"
+title: "Block Copy"
+linkTitle: "Copy"
+weight: 10
+description: "Copy block of memory"
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  "p/v": "Non-repeating: Set if BC-1 != 0, otherwise reset\nRepeating: N/A as BC=0 after instruction completes"
+  n: "Reset"
+  h: "Reset"
+
+code_format: "%[2]s %[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - Increment
+  - Decrement
+code_dest:
+  - Single Copy
+  - Repeat Copy
+  - Single Search
+  - Repeat Search
+codes:
+  - op: "LDI"
+    code: "EDA0"
+    colour: yellow
+    match: "Single Copy Increment"
+    size: 2
+    cycles: 4,4,3,5
+  - op: "LDIR"
+    code: "EDB0"
+    colour: yellow
+    match: "Repeat Copy Increment"
+    size: 2
+    cycles: 4,4,3,5,5
+  - op: "LDD"
+    code: "EDA8"
+    colour: yellow
+    match: "Single Copy Decrement"
+    size: 2
+    cycles: 4,4,3,5
+  - op: "LDDR"
+    code: "EDB8"
+    colour: yellow
+    match: "Repeat Copy Decrement"
+    size: 2
+    cycles: 4,4,3,5,5
+
+---
+
+<p>
+  The Block copy instructions allow for data to be moved around in memory.
+  The programmer needs to configure the 16 bit registers to define the properties of the move:
+  <code>HL</code> is the source address to copy from;
+  <code>DE</code> is the destination address to copy to;
+  <code>BC</code> is the number of bytes to copy.
+</p>
+
+{{< z80/instruction
+operation="\begin{rcases} \begin{rcases} HL \longleftarrow HL+1 \\ DE \longleftarrow DE+1 \end{rcases} \text{ if } D = 0\\ \begin{rcases} HL \longleftarrow HL-1 \\DE \longleftarrow DE-1 \end{rcases} \text{ if } D=1 \\BC \longleftarrow BC-1 \end{rcases} \text{repeat while } \begin{cases} L=1\\BC \not = 0 \end{cases}"
+def="11101101 ED/101LD000"
+>}}
+{{< /z80/instruction >}}
+<p>
+  <strong>D</strong> 0=Increment, 1=Decrement <code>HL</code> after each iteration.
+</p>
+<p>
+  <strong>L</strong> If set then if  \( BC \not = 0 \) at the end if the instruction then \( PC \longleftarrow PC - 2 \)
+  so that the instruction is repeated.<br/>
+  If BC=0 at start of a repeatable instruction then 65536 iterations will occur.
+</p>
+
+<p>
+  The <code>LD*</code> instructions then perform the equivalent of the following:
+</p>
+<ol>
+  <li>Copy a byte of memory from <code>(HL)</code> to <code>(DE)</code></li>
+  <li>Decrement <code>BC</code> by one</li>
+  <li><code>HL</code> and <code>DE</code> are either incremented (for LDI/LDIR) or decremented (for LDD/LDDR) by
+    one.
+  </li>
+  <li>The <code>LDIR</code> and <code>LDDR</code> instructions will loop back to step one if \( BC \not = 0 \)</li>
+</ol>
+
+<div>
+  <h2>Timing</h2>
+  <p>
+    For the non-repeating instructions, they take 16(4,4,3,5) T-States to execute.
+  </p>
+  <p>
+    For the repeating instructions, they take either 21(4,4,3,5,5) T-States when they loop
+    and 16(4,4,3,5) T-States when terminating.
+  </p>
+  <p>
+    Also note, that for these instructions the timing is for each iteration, not for the entire run.
+    So if LDIR is run with BC=4 then the number of T-States for the entire operation would take
+    79(21+21+21+16) T-States.
+  </p>
+</div>
