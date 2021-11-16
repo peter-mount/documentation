@@ -1,11 +1,11 @@
-{{- if isset .Params "flags" }}{{ partial "6502/flags.html" .Params.flags }}{{end -}}
+{{- if isset .Params "flags" }}{{ partial "6502/flags.html" . }}{{end -}}
 {{- if isset .Params "hide_codes" -}}{{- else -}}
 {{- if isset .Params "codes" -}}
 {{- $opcode := $.Params.codes -}}
 {{- if isset .Params "code_axis" | not -}}
 {{- if isset .Params "notitle" | not -}}
 <div class="printPageBreakAvoid">
-    <h3>Instructions</h3>
+    <h5>Instructions</h5>
     {{- end -}}
     <table class="table table-striped table-hover table-sm table-borderless">
         <thead>
@@ -149,6 +149,7 @@
 
 {{- $rowCount := len $validRows -}}
 <div class="printPageBreakAvoid">
+    <h5>Opcode Matrix</h5>
 <table class="memoryMap3">
     <thead>
     {{- if ne $sourceLabel "" -}}

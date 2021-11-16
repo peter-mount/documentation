@@ -1,23 +1,43 @@
-<div class="printPageBreakAvoid">
-    <h3>Flags Affected</h3>
-    <div>
-        {{- if isset . "n" }}<strong>n</strong>{{else}}-{{end -}}
-        {{- if isset . "v" }}<strong>v</strong>{{else}}-{{end -}}
-        {{- if isset . "m" }}<strong>m</strong>{{else}}-{{end -}}
-        {{- if isset . "b" }}<strong>b</strong>{{else}}{{ if isset . "x" }}<strong>x</strong>{{else}}-{{end}}{{end -}}
-        {{- if isset . "d" }}<strong>d</strong>{{else}}-{{end -}}
-        {{- if isset . "i" }}<strong>i</strong>{{else}}-{{end -}}
-        {{- if isset . "z" }}<strong>z</strong>{{else}}-{{end -}}
-        {{- if isset . "c" }}<strong>c</strong>{{else}}-{{end -}}
-    </div>
-    {{- if isset . "n" }}<div><span>n</span> <span>{{.n}}</span></div>{{end -}}
-    {{- if isset . "v" }}<div><span>v</span> <span>{{.v}}</span></div>{{end -}}
-    {{- if isset . "m" }}<div><span>m</span> <span>{{.m}}</span></div>{{end -}}
-    {{- if isset . "b" }}<div><span>b</span> <span>{{.b}}</span></div>{{end -}}
-    {{- if isset . "x" }}<div><span>x</span> <span>{{.x}}</span></div>{{end -}}
-    {{- if isset . "d" }}<div><span>d</span> <span>{{.d}}</span></div>{{end -}}
-    {{- if isset . "i" }}<div><span>i</span> <span>{{.i}}</span></div>{{end -}}
-    {{- if isset . "z" }}<div><span>z</span> <span>{{.z}}</span></div>{{end -}}
-    {{- if isset . "c" }}<div><span>c</span> <span>{{.c}}</span></div>{{end -}}
-    </tbody>
+{{- $m := .Params.flags -}}
+{{- $s := newScratch -}}
+{{- $proc := "6502" }}{{with $.Params.cpu}}{{ $proc = . }}{{end -}}
+{{- if eq $proc "z80" -}}
+{{- /* Z80 flags upper case */ -}}
+{{- if isset $m "s" }}{{ $s.Set "7" "s" }}{{end -}}
+{{- if isset $m "z" }}{{ $s.Set "6" "z" }}{{end -}}
+{{- if isset $m "h" }}{{ $s.Set "4" "h" }}{{end -}}
+{{- if isset $m "p/v" }}{{ $s.Set "2" "p/v" }}{{end -}}
+{{- if isset $m "n" }}{{ $s.Set "1" "n" }}{{end -}}
+{{- if isset $m "c" }}{{ $s.Set "0" "c" }}{{end -}}
+{{- else -}}
+{{- /* 6502 flags lower case */ -}}
+{{- if isset $m "n" }}{{ $s.Set "7" "n" }}{{end -}}
+{{- if isset $m "v" }}{{ $s.Set "6" "v" }}{{end -}}
+{{- if isset $m "m" }}{{ $s.Set "5" "m" }}{{end -}}
+{{- if isset $m "b" }}{{ $s.Set "4" "b" }}{{end -}}
+{{- if isset $m "x" }}{{ $s.Set "4" "x" }}{{end -}}
+{{- if isset $m "d" }}{{ $s.Set "3" "d" }}{{end -}}
+{{- if isset $m "i" }}{{ $s.Set "2" "i" }}{{end -}}
+{{- if isset $m "z" }}{{ $s.Set "1" "z" }}{{end -}}
+{{- if isset $m "c" }}{{ $s.Set "0" "c" }}{{end -}}
+{{- end -}}
+
+<div class="printPageBreakAvoid mt-1 mb-3">
+    <h5>{{$proc|upper}}&nbsp;Flags&nbsp;Affected</h5>
+    <table class="processorFlags">
+        <tbody>
+        {{- if eq 0 ($s.Values | len) -}}
+        <tr><td>None.</td></tr>
+        {{- else -}}
+            <tr><th>Flags&nbsp;</th><td>
+                {{- range $idx := seq 7 0}}{{$i := printf "%d" $idx -}}
+                {{- with $s.Get $i }}<strong>{{printf "%1.1s" .}}</strong>{{else}}-{{end -}}
+                {{- end -}}
+            </td></tr>
+            {{- range $idx := seq 7 0}}{{$i := printf "%d" $idx -}}
+            {{- with $s.Get $i }}<tr><th>{{.|lower}}</th><td>{{index $m .}}</td></tr>{{end -}}
+            {{- end -}}
+        {{- end -}}
+        </tbody>
+    </table>
 </div>

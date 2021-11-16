@@ -1,0 +1,38 @@
+---
+type: "manual"
+title: "LD A,I and LDA A,R"
+linkTitle: "LD A, I/R"
+description: "8-bit register instructions"
+cpu: z80
+flags:
+  s: "Set if the I or R register is negative"
+  z: "Set if the I or R register is 0"
+  "p/v": "Contains contents of IFF2, 0 if interrupt occurs during instruction running"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "LD %[2]s, %[3]s"
+code_axis:
+  - A
+  - I
+  - R
+codes:
+
+  - op: "LD A, I"
+    code: "ED57"
+    colour: grey
+    size: 2
+    cycles: 4,5
+  - op: "LD A, R"
+    code: "ED5F"
+    colour: grey
+    size: 2
+    cycles: 4,5
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow I/l LD A, I/11101101 ED/01010111 57//q A \longleftarrow R/l LD A, R/11101101 ED/01011111 5F"
+>}}
+{{< /z80/instruction >}}

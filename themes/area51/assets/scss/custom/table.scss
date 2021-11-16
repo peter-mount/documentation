@@ -27,7 +27,8 @@ table.truth {
     }
 }
 
-table.generic {
+table.generic,
+table.processorFlags {
     th {
         text-align: center;
     }
@@ -148,6 +149,16 @@ table.memoryMap {
 }
 */
 
+table.processorFlags,
+table.memoryMap,
+table.memoryMap2,
+table.memoryMap3,
+table.hexGrid {
+    caption {
+        caption-side: top;
+    }
+}
+
 table.memoryMap,
 table.memoryMap2,
 table.memoryMap3,
@@ -156,10 +167,6 @@ table.hexGrid {
     overflow-x: auto;
     margin-bottom: 1em;
     break-inside: avoid;
-
-    caption {
-        caption-side: top;
-    }
 
     th.topLeft {
         border-left:0 !important;
