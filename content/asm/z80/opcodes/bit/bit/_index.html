@@ -5,6 +5,11 @@ linkTitle: "BIT"
 description: "Test if a specific bit is set"
 tags:
   - z80 instruction
+cpu: z80
+flags:
+  z: "set if the specified bit is 0"
+  h: "set"
+  "n": "reset"
 code_format: "%[2]s,%[3]s"
 code_includeop: true
 code_axis:
