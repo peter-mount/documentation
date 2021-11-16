@@ -1,0 +1,51 @@
+---
+type: "manual"
+title: "ADD n without carry"
+linkTitle: "n"
+description: "Addition of a number without carry"
+weight: 20
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if carry from bit 3
+  "p/v": set if overflow
+  n: reset
+  c: set if carry from bit 7
+code_format: "ADD %[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+codes:
+
+  - op: "ADD A,n"
+    code: "C6nn"
+    colour: blue
+    size: 2
+    cycles: 4,3
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A + n/l ADD A, n/11000110 C6/n"
+>}}
+{{< /z80/instruction >}}

@@ -6,6 +6,14 @@ weight: 3
 description: "Copy or search block of memory"
 tags:
   - z80 instruction
+cpu: z80
+flags:
+  "p/v": "Non-repeating: Set if BC-1 != 0, otherwise reset\nRepeating: N/A as BC=0 after instruction completes"
+  n: "LD: Reset\nCP: Set"
+  s: "CP: Set if result is negative"
+  z: "CP: Set if A = (HL)"
+  h: "LD: Reset\nCP: Borrow from bit 4, otherwise reset"
+
 code_format: "%[2]s %[3]s"
 code_source: ""
 code_destination: ""

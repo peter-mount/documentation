@@ -1,0 +1,107 @@
+---
+type: "manual"
+title: "ADD ss to HL without carry"
+linkTitle: "hl,ss"
+description: "Addition without carry"
+weight: 40
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if carry from bit 11
+  n: reset
+  c: set if carry from bit 15
+code_format: "ADD %[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+codes:
+
+  - op: "ADD HL,BC"
+    code: "09"
+    colour: green
+    size: 1
+    cycles: 4,4,3
+  - op: "ADD HL,DE"
+    code: "19"
+    colour: green
+    size: 1
+    cycles: 4,4,3
+  - op: "ADD HL,HL"
+    code: "29"
+    colour: green
+    size: 1
+    cycles: 4,4,3
+  - op: "ADD HL,SP"
+    code: "39"
+    colour: green
+    size: 1
+    cycles: 4,4,3
+
+  - op: "ADD IX,BC"
+    code: "DD09"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADD IX,DE"
+    code: "DD19"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADD IX,SP"
+    code: "DD39"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADD IX,IX"
+    code: "DD29"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+
+  - op: "ADD IY,BC"
+    code: "FD09"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADD IY,DE"
+    code: "FD19"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADD IY,SP"
+    code: "FD39"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADD IY,IY"
+    code: "FD29"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+
+---
+{{< z80/instruction
+    def="/q HL \longleftarrow HL + dd/l ADD HL, dd/00d1001//q IX \longleftarrow IX + pp/l ADD IX, pp/11011101 DD/00p1001//q IY \longleftarrow IY + mm/l ADD IY, mm/11111101 FD/00m1001"
+>}}
+{{< /z80/instruction >}}

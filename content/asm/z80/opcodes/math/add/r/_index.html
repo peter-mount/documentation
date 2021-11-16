@@ -1,0 +1,77 @@
+---
+type: "manual"
+title: "ADD r without carry"
+linkTitle: "r"
+description: "Addition of a register without carry"
+weight: 10
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if carry from bit 3
+code_format: "ADD %[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+codes:
+  - op: "ADD A,A"
+    code: "87"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADD A,B"
+    code: "80"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADD A,C"
+    code: "81"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADD A,D"
+    code: "82"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADD A,E"
+    code: "83"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADD A,H"
+    code: "84"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADD A,L"
+    code: "85"
+    colour: green
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A + r/l ADD A, r/10000r"
+>}}
+{{< /z80/instruction >}}

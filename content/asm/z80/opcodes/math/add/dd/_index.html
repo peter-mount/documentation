@@ -1,0 +1,61 @@
+---
+type: "manual"
+title: "ADD (dd) without carry"
+linkTitle: "(dd)"
+description: "Addition of memory without carry"
+weight: 30
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if carry from bit 3
+  "p/v": set if overflow
+  n: reset
+  c: set if carry from bit 7
+code_format: "ADD %[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+codes:
+
+  - op: "ADD A,(HL)"
+    code: "86"
+    colour: yellow
+    size: 1
+    cycles: 4,3
+  - op: "ADD A,(IX+d)"
+    code: "DD86nn"
+    colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
+  - op: "ADD A,(IY+d)"
+    code: "FD86nn"
+    colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A + (HL)/l ADD A, (HL)/10000110 86//q A \longleftarrow A + (IX+d)/l ADD A, (IX+d)/11011101 DD/10000110 86/d//q A \longleftarrow A + (IY+d)/l ADD A, (IY+d)/11111101 FD/10000110 86/d"
+>}}
+{{< /z80/instruction >}}
