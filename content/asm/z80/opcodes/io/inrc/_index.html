@@ -6,6 +6,7 @@ weight: 10
 description: "Read from port in C and store in a specific register"
 tags:
   - z80 instruction
+nopagebreak:
 cpu: z80
 flags:
   s: "set if input data is negative"
@@ -77,9 +78,8 @@ codes:
     code: "ED70"
     colour: undocumented
     match: "IN (C) F"
-
-notes:
-  - "IN F, (C) documented in Zilog Z80 CPU User Manual, 2016 edition Page 296"
+    size: 2
+    cycles: 4,4,4
 ---
 {{< z80/instruction
     def="/q r \longleftarrow (C)/l IN r, (C)/11101101 ED/01r000//q F \longleftarrow (C)/l IN F, (C)/11101101 ED/01110000 70"
@@ -87,19 +87,13 @@ notes:
 {{< /z80/instruction >}}
 <p>
     The contents of Register C are placed on the bottom half (A0&hellip;7) of the address bus to select the I/O device at one of 256 possible ports.
-</p>
-<p>
     The contents of Register B are placed on the top half (A8&hellip;A15) of the address bus at this time.
 </p>
 <p>
     Then one byte from the selected port is placed on the data bus and written to register r in the CPU.
 </p>
-<h3>Undocumented OP Codes</h3>
-<p>
-    For <code>IN r, (C)</code> there's an undocumented code where r=%110 which sets the flag register.
-</p>
-<p>
-    For an undocumented code, this is actually in Zilog's Z80 CPU User Manual, 2016 edition Page 296,
-    so it isn't that "undocumented"
-    For this reason it's included on this page and not in the Undocumented instruction section.
-</p>
+<div class="alert-info">
+  There is an undocumented code where r=%110 which sets the flag register.
+  This is actually documented in Zilog's Z80 CPU User Manual, 2016 edition Page 296.
+  For this reason it's included on this page and not in the Undocumented instruction section.
+</div>
