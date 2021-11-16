@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="15 -10 150 70" width="15em">
+     viewBox="0 -10 180 70" width="18em">
     <defs>
         <path id="arrow" d="M0 0 l 10 -2.5 l 0 5 l -10 -2.5" fill="black"/>
     </defs>
@@ -15,17 +15,19 @@
             <text x="61.5" y="11.5" fill="black">0</text>
         </g>
         <use xlink:href="#byte" x="65" y="0"/>
+
         <g id="A">
             <path d="M 85 15 l 0 15 l -30 0 l 0 -15"/>
             <path d="M 55 15 l 5 10 l -10 0 l 5 -10" fill="black"/>
         </g>
         <use xlink:href="#A" x="40"/>
-        <use xlink:href="#A" x="40"/>
+        <text x="-5" y="11.5" fill="black">A</text>
 
         <g id="B">
             <path d="M 55 0 l 0 -15 l 65 0 l 0 15"/>
             <path d="M 120 0 l 5 -10 l -10 0 l 5 10" fill="black"/>
         </g>
+        <text x="140" y="11.5" fill="black">(HL)</text>
 
     </g>
 </svg>
