@@ -6,6 +6,13 @@ weight: 10
 description: "Read from port in C and store in a specific register"
 tags:
   - z80 instruction
+cpu: z80
+flags:
+  s: "set if input data is negative"
+  z: "set if input data is 0"
+  h: "reset"
+  "p/v": "set if parity is even, reset if odd"
+  "n": "reset"
 code_includeop: true
 code_format: "%[2]s %[3]s"
 code_source: ""
