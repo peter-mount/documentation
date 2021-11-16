@@ -23,19 +23,30 @@
 {{- end -}}
 
 <div class="printPageBreakAvoid mt-1 mb-3">
-    <h5>{{$proc|upper}}&nbsp;Flags&nbsp;Affected</h5>
+    <h5>Flags&nbsp;Affected</h5>
     <table class="processorFlags">
         <tbody>
         {{- if eq 0 ($s.Values | len) -}}
         <tr><td>None.</td></tr>
         {{- else -}}
-            <tr><th>Flags&nbsp;</th><td>
+            <tr><th>Flags</th><td><table><tbody><tr>
                 {{- range $idx := seq 7 0}}{{$i := printf "%d" $idx -}}
-                {{- with $s.Get $i }}<strong>{{printf "%1.1s" .}}</strong>{{else}}-{{end -}}
+                    {{- with $s.Get $i -}}
+                        <td class="brtb blue"><strong>{{printf "%s" .}}</strong>
+                    {{- else -}}
+                        <td class="brtb">-</td>
+                    {{- end -}}
                 {{- end -}}
-            </td></tr>
+            </tr></tbody></table></td></tr>
             {{- range $idx := seq 7 0}}{{$i := printf "%d" $idx -}}
-            {{- with $s.Get $i }}<tr><th>{{.|lower}}</th><td>{{index $m .}}</td></tr>{{end -}}
+                {{- with $s.Get $i }}<tr><th>{{.|lower}}</th><td>
+                    {{- $l := index $m . -}}
+                    {{- range $i, $v := split $l "\n" -}}
+                        {{- if ne $i 0 }}<br/>{{end -}}
+                        {{- $v -}}
+                    {{- end -}}
+                    </td></tr>
+                {{- end -}}
             {{- end -}}
         {{- end -}}
         </tbody>

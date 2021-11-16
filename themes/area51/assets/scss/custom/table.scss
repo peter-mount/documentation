@@ -40,6 +40,22 @@ table.processorFlags {
     }
 }
 
+table.processorFlags {
+    tr {
+        th:first-child {
+            width: 3em;
+        }
+        td {
+            vertical-align: top;
+        }
+    }
+    table td {
+        border: 1px solid black;
+        width: 2em;
+        text-align: center;
+    }
+}
+
 table.memory {
     border: 1px solid lightgrey;
     width: 100%;
@@ -426,6 +442,7 @@ table.memoryMap2 {
     }
 }
 
+table.processorFlags,
 table.diskMap,
 table.memoryMap,
 table.memoryMap2,
