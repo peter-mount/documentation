@@ -5,6 +5,14 @@ linkTitle: "RLD"
 description: "Rotate bit pairs in A and (HL) left"
 tags:
   - z80 instruction
+weight: 80
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: reset
+  "p/v": set if parity even, reset if parity odd
+  n: reset
 code_format: "%[2]s %[3]s"
 code_source: ""
 code_destination: ""

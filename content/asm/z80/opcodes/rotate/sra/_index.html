@@ -5,6 +5,15 @@ linkTitle: "SRA"
 description: "Rotate bits right with carry, bit 7 remains unchanged"
 tags:
   - z80 instruction
+weight: 50
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: reset
+  "p/v": set if parity even, reset if parity odd
+  n: reset
+  c: data from bit 0 of source register
 code_format: "%[2]s%[3]s"
 code_source: ""
 code_destination: ""
