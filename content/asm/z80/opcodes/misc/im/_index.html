@@ -1,0 +1,48 @@
+---
+type: "manual"
+title: "IM Interrupt Mode"
+linkTitle: "IM"
+description: "Select interrupt mode"
+tags:
+  - z80 instruction
+weight: 71
+nopagebreak: true
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - NOP
+  - HALT
+  - EI
+  - DI
+  - IM0
+  - IM1
+  - IM2
+codes:
+  - op: "IM0"
+    match: "OP IM0"
+    code: "ED46"
+    colour: red
+    size: 2
+    cycles: 4,4
+  - op: "IM1"
+    match: "OP IM1"
+    code: "ED56"
+    colour: red
+    size: 2
+    cycles: 4,4
+  - op: "IM2"
+    match: "OP IM2"
+    code: "ED5E"
+    colour: red
+    size: 2
+    cycles: 4,4
+
+---
+{{< z80/instruction def="11101101 ED/010Q110">}}
+{{< /z80/instruction >}}
+<p>Note: Only modes 0, 1 and 2 are valid for <code>IM n</code>.</p>

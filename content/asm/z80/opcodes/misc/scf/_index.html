@@ -1,11 +1,17 @@
 ---
 type: "manual"
-title: "General purpose Accumulator instructions"
-linkTitle: "Accumulator"
-weight: 3
-description: "General instructions for the AF register pair"
+title: "SCF Set Carry Flag"
+linkTitle: "SCF"
+weight: 31
+description: "Set Carry Flag"
 tags:
   - z80 instruction
+nopagebreak: true
+cpu: z80
+flags:
+  h: reset
+  "n": reset
+  c: set
 code_source: ""
 code_destination: ""
 code_includeop: true
@@ -14,18 +20,11 @@ code_destination: ""
 code_format: "%[2]s%[3]s"
 code_axis:
   - "OP "
-  - DAA
   - CPL
   - NEG
   - CCF
   - SCF
 codes:
-  - op: "DAA"
-    match: "OP DAA"
-    code: "27"
-    colour: green
-    size: 1
-    cycles: 4
   - op: "CPL"
     match: "OP CPL"
     code: "2F"
@@ -52,7 +51,5 @@ codes:
     cycles: 4
 
 ---
-{{< z80/instruction
-def="/q @/l DAA/00100111 27//q A \longleftarrow \overline{A}/l CPL/00101111 2F//q A \longleftarrow 0 - A/l NEG/11101101 ED/01000100 44//q CY \longleftarrow \overline{CY}/l CCF/00111111 3F//q CY \longleftarrow 1/l SCF/00110111 37"
->}}
+{{< z80/instruction operation="CY \longleftarrow 1" def="00110111 37">}}
 {{< /z80/instruction >}}

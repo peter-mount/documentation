@@ -1,0 +1,35 @@
+---
+type: "manual"
+title: "CPL Invert Accumulator"
+linkTitle: "CPL"
+weight: 2
+tags:
+  - z80 instruction
+nopagebreak: true
+cpu: z80
+flags:
+  h: set
+  "n": set
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - CPL
+  - NEG
+  - CCF
+  - SCF
+codes:
+  - op: "CPL"
+    match: "OP CPL"
+    code: "2F"
+    colour: green
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction operation="A \longleftarrow \overline{A}" def="00101111 2F">}}
+{{< /z80/instruction >}}

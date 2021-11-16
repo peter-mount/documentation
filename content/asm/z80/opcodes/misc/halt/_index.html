@@ -1,0 +1,33 @@
+---
+type: "manual"
+title: "HALT the cpu"
+linkTitle: "HALT"
+tags:
+  - z80 instruction
+weight: 4
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - NOP
+  - HALT
+  - EI
+  - DI
+  - IM0
+  - IM1
+  - IM2
+codes:
+  - op: "HALT"
+    match: "OP HALT"
+    code: "76"
+    colour: grey
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction def="01110110 76">}}
+{{< /z80/instruction >}}

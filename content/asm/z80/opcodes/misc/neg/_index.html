@@ -1,0 +1,39 @@
+---
+type: "manual"
+title: "NEG Negate Accumulator (two's compliment)"
+linkTitle: "NEG"
+weight: 3
+tags:
+  - z80 instruction
+nopagebreak: true
+cpu: z80
+flags:
+  s: "set if result is negative"
+  z: "set if result is 0"
+  h: "set if borrow from bit 4"
+  "p/v": "set if Accumulator was 0x80 before operation"
+  "n": "set"
+  c: "set if Accumulator was not 0x00 before operation"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - CPL
+  - NEG
+  - CCF
+  - SCF
+codes:
+  - op: "NEG"
+    match: "OP NEG"
+    code: "ED44"
+    colour: green
+    size: 2
+    cycles: 4
+
+---
+{{< z80/instruction operation="A \longleftarrow 0 - A" def="11101101 ED/01000100 44">}}
+{{< /z80/instruction >}}

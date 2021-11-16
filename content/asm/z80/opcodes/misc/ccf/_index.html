@@ -1,0 +1,36 @@
+---
+type: "manual"
+title: "CCF Compliment Carry Flag"
+linkTitle: "CCF"
+weight: 30
+description: "Invert Carry Flag"
+tags:
+  - z80 instruction
+nopagebreak: true
+cpu: z80
+flags:
+  h: "previous carry is copied"
+  c: "set if C was 0, reset if C was 1"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - CPL
+  - NEG
+  - CCF
+  - SCF
+codes:
+  - op: "CCF"
+    match: "OP CCF"
+    code: "3F"
+    colour: green
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction operation="CY \longleftarrow \overline{CY}" def="00111111 3F">}}
+{{< /z80/instruction >}}

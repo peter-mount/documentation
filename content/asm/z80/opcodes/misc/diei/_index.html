@@ -1,0 +1,40 @@
+---
+type: "manual"
+title: "DI EI Interrupt enable"
+linkTitle: "CPU"
+description: "Enable/Disable interrupts"
+weight: 70
+tags:
+  - z80 instruction
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - NOP
+  - HALT
+  - EI
+  - DI
+  - IM0
+  - IM1
+  - IM2
+codes:
+  - op: "EI"
+    match: "OP EI"
+    code: "FB"
+    colour: red
+    size: 1
+    cycles: 4
+  - op: "DI"
+    match: "OP DI"
+    code: "F3"
+    colour: red
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction def="/q IFF \longleftarrow 0/l DI/11110011//q IFF \longleftarrow 1/l EI/11111011">}}
+{{< /z80/instruction >}}

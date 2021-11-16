@@ -1,0 +1,34 @@
+---
+type: "manual"
+title: "NOP No Operation"
+linkTitle: "NOP"
+weight: 1
+tags:
+  - z80 instruction
+nopagebreak: true
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - NOP
+  - HALT
+  - EI
+  - DI
+  - IM0
+  - IM1
+  - IM2
+codes:
+  - op: "NOP"
+    match: "OP NOP"
+    code: "00"
+    colour: grey
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction def="00000000 00">}}
+{{< /z80/instruction >}}

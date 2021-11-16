@@ -1,0 +1,35 @@
+---
+type: "manual"
+title: "DAA"
+linkTitle: "DAA"
+weight: 80
+description: "Adjust accumulator for BCD addition and subtraction operations"
+tags:
+  - z80 instruction
+nopagebreak: true
+cpu: z80
+flags:
+  z: "Set if Accumulator is 0"
+  h: "Varies"
+  "p/v": "Set if Accumulator parity is even, reset if odd"
+  c: "Varies"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_source: ""
+code_destination: ""
+code_format: "%[2]s%[3]s"
+code_axis:
+  - "OP "
+  - DAA
+codes:
+  - op: "DAA"
+    match: "OP DAA"
+    code: "27"
+    colour: green
+    size: 1
+    cycles: 4
+
+---
+{{< z80/instruction operation="@" def="00100111 27">}}
+{{< /z80/instruction >}}
