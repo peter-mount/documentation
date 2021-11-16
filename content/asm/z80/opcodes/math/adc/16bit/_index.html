@@ -1,0 +1,66 @@
+---
+type: "manual"
+title: "ADC 16 bit add with Carry"
+linkTitle: "16 bit"
+description: "Addition with carry"
+weight: 16
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if carry from bit 11
+  "p/v": set if overflow
+  n: reset
+  c: set if carry from bit 15
+code_format: "ADC %[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+codes:
+
+  - op: "ADC HL,BC"
+    code: "ED4A"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADC HL,DE"
+    code: "ED5A"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADC HL,HL"
+    code: "ED6A"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+  - op: "ADC HL,SP"
+    code: "ED7A"
+    colour: green
+    size: 2
+    cycles: 4,4,4,3
+
+---
+{{< z80/instruction
+    def="/q HL \longleftarrow HL + ss + Carry/l ADC HL, dd/11101101 ED/01d1010"
+>}}
+{{< /z80/instruction >}}

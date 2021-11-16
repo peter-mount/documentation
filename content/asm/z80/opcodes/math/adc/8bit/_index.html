@@ -1,0 +1,103 @@
+---
+type: "manual"
+title: "ADC 8 bit add with Carry"
+linkTitle: "8 bit"
+description: "Addition with carry"
+weight: 8
+tags:
+  - z80 instruction
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if carry from bit 3
+  "p/v": set if overflow
+  n: reset
+  c: set if carry from bit 7
+code_format: "ADC %[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+codes:
+
+  - op: "ADC A,A"
+    code: "8F"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADC A,B"
+    code: "88"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADC A,C"
+    code: "89"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADC A,D"
+    code: "8A"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADC A,E"
+    code: "8B"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADC A,H"
+    code: "8C"
+    colour: green
+    size: 1
+    cycles: 4
+  - op: "ADC A,L"
+    code: "8D"
+    colour: green
+    size: 1
+    cycles: 4
+
+  - op: "ADC A,(HL)"
+    code: "8E"
+    colour: yellow
+    size: 1
+    cycles: 4,3
+  - op: "ADC A,(IX+d)"
+    code: "DD8Enn"
+    colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
+  - op: "ADC A,(IY+d)"
+    code: "FD8Enn"
+    colour: yellow
+    size: 3
+    cycles: 4,4,3,5,3
+
+  - op: "ADC A,n"
+    code: "CEnn"
+    colour: blue
+    size: 2
+    cycles: 4,3
+
+---
+{{< z80/instruction
+    def="/q A \longleftarrow A + r + Carry/l ADC A,r/10001r//q A \longleftarrow A + n + Carry/l ADC A,n/11001110 CE/n//q A \longleftarrow A + (HL) + Carry/l ADC A, (HL)/10001110 8E//q A \longleftarrow A + (IX+d) + Carry/l ADC A, (IX + d)/11011101 DD/10001110 8E/d//q A \longleftarrow A + (IY+d) + Carry/l ADC A, (IY + d)/11111101 FD/10001110 8E/d"
+>}}
+{{< /z80/instruction >}}
