@@ -5,6 +5,15 @@ linkTitle: "OR"
 description: "Binary OR"
 tags:
   - z80 instruction
+weight: 41
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: reset
+  "p/v": set if overflow
+  n: reset
+  c: reset
 code_format: "OR %[2]s,%[3]s"
 code_source: ""
 code_destination: ""

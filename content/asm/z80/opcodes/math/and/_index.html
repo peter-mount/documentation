@@ -5,6 +5,15 @@ linkTitle: "AND"
 description: "Binary AND"
 tags:
   - z80 instruction
+weight: 40
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set
+  "p/v": set if overflow
+  n: reset
+  c: reset
 code_format: "AND %[2]s,%[3]s"
 code_source: ""
 code_destination: ""

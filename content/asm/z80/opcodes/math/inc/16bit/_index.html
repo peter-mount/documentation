@@ -1,0 +1,78 @@
+---
+type: "manual"
+title: "INC 16-bit Increment"
+linkTitle: "16 bit"
+description: "Increment 16-bit register pair by 1"
+tags:
+  - z80 instruction
+weight: 16
+cpu: z80
+flags:
+code_format: "%[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "Op"
+codes:
+
+  - op: "INC BC"
+    match: "Op,BC"
+    code: "03"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "INC DE"
+    match: "Op,DE"
+    code: "13"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "INC HL"
+    match: "Op,HL"
+    code: "23"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "INC SP"
+    match: "Op,SP"
+    code: "33"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "INC IX"
+    match: "Op,IX"
+    code: "DD23"
+    colour: green
+    size: 2
+    cycles: 4,6
+  - op: "INC IY"
+    match: "Op,IY"
+    code: "FD23"
+    colour: green
+    size: 2
+    cycles: 4,6
+
+---
+{{< z80/instruction
+    def="/q dd \longleftarrow dd + 1/l INC qq/00d0011//q IX \longleftarrow IX + 1/l INC IX/11011101 DD/00100011 23//q IY \longleftarrow IY + 1/l INC IY/11111101 FD/00100011 23"
+>}}
+{{< /z80/instruction >}}

@@ -1,19 +1,18 @@
 ---
 type: "manual"
-title: "CP"
-linkTitle: "CP"
-description: "Comparison"
+title: "INC 8-bit Increment"
+linkTitle: "8 bit"
+description: "Increment 8-bit register by 1"
 tags:
   - z80 instruction
-weight: 60
+weight: 8
 cpu: z80
 flags:
   s: set if result negative
   z: set if result is 0
-  h: set if borrow from bit 4
-  "p/v": set if overflow
-  n: set
-  c: set if borrow
+  h: set if carry from bit 3
+  "p/v": set if register was 0x7F before operation, reset otherwise
+  n: reset
 code_format: "%[2]s,%[3]s"
 code_source: ""
 code_destination: ""
@@ -40,77 +39,70 @@ code_dest:
   - "Op"
 codes:
 
-    # match "Op,A" to fake the blank dest
-  - op: "CP A"
+  - op: "INC A"
     match: "Op,A"
-    code: "BF"
+    code: "3C"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP B"
+  - op: "INC B"
     match: "Op,B"
-    code: "B8"
+    code: "04"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP C"
+  - op: "INC C"
     match: "Op,C"
-    code: "B9"
+    code: "0C"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP D"
+  - op: "INC D"
     match: "Op,D"
-    code: "BA"
+    code: "14"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP E"
+  - op: "INC E"
     match: "Op,E"
-    code: "BB"
+    code: "1C"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP H"
+  - op: "INC H"
     match: "Op,H"
-    code: "BC"
+    code: "24"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP L"
+  - op: "INC L"
     match: "Op,L"
-    code: "BD"
+    code: "2C"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP (HL)"
+
+  - op: "INC (HL)"
     match: "Op,(HL)"
-    code: "BE"
+    code: "34"
     colour: yellow
     size: 1
-    cycles: 4,3
-  - op: "CP (IX+d)"
+    cycles: 4,4,3
+  - op: "INC (IX+d)"
     match: "Op,(IX+d)"
-    code: "DDBEnn"
+    code: "DD34nn"
     colour: yellow
     size: 3
-    cycles: 4,4,3,5,3
-  - op: "CP (IY+d)"
+    cycles: 4,4,3,5,4,3
+  - op: "INC (IY+d)"
     match: "Op,(IY+d)"
-    code: "FDBEnn"
+    code: "FD34nn"
     colour: yellow
     size: 3
-    cycles: 4,4,3,5,3
-  - op: "CP n"
-    match: "Op,n"
-    code: "FEnn"
-    colour: blue
-    size: 2
-    cycles: 4,3
+    cycles: 4,4,3,5,4,3
 
 ---
 {{< z80/instruction
-    operation="A - s"
-    def="/l CP r/10111r//l CP n/11111110 FE/n//l CP (HL)/10111110 BE//l CP (IX+d)/11011101 DD/10111110 BE/d//l CP (IY+d)/11111101 FD/10111110 BE/d"
+    def="/q s \longleftarrow r + 1/l INC r/00r100//q (HL) \longleftarrow (HL) + 1/l INC (HL)/00110100 34//q (IX+d) \longleftarrow (IX+d) + 1/l INC (IX+d)/11011101 DD/00110100 34/d//q (IY+d) \longleftarrow (IY+d) + 1/l INC (IY+d)/11111101 FD/00110100 34/d"
 >}}
 {{< /z80/instruction >}}

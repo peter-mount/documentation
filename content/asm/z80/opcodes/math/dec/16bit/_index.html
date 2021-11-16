@@ -1,0 +1,78 @@
+---
+type: "manual"
+title: "DEC 16-bit Decrement"
+linkTitle: "16 bit"
+description: "Decrement 16-bit register pair"
+tags:
+  - z80 instruction
+weight: 16
+cpu: z80
+flags:
+code_format: "%[2]s,%[3]s"
+code_source: ""
+code_destination: ""
+code_includeop: true
+code_axis:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - H
+  - L
+  - "(HL)"
+  - "(IX+d)"
+  - "(IY+d)"
+  - "n"
+  - BC
+  - DE
+  - HL
+  - SP
+  - IX
+  - IY
+code_dest:
+  - "Op"
+codes:
+
+  - op: "DEC BC"
+    match: "Op,BC"
+    code: "0B"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "DEC DE"
+    match: "Op,DE"
+    code: "1B"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "DEC HL"
+    match: "Op,HL"
+    code: "2B"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "DEC SP"
+    match: "Op,SP"
+    code: "3B"
+    colour: green
+    size: 1
+    cycles: 6
+  - op: "DEC IX"
+    match: "Op,IX"
+    code: "DD2B"
+    colour: green
+    size: 2
+    cycles: 4,6
+  - op: "DEC IY"
+    match: "Op,IY"
+    code: "FD2B"
+    colour: green
+    size: 2
+    cycles: 4,6
+
+---
+{{< z80/instruction
+    def="/q dd \longleftarrow dd - 1/l DEC dd/00d1011//q IX \longleftarrow IX - 1/l DEC IX/11011101 DD/00101011 2B//q IY \longleftarrow IY - 1/l DEC IY/11111101 FD/00101011 2B"
+>}}
+{{< /z80/instruction >}}

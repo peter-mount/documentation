@@ -1,19 +1,18 @@
 ---
 type: "manual"
-title: "CP"
-linkTitle: "CP"
-description: "Comparison"
+title: "DEC 8-bit Decrement"
+linkTitle: "8 bit"
+description: "Decrement"
 tags:
   - z80 instruction
-weight: 60
+weight: 8
 cpu: z80
 flags:
   s: set if result negative
   z: set if result is 0
   h: set if borrow from bit 4
-  "p/v": set if overflow
+  "p/v": set if register was 0x80 before operation, reset otherwise
   n: set
-  c: set if borrow
 code_format: "%[2]s,%[3]s"
 code_source: ""
 code_destination: ""
@@ -40,77 +39,70 @@ code_dest:
   - "Op"
 codes:
 
-    # match "Op,A" to fake the blank dest
-  - op: "CP A"
+  - op: "DEC A"
     match: "Op,A"
-    code: "BF"
+    code: "3D"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP B"
+  - op: "DEC B"
     match: "Op,B"
-    code: "B8"
+    code: "05"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP C"
+  - op: "DEC C"
     match: "Op,C"
-    code: "B9"
+    code: "0D"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP D"
+  - op: "DEC D"
     match: "Op,D"
-    code: "BA"
+    code: "15"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP E"
+  - op: "DEC E"
     match: "Op,E"
-    code: "BB"
+    code: "1D"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP H"
+  - op: "DEC H"
     match: "Op,H"
-    code: "BC"
+    code: "25"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP L"
+  - op: "DEC L"
     match: "Op,L"
-    code: "BD"
+    code: "2D"
     colour: green
     size: 1
     cycles: 4
-  - op: "CP (HL)"
+
+  - op: "DEC (HL)"
     match: "Op,(HL)"
-    code: "BE"
+    code: "35"
     colour: yellow
     size: 1
-    cycles: 4,3
-  - op: "CP (IX+d)"
+    cycles: 4,4,3
+  - op: "DEC (IX+d)"
     match: "Op,(IX+d)"
-    code: "DDBEnn"
+    code: "DD35nn"
     colour: yellow
     size: 3
-    cycles: 4,4,3,5,3
-  - op: "CP (IY+d)"
+    cycles: 4,4,3,5,4,3
+  - op: "DEC (IY+d)"
     match: "Op,(IY+d)"
-    code: "FDBEnn"
+    code: "FD35nn"
     colour: yellow
     size: 3
-    cycles: 4,4,3,5,3
-  - op: "CP n"
-    match: "Op,n"
-    code: "FEnn"
-    colour: blue
-    size: 2
-    cycles: 4,3
+    cycles: 4,4,3,5,4,3
 
 ---
 {{< z80/instruction
-    operation="A - s"
-    def="/l CP r/10111r//l CP n/11111110 FE/n//l CP (HL)/10111110 BE//l CP (IX+d)/11011101 DD/10111110 BE/d//l CP (IY+d)/11111101 FD/10111110 BE/d"
+    def="/q r \longleftarrow r - 1/l DEC r/00r101//q (HL) \longleftarrow (HL) - 1/l DEC (HL)/00110101//q (IX+d) \longleftarrow (IX+d) - 1/l DEC (IX+d)/11011101 DD/00110101 35/d//q (IY+d) \longleftarrow (IY+d) - 1/l DEC (IY+d)/11111101 FD/00110101 35/d"
 >}}
 {{< /z80/instruction >}}

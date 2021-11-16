@@ -3,9 +3,18 @@
 {{ if templates.Exists (printf "partials/%s" $tpl) }}
   {{ partial $tpl . }}
 {{ else -}}
-{{ $break := cond .DoPageBreak "page-break-before: always" "" -}}
+
+{{- /* If a page break between sections is required and param nopagebreak is present set to auto not always. */ -}}
+{{- /* This allows us to merge subpages to save blank space */ -}}
+{{- /* Original code: $break := cond .DoPageBreak "page-break-before: always" "" */ -}}
+
+{{ $break := "" -}}
+{{ if .DoPageBreak -}}
+{{ if isset .Page.Params "nopagebreak" }}{{ $break = "page-break-before: auto"}}{{else}}{{ $break = "page-break-before: always" -}}
+{{end -}}
+{{ end -}}
+
 <div class="td-content-new" style="{{ $break }}">
-    {{ $break := cond .DoPageBreak "page-break-before: always" "" }}
 	<h1 id="pg-{{ .Page.File.UniqueID }}">{{ .PageNum }} - {{ .Page.Title }}</h1>
     {{ with .Page.Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
     {{- partial "bbc/api.html" .Page -}}

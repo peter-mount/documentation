@@ -5,6 +5,15 @@ linkTitle: "SUB"
 description: "Subtraction without Carry"
 tags:
   - z80 instruction
+weight: 20
+cpu: z80
+flags:
+  s: set if result negative
+  z: set if result is 0
+  h: set if borrow from bit 4
+  "p/v": set if overflow
+  n: set
+  c: set if borrow
 code_format: "SUB %[2]s,%[3]s"
 code_source: ""
 code_destination: ""
