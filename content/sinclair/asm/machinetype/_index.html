@@ -1,0 +1,66 @@
+---
+type: "manual"
+title: "Determine Machine Type"
+linkTitle: "System Type"
+description: "Detect which model of Spectrum the code is running on"
+categories:
+  - spectrum
+tags:
+  - Z80 Example
+resources:
+  - name: "machinetype.z80"
+    url: "/sinclair/asm/machinetype/machinetype.z80"
+    size: "4K"
+---
+<p>
+  There is no official method of determining which model of Spectrum code is running on, however one method is to
+  look for differences in the ROM on the machine.
+</p>
+
+<p>
+  There were 6 official models of Spectrum released:
+</p>
+<ul>
+  <ol>
+    <li>48K with a single rom (16K had the same ROM)</li>
+    <li>128K with 2 roms</li>
+    <li>Spanish 128K releasen 1985</li>
+    <li>+2 with built in Cassette Deck</li>
+    <li>+2A and +3 - These have the same roms just differ with the +3 having a built in 3" floppy drive.</li>
+  </ol>
+</ul>
+
+<p>
+  Below is a routine which will return a value representing the machine type the code is running on in the Accumulator.
+</p>
+
+<p>
+  It works by first paging out the 48K rom - something that will do nothing on a real 48K machine,
+  before checking for the Copyright string present in the 48K rom.
+</p>
+
+<p>
+  If that is not present it then attempts to page out the rom on a +2A/+3 machine - as they have 4 ROM's,
+  then checking for strings present on the +2A/+3, then the +2 and finally the Spanish 128K machine.
+</p>
+
+<p>
+  If it got this far without a match then it's running on an original UK 128K machine.
+</p>
+
+<h3>Rom selection</h3>
+<p>
+  There's two additional routines in here, <code>romSel1</code> and <code>romSel2</code>,
+  which handle the ROM selection and could be reused.
+  They both take the new value of the port which manages the rom selection in the Accumulator and updates both the
+  appropriate port and system variable.
+</p>
+<p>
+  For romSel1 load the Accumulator from 0x5BFC and make your changes before calling this routine.
+</p>
+<p>
+  For romSel2 load the Accumulator from 0x5B67 and make your changes before calling this routine.
+</p>
+
+<h3>machinetype.z80 source</h3>
+{{< book/include src="content/sinclair/asm/machinetype/machinetype.z80" >}}
