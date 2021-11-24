@@ -51,3 +51,28 @@ categories:
   If the bit is set then a disk interface is present, hence a +3.
   If the bit is reset then no disk is present, hence a +2A or a +3 with no disk interface or the interface disabled.
 </p>
+
+<h3>CP/M File compatibility</h3>
+<p>
+  +3DOS uses the CP/M file structure, subject to the following restrictions:
+</p>
+<ul>
+  <li>
+    Maximum file size of 8 megabytes (CP/M Plus supports a maximum of 32 megabytes).
+  </li>
+  <li>
+    Maximum drive size of 8 megabytes (CP/M Plus supports a maximum of 128 megabytes).
+  </li>
+  <li>
+    Directory labels are ignored.
+  </li>
+  <li>
+    No passwords. XFCBs will be erased, renamed, etc., along with their file(s) but are otherwise ignored.
+  </li>
+  <li>
+    No date and time stamps. SFCBs are initialised to zero when a file is created, but are otherwise ignored.
+  </li>
+  <li>
+    The archive file attribute is ignored, i.e. it is unaffected by all routines except DOS SET ATTRIBUTES.
+  </li>
+</ul>
