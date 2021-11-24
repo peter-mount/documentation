@@ -1,0 +1,122 @@
+---
+type: "manual"
+title: "DOS_OPEN"
+linkTitle: "Open"
+description: "Open and/or Create a file"
+weight: 0x0106
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_OPEN"
+    addr: "0106"
+    title: "Open and/or Create a file"
+---
+<h3>Synopsys</h3>
+<p>
+  Create and/or open a file
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  <tr>
+  <td>C</td>
+  <td class="text-left">Access mode required</td>
+  </tr>
+  <tr>
+  <td>D</td>
+  <td class="text-left">Create action</td>
+  </tr>
+  <tr>
+  <td>E</td>
+  <td class="text-left">Open action</td>
+  </tr>
+  <tr>
+  <td>HL</td>
+  <td class="text-left">Address of filename, no wildcards. Terminated with 0xFF</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If file newly created:</dt>
+  <dd>Carry true</dd>
+  <dd>Zero true</dd>
+  <dd>A corrupt</dd>
+  <dt>If existing file opened:</dt>
+  <dd>Carry true</dd>
+  <dd>Zero false</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<table class="memoryMap3">
+  <thead>
+  <tr>
+    <th>Open</th>
+    <th colspan="8">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><td>0</td><td class="text-left" colspan="8">Error - File already exists.</td></tr>
+  <tr><td>1</td><td class="text-left" colspan="8">
+    Open the file, read the header (if any).<br/>
+    Position file pointer after header.
+  </td></tr>
+  <tr><td>2</td><td class="text-left" colspan="8">
+    Open the file, ignore any header.<br/>
+    Position file pointer at 000000h (0).
+  </td></tr>
+  <tr><td>3</td><td class="text-left" colspan="8">
+    Assume given filename is 'filename.type'.
+    <ol>
+      <li>Erase 'filename.BAK' (if it exists).</li>
+      <li>Rename 'filename.type' to 'filename.BAK'.</li>
+      <li>Follow create action.</li>
+    </ol>
+  </td></tr>
+  <tr><td>4</td><td class="text-left" colspan="8">
+    Erase existing version.<br/>
+    Follow create action.
+  </td></tr>
+  </tbody>
+</table>
+
+<table class="memoryMap3">
+  <thead>
+  <tr>
+    <th>Create</th>
+    <th colspan="8">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><td>0</td><td class="text-left" colspan="8">Error - File does not exists.</td></tr>
+  <tr><td>1</td><td class="text-left" colspan="8">
+    Create and open new file with a header.<br/>
+    Position file pointer after header.
+  </td></tr>
+  <tr><td>2</td><td class="text-left" colspan="8">
+    Create and open new file without a header.<br/>
+    Position file pointer at 000000h (0).
+  </td></tr>
+</table>
+
+<div class="alert-info">
+  Note: The original +3 Manual doesn't mention that the filename needs to be terminated with a 0xFF byte.
+  <p>This was only discovered during testing by looking at the ROM 2 disassembly.</p>
+</div>

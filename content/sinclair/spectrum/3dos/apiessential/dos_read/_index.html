@@ -1,0 +1,69 @@
+---
+type: "manual"
+title: "DOS_READ"
+linkTitle: "Read"
+description: "Read bytes from a file into memory"
+weight: 0x0112
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_READ"
+    addr: "0112"
+    title: "Read bytes from a file into memory"
+---
+<h3>Synopsys</h3>
+<p>
+  Read bytes from a file into memory, advancing the file pointer in the process.
+</p>
+<p>
+  This routine does not consider any soft-EOF in the file.
+  Attempting to read past the EOF will produce an error.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Page number for addresses 0xC000&hellip;0xFFFF</td>
+  </tr>
+  <tr>
+    <td>DE</td>
+    <td class="text-left">Number of bytes to read. 0 means 64K</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of where to write the bytes to</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dd>DE corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>DE = Number of bytes remaining unread</dd>
+  <dt>Always:</dt>
+  <dd>BC HL IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<p>
+  The value of C is only used when HL is within the upper 16K of memory (0xC000&hellip;0xFFFF).
+  If HL is in this range then C is the RAM bank to use.
+  For most purposes C should be set to 0 which is the default RAM bank mapped to that region.
+</p>

@@ -1,0 +1,52 @@
+---
+type: "manual"
+title: "Error Codes"
+linkTitle: "Error Codes"
+description: "The +3DOS Error Codes"
+weight: 30
+categories:
+  - spectrum
+no_list: true
+---
+<p>
+  When a call to a +3DOS API fails then the carry flag will be false and the Accumulator will contain the error code.
+  The errors are in two categories, Recoverable (Green) and Non-recoverable (Red):
+</p>
+
+<table class="memoryMap4">
+  <thead>
+  <tr>
+    <th colspan="2">Code</th>
+    <th colspan="8">Error</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="green"><td class="bb">0</td><td class="brb">0x00</td><td class="brb text-left" colspan="8">Drive not ready</td></tr>
+  <tr class="green"><td class="bb">1</td><td class="brb">0x01</td><td class="brb text-left" colspan="8">Disk is write protected</td></tr>
+  <tr class="green"><td class="bb">2</td><td class="brb">0x02</td><td class="brb text-left" colspan="8">Seek fail</td></tr>
+  <tr class="green"><td class="bb">3</td><td class="brb">0x03</td><td class="brb text-left" colspan="8">CRC data error</td></tr>
+  <tr class="green"><td class="bb">4</td><td class="brb">0x04</td><td class="brb text-left" colspan="8">No data</td></tr>
+  <tr class="green"><td class="bb">5</td><td class="brb">0x05</td><td class="brb text-left" colspan="8">Missing address mark</td></tr>
+  <tr class="green"><td class="bb">6</td><td class="brb">0x06</td><td class="brb text-left" colspan="8">Unrecognised disk format</td></tr>
+  <tr class="green"><td class="bb">7</td><td class="brb">0x07</td><td class="brb text-left" colspan="8">Unknown disk error</td></tr>
+  <tr class="green"><td class="bb">8</td><td class="brb">0x08</td><td class="brb text-left" colspan="8">Disk changed whilst +3DOS was using it</td></tr>
+  <tr class="green"><td class="bb">9</td><td class="brb">0x09</td><td class="brb text-left" colspan="8">Unsuitable media for drive</td></tr>
+  <tr class="red"><td class="bb">20</td><td class="brb">0x14</td><td class="brb text-left" colspan="8">Bad filename</td></tr>
+  <tr class="red"><td class="bb">21</td><td class="brb">0x15</td><td class="brb text-left" colspan="8">Bad parameter</td></tr>
+  <tr class="red"><td class="bb">22</td><td class="brb">0x16</td><td class="brb text-left" colspan="8">Drive not found</td></tr>
+  <tr class="red"><td class="bb">23</td><td class="brb">0x17</td><td class="brb text-left" colspan="8">File not found</td></tr>
+  <tr class="red"><td class="bb">24</td><td class="brb">0x18</td><td class="brb text-left" colspan="8">File already exists</td></tr>
+  <tr class="red"><td class="bb">25</td><td class="brb">0x19</td><td class="brb text-left" colspan="8">End of file</td></tr>
+  <tr class="red"><td class="bb">26</td><td class="brb">0x1A</td><td class="brb text-left" colspan="8">Disk full</td></tr>
+  <tr class="red"><td class="bb">27</td><td class="brb">0x1B</td><td class="brb text-left" colspan="8">Directory full</td></tr>
+  <tr class="red"><td class="bb">28</td><td class="brb">0x1C</td><td class="brb text-left" colspan="8">Read-only file</td></tr>
+  <tr class="red"><td class="bb">29</td><td class="brb">0x1D</td><td class="brb text-left" colspan="8">File number not open (or open with wrong access)</td></tr>
+  <tr class="red"><td class="bb">30</td><td class="brb">0x1E</td><td class="brb text-left" colspan="8">Access denied (file is in use already)</td></tr>
+  <tr class="red"><td class="bb">31</td><td class="brb">0x1F</td><td class="brb text-left" colspan="8">Cannot rename between drives</td></tr>
+  <tr class="red"><td class="bb">32</td><td class="brb">0x20</td><td class="brb text-left" colspan="8">Extent missing (which should be there)</td></tr>
+  <tr class="red"><td class="bb">33</td><td class="brb">0x21</td><td class="brb text-left" colspan="8">Uncached (software error)</td></tr>
+  <tr class="red"><td class="bb">34</td><td class="brb">0x22</td><td class="brb text-left" colspan="8">File too big (trying to read or write past 8 megabytes)</td></tr>
+  <tr class="red"><td class="bb">35</td><td class="brb">0x23</td><td class="brb text-left" colspan="8">Disk not bootable (boot sector is not acceptable to DOS BOOT)</td></tr>
+  <tr class="red"><td class="bb">36</td><td class="brb">0x24</td><td class="brb text-left" colspan="8">Drive in use (trying to re-map or remove a drive with files open)</td></tr>
+  </tbody>
+</table>

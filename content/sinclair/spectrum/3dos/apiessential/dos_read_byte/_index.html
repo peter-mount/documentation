@@ -1,0 +1,55 @@
+---
+type: "manual"
+title: "DOS_READ_BYTE"
+linkTitle: "Read Byte"
+description: "Read byte from a file, check for soft-EOF"
+weight: 0x0118
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_READ_BYTE"
+    addr: "0118"
+    title: "Read byte from a file, check for soft-EOF"
+---
+<h3>Synopsys</h3>
+<p>
+  Read a byte from a file, advancing the file pointer in the process.
+  It tests for a soft EOF (0x1A) but it is possible to read past this.
+  Reading to the hard EOF will return an error.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK - not soft-EOF (0x1A)</dt>
+  <dd>Carry true</dd>
+  <dd>Zero false</dd>
+  <dd>A corrupt</dd>
+  <dd>C Byte read</dd>
+  <dt>If OK - soft-EOF (0x1A)</dt>
+  <dd>Carry true</dd>
+  <dd>Zero true</dd>
+  <dd>A corrupt</dd>
+  <dd>C Byte read</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>C corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

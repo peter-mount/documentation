@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "DOS_WRITE_BYTE"
+linkTitle: "Write Byte"
+description: "Write byte to a file"
+weight: 0x011B
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_WRITE_BYTE"
+    addr: "011B"
+    title: "Write byte to a file"
+---
+<h3>Synopsys</h3>
+<p>
+  Write a byte to a file, advancing the file pointer in the process.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Byte to write</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

@@ -1,0 +1,40 @@
+---
+type: "manual"
+title: "DOS_INITIALISE"
+linkTitle: "Initialise"
+description: "Initialise +3DOS"
+weight: 0x0100
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_INITIALISE"
+    addr: "0100"
+    title: "Initialise +3DOS"
+---
+<h3>Synopsys</h3>
+<ul>
+  <li>Initialise +3DOS.</li>
+  <li>Initialise disk drivers.</li>
+  <li>Initialise cache and the RAMdisk.</li>
+  <li>All files closed.</li>
+  <li>All drives logged out.</li>
+  <li>Default drive A: (if disk interface present), else M:</li>
+  <li>Default user 0.</li>
+  <li>Retry count 15.</li>
+  <li>Error messages disabled.</li>
+</ul>
+<h3>Entry Parameters</h3>
+<p>None</p>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

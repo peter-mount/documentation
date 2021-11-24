@@ -1,0 +1,53 @@
+---
+type: "manual"
+title: "DOS_SET_USER"
+linkTitle: "Set User"
+description: "Set the default user"
+weight: 0x0130
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_SET_USER"
+    addr: "0130"
+    title: "Set the default user"
+---
+<h3>Synopsys</h3>
+<p>
+  Set the default user area, i.e. the user area implied by all filenames that do not specify a user number.
+</p>
+<p>
+  The default user number is initially 0.
+</p>
+<p>
+  This only affects routines that take filename parameters.
+</p>
+<p>
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">User 0&hellip;15, 0xFF to get the default user</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A = default user</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

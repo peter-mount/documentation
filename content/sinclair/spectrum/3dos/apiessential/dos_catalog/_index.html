@@ -1,0 +1,120 @@
+---
+type: "manual"
+title: "DOS_CATALOG"
+linkTitle: "Catalog"
+description: "Get the disk catalog"
+weight: 0x011E
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_CATALOG"
+    addr: "011E"
+    title: "Get the disk catalog"
+---
+<h3>Synopsys</h3>
+<p>
+  Fills a buffer with part of the directory (sorted).
+</p>
+<p>
+  The filename specifies the drive, user and a (possibly ambiguous) filename.
+</p>
+<p>
+  Since the size of a directory is variable (and may be quite large), this routine permits the directory to be
+  catalogued in a number of small sections.
+  The caller passes a buffer pre-loaded with the first required filename, or zeroes for the start of the directory.
+  The buffer is loaded with part (or all, if it fits) of the directory sorted in ASCII order.
+  If more of the directory is required, this routine is re-called with the buffer re-initialised with the last file
+  previously returned.
+  This procedure is followed repeatedly until all of the directory has been catalogued.
+</p>
+<p>
+  Note that +3DOS format disks (which are the same as single-sided, single track AMSTRAD PCW range format disks) may
+  have a maximum of 64 directory entries.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>B</td>
+    <td class="text-left">n+1 size of buffer in entries, must be &gt;= 2</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td class="text-left">
+      Filter:<br/>
+      Bit 0 = include system files if set<br>
+      Bits 1&hellip;7 reserved
+    </td>
+  </tr>
+  <tr>
+    <td>DE</td>
+    <td class="text-left">Address of buffer, first entry initialised</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of filename, wildcards permitted</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dd>
+    B number of completed entries in buffer, 0&hellip;n.<br/>
+    If B=n then there may be more entries for subsequent calls
+  </dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dd>B corrupt</dd>
+  <dt>Always:</dt>
+  <dd>C DE HL IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<h3>Buffer format</h3>
+<p>
+  The buffer passed to this routine consists of 2 or more entries, with the first one initialised
+  with the first filename required.
+  It is valid for the first entry to be all zero's.
+</p>
+<p>
+  If the buffer is too small for the directory then it can be called again with entry 0 being a
+  copy of entry n from the previous call.
+</p>
+<table class="hexGrid">
+  <caption>Directory Entry Format</caption>
+  <thead>
+  <tr>
+    <th colspan="2">Bytes</th>
+    <th>Length</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td><td>7</td><td>8</td>
+    <td class="text-left">Filename in ASCII, left justified, space padding</td>
+  </tr>
+  <tr>
+    <td>8</td><td>10</td><td>3</td>
+    <td class="text-left">Type in ASCII, left justified, space padding</td>
+  </tr>
+  <tr>
+    <td>11</td><td>12</td><td>2</td>
+    <td class="text-left">File size in KB</td>
+  </tr>
+  </tbody>
+</table>
+<p>
+  The file size is the disk space allocated, not the actual file size.
+</p>

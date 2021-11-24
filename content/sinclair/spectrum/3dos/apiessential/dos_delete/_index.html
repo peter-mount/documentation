@@ -1,0 +1,48 @@
+---
+type: "manual"
+title: "DOS_DELETE"
+linkTitle: "Delete"
+description: "Delete a file"
+weight: 0x0124
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_DELETE"
+    addr: "0124"
+    title: "Delete a file"
+---
+<h3>Synopsys</h3>
+<p>
+  Delete an existing file.
+</p>
+<p>
+  The file must not be open on any file number.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of filename, wildcards are permitted.</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

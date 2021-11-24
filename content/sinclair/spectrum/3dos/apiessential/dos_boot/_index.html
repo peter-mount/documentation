@@ -1,0 +1,71 @@
+---
+type: "manual"
+title: "DOS_BOOT"
+linkTitle: "Boot"
+description: "Boot from disk"
+weight: 0x012A
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_BOOT"
+    addr: "012A"
+    title: "Boot from disk"
+---
+<h3>Synopsys</h3>
+<p>
+  Boot from Disk
+</p>
+<p>
+  This routine loads a single bootstrap sector from the disk in drive A: into memory and enters it.
+  This is for loading games or other operating systems.
+</p>
+<h3>Entry Parameters</h3>
+<p>None</p>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>No exit as the bootstrap has taken over</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>
+<h3>Bootstrap environment</h3>
+<div class="row">
+  <div class="col-6">
+    <p>
+      When the bootstrap runs with the following memory configuration:
+    </p>
+    <p>
+      The bootstrap sector is on side 0, track 0, sector 1 of the disk.
+      It is loaded into memory at 0xFE00 and entered at 0xFE10.
+      Interrupts are disabled, and SP = 0xFE00.
+    </p>
+    <p>
+      The sum of all bytes in the sector must equal 3 MOD 256.
+      Byte 15 in the sector can be used to adjust the sum to achive this.
+      Bytes 0&hellip;15 of the sector hold the disk specification.
+    </p>
+    <p>
+    </p>
+  </div>
+  <div class="col-6">
+    <table class="hexGrid">
+      <thead>
+      <tr>
+        <th colspan="2">Memory Range</th>
+        <th>RAM Bank</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td>0x0000</td><td>0x3FFF</td><td>Bank 4</td></tr>
+      <tr><td>0x4000</td><td>0x7FFF</td><td>Bank 7</td></tr>
+      <tr><td>0x8000</td><td>0xBFFF</td><td>Bank 6</td></tr>
+      <tr><td>0xC000</td><td>0xFFFF</td><td>Bank 3</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

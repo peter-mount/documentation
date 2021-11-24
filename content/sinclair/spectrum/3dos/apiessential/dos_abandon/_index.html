@@ -1,0 +1,50 @@
+---
+type: "manual"
+title: "DOS_ABANDON"
+linkTitle: "Abandon"
+description: "Abandon a file"
+weight: 0x010C
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_ABANDON"
+    addr: "010C"
+    title: "Abandon a file"
+---
+<h3>Synopsys</h3>
+<p>
+  Abandon a file
+</p>
+<p>
+  Similar to DOS CLOSE, except that any header, or data, or directory data yet to be written to disk is discarded.
+  This routine should only be used to force a file closed in the event that DOS CLOSE is unable to close the file
+  (for example, if the media is damaged or permanently changed or removed).
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

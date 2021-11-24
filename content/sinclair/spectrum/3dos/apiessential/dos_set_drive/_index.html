@@ -1,0 +1,56 @@
+---
+type: "manual"
+title: "DOS_SET_DRIVE"
+linkTitle: "Set Drive"
+description: "Set the default drive"
+weight: 0x012D
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_SET_DRIVE"
+    addr: "012D"
+    title: "Set the default drive"
+---
+<h3>Synopsys</h3>
+<p>
+  Set the default drive (i.e. the drive implied by all filenames that do not specify a drive).
+</p>
+<p>
+  The default drive is initially A:
+</p>
+<p>
+  Does not access the drive, but merely checks that there is a driver for it (which does not imply that the drive exists).
+</p>
+<p>
+  This only affects routines that take filename parameters.
+</p>
+<p>
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Drive letter A&hellip;P, 0xFF to get the default drive</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A = default drive</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

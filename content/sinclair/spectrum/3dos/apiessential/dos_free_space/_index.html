@@ -1,0 +1,47 @@
+---
+type: "manual"
+title: "DOS_FREE_SPACE"
+linkTitle: "Free Space"
+description: "Get free space on drive"
+weight: 0x0121
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_FREE_SPACE"
+    addr: "0121"
+    title: "Get free space on drive"
+---
+<h3>Synopsys</h3>
+<p>
+  Return the amount of free space on a drive.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Drive letter A&hellip;P</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dd>HL = Free space in KB</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dd>HL corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC DE IX corrupt, all other registers preserved.</dd>
+</dl>

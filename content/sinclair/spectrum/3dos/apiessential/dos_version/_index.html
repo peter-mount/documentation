@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "DOS_VERSION"
+linkTitle: "Version"
+description: "Get the DOS issue and version numbers"
+weight: 0x0103
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_VERSION"
+    addr: "0103"
+    title: "Return DOS issue and version numbers"
+---
+<h3>Synopsys</h3>
+<p>
+  Get the DOS issue and version numbers.
+</p>
+<h3>Entry Parameters</h3>
+<p>None</p>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>D = Issue</dd>
+  <dd>E = Version (within issue)</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A=Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

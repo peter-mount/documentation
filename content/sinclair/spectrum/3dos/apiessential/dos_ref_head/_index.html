@@ -1,0 +1,64 @@
+---
+type: "manual"
+title: "DOS_REF_HEAD"
+linkTitle: "Ref Head"
+description: "Point to header data for this file"
+weight: 0x010F
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_REF_HEAD"
+    addr: "010F"
+    title: "Point to header data for this file"
+---
+<h3>Synopsys</h3>
+<p>
+  Point at the header data for this file.
+</p>
+<p>
+  The header data area is 8 bytes long and may be used by the caller for any purpose whatsoever.
+  It is available even if the file does not have a header;
+  however, only files with a header and opened with write access will have the header data recorded on disk.
+</p>
+<p>
+  Note that +3 BASIC uses these 8 bytes (see the note under DOS OPEN which gives the details).
+  If creating a file that will subsequently be LOADed within BASIC, then those bytes should be filled with the relevant values.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dd>IX = Address of header data</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>IX corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL corrupt, all other registers preserved.</dd>
+</dl>
+
+<div class="alert-info">
+  The original manual doesn't mention exactly what IX points to after this call.
+  <p>
+    The address in IX is the <a href="../../fileheader/">+3 BASIC Header</a> structure which is 8 bytes long.
+    (IX+0) is the file type, (IX+1) the file length and (IX+3) param 1.
+  </p>
+</div>
