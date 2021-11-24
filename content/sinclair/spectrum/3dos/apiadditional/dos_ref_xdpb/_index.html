@@ -1,21 +1,22 @@
 ---
 type: "manual"
-title: "DOS_RENAME"
-linkTitle: "Rename"
-description: "Rename a file"
-weight: 0x0127
+title: "DOS_REF_XDPB"
+linkTitle: "REF XDPB"
+description: "Point at XDPB for this drive"
+weight: 0x0151
 categories:
   - spectrum
   - spectrumAPI
 no_list: true
 api:
-  - name: "DOS_RENAME"
-    addr: "0127"
-    title: "Get free space on drive"
+  - name: "DOS_REF_XDPB"
+    addr: "0151"
+    title: "Point at XDPB for this drive"
 ---
 <h3>Synopsys</h3>
 <p>
-  Return the amount of free space on a drive.
+  Point at the XDPB for this drive. (The XDPB is required by the floppy
+  disk driver routines.)
 </p>
 <h3>Entry Parameters</h3>
 <table class="memoryMap">
@@ -37,11 +38,11 @@ api:
   <dt>If OK:</dt>
   <dd>Carry true</dd>
   <dd>A corrupt</dd>
-  <dd>HL = Free space in KB</dd>
+  <dd>IX = Address of XDPB</dd>
   <dt>Otherwise:</dt>
   <dd>Carry false</dd>
   <dd>A=Error code</dd>
-  <dd>HL corrupt</dd>
+  <dd>IX corrupt</dd>
   <dt>Always:</dt>
-  <dd>BC DE IX corrupt, all other registers preserved.</dd>
+  <dd>BC DE HL corrupt, all other registers preserved.</dd>
 </dl>

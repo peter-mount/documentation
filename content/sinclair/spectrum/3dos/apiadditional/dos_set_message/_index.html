@@ -1,0 +1,144 @@
+---
+type: "manual"
+title: "DOS_SET_MESSAGE"
+linkTitle: "Set MSG"
+description: "Enable/disable disk error messages"
+weight: 0x014E
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_SET_MESSAGE"
+    addr: "014E"
+    title: "Enable/disable disk error messages"
+---
+<h3>Synopsys</h3>
+<p>
+    Enable/disable disk error messages.
+</p>
+<p>
+    This should be used to make +3DOS aware of your own ALERT subroutine.
+    When +3DOS detects an error, it will call your ALERT subroutine, passing to it the values documented below.
+    The ALERT subroutine should print the text of the message that +3DOS passes it, then should wait for the user to
+    press a key.
+    If the key is in the reply string (that +3DOS also passes - version V1.0 only), then a 'ret' should be made with A =
+    0, 1 or 2, or containing the character (depending on the version of +3DOS).
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+    <thead>
+    <tr>
+        <th>Register</th>
+        <th>Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>A</td>
+        <td class="text-left">Enable 0xff or disable 0x00</td>
+    </tr>
+    <tr>
+        <td>HL</td>
+        <td class="text-left">Address of ALERT routine if enabled</td>
+    </tr>
+    </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+    <dd>HL = address of previous ALERT routine, 0 if none</dd>
+    <dt>Always:</dt>
+    <dd>AF BC DE IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<h3>ALERT implementations</h3>
+<p>
+    Note that if you are substituting your own ALERT subroutine, the 'entry conditions' are the conditions passed to
+    your subroutine and the 'exit conditions' are the values that your subroutine must produce and the registers you are
+    allowed to corrupt.
+</p>
+<p>
+    There are two routine interfaces for ALERT, depending on which version of +3DOS is installed.
+</p>
+<p>
+    If you provide an ALERT function, you should have two subroutines,
+    or one with switchable entry and exit conditions,
+    and check the +3DOS version number before deciding which one to use.
+</p>
+
+<h4>+3DOS V1.0</h4>
+
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+    <thead>
+    <tr>
+        <th>Register</th>
+        <th>Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>DE</td>
+        <td class="text-left">Address of reply string in page 7 terminated by 0xFF</td>
+    </tr>
+    <tr>
+        <td>HL</td>
+        <td class="text-left">Address of error message in page 7 terminated by 0xFF</td>
+    </tr>
+    </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+    <dd>A = Reply character</dd>
+    <dt>Always:</dt>
+    <dd>F BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<h4>+3DOS V1.1 and above</h4>
+<p>
+    The second version allows the user to provide non-UK error messages and is generally more flexible, is present in
+    +3DOS versions V1.1 and upwards.
+</p>
+
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+    <thead>
+    <tr>
+        <th>Register</th>
+        <th>Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>B</td>
+        <td class="text-left">Error number</td>
+    </tr>
+    <tr>
+        <td>C</td>
+        <td class="text-left">Drive A&hellip;P</td>
+    </tr>
+    <tr>
+        <td>D</td>
+        <td class="text-left">Logical track if required by message</td>
+    </tr>
+    <tr>
+        <td>E</td>
+        <td class="text-left">Logical sector if required by message</td>
+    </tr>
+    <tr>
+        <td>HL</td>
+        <td class="text-left">Address of UK error message in page 7 terminated by 0xFF</td>
+    </tr>
+    </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+    <dd>
+        A = Reply<br/>
+        0 = cancel<br/>
+        1 = retry<br/>
+        2 = ignore
+    </dd>
+    <dt>Always:</dt>
+    <dd>F BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

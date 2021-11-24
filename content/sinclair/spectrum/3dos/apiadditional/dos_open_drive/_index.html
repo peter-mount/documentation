@@ -1,0 +1,75 @@
+---
+type: "manual"
+title: "DOS_OPEN_DRIVE"
+linkTitle: "Open Drive"
+description: "Open drive as a single file"
+weight: 0x014B
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_OPEN_DRIVE"
+    addr: "014B"
+    title: "Open drive as a single file"
+---
+<h3>Synopsys</h3>
+<p>
+  Open the disk in this drive as a single file.
+</p>
+<p>
+  The whole disk is presented as a single file regardless of any real files on the disk.
+  This routine can be used to examine/poke directories, files, etc.
+  It should not be used by the uninitiated, the faint-hearted, or by anyone who values their files!</p>
+<p>
+  Sets file pointer to 0x000000 (0).
+</p>
+<p>
+  If there are any files open on this drive from other file numbers with shared-read access, then the disk can only be
+  opened with shared-read access from this file number.
+</p>
+<p>
+  If there are any file open on this drive from other file numbers with exclusive access, then the disk cannot be opened
+  from this file number.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Drive A&hellip;P</td>
+  </tr>
+  <tr>
+    <td>B</td>
+    <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td class="text-left">
+      Access mode required: Bits 0&hellip;2:<br/>
+      1 = exclusive read<br/>
+      2 = exclusive write<br/>
+      3 = exclusive read/write<br/>
+      5 = shared read<br/>
+      All other bits are reserved
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL corrupt, all other registers preserved.</dd>
+</dl>

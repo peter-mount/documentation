@@ -1,0 +1,91 @@
+---
+type: "manual"
+title: "DOS_MAP_B"
+linkTitle: "Map B"
+description: "Map drive B to unit 0 or 1"
+weight: 0x0154
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_MAP_A"
+    addr: "0154"
+    title: "Map drive B to unit 0 or 1"
+---
+<h3>Synopsys</h3>
+<p>
+  Map drive B: to unit 0 or unit 1.
+  This routine will fail if drive B: has files open.
+</p>
+<p>
+  If mapping B: to unit 0, then each time unit 0 is accessed, a check is made that the drive mapping is correct.
+  If it isn't, then a reverse call to CHANGE DISK is made, to ask the user to change the disk in unit 0.
+</p>
+<p>
+  If mapping B: to unit 1, then if unit 1 does not exist, drive B: is disabled.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Unit 0 or 1</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of change disk routine if unit = 0</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dd>HL = Address of previous change disk routine, 0 if none</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A corrupt</dd>
+  <dd>HL corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC DE IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<h4>Change Disk routine</h4>
+<p>
+  If you are substituting your own CHANGE DISK subroutine,
+  the 'entry conditions' are the conditions passed to your subroutine,
+  and the 'exit conditions' are registers you are allowed to corrupt.
+</p>
+
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Logical drive A&hellip;P</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of message in page 7 terminated by 0xFF</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>Always:</dt>
+  <dd>AF BC DE IX corrupt, all other registers preserved.</dd>
+</dl>
