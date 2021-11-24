@@ -1,0 +1,52 @@
+---
+type: "manual"
+title: "DOS_GET_EOF"
+linkTitle: "Get EOF"
+description: "Get the end of file (EOF) position"
+weight: 0x0139
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_GET_EOF"
+    addr: "0139"
+    title: "Get the end of file (EOF) position"
+---
+<h3>Synopsys</h3>
+<p>
+  Get the end of file (EOF) file position greater than all written byte positions.
+  Does not affect the file pointer.
+  Does not consider soft-EOF.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>B</td>
+    <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+    <dd>
+      E HL = File pointer 0x000000&hellip;0xFFFFFF (16Mb)<br/>
+      E is most significant byte, L least
+    </dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>E HL = Corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC D IX corrupt, all other registers preserved.</dd>
+</dl>

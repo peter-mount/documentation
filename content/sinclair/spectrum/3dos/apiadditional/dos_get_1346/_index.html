@@ -1,0 +1,43 @@
+---
+type: "manual"
+title: "DOS_GET_1346"
+linkTitle: "Get 1346"
+description: "Get current cache/ramdisk location"
+weight: 0x013C
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_GET_1346"
+    addr: "013C"
+    title: "Set current cache/ramdisk location"
+---
+<h3>Synopsys</h3>
+<p>
+  Get the current location of the cache and RAMdisk.
+</p>
+<p>
+  Pages 1, 3, 4, 6 are considered as an array of 128 sector buffers
+  (numbered 0...127), each of 512 bytes. The cache and RAMdisk occupy
+  two separate (contiguous) areas of this array.
+</p>
+<p>
+  Any unused sector buffers may be used by the caller.
+</p>
+<p>
+  Note that the sizes may be smaller than those specified in DOS_SET_1346,
+  as there is an (unpublished) maximum size of cache and a minimum
+  size of RAMdisk (4 sectors).
+</p>
+<h3>Entry Parameters</h3>
+<p>None</p>
+<h3>Exit Parameters</h3>
+<dl>
+  <dd>D = First buffer of cache</dd>
+  <dd>E = Number of cache sector buffers</dd>
+  <dt>H = First buffer of RAM disk</dt>
+  <dd>L = Number of RAM disk sector buffers</dd>
+  <dt>Always:</dt>
+  <dd>AF BC IX corrupt, all other registers preserved.</dd>
+</dl>

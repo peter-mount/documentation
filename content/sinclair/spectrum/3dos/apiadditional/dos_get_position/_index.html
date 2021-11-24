@@ -1,0 +1,50 @@
+---
+type: "manual"
+title: "DOS_GET_POSITION"
+linkTitle: "Get Pos"
+description: "Get the file pointer"
+weight: 0x0133
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_GET_POSITION"
+    addr: "0133"
+    title: "Get the file pointer"
+---
+<h3>Synopsys</h3>
+<p>
+  Returns the current position in the file
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>B</td>
+  <td class="text-left">File number 0&hellip;15</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+    <dd>
+      E HL = File pointer 0x000000&hellip;0xFFFFFF (16Mb)<br/>
+      E is most significant byte, L least
+    </dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>E HL = Corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC D IX corrupt, all other registers preserved.</dd>
+</dl>

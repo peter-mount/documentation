@@ -1,0 +1,83 @@
+---
+type: "manual"
+title: "DOS_SET_1346"
+linkTitle: "Set 1346"
+description: "Rebuild the sector cache and RAM disk"
+weight: 0x013F
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_SET_1346"
+    addr: "013F"
+    title: "Rebuild the sector cache and RAM disk"
+---
+<h3>Synopsys</h3>
+<p>
+  Rebuild the sector cache and RAM disk.
+</p>
+<p>
+  This routine is used to make some store available to the user, or to return store to DOS.
+  Note that if the RAM disk is moved, or its size is changed, then all files thereon are erased.
+</p>
+<p>
+  Pages 1, 3, 4, 6 are considered as an array of 128 sector buffers (numbered 0...127), each of 512 bytes.
+  The cache and RAMdisk occupy two separate (contiguous) areas of this array.
+</p>
+<p>
+  The location and size of the cache and RAMdisk can be specified separately;
+  any remaining buffers are unused by DOS and are available to the caller.
+</p>
+<p>
+  Note that the sizes actually used may be smaller than those specified as in practice, there is a maximum cache size and a minimum size of RAMdisk (4 sectors).
+</p>
+<p>
+  A cache size of 0 will still work but will seriously impair the floppy disk performance.
+</p>
+<p>
+  This routine will fail if there are any files open on drive M:
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>D</td>
+    <td class="text-left">First buffer for cache</td>
+  </tr>
+  <tr>
+    <td>E</td>
+    <td class="text-left">Number of cache sector buffers</td>
+  </tr>
+  <tr>
+    <td>H</td>
+    <td class="text-left">First buffer for RAM disk</td>
+  </tr>
+  <tr>
+    <td>L</td>
+    <td class="text-left">Number of RAM disk sector buffers</td>
+  </tr>
+  <tr class="orange">
+    <td colspan="2">
+      Note: E + L &lt;= 128
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

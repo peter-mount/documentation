@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "DOS_FLUSH"
+linkTitle: "Flush"
+description: "Write any pending data to this drive"
+weight: 0x0142
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_FLUSH"
+    addr: "0142"
+    title: "Write any pending data to this drive"
+---
+<h3>Synopsys</h3>
+<p>
+  Write any pending headers, data, directory entries for this drive.
+</p>
+<p>
+  This routine ensures that the disk is up-to-date.
+  It can be called at any time, even when files are open.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Drive A&hellip;P</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

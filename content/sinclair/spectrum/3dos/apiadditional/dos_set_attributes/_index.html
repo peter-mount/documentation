@@ -1,0 +1,91 @@
+---
+type: "manual"
+title: "DOS_SET_ATTRIBUTES"
+linkTitle: "Set Attrs"
+description: "Set a files attributes"
+weight: 0x0148
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DOS_SET_ATTRIBUTES"
+    addr: "0148"
+    title: "Set a files attributes"
+---
+<h3>Synopsys</h3>
+<p>
+  Set a file's attributes.
+</p>
+<p>
+  Only the file attributes f1'...f4', t1'...t3' can be set or cleared.
+  The interface attributes f5'...f8' are always 0.
+</p>
+<p>
+  This routine first sets the attributes specified in D, then clears those attributes specified in E,
+  i.e. E has priority.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>D</td>
+    <td class="text-left">Attributes to set</td>
+  </tr>
+  <tr>
+    <td>E</td>
+    <td class="text-left">Attributes to clear</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of filename, wildcards permitted</td>
+  </tr>
+  </tbody>
+</table>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<table class="memoryMap4">
+  <caption>Bit definitions for Attributes</caption>
+  <thead>
+  <tr>
+    <th>Bit</th>
+    <th colspan="2">Attribute</th>
+    <th>Bit</th>
+    <th>Attribute</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="bb">0</td><td class="bb">t3</td><td class="brb">Archive</td>
+    <td class="bb">3</td><td class="brb">f4</td>
+  </tr>
+  <tr>
+    <td class="bb">1</td><td class="bb">t2</td><td class="brb">System</td>
+    <td class="bb">4</td><td class="brb">f3</td>
+  </tr>
+  <tr>
+    <td class="bb">2</td><td class="bb">t1</td><td class="brb">Read Only</td>
+    <td class="bb">5</td><td class="brb">f2</td>
+  </tr>
+  <tr>
+    <td class="bnone" colspan="3"></td>
+    <td class="blb">6</td><td class="brb">f1</td>
+  </tr>
+  </tbody>
+</table>
