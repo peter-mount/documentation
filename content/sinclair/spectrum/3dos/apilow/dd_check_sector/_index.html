@@ -1,0 +1,80 @@
+---
+type: "manual"
+title: "DD_CHECK_SECTOR"
+linkTitle: "Check Sector"
+description: "Check a sector"
+weight: 0x0169
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_CHECK_SECTOR"
+    addr: "0169"
+    title: "Check a sector"
+---
+<h3>Synopsys</h3>
+<p>
+  Check a sector. (Uses the uPD765A scan equal command.)
+</p>
+<p>
+  Checks that the sector on disk is the same as the copy in memory.
+</p>
+<p>
+  Note that FFh (255) on disk or in memory always matches anything (see
+  uPD765A specification for further details).
+</p>
+<p>
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>B</td>
+    <td class="text-left">Page for 0xC000&hellip;0xFFFF</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Unit 0 or 1</td>
+  </tr>
+  <tr>
+    <td>D</td>
+    <td class="text-left">Logical track, 0 base</td>
+  </tr>
+  <tr>
+    <td>E</td>
+    <td class="text-left">logical sector, 0 base</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of buffer</td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK & Equal:</dt>
+  <dd>Carry true</dd>
+  <dd>Zero true</dd>
+  <dd>A corrupt</dd>
+  <dt>If OK & Not Equal:</dt>
+  <dd>Carry true</dd>
+  <dd>Zero false</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

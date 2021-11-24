@@ -1,0 +1,57 @@
+---
+type: "manual"
+title: "DD_EQUIPMENT"
+linkTitle: "Equipment"
+description: "Ask what type of drive"
+weight: 0x0181
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_EQUIPMENT"
+    addr: "0181"
+    title: "Ask what type of drive"
+---
+<h3>Synopsys</h3>
+<p>
+  Ask what type of drive this is (i.e. single/double track, single/double sided).
+</p>
+<p>
+  Track information can only be determined once a disk has been seen and had its type identified during logging in.
+</p>
+<p>
+  Side information can only be detected after a double sided disk has been seen and has its type identified during
+  logging in.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Unit 0 or 1</td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dd>Carry true</dd>
+  <dd>
+    A = Side/track information<br/>
+    bits 0&hellip;1 side information: 0 = unknown, 1 = single sided, 2 = double sided<br/>
+    bits 2&hellip;3 track information: 0 = unknown, 1 = single track, 2 = double track
+  </dd>
+  <dt>Always:</dt>
+  <dd>F BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

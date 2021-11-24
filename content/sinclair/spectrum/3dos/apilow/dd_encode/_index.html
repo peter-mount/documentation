@@ -1,0 +1,102 @@
+---
+type: "manual"
+title: "DD_ENCODE"
+linkTitle: "Enocde"
+description: "Set copy protection encode routine"
+weight: 0x0184
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_ENCODE"
+    addr: "0184"
+    title: "Set copy protection encode routine"
+---
+<h3>Synopsys</h3>
+<p>
+  Set the copy protection ENCODE subroutine.
+</p>
+<p>
+  Copy protected disks have some of their track and sector numbers encoded on disk.
+  Before each disk access, the ENCODE subroutine is called to encode the physical track and sector numbers.
+</p>
+<p>
+  These encoded track and sector numbers must match those in the sector identifier.
+</p>
+<p>
+  Note that tracks 0&hellip;2 on either side of a disk should not be encoded.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Enable 0xFF or disable 0x00</td>
+  </tr>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">If enabled address of ENCODE routine</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dd>HL = Address of previous encode routine, 0 if none</dd>
+  <dt>Always:</dt>
+  <dd>AF BC DE IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<h3>ENCODE routine</h3>
+<p>
+  If you are substituting your own ENCODE subroutine,
+  the 'entry conditions' are the conditions passed to your subroutine,
+  and the 'exit conditions' are the values that your subroutine must produce and the registers you are allowed to
+  corrupt.
+</p>
+
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C</td>
+    <td class="text-left">
+      Unit/Side<br/>
+      Bits 0&hellip;1 = unit, Bit 2 = side
+    </td>
+  </tr>
+  <tr>
+    <td>D</td>
+    <td class="text-left">Physical track</td>
+  </tr>
+  <tr>
+    <td>E</td>
+    <td class="text-left">Physical sector</td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dd>D = Encoded physical track</dd>
+  <dd>E = Encoded physical sector</dd>
+  <dt>Always:</dt>
+  <dd>AF corrupt, all other registers preserved.</dd>
+</dl>

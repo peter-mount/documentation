@@ -1,0 +1,22 @@
+---
+type: "manual"
+title: "Low Level API"
+linkTitle: "Low Level API"
+description: "+3DOS Low Level API"
+weight: 12
+categories:
+  - spectrum
+#no_list: true
+---
+<p>
+  The following are the floppy disk driver routines.
+  The unit number is 0&hellip;3 for the uPD765A.
+  On the +3, unit 0 is drive A: and unit 1 is drive B:, or optionally, both A: and B: may be mapped onto unit 0.
+  Units 2 and 3 are not used.
+</p>
+<p>
+  With the exception of DD_INTERFACE, none of these routines may be called if the floppy disk interface is not present.
+</p>
+<p>
+  All routines assume that interrupts are enabled on entry, and will still be enabled on exit.
+</p>

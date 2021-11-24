@@ -1,0 +1,52 @@
+---
+type: "manual"
+title: "DD_TEST_UNSUITABLE"
+linkTitle: "Test Disk"
+description: "Check disk is suitable to write to"
+weight: 0x0172
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_TEST_UNSUITABLE"
+    addr: "0172"
+    title: "Check disk is suitable to write to"
+---
+<h3>Synopsys</h3>
+<p>
+  Check that disk is suitable to write to.
+
+  A single track disk will not work in a double track drive, and vice versa.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Unit 0 or 1</td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A corrupt</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dt>Always:</dt>
+  <dd>BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

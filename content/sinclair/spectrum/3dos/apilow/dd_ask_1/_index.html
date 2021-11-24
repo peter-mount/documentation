@@ -1,0 +1,49 @@
+---
+type: "manual"
+title: "DD_ASK_1"
+linkTitle: "Ask 1"
+description: "Check to see if unit 1 is present"
+weight: 0x017B
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_ASK_1"
+    addr: "017B"
+    title: "Check to see if unit 1 is present"
+---
+<h3>Synopsys</h3>
+<p>
+  Check to see if unit 1 is present.
+  BASIC holds this information in bit 5 of the FLAGS3 system variable.
+</p>
+<p>
+  Turn motor on.
+</p>
+<p>
+  Fetch drive status.
+</p>
+<p>
+  If unit 1 is not-ready and write-protected, then unit 1 is missing.
+  Start motor off timeout.
+</p>
+<p>
+  Note that this routine can be fooled by disks which are almost, but not quite, inserted in the drive.
+</p>
+<p>
+  This routine assumes that when a disk is not in the drive, then write-protect is true.
+  This is indeed the case for 3 inch and 8 inch disk drives, but is not the case for 5 1/4 inch disk drives.
+</p>
+<h3>Entry Parameters</h3>
+<p>None</p>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If unit 1 present:</dt>
+  <dd>Carry true</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dt>Always:</dt>
+  <dd>A BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

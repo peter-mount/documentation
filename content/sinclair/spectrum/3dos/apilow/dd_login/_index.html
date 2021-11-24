@@ -1,0 +1,55 @@
+---
+type: "manual"
+title: "DD_LOGIN"
+linkTitle: "Login"
+description: "Log in a new disk"
+weight: 0x0175
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_LOGIN"
+    addr: "0175"
+    title: "Login a new disk"
+---
+<h3>Synopsys</h3>
+<p>
+  Log in a new disk.
+  Initialise the XDPB.
+  This routine does not affect or consider the freeze flag.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C</td>
+    <td class="text-left">Unit 0 or 1</td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A = Disk type</dd>
+  <dd>DE = Size of allocation vector</dd>
+  <dd>HL = Size of hash table</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>DE HL corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC IX corrupt, all other registers preserved.</dd>
+</dl>

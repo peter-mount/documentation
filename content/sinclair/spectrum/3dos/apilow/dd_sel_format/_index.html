@@ -1,0 +1,62 @@
+---
+type: "manual"
+title: "DD_SEL_FORMAT"
+linkTitle: "Sel Fmt"
+description: "Select a standard format"
+weight: 0x0178
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_SEL_FORMAT"
+    addr: "0178"
+    title: "Select a standard format"
+---
+<h3>Synopsys</h3>
+<p>
+  Initialise an XDPB for a standard format.
+
+  This routine does not affect or consider the freeze flag.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">
+      Disk type:<br/>
+      0 = Spectrum +3 (Amstrad PCW DD, SS, ST)<br/>
+      1 = Amstrad CPC range system format<br/>
+      2 = Amstrad CPC range data-only format<br/>
+      3 = Amstrad PCW range DD, SS, DT<br/>
+      Any other value returns an error
+    </td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A = Disk type</dd>
+  <dd>DE = Size of 2 bit allocation vector</dd>
+  <dd>HL = Size of hash table</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>DE HL corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC IX corrupt, all other registers preserved.</dd>
+</dl>

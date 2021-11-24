@@ -1,0 +1,33 @@
+---
+type: "manual"
+title: "DD_INTERFACE"
+linkTitle: "Interface"
+description: "Check for the disk drive interface"
+weight: 0x0157
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_INTERFACE"
+    addr: "0157"
+    title: "Check for the disk drive interface"
+---
+<h3>Synopsys</h3>
+<p>
+  Is the floppy disk drive interface present?
+</p>
+<p>
+  This information is also held by BASIC in bit 4 of the FLAGS3 system variable.
+</p>
+<h3>Entry Parameters</h3>
+<p>None</p>
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If present<dt>
+  <dd>Carry true</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dt>Always:</dt>
+  <dd>A BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

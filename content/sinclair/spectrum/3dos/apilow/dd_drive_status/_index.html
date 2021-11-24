@@ -1,0 +1,46 @@
+---
+type: "manual"
+title: "DD_DRIVE_STATUS"
+linkTitle: "Drive Stat"
+description: "Check drive status"
+weight: 0x017E
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_DRIVE_STATUS"
+    addr: "017E"
+    title: "Check drive status"
+---
+<h3>Synopsys</h3>
+<p>
+  Issue a sense drive status command.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>C</td>
+    <td class="text-left">
+      Unit/head<br/>
+      Bits 0&hellip;1 Unit 0&hellip;3<br/>
+      Bit 2 Head<br/>
+      Bits 3&hellip;7 = 0
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>A = ST3 status register 3 of uPD765A</dt>
+  <dt>Always:</dt>
+  <dd>F BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

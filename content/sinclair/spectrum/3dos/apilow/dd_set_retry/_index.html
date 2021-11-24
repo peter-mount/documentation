@@ -1,0 +1,41 @@
+---
+type: "manual"
+title: "DD_SET_RETRY"
+linkTitle: "Set Retry"
+description: "Set try/retry count"
+weight: 0x0160
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_SET_RETRY"
+    addr: "0160"
+    title: "Set try/retry count"
+---
+<h3>Synopsys</h3>
+<p>
+  Set the try and retry count.
+  A value of 1 will try the operation once with no retries.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>A</td>
+    <td class="text-left">Try/Retry count &gt;= 1</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>Always:</dt>
+  <dd>AF BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>
