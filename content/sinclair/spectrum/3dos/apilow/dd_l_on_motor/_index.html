@@ -1,0 +1,29 @@
+---
+type: "manual"
+title: "DD_L_ON_MOTOR"
+linkTitle: "L On Motor"
+description: "Turn on motor"
+weight: 0x0196
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_L_ON_MOTOR"
+    addr: "0196"
+    title: "Turn on motor"
+---
+<h3>Synopsys</h3>
+<p>
+  Turn on the motor.
+  Wait for the motor on time as set by DD SETUP.
+</p>
+
+<h3>Entry Parameters</h3>
+<p>None</p>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>Always:</dt>
+  <dd>AF BC DE HL IX corrupt, all other registers preserved.</dd>
+</dl>

@@ -1,0 +1,86 @@
+---
+type: "manual"
+title: "DD_L_WRITE"
+linkTitle: "L Write"
+description: "Low level uPD765A write command"
+weight: 0x0193
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_L_WRITE"
+    addr: "0193"
+    title: "Low level uPD765A write command"
+---
+<h3>Synopsys</h3>
+<p>
+  Low level uPD765A write command.
+</p>
+<ul>
+  <li>Write data.</li>
+  <li>Write deleted data.</li>
+  <li>Format a track.</li>
+  <li>Scan equal.</li>
+  <li>Scan low or Equal.</li>
+  <li>Writes commands.</li>
+  <li>Writes data.</li>
+  <li>Reads results.</li>
+  <li>Motor must be running.</li>
+</ul>
+
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>HL</td>
+    <td class="text-left">Address of parameter block</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dd>HL = Address of result buffer in page 7</dd>
+  <dt>Always:</dt>
+  <dd>AF BC DE IX corrupt, all other registers preserved.</dd>
+</dl>
+
+<table class="hexGrid">
+  <caption>Parameter Block Format</caption>
+  <thead>
+  <tr>
+    <th colspan="2">Bytes</th>
+    <th>Length</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>0</td><td>0</td><td>1</td>
+    <td class="text-left">Page for 0xC000&hellip;0xFFFF</td>
+  </tr>
+  <tr>
+    <td>1</td><td>2</td><td>2</td>
+    <td class="text-left">Address of buffer</td>
+  </tr>
+  <tr>
+    <td>3</td><td>4</td><td>2</td>
+    <td class="text-left">Number of bytes to transfer</td>
+  </tr>
+  <tr>
+    <td>5</td><td>5</td><td>1</td>
+    <td class="text-left">Number of command bytes n</td>
+  </tr>
+  <tr>
+    <td>6</td><td>5+n</td><td>n</td>
+    <td class="text-left">Command bytes</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,56 @@
+---
+type: "manual"
+title: "DD_L_XDPB"
+linkTitle: "L XDPB"
+description: "Initialise XDPB for a given format"
+weight: 0x0187
+categories:
+  - spectrum
+  - spectrumAPI
+no_list: true
+api:
+  - name: "DD_L_XDPB"
+    addr: "0187"
+    title: "Initialise XDPB for a given format"
+---
+<h3>Synopsys</h3>
+<p>
+  Initialise an XDPB for a given format.
+</p>
+<p>
+  This routine does not affect or consider the freeze flag.
+</p>
+<h3>Entry Parameters</h3>
+<table class="memoryMap">
+  <thead>
+  <tr>
+    <th>Register</th>
+    <th>Content</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>DE</td>
+    <td class="text-left">Address of source disk specification</td>
+  </tr>
+  <tr>
+    <td>IX</td>
+    <td class="text-left">Address of destination XDPB</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Exit Parameters</h3>
+<dl>
+  <dt>If OK:</dt>
+  <dd>Carry true</dd>
+  <dd>A = Disk type recorded on disk</dd>
+  <dd>DE = Size of allocation vector</dd>
+  <dd>HL = Size of hash table</dd>
+  <dt>Otherwise:</dt>
+  <dd>Carry false</dd>
+  <dd>A = Error code</dd>
+  <dd>DE HL corrupt</dd>
+  <dt>Always:</dt>
+  <dd>BC IX corrupt, all other registers preserved.</dd>
+</dl>
