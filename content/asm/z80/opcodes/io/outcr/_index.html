@@ -21,6 +21,7 @@ code_axis:
   - "H"
   - "L"
   - "(HL)"
+  - "F"
 code_dest:
   - "OUT (C)"
 codes:
@@ -60,11 +61,15 @@ codes:
     colour: grey
     size: 2
     cycles: 4,4,4
+  - op: "OUT (C),F"
+    code: "ED71"
+    colour: undocumented
+    size: 2
+    cycles: 4,4,4
 
 ---
 {{< z80/instruction
-    operation="(C) \longleftarrow r"
-    def="11101101 ED/01r001"
+    def="/q (C) \longleftarrow r/l OUT (C), r/11101101 ED/01r001//q (C) \longleftarrow F/l OUT (C), F/11101101 ED/01110001 71"
 >}}
 {{< /z80/instruction >}}
 <p>
@@ -78,7 +83,12 @@ codes:
     Then the byte contained in r is placed on the data bus and written to the selected peripheral device.
 </p>
 
-<h3>Undocumented OP Codes</h3>
-<p>
-  For <code>OUT (C), r</code> there's an undocumented code where r=%110 which writes the flag register.
-</p>
+<div class="alert-info">
+  <p>
+    There is an <a href="../../undocumented/">undocumented</a> code where r=%110 which writes the flag register.
+  </p>
+  <p>
+    Unlike it's <a href="../inrc/">IN F, (C)</a> counterpart, this instruction is completely undocumented, but it's here
+    not in the undocumented section to be consistent.
+  </p>
+</div>

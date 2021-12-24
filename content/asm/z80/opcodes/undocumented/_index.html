@@ -77,21 +77,25 @@ description: "Undocumented instructions - use with care"
 
     <h4>ED</h4>
     <p>
-        There are a few undocumented instructions with this prefix but they simply emulate existing instructions.
+        There are a few undocumented instructions with this prefix, but they simply emulate existing instructions.
+    </p>
+    <p>
+        The exception to this are the <code>IN F, (C)</code> and <code>OUT (C), F</code> instructions which are
+        described below.
     </p>
 </div>
 
 <div class="printPageBreakAvoid mb-4">
     <h3>When is undocumented actually documented?</h3>
     <p>
-        One oddity is the undocumented instruction <code>IN F,(C)</code><sub>0xED70</sub> which performs an IN from an
-        I/O
-        port but stores the result into the Flags register.
-    </p>
-    <p>
+        One oddity is the undocumented <code>IN F,(C)</code><sub>0xED70</sub> instruction
+        which performs an IN from an I/O port but stores the result into the Flags register.
         This instruction is actually documented in Zilogs own documentation (2016 PDF).
+        For this reason, that instruction is listed on the <a href="../io/inrc/">IN r, (C)</a> page and not in this
+        section.
     </p>
     <p>
-        For this reason, that instruction is listed on the <code>IN r,(C)</code> page and not in this section.
+        It's <code>OUT (C), F</code><sub>0xED71</sub> equivalent is listed under <a href="../io/outcr/">OUT (C), r</a> for consistency, even though that
+        instruction is completely undocumented.
     </p>
 </div>
