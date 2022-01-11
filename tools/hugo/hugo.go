@@ -1,7 +1,9 @@
 package hugo
 
 import (
+  "context"
   "flag"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
   "log"
@@ -11,8 +13,9 @@ import (
 
 // Hugo runs hugo
 type Hugo struct {
-  server  *bool // true to run Hugo in server mode
-  cleanup *bool // true to clean out public directory before running
+  server  *bool          // true to run Hugo in server mode
+  cleanup *bool          // true to clean out public directory before running
+  worker  *kernel.Worker // Worker queue
 }
 
 func (h *Hugo) Name() string {
@@ -23,24 +26,38 @@ func (h *Hugo) Init(k *kernel.Kernel) error {
   h.server = flag.Bool("s", false, "Run hugo in server mode")
   h.cleanup = flag.Bool("clean", false, "Cleanup public directory before running")
 
+  service, err := k.AddService(&kernel.Worker{})
+  if err != nil {
+    return err
+  }
+  h.worker = service.(*kernel.Worker)
+
   return k.DependsOn(&PostCSS{})
 }
 
 func (h *Hugo) Start() error {
   if *h.cleanup {
-    // Remove all of our temp dirs
-    return util.StringSliceOf(
-      "public",
-      "static/static/book",
-      "static/static/chipref",
-      "static/static/gen",
-    ).ForEach(os.RemoveAll)
+    h.worker.AddPriorityTask(tools.PriorityImmediate, h.cleanupTask)
   }
+
+  h.worker.AddPriorityTask(tools.PriorityHugo, h.run)
 
   return nil
 }
 
-func (h *Hugo) Run() error {
+// Remove all of our temp dirs
+func (h *Hugo) cleanupTask(_ context.Context) error {
+  log.Println("Cleaning up directories")
+
+  return util.StringSliceOf(
+    "public",
+    "static/static/book",
+    "static/static/chipref",
+    "static/static/gen",
+  ).ForEach(os.RemoveAll)
+}
+
+func (h *Hugo) run(_ context.Context) error {
   log.Println("Running hugo")
 
   var args []string
