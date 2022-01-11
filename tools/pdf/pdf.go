@@ -5,6 +5,7 @@ import (
   "flag"
   "github.com/chromedp/cdproto/page"
   "github.com/chromedp/chromedp"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
@@ -56,15 +57,17 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
 }
 
-// Run through args for book id's and generate the PDF's
-func (p *PDF) Run() error {
+func (p *PDF) Start() error {
   if *p.enable {
     return nil
   }
 
   return p.bookShelf.Books().ForEach(func(book *hugo.Book) error {
-    log.Println("Generating PDF for", book.ID)
-    return p.chromium.Run(p.printToPDF(book))
+    p.worker.AddPriorityTask(tools.PriorityPDF, func(ctx context.Context) error {
+      log.Println("Generating PDF for", book.ID)
+      return p.chromium.Run(p.printToPDF(book))
+    })
+    return nil
   })
 }
 
