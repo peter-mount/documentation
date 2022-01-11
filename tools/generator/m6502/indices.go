@@ -3,6 +3,7 @@ package m6502
 import (
   "context"
   "fmt"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
@@ -14,7 +15,7 @@ import (
 
 func delayOpTask(t task.Task) task.Task {
   return func(ctx context.Context) error {
-    task.GetQueue(ctx).AddPriorityTask(25,
+    task.GetQueue(ctx).AddPriorityTask(tools.PriorityIndices,
       task.Of(t).
         WithContext(ctx, generator.BookKey))
     return nil

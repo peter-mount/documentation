@@ -2,6 +2,7 @@ package autodoc
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/go-kernel/util/task"
   "io"
   "os"
@@ -72,9 +73,9 @@ func InitBuilder(dir, file string, modified time.Time, asm, suffix, title, desc 
 
   // Add indices files later
   task.GetQueue(ctx).
-      AddPriorityTask(30, GenerateReferenceIndices(buildFileName, modified).
+      AddPriorityTask(tools.PriorityAutodoc, GenerateReferenceIndices(buildFileName, modified).
         WithContext(ctx, ResourceManagerKey)).
-      AddPriorityTask(30, GenerateFileIndexPage(dir, file, asm, buildFileName, modified).
+      AddPriorityTask(tools.PriorityAutodoc, GenerateFileIndexPage(dir, file, asm, buildFileName, modified).
         WithContext(ctx, ResourceManagerKey))
 
   if writeNow {

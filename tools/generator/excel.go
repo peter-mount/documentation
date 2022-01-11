@@ -2,6 +2,7 @@ package generator
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel"
   "path"
@@ -55,7 +56,7 @@ func (e *Excel) Get(name string, modified time.Time) util.ExcelProvider {
   e.builders[name] = provider
 
   // Add task that will actually write the Excel file
-  e.worker.AddPriorityTask(500, provider.task)
+  e.worker.AddPriorityTask(tools.PriorityExcel, provider.task)
 
   return provider
 }

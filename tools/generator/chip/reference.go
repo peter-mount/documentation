@@ -3,6 +3,7 @@ package chip
 import (
   "context"
   "fmt"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
@@ -16,7 +17,7 @@ func (c *Chip) chipReferenceTables(ctx context.Context) error {
 
   // Requeue so it runs later
   task.GetQueue(ctx).
-      AddPriorityTask(50, task.Of(c.chipReferenceTablesTask).
+      AddPriorityTask(tools.PriorityChip, task.Of(c.chipReferenceTablesTask).
         WithValue(generator.BookKey, book))
 
   return nil

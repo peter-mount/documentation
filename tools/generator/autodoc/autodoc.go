@@ -2,6 +2,7 @@ package autodoc
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
   "github.com/peter-mount/go-kernel"
@@ -60,7 +61,7 @@ func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
   s.headers[book.ID] = h
 
   task.GetQueue(ctx).
-      AddPriorityTask(20, task.Of(h.task).
+      AddPriorityTask(tools.PriorityApi, task.Of(h.task).
         WithValue(generator.BookKey, book).
         WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 
@@ -78,7 +79,7 @@ func (s *Autodoc) GetApi(ctx context.Context) *Api {
   s.apis[book.ID] = a
 
   task.GetQueue(ctx).
-      AddPriorityTask(20, task.Of().
+      AddPriorityTask(tools.PriorityApi, task.Of().
         Then(a.generateResource).
         Then(a.generateSource).
         Then(a.generateIndex).

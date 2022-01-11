@@ -2,6 +2,7 @@ package svg
 
 import (
   "context"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "gopkg.in/yaml.v2"
@@ -36,7 +37,7 @@ func (s *SVG) Start() error {
 }
 
 func (s *SVG) processFile(path string, info os.FileInfo) error {
-  s.worker.AddPriorityTask(70, func(ctx context.Context) error {
+  s.worker.AddPriorityTask(tools.PrioritySVG, func(ctx context.Context) error {
     buf, err := ioutil.ReadFile(path)
     if err != nil {
       return err
