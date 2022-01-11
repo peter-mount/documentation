@@ -4,9 +4,9 @@ import (
   "context"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
-  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
+  "github.com/peter-mount/go-kernel/util/task"
 )
 
 type Autodoc struct {
@@ -59,9 +59,10 @@ func (s *Autodoc) getHeaders(ctx context.Context) *Headers {
   h := NewHeaders()
   s.headers[book.ID] = h
 
-  s.generator.AddPriorityTask(20, task.Of(h.task).
-    WithValue(generator.BookKey, book).
-    WithValue(autodoc.ResourceManagerKey, s.resourceManager))
+  task.GetQueue(ctx).
+      AddPriorityTask(20, task.Of(h.task).
+        WithValue(generator.BookKey, book).
+        WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 
   return h
 }
@@ -76,12 +77,13 @@ func (s *Autodoc) GetApi(ctx context.Context) *Api {
   a := NewApi()
   s.apis[book.ID] = a
 
-  s.generator.AddPriorityTask(20, task.Of().
-    Then(a.generateResource).
-    Then(a.generateSource).
-    Then(a.generateIndex).
-    WithValue(generator.BookKey, book).
-    WithValue(autodoc.ResourceManagerKey, s.resourceManager))
+  task.GetQueue(ctx).
+      AddPriorityTask(20, task.Of().
+        Then(a.generateResource).
+        Then(a.generateSource).
+        Then(a.generateIndex).
+        WithValue(generator.BookKey, book).
+        WithValue(autodoc.ResourceManagerKey, s.resourceManager))
 
   return a
 }

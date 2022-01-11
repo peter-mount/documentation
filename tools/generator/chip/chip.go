@@ -6,10 +6,10 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   util2 "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
+  "github.com/peter-mount/go-kernel/util/task"
   "log"
   "os"
   "path"
@@ -222,7 +222,8 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
         return fmt.Errorf("%s already defined", v.Name)
       }
 
-      c.generator.AddTask(v.Generate)
+      task.GetQueue(ctx).
+        AddTask(v.Generate)
       return nil
     })
   })

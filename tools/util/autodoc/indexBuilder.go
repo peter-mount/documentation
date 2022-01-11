@@ -3,7 +3,7 @@ package autodoc
 import (
   "context"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/task"
+  "github.com/peter-mount/go-kernel/util/task"
   "os"
   "path"
   "strings"

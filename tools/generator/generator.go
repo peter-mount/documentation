@@ -4,8 +4,8 @@ import (
   "context"
   "fmt"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
+  task2 "github.com/peter-mount/go-kernel/util/task"
   "log"
 )
 
@@ -13,8 +13,8 @@ import (
 type Generator struct {
   config     *hugo.Config // Configuration
   bookShelf  *hugo.BookShelf
-  generators map[string]task.Task // Map of available generators
-  tasks      task.Queue
+  generators map[string]task2.Task // Map of available generators
+  worker     *kernel.Worker        // Worker queue
 }
 
 func (g *Generator) Name() string {
@@ -35,17 +35,22 @@ func (g *Generator) Init(k *kernel.Kernel) error {
   }
   g.bookShelf = service.(*hugo.BookShelf)
 
+  service, err = k.AddService(&kernel.Worker{})
+  if err != nil {
+    return err
+  }
+  g.worker = service.(*kernel.Worker)
+
   return nil
 }
 
 func (g *Generator) Start() error {
-  g.generators = make(map[string]task.Task)
-  g.tasks = task.NewQueue()
+  g.generators = make(map[string]task2.Task)
   return nil
 }
 
 // Register a named Handler
-func (g *Generator) Register(n string, h task.Task) *Generator {
+func (g *Generator) Register(n string, h task2.Task) *Generator {
   if _, exists := g.generators[n]; exists {
     panic(fmt.Errorf("GeneratorHandler %s already registered", n))
   }
@@ -58,16 +63,7 @@ func (g *Generator) Run() error {
   if err := g.bookShelf.Books().ForEach(g.invokeBook); err != nil {
     return err
   }
-
-  return task.Run(g.tasks, context.Background())
-}
-
-func (g *Generator) AddTask(task task.Task) task.Queue {
-  return g.tasks.AddTask(task)
-}
-
-func (g *Generator) AddPriorityTask(priority int, task task.Task) task.Queue {
-  return g.tasks.AddPriorityTask(priority, task)
+  return nil
 }
 
 const (
@@ -85,7 +81,7 @@ func (g *Generator) invokeBook(book *hugo.Book) error {
   return book.Generate.ForEach(func(n string) error {
     h, exists := g.generators[n]
     if exists {
-      g.AddTask(h.WithValue(BookKey, book))
+      g.worker.AddTask(h.WithValue(BookKey, book))
     } else {
       // Log a warning but ignore - could be an invalid config or the generator is not deployed.
       // Originally this was a fatal error, but now we just ignore to allow custom tools to be run

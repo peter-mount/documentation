@@ -2,7 +2,6 @@ package svg
 
 import (
   "context"
-  "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/walk"
   "github.com/peter-mount/go-kernel"
   "gopkg.in/yaml.v2"
@@ -11,7 +10,7 @@ import (
 )
 
 type SVG struct {
-  generator *generator.Generator // Generator
+  worker *kernel.Worker // Worker queue
 }
 
 func (s *SVG) Name() string {
@@ -19,11 +18,11 @@ func (s *SVG) Name() string {
 }
 
 func (s *SVG) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&generator.Generator{})
+  service, err := k.AddService(&kernel.Worker{})
   if err != nil {
     return err
   }
-  s.generator = service.(*generator.Generator)
+  s.worker = service.(*kernel.Worker)
 
   return nil
 }
@@ -37,7 +36,7 @@ func (s *SVG) Start() error {
 }
 
 func (s *SVG) processFile(path string, info os.FileInfo) error {
-  s.generator.AddPriorityTask(70, func(ctx context.Context) error {
+  s.worker.AddPriorityTask(70, func(ctx context.Context) error {
     buf, err := ioutil.ReadFile(path)
     if err != nil {
       return err

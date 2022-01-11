@@ -18,6 +18,7 @@ type PDF struct {
   bookShelf *hugo.BookShelf
   chromium  *hugo.Chromium // Chromium browser
   enable    *bool          // Is PDF generation enabled
+  worker    *kernel.Worker // Worker queue
 }
 
 func (p *PDF) Name() string {
@@ -44,6 +45,12 @@ func (p *PDF) Init(k *kernel.Kernel) error {
     return err
   }
   p.bookShelf = service.(*hugo.BookShelf)
+
+  service, err = k.AddService(&kernel.Worker{})
+  if err != nil {
+    return err
+  }
+  p.worker = service.(*kernel.Worker)
 
   // We need a webserver & must run after hugo
   return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})

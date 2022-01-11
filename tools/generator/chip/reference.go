@@ -6,7 +6,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/task"
+  "github.com/peter-mount/go-kernel/util/task"
 )
 
 // Generates the chip reference tables.
@@ -15,8 +15,9 @@ func (c *Chip) chipReferenceTables(ctx context.Context) error {
   book := generator.GetBook(ctx)
 
   // Requeue so it runs later
-  c.generator.AddPriorityTask(50, task.Of(c.chipReferenceTablesTask).
-    WithValue(generator.BookKey, book))
+  task.GetQueue(ctx).
+      AddPriorityTask(50, task.Of(c.chipReferenceTablesTask).
+        WithValue(generator.BookKey, book))
 
   return nil
 }

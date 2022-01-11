@@ -6,7 +6,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/task"
+  "github.com/peter-mount/go-kernel/util/task"
   "sort"
   "strconv"
   "strings"

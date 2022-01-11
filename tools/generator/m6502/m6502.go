@@ -3,9 +3,9 @@ package m6502
 import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/generator/autodoc"
-  "github.com/peter-mount/documentation/tools/util/task"
   "github.com/peter-mount/go-kernel"
   util2 "github.com/peter-mount/go-kernel/util"
+  "github.com/peter-mount/go-kernel/util/task"
 )
 
 type M6502 struct {
