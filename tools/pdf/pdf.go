@@ -8,6 +8,7 @@ import (
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/web"
   "github.com/peter-mount/go-kernel"
   "log"
   "strings"
@@ -17,7 +18,7 @@ import (
 type PDF struct {
   config    *hugo.Config // Config
   bookShelf *hugo.BookShelf
-  chromium  *hugo.Chromium // Chromium browser
+  chromium  *web.Chromium  // Chromium browser
   enable    *bool          // Is PDF generation enabled
   worker    *kernel.Worker // Worker queue
 }
@@ -35,11 +36,11 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   }
   p.config = service.(*hugo.Config)
 
-  service, err = k.AddService(&hugo.Chromium{})
+  service, err = k.AddService(&web.Chromium{})
   if err != nil {
     return err
   }
-  p.chromium = service.(*hugo.Chromium)
+  p.chromium = service.(*web.Chromium)
 
   service, err = k.AddService(&hugo.BookShelf{})
   if err != nil {
@@ -54,7 +55,7 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   p.worker = service.(*kernel.Worker)
 
   // We need a webserver & must run after hugo
-  return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
+  return k.DependsOn(&web.Webserver{}, &hugo.Hugo{})
 }
 
 func (p *PDF) Start() error {

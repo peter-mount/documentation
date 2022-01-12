@@ -1,8 +1,9 @@
-package hugo
+package web
 
 import (
   "context"
   "github.com/gorilla/mux"
+  "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/go-kernel"
   "log"
   "net/http"
@@ -12,7 +13,7 @@ import (
 // Webserver provides a webserver if required for other tasks.
 // It serves the public directory
 type Webserver struct {
-  config *Config      // Config
+  config *hugo.Config // Config
   server *http.Server // enabled
 }
 
@@ -21,11 +22,11 @@ func (w *Webserver) Name() string {
 }
 
 func (w *Webserver) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&Config{})
+  service, err := k.AddService(&hugo.Config{})
   if err != nil {
     return err
   }
-  w.config = service.(*Config)
+  w.config = service.(*hugo.Config)
   return nil
 }
 
