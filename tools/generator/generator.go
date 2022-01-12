@@ -3,6 +3,7 @@ package generator
 import (
   "context"
   "fmt"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/go-kernel"
   task2 "github.com/peter-mount/go-kernel/util/task"
@@ -46,6 +47,8 @@ func (g *Generator) Init(k *kernel.Kernel) error {
 
 func (g *Generator) Start() error {
   g.generators = make(map[string]task2.Task)
+
+  g.worker.AddPriorityTask(tools.PriorityImmediate, g.generate)
   return nil
 }
 
@@ -59,7 +62,7 @@ func (g *Generator) Register(n string, h task2.Task) *Generator {
   return g
 }
 
-func (g *Generator) Run() error {
+func (g *Generator) generate(_ context.Context) error {
   if err := g.bookShelf.Books().ForEach(g.invokeBook); err != nil {
     return err
   }
