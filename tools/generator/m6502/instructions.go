@@ -5,6 +5,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/strings"
   "strconv"
 )
 
@@ -92,7 +93,7 @@ func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}
 }
 
 func (i *Instructions) writeOpCodes(prefix string, codes []*Opcode) util.FileBuilder {
-  return func(a util.StringSlice) (util.StringSlice, error) {
+  return func(a strings.StringSlice) (strings.StringSlice, error) {
     a = append(a, prefix+":")
 
     for _, op := range codes {

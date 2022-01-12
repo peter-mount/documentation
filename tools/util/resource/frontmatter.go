@@ -2,6 +2,7 @@ package resource
 
 import (
   "github.com/peter-mount/documentation/tools/util"
+  strings2 "github.com/peter-mount/documentation/tools/util/strings"
   "path"
   "sort"
   "strings"
@@ -32,7 +33,7 @@ func (r *resource) resources(a []Resource, prefix string) []Resource {
         if r.Size() > 0 {
           a = append(a, Wrap(prefix, r))
         }
-      }else {
+      } else {
         a = cr.resources(a, path.Join(prefix, np))
       }
     }
@@ -52,9 +53,9 @@ func Wrap(prefix string, r Resource) Resource {
 }
 
 func (r resource) FileBuilder() util.FileBuilder {
-  return func(slice util.StringSlice) (util.StringSlice, error) {
-    res:=r.Flatten()
-    if len(res)>0 {
+  return func(slice strings2.StringSlice) (strings2.StringSlice, error) {
+    res := r.Flatten()
+    if len(res) > 0 {
       slice = append(slice, "resources:")
       for _, e := range res {
         slice = append(slice, "  - name: \""+e.Name()+"\"")

@@ -5,6 +5,7 @@ import (
   "flag"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/strings"
   "github.com/peter-mount/go-kernel"
   "log"
   "os"
@@ -49,7 +50,7 @@ func (h *Hugo) Start() error {
 func (h *Hugo) cleanupTask(_ context.Context) error {
   log.Println("Cleaning up directories")
 
-  return util.StringSliceOf(
+  return strings.Of(
     "public",
     "static/static/book",
     "static/static/chipref",

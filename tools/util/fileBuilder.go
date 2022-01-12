@@ -2,6 +2,7 @@ package util
 
 import (
   "fmt"
+  "github.com/peter-mount/documentation/tools/util/strings"
   "gopkg.in/yaml.v2"
   "io"
   "path"
@@ -9,13 +10,13 @@ import (
 )
 
 // FileBuilder creates text files
-type FileBuilder func(StringSlice) (StringSlice, error)
+type FileBuilder func(strings.StringSlice) (strings.StringSlice, error)
 
 // FileBuilderOf returns a FileBuilder which consists of each provided FileBuilder in sequence
 func FileBuilderOf(h ...FileBuilder) FileBuilder {
   switch len(h) {
   case 0:
-    return func(slice StringSlice) (StringSlice, error) {
+    return func(slice strings.StringSlice) (strings.StringSlice, error) {
       return slice, nil
     }
   case 1:
@@ -31,7 +32,7 @@ func FileBuilderOf(h ...FileBuilder) FileBuilder {
 
 // Then returns a FileBuilder which runs the first then second FileBuilder in sequence
 func (a FileBuilder) Then(b FileBuilder) FileBuilder {
-  return func(s StringSlice) (StringSlice, error) {
+  return func(s strings.StringSlice) (strings.StringSlice, error) {
     s, err := a(s)
     if err != nil {
       return nil, err
@@ -43,7 +44,7 @@ func (a FileBuilder) Then(b FileBuilder) FileBuilder {
 // WrapAsFrontMatter wraps a FileBuilder so that it's generated content is wrapped by a pair of "---" lines
 // suitable for Hugo's front matter
 func (a FileBuilder) WrapAsFrontMatter() FileBuilder {
-  return func(slice StringSlice) (StringSlice, error) {
+  return func(slice strings.StringSlice) (strings.StringSlice, error) {
     slice = append(slice, "---")
     slice, err := a(slice)
     if err != nil {
@@ -55,20 +56,20 @@ func (a FileBuilder) WrapAsFrontMatter() FileBuilder {
 }
 
 func (a FileBuilder) Append(s string) FileBuilder {
-  return a.Then(func(slice StringSlice) (StringSlice, error) {
+  return a.Then(func(slice strings.StringSlice) (strings.StringSlice, error) {
     return append(slice, s), nil
   })
 }
 
 func (a FileBuilder) Appendf(s string, args ...interface{}) FileBuilder {
-  return a.Then(func(slice StringSlice) (StringSlice, error) {
+  return a.Then(func(slice strings.StringSlice) (strings.StringSlice, error) {
     return append(slice, fmt.Sprintf(s, args...)), nil
   })
 }
 
 // Yaml appends the supplied value as YAML
 func (a FileBuilder) Yaml(val interface{}) FileBuilder {
-  return func(slice StringSlice) (StringSlice, error) {
+  return func(slice strings.StringSlice) (strings.StringSlice, error) {
     slice, err := a(slice)
     if err != nil {
       return nil, err
@@ -106,7 +107,7 @@ func ReferenceFilename(dir, name, fileName string) string {
 
 // ReferenceFileBuilder returns a FileBuilder with standard front matter for hugo pages
 func ReferenceFileBuilder(title, desc, layout string, weight int) FileBuilder {
-  return func(ary StringSlice) (StringSlice, error) {
+  return func(ary strings.StringSlice) (strings.StringSlice, error) {
     ary = append(ary,
       "# This file is generated.",
       "# To edit, change the files under content then run the generator.",
@@ -122,7 +123,7 @@ func ReferenceFileBuilder(title, desc, layout string, weight int) FileBuilder {
 }
 
 func BlankFileBuilder() FileBuilder {
-  return func(slice StringSlice) (StringSlice, error) {
+  return func(slice strings.StringSlice) (strings.StringSlice, error) {
     return slice, nil
   }
 }

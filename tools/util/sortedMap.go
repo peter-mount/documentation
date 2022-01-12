@@ -1,5 +1,7 @@
 package util
 
+import "github.com/peter-mount/documentation/tools/util/strings"
+
 type SortedMap map[string]interface{}
 
 func NewSortedMap() *SortedMap {
@@ -37,8 +39,8 @@ func (m *SortedMap) decodeMap(source map[interface{}]interface{}) error {
   return nil
 }
 
-func (m *SortedMap) Keys() StringSlice {
-  var a StringSlice
+func (m *SortedMap) Keys() strings.StringSlice {
+  var a strings.StringSlice
   for k, _ := range *m {
     a = append(a, k)
   }

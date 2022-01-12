@@ -2,7 +2,7 @@ package chip
 
 import (
   "fmt"
-  "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/documentation/tools/util/strings"
 )
 
 type Category map[string]map[string]*Definition
@@ -41,8 +41,8 @@ func (c *Category) Get(cat, name string) *Definition {
 }
 
 // Categories returns a sorted slice of category names
-func (c *Category) Categories() util.StringSlice {
-  var a util.StringSlice
+func (c *Category) Categories() strings.StringSlice {
+  var a strings.StringSlice
 
   for k, _ := range *c {
     a = append(a, k)
@@ -51,8 +51,8 @@ func (c *Category) Categories() util.StringSlice {
   return a.Sort()
 }
 
-func (c *Category) DefinitionNames(cat string) util.StringSlice {
-  var a util.StringSlice
+func (c *Category) DefinitionNames(cat string) strings.StringSlice {
+  var a strings.StringSlice
 
   if m, exists := (*c)[cat]; exists {
     for k, _ := range m {

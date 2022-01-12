@@ -1,7 +1,7 @@
 package hugo
 
 import (
-  "github.com/peter-mount/documentation/tools/util"
+  strings2 "github.com/peter-mount/documentation/tools/util/strings"
   "os"
   "path"
   "path/filepath"
@@ -25,11 +25,11 @@ func (bs Books) ForEach(f BookHandler) error {
 
 // Book defines a book that's rendered as pdf
 type Book struct {
-  BookCopyright `yaml:",inline"`                     // Copyright of book
-  ID            string           `yaml:"id"`         // ID of the book, e.g. "bbc" or "6502"
-  FrontImage    BookCopyright    `yaml:"frontImage"` // Copyright of front image
-  Generate      util.StringSlice `yaml:"generate"`   // List of generators to run on this book
-  modified      time.Time        `yaml:"-"`          // Last Modified time
+  BookCopyright `yaml:",inline"`                         // Copyright of book
+  ID            string               `yaml:"id"`         // ID of the book, e.g. "bbc" or "6502"
+  FrontImage    BookCopyright        `yaml:"frontImage"` // Copyright of front image
+  Generate      strings2.StringSlice `yaml:"generate"`   // List of generators to run on this book
+  modified      time.Time            `yaml:"-"`          // Last Modified time
   contentPath   string
   webPath       string
 }

@@ -1,4 +1,4 @@
-package util
+package strings
 
 import (
   "io"
@@ -6,35 +6,10 @@ import (
   "strings"
 )
 
-type StringHandler func(string) error
-
-// WithStringHandler starts a new StringHandler
-func WithStringHandler() StringHandler {
-  return func(_ string) error {
-    return nil
-  }
-}
-
-// Then joins two string handlers so the left-hand side runs first then the right-hand side.
-func (a StringHandler) Then(b StringHandler) StringHandler {
-  return func(s string) error {
-    err := a(s)
-    if err != nil {
-      return err
-    }
-    return b(s)
-  }
-}
-
-// Do invokes a StringHandler with a specific string
-func (a StringHandler) Do(s string) error {
-  return a(s)
-}
-
 type StringSlice []string
 
-// StringSliceOf returns a StringSlice from a slice of strings
-func StringSliceOf(s ...string) StringSlice {
+// Of returns a StringSlice from a slice of strings
+func Of(s ...string) StringSlice {
   return s
 }
 
@@ -47,11 +22,6 @@ func (s StringSlice) ForEach(f StringHandler) error {
     }
   }
   return nil
-}
-
-// FileHandler returns a FileHandler which will contain the StringSlice with each entry being a single line of the output.
-func (s StringSlice) FileHandler() FileHandler {
-  return StringFileHandler(strings.Join(s, "\n"))
 }
 
 // Write will write a StringSlice to a writer with each entry being a single line.
@@ -92,16 +62,5 @@ func (a StringSliceHandler) Then(b StringSliceHandler) StringSliceHandler {
       return nil, err
     }
     return b(s)
-  }
-}
-
-func (a StringSliceHandler) FileHandler() FileHandler {
-  return func(w io.Writer) error {
-    s, err := a(nil)
-    if err != nil {
-      return err
-    }
-
-    return s.Write(w)
   }
 }

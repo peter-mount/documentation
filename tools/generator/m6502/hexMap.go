@@ -4,6 +4,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/html"
+  strings2 "github.com/peter-mount/documentation/tools/util/strings"
   "log"
   "sort"
   "strconv"
@@ -114,7 +115,7 @@ func (hg *HexGrid) Opcode(a ...*Opcode) *HexGrid {
 }
 
 func (hg *HexGrid) FileBuilder() util.FileBuilder {
-  return func(slice util.StringSlice) (util.StringSlice, error) {
+  return func(slice strings2.StringSlice) (strings2.StringSlice, error) {
     slice = append(slice, "hexGrid:")
 
     var keys []string
@@ -177,7 +178,7 @@ func (g *HexMap) opcode(a ...*Opcode) {
   }
 }
 
-func (g *HexMap) write(slice util.StringSlice) (util.StringSlice, error) {
+func (g *HexMap) write(slice strings2.StringSlice) (strings2.StringSlice, error) {
   for _, r := range g.Data {
     slice = append(slice, "    -")
     for _, c := range r {

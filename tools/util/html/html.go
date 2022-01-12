@@ -3,13 +3,14 @@ package html
 import (
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
+  strings2 "github.com/peter-mount/documentation/tools/util/strings"
   "strings"
 )
 
 // Element represents an HTML element.
 type Element struct {
   name     string
-  class    util.StringSlice
+  class    strings2.StringSlice
   attrs    []Attr
   parent   *Element
   children []*Element
@@ -150,7 +151,7 @@ func (e *Element) Text(s ...string) *Element {
 // This instance will always operate from the document root Element.
 func (e *Element) FileBuilder() util.FileBuilder {
   n := e.RootElement()
-  return func(slice util.StringSlice) (util.StringSlice, error) {
+  return func(slice strings2.StringSlice) (strings2.StringSlice, error) {
     return append(slice, n.String()), nil
   }
 }

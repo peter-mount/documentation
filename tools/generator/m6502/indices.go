@@ -7,6 +7,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  strings2 "github.com/peter-mount/documentation/tools/util/strings"
   "github.com/peter-mount/go-kernel/util/task"
   "sort"
   "strconv"
@@ -102,7 +103,7 @@ func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, tit
   ).
     //Then(inst.writeOpCodes(prefix, inst.opCodes)).
     WrapAsFrontMatter().
-      Then(func(slice util.StringSlice) (util.StringSlice, error) {
+      Then(func(slice strings2.StringSlice) (strings2.StringSlice, error) {
         slice = append(slice, "<div class='opIndex'>", "<table>")
         for _, op := range inst.opCodes {
           class := ""
