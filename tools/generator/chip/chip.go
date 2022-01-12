@@ -3,6 +3,7 @@ package chip
 import (
   "context"
   "fmt"
+  "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   util2 "github.com/peter-mount/documentation/tools/util"
@@ -18,6 +19,7 @@ import (
 // Chip handles the generation of CHIP pin layout images
 type Chip struct {
   generator *generator.Generator // Generator
+  worker    *kernel.Worker       // Worker queue
   excel     *generator.Excel     // Excel
   chips     *Category            // Map of named chip definitions
   extracted util.Set             // Set of book ID's so that we run once per book
@@ -77,6 +79,12 @@ func (c *Chip) Init(k *kernel.Kernel) error {
   }
   c.generator = service.(*generator.Generator)
 
+  service, err = k.AddService(&kernel.Worker{})
+  if err != nil {
+    return err
+  }
+  c.worker = service.(*kernel.Worker)
+
   service, err = k.AddService(&generator.Excel{})
   if err != nil {
     return err
@@ -130,6 +138,13 @@ func (c *Chip) extract(ctx context.Context) error {
 
 // extractChipDefinitions extracts all definitions from a specific hugo page
 func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) error {
+  c.worker.AddPriorityTask(tools.PriorityChip,
+    task.Of(c.extractChipDefTask).
+      WithContext(ctx, "other", "fileInfo"))
+  return nil
+}
+
+func (c *Chip) extractChipDefTask(ctx context.Context) error {
   return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
     return util2.IfMap(e, func(m map[interface{}]interface{}) error {
       pinCount, ok := util2.DecodeInt(m["pinCount"], 0)
@@ -223,7 +238,7 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
       }
 
       task.GetQueue(ctx).
-        AddTask(v.Generate)
+        AddPriorityTask(tools.PriorityChip, v.Generate)
       return nil
     })
   })
