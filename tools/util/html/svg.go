@@ -1,7 +1,7 @@
 package html
 
 func (e *Element) Svg() *Element {
-  return e.element("svg").
+  return e.Element("svg").
     Attr("xmlns", "http://www.w3.org/2000/svg").
     Attr("version", "1.1")
 }
@@ -23,7 +23,7 @@ func (e *Element) Y(v int) *Element {
 }
 
 func (e *Element) ClipPath() *Element {
-  return e.element("clipPath")
+  return e.Element("clipPath")
 }
 
 func (e *Element) CX(v int) *Element {
@@ -62,29 +62,29 @@ func (e *Element) StrokeWidth(v string, a ...interface{}) *Element {
   return e.Attr("stroke-width", v, a...)
 }
 
-// SvgText is the text element, cannot use Text() as that adds plain text
+// SvgText is the text Element, cannot use Text() as that adds plain text
 func (e *Element) SvgText() *Element {
-  return e.element("text")
+  return e.Element("text")
 }
 
 func (e *Element) TSpan() *Element {
-  return e.element("tspan")
+  return e.Element("tspan")
 }
 
 func (e *Element) Circle() *Element {
-  return e.element("circle")
+  return e.Element("circle")
 }
 
 func (e *Element) G() *Element {
-  return e.element("g")
+  return e.Element("g")
 }
 
 func (e *Element) Polygon() *Element {
-  return e.element("polygon")
+  return e.Element("polygon")
 }
 
 func (e *Element) Polyline() *Element {
-  return e.element("polyline")
+  return e.Element("polyline")
 }
 
 func (e *Element) Point(x, y int) *Element {
@@ -93,5 +93,5 @@ func (e *Element) Point(x, y int) *Element {
 }
 
 func (e *Element) Rect() *Element {
-  return e.element("rect")
+  return e.Element("rect")
 }

@@ -7,7 +7,7 @@ import (
   "strings"
 )
 
-// Element represents an HTML element.
+// Element represents an HTML Element.
 type Element struct {
   name     string
   class    strings2.StringSlice
@@ -32,7 +32,7 @@ func (p Point) String() string {
   return fmt.Sprintf("%d,%d", p.X, p.Y)
 }
 
-// Class adds a css class name to the element.
+// Class adds a css class name to the Element.
 // This takes a format string like fmt.Sprintf()
 func (e *Element) Class(c string, a ...interface{}) *Element {
   e.class = append(e.class, fmt.Sprintf(c, a...))
@@ -99,8 +99,8 @@ func Builder() *Element {
   return &Element{}
 }
 
-// End terminates the current element, returning its parent.
-// For the root it return's the current root element.
+// End terminates the current Element, returning its parent.
+// For the root it return's the current root Element.
 func (e *Element) End() *Element {
   if e != nil && e.parent != nil {
     return e.parent
@@ -115,7 +115,7 @@ func (e *Element) Exec(f func(*Element) *Element) *Element {
 }
 
 // If calls a function if a condition is true.
-// The returned instance will be the returned instance from that function or the current element if the condition was false.
+// The returned instance will be the returned instance from that function or the current Element if the condition was false.
 func (e *Element) If(p bool, f func(*Element) *Element) *Element {
   if p {
     return f(e)
@@ -123,7 +123,7 @@ func (e *Element) If(p bool, f func(*Element) *Element) *Element {
   return e
 }
 
-// RootElement returns the root element of the current document.
+// RootElement returns the root Element of the current document.
 func (e *Element) RootElement() *Element {
   n := e
   for n.parent != nil {
@@ -132,7 +132,7 @@ func (e *Element) RootElement() *Element {
   return n
 }
 
-// Textf appends a Text element based on a fmt.Sprintf() formatted string.
+// Textf appends a Text Element based on a fmt.Sprintf() formatted string.
 func (e *Element) Textf(f string, s ...interface{}) *Element {
   return e.Text(fmt.Sprintf(f, s...))
 }
@@ -141,7 +141,7 @@ func (e *Element) Textf(f string, s ...interface{}) *Element {
 func (e *Element) Text(s ...string) *Element {
   ne := e
   for _, a := range s {
-    ne := ne.element("")
+    ne := ne.Element("")
     ne.text = a
   }
   return ne
@@ -174,7 +174,7 @@ func (e *Element) Sequence(start, end int, f SequenceHandler) *Element {
   return ne
 }
 
-func (e *Element) element(n string) *Element {
+func (e *Element) Element(n string) *Element {
   child := &Element{
     name:   n,
     parent: e,
@@ -184,63 +184,63 @@ func (e *Element) element(n string) *Element {
 }
 
 func (e *Element) A() *Element {
-  return e.element("a")
+  return e.Element("a")
 }
 
-// Div element. This is open so End() must be called to terminate it.
+// Div Element. This is open so End() must be called to terminate it.
 func (e *Element) Div() *Element {
-  return e.element("div")
+  return e.Element("div")
 }
 
-// Span element. This is open so End() must be called to terminate it.
+// Span Element. This is open so End() must be called to terminate it.
 func (e *Element) Span() *Element {
-  return e.element("span")
+  return e.Element("span")
 }
 
-// OL element. This is open so End() must be called to terminate it.
+// OL Element. This is open so End() must be called to terminate it.
 func (e *Element) OL() *Element {
-  return e.element("ol")
+  return e.Element("ol")
 }
 
-// LI element. This is open so End() must be called to terminate it.
+// LI Element. This is open so End() must be called to terminate it.
 func (e *Element) LI() *Element {
-  return e.element("li")
+  return e.Element("li")
 }
 
-// Sub element. This is open so End() must be called to terminate it.
+// Sub Element. This is open so End() must be called to terminate it.
 func (e *Element) Sub() *Element {
-  return e.element("sub")
+  return e.Element("sub")
 }
 
-// Sup element. This is open so End() must be called to terminate it.
+// Sup Element. This is open so End() must be called to terminate it.
 func (e *Element) Sup() *Element {
-  return e.element("sup")
+  return e.Element("sup")
 }
 
 func (e *Element) Style() *Element {
-  return e.element("style")
+  return e.Element("style")
 }
 
 func (e *Element) Table() *Element {
-  return e.element("table")
+  return e.Element("table")
 }
 
 func (e *Element) THead() *Element {
-  return e.element("thead")
+  return e.Element("thead")
 }
 
 func (e *Element) TBody() *Element {
-  return e.element("tbody")
+  return e.Element("tbody")
 }
 
 func (e *Element) TR() *Element {
-  return e.element("tr")
+  return e.Element("tr")
 }
 
 func (e *Element) TD() *Element {
-  return e.element("td")
+  return e.Element("td")
 }
 
 func (e *Element) TH() *Element {
-  return e.element("th")
+  return e.Element("th")
 }
