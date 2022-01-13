@@ -26,7 +26,7 @@ func qfp(d *Definition) error {
 }
 
 func cc(d *Definition) error {
-  b := html.HtmlBuilder()
+  b := html.Builder()
 
   pinCount4 := d.PinCount / 4
 

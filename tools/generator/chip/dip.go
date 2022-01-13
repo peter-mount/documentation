@@ -20,7 +20,7 @@ const (
 
 // dip Dual Inline Pin chip layout
 func dip(d *Definition) error {
-  b := html.HtmlBuilder()
+  b := html.Builder()
 
   pinCount2 := d.PinCount / 2
 

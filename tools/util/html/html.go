@@ -94,8 +94,8 @@ func (e *Element) String() string {
   return strings.Join(a, "")
 }
 
-// HtmlBuilder creates a new Element builder
-func HtmlBuilder() *Element {
+// Builder creates a new Element builder
+func Builder() *Element {
   return &Element{}
 }
 
