@@ -8,7 +8,7 @@ categories:
   - bash
 resources:
   - name: "morelines.sh"
-    url: "/content/linux/scripting/bash/read/file-by-line/morelines.sh"
+    url: "/content/linux/scripting/bash/data/file-by-line/morelines.sh"
     size: "131"
 ---
 <div class="printPageBreakAvoid">
@@ -49,9 +49,9 @@ while IFS= read -r line; do command "${line}"; done < src.file
     <p>
         For example, here we have a script which writes the content of a file to stdout but adds line numbers to the output:
     </p>
-    {{< book/include src="content/linux/scripting/bash/read/file-by-line/morelines.sh" >}}
+    {{< book/include src="content/linux/scripting/bash/data/file-by-line/morelines.sh" >}}
     <p>
         When run against itself:
     </p>
-    {{< book/include src="content/linux/scripting/bash/read/file-by-line/morelines.txt" >}}
+    {{< book/include src="content/linux/scripting/bash/data/file-by-line/morelines.txt" >}}
 </div>
