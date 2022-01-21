@@ -1,0 +1,71 @@
+---
+type: "manual"
+title: "Cut"
+linkTitle: "cut"
+description: "Remove sections from each line of files"
+categories:
+  - linux
+---
+<div class="printPageBreakAvoid">
+  <h3>SYNOPSIS</h3>
+  <pre>cut OPTION... [FILE]...</pre>
+
+  <h3>DESCRIPTION</h3>
+  <p>
+    Print selected parts of lines from each FILE to standard output.
+  </p>
+  <p>
+    With no FILE, or when FILE is -, read standard input.
+  </p>
+  <p>
+    Mandatory arguments to long options are mandatory for short options too.
+  </p>
+  <dl>
+    <dt>-b, --bytes=LIST</dt>
+    <dd>select only these bytes</dd>
+
+    <dt>-c, --characters=LIST</dt>
+    <dd>select only these characters</dd>
+
+    <dt>-d, --delimiter=DELIM</dt>
+    <dd>use DELIM instead of TAB for field delimiter</dd>
+
+    <dt>-f, --fields=LIST</dt>
+    <dd>select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified</dd>
+
+    <dt>-n</dt>
+    <dd>ignored</dd>
+
+    <dt>--complement</dt>
+    <dd>complement the set of selected bytes, characters or fields</dd>
+
+    <dt>-s, --only-delimited</dt>
+    <dd>do not print lines not containing delimiters</dd>
+
+    <dt>--output-delimiter=STRING</dt>
+    <dd>use STRING as the output delimiter the default is to use the input delimiter</dd>
+
+    <dt>-z, --zero-terminated</dt>
+    <dd>line delimiter is NUL, not newline</dd>
+
+    <dt>--help</dt>
+    <dd>display this help and exit</dd>
+
+    <dt>--version</dt>
+    <dd>output version information and exit</dd>
+  </dl>
+
+  <p>
+    Use  one, and only one of -b, -c or -f.
+    Each LIST is made up of one range, or many ranges separated by commas.
+    Selected input is written in the same order that it is read, and is written exactly once.  Each range is one of:
+  </p>
+
+  <dl>
+    <dt>N</dt><dd>N'th byte, character or field, counted from 1</dd>
+    <dt>N-</dt><dd>from N'th byte, character or field, to end of line</dd>
+    <dt>N-M</dt><dd>from N'th to M'th (included) byte, character or field</dd>
+    <dt>-M</dt><dd>from first to M'th (included) byte, character or field</dd>
+  </dl>
+
+</div>

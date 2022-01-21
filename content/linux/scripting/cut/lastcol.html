@@ -1,0 +1,29 @@
+---
+type: "manual"
+title: "Cut last column"
+linkTitle: "cut last column"
+description: "How to get the last column using cut"
+categories:
+  - linux
+  - bash
+---
+<div class="printPageBreakAvoid">
+  <p>
+    To get the last field in a line using cut is simple, just wrap cut with a pair of rev commands and then extract the
+    first field:
+  </p>
+
+{{< highlight go "linenos=inline" >}}
+rev | cut -f1 -d' ' | rev
+{{< / highlight >}}
+
+  <p>
+    This works as rev simply reverses the characters of each line,
+    pipe it through cut which extracts the required fields (counting in reverse),
+    and then reverses it again so the content is in the original order.
+  </p>
+  <p>
+    The only thing you have to remember is that, once reversed, field 1 is actually the last, 2 the one before the last
+    and so on.
+  </p>
+</div>
