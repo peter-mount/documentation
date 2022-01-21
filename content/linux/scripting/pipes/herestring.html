@@ -1,0 +1,44 @@
+---
+type: "manual"
+title: "Here strings"
+linkTitle: "Here strings"
+description: "Sending a string into a pipe"
+categories:
+  - linux
+  - bash
+---
+<div class="printPageBreakAvoid">
+  <p>
+    Here strings are similar to <a href="../heredoc/">Here documents</a> but allows you to do this on one line:
+  </p>
+
+{{< highlight go "linenos=inline" >}}
+command <<<"some string"
+{{< / highlight >}}
+
+  <p>
+    For example, the following commands do the same thing, count the number of words in a string:
+  </p>
+
+{{< highlight go "linenos=inline" >}}
+echo "This is a test" | wc -w
+
+wc -w <<<"This is a test"
+{{< / highlight >}}
+
+  <p>
+    You can also pipe the output of commands as a here string:
+  </p>
+
+{{< highlight go "linenos=inline" >}}
+ps -fe | wc -l
+
+wc -l <<<$(ps -fe)
+{{< / highlight >}}
+
+  <p>
+    See also:
+    <a href="../heredoc/">Here document</a>
+  </p>
+
+</div>

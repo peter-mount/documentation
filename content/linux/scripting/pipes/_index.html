@@ -1,0 +1,54 @@
+---
+type: "manual"
+title: "Pipes"
+linkTitle: "Pipes"
+description: "Pipes and Pipelines"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        In most script languages, a pipe is where the output of one command is passed as the input of a second command.
+        It allows the chaining of multiple commands without the need of intermediary files.
+    </p>
+    <h3>File handles</h3>
+    <p>
+        Every command has 3 files open by default:
+    </p>
+    <table class="hexGrid">
+        <thead>
+        <tr>
+            <th rowspan="2">File #</th>
+            <th rowspan="2">Name</th>
+            <th colspan="3">Script</th>
+            <th rowspan="2">Description</th>
+        </tr>
+        <tr>
+            <th>Read</th>
+            <th>Create</th>
+            <th>Append</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0</td><td>stdin</td>
+            <td>&lt;</td>
+            <td></td>
+            <td></td>
+            <td>Input into the command</td>
+        </tr>
+        <tr>
+            <td>1</td><td>stdout</td>
+            <td></td>
+            <td>&gt;&amp;1</td>
+            <td>&gt;&gt;&amp;1</td>
+            <td>Output from the command</td>
+        </tr>
+        <tr>
+            <td>2</td><td>stderr</td>
+            <td></td>
+            <td>&gt;&amp;2</td>
+            <td>&gt;&gt;&amp;2</td>
+            <td>Errors from the command</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

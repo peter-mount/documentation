@@ -1,0 +1,36 @@
+---
+type: "manual"
+title: "Here document"
+linkTitle: "Here document"
+description: "Sending multiple lines into a pipe"
+categories:
+  - linux
+  - bash
+---
+<div class="printPageBreakAvoid">
+  <p>
+    A Here document is a set of lines in a script which is to be sent to a command as it's input.
+  </p>
+  <p>
+    It consists of <code>&lt;&lt;deliminator</code> followed by multiple lines and then a line with just
+    <code>demiminator</code> to show the end of the document.
+  </p>
+  <p>
+    For example, we have a 4 line document that will be sent to the command as it's standard input:
+  </p>
+
+{{< highlight go "linenos=inline" >}}
+command <<TERMINATOR
+line 1
+line 2
+line $someVar
+line 4
+TERMINATOR
+{{< / highlight >}}
+
+  <p>
+    See also:
+    <a href="../herestring/">Here strings</a>
+  </p>
+
+</div>
