@@ -1,0 +1,60 @@
+---
+type: "manual"
+title: "Read file line by line"
+linkTitle: "Read Line by Line"
+description: "How to read a file line by line in Bash"
+categories:
+  - linux
+  - bash
+resources:
+  - name: "morelines.sh"
+    url: "/content/linux/scripting/bash/read/file-by-line/morelines.sh"
+    size: "131"
+---
+<div class="printPageBreakAvoid">
+    <div class="alert-info">
+        Although this has been tested for Bash, this should also work for other shells kike ksh
+    </div>
+    <p>
+        Reading a file into a bash script on a per line basis is pretty simple:
+    </p>
+
+{{< highlight go "linenos=inline" >}}
+while read -r line; do command "${line}"; done < src.file
+{{< / highlight >}}
+
+    <p>
+        here we read a line from stdin and as long as a line was read the line is passed to command as a single command
+        argument.
+    </p>
+    <p>
+        the <code>-r</code> option prevents backslash escapes in the line being interpreted.
+    </p>
+    <p>
+        If you want to prevent leading or trailling whitespace from being removed from the line then add
+        <code>IFS=</code> to the line:
+    </p>
+
+{{< highlight go "linenos=inline" >}}
+while IFS= read -r line; do command "${line}"; done < src.file
+{{< / highlight >}}
+
+    <h2>Within scripts</h2>
+    <p>
+        The above is useful when writing something quick on the command line, but in a script it's more customary
+        to write this across multiple lines.
+    </p>
+    <p>
+        What I tend to do is wrap the while loop within <code>( )</code> with the input redirect after the parentheses.
+        To me this makes it clearer on what the bounds of the script relates to the input.
+    </p>
+
+    <p>
+        For example, here we have a script which writes the content of a file to stdout but adds line numbers to the output:
+    </p>
+    {{< book/include src="content/linux/scripting/bash/read/file-by-line/morelines.sh" >}}
+    <p>
+        When run against itself:
+    </p>
+    {{< book/include src="content/linux/scripting/bash/read/file-by-line/morelines.txt" >}}
+</div>

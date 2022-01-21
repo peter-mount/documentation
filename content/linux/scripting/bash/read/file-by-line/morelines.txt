@@ -1,0 +1,11 @@
+$ ./morelines.sh morelines.sh
+001 #!/bin/bash
+002 input="$1"
+003 (
+004   lc=1
+005   while IFS= read -r line
+006   do
+007     printf "%03d %s\n" ${lc} "${line}"
+008     lc=$((lc+1))
+009   done
+010 ) < "${input}"
