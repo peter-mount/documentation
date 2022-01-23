@@ -11,6 +11,9 @@ pygmentsUseClassic = false
 # See https://help.farbox.com/pygments.html
 pygmentsStyle = "tango"
 
+# Undocumented, get .Lastmod from git history not frontmatter
+EnableGitInfo = true
+
 # Configure how URLs look like per section.
 [permalinks]
 blog = "/:section/:year/:month/:day/:slug/"
