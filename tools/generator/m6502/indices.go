@@ -110,7 +110,7 @@ func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, tit
           if op.Colour == "undocumented" {
             class = " class=\"" + op.Colour + "\""
           }
-          slice = append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, op.Op, op.Code))
+          slice = append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, op.String(), op.Code))
         }
         slice = append(slice, "</table>", "</div>")
         return slice, nil
