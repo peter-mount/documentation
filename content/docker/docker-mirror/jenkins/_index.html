@@ -1,0 +1,31 @@
+---
+type: "manual"
+title: "Using docker-mirror in a Jenkins pipeline"
+linkTitle: "Jenkins Pipeline"
+description: "How to use docker-mirror in a Jenkins pipeline"
+weight: 80
+---
+<div class="printPageBreakAvoid">
+    <p>
+        The following is an example pipeline for Jenkins to perform regular mirrors of common repositories:
+    </p>
+{{< highlight go "linenos=inline" >}}
+node( "docker" ) {
+    [
+    "alpine:latest",
+    "debian:11-slim",
+    "debian:latest",
+    "golang:alpine",
+    "openjdk:11"
+    ].each {
+        name -> stage( name ) {
+            sh "docker-mirror -d docker.example.com " + name
+        }
+    }
+}
+{{< / highlight >}}
+    <p>
+        This pipeline will use a jenkins node called "docker" and will run docker-mirror against each one of the
+        listed images, ensuring that the version on docker.example.com is in sync.
+    </p>
+</div>
