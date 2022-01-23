@@ -107,6 +107,7 @@ func (b *BBC) writeOsbyteIndex(ctx context.Context) error {
     "OSByte &FFF4 calls",
     "manual",
     10,
+    book.Modified(),
   ).
     Yaml(r).
     WrapAsFrontMatter().

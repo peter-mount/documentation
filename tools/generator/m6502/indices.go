@@ -85,7 +85,7 @@ func (s *M6502) writeOpsHexGrid(ctx context.Context) error {
   book := generator.GetBook(ctx)
   inst := s.Instructions(book)
 
-  return util.ReferenceFileBuilder("Opcode Matrix", "Instructions shown in an Opcode Matrix", "manual", 10).
+  return util.ReferenceFileBuilder("Opcode Matrix", "Instructions shown in an Opcode Matrix", "manual", 10, book.Modified()).
       Then(NewHexGrid().
         Opcode(inst.opCodes...).
         FileBuilder()).
@@ -100,6 +100,7 @@ func (s *M6502) writeFile(book *hugo.Book, inst *Instructions, prefix, name, tit
     desc,
     "manual",
     10,
+    book.Modified(),
   ).
     //Then(inst.writeOpCodes(prefix, inst.opCodes)).
     WrapAsFrontMatter().

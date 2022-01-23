@@ -30,7 +30,7 @@ func GenerateReferenceIndexFile(ctx context.Context, fileName string, fileTime t
   return task.Of(func(ctx context.Context) error {
 
     return GenerateCustomIndexFile(fileName, fileTime, func(fileName string, fileTime time.Time) error {
-      fb := util.ReferenceFileBuilder(title, desc, "manual", 100)
+      fb := util.ReferenceFileBuilder(title, desc, "manual", 100, fileTime)
 
       // Get any resources for this location
       if rm := GetResourceManager(ctx); rm != nil {

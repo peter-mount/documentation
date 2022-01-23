@@ -127,7 +127,7 @@ func (a *Api) generateIndexFile(ctx context.Context) error {
     r.Api = append(r.Api, o.params)
   }
 
-  return util.ReferenceFileBuilder(title, title, "manual", 10).
+  return util.ReferenceFileBuilder(title, title, "manual", 10, book.Modified()).
     Yaml(r).
     WrapAsFrontMatter().
     FileHandler().

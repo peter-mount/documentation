@@ -7,6 +7,7 @@ import (
   "io"
   "path"
   "strconv"
+  "time"
 )
 
 // FileBuilder creates text files
@@ -106,7 +107,7 @@ func ReferenceFilename(dir, name, fileName string) string {
 }
 
 // ReferenceFileBuilder returns a FileBuilder with standard front matter for hugo pages
-func ReferenceFileBuilder(title, desc, layout string, weight int) FileBuilder {
+func ReferenceFileBuilder(title, desc, layout string, weight int, t time.Time) FileBuilder {
   return func(ary strings.StringSlice) (strings.StringSlice, error) {
     ary = append(ary,
       "# This file is generated.",
@@ -118,6 +119,9 @@ func ReferenceFileBuilder(title, desc, layout string, weight int) FileBuilder {
       "description: \""+desc+"\"",
       "notitle: \"don't show instructions header in table\"",
     )
+    if !t.IsZero() {
+      ary = append(ary, fmt.Sprintf("lastmod: %q", t.Format(time.RFC3339)))
+    }
     return ary, nil
   }
 }

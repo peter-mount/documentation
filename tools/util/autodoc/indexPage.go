@@ -25,7 +25,7 @@ func GenerateFileIndexPage(dir, file, asm, buildFileName string, modified time.T
     rm.GetResources(path.Join(dir, asm)).AddChild(fileResource)
 
     return GenerateCustomIndexFile(fullFileName, modified, func(indexFileName string, fileTime time.Time) error {
-      return util.ReferenceFileBuilder(file, "Generated file for "+asm, "manual", 10).
+      return util.ReferenceFileBuilder(file, "Generated file for "+asm, "manual", 10, fileTime).
         Then(fileResource.FileBuilder()).
         WrapAsFrontMatter().
         Appendf("{{< book/include src=%q >}}", buildFileName).

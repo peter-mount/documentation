@@ -60,6 +60,7 @@ func (b *BBC) writeOswordIndex(ctx context.Context) error {
     "OSWord &FFF1 calls",
     "manual",
     10,
+    book.Modified(),
   ).
     Yaml(r).
     WrapAsFrontMatter().
