@@ -7,6 +7,7 @@ import (
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/strings"
   "strconv"
+  strings2 "strings"
 )
 
 const (
@@ -82,6 +83,10 @@ func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}
       op.Bytes = i.decodeOpType(n, e1)
     } else {
       op.Bytes = i.decodeOpType(n, e["bytes"])
+    }
+
+    if op.Bytes != nil && op.Bytes.Int() > 1 && !strings2.Contains(op.Code, "nn") {
+      op.Code = op.Code + strings2.Repeat("nn", op.Bytes.Int()-1)
     }
 
     op.Cycles = i.decodeOpType(n, e["cycles"])
