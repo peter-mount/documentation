@@ -79,18 +79,6 @@ func (c *Config) Start() error {
     c.Webserver.Port = 8080
   }
 
-  // Ensure all books have PDF config by using the global version
-  /*_ = c.Books.ForEach(func(book *Book) error {
-    if book.PDF == nil {
-      book.PDF = &c.PDF
-    }
-
-    // Sets book modified time before any generated files
-    _ = book.Modified()
-
-    return nil
-  })*/
-
   return nil
 }
 

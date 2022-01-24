@@ -8,7 +8,6 @@ import (
   "github.com/peter-mount/documentation/tools/hugo"
   util2 "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/walk"
-  "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
@@ -18,9 +17,9 @@ import (
 
 // Chip handles the generation of CHIP pin layout images
 type Chip struct {
-  generator *generator.Generator // Generator
-  worker    *kernel.Worker       // Worker queue
-  excel     *generator.Excel     // Excel
+  generator *generator.Generator `kernel:"inject"` // Generator
+  worker    task.Queue           `kernel:"worker"` // Worker queue
+  excel     *generator.Excel     `kernel:"inject"` // Excel
   chips     *Category            // Map of named chip definitions
   extracted util.Set             // Set of book ID's so that we run once per book
 }
@@ -70,28 +69,6 @@ func (d *Definition) Path(dir string) string {
 
 func (c *Chip) Name() string {
   return "Chip"
-}
-
-func (c *Chip) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&generator.Generator{})
-  if err != nil {
-    return err
-  }
-  c.generator = service.(*generator.Generator)
-
-  service, err = k.AddService(&kernel.Worker{})
-  if err != nil {
-    return err
-  }
-  c.worker = service.(*kernel.Worker)
-
-  service, err = k.AddService(&generator.Excel{})
-  if err != nil {
-    return err
-  }
-  c.excel = service.(*generator.Excel)
-
-  return nil
 }
 
 func (c *Chip) Start() error {

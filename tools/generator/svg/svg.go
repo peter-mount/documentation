@@ -4,28 +4,18 @@ import (
   "context"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util/walk"
-  "github.com/peter-mount/go-kernel"
+  "github.com/peter-mount/go-kernel/util/task"
   "gopkg.in/yaml.v2"
   "io/ioutil"
   "os"
 )
 
 type SVG struct {
-  worker *kernel.Worker // Worker queue
+  worker task.Queue `kernel:"worker"` // Worker queue
 }
 
 func (s *SVG) Name() string {
   return "SVG"
-}
-
-func (s *SVG) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&kernel.Worker{})
-  if err != nil {
-    return err
-  }
-  s.worker = service.(*kernel.Worker)
-
-  return nil
 }
 
 func (s *SVG) Start() error {

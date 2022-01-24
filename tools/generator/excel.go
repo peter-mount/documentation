@@ -4,14 +4,14 @@ import (
   "context"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/go-kernel"
+  "github.com/peter-mount/go-kernel/util/task"
   "path"
   "time"
 )
 
 // Excel service that manages multiple Workbooks by ID and ensures they are written
 type Excel struct {
-  worker   *kernel.Worker // Worker queue
+  worker   task.Queue `kernel:"worker"` // Worker queue
   builders map[string]*provider
 }
 
@@ -29,16 +29,6 @@ func (p *provider) BuildExcel(f func(builder util.ExcelBuilder) util.ExcelBuilde
 
 func (e *Excel) Name() string {
   return "Excel"
-}
-
-func (e *Excel) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&kernel.Worker{})
-  if err != nil {
-    return err
-  }
-  e.worker = service.(*kernel.Worker)
-
-  return nil
 }
 
 func (e *Excel) Start() error {

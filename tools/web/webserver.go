@@ -4,7 +4,6 @@ import (
   "context"
   "github.com/gorilla/mux"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/go-kernel"
   "log"
   "net/http"
   "strconv"
@@ -13,21 +12,12 @@ import (
 // Webserver provides a webserver if required for other tasks.
 // It serves the public directory
 type Webserver struct {
-  config *hugo.Config // Config
+  config *hugo.Config `kernel:"inject"` // Config
   server *http.Server // enabled
 }
 
 func (w *Webserver) Name() string {
   return "webserver"
-}
-
-func (w *Webserver) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&hugo.Config{})
-  if err != nil {
-    return err
-  }
-  w.config = service.(*hugo.Config)
-  return nil
 }
 
 func (w *Webserver) Start() error {

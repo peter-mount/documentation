@@ -5,7 +5,6 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util/walk"
-  "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
 )
@@ -13,8 +12,8 @@ import (
 // BBC generates the reference pages in the BBC book.
 // These pages are the indices to the various sections like MOS calls, OSByte & OSWord calls etc.
 type BBC struct {
-  generator *generator.Generator // Generator
-  excel     *generator.Excel     // Excel
+  generator *generator.Generator `kernel:"inject"` // Generator
+  excel     *generator.Excel     `kernel:"inject"` // Excel
   extracted bool                 // True once extract() has run
   osbyte    []*Osbyte            // OSBYTE calls
   osword    []*Osword            // OSWORD calls
@@ -30,22 +29,6 @@ type Output struct {
 
 func (b *BBC) Name() string {
   return "BBC"
-}
-
-func (b *BBC) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&generator.Generator{})
-  if err != nil {
-    return err
-  }
-  b.generator = service.(*generator.Generator)
-
-  service, err = k.AddService(&generator.Excel{})
-  if err != nil {
-    return err
-  }
-  b.excel = service.(*generator.Excel)
-
-  return nil
 }
 
 func (b *BBC) Start() error {

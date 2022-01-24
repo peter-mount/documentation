@@ -11,8 +11,8 @@ import (
 )
 
 type Autodoc struct {
-  generator       *generator.Generator     // Generator
-  resourceManager *autodoc.ResourceManager // ResourceManager
+  generator       *generator.Generator     `kernel:"inject"` // Generator
+  resourceManager *autodoc.ResourceManager `kernel:"inject"` // ResourceManager
   extracted       util.Set                 // Set of book ID's so that we run once per book
   headers         map[string]*Headers      // Headers per book
   apis            map[string]*Api          // Apis per book
@@ -23,17 +23,17 @@ func (s *Autodoc) Name() string {
 }
 
 func (s *Autodoc) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&generator.Generator{})
-  if err != nil {
-    return err
-  }
-  s.generator = service.(*generator.Generator)
+  /*service, err := k.AddService(&generator.Generator{})
+    if err != nil {
+      return err
+    }
+    s.generator = service.(*generator.Generator)
 
-  service, err = k.AddService(&autodoc.ResourceManager{})
-  if err != nil {
-    return err
-  }
-  s.resourceManager = service.(*autodoc.ResourceManager)
+    service, err = k.AddService(&autodoc.ResourceManager{})
+    if err != nil {
+      return err
+    }
+    s.resourceManager = service.(*autodoc.ResourceManager)*/
 
   return nil
 }

@@ -10,17 +10,18 @@ import (
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/web"
   "github.com/peter-mount/go-kernel"
+  "github.com/peter-mount/go-kernel/util/task"
   "log"
   "strings"
 )
 
 // PDF tool that handles the generation of PDF documentation of a "book"
 type PDF struct {
-  config    *hugo.Config // Config
-  bookShelf *hugo.BookShelf
-  chromium  *web.Chromium  // Chromium browser
-  enable    *bool          // Is PDF generation enabled
-  worker    *kernel.Worker // Worker queue
+  config    *hugo.Config    `kernel:"inject"` // Config
+  bookShelf *hugo.BookShelf `kernel:"inject"`
+  chromium  *web.Chromium   `kernel:"inject"` // Chromium browser
+  enable    *bool           // Is PDF generation enabled
+  worker    task.Queue      `kernel:"worker"` // Worker queue
 }
 
 func (p *PDF) Name() string {
@@ -29,30 +30,6 @@ func (p *PDF) Name() string {
 
 func (p *PDF) Init(k *kernel.Kernel) error {
   p.enable = flag.Bool("p", false, "disable pdf generation")
-
-  service, err := k.AddService(&hugo.Config{})
-  if err != nil {
-    return err
-  }
-  p.config = service.(*hugo.Config)
-
-  service, err = k.AddService(&web.Chromium{})
-  if err != nil {
-    return err
-  }
-  p.chromium = service.(*web.Chromium)
-
-  service, err = k.AddService(&hugo.BookShelf{})
-  if err != nil {
-    return err
-  }
-  p.bookShelf = service.(*hugo.BookShelf)
-
-  service, err = k.AddService(&kernel.Worker{})
-  if err != nil {
-    return err
-  }
-  p.worker = service.(*kernel.Worker)
 
   // We need a webserver & must run after hugo
   return k.DependsOn(&web.Webserver{}, &hugo.Hugo{})

@@ -6,16 +6,16 @@ import (
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/go-kernel"
-  task2 "github.com/peter-mount/go-kernel/util/task"
+  "github.com/peter-mount/go-kernel/util/task"
   "log"
 )
 
 // Generator is a kernel Service which handles the generation of content based on page metadata.
 type Generator struct {
-  config     *hugo.Config // Configuration
-  bookShelf  *hugo.BookShelf
-  generators map[string]task2.Task // Map of available generators
-  worker     *kernel.Worker        // Worker queue
+  config     *hugo.Config         `kernel:"inject"` // Configuration
+  bookShelf  *hugo.BookShelf      `kernel:"inject"`
+  generators map[string]task.Task // Map of available generators
+  worker     task.Queue           `kernel:"worker"` // Worker queue
 }
 
 func (g *Generator) Name() string {
@@ -46,14 +46,14 @@ func (g *Generator) Init(k *kernel.Kernel) error {
 }
 
 func (g *Generator) Start() error {
-  g.generators = make(map[string]task2.Task)
+  g.generators = make(map[string]task.Task)
 
   g.worker.AddPriorityTask(tools.PriorityImmediate, g.generate)
   return nil
 }
 
 // Register a named Handler
-func (g *Generator) Register(n string, h task2.Task) *Generator {
+func (g *Generator) Register(n string, h task.Task) *Generator {
   if _, exists := g.generators[n]; exists {
     panic(fmt.Errorf("GeneratorHandler %s already registered", n))
   }
