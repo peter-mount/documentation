@@ -21,6 +21,7 @@ type Hugo struct {
   expired *bool      // true to build expired content, same as --buildExpired for hugo
   future  *bool      // true to build future content, same as --buildFuture for hugo
   worker  task.Queue `kernel:"worker"` // Worker queue
+  _       *PostCSS   `kernel:"inject"` // Just a dependency
 }
 
 func (h *Hugo) Name() string {
@@ -34,7 +35,7 @@ func (h *Hugo) Init(k *kernel.Kernel) error {
   h.expired = flag.Bool("buildExpired", false, "Build expired pages")
   h.future = flag.Bool("buildFuture", false, "Build future pages")
 
-  return k.DependsOn(&PostCSS{})
+  return nil
 }
 
 func (h *Hugo) Start() error {

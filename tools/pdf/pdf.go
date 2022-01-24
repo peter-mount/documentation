@@ -22,6 +22,8 @@ type PDF struct {
   chromium  *web.Chromium   `kernel:"inject"` // Chromium browser
   enable    *bool           // Is PDF generation enabled
   worker    task.Queue      `kernel:"worker"` // Worker queue
+  _         *web.Webserver  `kernel:"inject"`
+  _         *hugo.Hugo      `kernel:"inject"`
 }
 
 func (p *PDF) Name() string {
@@ -32,7 +34,7 @@ func (p *PDF) Init(k *kernel.Kernel) error {
   p.enable = flag.Bool("p", false, "disable pdf generation")
 
   // We need a webserver & must run after hugo
-  return k.DependsOn(&web.Webserver{}, &hugo.Hugo{})
+  return nil
 }
 
 func (p *PDF) Start() error {

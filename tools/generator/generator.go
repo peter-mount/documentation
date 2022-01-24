@@ -5,7 +5,6 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
 )
@@ -20,29 +19,6 @@ type Generator struct {
 
 func (g *Generator) Name() string {
   return "generator"
-}
-
-func (g *Generator) Init(k *kernel.Kernel) error {
-
-  service, err := k.AddService(&hugo.Config{})
-  if err != nil {
-    return err
-  }
-  g.config = service.(*hugo.Config)
-
-  service, err = k.AddService(&hugo.BookShelf{})
-  if err != nil {
-    return err
-  }
-  g.bookShelf = service.(*hugo.BookShelf)
-
-  service, err = k.AddService(&kernel.Worker{})
-  if err != nil {
-    return err
-  }
-  g.worker = service.(*kernel.Worker)
-
-  return nil
 }
 
 func (g *Generator) Start() error {
