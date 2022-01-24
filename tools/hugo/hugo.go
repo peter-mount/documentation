@@ -2,11 +2,9 @@ package hugo
 
 import (
   "context"
-  "flag"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/strings"
-  "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
   "os"
@@ -15,27 +13,17 @@ import (
 
 // Hugo runs hugo
 type Hugo struct {
-  server  *bool      // true to run Hugo in server mode
-  cleanup *bool      // true to clean out public directory before running
-  draft   *bool      // true to build drafts, same as --buildDrafts for hugo
-  expired *bool      // true to build expired content, same as --buildExpired for hugo
-  future  *bool      // true to build future content, same as --buildFuture for hugo
-  worker  task.Queue `kernel:"worker"` // Worker queue
-  _       *PostCSS   `kernel:"inject"` // Just a dependency
+  server  *bool      `kernel:"flag,s,Run hugo in server mode"`                       // true to run Hugo in server mode
+  cleanup *bool      `kernel:"flag,clean,Cleanup public directories before running"` // true to clean out public directory before running
+  draft   *bool      `kernel:"flag,buildDrafts,Build draft pages"`                   // true to build drafts, same as --buildDrafts for hugo
+  expired *bool      `kernel:"flag,buildExpired,Build expired pages"`                // true to build expired content, same as --buildExpired for hugo
+  future  *bool      `kernel:"flag,buildFuture,Build future pages"`                  // true to build future content, same as --buildFuture for hugo
+  worker  task.Queue `kernel:"worker"`                                               // Worker queue
+  _       *PostCSS   `kernel:"inject"`                                               // Just a dependency
 }
 
 func (h *Hugo) Name() string {
   return "hugo"
-}
-
-func (h *Hugo) Init(k *kernel.Kernel) error {
-  h.server = flag.Bool("s", false, "Run hugo in server mode")
-  h.cleanup = flag.Bool("clean", false, "Cleanup public directory before running")
-  h.draft = flag.Bool("buildDrafts", false, "Build draft pages")
-  h.expired = flag.Bool("buildExpired", false, "Build expired pages")
-  h.future = flag.Bool("buildFuture", false, "Build future pages")
-
-  return nil
 }
 
 func (h *Hugo) Start() error {

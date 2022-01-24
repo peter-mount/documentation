@@ -5,7 +5,6 @@ import (
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/util/autodoc"
-  "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/task"
 )
@@ -20,22 +19,6 @@ type Autodoc struct {
 
 func (s *Autodoc) Name() string {
   return "Autodoc"
-}
-
-func (s *Autodoc) Init(k *kernel.Kernel) error {
-  /*service, err := k.AddService(&generator.Generator{})
-    if err != nil {
-      return err
-    }
-    s.generator = service.(*generator.Generator)
-
-    service, err = k.AddService(&autodoc.ResourceManager{})
-    if err != nil {
-      return err
-    }
-    s.resourceManager = service.(*autodoc.ResourceManager)*/
-
-  return nil
 }
 
 func (s *Autodoc) Start() error {

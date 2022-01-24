@@ -1,9 +1,7 @@
 package hugo
 
 import (
-  "flag"
   "fmt"
-  "github.com/peter-mount/go-kernel"
   "gopkg.in/yaml.v2"
   "io/ioutil"
   "path/filepath"
@@ -11,9 +9,9 @@ import (
 
 // Config file for doctool
 type Config struct {
-  Webserver  WebserverConfig `yaml:"webserver"` // Webserver
-  PDF        PDF             `yaml:"pdf"`       // Common PDF template, can be overridden per book
-  configFile *string         `yaml:"-"`         // Config file name
+  Webserver  WebserverConfig `yaml:"webserver"`                            // Webserver
+  PDF        PDF             `yaml:"pdf"`                                  // Common PDF template, can be overridden per book
+  configFile *string         `yaml:"-" kernel:"flag,c,Config file to use"` // Config file name
 }
 
 type WebserverConfig struct {
@@ -43,11 +41,6 @@ type PDFMargin struct {
 
 func (c *Config) Name() string {
   return "Config"
-}
-
-func (c *Config) Init(_ *kernel.Kernel) error {
-  c.configFile = flag.String("c", "", "The config file to use")
-  return nil
 }
 
 func (c *Config) Start() error {

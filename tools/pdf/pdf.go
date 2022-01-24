@@ -2,14 +2,12 @@ package pdf
 
 import (
   "context"
-  "flag"
   "github.com/chromedp/cdproto/page"
   "github.com/chromedp/chromedp"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/web"
-  "github.com/peter-mount/go-kernel"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
   "strings"
@@ -17,24 +15,17 @@ import (
 
 // PDF tool that handles the generation of PDF documentation of a "book"
 type PDF struct {
-  config    *hugo.Config    `kernel:"inject"` // Config
-  bookShelf *hugo.BookShelf `kernel:"inject"`
-  chromium  *web.Chromium   `kernel:"inject"` // Chromium browser
-  enable    *bool           // Is PDF generation enabled
-  worker    task.Queue      `kernel:"worker"` // Worker queue
-  _         *web.Webserver  `kernel:"inject"`
-  _         *hugo.Hugo      `kernel:"inject"`
+  config    *hugo.Config    `kernel:"inject"`                        // Config
+  bookShelf *hugo.BookShelf `kernel:"inject"`                        // Bookshelf
+  chromium  *web.Chromium   `kernel:"inject"`                        // Chromium browser
+  enable    *bool           `kernel:"flag,p,disable PDF generation"` // Is PDF generation enabled
+  worker    task.Queue      `kernel:"worker"`                        // Worker queue
+  _         *web.Webserver  `kernel:"inject"`                        // we need these to deploy before this but don't
+  _         *hugo.Hugo      `kernel:"inject"`                        // access them directly
 }
 
 func (p *PDF) Name() string {
   return "PDF"
-}
-
-func (p *PDF) Init(k *kernel.Kernel) error {
-  p.enable = flag.Bool("p", false, "disable pdf generation")
-
-  // We need a webserver & must run after hugo
-  return nil
 }
 
 func (p *PDF) Start() error {
