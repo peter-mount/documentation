@@ -27,10 +27,6 @@ type Output struct {
   Osword []interface{} `yaml:"osword,omitempty"`
 }
 
-func (b *BBC) Name() string {
-  return "BBC"
-}
-
 func (b *BBC) Start() error {
   b.generator.
       Register("bbcOsbyteIndex",

@@ -14,10 +14,6 @@ type SVG struct {
   worker task.Queue `kernel:"worker"` // Worker queue
 }
 
-func (s *SVG) Name() string {
-  return "SVG"
-}
-
 func (s *SVG) Start() error {
   return walk.NewPathWalker().
     Then(s.processFile).

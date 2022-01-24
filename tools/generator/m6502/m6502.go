@@ -15,10 +15,6 @@ type M6502 struct {
   instructions util2.Map            // Map of extracted data
 }
 
-func (s *M6502) Name() string {
-  return "m6502"
-}
-
 func (s *M6502) Start() error {
   s.extracted = util2.NewHashSet()
   s.instructions = util2.NewSyncMap()

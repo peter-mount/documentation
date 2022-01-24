@@ -17,10 +17,6 @@ type Autodoc struct {
   apis            map[string]*Api          // Apis per book
 }
 
-func (s *Autodoc) Name() string {
-  return "Autodoc"
-}
-
 func (s *Autodoc) Start() error {
   s.extracted = util.NewHashSet()
   s.headers = make(map[string]*Headers)

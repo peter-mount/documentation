@@ -16,10 +16,6 @@ type Webserver struct {
   server *http.Server // enabled
 }
 
-func (w *Webserver) Name() string {
-  return "webserver"
-}
-
 func (w *Webserver) Start() error {
   log.Println("Starting webserver")
 

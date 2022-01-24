@@ -24,10 +24,6 @@ type PDF struct {
   _         *hugo.Hugo      `kernel:"inject"`                        // access them directly
 }
 
-func (p *PDF) Name() string {
-  return "PDF"
-}
-
 func (p *PDF) Start() error {
   if *p.enable {
     return nil

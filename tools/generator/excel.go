@@ -27,10 +27,6 @@ func (p *provider) BuildExcel(f func(builder util.ExcelBuilder) util.ExcelBuilde
   return nil
 }
 
-func (e *Excel) Name() string {
-  return "Excel"
-}
-
 func (e *Excel) Start() error {
   e.builders = make(map[string]*provider)
   return nil

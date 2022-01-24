@@ -20,10 +20,6 @@ type PostCSS struct {
   installed bool
 }
 
-func (p *PostCSS) Name() string {
-  return "PostCSS"
-}
-
 const nodeModules = "node_modules"
 
 // Start checks nodeModules does not exist and if it doesn't installs the

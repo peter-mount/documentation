@@ -67,10 +67,6 @@ func (d *Definition) Path(dir string) string {
   return path.Join(a...)
 }
 
-func (c *Chip) Name() string {
-  return "Chip"
-}
-
 func (c *Chip) Start() error {
   c.chips = NewCategory()
   c.extracted = util.NewHashSet()

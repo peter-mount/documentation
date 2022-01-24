@@ -15,10 +15,6 @@ type ResourceManager struct {
   m map[string]resource.Resource
 }
 
-func (rm *ResourceManager) Name() string {
-  return ResourceManagerKey
-}
-
 func (rm *ResourceManager) Start() error {
   rm.m = make(map[string]resource.Resource)
   return nil

@@ -13,10 +13,6 @@ type BookShelf struct {
   books Books
 }
 
-func (bs *BookShelf) Name() string {
-  return "BookShelf"
-}
-
 func (bs *BookShelf) Start() error {
   log.Println("Searching for books")
   return walk.NewPathWalker().

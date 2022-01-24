@@ -14,10 +14,6 @@ type Chromium struct {
   allocCancel  context.CancelFunc // alloc close
 }
 
-func (c *Chromium) Name() string {
-  return "chromium"
-}
-
 func (c *Chromium) Start() error {
   log.Println("Starting chromium")
 

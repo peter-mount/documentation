@@ -17,10 +17,6 @@ type Generator struct {
   worker     task.Queue           `kernel:"worker"` // Worker queue
 }
 
-func (g *Generator) Name() string {
-  return "generator"
-}
-
 func (g *Generator) Start() error {
   g.generators = make(map[string]task.Task)
 

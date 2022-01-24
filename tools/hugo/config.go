@@ -39,10 +39,6 @@ type PDFMargin struct {
   Right  float64 `yaml:"right"`  // Right margin in inches
 }
 
-func (c *Config) Name() string {
-  return "Config"
-}
-
 func (c *Config) Start() error {
   // Verify then load the config file
   if *c.configFile == "" {

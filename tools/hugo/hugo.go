@@ -22,10 +22,6 @@ type Hugo struct {
   _       *PostCSS   `kernel:"inject"`                                               // Just a dependency
 }
 
-func (h *Hugo) Name() string {
-  return "hugo"
-}
-
 func (h *Hugo) Start() error {
   if *h.cleanup {
     h.worker.AddPriorityTask(tools.PriorityImmediate, h.cleanupTask)
