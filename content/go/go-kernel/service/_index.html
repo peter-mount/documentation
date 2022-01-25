@@ -10,10 +10,79 @@ weight: 20
         A Service is the core entity managed by the microkernel which will provide it with lifecycle support and dependency management.
     </p>
     <p>
-        It consists of a struct type which implements the Service interface and optionally any of the lifecycle interfaces.
+        When a service is deployed it becomes managed by the kernel and follow a strict lifecycle:
+    </p>
+    <table class="hexGrid">
+        <thead>
+        <tr>
+            <th>Lifecycle</th>
+            <th>Description</th>
+            <th>Function</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Inject</td>
+            <td class="text-left" rowspan="2">
+                Resolve dependencies on other services,
+                Declare command line flags
+            </td>
+            <td>field injection</td>
+        </tr>
+        <tr>
+            <td>Init</td>
+            <td>Init(*Kernel) error</td>
+        </tr>
+        <tr>
+            <td>PostInit</td>
+            <td class="text-left">Allow checks after init, e.g. command line arguments are correct</td>
+            <td>PostInit() error</td>
+        </tr>
+        <tr>
+            <td>Start</td>
+            <td class="text-left">Allows a service to start, open files, databases etc.</td>
+            <td>Start()</td>
+        </tr>
+        <tr>
+            <td>Run</td>
+            <td class="text-left">
+                Allows a service to perform a task.<br/>
+                This is deprecated as tasks should be performed using the task worker queue instead.
+            </td>
+            <td>Run() error</td>
+        </tr>
+        <tr>
+            <td>Stop</td>
+            <td class="text-left">Allows a service to free any resources as it shuts down.</td>
+            <td>Stop()</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        The details of each lifecycle stage is described in full in the following sections, however every one of them
+        is optional as a service does not require any of them to be implemented for a service to be deployed.
     </p>
     <p>
-        At the bare minimum the Service interface must be implemented.
+        The Inject lifecycle was introduced in V1.1.0 and is an alternative to Init although both can be used under
+        certain cirumstances.
+    </p>
+
+    <h3>v1.1.0</h3>
+    <p>
+        As of version 1.1.0 a service can be any struct. This struct would, when deployed within the kernel become a
+        singleton instance available for injection into other services.
+    </p>
+    <p>
+        Lifecycle handling can be performed by means of the lifecycle interfaces described below.
+    </p>
+
+    <h3>Before v1.1.0</h3>
+    <p>
+        Before version 1.1.0 a service consisted of a struct type which implemented the Service interface and optionally any of the lifecycle interfaces.
+    </p>
+    <p>
+        The Service interface required the Name() function which provided the unique name for this service:
     </p>
 {{< highlight go "linenos=inline" >}}type Service interface {
     Name() string

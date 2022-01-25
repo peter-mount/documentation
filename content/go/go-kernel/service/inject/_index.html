@@ -1,0 +1,93 @@
+---
+type: "manual"
+title: "Service Dependency Injection"
+linkTitle: "Injection"
+weight: 5
+---
+<div class="printPageBreakAvoid">
+<p>
+    The first lifecycle stage a service goes through is injection.
+    Here a service can declare any other services it has a dependency on or any command line flags it requires by use
+    of field tags within its structure.
+</p>
+<p>
+    For example, here we have a simple service showing the possible combinations available by the Injection lifecycle:
+</p>
+{{< highlight go "linenos=inline" >}}type Example struct {
+  config  *conf.Config `kernel:"inject"`
+  worker  task.Queue   `kernel:"worker"`
+  _       *PostCSS     `kernel:"inject"`
+  server  *bool        `kernel:"flag,s,Run hugo in server mode"`
+}{{< / highlight >}}
+
+    <h2>Service dependencies</h2>
+    <p>
+        A service can declare a <a href="../dependencies/">dependency</a> against another service by including th
+        e <code>kernel:"inject"</code> tag against a field of the type of the service.
+    </p>
+
+    <p>
+        In the above example we have the field config which has the type <code>*conf.Config</code>.
+        As that field has the tag then the kernel will inject that service's pointer into that field.
+        When the service starts, it will be started before this one.
+    </p>
+
+    <h3>Unreferenced Service dependencies</h3>
+    <p>
+        An unreferenced dependency is a dependency on another service, but we won't call that service directly.
+        An example of this is a webserver - we need the service to be running whilst this service is running,
+        but we won't call the service directly, e.g. we might make an HTTP connection to it but not via code.
+    </p>
+    <p>
+        In the above example, the PostCSS service is one of these. We want that service to be deployed however we won't
+        be using it directly so the field name is <code>_</code>.
+        This ensures that service is deployed but not injected into the struct.
+    </p>
+
+</div>
+
+<div class="printPageBreakAvoid">
+    <h2>Worker Task Queue</h2>
+    <p>
+        The worker task queue is a kernel service allowing for tasks to be queued and prioritised for execution.
+        It's injected using the <code>kernel:"worker"</code> tag.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h2>Command line flags</h2>
+    <p>
+        Command line flags can be injected using the <code>kernel:"flag"</code> tag.
+        This is a composite tag consisting of up to 4 comma separated fields.
+        The first field is always <code>flag</code>.
+    </p>
+    <p>
+        To inject a flag, simply create a field with its type being one of:
+        *bool, *string, *int, *int64 or *float64.
+        Any other type will cause the service to fail.
+    </p>
+    <p>
+        The tag takes the following format:
+        <code>flag,{<em>name</em>,{<em>description</em>,{<em>default</em>}}}</code>
+    </p>
+
+    <dl>
+        <dt>name</dt>
+        <dd>
+            The name of this flag. It will have '-' prepended to it when used on the command line.<br/>
+            If absent or "" then this will take the name of the field being tagged.
+        </dd>
+        <dt>description</dt>
+        <dd>
+            The description for this flag, used when listing the available flags on the command line.<br/>
+            If absent or "" then this will take the value used for the flag name.
+        </dd>
+        <dt>default</dt>
+        <dd>
+            The default value for this flag.<br/>
+            If absent or "" then this will take a suitable default for the type:
+            "" for string, false for boolean, 0 for integers or 0.0 for floats.
+        </dd>
+    </dl>
+
+</div>

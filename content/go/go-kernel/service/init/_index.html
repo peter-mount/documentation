@@ -1,125 +1,138 @@
 ---
 type: "manual"
 title: "Initialise & Service Dependencies"
-linkTitle: "Init & dependencies"
-weight: 1
+linkTitle: "Init"
+weight: 10
 ---
 <div class="printPageBreakAvoid">
-<p>
-    The first lifecycle stage a service goes through is init.
-    Here a service can declare any other services it has a dependency on or any command line flags it requires.
-</p>
-<p>
-    To do this the service needs to implement the InitialisableService interface:
-</p>
+    <p>
+        The second lifecycle stage a service goes through is init.
+        Here a service can declare any other services it has a <a href="../dependencies/">dependency</a> on or any
+        command line flags it requires.
+    </p>
+    <div class="alert-info">
+        <p>
+            Since v1.1.0 the Init lifecycle has been replaced by <a href="../inject/">Injection</a> for most purposes.
+        </p>
+        <p>
+            There are some use-cases where Init is still useful but for most purposes you will find
+            <a href="../inject/">Injection</a> is neater and easier to maintain with less boilerplate code.
+        </p>
+    </div>
+    <p>
+        To do this the service needs to implement the InitialisableService interface:
+    </p>
 {{< highlight go "linenos=inline" >}}type InitialisableService interface {
-    Init(*Kernel) error
+  Init(*Kernel) error
 }{{< / highlight >}}
 
-<p>
-    If an error is returned from this Init() method the Kernel will exit immediately returning that error.
-</p>
-
-<div class="alert-danger">
     <p>
-        A service must never call a function in another service from inside the Init() method,
-        nor create any external resources like go routines or open files.
+        If an error is returned from this Init() method the Kernel will exit immediately returning that error.
     </p>
-    <p>
-        Doing so could call a service which has not yet been initialised and leave resources open if the kernel exits
-        due to an error.
-    </p>
-</div>
 
-<h2>Command line flags</h2>
-<p>
-    To add a simple flag to a service we simply use the flag package to create the flag from within the
-    Init function.
-</p>
+    <div class="alert-danger">
+        <p>
+            A service must never call a function in another service from inside the Init() method,
+            nor create any external resources like go routines or open files.
+        </p>
+        <p>
+            Doing so could call a service which has not yet been initialised and leave resources open if the kernel
+            exits
+            due to an error.
+        </p>
+    </div>
+
+    <h2>Command line flags</h2>
+    <p>
+        To add a simple flag to a service we simply use the flag package to create the flag from within the
+        Init function.
+    </p>
 {{< highlight go "linenos=inline" >}}package hugo
 
 import (
-  "flag"
-  "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/go-kernel"
+    "flag"
+    "github.com/peter-mount/documentation/tools/util"
+    "github.com/peter-mount/go-kernel"
 )
 
 // Hugo runs hugo
 type Hugo struct {
-  server *bool // true to run Hugo in server mode
+    server *bool // true to run Hugo in server mode
 }
 
 func (h *Hugo) Name() string {
-  return "hugo"
+    return "hugo"
 }
 
 func (h *Hugo) Init(_ *kernel.Kernel) error {
-  h.server = flag.Bool("s", false, "Run hugo in server mode")
-  return nil
+    h.server = flag.Bool("s", false, "Run hugo in server mode")
+    return nil
 }{{< / highlight >}}
-<p>
-    Once the kernel has completed the Init stage we can then reference the flag's value as it would be set with
-    the command line flag from the command line.
-</p>
+    <p>
+        Once the kernel has completed the Init stage we can then reference the flag's value as it would be set with
+        the command line flag from the command line.
+    </p>
 </div>
 
 <div class="printPageBreakAvoid">
 
-<h2>Service dependencies</h2>
-<p>
-    A service can declare a dependency against another service by using the Kernel instance passed to the Init method.
-    The passed instance is only valid for this call, and you should never store it or attempt to use it outside of
-    the Init lifecycle stage.
-</p>
+    <h2>Service dependencies</h2>
+    <p>
+        A service can declare a <a href="../dependencies/">dependency</a> against another service by using the Kernel
+        instance passed to the Init method.
+        The passed instance is only valid for this call, and you should never store it or attempt to use it outside of
+        the Init lifecycle stage.
+    </p>
 
-<p>
-    There are two types of dependencies. The most common one is where you want to use one service from another.
-    To do this you need to use the AddService() function in the Kernel instance passed to Init().
-</p>
+    <p>
+        There are two types of dependencies. The most common one is where you want to use one service from another.
+        To do this you need to use the AddService() function in the Kernel instance passed to Init().
+    </p>
 {{< highlight go >}}func (k *Kernel) AddService(s Service) (Service, error){{< / highlight >}}
-<p>
-    This function accepts a single instance of the service you require. The function will then either return the
-    instance the service that's been deployed in the kernel which you can then cast and store for later use.
-</p>
-<p>
-    If an error occurs then AddService() will return that error.
-    You must exit the Init() function immediately, returning that error.
-</p>
+    <p>
+        This function accepts a single instance of the service you require. The function will then either return the
+        instance the service that's been deployed in the kernel which you can then cast and store for later use.
+    </p>
+    <p>
+        If an error occurs then AddService() will return that error.
+        You must exit the Init() function immediately, returning that error.
+    </p>
 
-<p>For example:</p>
+    <p>For example:</p>
 
 {{< highlight go "linenos=inline" >}}package hugo
 
 import (
-  "context"
-  "github.com/peter-mount/go-kernel"
+    "context"
+    "github.com/peter-mount/go-kernel"
 )
 
 type Webserver struct {
-  config *Config      // Config
+    config *Config // Config
 }
 
 func (w *Webserver) Name() string {
-  return "webserver"
+    return "webserver"
 }
 
 func (w *Webserver) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&Config{})
-  if err != nil {
-    return err
-  }
-  w.config = service.(*Config)
+    service, err := k.AddService(&Config{})
+    if err != nil {
+        return err
+    }
+    w.config = service.(*Config)
 
-  return nil
+    return nil
 }{{< / highlight >}}
 
-<p>
-    The instance you pass to AddService() may not be the same one returned if that service already exists in the kernel.
-</p>
-<p>
-    The key here is the string the Name() function returns.
-    As that must be unique it is used as the unique identifier within the kernel for the service.
-</p>
+    <p>
+        The instance you pass to AddService() may not be the same one returned if that service already exists in the
+        kernel.
+    </p>
+    <p>
+        The key here is the string the Name() function returns.
+        As that must be unique it is used as the unique identifier within the kernel for the service.
+    </p>
     <p>
         As such the lookup follows the following rules:
     </p>
@@ -132,7 +145,9 @@ func (w *Webserver) Init(k *kernel.Kernel) error {
                     If the new Service implements InitialisableService then it's Init() function will be called
                     so that it can add its own dependencies which will then deploy before it.
                 </li>
-                <li>The new service is finally added to the kernel and the instance you passed to the function will be returned.</li>
+                <li>The new service is finally added to the kernel and the instance you passed to the function will be
+                    returned.
+                </li>
             </ol>
         </li>
     </ul>
@@ -150,7 +165,7 @@ func (w *Webserver) Init(k *kernel.Kernel) error {
         This is rarely used but is a convenience function where you declare that you depend on one or more services
         to exist but don't actually want a reference to them.
     </p>
-{{< highlight go >}}func (k *Kernel) DependsOn(services ...Service) error{{< / highlight >}}
+    {{< highlight go >}}func (k *Kernel) DependsOn(services ...Service) error{{< / highlight >}}
     <p>
         For example, you might have a service that requires a webserver to be running, but you don't need to directly
         link to it as you would be making http calls to it instead.
@@ -158,35 +173,35 @@ func (w *Webserver) Init(k *kernel.Kernel) error {
 {{< highlight go "linenos=inline" >}}package pdf
 
 import (
-  "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/go-kernel"
+    "github.com/peter-mount/documentation/tools/hugo"
+    "github.com/peter-mount/go-kernel"
 )
 
 // PDF tool that handles the generation of PDF documentation of a "book"
 type PDF struct {
-  config   *hugo.Config   // Config
-  chromium *hugo.Chromium // Chromium browser
+    config *hugo.Config // Config
+    chromium *hugo.Chromium // Chromium browser
 }
 
 func (p *PDF) Name() string {
-  return "PDF"
+    return "PDF"
 }
 
 func (p *PDF) Init(k *kernel.Kernel) error {
-  service, err := k.AddService(&hugo.Config{})
-  if err != nil {
-    return err
-  }
-  p.config = service.(*hugo.Config)
+    service, err := k.AddService(&hugo.Config{})
+    if err != nil {
+        return err
+    }
+    p.config = service.(*hugo.Config)
 
-  service, err = k.AddService(&hugo.Chromium{})
-  if err != nil {
-    return err
-  }
-  p.chromium = service.(*hugo.Chromium)
+    service, err = k.AddService(&hugo.Chromium{})
+    if err != nil {
+        return err
+    }
+    p.chromium = service.(*hugo.Chromium)
 
-  // We need a webserver & must run after hugo
-  return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
+    // We need a webserver & must run after hugo
+    return k.DependsOn(&hugo.Webserver{}, &hugo.Hugo{})
 }{{< / highlight >}}
     <p>
         Here we depend on two services which we store a reference to use them,
@@ -194,29 +209,5 @@ func (p *PDF) Init(k *kernel.Kernel) error {
     </p>
     <p>
         If an error occurs then DependsOn() will return that error. You must exit Init() returning that error.
-    </p>
-</div>
-
-<div class="printPageBreakAvoid">
-    <h2>Circular dependencies</h2>
-    <p>
-        The kernel does not allow circular dependencies.
-    </p>
-    <p>
-        For example you have three services called A, B and C.
-    </p>
-    <p>
-        Service A depends on B which in turn depends on C.
-    </p>
-    <p>
-        However Service B cannot depend on A, nor can C depend on either A or B because the kernel would not be able to
-        determine the order the services should be started.
-    </p>
-    <p>
-        e.g. if C depends on A, but A indirectly depends on C via B which one should start first?
-    </p>
-    <p>
-        If this situation happens during a call to AddService() or DependsOn() the kernel itself will stop returning
-        an error.
     </p>
 </div>

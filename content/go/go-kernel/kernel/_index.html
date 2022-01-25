@@ -24,12 +24,20 @@ weight: 15
     <tbody>
     <tr>
       <th style="vertical-align: top;">
-        Init
+        Inject &amp; Init
       </th>
       <td>
         <p>
-          This is the initial stage. Here services can declare they depend on other services by implementing
-          the InitialisableService. They can also define any command line flags they want to use.
+          This is the initial stage which is split into two parts.
+        </p>
+        <p>
+          The first part is <a href="../service/inject/">Injection</a> where dependencies are injected into the service
+          (v1.1.0 or later).
+        </p>
+        <p>
+          The second part is <a href="../service/init/">Init</a> where services can declare they depend on other services by
+          implementing the InitialisableService.
+          They can also define any command line flags they want to use via either mechanism.
         </p>
         <p>
           Once this stage completes no new services can be added to the kernel.
@@ -42,7 +50,8 @@ weight: 15
       </th>
       <td>
         <p>
-          The second stage which allows a service to check it has everything it needs.
+          The second stage is <a href="../service/postinit/">PostInit</a> which allows a service to check it has
+          everything it needs.
           Usually this is to check that any command line flags are valid or mandatory ones are present.
         </p>
       </td>
@@ -53,8 +62,8 @@ weight: 15
       </th>
       <td>
         <p>
-          The third stage is Start. A service can implement the StartableService interface so that it can
-          perform any initialisation it requires.
+          The third stage is <a href="../service/startstop/">Start</a>.
+          A service can implement the StartableService interface so that it can perform any initialisation it requires.
           For example, it could load a configuration file, open a database.
         </p>
         <p>
@@ -72,7 +81,7 @@ weight: 15
       </th>
       <td>
         <p>
-          When the kernel reaches the run stage, every service has now been started.
+          When the kernel reaches the <a href="../service/run/">Run</a> stage, every service has now been started.
         </p>
         <p>
           The kernel will then go though every deployed service and if they implement the RunnableService
@@ -91,6 +100,10 @@ weight: 15
           For Server Daemons like a rest service this interface should not be used as you cannot guarantee
           it will ever be called.
         </p>
+        <p>
+          In the majority of purposes, applications would use the worker task Queue instead of implementing Run
+          as it allows for more flexible task scheduling within the application.
+        </p>
       </td>
     </tr>
     <tr>
@@ -99,8 +112,9 @@ weight: 15
       </th>
       <td>
         <p>
-          This is the final stage where every service that implements the StoppableService interface that has
-          also passed through the Start stage will have their Stop function called.
+          <a href="../service/startstop/">Stop</a> is the final stage where every service that implements the
+          StoppableService interface that has also passed through the <a href="../service/startstop/">Start</a>
+          stage will have their Stop function called.
           This allows a service to release any resources it has open.
         </p>
         <p>

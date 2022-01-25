@@ -1,0 +1,52 @@
+---
+type: "manual"
+title: "Dependencies"
+linkTitle: "Dependencies"
+weight: 3
+---
+<div class="printPageBreakAvoid">
+    <p>
+        A service can have dependencies on other services.
+        During startup, when a service declares it has a dependency then that service will be started before it's
+        dependent.
+        This ensures that a services' functionality is in a valid state during the lifetime of the application.
+    </p>
+    <p>
+        Dependencies are declared in a service by either <a href="../inject/">injection</a>
+        or in the <a href="../init/">Init</a> lifecycle phase.
+    </p>
+
+    <p>
+        The the following example we have an application with 4 services.
+        Service A depends on B & C, B on C and C with D.
+        This relationship is shown with the black arrows.
+    </p>
+    <img src="dependency.svg" alt="Dependency tree"/>
+    <p>
+        The red arrows show dependencies which are invalid as they create circular dependency which is described below.
+    </p>
+
+</div>
+
+<div class="printPageBreakAvoid">
+    <h3>Circular dependencies</h3>
+    <p>
+        The kernel does not allow circular dependencies.
+    </p>
+    <p>
+        In the example above we have four services called A, B, C and D.
+        The black arrows show the valid dependencies but the red arrows show illegal dependencies - that is, a
+        dependency that cannot be made as it would create a circular dependency.
+    </p>
+    <p>
+        The reason this is an issue is that, when a circular dependency exists the kernel cannot determine the
+        correct starting order.
+    </p>
+    <p>
+        e.g. if C depends on A, but A indirectly depends on C via B which one should start first?
+    </p>
+    <p>
+        If this situation happens during the injection or init lifecycle phases the kernel itself will stop returning an
+        error.
+    </p>
+</div>

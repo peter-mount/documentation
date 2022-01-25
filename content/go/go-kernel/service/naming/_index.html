@@ -1,0 +1,33 @@
+
+---
+type: "manual"
+title: "Naming services"
+linkTitle: "Naming"
+weight: 2
+---
+<div class="printPageBreakAvoid">
+    <p>
+        When a service is deployed, it is deployed using a unique name. It is this name which indicates if the service
+        has already been deployed when dependency injection is performed.
+    </p>
+
+    <p>
+        As of version 1.1.0 a service can be any struct so by default it would be assigned a unique name based
+        on it's package path and type name providing a unique name for it's type.
+    </p>
+    <p>
+        Alternatively the service can have the <code>Name() string</code> function which will provide the service's name.
+    </p>
+    <p>
+        For applications using v1.1.0 or later it's advised to not implement Name() and leave the naming to the Kernel.
+        The Name() function will still be supported as it has uses for specialist use-cases.
+    </p>
+
+    <h3>Before v1.1.0</h3>
+    <p>
+        In kernel's prior to v1.1.0 the Name() function was mandatory and was the only means of providing a unique name
+        to a service.
+    </p>
+
+</div>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 210 50" width="20em">
+    <defs>
+        <path id="arrow" d="M10 0 l -10 -2.5 l 0 5 l 10 -2.5"/>
+        <path id="larrow" d="M0 0 l 10 -2.5 l 0 5 l -10 -2.5"/>
+        <g id="error1" stroke="red">
+            <path d="M0 0 l0 -5 l-40 0 l0 5"/>
+            <use xlink:href="#larrow" x="-25" y="-5" fill="red"/>
+        </g>
+        <g id="error2" stroke="red">
+            <path d="M10 0 l0 15 l-110 0 l0 -15"/>
+            <use xlink:href="#larrow" x="-50" y="15" fill="red"/>
+        </g>
+    </defs>
+    <g transform="translate(10 10)" fill="none" stroke="black" font-size="70%">
+        <g transform="translate(20 0)">
+            <rect width="20" height="14"/>
+            <text x="5" y="11.5" fill="black" stroke="none">A</text>
+            <g stroke="black" fill="black">
+                <line x1="20" x2="40" y1="7.5" y2="7.5"/>
+                <use xlink:href="#arrow" x="40" y="7.5"/>
+            </g>
+            <g stroke="black">
+                <path d="M15 15 l0 5 l90 0 l0 -5"/>
+                <use xlink:href="#arrow" x="55" y="20" fill="black"/>
+            </g>
+        </g>
+
+        <g transform="translate(70 0)">
+            <rect width="20" height="14"/>
+            <text x="5" y="11.5" fill="black" stroke="none">B</text>
+            <g stroke="black" fill="black">
+                <line x1="20" x2="40" y1="7.5" y2="7.5"/>
+                <use xlink:href="#arrow" x="40" y="7.5"/>
+            </g>
+        </g>
+
+        <g transform="translate(120 0)">
+            <rect width="20" height="14"/>
+            <text x="5" y="11.5" fill="black" stroke="none">C</text>
+            <g stroke="black" fill="black">
+                <line x1="20" x2="40" y1="7.5" y2="7.5"/>
+                <use xlink:href="#arrow" x="40" y="7.5"/>
+            </g>
+        </g>
+
+        <g transform="translate(170 0)">
+            <rect width="20" height="14"/>
+            <text x="5" y="11.5" fill="black" stroke="none">D</text>
+        </g>
+
+        <use xlink:href="#error1" x="75" y="0"/>
+        <use xlink:href="#error1" x="125" y="0"/>
+        <use xlink:href="#error2" x="125" y="15"/>
+
+    </g>
+</svg>
