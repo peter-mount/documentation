@@ -242,6 +242,41 @@ table.hexGrid {
                 text-align: center;
             }
 
+            span.desc,
+            span.descLeft,
+            span.descRight,
+            span.text {
+                text-align: center;
+            }
+
+            span.desc,
+            span.text {
+                left: 0;
+            }
+
+            span.descLeft {
+                left: 0.5em;
+            }
+
+            span.desc,
+            span.text {
+                right: 0;
+            }
+            span.descRight {
+                right: 0.5em;
+            }
+
+            span.desc,
+            span.descLeft,
+            span.descRight {
+                top: 40%;
+            }
+
+            span.text {
+                top: 30%;
+                font-size: 50%;
+            }
+
             span.code {
                 left: 0;
                 bottom: 0;
