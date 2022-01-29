@@ -11,10 +11,9 @@ import (
 
 // Generator is a kernel Service which handles the generation of content based on page metadata.
 type Generator struct {
-  config     *hugo.Config         `kernel:"inject"` // Configuration
   bookShelf  *hugo.BookShelf      `kernel:"inject"`
-  generators map[string]task.Task // Map of available generators
   worker     task.Queue           `kernel:"worker"` // Worker queue
+  generators map[string]task.Task // Map of available generators
 }
 
 func (g *Generator) Start() error {

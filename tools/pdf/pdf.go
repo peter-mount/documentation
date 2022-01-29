@@ -15,13 +15,32 @@ import (
 
 // PDF tool that handles the generation of PDF documentation of a "book"
 type PDF struct {
-  config    *hugo.Config    `kernel:"inject"`                        // Config
+  config    *Config         `kernel:"config,pdf"`                    // Config
   bookShelf *hugo.BookShelf `kernel:"inject"`                        // Bookshelf
   chromium  *web.Chromium   `kernel:"inject"`                        // Chromium browser
   enable    *bool           `kernel:"flag,p,disable PDF generation"` // Is PDF generation enabled
   worker    task.Queue      `kernel:"worker"`                        // Worker queue
-  _         *web.Webserver  `kernel:"inject"`                        // we need these to deploy before this but don't
+  webserver *web.Webserver  `kernel:"inject"`                        // Webserver
   _         *hugo.Hugo      `kernel:"inject"`                        // access them directly
+}
+
+type Config struct {
+  PrintBackground     bool    `yaml:"printBackground"`     // Print background graphics
+  Margin              Margin  `yaml:"margin"`              // Page margins
+  Width               float64 `yaml:"width"`               // Page width in inches
+  Height              float64 `yaml:"height"`              // Page height in inches
+  Landscape           bool    `yaml:"landscape"`           // Landscape or Portrait
+  Header              string  `yaml:"header"`              // Header in html
+  Footer              string  `yaml:"footer"`              // Footer in html
+  DisableHeaderFooter bool    `yaml:"disableHeaderFooter"` // Disable header & footer generation
+}
+
+// Margin in inches. Default is 1cm ~0.4 inches
+type Margin struct {
+  Top    float64 `yaml:"top"`    // Top margin in inches
+  Left   float64 `yaml:"left"`   // Left margin in inches
+  Bottom float64 `yaml:"bottom"` // Bottom margin in inches
+  Right  float64 `yaml:"right"`  // Right margin in inches
 }
 
 func (p *PDF) Start() error {
@@ -40,25 +59,23 @@ func (p *PDF) Start() error {
 
 // print a specific pdf page.
 func (p *PDF) printToPDF(book *hugo.Book) chromedp.Tasks {
-  url := p.config.WebPath("%s/_print/", strings.ToLower(book.WebPath()))
-
-  pdf := p.config.PDF
+  url := p.webserver.WebPath("%s/_print/", strings.ToLower(book.WebPath()))
 
   return chromedp.Tasks{
     chromedp.Navigate(url),
     chromedp.ActionFunc(func(ctx context.Context) error {
       buf, _, err := page.PrintToPDF().
-        WithPrintBackground(pdf.PrintBackground).
-        WithMarginTop(pdf.Margin.Top).
-        WithMarginBottom(pdf.Margin.Bottom).
-        WithMarginLeft(pdf.Margin.Left).
-        WithMarginRight(pdf.Margin.Right).
-        WithLandscape(pdf.Landscape).
-        WithPaperWidth(pdf.Width).
-        WithPaperHeight(pdf.Height).
-        WithDisplayHeaderFooter(!pdf.DisableHeaderFooter).
-        WithHeaderTemplate(book.Expand(pdf.Header)).
-        WithFooterTemplate(book.Expand(pdf.Footer)).
+        WithPrintBackground(p.config.PrintBackground).
+        WithMarginTop(p.config.Margin.Top).
+        WithMarginBottom(p.config.Margin.Bottom).
+        WithMarginLeft(p.config.Margin.Left).
+        WithMarginRight(p.config.Margin.Right).
+        WithLandscape(p.config.Landscape).
+        WithPaperWidth(p.config.Width).
+        WithPaperHeight(p.config.Height).
+        WithDisplayHeaderFooter(!p.config.DisableHeaderFooter).
+        WithHeaderTemplate(book.Expand(p.config.Header)).
+        WithFooterTemplate(book.Expand(p.config.Footer)).
         Do(ctx)
 
       if err != nil {

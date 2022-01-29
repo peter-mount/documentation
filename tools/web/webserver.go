@@ -2,8 +2,8 @@ package web
 
 import (
   "context"
+  "fmt"
   "github.com/gorilla/mux"
-  "github.com/peter-mount/documentation/tools/hugo"
   "log"
   "net/http"
   "strconv"
@@ -12,8 +12,13 @@ import (
 // Webserver provides a webserver if required for other tasks.
 // It serves the public directory
 type Webserver struct {
-  config *hugo.Config `kernel:"inject"` // Config
-  server *http.Server // enabled
+  config *WebserverConfig `kernel:"config,webserver"`
+  server *http.Server
+}
+
+type WebserverConfig struct {
+  Address string `yaml:"address"` // Webserver bind address, default "127.0.0.1"
+  Port    int    `yaml:"port"`    // Port defaults to 8080
 }
 
 func (w *Webserver) Start() error {
@@ -24,7 +29,7 @@ func (w *Webserver) Start() error {
     Handler(http.FileServer(http.Dir("public")))
 
   w.server = &http.Server{
-    Addr:    w.config.Webserver.Address + ":" + strconv.Itoa(w.config.Webserver.Port),
+    Addr:    w.config.Address + ":" + strconv.Itoa(w.config.Port),
     Handler: router,
   }
 
@@ -40,4 +45,8 @@ func (w *Webserver) Stop() {
     log.Println("Stopping webserver")
     _ = w.server.Shutdown(context.Background())
   }
+}
+
+func (c *Webserver) WebPath(f string, a ...interface{}) string {
+  return fmt.Sprintf("http://%s:%d/"+f, append([]interface{}{c.config.Address, c.config.Port}, a...)...)
 }
