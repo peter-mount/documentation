@@ -2,6 +2,7 @@ package m6502
 
 import (
   "github.com/peter-mount/documentation/tools/util"
+  util2 "github.com/peter-mount/go-kernel/util"
   "sort"
   "strconv"
 )
@@ -15,7 +16,7 @@ type Opcode struct {
   Code          string
   Op            string
   Addressing    string
-  Compatibility *util.SortedMap
+  Compatibility *util2.SortedMap
   Bytes         *OpcodeType
   Cycles        *OpcodeType
   Notes         []int

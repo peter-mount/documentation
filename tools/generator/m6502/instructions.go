@@ -6,6 +6,7 @@ import (
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/strings"
+  util2 "github.com/peter-mount/go-kernel/util"
   "strconv"
   strings2 "strings"
 )
@@ -75,7 +76,7 @@ func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}
       Code:          opcode,
       Op:            util.DecodeString(e["op"], defaultOp),
       Addressing:    util.DecodeString(e["addressing"], ""),
-      Compatibility: util.NewSortedMap().Decode(e["compatibility"]),
+      Compatibility: util2.NewSortedMap().Decode(e["compatibility"]),
       Colour:        util.DecodeString(e["colour"], ""),
     }
 
