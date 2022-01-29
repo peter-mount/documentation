@@ -5,6 +5,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  util2 "github.com/peter-mount/go-kernel/util"
   "sort"
 )
 
@@ -26,11 +27,11 @@ type FunctionParams struct {
 }
 
 func (p *FunctionParams) decode(e interface{}) error {
-  return util.IfMap(e, func(m map[interface{}]interface{}) error {
-    p.A = util.IfMapEntryString(m, "a")
-    p.X = util.IfMapEntryString(m, "x")
-    p.Y = util.IfMapEntryString(m, "y")
-    p.C = util.IfMapEntryString(m, "c")
+  return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+    p.A = util2.IfMapEntryString(m, "a")
+    p.X = util2.IfMapEntryString(m, "x")
+    p.Y = util2.IfMapEntryString(m, "y")
+    p.C = util2.IfMapEntryString(m, "c")
     return nil
   })
 }
@@ -43,37 +44,37 @@ type Compatibility struct {
 }
 
 func (c *Compatibility) decode(e interface{}) error {
-  return util.IfMap(e, func(m map[interface{}]interface{}) error {
-    c.BBC = util.IfMapEntryBool(m, "bbc")
-    c.Master = util.IfMapEntryBool(m, "master")
-    c.Electron = util.IfMapEntryBool(m, "electron")
-    c.Other = util.IfMapEntryString(m, "other")
+  return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+    c.BBC = util2.IfMapEntryBool(m, "bbc")
+    c.Master = util2.IfMapEntryBool(m, "master")
+    c.Electron = util2.IfMapEntryBool(m, "electron")
+    c.Other = util2.IfMapEntryString(m, "other")
     return nil
   })
 }
 
 func (b *BBC) extractOsbyte(ctx context.Context, _ *hugo.FrontMatter) error {
-  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
-    return util.IfMap(e, func(m map[interface{}]interface{}) error {
-      if v, ok := util.DecodeInt(m["int"], 0); ok {
+  return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
+    return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+      if v, ok := util2.DecodeInt(m["int"], 0); ok {
         o := &Osbyte{
           Call:   v,
           params: m,
-          Hex:    util.IfMapEntryString(m, "hex"),
-          Title:  util.IfMapEntryString(m, "title"),
+          Hex:    util2.IfMapEntryString(m, "hex"),
+          Title:  util2.IfMapEntryString(m, "title"),
         }
 
-        err := util.IfMapEntry(m, "entry", o.Entry.decode)
+        err := util2.IfMapEntry(m, "entry", o.Entry.decode)
         if err != nil {
           return err
         }
 
-        err = util.IfMapEntry(m, "exit", o.Exit.decode)
+        err = util2.IfMapEntry(m, "exit", o.Exit.decode)
         if err != nil {
           return err
         }
 
-        err = util.IfMapEntry(m, "compatibility", o.Compat.decode)
+        err = util2.IfMapEntry(m, "compatibility", o.Compat.decode)
         if err != nil {
           return err
         }

@@ -3,8 +3,8 @@ package asm
 import (
   "context"
   "fmt"
-  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/autodoc"
+  "github.com/peter-mount/go-kernel/util"
   "io"
   "strings"
   "time"

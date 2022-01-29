@@ -6,7 +6,6 @@ import (
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
-  util2 "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/task"
   "github.com/peter-mount/go-kernel/util/walk"
@@ -118,25 +117,25 @@ func (c *Chip) extractChipDefinitions(ctx context.Context, _ *hugo.FrontMatter) 
 }
 
 func (c *Chip) extractChipDefTask(ctx context.Context) error {
-  return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
-    return util2.IfMap(e, func(m map[interface{}]interface{}) error {
-      pinCount, ok := util2.DecodeInt(m["pinCount"], 0)
+  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
+    return util.IfMap(e, func(m map[interface{}]interface{}) error {
+      pinCount, ok := util.DecodeInt(m["pinCount"], 0)
       if !ok || pinCount < 1 {
         return fmt.Errorf("invalid pinCount %d", pinCount)
       }
 
-      pinOffset, ok := util2.DecodeInt(m["pinOffset"], 0)
+      pinOffset, ok := util.DecodeInt(m["pinOffset"], 0)
 
-      weight, _ := util2.DecodeInt(m["weight"], 0)
+      weight, _ := util.DecodeInt(m["weight"], 0)
 
       v := &Definition{
-        Name:        util2.DecodeString(m["name"], ""),
-        Category:    util2.DecodeString(m["category"], ""),
-        SubCategory: util2.DecodeString(m["subCategory"], ""),
-        Title:       util2.DecodeString(m["title"], ""),
-        Type:        util2.DecodeString(m["type"], ""),
-        Label:       util2.DecodeString(m["label"], ""),
-        SubLabel:    util2.DecodeString(m["subLabel"], ""),
+        Name:        util.DecodeString(m["name"], ""),
+        Category:    util.DecodeString(m["category"], ""),
+        SubCategory: util.DecodeString(m["subCategory"], ""),
+        Title:       util.DecodeString(m["title"], ""),
+        Type:        util.DecodeString(m["type"], ""),
+        Label:       util.DecodeString(m["label"], ""),
+        SubLabel:    util.DecodeString(m["subLabel"], ""),
         PinCount:    pinCount,
         PinOffset:   pinOffset,
         Pins:        make(map[int]string),
@@ -144,9 +143,9 @@ func (c *Chip) extractChipDefTask(ctx context.Context) error {
         FileInfo:    ctx.Value("fileInfo").(os.FileInfo),
       }
 
-      if err := util2.IfMap(m["pins"], func(m map[interface{}]interface{}) error {
+      if err := util.IfMap(m["pins"], func(m map[interface{}]interface{}) error {
         for pinId, label := range m {
-          key, ok := util2.DecodeInt(pinId, 0)
+          key, ok := util.DecodeInt(pinId, 0)
           if !ok {
             return fmt.Errorf("%s invalid Pin \"%s\"", v.Name, pinId)
           }

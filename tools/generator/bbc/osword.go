@@ -5,6 +5,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  util2 "github.com/peter-mount/go-kernel/util"
   "sort"
 )
 
@@ -18,21 +19,21 @@ type Osword struct {
 }
 
 func (b *BBC) extractOsword(ctx context.Context, _ *hugo.FrontMatter) error {
-  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
-    return util.IfMap(e, func(m map[interface{}]interface{}) error {
-      if _, ok := util.DecodeInt(m["int"], 0); ok {
+  return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
+    return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+      if _, ok := util2.DecodeInt(m["int"], 0); ok {
         o := &Osword{
-          Call:   util.IfMapEntryInt(m, "int"),
+          Call:   util2.IfMapEntryInt(m, "int"),
           params: m,
-          Hex:    util.IfMapEntryString(m, "hex"),
-          Title:  util.IfMapEntryString(m, "title"),
+          Hex:    util2.IfMapEntryString(m, "hex"),
+          Title:  util2.IfMapEntryString(m, "title"),
         }
 
-        if err := util.IfMapEntry(m, "exit", o.Exit.decode); err != nil {
+        if err := util2.IfMapEntry(m, "exit", o.Exit.decode); err != nil {
           return err
         }
 
-        if err := util.IfMapEntry(m, "compatibility", o.Compat.decode); err != nil {
+        if err := util2.IfMapEntry(m, "compatibility", o.Compat.decode); err != nil {
           return err
         }
 

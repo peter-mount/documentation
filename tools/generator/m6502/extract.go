@@ -5,6 +5,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
+  util2 "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/walk"
   "log"
 )
@@ -57,7 +58,7 @@ func (s *M6502) extract(ctx context.Context, fm *hugo.FrontMatter) error {
     notes := ctx.Value("notes").(*util.Notes)
     instructions := GetInstructions(ctx)
 
-    _ = util.ForEachInterface(codes, func(e1 interface{}) error {
+    _ = util2.ForEachInterface(codes, func(e1 interface{}) error {
       instructions.extractOp(defaultOp, notes, e1)
       return nil
     })

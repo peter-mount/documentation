@@ -1,6 +1,7 @@
 package util
 
 import (
+  "github.com/peter-mount/go-kernel/util"
   "log"
   "sort"
   "strings"
@@ -78,7 +79,7 @@ func (n *Notes) DecodePageNotes(v interface{}) {
     return
   }
 
-  _ = ForEachInterface(v, func(e interface{}) error {
+  _ = util.ForEachInterface(v, func(e interface{}) error {
     _ = n.add(e)
     return nil
   })

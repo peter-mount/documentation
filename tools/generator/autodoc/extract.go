@@ -5,7 +5,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
-  util2 "github.com/peter-mount/documentation/tools/util"
+  "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/walk"
   "log"
 )
@@ -38,22 +38,22 @@ func (s *Autodoc) extractMemoryMap(ctx context.Context, fm *hugo.FrontMatter) er
 
   headers := s.getHeaders(ctx)
   if d, exists := fm.Other["description"]; exists {
-    _ = headers.Add(&Header{Comment: util2.DecodeString(d, "")})
+    _ = headers.Add(&Header{Comment: util.DecodeString(d, "")})
     log.Println(d)
   }
 
-  return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
-    return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
+    return util.IfMap(e, func(m map[interface{}]interface{}) error {
       var val string
       if e, exists := m["address"]; exists {
-        val = "0x" + util2.DecodeString(e, "") // Valid as address is always in hex
+        val = "0x" + util.DecodeString(e, "") // Valid as address is always in hex
       } else if e, exists := m["value"]; exists {
-        val = util2.DecodeString(e, "")
+        val = util.DecodeString(e, "")
       }
       return headers.Add(&Header{
-        Label:   util2.DecodeString(m["name"], ""),
+        Label:   util.DecodeString(m["name"], ""),
         Value:   val,
-        Comment: util2.DecodeString(m["desc"], ""),
+        Comment: util.DecodeString(m["desc"], ""),
       })
     })
   })
@@ -64,27 +64,27 @@ func (s *Autodoc) extractApi(ctx context.Context, fm *hugo.FrontMatter) error {
   api := s.GetApi(ctx)
   // TODO add comment here
 
-  return util2.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
-    return util2.IfMap(e, func(m map[interface{}]interface{}) error {
+  return util.ForEachInterface(ctx.Value("other"), func(e interface{}) error {
+    return util.IfMap(e, func(m map[interface{}]interface{}) error {
       v := &ApiEntry{
-        Name:     util2.DecodeString(m["name"], ""),
-        Addr:     "0x" + util2.DecodeString(m["addr"], ""),
-        Indirect: util2.DecodeString(m["indirect"], ""),
-        Title:    util2.DecodeString(m["title"], ""),
+        Name:     util.DecodeString(m["name"], ""),
+        Addr:     "0x" + util.DecodeString(m["addr"], ""),
+        Indirect: util.DecodeString(m["indirect"], ""),
+        Title:    util.DecodeString(m["title"], ""),
         params:   e,
       }
 
-      if i, ok := util2.DecodeInt(v.Addr, 0); !ok {
+      if i, ok := util.DecodeInt(v.Addr, 0); !ok {
         return fmt.Errorf("failed to parse addr %q for %s", v.Addr, v.Name)
       } else {
         v.call = i
       }
 
-      if err := util2.IfMapEntry(m, "entry", v.Entry.decode); err != nil {
+      if err := util.IfMapEntry(m, "entry", v.Entry.decode); err != nil {
         return err
       }
 
-      if err := util2.IfMapEntry(m, "exit", v.Exit.decode); err != nil {
+      if err := util.IfMapEntry(m, "exit", v.Exit.decode); err != nil {
         return err
       }
 

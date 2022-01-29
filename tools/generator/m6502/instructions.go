@@ -44,14 +44,14 @@ func (i *Instructions) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
   } else if i, ok := e1.(int); ok {
     o.Value = strconv.Itoa(i)
   } else {
-    _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
-      _ = util.IfMapEntry(e, "value", func(v interface{}) error {
-        o.Value = util.DecodeString(v, "")
+    _ = util2.IfMap(e1, func(e map[interface{}]interface{}) error {
+      _ = util2.IfMapEntry(e, "value", func(v interface{}) error {
+        o.Value = util2.DecodeString(v, "")
         return nil
       })
 
-      return util.IfMapEntry(e, "notes", func(v interface{}) error {
-        return util.ForEachInterface(v, func(ae interface{}) error {
+      return util2.IfMapEntry(e, "notes", func(v interface{}) error {
+        return util2.ForEachInterface(v, func(ae interface{}) error {
           if i, ok := ae.(int); ok {
             note := n.GetId(i)
             if note != nil {
@@ -68,16 +68,16 @@ func (i *Instructions) decodeOpType(n *util.Notes, e1 interface{}) *OpcodeType {
 }
 
 func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}) {
-  _ = util.IfMap(e1, func(e map[interface{}]interface{}) error {
-    opcode := util.DecodeString(e["code"], "")
+  _ = util2.IfMap(e1, func(e map[interface{}]interface{}) error {
+    opcode := util2.DecodeString(e["code"], "")
     order, _ := strconv.ParseInt(opcode, 16, 32)
     op := &Opcode{
       Order:         int(order),
       Code:          opcode,
-      Op:            util.DecodeString(e["op"], defaultOp),
-      Addressing:    util.DecodeString(e["addressing"], ""),
+      Op:            util2.DecodeString(e["op"], defaultOp),
+      Addressing:    util2.DecodeString(e["addressing"], ""),
       Compatibility: util2.NewSortedMap().Decode(e["compatibility"]),
-      Colour:        util.DecodeString(e["colour"], ""),
+      Colour:        util2.DecodeString(e["colour"], ""),
     }
 
     if e1, exists := e["size"]; exists {
