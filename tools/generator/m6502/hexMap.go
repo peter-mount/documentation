@@ -4,7 +4,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/html"
-  strings2 "github.com/peter-mount/documentation/tools/util/strings"
+  strings2 "github.com/peter-mount/go-kernel/util/strings"
   "log"
   "sort"
   "strconv"

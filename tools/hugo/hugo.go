@@ -3,8 +3,8 @@ package hugo
 import (
   "context"
   "github.com/peter-mount/documentation/tools"
-  "github.com/peter-mount/documentation/tools/util/strings"
   util2 "github.com/peter-mount/go-kernel/util"
+  "github.com/peter-mount/go-kernel/util/strings"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
   "os"

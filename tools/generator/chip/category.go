@@ -2,7 +2,7 @@ package chip
 
 import (
   "fmt"
-  "github.com/peter-mount/documentation/tools/util/strings"
+  "github.com/peter-mount/go-kernel/util/strings"
 )
 
 type Category map[string]map[string]*Definition
