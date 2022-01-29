@@ -5,7 +5,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/walk"
+  "github.com/peter-mount/go-kernel/util/walk"
   "log"
 )
 

@@ -4,7 +4,7 @@ import (
   "bufio"
   "context"
   "github.com/peter-mount/documentation/tools/util"
-  "github.com/peter-mount/documentation/tools/util/walk"
+  "github.com/peter-mount/go-kernel/util/walk"
   "gopkg.in/yaml.v2"
   "io"
   "os"
