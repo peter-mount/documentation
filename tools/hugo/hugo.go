@@ -3,8 +3,8 @@ package hugo
 import (
   "context"
   "github.com/peter-mount/documentation/tools"
-  "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/strings"
+  util2 "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/task"
   "log"
   "os"
@@ -60,7 +60,7 @@ func (h *Hugo) run(_ context.Context) error {
   args = appendArg(args, *h.expired, "--buildExpired")
   args = appendArg(args, *h.future, "--buildFuture")
 
-  stdout := &util.LogStream{}
+  stdout := &util2.LogStream{}
   defer stdout.Close()
 
   cmd := exec.Command("hugo", args...)

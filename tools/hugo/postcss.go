@@ -2,7 +2,7 @@ package hugo
 
 import (
   "fmt"
-  "github.com/peter-mount/documentation/tools/util"
+  util2 "github.com/peter-mount/go-kernel/util"
   "log"
   "os"
   "os/exec"
@@ -47,7 +47,7 @@ func (p *PostCSS) Stop() {
 func (p *PostCSS) install() error {
   log.Println("Installing postcss plugins")
 
-  stdout := &util.LogStream{}
+  stdout := &util2.LogStream{}
   defer stdout.Close()
 
   //cmd := exec.Command("npm", "install", "autoprefixer")
@@ -65,7 +65,7 @@ func (p *PostCSS) install() error {
 func (p *PostCSS) uninstall() error {
   log.Println("Uninstalling postcss plugins")
 
-  stdout := &util.LogStream{}
+  stdout := &util2.LogStream{}
   defer stdout.Close()
 
   cmd := exec.Command("rm", "-rf", nodeModules)
