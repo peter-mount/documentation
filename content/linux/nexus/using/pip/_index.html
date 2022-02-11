@@ -1,0 +1,62 @@
+---
+type: "manual"
+title: "PyPi repository mirrors"
+linkTitle: "PIP for Python"
+description: "How to configure PIP use a PyPi repository mirror"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        Configuring PIP to use Nexus as a proxy is simple.
+    </p>
+    <p>
+        First ensure you've created the <a href="../../repos/pip/">PyPy proxy</a>.
+    </p>
+    <p>
+        Next, we need to edit or create <code>pip.conf</code> to hold the new index position.
+        This file can be in one of three locations:
+    </p>
+    <dl>
+        <dt>Global</dt>
+        <dd>
+            If it exists then <code>${XDG_CONFIG_DIRS}/pip.conf</code> will be loaded, followed by
+            <code>/etc/pip.conf</code>.
+        </dd>
+        <dt>User</dt>
+        <dd>
+            <code>${HOME}/.config/pip/pip.conf</code> for the specific user.
+            There is a legacy option of <code>${HOME}/.pip/pip.conf</code> which will be used if it exists.
+        </dd>
+        <dt>Site</dt>
+        <dd>For virtual environments then <code>${VIRTUAL_ENV}/pip.conf</code></dd>
+    </dl>
+    <h3>pip.conf</h3>
+    <p>
+        <code>pip.conf</code> should contain the following:
+    </p>
+{{< highlight go "linenos=inline" >}}
+[global]
+index = http://10.11.12.13:8081/repository/pypi-group/pypi
+index-url = http://10.11.12.13:8081/repository/pypi-group/simple
+{{< / highlight >}}
+    <p>
+        Where <code>10.11.12.13</code> is where you have deployed Nexus and
+        <code>pypi-proxy</code> is what you called your PyPi proxy.
+        If you've configured a group then use the group's name instead, e.g. <code>pypi-group</code>
+    </p>
+    <p>
+        Obviously if you've configured https and dns then use that and not port 8081.
+    </p>
+    <p>
+        Now any time you run <code>pip</code> it will use your proxy.
+    </p>
+    <h3>Further reading</h3>
+    <ul>
+        <li>
+            <a href="https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/pypi-repositories">PyPI Repositories</a> - SonaType Nexus 3
+        </li>
+        <li>
+            PIP <a href="https://pip.pypa.io/en/stable/topics/configuration/">Configuration</a> -
+            <a href="https://www.pypa.io/">Python Packaging Authority</a>
+        </li>
+    </ul>
+</div>

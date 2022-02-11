@@ -1,0 +1,136 @@
+---
+type: "manual"
+title: "PIP mirror"
+linkTitle: "PIP/PyPi"
+description: "How to configure a mirror for PIP"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        PIP is the package manager for Python and Nexus does support acting as a mirror.
+    </p>
+
+    <h2>Create blob store</h2>
+
+    <p>
+        Just like for <a href="../apt/">APT</a> and <a href="../npm/">NPM</a> we'll create a blobstore just for PIP.
+        This will be called <code>pip</code> to follow the same guidelines.
+    </p>
+    <ol>
+        <li>
+            Log in to Nexus and go to the admin page via the <i class="fa fa-cog"></i> icon in
+            the top nav bar.
+        </li>
+        <li>
+            Select blob store, then <strong><i class="fa fa-plus-circle"></i> Create blob store</strong>
+        </li>
+        <li>
+            Under Type select File
+        </li>
+        <li>
+            Under Name enter <code>pip</code>
+        </li>
+        <li>
+            Select <strong>Create blob store</strong> to create it.
+        </li>
+    </ol>
+
+    <h2>Create pip/pypi mirror</h2>
+    <ol>
+        <li>
+            Log in to Nexus and go to the admin page via the <i class="fa fa-cog"></i> icon in the top nav bar.
+        </li>
+        <li>
+            Select Repositories then the <strong><i class="fa fa-plus-circle"></i> Create Repository</strong>
+        </li>
+        <li>
+            Select <code>pypi (proxy)</code> as the repository type.
+        </li>
+        <li>
+            <p>
+                Now fill in the required fields.
+            </p>
+            <ol>
+                <li>
+                    For name enter <code>pypi-proxy</code>
+                </li>
+                <li>
+                    For Remote storage enter the repository url <code>https://pypi.org</code>
+                </li>
+                <li>
+                    For Blob store select the one you created earlier,
+                    <code>pip</code> if you are following my naming conventions.
+                </li>
+            </ol>
+        </li>
+        <li>
+            Once it's all filled in select <strong>Save</strong> and the Repositories list should now show it.
+        </li>
+    </ol>
+
+    <h2>Create pip/pypi group</h2>
+    <p>
+        This is optional. If you are going to just mirror the core pypi repository then you can skip this and just
+        use <code>pypi-proxy</code> directly.
+    </p>
+    <p>
+        However, Nexus supports grouping multiple repositories together with a group, where if it cannot find an
+        artefact in the first one it would check the next one.
+        This is seamless to the client as all it knows about is there's a single repository.
+    </p>
+    <p>
+        One use-case for this is if you have a hosted repository where you store your own private artefacts.
+        In this instance you'd create the proxy as above, then a pypi-hosted repository.
+        The group would then include both of them as if it's just one.
+    </p>
+    <p>
+        I'd advise you should create the group with just <code>pypi-proxy</code> present as then your <code>pip</code>
+        clients will use the group, and you can then seamlessly change the underlying proxies separately.
+        For example, using an alternate upstream pypi repository instead of the default one.
+        You can do the switch in nexus without changing any client.
+    </p>
+    <ol>
+        <li>
+            Log in to Nexus and go to the admin page via the <i class="fa fa-cog"></i> icon in the top nav bar.
+        </li>
+        <li>
+            Select Repositories then the <strong><i class="fa fa-plus-circle"></i> Create Repository</strong>
+        </li>
+        <li>
+            Select <code>pypi (group)</code> as the repository type.
+        </li>
+        <li>
+            <p>
+                Now fill in the required fields:
+            </p>
+            <ol>
+                <li>
+                    For name enter <code>pypi-group</code>
+                </li>
+                <li>
+                    Under member repositories you will see two lists.
+                    <p>
+                        On the left hand side select the npm repositories you want to be a member of this group
+                        and select <code>&gt;</code>.
+                        It should then appear on the right hand side.
+                    </p>
+                    <p>
+                        You can change the priority of the entries by selecting the repository name and clicking the up
+                        or down arrows.
+                        The higher a repository is in the list then they are checked first.
+                    </p>
+                </li>
+            </ol>
+        </li>
+        <li>
+            Once it's all filled in select <strong>Save</strong> and the Repositories list should now show
+            it.
+        </li>
+    </ol>
+
+    <h2>Using the mirror</h2>
+    <p>
+        Once you have configured your repositories, you can then now point <code>pip</code> to use it.
+        This is described in the <a href="../../using/">Using Repository mirrors</a> section.
+    </p>
+
+</div>

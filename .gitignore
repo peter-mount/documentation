@@ -21,6 +21,7 @@ node_modules
 .vscode
 /go_build_newsite_main_go
 build-toolset.sh
+run-toolset.sh
 public
 publish-deploy-uat.sh
 /static/static/gen/
