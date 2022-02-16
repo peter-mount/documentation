@@ -8,7 +8,7 @@ require (
 	github.com/chromedp/chromedp v0.7.4
 	github.com/gorilla/mux v1.7.2
 	github.com/microcosm-cc/bluemonday v1.0.16
-	github.com/peter-mount/go-kernel v1.1.1-0.20220129091939-4c1fe55bc7a4
+	github.com/peter-mount/go-kernel v1.2.0
 	github.com/xuri/excelize/v2 v2.4.1
 	gopkg.in/yaml.v2 v2.4.0
 )
