@@ -2,7 +2,6 @@ package telstar
 
 import (
   "bytes"
-  "context"
   "encoding/json"
   "fmt"
   "github.com/peter-mount/go-kernel/util/task"
@@ -10,7 +9,6 @@ import (
   "net/http"
   "net/http/cookiejar"
   "net/url"
-  "os"
 )
 
 // Service implements a bridge which updates a telstar server with generated documentation
@@ -35,17 +33,22 @@ func (s *Service) Start() error {
       return err
     }
     s.uri = u
+    /*
+       s.worker.AddPriorityTask(-1, func(ctx context.Context) error {
+         frame, err := s.GetFrame(PageId{PageNo: 9, FrameId: "a"})
+         if err != nil {
+           s.Printf("error %v", err)
+           return err
+         }
+         s.Printf("Frame: %v", frame)
+         os.Exit(0)
+         return nil
+       })
+    */
 
-    s.worker.AddPriorityTask(-1, func(ctx context.Context) error {
-      frame, err := s.GetFrame(PageId{PageNo: 9, FrameId: "a"})
-      if err != nil {
-        s.Printf("error %v", err)
-        return err
-      }
-      s.Printf("Frame: %v", frame)
-      os.Exit(0)
-      return nil
-    })
+    //walk.NewPathWalker().
+    //  Walk()
+
     return s.loginTelstar()
   }
   return nil

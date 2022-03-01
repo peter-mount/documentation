@@ -12,6 +12,7 @@ type Frame struct {
   HeaderText       string        `json:"header-text"`
   CacheId          string        `json:"cache-id"`
   Content          Content       `json:"content"`
+  FrameType        string        `json:"frame-type,omitempty"`
   Title            Content       `json:"title"`
   RoutingTable     []int         `json:"routing-table"`
   Cursor           bool          `json:"cursor"`
@@ -37,6 +38,42 @@ type Connection struct {
 type Content struct {
   Data string `json:"data"`
   Type string `json:"type"`
+}
+
+func NewFrame(pid PageId) *Frame {
+  parent := pid.PageNo / 10
+  childId := pid.PageNo * 10
+  return &Frame{
+    PID:        pid,
+    Visible:    true,
+    HeaderText: "[G]area51.dev[Y]",
+    FrameType:  "information",
+    RoutingTable: []int{
+      childId,     // 0 to first entry?
+      childId + 1, // 1 to sub-page 1
+      childId + 2, // 2 to sub-page 2
+      childId + 3, // 3 to sub-page 3
+      childId + 4, // 4 to sub-page 4
+      childId + 5, // 5 to sub-page 5
+      childId + 6, // 6 to sub-page 6
+      childId + 7, // 7 to sub-page 7
+      childId + 8, // 8 to sub-page 8
+      childId + 9, // 9 to sub-page 9
+      parent,      // Not sure which key this is for
+    },
+  }
+}
+
+func (f *Frame) SetTitle(t string) *Frame {
+  f.Title.Data = t
+  f.Title.Type = "markup"
+  return f
+}
+
+func (f *Frame) SetContent(t string) *Frame {
+  f.Content.Data = t
+  f.Content.Type = "markup"
+  return f
 }
 
 func (s *Service) GetFrame(pid PageId) (*Frame, error) {
