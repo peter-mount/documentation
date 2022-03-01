@@ -8,6 +8,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator/svg"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/pdf"
+  "github.com/peter-mount/documentation/tools/telstar"
   "github.com/peter-mount/go-kernel"
   "log"
 )
@@ -20,6 +21,7 @@ func main() {
     &chip.Chip{},
     &autodoc.Autodoc{},
     &svg.SVG{},
+    &telstar.Service{},
     // Core modules. Have these after the generators so they pick up the new content
     &hugo.Hugo{},
     &pdf.PDF{},
