@@ -18,7 +18,7 @@ func DecodeFrame(s string, rowBegin, rowEnd, columnBegin, columnEnd int, trimEnd
     rd := data[row*40 : (row+1)*40]
     rd = rd[columnBegin : columnEnd+1]
     if trimEnds {
-      rd = strings.TrimSpace(rd)
+      rd = strings.TrimRight(rd, " ")
     }
 
     r = append(r, rd)
