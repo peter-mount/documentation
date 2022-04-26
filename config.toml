@@ -138,6 +138,12 @@ enable = false
         url = "https://twitter.com/peter_mount"
         icon = "fab fa-twitter"
         desc = "Follow us on Twitter to get the latest news!"
+[[params.links.user]]
+        name ="Mastodon"
+        url = "https://area51.social/@peter"
+        rel = "me"
+        icon = "fab fa-mastodon"
+        desc = "Follow us on Mastodon to get the latest news!"
 #[[params.links.user]]
 #        name = "Stack Overflow"
 #        url = "https://example.org/stack"

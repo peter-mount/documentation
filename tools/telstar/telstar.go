@@ -4,53 +4,37 @@ import (
   "bytes"
   "encoding/json"
   "fmt"
+  "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/telstar/frame"
   "github.com/peter-mount/go-kernel/util/task"
+  "io/ioutil"
   "log"
   "net/http"
-  "net/http/cookiejar"
   "net/url"
 )
 
 // Service implements a bridge which updates a telstar server with generated documentation
 type Service struct {
-  enabled *string    `kernel:"flag,telstar,Update telstar instance"`
-  worker  task.Queue `kernel:"worker"`
-  cookies http.CookieJar
-  uri     *url.URL
+  enabled   *string              `kernel:"flag,telstar,Update telstar instance"`
+  worker    task.Queue           `kernel:"worker"`
+  generator *generator.Generator `kernel:"inject"` // Generator
+  cookies   http.CookieJar
+  uri       *url.URL
 }
 
 func (s *Service) Start() error {
-  if *s.enabled != "" {
-    // Setup cookie jar, parse parameter url then login to the remote service
-    jar, err := cookiejar.New(nil)
-    if err != nil {
-      return err
-    }
-    s.cookies = jar
+  s.generator.Register("telstar",
+    task.Of().
+      Then(s.loginTelstar))
 
+  if *s.enabled != "" {
     u, err := url.Parse(*s.enabled)
     if err != nil {
       return err
     }
     s.uri = u
-    /*
-       s.worker.AddPriorityTask(-1, func(ctx context.Context) error {
-         frame, err := s.GetFrame(PageId{PageNo: 9, FrameId: "a"})
-         if err != nil {
-           s.Printf("error %v", err)
-           return err
-         }
-         s.Printf("Frame: %v", frame)
-         os.Exit(0)
-         return nil
-       })
-    */
-
-    //walk.NewPathWalker().
-    //  Walk()
-
-    return s.loginTelstar()
   }
+
   return nil
 }
 
@@ -111,4 +95,27 @@ func (s *Service) Call(method string, payload interface{}, responseHandler Respo
   }
 
   return nil
+}
+
+func (s *Service) GetFrame(pid frame.PageId) (*frame.Frame, error) {
+  s.Printf("GetFrame %d%s", pid.PageNo, pid.FrameId)
+
+  var f *frame.Frame
+
+  if err := s.Call("GET",
+    nil,
+    func(resp *http.Response) error {
+
+      body, err := ioutil.ReadAll(resp.Body)
+      if err != nil {
+        return err
+      }
+      f = &frame.Frame{PID: pid}
+      return json.Unmarshal(body, f)
+    },
+    "frame/%d%s", pid.PageNo, pid.FrameId); err != nil {
+    return nil, err
+  }
+
+  return f, nil
 }

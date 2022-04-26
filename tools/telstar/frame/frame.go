@@ -1,10 +1,4 @@
-package telstar
-
-import (
-  "encoding/json"
-  "io/ioutil"
-  "net/http"
-)
+package frame
 
 type Frame struct {
   PID              PageId        `json:"pid"`
@@ -74,27 +68,4 @@ func (f *Frame) SetContent(t string) *Frame {
   f.Content.Data = t
   f.Content.Type = "markup"
   return f
-}
-
-func (s *Service) GetFrame(pid PageId) (*Frame, error) {
-  s.Printf("GetFrame %d%s", pid.PageNo, pid.FrameId)
-
-  var frame *Frame
-
-  if err := s.Call("GET",
-    nil,
-    func(resp *http.Response) error {
-
-      body, err := ioutil.ReadAll(resp.Body)
-      if err != nil {
-        return err
-      }
-      frame = &Frame{PID: pid}
-      return json.Unmarshal(body, frame)
-    },
-    "frame/%d%s", pid.PageNo, pid.FrameId); err != nil {
-    return nil, err
-  }
-
-  return frame, nil
 }

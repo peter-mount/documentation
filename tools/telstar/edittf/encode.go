@@ -2,7 +2,12 @@ package edittf
 
 import "fmt"
 
-func Encode(frame []string) string {
+// PadLines ensures the slice is 25 entries long & each entry is 40 characters, padded by spaces as required
+func PadLines(frame []string) []string {
+  if len(frame) > 25 {
+    frame = frame[:25]
+  }
+
   if len(frame) < 25 {
     // Add row to start & end so that we have 25 rows
     frame = append([]string{""}, frame...)
@@ -15,6 +20,13 @@ func Encode(frame []string) string {
   for r, s := range frame {
     frame[r] = (s + "                                        ")[:40]
   }
+
+  return frame
+}
+
+// Encode a frame into edit.tf format
+func Encode(frame []string) string {
+  frame = PadLines(frame)
 
   b64 := make([]byte, 1167)
 
