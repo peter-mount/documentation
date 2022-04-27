@@ -1,0 +1,243 @@
+---
+type: "manual"
+title: "MC68302 Integrated Multiprotocol Processor"
+linkTitle: "68302 IMP"
+weight: 68302
+description: MC68302 Integrated Multiprotocol Processor
+chip:
+  - name: "MC68302-PGA"
+    category: "motorola"
+    title: "MC68302 Integrated Multiprotocol Processor"
+    type: "pga"
+    pinCount: 13
+    label: "Motorola"
+    subLabel: "MC68302"
+    source: "mc68302_motorola.pdf"
+    pins:
+        "A1": "A(14)"
+        "A2": "A(21)"
+        "A3": "A(22)"
+        "A4": "GND"
+        "A5": "D(15)"
+        "A6": "D(12)"
+        "A7": "GND"
+        "A8": "D(9)"
+        "A9": "D(7)"
+        "A10": "D(6)"
+        "A11": "GND"
+        "A12": "D(3)"
+        "A13": "RXD(1)"
+        "B1": "A(11)"
+        "B2": "A(18)"
+        "B3": "A(19)"
+        "B4": "A(20)"
+        "B5": "V(DD)"
+        "B6": "D(13)"
+        "B7": "D(10)"
+        "B8": "D(8)"
+        "B9": "D(5)"
+        "B10": "D(2)"
+        "B11": "D(0)"
+        "B12": "NOT(CTS(3))"
+        "B13": "NOT(CTS(2))"
+        "C1": "A(10)"
+        "C2": "A(13)"
+        "C3": "A(17)"
+        "C4": "GND"
+        "C5": "A(23)"
+        "C6": "D(14)"
+        "C7": "D(11)"
+        "C8": "V(DD)"
+        "C9": "D(4)"
+        "C10": "D(1)"
+        "C11": "NOT(CD(1))"
+        "C12": "RCLK(2)"
+        "C13": "NOT(RTS(2))"
+        "D1": "A(7)"
+        "D2": "GND"
+        "D3": "A(12)"
+        "D4": "A(15)"
+        "D5": "A(16)"
+        "D9": "RXD(2)"
+        "D10": "NOT(CTS(1))"
+        "D11": "TCLK(2)"
+        "D12": "GND"
+        "D13": "V(DD)"
+        "E1": "A(6)"
+        "E2": "A(8)"
+        "E3": "A(9)"
+        "E4": "V(DD)"
+        "E10": "TXD(2)"
+        "E11": "NOT(CD(2))"
+        "E12": "SDS(2)"
+        "E13": "RXD(3)"
+        "F1": "GND"
+        "F2": "A(4)"
+        "F3": "A(5)"
+        "F11": "TXD(3)"
+        "F12": "RCLK(3)"
+        "F13": "TCLK(3)"
+        "G1": "A(1)"
+        "G2": "A(3)"
+        "G3": "A(2)"
+        "G11": "PAI(2)"
+        "G12": "NOT(DREQ)"
+        "G13": "GND"
+        "H1": "FC(0)"
+        "H2": "V(DD)"
+        "H3": "FC(1)"
+        "H11": "NOT(FRZ)"
+        "H12": "NOT(DONE)"
+        "H13": "NOT(DACK)"
+        "J1": "FC(2)"
+        "J2": "NOT(CS(1))"
+        "J3": "GND"
+        "J4": "PB(8)"
+        "J10": "GND"
+        "J11": "BRG(1)"
+        "J12": "NC(3)"
+        "J13": "DISCPU"
+        "K1": "NOT(CS(0))"
+        "K2": "NOT(RMC)"
+        "K3": "IAC"
+        "K4": "PB(9)"
+        "K5": "NOT(WDOG)"
+        "K9": "NOT(DTAK)"
+        "K10": "V(DD)"
+        "K11": "TXD(1)"
+        "K12": "NOT(RTS(1))"
+        "K13": "BUSW"
+        "L1": "NOT(CS(2))"
+        "L2": "PB(11)"
+        "L3": "GND"
+        "L4": "NOT(TOUT(1))"
+        "L5": "NOT(IACK(6))"
+        "L6": "NOT(LDS)"
+        "L7": "XTAL"
+        "L8": "NOT(IPL(0))"
+        "L9": "NOT(AVEC)"
+        "L10": "NC(1)"
+        "L11": "NOT(BCLR)"
+        "L12": "TCLK(1)"
+        "L13": "NOT(CD(3))"
+        "M1": "NOT(CS(3))"
+        "M2": "NOT(TOUT(2))"
+        "M3": "TIN(2)"
+        "M4": "V(DD)"
+        "M5": "NOT(IACK(7))"
+        "M6": "NOT(AS)"
+        "M7": "GND"
+        "M8": "CLK(0)"
+        "M9": "NOT(BERR)"
+        "M10": "NOT(BR)"
+        "M11": "NOT(BGACK)"
+        "M12": "NOT(BG)"
+        "M13": "NOT(RTS(3))"
+        "N1": "PB(10)"
+        "N2": "TIN(1)"
+        "N3": "NOT(IACK(1))"
+        "N4": "GND"
+        "N5": "NOT(UDS)"
+        "N6": "R/NOT(W)"
+        "N7": "EXTAL"
+        "N8": "V(DD)"
+        "N9": "NOT(IPL(1))"
+        "N10": "NOT(IPL(2))"
+        "N11": "NOT(RESET)"
+        "N12": "NOT(HALT)"
+        "N13": "RCLK(1)"
+---
+
+<p>
+    The MC68302 Integrated Multiprotocol Processor (IMP) consists of an M68000 microprocessor core
+    and a communications processor.
+</p>
+
+<p>
+The features of the IMP are as follows:
+</p>
+<ul>
+    <li>On-Chip HCMOS MC68000/MC68008 Core Supporting a 16- or 8-Bit M68000 Family System</li>
+    <li>IB Including:
+        <ul>
+            <li>Independent Direct Memory Access (IDMA) Controller with Three Handshake Signals:
+                <span class="not">DREQ</span>, <span class="not">DACK</span>, and <span class="not">DONE</span>
+            </li>
+            <li>Interrupt Controller with Two Modes of Operation</li>
+            <li>Parallel Input/Output (I/O) Ports, Some with Interrupt Capability</li>
+            <li>On-Chip 1152-Byte Dual-Port RAM</li>
+            <li>Three Timers Including a Watchdog Timer</li>
+            <li>Four Programmable Chip-Select Lines with Wait-State Generator Logic</li>
+            <li>Programmable Address Mapping of the Dual-Port RAM and IMP Registers</li>
+            <li>On-Chip Clock Generator with Output Signal</li>
+            <li>System Control:
+                <ul>
+                    <li>Bus Arbitration Logic with Low-Interrupt Latency Support</li>
+                    <li>System Status and Control Logic</li>
+                    <li>Disable CPU Logic (M68000)</li>
+                    <li>Hardware Watchdog</li>
+                    <li>Low-Power (Standby) Modes</li>
+                    <li>Freeze Control for Debugging</li>
+                    <li>DRAM Refresh Controller</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>CP Including:
+        <ul>
+            <li>Main Controller (RISC Processor)</li>
+            <li>Three Independent Full-Duplex Serial Communications Controllers (SCCs)</li>
+            <li>Supporting Various Protocols:
+                <ul>
+                    <li>High-Level/Synchronous Data Link Control (HDLC/SDLC)</li>
+                    <li>Universal Asynchronous Receiver Transmitter (UART)</li>
+                    <li>Binary Synchronous Communication (BISYNC)</li>
+                    <li>Synchronous/Asynchronous Digital Data Communications Message Protocol (DDCMP)</li>
+                    <li>Transparent Modes</li>
+                    <li>V.110 Rate Adaption</li>
+                </ul>
+            </li>
+            <li>Six Serial DMA Channels for the Three SCCs</li>
+            <li>Flexible Physical Interface Accessible by SCCs Including:
+                <ul>
+                    <li>Motorola Interchip Digital Link (IDL)</li>
+                    <li>General Circuit Interface (GCI, also known as IOM<sup>3</sup>-2)</li>
+                    <li>Pulse Code Modulation (PCM) Highway Interface</li>
+                    <li>Nonmultiplexed Serial Interface (NMSI) Implementing Standard Modem Signals</li>
+                </ul>
+            </li>
+            <li>SCP for Synchronous Communication</li>
+            <li>Two Serial Management Controllers (SMCs) To Support IDL and GCI Auxiliary Channels</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>16/8 bit operation</h3>
+<p>
+    The MC68302 can operate either in the full MC68000 mode with a 16-bit data bus or in the
+    MC68008 mode with an 8-bit data bus by tying the bus width (BUSW) pin low.
+</p>
+<p>
+    <span class="not">UDS</span>/A<sub>0</sub> functions as A<sub>0</sub> and
+    <span class="not">LDS</span>/<span class="not">DS</span> functions as <span class="not">DS</span> in the MC68008
+    mode.
+</p>
+<h4>NOTE</h4>
+<p>
+    The BUSW pin is static and is not intended to be used for dynamic bus sizing.
+    If the state of BUSW is changed during operation of the MC68302, erratic operation may occur.
+</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <img src="/static/chipref/motorola/MC68302-PGA.svg"/>
+        </div>
+    </div>
+</div>
+
+<h3>Notes:</h3>
+<p>
+    There are PQFT and TQFP versions of this chip but the pin numbers do not match up with the datasheet
+    so they have been left out until another source is found.
+</p>
