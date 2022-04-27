@@ -143,33 +143,42 @@ func (c *Chip) extractChipDefTask(ctx context.Context) error {
         FileInfo:    ctx.Value("fileInfo").(os.FileInfo),
       }
 
-      if err := util.IfMap(m["pins"], func(m map[interface{}]interface{}) error {
-        for pinId, label := range m {
-          key, ok := util.DecodeInt(pinId, 0)
-          if !ok {
-            return fmt.Errorf("%s invalid Pin \"%s\"", v.Name, pinId)
-          }
-          if _, exists := v.Pins[key]; exists {
-            return fmt.Errorf("%s pin %d already defined", v.Name, key)
-          }
-          v.Pins[key] = label.(string)
+      if v.Type == "pga" {
+        if err := util.IfMap(m["pins"], func(m map[interface{}]interface{}) error {
+          return pgaDecodePins(v, m)
+        }); err != nil {
+          return err
         }
-        return nil
-      }); err != nil {
-        return err
-      }
-
-      // Ensure we have an entry for each pin
-      for pin := 1; pin <= pinCount; pin++ {
-        if _, exists := v.Pins[pin]; !exists {
-          v.Pins[pin] = "Undefined()"
-          log.Printf("%s Pin %d is missing", v.Name, pin)
+      } else {
+        // For non-pga check pins are present
+        if err := util.IfMap(m["pins"], func(m map[interface{}]interface{}) error {
+          for pinId, label := range m {
+            key, ok := util.DecodeInt(pinId, 0)
+            if !ok {
+              return fmt.Errorf("%s invalid Pin \"%s\"", v.Name, pinId)
+            }
+            if _, exists := v.Pins[key]; exists {
+              return fmt.Errorf("%s pin %d already defined", v.Name, key)
+            }
+            v.Pins[key] = label.(string)
+          }
+          return nil
+        }); err != nil {
+          return err
         }
-      }
 
-      // Fail if counts don't match, can be a mis-labeled entry
-      if len(v.Pins) != pinCount {
-        return fmt.Errorf("%s pin count missmatch, expecting %d got %d", v.Name, pinCount, len(v.Pins))
+        // Ensure we have an entry for each pin
+        for pin := 1; pin <= pinCount; pin++ {
+          if _, exists := v.Pins[pin]; !exists {
+            v.Pins[pin] = "Undefined()"
+            log.Printf("%s Pin %d is missing", v.Name, pin)
+          }
+        }
+
+        // Fail if counts don't match, can be a mis-labeled entry
+        if len(v.Pins) != pinCount {
+          return fmt.Errorf("%s pin count missmatch, expecting %d got %d", v.Name, pinCount, len(v.Pins))
+        }
       }
 
       // verify chip is correct
@@ -201,6 +210,11 @@ func (c *Chip) extractChipDefTask(ctx context.Context) error {
           return fmt.Errorf("%s lccc must be divisible by 4, got %d", v.Name, pinCount)
         }
         v.handler = qfp
+      case "pga":
+        if pinCount < 2 {
+          return fmt.Errorf("%s pga must be >= 2, got %d", v.Name, pinCount)
+        }
+        v.handler = pga
       default:
         return fmt.Errorf("%s unsupported chip type \"%s\"", v.Name, v.Type)
       }

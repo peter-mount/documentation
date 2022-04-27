@@ -22,6 +22,22 @@ func (e *Element) Y(v int) *Element {
   return e.AttrInt("y", v)
 }
 
+func (e *Element) X1(v int) *Element {
+  return e.AttrInt("x1", v)
+}
+
+func (e *Element) Y1(v int) *Element {
+  return e.AttrInt("y1", v)
+}
+
+func (e *Element) X2(v int) *Element {
+  return e.AttrInt("x2", v)
+}
+
+func (e *Element) Y2(v int) *Element {
+  return e.AttrInt("y2", v)
+}
+
 func (e *Element) ClipPath() *Element {
   return e.Element("clipPath")
 }
@@ -94,4 +110,8 @@ func (e *Element) Point(x, y int) *Element {
 
 func (e *Element) Rect() *Element {
   return e.Element("rect")
+}
+
+func (e *Element) Line() *Element {
+  return e.Element("line")
 }
