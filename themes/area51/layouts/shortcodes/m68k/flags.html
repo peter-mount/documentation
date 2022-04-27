@@ -1,0 +1,31 @@
+<tr>
+    <th class="align-top">Flags:</th>
+    <td class="bnone text-left align-top font-normal">
+        <table class="memoryMap4">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>N</th>
+                <th>Z</th>
+                <th>V</th>
+                <th>C</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="brtb">{{- with $.Get "X"}}*{{else}}U{{end -}}</td>
+                <td class="brtb">{{- with $.Get "N"}}*{{else}}U{{end -}}</td>
+                <td class="brtb">{{- with $.Get "Z"}}*{{else}}U{{end -}}</td>
+                <td class="brtb">{{- with $.Get "V"}}*{{else}}U{{end -}}</td>
+                <td class="brtb">{{- with $.Get "C"}}*{{else}}U{{end -}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div>X {{with $.Get "X"}}{{.}}{{else}}Undefined{{end -}}</div>
+        <div>N {{with $.Get "N"}}{{.}}{{else}}Undefined{{end -}}</div>
+        <div>Z {{with $.Get "Z"}}{{.}}{{else}}Undefined{{end -}}</div>
+        <div>V {{with $.Get "V"}}{{.}}{{else}}Undefined{{end -}}</div>
+        <div>C {{with $.Get "C"}}{{.}}{{else}}Undefined{{end -}}</div>
+        {{.Inner}}
+    </td>
+</tr>

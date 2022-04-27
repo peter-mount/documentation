@@ -1,0 +1,9 @@
+{{- $s := slice -}}
+{{- with $.Get "byte"}}{{$s = $s | append "Byte"}}{{end -}}
+{{- with $.Get "word"}}{{$s = $s | append "Word"}}{{end -}}
+{{- with $.Get "long"}}{{$s = $s | append "Long"}}{{end -}}
+
+<tr>
+    <th class="align-top">Data Size</th>
+    <td class="bnone text-left align-top font-normal">{{delimit $s ", "}}</td>
+</tr>

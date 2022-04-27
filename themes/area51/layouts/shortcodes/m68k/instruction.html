@@ -1,0 +1,110 @@
+{{- define "m68klookuptable" -}}
+<table class="memoryMap">
+    <thead>
+    <tr>
+        <th>{{$.field}}</th><th colspan="7">Operation</th>
+    </tr>
+    </thead>
+    <tbody>
+        {{- range $k, $v := $ -}}
+        {{- if ne $k "field" -}}
+        <tr><td class="align-top">{{$k}}</td><td class="text-left align-top">{{$v}}</td></tr>
+        {{- end -}}
+        {{- end -}}
+    </tbody>
+</table>
+{{- end -}}
+
+{{- with $.Get "def" -}}
+{{- $scratch := newScratch -}}
+<tr><th class="bnone text-left" colspan="2">Format:</th></tr>
+<tr><td class="bnone text-left" colspan="2">
+    <table class="memoryMap4">
+        <thead>
+        <tr>
+            <th>15</th><th>14</th><th>13</th><th>12</th><th>11</th><th>10</th><th>9</th><th>8</th>
+            <th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {{- range split . "" -}}
+            {{- if eq . "0" -}}<td class="brtb">0</td>
+            {{- else if eq . "1" -}}<td class="brtb">1</td>
+            {{- else if eq . "d" -}}<td class="brtb green" colspan="3">Register</td>
+            {{- else if eq . "E" -}}
+            <td class="brtb orange" colspan="3">E/A Mode</td>
+            <td class="brtb green" colspan="3">E/A Register</td>
+            {{- else if eq . "M" -}}<td class="brtb orange">R/M</td>
+            {{- else if eq . "m" -}}<td class="brtb orange">O/M</td>
+            {{- else if eq . "R" -}}<td class="brtb green" colspan="3">Rx</td>
+            {{- else if eq . "r" -}}<td class="brtb green" colspan="3">Ry</td>
+            {{- else if eq . "S" -}}<td class="brtb blue" colspan="2">Size</td>
+            {{- else -}}<td class="brtb orange">{{.}}</td>
+            {{- end -}}
+            {{- $scratch.Set . 1 -}}
+            {{- end -}}
+        </tr>
+        </tbody>
+    </table>
+</td></tr>
+
+{{- with $scratch.Get "R" -}}
+<tr>
+    <th class="bnone text-right align-top"></th>
+    <td class="bnone text-left align-top font-normal">
+        <strong>Rx</strong> the source register.
+    </td>
+</tr>
+{{- end -}}
+
+{{- with $scratch.Get "r" -}}
+<tr>
+    <th class="bnone text-right align-top"></th>
+    <td class="bnone text-left align-top font-normal">
+        <strong>Ry</strong> the destination register.
+    </td>
+</tr>
+{{- end -}}
+
+{{- with $scratch.Get "M" -}}
+<tr>
+    <th class="bnone text-right align-top"></th>
+    <td class="bnone text-left align-top font-normal">
+        <strong>R/M</strong> Specifies the operand addressing mode:
+        {{- template "m68klookuptable" (dict "field" "R/M" "0" "Uses data registers" "1" "Uses address registers or memory") -}}
+    </td>
+</tr>
+{{- end -}}
+
+{{- with $scratch.Get "m" -}}
+<tr>
+    <th class="bnone text-right align-top"></th>
+    <td class="bnone text-left align-top font-normal">
+        <strong>O/M</strong> the operation Mode:
+        {{- template "m68klookuptable" (dict "field" "O/M" "0" "Result into register" "1" "Result into address") -}}
+    </td>
+</tr>
+{{- end -}}
+
+{{- with $scratch.Get "S" -}}
+<tr>
+    <th class="bnone text-right align-top"></th>
+    <td class="bnone text-left align-top font-normal">
+        <strong>Size</strong> the size of the operation:
+        {{- template "m68klookuptable" (dict "field" "Size" "00" "Byte" "01" "Word" "10" "Long") -}}
+    </td>
+</tr>
+{{- end -}}
+
+{{- with $scratch.Get "E" -}}
+<tr>
+    <th class="bnone text-right align-top"></th>
+    <td class="bnone text-left align-top font-normal">
+        <strong>O/M</strong> the operation Mode:
+        {{- template "m68klookuptable" (dict "field" "O/M" "0" "Result into register" "1" "Result into address") -}}
+    </td>
+</tr>
+{{- end -}}
+
+{{- end -}}

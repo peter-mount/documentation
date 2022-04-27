@@ -397,6 +397,14 @@ table.diskMap {
                 }
             }
 
+            td.font-normal {
+                font-size: 100% !important;
+            }
+
+            td.align-top {
+                vertical-align: top;
+            }
+
             td:first-child,
             td.blrtb,
             td.blrt,
