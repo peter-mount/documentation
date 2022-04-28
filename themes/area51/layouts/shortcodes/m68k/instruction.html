@@ -33,10 +33,26 @@
             {{- else if eq . "1" -}}<td class="brtb">1</td>
             {{- else if eq . "d" -}}<td class="brtb green" colspan="3">Register</td>
             {{- else if eq . "E" -}}
-            <td class="brtb orange" colspan="3">E/A Mode</td>
-            <td class="brtb green" colspan="3">E/A Register</td>
+            <td class="brtb subTable" colspan="6">
+                <table class="generic subTable">
+                    <tr><td colspan="2">Effective Address</td></tr>
+                    <tr><td class="brtb orange">Mode</td>
+            <td class="brtb green">Register</td></tr>
+                </table>
+            </td>
+            <!-- td class="brtb orange" colspan="3">E/A Mode</td>
+            <td class="brtb green" colspan="3">E/A Register</td -->
             {{- else if eq . "M" -}}<td class="brtb orange">R/M</td>
-            {{- else if eq . "m" -}}<td class="brtb orange">O/M</td>
+            {{- else if eq . "m" -}}
+            <td class="brtb subTable" colspan="3">
+                <table class="generic subTable">
+                    <tr><td colspan="3">Op Mode</td></tr>
+                    <tr>
+                        <td class="brtb orange">Dir</td>
+                        <td class="brtb blue" colspan="2">Size</td>
+                    </tr>
+                </table>
+            </td>
             {{- else if eq . "R" -}}<td class="brtb green" colspan="3">Rx</td>
             {{- else if eq . "r" -}}<td class="brtb green" colspan="3">Ry</td>
             {{- else if eq . "S" -}}<td class="brtb blue" colspan="2">Size</td>
@@ -93,16 +109,6 @@
     <td class="bnone text-left align-top font-normal">
         <strong>Size</strong> the size of the operation:
         {{- template "m68klookuptable" (dict "field" "Size" "00" "Byte" "01" "Word" "10" "Long") -}}
-    </td>
-</tr>
-{{- end -}}
-
-{{- with $scratch.Get "E" -}}
-<tr>
-    <th class="bnone text-right align-top"></th>
-    <td class="bnone text-left align-top font-normal">
-        <strong>O/M</strong> the operation Mode:
-        {{- template "m68klookuptable" (dict "field" "O/M" "0" "Result into register" "1" "Result into address") -}}
     </td>
 </tr>
 {{- end -}}

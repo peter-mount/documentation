@@ -1,0 +1,50 @@
+---
+type: "manual"
+title: "ADD"
+linkTitle: "ADD"
+tags:
+  - 68000 instruction
+m68k:
+  operation: "Source + Destination \\longrightarrow Destination"
+  asm:
+    - "ADD ea, Dn"
+    - "ADD Dn, ea"
+  size:
+    - Byte
+    - Word
+    - Long
+  flags:
+    "x": "Set the same as the carry bit"
+---
+
+<table class="memoryMap4">
+  {{< m68k/block title="Operation" >}}
+  \(Source + Destination + X \longrightarrow Destination\)
+  {{< /m68k/block >}}
+
+  {{< m68k/block title="Syntax" >}}
+  ADD ea, Dn<br/>
+  ADD Dn, ea<br/>
+  {{< /m68k/block >}}
+
+  {{< m68k/size byte="1" word="1" long="1" >}}
+
+  {{< m68k/block title="Description" >}}
+  <p>
+    Adds the source operand to the destination operand using binary addition and stores the result in the destination location.
+    The size of the operation may be specified as byte, word, or long.
+    The mode of the instruction indicates which operand is the source and which is the destination, as well as the operand size.
+  </p>
+  {{< /m68k/block >}}
+
+  {{< m68k/flags
+  X="Set the same as the carry bit"
+  N="Set if the result is negative; cleared otherwise"
+  Z="Cleared if the result is nonzero; set if zero"
+  V="Set if an overflow occurs; cleared otherwise"
+  C="Set if a carry is generated; cleared otherwise"
+  >}}
+
+  {{< m68k/instruction def="1101dmE">}}
+
+</table>

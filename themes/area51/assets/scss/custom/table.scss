@@ -598,3 +598,45 @@ tr.undocumented {
         font-style: italic;
     }
 }
+
+/*
+ * subtables, embedding within another one.
+ *
+ * e.g. table.memoryMap4 - in a TD set this class then another table with
+ * generic & subTable classes then the layout will have the correct borders
+ */
+td.subTable {
+    /* Ensure no padding on the cell */
+    padding: 0;
+
+    table.subTable {
+        /* Remove outer border on table, if any */
+        border: 0;
+        width: 100%;
+
+        /* Remove outer borders on cells so there's no thick lines */
+        tbody {
+            tr {
+                td:first-child {
+                    border-left: 0;
+                }
+
+                td:last-child {
+                    border-right: 0;
+                }
+            }
+
+            tr:first-child {
+                td {
+                    border-top: 0;
+                }
+            }
+
+            tr:last-child {
+                td {
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
