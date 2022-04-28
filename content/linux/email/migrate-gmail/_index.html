@@ -1,0 +1,136 @@
+---
+type: "manual"
+title: "Migrate from Gmail"
+linkTitle: "Migrate from Gmail"
+description: "How to migrate from Gmail and restore the email folders"
+categories:
+    - linux
+---
+<p>
+    These notes describes how to extract email from a GMail account (standard GMail or Google Workspace)
+    and restore them with the emails organised into folders as they were within GMail.
+</p>
+
+<div class="alert-info">
+    Be aware, a downside of this is that if an email has multiple labels in GMail then when this process completes
+    then there will be multiple copies of it, using up more disk space than you might be expecting.
+</div>
+
+<p>
+    There are times you might want to migrate away from Google's GMail service.
+</p>
+<p>
+    For example, at the time of writing a major reason is if you have a private Google Workspace instance which was free
+    when you originally set it up.
+    Google are going to start charging for those instances on a per-account so unless you can afford it you can archive
+    your email and optionally upload them to a new service.
+</p>
+
+<h2>Exporting from GMail</h2>
+<p>
+    Exporting your account data is simple.
+    Head over to <a href="https://takeout.google.com/" rel="nofollow">https://takeout.google.com/</a> whilst logged in
+    to
+    Google.
+</p>
+<p>
+    If you are logged into multiple accounts you might need to switch to the one you want to export once on that page
+    via
+    your avatar at the top right of the page.
+</p>
+<p>
+    On that page you will see most of the options pre-selected.
+    The first one is normally unselected due to its size.
+    You can either accept the defaults or, if you just want one like email or a custom set, select <code>Deselect
+    all</code>
+    then select the ones you want.
+    For this exercise you want <code>Mail</code> selected.
+</p>
+<p>
+    Select <code>Next</code> and you are presented with the delivery method.
+    Here keep the default <code>Export once</code> and select <code>Create export</code>.
+</p>
+<p>
+    Now wait. This can take some time, even a day or two, depending on how big your export is going to be.
+</p>
+<p>
+    Once it's done you will receive an email on that account telling you it's ready and a link to download it.
+    You'll get a few days to download the extract.
+</p>
+<div class="alert-info">
+    An issue here is that, if that account is busy you may not get all emails received after the extract request
+    included
+    in the export.
+    Sadly there's not much you can do here other than keeping track of anything important during that time and
+    forwarding them manually or saving them.
+</div>
+
+<h2>Handling the export</h2>
+<p>
+    Once you have received the notification, download the generated Zip archive.
+    If the archive is larger than 2Gb it will be split into multiple files, so you have to download all of them.
+    I suggest doing this in am empty directory.
+</p>
+<p>
+    Next extract the files from the archive. You should get a new <code>Takeout</code> directory.
+</p>
+<p>
+    Depending on what you extracted, Mail should be inside <code>Takeout/Mail</code> as a <code>.mbox</code> file.
+    Copy these to a new empty directory which you will use as the source for the next step.
+</p>
+
+<h2>Recreating email folders</h2>
+
+<div class="alert-warning">
+    Be careful here that you do not accidentally overwrite anything.
+    The steps below are written so that your downloaded archive is untouched, as it is effectively your backup of all
+    of your email!
+</div>
+
+<p>
+    With Gmail there's actually no concept of a folder containing your emails.
+    It's all done with labels.
+    So, if you import this into an email client you will just get a single monolithic folder with every email within it.
+    Not what you were expecting.
+</p>
+<p>
+    All is not lost however as Gmail stores an emails labels as a non-standard <code>X-Gmail-Labels</code> header.
+</p>
+
+<p>
+    To fix this there's a handy python script called <code>gmail-mboxsplitter</code>.
+</p>
+<p>
+    Create a new empty folder and inside that clone its repository:
+</p>
+{{< highlight go "linenos=inline" >}}git clone https://github.com/f00b4r0/gmail-mboxsplitter.git{{< / highlight >}}
+<p>
+    Next create a subdirectory next to this called <code>src</code> and copy the <code>.mbox</code> file extracted into
+    it.
+    If there's multiple files then copy them all.
+    For my first run it was called <code>All mail Including Spam and Trash.mbox</code>.
+    In the end this directory should only contain mbox files and nothing else.
+</p>
+<p>
+    Now create another subdirectory.
+    This will be where we will create the new mbox files, one per folder.
+    Move into this new blank directory and run for each <code>.mbox</code> file under <code>src</code>:
+</p>
+{{< highlight go "linenos=inline" >}}
+../gmail-mboxsplitter/mbox_split.py --infile ../src/All\ mail\ Including\ Spam\ and\ Trash.mbox
+{{< / highlight >}}
+<p>
+    Now wait. The script will process each email in that <code>.mbox</code> file and write it to each new mbox, one for
+    each label.
+</p>
+<p>
+    Depending on how large your old mailbox is it can take some time.
+</p>
+<p>
+    It will also log a lot, so don't do this remotely.
+</p>
+
+<p>
+    Once it has completed, you can then import these into your favourite email client.
+    You don't need to do all of them, just the ones you want or use regularly & the others become an archive.
+</p>
