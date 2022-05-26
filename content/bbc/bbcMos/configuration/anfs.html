@@ -1,0 +1,58 @@
+---
+type: "manual"
+title: "ANFS specific options"
+linkTitle: "ANFS"
+description: "*CONFIGURE options that are available if ANFS is installed"
+categories:
+  - bbc
+---
+<div class="printPageBreakAvoid">
+  <p>
+    The following options only apply to systems fitted with the ANFS (Advanced Network Filing System)
+    ROM.
+  </p>
+
+  <h2>*CONFIGURE FS &lt;x.xxx&gt; or &lt;Name&gt;</h2>
+  {{< bbc/configure
+  description="Used to selected the default fileserver for logging onto"
+  default="0,254"
+  >}}
+  FS Number<br/>
+  FS Name
+
+  <p>
+    e.g. <code>*CONFIGURE FS 0,254</code>
+  <p>
+    ot <code>*CONFIGURE FS TecSupport</code>
+  </p>
+  {{< /bbc/configure >}}
+
+  <p></p>
+
+  <h2>*CONFIGURE PS &lt;x.xxx&gt; or &lt;Name&gt;</h2>
+  {{< bbc/configure
+  description="Used to selected the default network printer server"
+  default="0,235"
+  >}}
+  PS Number<br/>
+  PS Name
+
+  <p>
+    e.g. <code>*CONFIGURE PS 0,235</code>
+  <p>
+    ot <code>*CONFIGURE FS Laser</code>
+  </p>
+  {{< /bbc/configure >}}
+
+  <p></p>
+
+  <h2>*CONFIGURE SPACE/NOSPACE</h2>
+  {{< bbc/configure
+  description="On the BBC Master Series pages &B00 and &C00 are allocated as workspace to be used by the Econet filing system. On previous models these areas were used a buffers. Some existing software may try to use these areas and conflict with the operating system use of the space. The Econet system can be configured to claim other areas thus leaving pages &B00 and &C00 free for use with any application programs which are found to make inappropriate use of these areas."
+  default="NOSPACE"
+  >}}
+  SPACE - Pages claimed for transient commands. Effect on PAGE, OSHWM rises by &200.<br/>
+  NOSPACE - PAGEs are not claimed and therefore the OSHWM is not increased.
+  {{< /bbc/configure >}}
+
+</div>

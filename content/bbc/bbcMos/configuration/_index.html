@@ -8,6 +8,10 @@ categories:
   - bbc
 ---
 <div class="printPageBreakAvoid">
+    <div class="alert-info">
+        This section is taken from Support Group Application Note No. 203, Issue 1
+        dated 27th February 1992
+    </div>
     <p>
         After the Master series have had either their batteries or EEPROM replaced it will normally be necessary to
         perform some sort of re-configuration.
@@ -27,11 +31,30 @@ categories:
         <br/>
         <em>Note the . at the end is required when using the shortened version.</em>
     </p>
+
+    <h2>General Information</h2>
+    <p>
+        The <code>*CONFIGURE</code> commands must always be followed by a CTRL BREAK to initialise the settings in the
+        machine.
+    </p>
+    <p>
+        It is possible to use Edit supplied with the BBC Master to created a standard file which contains all the
+        <code>*CONFIGURE</code> options which could be used to re configure the machine in one go by using the
+        <code>*EXEC</code> command.
+    </p>
+    <p>
+        The Master Compact EEPROM has a limited life of 10,000 write operations. The chip is easily replaced
+        when this limit is reached.
+    </p>
+    <p>
+        If ROMs appear in the ROM table as being unplugged it is possible to re - insert then using the command
+        <code>*INSERT</code> followed by the ROM Socket number eg. <code>*INSERT 13</code>
+    </p>
 </div>
 
 <div class="printPageBreakAvoid">
+    <h2>Default configuration</h2>
     <table class="memoryMap3">
-        <caption>Default configuration</caption>
         <thead>
         <tr>
             <th>Configuration</th>
@@ -57,8 +80,6 @@ categories:
         <tr><td>MODE</td><td>7</td><td>Teletext Mode 7</td><tr>
         <tr><td>REPEAT</td><td>8</td><td>0.08s</td><tr>
         <tr><td>SCROLL/NOSCROLL</td><td>SCROLL</td><td></td><tr>
-        <tr><td></td><td></td><td></td><tr>
-        <tr><td></td><td></td><td></td><tr>
         </tbody>
     </table>
 </div>

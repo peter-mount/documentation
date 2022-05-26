@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "View specific options"
+linkTitle: "View"
+description: "*CONFIGURE options that are available if System ROM 3.50 is installed"
+categories:
+  - bbc
+---
+<div class="printPageBreakAvoid">
+  <p>
+    The following option only applies to BBC Master Compact and to BBC Master 128's that are fitted with the optional
+    System ROM (3.50).
+  </p>
+
+  <h2>*CONFIGURE View Setup &lt;xxx&gt;</h2>
+  {{< bbc/configure
+  description="Define how View should start up."
+  default="FJ"
+  >}}
+  F - Format mode is on when View starts (an F will appear at the top left of the screen)<br/>
+  J - Justify mode is on when View starts (a J will appear at the top left of the screen)<br/>
+  I - Insert mode is on when View starts (an I will appear at the top left of the screen)
+  {{< /bbc/configure >}}
+
+</div>
