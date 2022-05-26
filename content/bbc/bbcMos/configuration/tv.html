@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "*CONFIGURE TV <0-255>,<0-1>"
+linkTitle: "TV"
+description: "Configure the TV output"
+categories:
+  - bbc
+---
+{{< bbc/configure
+default="0,1"
+label="Description:"
+>}}
+<p>
+  Alter the vertical screen alignment and set or reset the interlace option.
+</p>
+<p>
+  The first parameter is interpreted as a signal byte
+  ie. 1 means a movement of 1 line up and 255 (-1) means a movement of one line down.
+  If parameter is 0 no adjustment is made to the vertical screen alignment.
+</p>
+<p>
+  If the second parameter is 0 the screen interlace option is switched ON;
+  if it is 1, the screen parameter is omitted the value zero is assumed.
+</p>
+{{< /bbc/configure >}}

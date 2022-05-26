@@ -1,0 +1,15 @@
+---
+type: "manual"
+title: "*CONFIGURE Boot / NoBoot"
+linkTitle: "Boot"
+description: "Sets the Boot action when the machine is switched on"
+categories:
+  - bbc
+---
+{{< bbc/configure
+desc="Set the Boot action of the machine on switch on. Boot tells the machine to attempt to run the !Boot file on a disc on switch on or CTRL BREAK. NOBOOT reverses the action of BOOT."
+default="NOBOOT"
+>}}
+BOOT<br/>
+NOBOOT
+{{< /bbc/configure >}}

@@ -1,0 +1,34 @@
+---
+type: "manual"
+title: "*CONFIGURE FDrive <0-7>"
+linkTitle: "FDrive"
+description: "Defines the step time or the use of precompensation in ADFS"
+categories:
+  - bbc
+---
+{{< bbc/configure
+  desc="For computers fitted with either WD1770 or WD1772 disc controllers. FDrive defines the step time and, for ADFS, use of precompensation."
+  default="0"
+>}}
+<table class="memoryMap3">
+  <thead>
+  <tr>
+    <th rowspan="2">Value</th>
+    <th colspan="2">track step time</th>
+    <th rowspan="2">precompensation<br/>ADFS only</th>
+  </tr>
+  <tr><th>WD1770</th><th>WD1772</th></tr>
+  </thead>
+  <tbody>
+  <tr><td>0 or 4</td><td>6ms</td><td>6ms</td><td>yes</td></tr>
+  <tr><td>1 or 5</td><td>6ms</td><td>6ms</td><td>no</td></tr>
+  <tr><td>2 or 6</td><td>30ms</td><td>3ms</td><td>yes</td></tr>
+  <tr><td>3 or 7</td><td>30ms</td><td>3ms</td><td>no</td></tr>
+  </tbody>
+</table>
+<p>
+  Most drives require 6ms step time.
+  Older drives may need the 30ms step time;
+  modern drives may be able to operate at 3ms - consult your disc drive documentation.
+</p>
+{{< /bbc/configure >}}

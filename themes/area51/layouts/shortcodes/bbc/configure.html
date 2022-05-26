@@ -1,0 +1,15 @@
+<div class="printPageBreakAvoid">
+    <table class="generic">
+        <tbody>
+        {{- with $.Get "desc" -}}<tr><th>Description:</th><td>{{.}}</td></tr>{{- end -}}
+        {{- with .Inner -}}
+        <tr><th>
+            {{- with $.Get "label" -}}{{.}}{{- else }}Options:{{end -}}
+        </th><td>
+            {{- . -}}
+        </td></tr>{{- end -}}
+        {{- with $.Get "default" -}}
+        <tr><th>Default:</th><td>{{.}}</td></tr>{{- end -}}
+        </tbody>
+    </table>
+</div>

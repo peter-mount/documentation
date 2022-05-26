@@ -1,0 +1,42 @@
+---
+type: "manual"
+title: "*CONFIGURE Mode"
+linkTitle: "Mode"
+description: "Sets the default screen mode"
+categories:
+  - bbc
+---
+{{< bbc/configure default="7" >}}
+<p>
+  The default mode is one of 0&hellip;7 for non-shadow modes or 128&hellip;135 for shadow modes.
+</p>
+<table class="memoryMap3">
+  <thead>
+  <tr>
+    <th colspan="2">Mode</th>
+    <th colspan="2">Characters</th>
+    <th rowspan="2">Char Set</th>
+    <th colspan="2">Graphic Pixels</th>
+    <th rowspan="2">Colours</th>
+  </tr>
+  <tr>
+    <th>Normal</th>
+    <th>Shadow</th>
+    <th>Rows</th>
+    <th>Cols</th>
+    <th>X</th>
+    <th>Y</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><td>0</td><td>128</td><td>32</td><td>80</td><td>ASCII</td><td>640</td><td>256</td><td>2</td></tr>
+  <tr><td>1</td><td>129</td><td>32</td><td>40</td><td>ASCII</td><td>320</td><td>256</td><td>4</td></tr>
+  <tr><td>2</td><td>130</td><td>32</td><td>20</td><td>ASCII</td><td>160</td><td>256</td><td>16</td></tr>
+  <tr><td>3</td><td>131</td><td>25</td><td>80</td><td>ASCII</td><td colspan="2">Text only</td><td>2</td></tr>
+  <tr><td>4</td><td>132</td><td>32</td><td>40</td><td>ASCII</td><td>320</td><td>256</td><td>2</td></tr>
+  <tr><td>5</td><td>133</td><td>25</td><td>40</td><td>ASCII</td><td>160</td><td>256</td><td>2</td></tr>
+  <tr><td>6</td><td>134</td><td>25</td><td>40</td><td>ASCII</td><td colspan="2" rowspan="2">Text only</td><td>16</td></tr>
+  <tr><td>7</td><td>135</td><td>25</td><td>40</td><td>Teletext</td><td>2</td></tr>
+  </tbody>
+</table>
+{{< /bbc/configure >}}

@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "*CONFIGURE Data <0-7>"
+linkTitle: "Data"
+description: "Specifies the data format used by the RS232 interface"
+categories:
+  - bbc
+---
+{{< bbc/configure default="4 (8N2)" >}}
+<table class="memoryMap3">
+  <thead>
+  <tr><th>Value</th><th>Abbrev</th><th>Word&nbsp;Len</th><th>Parity</th><th>Stop&nbsp;Bits</th></tr>
+  </thead>
+  <tbody>
+  <tr><td>0</td><td>7E2</td><td>7</td><td>even</td><td>2</td></tr>
+  <tr><td>1</td><td>7O2</td><td>7</td><td>odd</td><td>2</td></tr>
+  <tr><td>2</td><td>7E1</td><td>7</td><td>even</td><td>1</td></tr>
+  <tr><td>3</td><td>7O1</td><td>7</td><td>odd</td><td>1</td></tr>
+  <tr><td>4</td><td>8N2</td><td>8</td><td>none</td><td>2</td></tr>
+  <tr><td>5</td><td>8N1</td><td>8</td><td>none</td><td>1</td></tr>
+  <tr><td>6</td><td>8E1</td><td>8</td><td>even</td><td>1</td></tr>
+  <tr><td>7</td><td>8O1</td><td>8</td><td>odd</td><td>1</td></tr>
+  </tbody>
+</table>
+{{< /bbc/configure >}}

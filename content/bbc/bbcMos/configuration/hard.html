@@ -1,0 +1,19 @@
+---
+type: "manual"
+title: "*CONFIGURE Hard / Floppy"
+linkTitle: "Hard"
+description: "Sets if a hard disk or floppy disk is selected"
+categories:
+  - bbc
+---
+{{< bbc/configure default="Floppy" label="Description:">}}
+<p>
+  For systems that have both floppy disc(s) and a Winchester disc connected:
+</p>
+<p>
+  <code>*CONFIGURE FLOPPY</code> causes ADFS to initialise with drive 4 (floppy discs) selected.
+</p>
+<p>
+  <code>*CONFIGURE HARD</code> causes ADFS to initialise with drive 0 (Winchester) selected.
+</p>
+{{< /bbc/configure >}}

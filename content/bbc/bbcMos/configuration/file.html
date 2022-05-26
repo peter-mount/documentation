@@ -1,0 +1,25 @@
+---
+type: "manual"
+title: "*CONFIGURE File <0-15>"
+linkTitle: "File"
+description: "Defines the default file system by its ROM socket"
+categories:
+  - bbc
+---
+{{< bbc/configure
+  default="13 (0xD ADFS)"
+>}}
+<p>Standard Master 128 roms:</p>
+{{< bbc/master-rom-list >}}
+<p>
+  The <code>*CONFIGURE FILE</code> command takes a decimal argument however the
+  <code>*ROMS</code> command shows it as a Hex value.
+</p>
+<p>
+  On a normal BBC Master <code>*CONFIGURE FILE 9</code> would switch the default file system to DFS.
+</p>
+<div class="alert-info">
+  The original Acorn documentation has the default as 14.
+  However, ADFS is in ROM 0xD which is 13.
+</div>
+{{< /bbc/configure >}}

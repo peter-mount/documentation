@@ -1,0 +1,22 @@
+---
+type: "manual"
+title: "*CONFIGURE Print <0-4>"
+linkTitle: "Print"
+description: "Defines the printer port"
+categories:
+  - bbc
+---
+{{< bbc/configure default="0 (SINK)" >}}
+<table class="memoryMap3">
+  <thead>
+  <tr><th>Value</th><th colspan="6">Port</th></tr>
+  </thead>
+  <tbody>
+  <tr><td>0</td><td>Sink <em>(No output printed)</em></td></tr>
+  <tr><td>1</td><td>Centronics Parallel port</td></tr>
+  <tr><td>2</td><td>RS232 Serial port</td></tr>
+  <tr><td>3</td><td>User printer driver</td></tr>
+  <tr><td>4</td><td>Econet network printer</td></tr>
+  </tbody>
+</table>
+{{< /bbc/configure >}}

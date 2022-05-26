@@ -1,0 +1,22 @@
+---
+type: "manual"
+title: "*CONFIGURE Lang <0-15>"
+linkTitle: "Lang"
+description: "Defines the default language by its ROM socket"
+categories:
+  - bbc
+---
+{{< bbc/configure
+  default="12 (0xC BASIC)"
+>}}
+<p>Standard Master 128 roms:</p>
+{{< bbc/master-rom-list >}}
+<p>
+  The <code>*CONFIGURE LANG</code> command takes a decimal argument however the
+  <code>*ROMS</code> command shows it as a Hex value.
+</p>
+<div class="alert-info">
+  The original Acorn documentation has the default as 13 (0xC).
+  However, BASIC is in ROM 0xC which is 12.
+</div>
+{{< /bbc/configure >}}
