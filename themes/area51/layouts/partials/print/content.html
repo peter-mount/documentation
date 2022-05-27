@@ -13,7 +13,6 @@
 {{ if isset .Page.Params "nopagebreak" }}{{ $break = "page-break-before: auto"}}{{else}}{{ $break = "page-break-before: always" -}}
 {{end -}}
 {{ end -}}
-
 <div class="td-content-new" style="{{ $break }}">
 	<h1 id="pg-{{ .Page.File.UniqueID }}">{{ .PageNum }} - {{ .Page.Title }}</h1>
     {{ with .Page.Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
