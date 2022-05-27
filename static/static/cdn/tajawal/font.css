@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/static/cdn/tajawal/Iurf6YBj_oCad4k1l5qjLrY.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/static/cdn/tajawal/Iura6YBj_oCad4k1rzY.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/static/cdn/tajawal/Iurf6YBj_oCad4k1l8KiLrY.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/static/cdn/tajawal/Iurf6YBj_oCad4k1l4qkLrY.ttf) format('truetype');
+}
