@@ -1,0 +1,2 @@
+root@nas1[~]# python3 replace_disk.py Pool1 gptid/746cf510-8712-11ea-b4bb-28924a2f0b10 ada2
+Replace initiated.

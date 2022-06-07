@@ -1,0 +1,90 @@
+---
+type: "manual"
+title: "Replace Disk"
+linkTitle: "Replace Disk"
+description: "Notes on replacing a disk in a ZFS Pool"
+categories:
+  - linux
+  - zfs
+  - TrueNAS
+resources:
+  - name: "replace_disk.py"
+    url: "/linux/nas/truenas/replacedisk/replace_disk.py"
+    size: "4K"
+---
+<div class="printPageBreakAvoid">
+    <p>
+        If you want to replace a disk in a ZFS pool you normally do it from the UI, selecting a spare drive that is at
+        least the same size as the one to replace, then use it as the replacement for the original drive.
+        An hour or so later the new drive has been populated with the data from the old one and the original disk is
+        removed from the pool so that it can be replaced.
+    </p>
+    <h2>The problem</h2>
+    <p>
+        In my instance I was upgrading a two-drive pool from two 2TB drives to two 4TB drives,
+        so I had to replace each one, one at a time by installing the new drive in a spare bay, then get ZFS to replace
+        the original disk with the new one.
+    </p>
+    <p>
+        This works fine as long as the new drive is the same size or larger than the original.
+    </p>
+    <p>
+        In TrueNAS Core 13.0-Release, that process is
+        <a href="https://www.truenas.com/docs/core/corereleasenotes/#cli-disk-replacements" target="_blank">broken</a>
+        and you have to use a script to perform this task.
+    </p>
+    <p>
+        Now that script works fine and the link above does show how to do it, but one issue I had was that TrueNAS uses
+        gptid's as the identifiers in the pool, so how do I map the actual gptid to remove to the disk?
+    </p>
+    <p>
+        If this was replacing a degraded disk then that's not a problem as it would show, but in my case I was increasing
+        the size so the drive's state is ONLINE so not easily identifiable.
+    </p>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h2>The solution</h2>
+
+    <h3>List the specific pool with the disk to replace</h3>
+    <p>
+        Run <code>zpool status &lt;pool name&gt;</code> where <code>&lt;pool name&gt;</code> is the name of the
+        Pool.
+        In this example it's <code>Pool1</code>
+    </p>
+    {{< book/include src="content/linux/nas/truenas/replacedisk/replace1.txt" >}}
+
+    <h3>Identify the disk to replace</h3>
+    <p>
+        Here we have 2 disks, ada1 which is the one to replace and is a member of the pool and ada2 which is our
+        new one.
+        In the TrueNAS UI we don't see gptid's so we need to identify which one of the above relates to the ada1
+        disk.
+    </p>
+    <p>
+        To do this we can use the <code>glabel status</code> command which lists the mappings:
+    </p>
+    {{< book/include src="content/linux/nas/truenas/replacedisk/replace2.txt" >}}
+    <p>
+        From this we can see that drive ada1 partition 2 (ada1p2) maps to
+        gptid/746cf510-8712-11ea-b4bb-28924a2f0b10
+        which is what we need.
+    </p>
+
+    <h3>Run the script to replace the disk</h3>
+    <p>
+        First download the tool, either with
+        <code>curl -s https://raw.githubusercontent.com/truenas/gist/main/replace_disk.py -o
+            replace_disk.py</code>
+        or the copy listed in the Resources' section at the top right of this page.
+    </p>
+    <p>
+        Next run it with <code>python3 replace_disk.py &lt;pool_name&gt; &lt;gptid/####&gt; &lt;ada#&gt;</code>
+        substituting the pool_name, gptid and ada parameters:
+    </p>
+    {{< book/include src="content/linux/nas/truenas/replacedisk/replace3.txt" >}}
+    <p>
+        You should then see it appear in the UI that it's now replacing the disk and the ETA on when it will
+        complete.
+    </p>
+</div>

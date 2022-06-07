@@ -1,0 +1,8 @@
+root@nas1[~]# glabel status
+                                      Name  Status  Components
+gptid/95191534-e5ce-11ec-8a81-28924a2f0b10     N/A  ada0p1
+gptid/746cf510-8712-11ea-b4bb-28924a2f0b10     N/A  ada1p2
+gptid/041516c7-e5b1-11ec-bd44-28924a2f0b10     N/A  ada3p2
+gptid/951ce3a4-e5ce-11ec-8a81-28924a2f0b10     N/A  ada0p3
+gptid/745a2d41-8712-11ea-b4bb-28924a2f0b10     N/A  ada1p1
+gptid/0404cfd6-e5b1-11ec-bd44-28924a2f0b10     N/A  ada3p1

@@ -1,0 +1,17 @@
+root@nas1[~]# zpool status Pool1
+  pool: Pool1
+ state: ONLINE
+status: Some supported and requested features are not enabled on the pool.
+	The pool can still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+	the pool may no longer be accessible by software that does not support
+	the features. See zpool-features(7) for details.
+  scan: scrub repaired 0B in 01:43:47 with 0 errors on Mon Jun  6 22:55:22 2022
+config:
+
+	NAME                                          STATE     READ WRITE CKSUM
+	Pool1                                         ONLINE       0     0     0
+	  gptid/746cf510-8712-11ea-b4bb-28924a2f0b10  ONLINE       0     0     0
+	  gptid/041516c7-e5b1-11ec-bd44-28924a2f0b10  ONLINE       0     0     0
+
+errors: No known data errors
