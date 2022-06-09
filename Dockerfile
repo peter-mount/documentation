@@ -45,17 +45,17 @@ ARG prefix
 ARG arch=amd64
 ARG goos=linux
 FROM ${prefix}golang:alpine AS build
-ARG hugoVersion=0.89.2
+ARG hugoVersion=0.100.2
 
 # Required commands for the build
 RUN apk add --no-cache tzdata
 
 # Get Hugo extended build with version in the hugoVersion build-arg
-RUN mkdir -pv /dest/bin/ &&\
-    cd /tmp &&\
+RUN cd /tmp &&\
     wget -q -O /tmp/hugo.tgz https://github.com/gohugoio/hugo/releases/download/v${hugoVersion}/hugo_extended_${hugoVersion}_Linux-64bit.tar.gz &&\
     tar xpf hugo.tgz &&\
-    cp -p hugo /dest/bin/
+    mkdir -pv /dest/usr/local/bin/ &&\
+    cp -p hugo /dest/usr/local/bin/
 
 WORKDIR /work
 
@@ -69,13 +69,13 @@ RUN go mod download
 
 # Build our tools
 COPY tools/ tools/
-RUN CGO_ENABLED=0 go build -o /dest/bin/doctool tools/bin/main.go
+RUN CGO_ENABLED=0 go build -o /dest/usr/local/bin/doctool tools/bin/main.go
 
 # ===================================================================
 # Final stage add all resources to base image
 FROM base AS final
 
-# Copy the go tool build
-COPY --from=build /dest/bin/* /usr/local/bin/
-
 WORKDIR /work
+
+# Copy the go tool build
+COPY --from=build /dest/ /
