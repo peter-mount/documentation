@@ -15,8 +15,8 @@ type IndexGenerator struct {
   Desc      string
   Class     string
   Paginator func(int, interface{}) bool
-  Header    func(strings.StringSlice, int) strings.StringSlice
-  Body      func(strings.StringSlice, int, interface{}) strings.StringSlice
+  Header    func(slice strings.StringSlice, rowCount int) strings.StringSlice
+  Body      func(slice strings.StringSlice, rowCount int, entry interface{}) strings.StringSlice
 }
 
 func (i *IndexGenerator) WriteFile(book *hugo.Book, iterator util2.Iterator) error {

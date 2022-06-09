@@ -22,9 +22,14 @@ func (s *M68k) writeOperationIndex(ctx context.Context) error {
     Name:      "operation",
     Title:     "Instruction List by Operation",
     Desc:      "",
-    Class:     "opIndex2",
+    Class:     "opIndex1",
     Paginator: nil,
-    Header:    nil,
+    Header: func(slice strings2.StringSlice, rowCount int) strings2.StringSlice {
+      return append(slice, "<thead><tr>",
+        "<th>Operation</th>",
+        "<th>Opcode</th>",
+        "</tr></thead>")
+    },
     Body: func(slice strings2.StringSlice, _ int, entry interface{}) strings2.StringSlice {
       op := entry.(*assembly.Opcode)
       class := ""
