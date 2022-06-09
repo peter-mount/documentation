@@ -585,8 +585,14 @@ table.summary {
     }
 }
 
-div.opIndex {
+div.opIndex,
+div.opIndex4 {
     columns: 4;
+}
+
+div.opIndex2 {
+    columns: 2;
+    //column-rule: 4px dotted grey;
 }
 
 // Used in instruction lists to indicate an undocumented opcode. colour is there due to PDF not showing lighter that

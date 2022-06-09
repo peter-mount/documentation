@@ -67,6 +67,24 @@ RUN go env -w GOFLAGS=-mod=mod
 COPY go.mod .
 RUN go mod download
 
+# intermediates that don't get detected by go.mod
+# Review these every so often
+RUN go get github.com/mailru/easyjson \
+           github.com/chromedp/sysutil \
+           golang.org/x/net \
+           github.com/aymerick/douceur \
+           github.com/gobwas/ws \
+           github.com/xuri/efp \
+           golang.org/x/crypto \
+           golang.org/x/text \
+           github.com/richardlehane/mscfb \
+           github.com/mohae/deepcopy \
+           github.com/gorilla/css \
+           github.com/josharian/intern \
+           github.com/gobwas/pool \
+           github.com/gobwas/httphead \
+           github.com/richardlehane/msoleps
+
 # Build our tools
 COPY tools/ tools/
 RUN CGO_ENABLED=0 go build -o /dest/usr/local/bin/doctool tools/bin/main.go

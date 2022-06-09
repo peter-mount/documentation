@@ -5,6 +5,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator/bbc"
   "github.com/peter-mount/documentation/tools/generator/chip"
   "github.com/peter-mount/documentation/tools/generator/m6502"
+  "github.com/peter-mount/documentation/tools/generator/m68k"
   "github.com/peter-mount/documentation/tools/generator/svg"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/pdf"
@@ -18,6 +19,7 @@ func main() {
     // The various page/file generators. Place these before the core modules
     &bbc.BBC{},
     &m6502.M6502{},
+    &m68k.M68k{},
     &chip.Chip{},
     &autodoc.Autodoc{},
     &svg.SVG{},
