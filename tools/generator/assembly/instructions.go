@@ -14,8 +14,9 @@ const (
 
 // Instructions holds the instructions being processed
 type Instructions struct {
-  opCodes []*Opcode
-  notes   *util.Notes
+  opCodes       []*Opcode                       // Slice of Opcodes
+  notes         *util.Notes                     // Notes, if any
+  ExtractFormat func(format string, op *Opcode) // Extract format field (optional)
 }
 
 func NewInstructions() *Instructions {
@@ -100,54 +101,26 @@ func GetInstructions(ctx context.Context) *Instructions {
   return nil
 }
 
+// Extract op code.
+// TODO this is 68k specific
 func (i *Instructions) Extract(defaultOp string, n *util.Notes, e1 interface{}) {
   _ = util2.IfMap(e1, func(e map[interface{}]interface{}) error {
 
-    format := util2.DecodeString(e["format"], "")
-
-    var opcodeR []rune
-    var orderR []rune
-    for _, c := range format {
-      cc := 'X'
-      cr := '0'
-      cn := 1
-      switch c {
-      case '0':
-        cc = '0'
-        cr = '0'
-      case '1':
-        cc = '1'
-        cr = '1'
-      case 'd':
-        cn = 3
-      case 'E':
-        cn = 6
-      case 'M':
-        cn = 1
-      case 'm':
-        cn = 3
-      case 'R':
-        cn = 3
-      case 'r':
-        cn = 3
-      case 'S':
-        cn = 2
-      }
-      for i := 0; i < cn; i++ {
-        opcodeR = append(opcodeR, cc)
-        orderR = append(orderR, cr)
-      }
-    }
-
-    opcode := string(opcodeR)
-    order, _ := strconv.ParseInt(string(orderR), 2, 32)
     op := &Opcode{
-      Order:         int(order),
-      Code:          opcode,
+      Code:          util2.DecodeString(e["code"], ""),
       Op:            util2.DecodeString(e["op"], defaultOp),
-      Format:        format,
+      Format:        util2.DecodeString(e["format"], ""),
       Compatibility: util2.NewSortedMap().Decode(e["compatibility"]),
       Colour:        util2.DecodeString(e["colour"], ""),
+    }
+
+    order, _ := strconv.ParseInt(op.Code, 16, 32)
+    op.Order = int(order)
+
+    if i.ExtractFormat != nil {
+      if op.Format != "" {
+        i.ExtractFormat(op.Format, op)
+      }
     }
 
     i.opCodes = append(i.opCodes, op)
@@ -157,5 +130,10 @@ func (i *Instructions) Extract(defaultOp string, n *util.Notes, e1 interface{}) 
 }
 
 func (i *Instructions) Normalise() {
+  for _, op := range i.opCodes {
+    op.Bytes.resolve(i.notes)
+    op.Cycles.resolve(i.notes)
+  }
+
   i.notes.Normalise()
 }

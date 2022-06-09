@@ -9,11 +9,14 @@ import (
   util2 "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/walk"
   "log"
+  "strconv"
 )
 
 func (s *M68k) extractOpcodes(ctx context.Context) error {
   book := generator.GetBook(ctx)
+
   instructions := s.Instructions(book)
+  instructions.ExtractFormat = s.extractFormat
 
   // Only run once per Book ID
   if s.extracted.Contains(book.ID) {
@@ -59,4 +62,45 @@ func (s *M68k) extract(ctx context.Context, fm *hugo.FrontMatter) error {
     })
   }
   return nil
+}
+
+func (s *M68k) extractFormat(format string, op *assembly.Opcode) {
+
+  var opcodeR []rune
+  var orderR []rune
+  for _, c := range format {
+    cc := 'X'
+    cr := '0'
+    cn := 1
+    switch c {
+    case '0':
+      cc = '0'
+      cr = '0'
+    case '1':
+      cc = '1'
+      cr = '1'
+    case 'd':
+      cn = 3
+    case 'E':
+      cn = 6
+    case 'M':
+      cn = 1
+    case 'm':
+      cn = 3
+    case 'R':
+      cn = 3
+    case 'r':
+      cn = 3
+    case 'S':
+      cn = 2
+    }
+    for i := 0; i < cn; i++ {
+      opcodeR = append(opcodeR, cc)
+      orderR = append(orderR, cr)
+    }
+  }
+
+  op.Code = string(opcodeR)
+  order, _ := strconv.ParseInt(string(orderR), 2, 32)
+  op.Order = int(order)
 }
