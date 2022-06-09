@@ -1,4 +1,4 @@
-package m68k
+package assembly
 
 import (
   "github.com/peter-mount/documentation/tools/util"
@@ -84,8 +84,4 @@ func (o *OpcodeType) Normalise() {
   sort.SliceStable(o.Notes, func(i, j int) bool {
     return o.Notes[i].Key < o.Notes[j].Key
   })
-}
-
-func (i *Instructions) normalise() {
-  i.notes.Normalise()
 }

@@ -3,6 +3,7 @@ package m68k
 import (
   "context"
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/generator/assembly"
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   util2 "github.com/peter-mount/go-kernel/util"
@@ -29,15 +30,15 @@ func (s *M68k) extractOpcodes(ctx context.Context) error {
     PathHasSuffix(".html").
       Then(hugo.FrontMatterActionOf().
         Then(s.extract).
-        WithNotes(instructions.notes).
-        Context(InstructionsKey, instructions).
+        WithNotes(instructions.Notes()).
+        Context(assembly.InstructionsKey, instructions).
         Walk(ctx)).
     Walk(book.ContentPath())
   if err != nil {
     return err
   }
 
-  instructions.normalise()
+  instructions.Normalise()
 
   return nil
 }
@@ -50,10 +51,10 @@ func (s *M68k) extract(ctx context.Context, fm *hugo.FrontMatter) error {
     }
 
     notes := ctx.Value("notes").(*util.Notes)
-    instructions := GetInstructions(ctx)
+    instructions := assembly.GetInstructions(ctx)
 
     _ = util2.ForEachInterface(codes, func(e1 interface{}) error {
-      instructions.extractOp(defaultOp, notes, e1)
+      instructions.Extract(defaultOp, notes, e1)
       return nil
     })
   }

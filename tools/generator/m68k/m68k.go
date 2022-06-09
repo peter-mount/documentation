@@ -2,7 +2,9 @@ package m68k
 
 import (
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/generator/assembly"
   "github.com/peter-mount/documentation/tools/generator/autodoc"
+  "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/task"
 )
@@ -27,4 +29,8 @@ func (s *M68k) Start() error {
           Then(delayOpTask(s.writeOpcodeIndex)))
 
   return nil
+}
+
+func (s *M68k) Instructions(b *hugo.Book) *assembly.Instructions {
+  return s.instructions.ComputeIfAbsent(b.ID, assembly.ComputeNewInstructions).(*assembly.Instructions)
 }

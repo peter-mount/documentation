@@ -1,4 +1,4 @@
-package m68k
+package assembly
 
 import (
   "github.com/peter-mount/documentation/tools/hugo"
@@ -7,6 +7,7 @@ import (
   "github.com/peter-mount/go-kernel/util/strings"
 )
 
+// IndexGenerator generates the reference index pages for Assembly languages
 type IndexGenerator struct {
   Prefix    string
   Name      string

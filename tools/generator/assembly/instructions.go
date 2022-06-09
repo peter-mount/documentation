@@ -1,8 +1,7 @@
-package m68k
+package assembly
 
 import (
   "context"
-  "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/util"
   util2 "github.com/peter-mount/go-kernel/util"
   "sort"
@@ -17,6 +16,21 @@ const (
 type Instructions struct {
   opCodes []*Opcode
   notes   *util.Notes
+}
+
+func NewInstructions() *Instructions {
+  return &Instructions{
+    opCodes: nil,
+    notes:   util.NewNotes(),
+  }
+}
+
+func ComputeNewInstructions(_ string) interface{} {
+  return NewInstructions()
+}
+
+func (i *Instructions) Notes() *util.Notes {
+  return i.notes
 }
 
 func (i *Instructions) Sort(comparator func(a *Opcode, b *Opcode) bool) *Instructions {
@@ -86,16 +100,7 @@ func GetInstructions(ctx context.Context) *Instructions {
   return nil
 }
 
-func (s *M68k) Instructions(b *hugo.Book) *Instructions {
-  return s.instructions.ComputeIfAbsent(b.ID, func(key string) interface{} {
-    return &Instructions{
-      opCodes: nil,
-      notes:   util.NewNotes(),
-    }
-  }).(*Instructions)
-}
-
-func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}) {
+func (i *Instructions) Extract(defaultOp string, n *util.Notes, e1 interface{}) {
   _ = util2.IfMap(e1, func(e map[interface{}]interface{}) error {
 
     format := util2.DecodeString(e["format"], "")
@@ -149,4 +154,8 @@ func (i *Instructions) extractOp(defaultOp string, n *util.Notes, e1 interface{}
 
     return nil
   })
+}
+
+func (i *Instructions) Normalise() {
+  i.notes.Normalise()
 }
