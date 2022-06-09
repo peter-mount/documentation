@@ -14,7 +14,7 @@ func (s *M68k) writeOperationIndex(ctx context.Context) error {
   book := generator.GetBook(ctx)
   inst := s.Instructions(book).
       Sort(func(a *assembly.Opcode, b *assembly.Opcode) bool {
-        return decodeOpcode(a.Code) < decodeOpcode(b.Code)
+        return assembly.DecodeOpcode(a.Code) < assembly.DecodeOpcode(b.Code)
       })
 
   gen := &assembly.IndexGenerator{
@@ -36,7 +36,7 @@ func (s *M68k) writeOperationIndex(ctx context.Context) error {
       if op.Colour == "undocumented" {
         class = " class=\"" + op.Colour + "\""
       }
-      return append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, op.String(), op.Code))
+      return append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, inst.OpcodeFormatter(op), op.Code))
     },
   }
   return gen.WriteFile(book, inst.Iterator())

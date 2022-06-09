@@ -25,8 +25,8 @@ func (s *M68k) Start() error {
       Register("68kOperationIndex",
         task.Of().
           Then(s.extractOpcodes).
-          Then(delayOpTask(s.writeOperationIndex)).
-          Then(delayOpTask(s.writeOpcodeIndex)))
+          Then(assembly.DelayOpTask(s.writeOperationIndex)).
+          Then(assembly.DelayOpTask(s.writeOpcodeIndex)))
 
   return nil
 }

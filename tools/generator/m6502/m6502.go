@@ -2,7 +2,9 @@ package m6502
 
 import (
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/generator/assembly"
   "github.com/peter-mount/documentation/tools/generator/autodoc"
+  "github.com/peter-mount/documentation/tools/hugo"
   util2 "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/task"
 )
@@ -23,15 +25,24 @@ func (s *M6502) Start() error {
       Register("6502OpsIndex",
         task.Of().
           Then(s.extractOpcodes).
-          Then(delayOpTask(s.writeOpsIndex))).
+          Then(assembly.DelayOpTask(s.writeOpsIndex))).
       Register("6502OpsHexIndex",
         task.Of().
           Then(s.extractOpcodes).
-          Then(delayOpTask(s.writeOpsHexIndex))).
+          Then(assembly.DelayOpTask(s.writeOpsHexIndex))).
       Register("6502OpsHexGrid",
         task.Of().
           Then(s.extractOpcodes).
-          Then(delayOpTask(s.writeOpsHexGrid)))
+          Then(assembly.DelayOpTask(s.writeOpsHexGrid)))
 
   return nil
+}
+
+func (s *M6502) Instructions(b *hugo.Book) *assembly.Instructions {
+  return s.instructions.ComputeIfAbsent(b.ID, func(s string) interface{} {
+    v := assembly.ComputeNewInstructions(s)
+    inst := v.(*assembly.Instructions)
+    inst.OpcodeFormatter = M6502OpcodeFormatter
+    return inst
+  }).(*assembly.Instructions)
 }

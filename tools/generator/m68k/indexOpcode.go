@@ -31,7 +31,7 @@ func (s *M68k) writeOpcodeIndex(ctx context.Context) error {
       if op.Colour == "undocumented" {
         class = " class=\"" + op.Colour + "\""
       }
-      return append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, op.String(), op.Code))
+      return append(slice, fmt.Sprintf("<tr%s><td>%s</td><td>%s</td></tr>", class, inst.OpcodeFormatter(op), op.Code))
     },
   }
   return gen.WriteFile(book, inst.Iterator())

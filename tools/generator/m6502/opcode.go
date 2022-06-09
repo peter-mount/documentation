@@ -1,29 +1,8 @@
 package m6502
 
-import (
-  "github.com/peter-mount/documentation/tools/util"
-  util2 "github.com/peter-mount/go-kernel/util"
-  "sort"
-  "strconv"
-)
+import "github.com/peter-mount/documentation/tools/generator/assembly"
 
-type Opcodes struct {
-  Codes []Opcode `yaml:"codes"`
-}
-
-type Opcode struct {
-  Order         int
-  Code          string
-  Op            string
-  Addressing    string
-  Compatibility *util2.SortedMap
-  Bytes         *OpcodeType
-  Cycles        *OpcodeType
-  Notes         []int
-  Colour        string
-}
-
-func (op *Opcode) String() string {
+func M6502OpcodeFormatter(op *assembly.Opcode) string {
   switch op.Addressing {
   case "abs":
     return op.Op + " <em>addr</em>"
@@ -81,71 +60,5 @@ func (op *Opcode) String() string {
     return op.Op + " (<em>sr</em>,S),Y"
   default:
     return op.Op
-  }
-}
-
-type OpcodeType struct {
-  Value  string       // value field
-  NoteId []string     // Note id's
-  Notes  []*util.Note // Resolved global note
-}
-
-func (o *OpcodeType) String() string {
-  if o != nil {
-    return o.Value
-  }
-  return ""
-}
-
-func (o *OpcodeType) Int() int {
-  if o != nil {
-    i, err := strconv.Atoi(o.Value)
-    if err == nil {
-      return i
-    }
-  }
-  return 0
-}
-
-func (o *OpcodeType) append(p, l string, a []string) []string {
-  a = append(a,
-    p+l+":",
-    p+"  value: \""+o.Value+"\"",
-  )
-
-  if len(o.Notes) > 0 {
-    a = append(a, p+"  notes:")
-    for _, n := range o.Notes {
-      a = append(a, p+"    - "+strconv.Itoa(n.Key)+" # "+n.Value)
-    }
-  }
-  return a
-}
-
-func (o *OpcodeType) resolve(n *util.Notes) {
-  if o == nil {
-    return
-  }
-
-  for _, s := range o.NoteId {
-    note := n.Get(s)
-    if note != nil {
-      o.Notes = append(o.Notes, note)
-    }
-  }
-}
-
-func (o *OpcodeType) Normalise() {
-  sort.SliceStable(o.Notes, func(i, j int) bool {
-    return o.Notes[i].Key < o.Notes[j].Key
-  })
-}
-
-func (i *Instructions) normalise() {
-  i.notes.Normalise()
-
-  for _, o := range i.opCodes {
-    o.Bytes.Normalise()
-    o.Cycles.Normalise()
   }
 }

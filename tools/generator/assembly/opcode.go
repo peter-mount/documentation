@@ -16,10 +16,3 @@ type Opcode struct {
   Notes         []int            // Notes about opcode
   Colour        string           // Colour used in rendering (optional)
 }
-
-// String returns the Opcode in the language format.
-// Some return op.Op, others based on Addressing for Format
-func (op *Opcode) String() string {
-  // TODO 6502/z80 use addressing maps so needs implementing
-  return op.Op
-}

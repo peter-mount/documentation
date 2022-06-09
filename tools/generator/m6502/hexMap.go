@@ -2,8 +2,10 @@ package m6502
 
 import (
   "fmt"
+  "github.com/peter-mount/documentation/tools/generator/assembly"
   "github.com/peter-mount/documentation/tools/util"
   "github.com/peter-mount/documentation/tools/util/html"
+  util2 "github.com/peter-mount/go-kernel/util"
   strings2 "github.com/peter-mount/go-kernel/util/strings"
   "log"
   "sort"
@@ -34,7 +36,7 @@ type HexCell struct {
   Parent     *HexMap // Link to parant Map
 }
 
-func (c *HexCell) fromOpcode(o *Opcode) {
+func (c *HexCell) fromOpcode(o *assembly.Opcode) {
   c.Label = o.Op
   c.Index = o.Code
   c.Addressing = o.Addressing
@@ -46,7 +48,7 @@ func (c *HexCell) fromOpcode(o *Opcode) {
 }
 
 // fromOpcodeIgnoreExtension same as fromOpcode except Do not overwrite Extension flag
-func (c *HexCell) fromOpcodeIgnoreExtension(o *Opcode) {
+func (c *HexCell) fromOpcodeIgnoreExtension(o *assembly.Opcode) {
   if !c.Extension {
     c.fromOpcode(o)
   }
@@ -104,7 +106,18 @@ func (hg *HexGrid) Cell(code string) *HexCell {
   return hg.resolve(strings.ReplaceAll(code, "nn", "")).cell(code)
 }
 
-func (hg *HexGrid) Opcode(a ...*Opcode) *HexGrid {
+func (hg *HexGrid) OpcodeFrom(i util2.Iterator) *HexGrid {
+  for i.HasNext() {
+    o := i.Next().(*assembly.Opcode)
+    if o != nil {
+      hg.Cell(o.Code).
+        fromOpcodeIgnoreExtension(o)
+    }
+  }
+  return hg
+}
+
+func (hg *HexGrid) Opcode(a ...*assembly.Opcode) *HexGrid {
   for _, o := range a {
     if o != nil {
       hg.Cell(o.Code).
@@ -169,7 +182,7 @@ func (g *HexMap) cell(code string) *HexCell {
   return c
 }
 
-func (g *HexMap) opcode(a ...*Opcode) {
+func (g *HexMap) opcode(a ...*assembly.Opcode) {
   for _, o := range a {
     if o != nil {
       g.cell(o.Code).

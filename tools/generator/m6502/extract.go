@@ -3,9 +3,8 @@ package m6502
 import (
   "context"
   "github.com/peter-mount/documentation/tools/generator"
+  "github.com/peter-mount/documentation/tools/generator/assembly"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/documentation/tools/util"
-  util2 "github.com/peter-mount/go-kernel/util"
   "github.com/peter-mount/go-kernel/util/walk"
   "log"
 )
@@ -28,40 +27,16 @@ func (s *M6502) extractOpcodes(ctx context.Context) error {
     PathNotContain("/reference/").
     PathHasSuffix(".html").
       Then(hugo.FrontMatterActionOf().
-        Then(s.extract).
-        WithNotes(instructions.notes).
-        Context(InstructionsKey, instructions).
+        Then(instructions.ExtractFrontMatter).
+        WithNotes(instructions.Notes()).
+        Context(assembly.InstructionsKey, instructions).
         Walk(ctx)).
     Walk(book.ContentPath())
   if err != nil {
     return err
   }
 
-  for _, op := range instructions.opCodes {
-    op.Bytes.resolve(instructions.notes)
-    op.Cycles.resolve(instructions.notes)
-  }
+  instructions.Normalise()
 
-  instructions.normalise()
-  //instructions.validateOpcodes()
-
-  return nil
-}
-
-func (s *M6502) extract(ctx context.Context, fm *hugo.FrontMatter) error {
-  if codes, exists := fm.Other["codes"]; exists {
-    var defaultOp string
-    if a, exists := fm.Other["op"]; exists {
-      defaultOp = a.(string)
-    }
-
-    notes := ctx.Value("notes").(*util.Notes)
-    instructions := GetInstructions(ctx)
-
-    _ = util2.ForEachInterface(codes, func(e1 interface{}) error {
-      instructions.extractOp(defaultOp, notes, e1)
-      return nil
-    })
-  }
   return nil
 }

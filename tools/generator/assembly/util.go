@@ -1,4 +1,4 @@
-package m68k
+package assembly
 
 import (
   "context"
@@ -9,7 +9,7 @@ import (
   "strings"
 )
 
-func delayOpTask(t task.Task) task.Task {
+func DelayOpTask(t task.Task) task.Task {
   return func(ctx context.Context) error {
     task.GetQueue(ctx).AddPriorityTask(tools.PriorityIndices,
       task.Of(t).
@@ -18,7 +18,7 @@ func delayOpTask(t task.Task) task.Task {
   }
 }
 
-func decodeOpcode(s string) int64 {
+func DecodeOpcode(s string) int64 {
   s = strings.ReplaceAll(s, "nn", "00")
   for len(s) < 8 {
     s = s + "00"
