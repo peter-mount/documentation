@@ -36,11 +36,11 @@ body:lang(fa) {
 }
 
 body:lang(he) {
-    @import url('/static/cdn/rubik/rubik.css');
+    @import url('/static/cdn/rubik/font.css');
     font-family: 'Rubik', "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 body:lang(ar) {
-    @import url('/static/cdn/rubik/tajawal');
+    @import url('/static/cdn/tajawal/font.css');
     font-family: 'Tajawal', "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
