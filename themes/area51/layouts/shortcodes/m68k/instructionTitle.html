@@ -1,0 +1,5 @@
+{{- define "instructionTitle.html_partial" -}}
+<div class="instructionFieldsTitle">{{index . "title"}}{{ with index . "subTitle"}}<span>&mdash; {{.}}</span>{{end}}</div>
+{{- end -}}
+
+{{- template "instructionTitle.html_partial" (dict "title" (.Get "title") "subTitle" (.Get "subTitle") ) -}}

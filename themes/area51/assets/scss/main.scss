@@ -34,6 +34,7 @@
 @import "custom/asm";
 @import "custom/alert";
 @import "custom/list";
+@import "custom/fields";
 
 @if $td-enable-google-fonts {
     @import url($web-font-path);

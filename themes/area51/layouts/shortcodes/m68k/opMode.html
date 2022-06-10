@@ -1,0 +1,32 @@
+{{- template "instructionTitle.html_partial" (dict "title" "Op Mode") -}}
+<table class="memoryMap4">
+    <thead>
+    <tr>
+        <th>Dir</th>
+        <th colspan="10">Operation</th>
+        <th class="bnone tcw1"></th>
+        <th colspan="2">Size</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="blrb align-top">0</td>
+        <td class="blrb text-left align-top" colspan="10">{{ .Get "dir0" }}</td>
+        <td></td>
+        <td class="blrb">00</td>
+        <td class="blrb">Byte</td>
+    </tr>
+    <tr>
+        <td class="blrb align-top">1</td>
+        <td class="blrb text-left align-top" colspan="10">{{ .Get "dir1" }}</td>
+        <td></td>
+        <td class="blrb">01</td>
+        <td class="blrb">Word</td>
+    </tr>
+    <tr>
+        <td class="bnone" colspan="12"></td>
+        <td class="blrb">10</td>
+        <td class="blrb">Long</td>
+    </tr>
+    </tbody>
+</table>

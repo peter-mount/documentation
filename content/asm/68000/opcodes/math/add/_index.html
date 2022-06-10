@@ -32,8 +32,13 @@ codes:
 
 {{< m68k/opcodepage >}}
 
-<div class="pagenobreak">
-  <p>Effective Address field—Determines addressing mode:</p>
+{{< m68k/instructionFields >}}
+  {{< m68k/opMode
+      dir0="\( ea + D_n \longrightarrow D_n \)"
+      dir1="\( D_n + ea \longrightarrow ea \)"
+  >}}
+
+  {{< m68k/instructionTitle title="Effective Address" subTitle="Determines the addressing mode" >}}
   <ol class="list-lower-alpha">
     <li>If the location specified is a source operand, all addressing modes can be used as listed in the following table:
 {{< m68k/effectiveAddress
@@ -49,10 +54,8 @@ codes:
       {{< m68k/effectiveAddress "(an)"="1" "(an)+"=1 "-(an)"=1 "(dan)"=1 "(danxn)"=1 "xxw"=1 "xxl"=1 >}}
     </li>
   </ol>
-</div>
 
-<div class="pagenobreak">
-    <h5>Note:</h5>
+    {{< m68k/instructionTitle title="Note" >}}
     <ol>
         <li>The <code>D<sub>n</sub></code> mode is used when the destination is a data register.</li>
         <li>The destination <code><em>ea</em></code> is invalid for a data register.</li>
@@ -60,4 +63,4 @@ codes:
         <li><code>ADDI</code> and <code>ADDQ</code> are used when the source is immediate data.</li>
         <li>Most assemblers handle the distinction between <code>ADD</code>, <code>ADDI</code> and <code>ADDQ</code></li>
     </ol>
-</div>
+{{< /m68k/instructionFields >}}

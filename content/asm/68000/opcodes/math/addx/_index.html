@@ -6,6 +6,7 @@ linkTitle: "ADDX"
 description: "ADD Extended"
 tags:
   - 68000 instruction
+hide_codes: true
 codes:
   - op: "ADDX"
     format: "1101R1S00Mr"
@@ -22,7 +23,7 @@ codes:
       "Z": "Cleared if the result is nonzero; unchanged otherwise"
       "V": "Set if an overflow occurs; cleared otherwise"
       "C": "Set if a carry is generated; cleared otherwise"
-      "note": \
+      "note":
         Normally, the Z condition code bit is set via programming before the start of an operation.
         This allows successful tests for zero results upon completion of multiple-precision operations.
     action: "Source + Destination + X \\longrightarrow Destination"

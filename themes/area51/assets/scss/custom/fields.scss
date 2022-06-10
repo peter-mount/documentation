@@ -1,0 +1,26 @@
+
+div.instructionFields {
+    div.instructionFieldsHeader {
+        font-weight: bold;
+        font-size: 120%;
+    }
+    div.instructionFieldsTitle {
+        font-weight: bold;
+        span {
+            font-weight: normal;
+            padding-left: 1em;
+        }
+    }
+
+    th.tcw1,
+    td.tcw1 {
+        width: 1em;
+        max-width: 1em;
+    }
+
+    th,
+    td {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+}
