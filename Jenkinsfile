@@ -30,6 +30,14 @@ node( 'documentation' ) {
         sh "echo '${cmd}'"
     }
 
+    stage( "vendors" ) {
+        dir('themes/area51/assets/vendor') {
+            writeFile file:'dummy', text:''
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/twbs/bootstrap']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/FortAwesome/Font-Awesome']]])
+        }
+    }
+
     stage( "build" ) {
         sh "docker-build -t ${TAG} ."
     }
