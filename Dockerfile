@@ -45,7 +45,7 @@ ARG prefix
 ARG arch=amd64
 ARG goos=linux
 FROM ${prefix}golang:alpine AS build
-ARG hugoVersion=0.100.2
+ARG hugoVersion=0.89.2
 
 # Required commands for the build
 RUN apk add --no-cache tzdata
