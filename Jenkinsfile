@@ -33,10 +33,8 @@ node( 'documentation' ) {
     stage( "vendors" ) {
         sh "rm -rf themes/area51/assets/vendor"
         sh "mkdir -p themes/area51/assets/vendor"
-        dir('themes/area51/assets/vendor') {
-            sh "git clone -b v4.6.1 https://github.com/twbs/bootstrap.git"
-            sh "git clone https://github.com/FortAwesome/Font-Awesome"
-        }
+        sh "cd themes/area51/assets/vendor;git clone -b v4.6.1 https://github.com/twbs/bootstrap.git"
+        sh "cd themes/area51/assets/vendor;git clone https://github.com/FortAwesome/Font-Awesome"
     }
 
     stage( "build" ) {
