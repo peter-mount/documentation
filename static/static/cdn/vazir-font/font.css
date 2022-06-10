@@ -1,7 +1,7 @@
 @font-face {
   font-family: Vazir;
   src: url('Vazir-Regular.eot');
-  src: url('Vazir-Regular.eot?#iefix') format('embedded-opentype'),
+  src: url('Vazir-Regular.iefix.eot') format('embedded-opentype'),
        url('Vazir-Regular.woff2') format('woff2'),
        url('Vazir-Regular.woff') format('woff'),
        url('Vazir-Regular.ttf') format('truetype');
@@ -12,7 +12,7 @@
 @font-face {
   font-family: Vazir;
   src: url('Vazir-Bold.eot');
-  src: url('Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+  src: url('Vazir-Bold.iefix.eot') format('embedded-opentype'),
        url('Vazir-Bold.woff2') format('woff2'),
        url('Vazir-Bold.woff') format('woff'),
        url('Vazir-Bold.ttf') format('truetype');
@@ -23,7 +23,7 @@
 @font-face {
   font-family: Vazir;
   src: url('Vazir-Thin.eot');
-  src: url('Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+  src: url('Vazir-Thin.iefix.eot') format('embedded-opentype'),
        url('Vazir-Thin.woff2') format('woff2'),
        url('Vazir-Thin.woff') format('woff'),
        url('Vazir-Thin.ttf') format('truetype');
