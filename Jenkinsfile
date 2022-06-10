@@ -31,6 +31,7 @@ node( 'documentation' ) {
     }
 
     stage( "vendors" ) {
+        sh "rm -rf themes/area51/assets/vendor"
         sh "mkdir -p themes/area51/assets/vendor"
         dir('themes/area51/assets/vendor') {
             sh "git clone https://github.com/twbs/bootstrap"
