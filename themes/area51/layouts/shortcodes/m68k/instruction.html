@@ -1,19 +1,3 @@
-{{- define "m68klookuptable" -}}
-<table class="memoryMap">
-    <thead>
-    <tr>
-        <th>{{$.field}}</th><th colspan="7">Operation</th>
-    </tr>
-    </thead>
-    <tbody>
-        {{- range $k, $v := $ -}}
-        {{- if ne $k "field" -}}
-        <tr><td class="align-top">{{$k}}</td><td class="text-left align-top">{{$v}}</td></tr>
-        {{- end -}}
-        {{- end -}}
-    </tbody>
-</table>
-{{- end -}}
 
 {{- with $.Get "def" -}}
 {{- $scratch := newScratch -}}

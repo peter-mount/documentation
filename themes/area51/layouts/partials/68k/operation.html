@@ -1,0 +1,21 @@
+{{- with .op }}{{partial "68k/block.html" (dict "label" "Operation:" "val" .)}}{{end -}}
+
+{{- with .syntax -}}
+    {{- template "68k/block.html_start" "Syntax:" -}}
+    {{- partial "68k/string_slice_to_div.html" . -}}
+    {{- template "68k/block.html_end" -}}
+{{- end -}}
+
+{{- with .datasize }}
+    {{- template "68k/block.html_start" "Data Size:" -}}
+    {{- partial "68k/string_slice_to_div.html" . -}}
+    {{- template "68k/block.html_end" -}}
+{{- end -}}
+
+{{- /*
+{{- with .action -}}
+    {{- template "68k/block.html_start" "Action:" -}}
+    \({{.}}\)
+    {{- template "68k/block.html_end" -}}
+{{- end -}}
+*/ -}}

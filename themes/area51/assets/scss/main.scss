@@ -32,6 +32,7 @@
 @import "custom/font";
 @import "custom/table";
 @import "custom/asm";
+@import "custom/alert";
 
 @if $td-enable-google-fonts {
     @import url($web-font-path);

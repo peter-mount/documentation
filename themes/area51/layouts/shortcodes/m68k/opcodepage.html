@@ -1,0 +1,9 @@
+{{- with .Page.Params.codes -}}
+{{- range . -}}
+<table class="memoryMap4">
+    {{- partial "68k/operation.html" . -}}
+    {{- partial "68k/flags.html" . -}}
+    {{- partial "68k/format.html" . -}}
+</table>
+{{- end -}}
+{{- end -}}

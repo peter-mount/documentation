@@ -1,0 +1,9 @@
+{{- define "68k/block.html_start" -}}
+<tr><th class="align-top">{{.}}</th><td class="bnone text-left align-top font-normal">
+{{- end -}}
+
+{{- define "68k/block.html_end"}}</td></tr>{{end -}}
+
+{{- template "68k/block.html_start" .label -}}
+{{.val}}
+{{- template "68k/block.html_end" -}}

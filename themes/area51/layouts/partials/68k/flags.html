@@ -1,0 +1,32 @@
+{{- with .flags -}}
+{{- $flags := . -}}
+{{- $s := slice "X" "N" "Z" "V" "C" -}}
+{{- template "68k/block.html_start" "Flags:" -}}
+
+<table class="memoryMap4">
+    <thead>
+    <tr>
+        {{- range $s -}}
+        <th>{{.}}</th>
+        {{- end -}}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {{- range $s -}}
+        <td class="brtb">
+            {{- with index $flags . }}*{{else}}U{{end -}}
+        </td>
+        {{- end -}}
+    </tr>
+    </tbody>
+</table>
+
+{{- range $s -}}
+<div>{{.}} {{with index $flags .}}{{.}}{{else}}Undefined{{end -}}</div>
+{{- end -}}
+
+{{- with index $flags "note"}}<div class="alert-info ma4">{{.}}</div>{{end -}}
+
+{{- template "68k/block.html_end" -}}
+{{- end -}}

@@ -6,25 +6,23 @@ linkTitle: "ABCD"
 description: "ABCD Add Decimal with Extend"
 tags:
   - 68000 instruction
+hide_codes: true
 codes:
   - op: "ABCD"
     format: "1100R10000Mr"
-    asm: "ABDC Dy, Dx"
-    xcode: 12
+    syntax:
+      - "ABCD Dy, Dx"
+      - "ABCD -(Ay), -(Ax)"
+    datasize: Byte
+    flags:
+      "X": "Set the same as the carry bit"
+      "Z": "Cleared if the result is nonzero; unchanged otherwise"
+      "C": "Set if a decimal carry was generated; cleared otherwise"
+      "note":
+        Normally, the Z condition code bit is set via programming before the start of an operation.
+        This allows successful tests for zero results upon completion of multiple-precision operations.
+    action: "Source_{10} + Destination_{10} + X \\longrightarrow Destination"
 ---
-<table class="memoryMap4">
-  {{< m68k/block title="Operation" >}}
-    \(Source_{10} + Destination_{10} + X \longrightarrow Destination\)
-  {{< /m68k/block >}}
-
-  {{< m68k/block title="Syntax" >}}
-  ABCD Dy, Dx<br/>
-  ABCD -(Ay), -(Ax)
-  {{< /m68k/block >}}
-
-  {{< m68k/size byte="1" >}}
-
-  {{< m68k/block title="Description" >}}
 <p>
   Adds the source operand to the destination operand along with the extend bit,
   and stores the result in the destination location. The addition is performed using binary-coded decimal arithmetic.
@@ -41,19 +39,5 @@ codes:
   </dd>
 </dl>
 <p>This operation is a byte operation only.</p>
-  {{< /m68k/block >}}
 
-  {{< m68k/flags
-    X="Set the same as the carry bit"
-    Z="Cleared if the result is nonzero; unchanged otherwise"
-    C="Set if a decimal carry was generated; cleared otherwise"
-  >}}
-  <div class="alert-info">
-    Normally, the Z condition code bit is set via programming before the start of an operation.
-    This allows successful tests for zero results upon completion of multiple-precision operations.
-  </div>
-  {{< /m68k/flags >}}
-
-  {{< m68k/instruction def="1100R10000Mr">}}
-
-</table>
+{{< m68k/opcodepage >}}

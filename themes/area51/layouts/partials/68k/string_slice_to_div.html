@@ -1,0 +1,11 @@
+{{- /*
+    This takes a slice value and renders it as a set of div elements wrapping each element.
+    If the value is not a slice it is treated as a slice of 1 element.
+*/ -}}
+{{- if reflect.IsSlice . -}}
+    {{- range . -}}
+        <div>{{.}}</div>
+    {{- end -}}
+{{- else -}}
+    <div>{{.}}</div>
+{{- end -}}
