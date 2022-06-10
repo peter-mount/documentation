@@ -1,0 +1,81 @@
+{{- $n := newScratch -}}
+
+{{- define "68k/effectiveAddress.html_entry" -}}
+{{- $d := . -}}
+{{- $n := index . "n" -}}
+{{- $label := index . "label" -}}
+{{- $exist := index . "valid" -}}
+    <td class="blrb">
+        {{- $label|safeHTML -}}
+        {{- with index . "note" -}}
+            {{- $l := add 1 (len ($n.Values)) -}}
+            {{- $n.Set (print $l) (print "<li>" . "</li>") }}
+            <sup>[{{$l}}]</sup>
+        {{- end -}}
+    </td><td class="brb">
+        {{- with $label -}}
+            {{- with $exist -}}
+                {{- with (index $d "mode")}}{{.|safeHTML}}{{else}}&hyphen;{{end -}}
+            {{- else}}&hyphen;{{end -}}
+        {{- end -}}
+    </td><td class="brb">
+        {{- with $label -}}
+            {{- with $exist -}}
+                {{- with (index $d "reg")}}{{.|safeHTML}}{{else}}&hyphen;{{end -}}
+            {{- else}}&hyphen;{{end -}}
+        {{- end -}}
+    </td>
+{{- end -}}
+
+<table class="memoryMap4">
+    <thead>
+    <tr>
+        <th>Addressing&nbsp;Mode</th>
+        <th>Mode</th>
+        <th>Register</th>
+        <th class="bnone"></th>
+        <th>Addressing&nbsp;Mode</th>
+        <th>Mode</th>
+        <th>Register</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "dn") "note" (.Get "note_dn") "label" "D<sub>n</sub>" "mode" "000" "reg" "D<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "xxw") "note" (.Get "note_xxw") "label" "(<em>xxx</em>).W" "mode" "111" "reg" "000") -}}
+    </tr>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "an") "note" (.Get "note_an") "label" "A<sub>n</sub>" "mode" "001" "reg" "A<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "xxl") "note" (.Get "note_xxl") "label" "(<em>xxx</em>).L" "mode" "111" "reg" "001") -}}
+    </tr>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "(an)") "note" (.Get "note_(an)") "label" "(A<sub>n</sub>)" "mode" "010" "reg" "A<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "data") "note" (.Get "note_data") "label" "#<em>&lt;data&gt;</em>" "mode" "111" "reg" "100") -}}
+    </tr>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "(an)+") "note" (.Get "note_(an)+") "label" "(A<sub>n</sub>)+" "mode" "011" "reg" "A<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n ) -}}
+    </tr>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "-(an)") "note" (.Get "note_-(an)") "label" "-(A<sub>n</sub>)" "mode" "100" "reg" "A<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n ) -}}
+    </tr>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "(dan)") "note" (.Get "note_dan") "label" "(D<sub>16</sub>,A<sub>n</sub>)" "mode" "101" "reg" "A<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "(dpc)") "note" (.Get "note_(dpc)") "label" "(D<sub>16</sub>,PC)" "mode" "111" "reg" "010") -}}
+    </tr>
+    <tr>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "(danxn)") "note" (.Get "note_(danxn)") "label" "(D<sub>8</sub>,A<sub>n</sub>,X<sub>n</sub>)" "mode" "110" "reg" "A<sub>n</sub>") -}}
+        <td></td>
+        {{- template "68k/effectiveAddress.html_entry" (dict "n" $n "valid" (.Get "(dpcxn)") "note" (.Get "note_(dpcxn)") "label" "(D<sub>8</sub>,PC,X<sub>n</sub>)" "mode" "111" "reg" "011") -}}
+    </tr>
+    </tbody>
+</table>
+
+{{- if len ($n.Values) -}}<small><ol>{{range $n.Values}}{{.|safeHTML}}{{end}}</ol></small>{{end -}}

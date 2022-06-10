@@ -33,6 +33,7 @@
 @import "custom/table";
 @import "custom/asm";
 @import "custom/alert";
+@import "custom/list";
 
 @if $td-enable-google-fonts {
     @import url($web-font-path);

@@ -31,3 +31,33 @@ codes:
 </p>
 
 {{< m68k/opcodepage >}}
+
+<div class="pagenobreak">
+  <p>Effective Address field—Determines addressing mode:</p>
+  <ol class="list-lower-alpha">
+    <li>If the location specified is a source operand, all addressing modes can be used as listed in the following table:
+{{< m68k/effectiveAddress
+      "dn"="1"
+      "an"="1" "note_an"="Word and long only"
+      "(an)"="1" "(an)+"=1 "-(an)"=1 "(dan)"=1 "(danxn)"=1
+      "xxw"=1 "xxl"=1 "data"=1 "(dpc)"=1 "(dpcxn)"=1
+>}}
+    </li>
+    <li>
+      If the location specified is a destination operand, only memory alterable
+      addressing modes can be used as listed in the following table:
+      {{< m68k/effectiveAddress "(an)"="1" "(an)+"=1 "-(an)"=1 "(dan)"=1 "(danxn)"=1 "xxw"=1 "xxl"=1 >}}
+    </li>
+  </ol>
+</div>
+
+<div class="pagenobreak">
+    <h5>Note:</h5>
+    <ol>
+        <li>The <code>D<sub>n</sub></code> mode is used when the destination is a data register.</li>
+        <li>The destination <code><em>ea</em></code> is invalid for a data register.</li>
+        <li><code>ADDA</code> is used when the destination is an address register.</li>
+        <li><code>ADDI</code> and <code>ADDQ</code> are used when the source is immediate data.</li>
+        <li>Most assemblers handle the distinction between <code>ADD</code>, <code>ADDI</code> and <code>ADDQ</code></li>
+    </ol>
+</div>
