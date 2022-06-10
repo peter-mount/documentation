@@ -1,3 +1,11 @@
+{{- /*
+    Take a format string and render a table showing the 16 bit 68K instruction
+    with each bit or bits associated with specific parts of the instruction
+    annotated.
+
+*/ -}}
+
+{{- /* Utility to render a simple table TODO to be moved out into a partial */ -}}
 {{- define "m68klookuptable" -}}
 <table class="memoryMap">
     <thead>
@@ -28,38 +36,45 @@
     </tr>
     </thead>
     <tbody>
+
+    {{- /* First row, in most cases the only one */ -}}
     <tr>
         {{- range split . "" -}}
-        {{- if eq . "0" -}}<td class="brtb">0</td>
-        {{- else if eq . "1" -}}<td class="brtb">1</td>
-        {{- else if eq . "d" -}}<td class="brtb green" colspan="3">Register</td>
-        {{- else if eq . "E" -}}
-        <td class="brtb subTable" colspan="6">
-            <table class="generic subTable">
-                <tr><td colspan="2">Effective Address</td></tr>
-                <tr><td class="brtb orange">Mode</td>
-                    <td class="brtb green">Register</td></tr>
-            </table>
-        </td>
-        <!-- td class="brtb orange" colspan="3">E/A Mode</td>
-        <td class="brtb green" colspan="3">E/A Register</td -->
-        {{- else if eq . "M" -}}<td class="brtb orange">R/M</td>
-        {{- else if eq . "m" -}}
-        <td class="brtb subTable" colspan="3">
-            <table class="generic subTable">
-                <tr><td colspan="3">Op Mode</td></tr>
-                <tr>
-                    <td class="brtb orange">Dir</td>
-                    <td class="brtb blue" colspan="2">Size</td>
-                </tr>
-            </table>
-        </td>
-        {{- else if eq . "R" -}}<td class="brtb green" colspan="3">Rx</td>
-        {{- else if eq . "r" -}}<td class="brtb green" colspan="3">Ry</td>
-        {{- else if eq . "S" -}}<td class="brtb blue" colspan="2">Size</td>
-        {{- else -}}<td class="brtb orange">{{.}}</td>
+            {{- if eq . "0" -}}
+                <td class="brtb" rowspan="2">0</td>
+            {{- else if eq . "1" -}}
+                <td class="brtb" rowspan="2">1</td>
+            {{- else if eq . "d" -}}
+                <td class="brtb green" rowspan="2" colspan="3">Register</td>
+            {{- else if eq . "E" -}}
+                <td class="brtb subTable" colspan="6">Effective Address</td>
+            {{- else if eq . "M" -}}
+                <td class="brtb orange" rowspan="2">R/M</td>
+            {{- else if eq . "m" -}}
+                <td class="brtb subTable" colspan="3">Op Mode</td>
+            {{- else if eq . "R" -}}
+                <td class="brtb green" rowspan="2" colspan="3">Rx</td>
+            {{- else if eq . "r" -}}
+                <td class="brtb green" rowspan="2" colspan="3">Ry</td>
+            {{- else if eq . "S" -}}
+                <td class="brtb blue" rowspan="2" colspan="2">Size</td>
+            {{- else -}}
+                <td class="brtb orange" rowspan="2">{{.}}</td>
+            {{- end -}}
+            {{- $scratch.Set . 1 -}}
         {{- end -}}
-        {{- $scratch.Set . 1 -}}
+    </tr>
+
+    {{- /* Second row, only for entries that need a second row */ -}}
+    <tr>
+        {{- range split . "" -}}
+            {{- if eq . "E" -}}
+                <td class="brtb orange" colspan="3">Mode</td>
+                <td class="brtb green" colspan="3">Register</td>
+            {{- else if eq . "m" -}}
+                <td class="brtb orange">Dir</td>
+                <td class="brtb blue" colspan="2">Size</td>
+            {{- end -}}
         {{- end -}}
     </tr>
     </tbody>
@@ -86,8 +101,9 @@
 
 {{- with $scratch.Get "m" -}}
 <p>
-    <strong>O/M</strong> the operation Mode:
-    {{- template "m68klookuptable" (dict "field" "O/M" "0" "Result into register" "1" "Result into address") -}}
+    <strong>Op Mode</strong>:
+    {{- template "m68klookuptable" (dict "field" "Dir" "0" "\\( ea + D_n \\longrightarrow D_n \\)" "1" "\\( D_n + ea \\longrightarrow ea \\)") -}}
+    {{- template "m68klookuptable" (dict "field" "Size" "00" "Byte" "01" "Word" "10" "Long") -}}
 </p>
 {{- end -}}
 

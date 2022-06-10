@@ -9,60 +9,38 @@ tags:
 codes:
   - op: "ADDX"
     format: "1101R1S00Mr"
-    asm: "ADDX Dy, Dx"
-m68k:
-  operation: "Source + Destination + X \\longrightarrow Destination"
-  asm:
-    - "ADDX Dy, Dx"
-    - "ADDX -(Ay), -(Ax)"
-  size:
-    - Byte
-    - Word
-    - Long
-  flags:
-    "x": "Set the same as the carry bit"
+    syntax:
+      - "ADDX Dy, Dx"
+      - "ADDX -(Ay), -(Ax)"
+    datasize:
+      - Byte
+      - Word
+      - Long
+    flags:
+      "X": "Set the same as the carry bit"
+      "N": "Set if the result is negative; cleared otherwise"
+      "Z": "Cleared if the result is nonzero; unchanged otherwise"
+      "V": "Set if an overflow occurs; cleared otherwise"
+      "C": "Set if a carry is generated; cleared otherwise"
+      "note": \
+        Normally, the Z condition code bit is set via programming before the start of an operation.
+        This allows successful tests for zero results upon completion of multiple-precision operations.
+    action: "Source + Destination + X \\longrightarrow Destination"
 ---
-<table class="memoryMap4">
-  {{< m68k/block title="Operation" >}}
-  \(Source + Destination + X \longrightarrow Destination\)
-  {{< /m68k/block >}}
 
-  {{< m68k/block title="Syntax" >}}
-  ADDX Dy, Dx<br/>
-  ADDX -(Ay), -(Ax)<br/>
-  {{< /m68k/block >}}
+<p>
+  Adds the source operand and the extend bit to the destination operand and
+  stores the result in the destination location. The operands can be addressed in two
+  different ways:
+</p>
+<dl>
+  <dt>Data register to data register</dt>
+  <dd>The data registers specified in the instruction contain the operands.</dd>
+  <dt>Memory to memory</dt>
+  <dd>The address registers specified in the instruction address the operands using the predecrement addressing mode.</dd>
+</dl>
+<p>
+  The size of the operation can be specified as byte, word, or long.
+</p>
 
-  {{< m68k/size byte="1" word="1" long="1" >}}
-
-  {{< m68k/block title="Description" >}}
-  <p>
-    Adds the source operand and the extend bit to the destination operand and
-    stores the result in the destination location. The operands can be addressed in two
-    different ways:
-  </p>
-  <dl>
-    <dt>Data register to data register</dt>
-    <dd>The data registers specified in the instruction contain the operands.</dd>
-    <dt>Memory to memory</dt>
-    <dd>The address registers specified in the instruction address the operands using the predecrement addressing mode.</dd>
-  </dl>
-  <p>
-    The size of the operation can be specified as byte, word, or long.
-  </p>
-  {{< /m68k/block >}}
-
-  {{< m68k/flags
-    X="Set the same as the carry bit"
-    N="Set if the result is negative; cleared otherwise"
-    Z="Cleared if the result is nonzero; unchanged otherwise"
-    V="Set if an overflow occurs; cleared otherwise"
-    C="Set if a carry is generated; cleared otherwise"
-  >}}
-  <div class="alert-info">
-    Normally, the Z condition code bit is set via programming before the start of an operation.
-    This allows successful tests for zero results upon completion of multiple-precision operations.
-  </div>
-  {{< /m68k/flags >}}
-
-  {{< m68k/instruction def="1101R1S00Mr">}}
-</table>
+{{< m68k/opcodepage >}}
