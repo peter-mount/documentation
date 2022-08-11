@@ -53,7 +53,7 @@ getSpectrumCharPos:             ; Get Spectrum char pos (bc) into HL for physica
 
     ld      a, b                ; get row
     add     a                   ; Shift right 5 to form low address
-    add     a                   ; use add not srr as this saves 1 byte and half the t-states
+    add     a                   ; use add not sla as this saves 1 byte and half the t-states
     add     a                   ; per shift, especially as we don't need to worry about carry flag
     add     a
     add     a                   ; HA is now the address of the start of line
