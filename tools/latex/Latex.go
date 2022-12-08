@@ -8,7 +8,6 @@ import (
   "github.com/peter-mount/documentation/tools/latex/parser"
   "github.com/peter-mount/documentation/tools/web"
   "github.com/peter-mount/go-kernel/v2/util/task"
-  "golang.org/x/net/html"
   "log"
   "os"
   "strings"
@@ -61,21 +60,17 @@ func (l *LaTeX) generate(book *hugo.Book) error {
   w := NewWriter(f)
   defer w.Close()
 
-  err = w.DocumentClass()
-  if err != nil {
-    return err
-  }
-
-  w = w.Begin("document")
+  w = w.DocumentClass().
+    UsePackage("color").
+    UsePackage("framed").
+    UsePackage("comment").
+    Begin("document")
 
   for _, n := range p.GetElementByClass("td-main") {
-    _ = parser.Traverse(n, 0, func(node *html.Node) error {
-      switch node.Type {
-      case html.TextNode:
-        _ = w.WriteString("%s\n", node.Data)
-      }
-      return nil
-    })
+    err = l.parseNode(w, n)
+    if err != nil {
+      return err
+    }
   }
 
   return nil

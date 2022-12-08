@@ -1,0 +1,436 @@
+---
+type: "manual"
+title: "Page 02"
+linkTitle: "Page 02"
+weight: 2
+categories:
+    - bbc
+memorymap:
+  - address: "0200"
+    length: 2
+    name: USERV
+    desc: "User Vector"
+  - address: "0202"
+    length: 2
+    name: BRKV
+    desc: "BRK Vector"
+  - address: "0204"
+    length: 2
+    name: IRQ1V
+    desc: "Interrupt request Vector 1"
+  - address: "0206"
+    length: 2
+    name: IRQ2V
+    desc: "Interrupt request Vector 2"
+  - address: "0208"
+    length: 2
+    name: CLIV
+    desc: "OSCLI Vector"
+  - address: "020A"
+    length: 2
+    name: BYTEV
+    desc: "OSBYTE Vector"
+  - address: "020C"
+    length: 2
+    name: WORDV
+    desc: "OSWORD Vector"
+  - address: "020E"
+    length: 2
+    name: WRCHV
+    desc: "OSWRCH Vector"
+  - address: "0210"
+    length: 2
+    name: RDCHV
+    desc: "OSRDCH Vector"
+  - address: "0212"
+    length: 2
+    name: FILEV
+    desc: "OSFILE Vector"
+  - address: "0214"
+    length: 2
+    name: ARGSV
+    desc: "OSARGS Vector"
+  - address: "0216"
+    length: 2
+    name: BGETV
+    desc: "OSBGET Vector"
+  - address: "0218"
+    length: 2
+    name: BPUTV
+    desc: "OSBPUT Vector"
+  - address: "021A"
+    length: 2
+    name: GBPBV
+    desc: "OSGBPB Vector"
+  - address: "021C"
+    length: 2
+    name: FINDV
+    desc: "OSFIND Vector"
+  - address: "021E"
+    length: 2
+    name: FSCV
+    desc: "File system control entry vector"
+  - address: "0220"
+    length: 2
+    name: EVNTV
+    desc: "Event interrupt vector"
+  - address: "0222"
+    length: 2
+    name: UPTV
+    desc: "User print routine vector"
+  - address: "0224"
+    length: 2
+    name: NETV
+    desc: "Used by ECONET to take control of computer"
+  - address: "0226"
+    length: 2
+    name: VDUV
+    desc: "Unrecognised VDU23 & PLOT commands"
+  - address: "0228"
+    length: 2
+    name: KEYV
+    desc: "Full keyboard access"
+  - address: "022A"
+    length: 2
+    name: INSV
+    desc: "Insert into buffer vector"
+  - address: "022C"
+    length: 2
+    name: REMV
+    desc: "Remove from buffer vector"
+  - address: "022E"
+    length: 2
+    name: CNPV
+    desc: "Count/purge buffer vector"
+  - address: "0230"
+    length: 2
+    name: IND1V
+    desc: "Spare Vector"
+  - address: "0232"
+    length: 2
+    name: IND2V
+    desc: "Spare Vector"
+  - address: "0234"
+    length: 2
+    name: IND3V
+    desc: "Spare Vector"
+  - address: "0236"
+    length: 2
+    desc: "Start address of OS variables"
+  - address: "0238"
+    length: 2
+    desc: "Address of ROM pointer table"
+  - address: "023A"
+    length: 2
+    desc: "Address of ROM information table"
+  - address: "023C"
+    length: 2
+    desc: "Address of key translation table"
+  - address: "023E"
+    length: 2
+    desc: "Start address of VDU variables"
+
+  - address: "0240"
+    length: 1
+    desc: "CFS timeout counter"
+  - address: "0241"
+    length: 1
+    desc: "Input source"
+  - address: "0242"
+    length: 1
+    desc: "Keyboard semaphore"
+  - address: "0243"
+    length: 1
+    desc: "Primary OSHWM"
+  - address: "0244"
+    length: 1
+    desc: "Current OSHWM"
+  - address: "0245"
+    length: 1
+    desc: "RS423 mode"
+  - address: "0246"
+    length: 1
+    desc: "Character definition explosion state"
+  - address: "0247"
+    length: 1
+    desc: "Cassette/ROM filing system switch"
+  - address: "0248"
+    length: 1
+    desc: "RAM copy of ULA control reg"
+  - address: "0249"
+    length: 1
+    desc: "RAM copy of ULA palette reg"
+  - address: "024A"
+    length: 1
+    desc: "ROM number active at last BRK"
+  - address: "024B"
+    length: 1
+    desc: "ROM number containing BASIC"
+  - address: "024C"
+    length: 1
+    desc: "Current ADC channel"
+  - address: "024D"
+    length: 1
+    desc: "Max ADC channel"
+  - address: "024E"
+    length: 1
+    desc: "ADC conversion type"
+  - address: "024F"
+    length: 1
+    desc: "RS423 user flag"
+  - address: "0250"
+    length: 1
+    desc: "RS423 control flag"
+  - address: "0251"
+    length: 1
+    desc: "Flashing colours counter"
+  - address: "0252"
+    length: 1
+    desc: "Mark period counter"
+  - address: "0253"
+    length: 1
+    desc: "Space period counter"
+  - address: "0254"
+    length: 1
+    desc: "Keyboard auto-repeat delay"
+  - address: "0255"
+    length: 1
+    desc: "Keyboard auto-repeat period"
+  - address: "0256"
+    length: 1
+    desc: "*EXEC file handle"
+  - address: "0257"
+    length: 1
+    desc: "*SPOOL file handle"
+  - address: "0258"
+    length: 1
+    desc: "ESCAPE/BREAK effect"
+  - address: "0259"
+    length: 1
+    desc: "ECONET keyboard disable"
+  - address: "025A"
+    length: 1
+    desc: "Keyboard status"
+  - address: "025B"
+    length: 1
+    desc: "RS423 handshake extent"
+  - address: "025C"
+    length: 1
+    desc: "RS423 input supression flag"
+  - address: "025D"
+    length: 1
+    desc: "RS423/cassette selection flag"
+  - address: "025E"
+    length: 1
+    desc: "Econet OS call interception status"
+  - address: "025F"
+    length: 1
+    desc: "Econet OSRDCH interception status"
+  - address: "0260"
+    length: 1
+    desc: "Econet OSWRCH interception status"
+  - address: "0261"
+    length: 1
+    desc: "Speech suppression status"
+  - address: "0262"
+    length: 1
+    desc: "Sount suppression status"
+  - address: "0263"
+    length: 1
+    desc: "BELL channel"
+  - address: "0264"
+    length: 1
+    desc: "BELL envelope number/volume"
+  - address: "0265"
+    length: 1
+    desc: "BELL frequency"
+  - address: "0266"
+    length: 1
+    desc: "BELL duration"
+  - address: "0267"
+    length: 1
+    desc: "Startup message & !BOOT options"
+  - address: "0268"
+    length: 1
+    desc: "Length of soft key string"
+  - address: "0269"
+    length: 1
+    desc: "No of lines printed since last page"
+  - address: "026A"
+    length: 1
+    desc: "No of items in VDU queue"
+  - address: "026B"
+    length: 1
+    desc: "TAB character value"
+  - address: "026C"
+    length: 1
+    desc: "ESCAPE character value"
+
+  - address: "026D"
+    length: 1
+    desc: "Character 0xC0 to 0xCF status"
+  - address: "026E"
+    length: 1
+    desc: "Character 0xD0 to 0xDF status"
+  - address: "026F"
+    length: 1
+    desc: "Character 0xE0 to 0xEF status"
+  - address: "0270"
+    length: 1
+    desc: "Character 0xF0 to 0xFF status"
+  - address: "0271"
+    length: 1
+    desc: "Function key status"
+  - address: "0272"
+    length: 1
+    desc: "SHIFT+Function key status"
+  - address: "0273"
+    length: 1
+    desc: "CTRL+Function key status"
+  - address: "0274"
+    length: 1
+    desc: "CTRL+SHIFT+Function key status"
+  - address: "0275"
+    length: 1
+    desc: "ESCAPE key status"
+  - address: "0276"
+    length: 1
+    desc: "ESCAPE key effect"
+
+  - address: "0277"
+    length: 1
+    desc: "IRQ bit mask for user 6522"
+  - address: "0278"
+    length: 1
+    desc: "IRQ bit mask for 6850"
+  - address: "0279"
+    length: 1
+    desc: "IRQ bit mask for system 6522"
+  - address: "027A"
+    length: 1
+    desc: "Tube presence flag"
+  - address: "027B"
+    length: 1
+    desc: "Speech processor presence flag"
+  - address: "027C"
+    length: 1
+    desc: "Write character destination status"
+  - address: "027D"
+    length: 1
+    desc: "Cursor editing status"
+  - address: "027E"
+    length: 3
+    desc: "Unused"
+  - address: "0281"
+    length: 1
+    desc: "Used by *FX1"
+  - address: "0282"
+    length: 1
+    desc: "RAM copy of serial processor ULA"
+  - address: "0283"
+    length: 1
+    desc: "Timer switch state"
+  - address: "0284"
+    length: 1
+    desc: "Soft key consistancy flag"
+  - address: "0285"
+    length: 1
+    desc: "Printer destination flag"
+  - address: "0286"
+    length: 1
+    desc: "Character ignored by printer"
+  - address: "0287"
+    length: 3
+    desc: "BREAK intercept code"
+  - address: "028A"
+    length: 2
+    desc: "Unused"
+  - address: "028C"
+    length: 1
+    desc: "Current language ROM number"
+  - address: "028D"
+    length: 1
+    desc: "Last BREAK type"
+  - address: "028E"
+    length: 1
+    desc: "Available RAM"
+  - address: "028F"
+    length: 1
+    desc: "Start up option flag"
+
+  - address: "0290"
+    length: 1
+    desc: "VDU vertical adjust, set by *TV"
+  - address: "0291"
+    length: 1
+    desc: "Interlace toggle flag, set by *TV"
+
+  - address: "0292"
+    length: 5
+    desc: "First copy of system clock values"
+  - address: "0297"
+    length: 5
+    desc: "Second copy of system clock values"
+  - address: "029C"
+    length: 5
+    desc: "Countdown interval timer value"
+
+  - address: "02A1"
+    length: 16
+    desc: "Paged ROM type table"
+
+  - address: "02B1"
+    length: 2
+    desc: "INKEY countdown timer"
+  - address: "02B3"
+    length: 3
+    desc: "OSWORD 0x01 workspace"
+  - address: "02B6"
+    length: 4
+    desc: "Low bytes of most recent analogue converter values"
+  - address: "02BA"
+    length: 4
+    desc: "High bytes of most recent analogue converter values"
+  - address: "02BE"
+    length: 1
+    desc: "Analogue system flag"
+
+  - address: "02BF"
+    length: 10
+    desc: "Event enable flags"
+  - address: "02C9"
+    length: 1
+    desc: "Soft key expansion pointer"
+  - address: "02CA"
+    length: 1
+    desc: "First auto repeat count"
+  - address: "02CB"
+    length: 3
+    desc: "Two key rollover processing workspace"
+  - address: "02CE"
+    length: 1
+    desc: "Sound semaphore"
+  - address: "02CF"
+    length: 9
+    desc: "Buffer busy flags"
+  - address: "02D8"
+    length: 9
+    desc: "Buffer start indices"
+  - address: "02E1"
+    length: 9
+    desc: "Buffer end indices"
+
+  - address: "02EA"
+    length: 2
+    desc: "Block size of current resident block of open cassette input file"
+  - address: "02EC"
+    length: 1
+    desc: "Block flag of current resident block of open cassette input file"
+  - address: "02ED"
+    length: 1
+    desc: "Last character in currently resident block of open cassette input file"
+  - address: "02EE"
+    length: 18
+    desc: "Used as area to build OSFILE control blocks for *LOAD & *SAVE"
+
+---

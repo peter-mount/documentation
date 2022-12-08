@@ -1,0 +1,171 @@
+---
+type: "manual"
+title: "Page 00"
+linkTitle: "Page 00"
+weight: -1
+categories:
+    - bbc
+memorymap:
+  - address: "0000"
+    length: 144
+    desc: "Allocated to current language"
+
+  - address: "0070"
+    offset: "0x70"
+    length: 32
+    desc: "Guaranteed unused with BASIC"
+
+  - address: "0090"
+    length: 16
+    desc: "Econet workspace"
+
+  - address: "00A0"
+    length: 8
+    desc: "Allocated to current NMI owner"
+  - address: "00A8"
+    length: 8
+    desc: "OS command workspace"
+
+  - address: "00B0"
+    length: 16
+    desc: "File system scratch space"
+  - address: "00C0"
+    length: 16
+    desc: "File system private space"
+
+  - address: "00D0"
+    length: 1
+    desc: "VDU status"
+    val:
+      "Bit 0": "VDU 2 enabled"
+      "Bit 1": "Scroll disabled"
+      "Bit 2": "Paged scroll selected"
+      "Bit 3": "Soft scrolling"
+      "Bit 4": "unused"
+      "Bit 5": "VDU 5 enabled"
+      "Bit 6": "Set when edit/text cursors are separated"
+      "Bit 7": "Set if VDU driver disabled"
+  - address: "00D1"
+    length: 1
+    desc: "Byte mask for current graphics point"
+  - address: "00D2"
+    length: 2
+    desc: "Text colour to be ORed & EORed into memory respectively"
+  - address: "00D4"
+    length: 2
+    desc: "Graphics colour to be ORed & EORed into memory respectively"
+  - address: "00D6"
+    length: 2
+    desc: "Address of top line of current graphics character cell"
+  - address: "00D8"
+    length: 1
+    desc: "Caps-lock/shift-lock"
+    val:
+      "48": "No locks"
+      "32": "Caps lock"
+      "16": "Shift lock"
+  - address: "00DA"
+    length: 6
+    desc: "Temp workspace"
+  - address: "00E0"
+    length: 2
+    desc: "Pointer to row multiplication table, high byte first"
+
+  - address: "00E2"
+    length: 1
+    desc: "Cassette filing system status"
+    val:
+      "Bit 0": "Input file open"
+      "Bit 1": "Output file open"
+      "Bit 2": "Unused"
+      "Bit 3": "Set if currently *CAT"
+      "Bit 4": "Unused"
+      "Bit 5": "Unused"
+      "Bit 6": "Set if at end of file"
+      "Bit 7": "Set if end of file warning issued"
+  - address: "00E3"
+    length: 1
+    desc: "Cassette filing system options *OPT"
+
+  - address: "00E4"
+    length: 3
+    desc: "General OS workspace"
+
+  - address: "00E7"
+    length: 1
+    desc: "Auto repeat countdown timer"
+
+  - address: "00E8"
+    length: 2
+    desc: "Pointer to input buffer used by OSWORD 0x01"
+  - address: "00EA"
+    length: 1
+    desc: "RS423 timeout counter"
+    val:
+      "=1": "Cassette filing system using 6850"
+      "=0": "RS423 system holds 6850 but has timed out"
+      "<0": "RS423 system holds 6850 but has not yet timed out"
+  - address: "00EB"
+    length: 1
+    desc: "Cassette critical flag"
+
+  - address: "00EC"
+    length: 1
+    desc: "Internal key no of most recently pressed key"
+  - address: "00ED"
+    length: 1
+    desc: "Internal key no of first key pressed of those still pressed"
+  - address: "00EE"
+    length: 1
+    desc: "Internal key number of character to be ignored when scanning keyboard"
+    val:
+      "Note": "0xEE is also RAM copy of 1MHz bus register"
+  - address: "00EF"
+    length: 1
+    desc: "Accumulator value for most recent OSBYTE/OSWORD"
+  - address: "00F0"
+    length: 1
+    desc: "X register for most recent OSBYTE/OSWORD"
+  - address: "00F1"
+    length: 1
+    desc: "Y register value for most recent OSBYTE/OSWORD"
+  - address: "00F2"
+    length: 2
+    desc: "text pointer for processing OS commands/filenames"
+  - address: "00F4"
+    length: 1
+    desc: "RAM copy of currently selected Paged ROM"
+  - address: "00F5"
+    length: 1
+    desc: "Current logical speech PHROM or ROM filing system ROM number"
+  - address: "00F6"
+    length: 2
+    desc: "Address pointer into paged ROM or speech PHROM"
+  - address: "00F8"
+    length: 2
+    desc: "Unused"
+  - address: "00FA"
+    length: 2
+    desc: "General OS workspace"
+  - address: "00FC"
+    length: 1
+    desc: "Accumulator saved in IRQ routine"
+  - address: "00FD"
+    length: 2
+    desc: "Pointer to error message"
+  - address: "00FF"
+    length: 1
+    desc: "Escape status"
+    val:
+      "Bit 7": "set if ESCAPE pressed"
+
+
+---
+<p>
+  On the BBC Micro addresses 0x0000&hellip;0x008F are reserved for the current language.
+  The table above lists the known BASIC II memory map for those addresses.
+</p>
+<p>
+  BBC Basic reserves 0x0070&hellip;0x008F for user programs.
+  User code should not use addresses outside that range unless they have replaced BASIC.
+</p>

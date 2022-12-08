@@ -1,0 +1,66 @@
+---
+type: "manual"
+title: "Page 08-0D"
+linkTitle: "Page 08-0D"
+weight: 8
+categories:
+  - bbc
+memorymap:
+  - address: "0800"
+    length: 64
+    desc: "Sound workspace"
+  - address: "0840"
+    length: 16
+    desc: "Sound channel 0 buffer"
+  - address: "0850"
+    length: 16
+    desc: "Sound channel 1 buffer"
+  - address: "0860"
+    length: 16
+    desc: "Sound channel 2 buffer"
+  - address: "0870"
+    length: 16
+    desc: "Sound channel 3 buffer"
+  - address: "0880"
+    length: 64
+    desc: "Printer buffer"
+  - address: "08C0"
+    length: 64
+    desc: "Envelope storage area, envelopes 1-4"
+
+  - address: "0900"
+    length: 192
+    desc: "RS423 output buffer or Envelope storage area, envelopes 5-16"
+  - address: "09C0"
+    length: 64
+    desc: "Speech buffer"
+  - address: "0900"
+    length: 256
+    desc: "Cassette output buffer (takes entire page if used)"
+
+  - address: "0A00"
+    length: 256
+    desc: "RS423 or Cassette input buffer"
+
+  - address: "0B00"
+    length: 16
+    desc: "1 byte pointer to *KEY text for soft keys 0-15"
+  - address: "0B10"
+    length: 240
+    desc: "Function key text"
+
+  - address: "0C00"
+    length: 256
+    desc: "Character 224-255 definitions"
+
+  - address: "0D00"
+    length: 159
+    desc: "NMI routines (disk & econet)"
+  - address: "0D9F"
+    length: 121
+    desc: "Expander vector set"
+  - address: "0DF0"
+    length: 16
+    desc: "Paged ROM workspace storage locations"
+
+---
