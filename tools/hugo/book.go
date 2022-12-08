@@ -1,7 +1,7 @@
 package hugo
 
 import (
-  strings2 "github.com/peter-mount/go-kernel/util/strings"
+  strings2 "github.com/peter-mount/go-kernel/v2/util/strings"
   "os"
   "path"
   "path/filepath"

@@ -2,7 +2,7 @@ package util
 
 import (
   "fmt"
-  "github.com/peter-mount/go-kernel/util/strings"
+  "github.com/peter-mount/go-kernel/v2/util/strings"
   "gopkg.in/yaml.v2"
   "io"
   "path"

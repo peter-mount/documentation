@@ -5,7 +5,7 @@ import (
   "fmt"
   "github.com/peter-mount/documentation/tools"
   "github.com/peter-mount/documentation/tools/hugo"
-  "github.com/peter-mount/go-kernel/util/task"
+  "github.com/peter-mount/go-kernel/v2/util/task"
   "log"
 )
 

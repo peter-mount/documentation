@@ -2,7 +2,7 @@ package hugo
 
 import (
   "fmt"
-  util2 "github.com/peter-mount/go-kernel/util"
+  util2 "github.com/peter-mount/go-kernel/v2/util"
   "log"
   "os"
   "os/exec"

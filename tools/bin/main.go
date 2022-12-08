@@ -10,7 +10,7 @@ import (
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/pdf"
   "github.com/peter-mount/documentation/tools/telstar"
-  "github.com/peter-mount/go-kernel"
+  "github.com/peter-mount/go-kernel/v2"
   "log"
 )
 
