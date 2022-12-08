@@ -7,9 +7,12 @@ import (
   "github.com/peter-mount/documentation/tools/hugo"
   "github.com/peter-mount/documentation/tools/latex/parser"
   "github.com/peter-mount/documentation/tools/web"
+  util2 "github.com/peter-mount/go-kernel/v2/util"
   "github.com/peter-mount/go-kernel/v2/util/task"
   "log"
   "os"
+  "os/exec"
+  "path/filepath"
   "strings"
 )
 
@@ -24,9 +27,11 @@ type LaTeX struct {
 func (l *LaTeX) Start() error {
   if *l.enable {
     return l.bookShelf.Books().ForEach(func(book *hugo.Book) error {
-      l.worker.AddPriorityTask(tools.PriorityPDF, func(ctx context.Context) error {
-        return l.generate(book)
-      })
+      if book.ID == "test" {
+        l.worker.AddPriorityTask(tools.PriorityPDF, func(ctx context.Context) error {
+          return l.generate(book)
+        })
+      }
       return nil
     })
   }
@@ -42,6 +47,24 @@ func appendArg(a []string, flag bool, f string, s ...interface{}) []string {
 }
 
 func (l *LaTeX) generate(book *hugo.Book) error {
+  bookDir := filepath.Join("public/static/book", book.ID)
+  log.Println("Creating", bookDir)
+  err := os.MkdirAll(bookDir, 0777)
+  if err != nil {
+    return err
+  }
+
+  tex := filepath.Join(bookDir, book.ID+".tex")
+  //pdf := filepath.Join(bookDir, book.ID+".pdf")
+
+  err = l.generateTeX(book, tex)
+  if err == nil {
+    err = l.generatePdf(tex)
+  }
+  return err
+}
+
+func (l *LaTeX) generateTeX(book *hugo.Book, tex string) error {
   log.Println("Generating LaTeX for", book.ID)
 
   url := l.webserver.WebPath("%s/_print/index.html", strings.ToLower(book.WebPath()))
@@ -52,8 +75,8 @@ func (l *LaTeX) generate(book *hugo.Book) error {
     return err
   }
 
-  dest := "public/static/book/" + book.ID + "-tx.tex"
-  f, err := os.Create(dest)
+  log.Println("Creating", tex)
+  f, err := os.Create(tex)
   if err != nil {
     return err
   }
@@ -74,4 +97,17 @@ func (l *LaTeX) generate(book *hugo.Book) error {
   }
 
   return nil
+}
+
+func (l *LaTeX) generatePdf(tex string) error {
+  tmpDir := filepath.Dir(tex)
+
+  stdout := &util2.LogStream{}
+  defer stdout.Close()
+
+  cmd := exec.Command("latex", "-interaction=nonstopmode", "-output-directory="+tmpDir, "-output-format=pdf", tex)
+  cmd.Stdout = stdout
+  cmd.Stderr = stdout
+
+  return cmd.Run()
 }

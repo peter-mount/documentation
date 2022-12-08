@@ -2,8 +2,8 @@ package latex
 
 import (
   "github.com/peter-mount/documentation/tools/latex/parser"
+  "github.com/peter-mount/documentation/tools/latex/table"
   "golang.org/x/net/html"
-  "log"
   "strings"
 )
 
@@ -56,8 +56,8 @@ func (l *LaTeX) parseElement(w *Writer, n *html.Node) error {
     return parser.StopChildTraverse()
 
   case "table":
-    t := NewTable(w, n)
-    log.Printf("table %d %d", t.maxCols, t.rows)
+    t := table.NewTable(w, n)
+    //log.Printf("table %d %d", t.maxCols, t.rows)
 
     w = w.Begin("center").Begin("tabular").
       WriteString("{|| %s||}", strings.Repeat("c ", t.maxCols))
