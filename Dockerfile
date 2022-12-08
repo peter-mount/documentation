@@ -17,7 +17,7 @@ ARG prefix
 FROM ${prefix}debian:11-slim AS base
 ARG aptrepo
 ARG npmrepo
-
+ARG nodejs=https://nodejs.org/dist/v18.12.1/node-v18.12.1-linux-x64.tar.xz
 # Needed post node15 otherwise npm will install at / & thats no longer permitted
 WORKDIR /root
 
@@ -32,12 +32,21 @@ RUN if [ ! -z "${aptrepo}" ]; then \
     ;fi &&\
     if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi &&\
     apt-get update &&\
-    apt-get install -y ca-certificates chromium nodejs npm git &&\
+    apt-get install -y ca-certificates chromium git curl xz-utils
+
+# Install latest stable nodejs
+RUN curl ${nodejs} -o /tmp/node.txz && (cd /usr/local;tar xJpf /tmp/node.txz) &&\
+    (cd /usr/local/bin;for i in ../node-*/bin/*;do ln -s ${i};done) &&\
     npm install npm@latest -g &&\
     npm install -g postcss postcss-cli &&\
-    npm install autoprefixer &&\
-    chmod -R +rx /root &&\
+    npm install autoprefixer
+
+# cleanup
+RUN chmod -R +rx /root &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.npmrc
+
+# Required to ensure that nodejs can resolve the home directory. Relies on uid being 1000
+RUN echo "user:x:1000:1000::/home:/bash" >>/etc/passwd && mkdir -p /home && chown 1000:1000 /home
 
 # ===================================================================
 # Retrieve hugo (precompiled) & build our tools
