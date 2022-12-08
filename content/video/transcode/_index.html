@@ -1,0 +1,20 @@
+---
+type: "manual"
+title: Transcoding
+linkTitle: Transcoding
+---
+
+<h3>Resizing a video</h3>
+<p>
+    A common task is to resize a video captured on a Mobile Phone to a smaller format that's acceptable to social media
+    like Mastodon. Most services have a file size limit like 50Mb so if your mobile has faithfully captured video at
+    4K then that won't upload.
+</p>
+
+<p>
+    So a quick option is to resize the video's physical size. The following will resize it to 480p which works
+    most of the time.
+</p>
+{{< highlight go "linenos=inline" >}}
+ffmpeg -i source.mp4 -s 720x480 smaller.mp4
+{{< /highlight >}}
