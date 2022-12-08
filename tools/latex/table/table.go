@@ -1,7 +1,6 @@
 package table
 
 import (
-	"github.com/peter-mount/documentation/tools/latex"
 	"github.com/peter-mount/documentation/tools/latex/parser"
 	"github.com/peter-mount/documentation/tools/latex/util"
 	"golang.org/x/net/html"
@@ -9,7 +8,7 @@ import (
 )
 
 type Table struct {
-	w         *latex.Writer
+	w         *util.Writer
 	n         *html.Node
 	maxCols   int
 	rows      int
@@ -17,12 +16,9 @@ type Table struct {
 	cellCount int
 }
 
-func NewTable(w *latex.Writer, n *html.Node) *Table {
-	t := &Table{w: w, n: n}
-
-	_ = parser.Traverse(n, html.ElementNode, t.parse)
-
-	return t
+func (t *Table) Parse(n *html.Node) error {
+	t.n = n
+	return parser.Traverse(n, html.ElementNode, t.parse)
 }
 
 func (t *Table) parse(n *html.Node) error {
@@ -42,6 +38,25 @@ func (t *Table) parse(n *html.Node) error {
 	return nil
 }
 
+func (t *Table) Write(w *util.Writer) error {
+	t.w = w
+
+	nw := t.w.
+		Begin("center").
+		Begin("tabular").
+		WriteString("{|| %s||}", strings.Repeat("c ", t.maxCols))
+
+	err := parser.TraverseChildren(t.n, 0, t.write)
+	if err != nil {
+		return err
+	}
+
+	nw.WriteString("\\hline\n").
+		End().
+		End()
+
+	return nil
+}
 func (t *Table) write(n *html.Node) error {
 	switch n.Type {
 	case html.TextNode:
