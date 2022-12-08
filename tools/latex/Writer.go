@@ -1,0 +1,94 @@
+package latex
+
+import (
+  "fmt"
+  "io"
+)
+
+// Writer assists in creating a LaTeX document
+type Writer struct {
+  w      io.WriteCloser // Underlying Writer
+  parent *Writer        // Parent when nesting
+  child  *Writer        // Child when nesting
+  class  string         // document in begin{document} etc. Used with end
+}
+
+const (
+  command1 = "\\%s{%s}\n"
+)
+
+func NewWriter(w io.WriteCloser) *Writer {
+  return &Writer{w: w}
+}
+
+// Write implements io.Writer
+func (w *Writer) Write(p []byte) (n int, err error) {
+  return w.w.Write(p)
+}
+
+// Close implements io.WriteCloser
+func (w *Writer) Close() error {
+  cw := w
+
+  // Find youngest generation
+  for cw.child != nil {
+    cw = cw.child
+  }
+
+  // Now end until we get to the root
+  for cw.parent != nil {
+    cw = cw.End()
+  }
+
+  // Now close the writer
+  return cw.w.Close()
+}
+
+func (w *Writer) WriteString(f string, a ...interface{}) error {
+  var err error
+  if len(a) == 0 {
+    _, err = w.Write([]byte(f))
+  } else {
+    _, err = w.Write([]byte(fmt.Sprintf(f, a...)))
+  }
+  return err
+}
+
+func (w *Writer) DocumentClass() error {
+  return w.WriteString("\\documentclass[a4paper,10pt]{book}")
+}
+
+func (w *Writer) Begin(class string) *Writer {
+  if w.child != nil {
+    panic("begin when already with child")
+  }
+  err := w.WriteString(command1, "begin", class)
+  if err != nil {
+    panic(err)
+  }
+
+  cw := &Writer{
+    w:      w.w,
+    parent: w,
+    class:  class,
+  }
+  w.child = cw
+  return cw
+}
+
+func (w *Writer) End() *Writer {
+  if w.parent != nil {
+    if w.parent.child == nil {
+      panic("End from orphan")
+    }
+    _ = w.WriteString(command1, "end", w.class)
+    w.parent.child = nil
+    return w.parent
+  }
+  return w
+}
+
+func (w *Writer) Comment(f string, a ...interface{}) *Writer {
+  _ = w.WriteString("%% "+f+"\n", a...)
+  return w
+}

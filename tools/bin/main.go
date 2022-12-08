@@ -8,6 +8,7 @@ import (
   "github.com/peter-mount/documentation/tools/generator/m68k"
   "github.com/peter-mount/documentation/tools/generator/svg"
   "github.com/peter-mount/documentation/tools/hugo"
+  "github.com/peter-mount/documentation/tools/latex"
   "github.com/peter-mount/documentation/tools/pdf"
   "github.com/peter-mount/documentation/tools/telstar"
   "github.com/peter-mount/go-kernel/v2"
@@ -24,9 +25,10 @@ func main() {
     &autodoc.Autodoc{},
     &svg.SVG{},
     &telstar.Service{},
-    // Core modules. Have these after the generators so they pick up the new content
+    // Core modules. Have these after the generators, so they pick up the new content
     &hugo.Hugo{},
     &pdf.PDF{},
+    &latex.LaTeX{},
   )
   if err != nil {
     log.Fatal(err)
