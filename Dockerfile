@@ -29,10 +29,13 @@ RUN if [ ! -z "${aptrepo}" ]; then \
           -e "s|http://deb.debian.org/|${aptrepo}|" \
           -e "s|http://security.debian.org/|${aptrepo}|" \
           /etc/apt/sources.list \
-    ;fi &&\
-    if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi &&\
+    ;fi
+
+RUN if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi &&\
     apt-get update &&\
     apt-get install -y ca-certificates chromium git curl xz-utils
+
+RUN apt-get install -y texlive texlive-latex-extra
 
 # Install latest stable nodejs
 RUN curl ${nodejs} -o /tmp/node.txz && (cd /usr/local;tar xJpf /tmp/node.txz) &&\
