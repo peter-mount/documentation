@@ -32,7 +32,7 @@ RUN if [ ! -z "${aptrepo}" ]; then \
     ;fi &&\
     if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi &&\
     apt-get update &&\
-    apt-get install -y ca-certificates chromium nodejs npm &&\
+    apt-get install -y ca-certificates chromium nodejs npm git &&\
     npm install npm@latest -g &&\
     npm install -g postcss postcss-cli &&\
     npm install autoprefixer &&\
@@ -45,7 +45,8 @@ ARG prefix
 ARG arch=amd64
 ARG goos=linux
 FROM ${prefix}golang:alpine AS build
-ARG hugoVersion=0.89.2
+#ARG hugoVersion=0.89.2
+ARG hugoVersion=0.108.0
 
 # Required commands for the build
 RUN apk add --no-cache tzdata
