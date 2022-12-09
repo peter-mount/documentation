@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/peter-mount/documentation/tools"
 	"github.com/peter-mount/documentation/tools/hugo"
+	"github.com/peter-mount/documentation/tools/latex/css"
 	"github.com/peter-mount/documentation/tools/latex/parser"
 	"github.com/peter-mount/documentation/tools/latex/util"
 	"github.com/peter-mount/documentation/tools/web"
@@ -19,7 +20,8 @@ import (
 )
 
 type LaTeX struct {
-	bookShelf *hugo.BookShelf `kernel:"inject"`                             // Bookshelf
+	bookShelf *hugo.BookShelf `kernel:"inject"` // Bookshelf
+	css       *css.Css        `kernel:"inject"`
 	enable    *bool           `kernel:"flag,latex,enable LaTeX generation"` // Is LaTeX generation enabled
 	worker    task.Queue      `kernel:"worker"`                             // Worker queue
 	webserver *web.Webserver  `kernel:"inject"`                             // Webserver

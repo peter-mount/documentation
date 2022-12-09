@@ -33,9 +33,7 @@ RUN if [ ! -z "${aptrepo}" ]; then \
 
 RUN if [ ! -z "${npmrepo}" ]; then echo registry=${npmrepo} >~/.npmrc ;fi &&\
     apt-get update &&\
-    apt-get install -y ca-certificates chromium git curl xz-utils
-
-RUN apt-get install -y texlive texlive-latex-extra
+    apt-get install -y ca-certificates chromium git curl xz-utils texlive texlive-latex-extra
 
 # Install latest stable nodejs
 RUN curl ${nodejs} -o /tmp/node.txz && (cd /usr/local;tar xJpf /tmp/node.txz) &&\

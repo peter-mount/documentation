@@ -23,3 +23,15 @@ pdf:
   header: "<div style='font-size: 5px;text-align:center;width:100%;margin-left:3em;margin-right:3em;'>${title}</div>"
   footer: "<div style='font-size: 5px;text-align:center;width:100%;margin-left:3em;margin-right:3em;'><span style='float:left'>${modified}</span><span style='float:right'><span class='pageNumber'></span>&nbsp;/&nbsp;<span class='totalPages'></span></span>${author} ${copyright}</div>"
   #footer: "<div style='font-size: 5px;width:100%;margin-left:3em;margin-right:3em;'><span class='date'></span> <span style='float:right'><span class='pageNumber'></span>&nbsp;of&nbsp;<span class='totalPages'></span></span></div>"
+
+# CSS stylesheets for LaTeX
+css:
+  styles:
+    "memory":
+      - rule: "tr"
+        border-bottom: "1px solid lightgrey"
+      - rule: "th:not(:last-child), td:not(:last-child)"
+        border-right: "1px solid lightgrey"
+        vertical-align: "top"
+      - rule: "th, td"
+        vertical-align: "top"
