@@ -7,14 +7,14 @@ import (
 
 // The types of a Value returned by Type()
 const (
-	// Ignore 0 so use _ then if someone manually creates Value its an unknown type
-	_ = iota
-	VAR_NULL
-	VAR_BOOL
-	VAR_INT
-	VAR_FLOAT
-	VAR_COMPLEX
-	VAR_STRING
+	// Ignore 0 so use _ then if someone manually creates Value it's an unknown type
+	_          = iota
+	VarNull    // nil
+	VarBool    // bool
+	VarInt     // int
+	VarFloat   // float64
+	VarComplex // complex
+	VarString  // string
 )
 
 type Value struct {
@@ -26,9 +26,9 @@ type Value struct {
 	stringVal  string
 }
 
-var nullValue = Value{varType: VAR_NULL}
-var falseValue = Value{varType: VAR_BOOL, boolVal: false}
-var trueValue = Value{varType: VAR_BOOL, boolVal: true}
+var nullValue = Value{varType: VarNull}
+var falseValue = Value{varType: VarBool, boolVal: false}
+var trueValue = Value{varType: VarBool, boolVal: true}
 
 func (v *Value) Same(b *Value) bool {
 	if b == nil {
@@ -52,15 +52,15 @@ func (v *Value) Equal(b *Value) bool {
 		return b == nil || b.IsNull()
 	}
 	switch v.Type() {
-	case VAR_BOOL:
+	case VarBool:
 		return v.Bool() == b.Bool()
-	case VAR_INT:
+	case VarInt:
 		return v.Int() == b.Int()
-	case VAR_FLOAT:
+	case VarFloat:
 		return v.Float() == b.Float()
-	case VAR_COMPLEX:
+	case VarComplex:
 		return v.Complex() == b.Complex()
-	case VAR_STRING:
+	case VarString:
 		return v.String() == b.String()
 	default:
 		return false
@@ -77,7 +77,7 @@ func True() *Value { return &trueValue }
 // Type of this value
 func (v *Value) Type() int {
 	if v == nil {
-		return VAR_NULL
+		return VarNull
 	}
 
 	return v.varType
@@ -93,27 +93,27 @@ func BoolValue(i bool) *Value {
 
 // IntValue returns a Value for an int64
 func IntValue(i int64) *Value {
-	return &Value{varType: VAR_INT, intVal: i}
+	return &Value{varType: VarInt, intVal: i}
 }
 
 // FloatValue returns a Value for an float64
 func FloatValue(i float64) *Value {
-	return &Value{varType: VAR_FLOAT, floatVal: i}
+	return &Value{varType: VarFloat, floatVal: i}
 }
 
 // ComplexValue returns a Value for a complex128
 func ComplexValue(i complex128) *Value {
-	return &Value{varType: VAR_COMPLEX, complexVal: i}
+	return &Value{varType: VarComplex, complexVal: i}
 }
 
 // StringValue returns a Value for an string
 func StringValue(i string) *Value {
-	return &Value{varType: VAR_STRING, stringVal: i}
+	return &Value{varType: VarString, stringVal: i}
 }
 
 // IsNull returns true if the Value is null
 func (v *Value) IsNull() bool {
-	return v == nil || v.varType == VAR_NULL
+	return v == nil || v.varType == VarNull
 }
 
 // IsZero returns true if the Value is null, false, 0, 0.0 or "" dependent on it's type
@@ -123,17 +123,17 @@ func (v *Value) IsZero() bool {
 	}
 
 	switch v.varType {
-	case VAR_NULL:
+	case VarNull:
 		return true
-	case VAR_BOOL:
+	case VarBool:
 		return !v.boolVal
-	case VAR_INT:
+	case VarInt:
 		return v.intVal == 0
-	case VAR_FLOAT:
+	case VarFloat:
 		return v.floatVal == 0.0
-	case VAR_COMPLEX:
+	case VarComplex:
 		return v.complexVal == 0+0i
-	case VAR_STRING:
+	case VarString:
 		return v.stringVal == ""
 	default:
 		return false
@@ -142,11 +142,11 @@ func (v *Value) IsZero() bool {
 
 // IsNumeric returns true if the Value is a number, i.e. int64 or float64
 func (v *Value) IsNumeric() bool {
-	return v != nil && (v.varType == VAR_INT || v.varType == VAR_FLOAT)
+	return v != nil && (v.varType == VarInt || v.varType == VarFloat)
 }
 
 func (v *Value) IsComplex() bool {
-	return v != nil && (v.varType == VAR_COMPLEX)
+	return v != nil && (v.varType == VarComplex)
 }
 
 func (v *Value) IsNegative() bool {
@@ -155,9 +155,9 @@ func (v *Value) IsNegative() bool {
 	}
 
 	switch v.varType {
-	case VAR_INT:
+	case VarInt:
 		return v.intVal < 0
-	case VAR_FLOAT:
+	case VarFloat:
 		return v.floatVal < 0.0
 	default:
 		return false
@@ -176,24 +176,24 @@ func (v *Value) Bool() bool {
 	}
 
 	switch v.varType {
-	case VAR_BOOL:
+	case VarBool:
 		return v.boolVal
-	case VAR_INT:
+	case VarInt:
 		if v.intVal == 0 {
 			return false
 		}
 		return true
-	case VAR_FLOAT:
+	case VarFloat:
 		if v.floatVal == 0 {
 			return false
 		}
 		return true
-	case VAR_COMPLEX:
+	case VarComplex:
 		if v.complexVal == 0+0i {
 			return false
 		}
 		return true
-	case VAR_STRING:
+	case VarString:
 		if v.stringVal == "" || v.stringVal[0] == 'f' || v.stringVal[0] == 'F' {
 			return false
 		}
@@ -210,18 +210,18 @@ func (v *Value) Int() int64 {
 	}
 
 	switch v.varType {
-	case VAR_BOOL:
+	case VarBool:
 		if v.boolVal {
 			return 1
 		}
 		return 0
-	case VAR_INT:
+	case VarInt:
 		return v.intVal
-	case VAR_FLOAT:
+	case VarFloat:
 		return int64(v.floatVal)
-	case VAR_COMPLEX:
+	case VarComplex:
 		return int64(real(v.complexVal))
-	case VAR_STRING:
+	case VarString:
 		r, err := strconv.ParseInt(v.stringVal, 10, 64)
 		if err == nil {
 			return r
@@ -240,18 +240,18 @@ func (v *Value) Float() float64 {
 	}
 
 	switch v.varType {
-	case VAR_BOOL:
+	case VarBool:
 		if v.boolVal {
 			return 1.0
 		}
 		return 0.0
-	case VAR_INT:
+	case VarInt:
 		return float64(v.intVal)
-	case VAR_FLOAT:
+	case VarFloat:
 		return v.floatVal
-	case VAR_COMPLEX:
+	case VarComplex:
 		return real(v.complexVal)
-	case VAR_STRING:
+	case VarString:
 		r, err := strconv.ParseFloat(v.stringVal, 64)
 		if err == nil {
 			return r
@@ -268,7 +268,7 @@ func (v *Value) Complex() complex128 {
 		return complex(0, 0)
 	}
 
-	if v.varType == VAR_COMPLEX {
+	if v.varType == VarComplex {
 		return v.complexVal
 	}
 	return complex(v.Float(), 0)
@@ -281,7 +281,7 @@ func (v *Value) Real() float64 {
 	if v == nil {
 		return 0.0
 	}
-	if v.varType == VAR_COMPLEX {
+	if v.varType == VarComplex {
 		return real(v.complexVal)
 	}
 	return v.Float()
@@ -291,7 +291,7 @@ func (v *Value) Real() float64 {
 // For real numbers this returns 0.0 but for complex numbers this returns the
 // imaginary component.
 func (v *Value) Imaginary() float64 {
-	if v != nil && v.varType == VAR_COMPLEX {
+	if v != nil && v.varType == VarComplex {
 		return imag(v.complexVal)
 	}
 	return 0.0
@@ -304,18 +304,18 @@ func (v *Value) String() string {
 	}
 
 	switch v.varType {
-	case VAR_BOOL:
+	case VarBool:
 		if v.boolVal {
 			return "true"
 		}
 		return "false"
-	case VAR_INT:
+	case VarInt:
 		return strconv.FormatInt(v.intVal, 10)
-	case VAR_FLOAT:
+	case VarFloat:
 		return strconv.FormatFloat(v.floatVal, 'f', 10, 64)
-	case VAR_COMPLEX:
+	case VarComplex:
 		return fmt.Sprintf("%v", v.complexVal)
-	case VAR_STRING:
+	case VarString:
 		return v.stringVal
 	default:
 		return ""
@@ -328,14 +328,14 @@ func (v *Value) String() string {
 // we should use float.
 func (v *Value) OperationType(b *Value) int {
 	t := v.Type()
-	if v.Type() == VAR_STRING || b.Type() == VAR_STRING {
-		t = VAR_STRING
-	} else if v.Type() == VAR_COMPLEX || b.Type() == VAR_COMPLEX {
-		t = VAR_COMPLEX
-	} else if v.Type() == VAR_FLOAT || b.Type() == VAR_FLOAT {
-		t = VAR_FLOAT
-	} else if v.Type() == VAR_INT || b.Type() == VAR_INT {
-		t = VAR_INT
+	if v.Type() == VarString || b.Type() == VarString {
+		t = VarString
+	} else if v.Type() == VarComplex || b.Type() == VarComplex {
+		t = VarComplex
+	} else if v.Type() == VarFloat || b.Type() == VarFloat {
+		t = VarFloat
+	} else if v.Type() == VarInt || b.Type() == VarInt {
+		t = VarInt
 	}
 	return t
 }
