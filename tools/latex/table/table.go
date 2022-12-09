@@ -33,7 +33,7 @@ func (t *Table) parse(n *html.Node) error {
 		t.inTr = false
 		t.rows++
 	case "th", "td":
-		t.cellCount++
+		t.cellCount += util.GetAttributeIntDefault(n, "colspan", 1)
 	}
 	return nil
 }
@@ -41,22 +41,19 @@ func (t *Table) parse(n *html.Node) error {
 func (t *Table) Write(w *util.Writer) error {
 	t.w = w
 
-	nw := t.w.
-		Begin("center").
-		Begin("tabular").
-		WriteString("{|| %s||}", strings.Repeat("c ", t.maxCols))
+	w.WriteString("%% Table %d rows %d cols\n", t.rows, t.maxCols).
+		WriteString("\\begin{center}\n\\begin{tabular}{|%s}\n", strings.Repeat("c|", t.maxCols))
 
 	err := parser.TraverseChildren(t.n, 0, t.write)
 	if err != nil {
 		return err
 	}
 
-	nw.WriteString("\\hline\n").
-		End().
-		End()
+	w.WriteString("\\hline\n\\end{tabular}\n\\end{center}\n")
 
 	return nil
 }
+
 func (t *Table) write(n *html.Node) error {
 	switch n.Type {
 	case html.TextNode:
@@ -66,7 +63,8 @@ func (t *Table) write(n *html.Node) error {
 		}
 
 	case html.ElementNode:
-		switch n.DataAtom.String() {
+		en := n.DataAtom.String()
+		switch en {
 		case "tr":
 			t.w.WriteString("\\hline\n")
 			t.cellCount = 0
@@ -74,18 +72,47 @@ func (t *Table) write(n *html.Node) error {
 			if err != nil {
 				return err
 			}
-			t.w.WriteString(" \\\\ [0.5ex]")
+			t.w.WriteString(" \\\\ [0.5ex]\n")
 			return parser.StopChildTraverse()
 
 		case "td", "th":
+			if t.cellCount > 0 {
+				t.w.WriteString(" & ")
+			}
+
+			rows := util.GetAttributeIntDefault(n, "rowspan", 1)
+			if rows > 1 {
+				t.w.WriteString("\\multirow{%d}{}{", rows)
+			}
+
+			cols := util.GetAttributeIntDefault(n, "colspan", 1)
+			if cols > 1 {
+				t.w.WriteString("\\multicolumn{%d}{|c|}{", cols)
+			}
+			t.cellCount += cols
+
+			header := en == "th"
+			if header {
+				t.w.WriteString("\\textbf{")
+			}
+
 			err := parser.TraverseChildren(n, 0, t.write)
 			if err != nil {
 				return err
 			}
-			t.cellCount++
-			if t.cellCount < t.maxCols {
-				t.w.WriteString(" & ")
+
+			if header {
+				t.w.WriteString("}")
 			}
+
+			if cols > 1 {
+				t.w.WriteString("}")
+			}
+
+			if rows > 1 {
+				t.w.WriteString("}")
+			}
+
 			return parser.StopChildTraverse()
 
 		}

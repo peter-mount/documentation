@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"github.com/peter-mount/documentation/tools/latex/util"
 	"golang.org/x/net/html"
 	"net/http"
 )
@@ -50,7 +51,7 @@ func Parse(url string) (*Parser, error) {
 
 	// Init idMap starting from the body element
 	_ = Traverse(parser.body, html.ElementNode, func(n *html.Node) error {
-		if id, exists := GetId(n); exists {
+		if id, exists := util.GetId(n); exists {
 			if _, exists = parser.idMap[id]; !exists {
 				parser.idMap[id] = n
 			}
@@ -72,7 +73,7 @@ func (p *Parser) GetElementByClass(class string) []*html.Node {
 	var ret []*html.Node
 
 	_ = Traverse(p.body, html.ElementNode, func(n *html.Node) error {
-		if CheckClass(n, class) {
+		if util.CheckClass(n, class) {
 			ret = append(ret, n)
 		}
 		return nil

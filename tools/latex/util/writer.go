@@ -55,10 +55,6 @@ func (w *Writer) WriteString(f string, a ...interface{}) *Writer {
 	return w
 }
 
-func (w *Writer) DocumentClass() *Writer {
-	return w.WriteString("\\documentclass[a4paper,10pt]{book}")
-}
-
 func (w *Writer) Begin(class string) *Writer {
 	if w.child != nil {
 		panic("begin when already with child")

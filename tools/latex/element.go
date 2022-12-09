@@ -41,18 +41,18 @@ func (l *LaTeX) parseNode(w *util.Writer, n *html.Node) error {
 
 func (l *LaTeX) parseElement(w *util.Writer, n *html.Node) error {
 	// Don't parse elements with this class as they are not for print
-	if parser.CheckClass(n, "d-print-none") {
+	if util.CheckClass(n, "d-print-none") {
 		return parser.StopChildTraverse()
 	}
 
 	switch n.DataAtom.String() {
 	case "h1":
-		w.WriteString(util.Command2, "title ")
+		//w.WriteString(util.Command2, "title ")
 		err := l.parseChildren(w, n)
 		if err != nil {
 			return err
 		}
-		w.WriteString(util.Command3)
+		//w.WriteString(util.Command3)
 		return parser.StopChildTraverse()
 
 	case "table":

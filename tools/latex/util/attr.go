@@ -1,7 +1,8 @@
-package parser
+package util
 
 import (
 	"golang.org/x/net/html"
+	"strconv"
 	"strings"
 )
 
@@ -13,6 +14,25 @@ func GetAttribute(n *html.Node, key string) (string, bool) {
 		}
 	}
 	return "", false
+}
+
+func GetAttributeInt(n *html.Node, key string) (int, bool) {
+	s, ok := GetAttribute(n, key)
+	if ok {
+		i, err := strconv.Atoi(s)
+		if err == nil {
+			return i, true
+		}
+	}
+	return 0, false
+}
+
+func GetAttributeIntDefault(n *html.Node, key string, def int) int {
+	i, ok := GetAttributeInt(n, key)
+	if ok {
+		return i
+	}
+	return def
 }
 
 func GetId(n *html.Node) (string, bool) {

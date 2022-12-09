@@ -84,11 +84,22 @@ func (l *LaTeX) generateTeX(book *hugo.Book, tex string) error {
 	w := util.NewWriter(f)
 	defer w.Close()
 
-	w = w.DocumentClass().
-		UsePackage("color").
-		UsePackage("framed").
-		UsePackage("comment").
-		Begin("document")
+	w.WriteString("\\documentclass[a4paper,10pt,reqno]{book}\n").
+		UsePackage("amsmath,amssymb,amsfonts"). // Typical math packages
+		UsePackage("graphics").                 // Allow graphics
+		UsePackage("color").                    // Coloured text & backgrounds
+		//UsePackage("framed").
+		//UsePackage("comment").
+		UsePackage("multirow"). // Needed for rowspan
+		WriteString("\\DeclareGraphicsExtensions{.pdf}\n").
+		WriteString("\\parindent 0cm\n").
+		WriteString("\\parskip 0.2cm\n").
+		WriteString("\\topmargin 0.2cm\n").
+		WriteString("\\oddsidemargin 1cm\n").
+		WriteString("\\evensidemargin 0.5cm\n").
+		WriteString("\\textwidth 19cm\n").
+		WriteString("\\textheight 28cm\n").
+		WriteString("\\begin{document}\n")
 
 	for _, n := range p.GetElementByClass("td-main") {
 		err = l.parseNode(w, n)
@@ -97,6 +108,7 @@ func (l *LaTeX) generateTeX(book *hugo.Book, tex string) error {
 		}
 	}
 
+	w.WriteString("\\end{document}")
 	return nil
 }
 
