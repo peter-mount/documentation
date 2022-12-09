@@ -1,7 +1,6 @@
 package css
 
 import (
-	"github.com/peter-mount/documentation/tools/latex/table"
 	"io"
 	"log"
 	"os"
@@ -17,13 +16,14 @@ type Styles struct {
 }
 
 type Style struct {
-	Rule         *Rule        `yaml:"-"`    // The compiled rule
-	RuleSrc      string       `yaml:"rule"` // Rule e.g. td:not(:last-child)
-	Align        *table.Align `yaml:"align"`
-	BorderLeft   string       `yaml:"border-left"`
-	BorderRight  string       `yaml:"border-right"`
-	BorderTop    string       `yaml:"border-top"`
-	BorderBottom string       `yaml:"border-bottom"`
+	Rule    *Rule             `yaml:"-"`    // The compiled rule
+	RuleSrc string            `yaml:"rule"` // Rule e.g. td:not(:last-child)
+	Css     map[string]string `yaml:"css"`
+	/*	Align        *table.Align `yaml:"align"`
+		BorderLeft   string       `yaml:"border-left"`
+		BorderRight  string       `yaml:"border-right"`
+		BorderTop    string       `yaml:"border-top"`
+		BorderBottom string       `yaml:"border-bottom"`*/
 }
 
 func (c *Css) Start() error {
@@ -31,6 +31,7 @@ func (c *Css) Start() error {
 	for k, v := range c.Styles.Styles {
 		log.Println(k)
 		for _, ve := range v {
+			log.Println(ve.RuleSrc, ve.Css)
 			r, err := ParseRule(ve.RuleSrc)
 			if err != nil {
 				return err

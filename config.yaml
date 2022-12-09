@@ -29,9 +29,12 @@ css:
   styles:
     "memory":
       - rule: "tr"
-        border-bottom: "1px solid lightgrey"
+        css:
+          border-bottom: "1px solid lightgrey"
       - rule: "th:not(:last-child), td:not(:last-child)"
-        border-right: "1px solid lightgrey"
-        vertical-align: "top"
+        css:
+          border-right: "1px solid lightgrey"
+          vertical-align: "top"
       - rule: "th, td"
-        vertical-align: "top"
+        css:
+          vertical-align: "top"
