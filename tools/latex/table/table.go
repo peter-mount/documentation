@@ -14,8 +14,10 @@ type Table struct {
 	maxCols   int
 	rows      int
 	inTr      bool
+	inHead    bool
 	cellCount int
-	data      [][]*Cell
+	head      CellSet
+	body      CellSet
 	curRow    []*Cell
 }
 
@@ -25,7 +27,8 @@ func (t *Table) Parse(n *html.Node) error {
 	if err != nil {
 		return err
 	}
-	t.fixStructure()
+	t.head.fixStructure(t.maxCols)
+	t.body.fixStructure(t.maxCols)
 	return nil
 }
 
@@ -34,6 +37,10 @@ func (t *Table) parse(n *html.Node) error {
 	switch nn {
 	case "caption":
 		t.caption = n
+	case "thead":
+		t.inHead = true
+	case "tbody":
+		t.inHead = false
 	case "tr":
 		t.inTr = true
 		t.cellCount = 0
@@ -44,13 +51,18 @@ func (t *Table) parse(n *html.Node) error {
 		}
 		t.inTr = false
 		t.rows++
-		t.data = append(t.data, t.curRow)
+		if t.inHead {
+			t.head = append(t.head, t.curRow)
+		} else {
+			t.body = append(t.body, t.curRow)
+		}
 	case "th", "td":
 		c := &Cell{
 			rowspan: util.GetAttributeIntDefault(n, "rowspan", 1),
 			colspan: util.GetAttributeIntDefault(n, "colspan", 1),
 			n:       n,
 			header:  nn == "th",
+			align:   AlignCenter,
 		}
 		t.curRow = append(t.curRow, c)
 		if c.header {
@@ -67,29 +79,23 @@ func (t *Table) Write(w *util.Writer) error {
 
 	w.WriteString("\n%% Table %d rows %d cols\n", t.rows, t.maxCols).
 		WriteString("\\begin{table}{\n").
-		WriteString("\\tiny\n\\begin{tabular}{|%s}\n", strings.Repeat("c|", t.maxCols))
+		WriteString("\\tiny\n\\begin{tabularx}{\\textwidth}{|%s}\n", strings.Repeat("c|", t.maxCols))
 
-	for _, row := range t.data {
-		//t.w.WriteString("\\hline\n")
+	w.WriteString("\\hline\n")
 
-		for i, cell := range row {
-			// Cell separator if not the first one
-			if i > 0 {
-				t.w.WriteString(" & ")
-			}
-
-			err := t.writeCell(cell)
-			if err != nil {
-				return err
-			}
-		}
-
-		// Row terminator
-		t.w.WriteString(" \\\\\n")
-		//t.w.WriteString(" \\\\ [0.5ex]\n")
+	err := t.head.Write(w)
+	if err != nil {
+		return err
 	}
 
-	w.WriteString("\\hline\n\\end{tabular}\n}\n")
+	w.WriteString("\\hline\n")
+
+	err = t.body.Write(w)
+	if err != nil {
+		return err
+	}
+
+	w.WriteString("\\hline\n\\end{tabularx}\n}\n")
 	if t.caption != nil {
 		w.WriteString("\\caption{")
 		_ = parser.TraverseChildren(t.caption, 0, w.WriteHtml)

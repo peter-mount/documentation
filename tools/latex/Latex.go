@@ -97,6 +97,7 @@ func (l *LaTeX) generateTeX(book *hugo.Book, tex string) error {
 		UsePackage("color").                    // Coloured text & backgrounds
 		//UsePackage("framed").
 		//UsePackage("comment").
+		UsePackage("tabularx"). // Fixed width tables
 		UsePackage("multirow"). // Needed for rowspan
 		WriteString("\\DeclareGraphicsExtensions{.pdf}\n").
 		WriteString("\\parindent 0cm\n").
