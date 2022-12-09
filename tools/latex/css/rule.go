@@ -27,11 +27,15 @@ func ParseRule(s string) (*Rule, error) {
 	l := css.NewLexer(strings.NewReader(s))
 	r := &Rule{}
 	for {
-		n, err := r.parse(l)
+		n, err := parseIdent(l)
 
 		if err == nil {
-			r.Nodes = append(r.Nodes, n)
 			err = n.parse(l)
+		}
+
+		if err == nil || err == io.EOF {
+			// Add the actual root to the node list
+			r.Nodes = append(r.Nodes, n.Root())
 		}
 
 		if err != nil {
@@ -44,7 +48,7 @@ func ParseRule(s string) (*Rule, error) {
 	}
 }
 
-func (r *Rule) parse(l *css.Lexer) (*Node, error) {
+func parseIdent(l *css.Lexer) (*Node, error) {
 	for {
 		tt, text := l.Next()
 		//fmt.Printf("rp: %v %q\n", tt, string(text))

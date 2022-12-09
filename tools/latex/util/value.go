@@ -26,9 +26,9 @@ type Value struct {
 	stringVal  string
 }
 
-var nullValue Value = Value{varType: VAR_NULL}
-var falseValue Value = Value{varType: VAR_BOOL, boolVal: false}
-var trueValue Value = Value{varType: VAR_BOOL, boolVal: true}
+var nullValue = Value{varType: VAR_NULL}
+var falseValue = Value{varType: VAR_BOOL, boolVal: false}
+var trueValue = Value{varType: VAR_BOOL, boolVal: true}
 
 func (v *Value) Same(b *Value) bool {
 	if b == nil {
@@ -68,9 +68,11 @@ func (v *Value) Equal(b *Value) bool {
 }
 
 // NullValue returns the Value for Null/nil
-func NullValue() *Value {
-	return &nullValue
-}
+func NullValue() *Value { return &nullValue }
+
+func False() *Value { return &falseValue }
+
+func True() *Value { return &trueValue }
 
 // Type of this value
 func (v *Value) Type() int {
@@ -160,6 +162,11 @@ func (v *Value) IsNegative() bool {
 	default:
 		return false
 	}
+}
+
+// AsBool converts Value into a Bool
+func (v *Value) AsBool() *Value {
+	return BoolValue(v.Bool())
 }
 
 // Bool returns the value as a bool

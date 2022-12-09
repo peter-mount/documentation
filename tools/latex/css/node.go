@@ -12,6 +12,7 @@ import (
 type NodeAction func(context.Context, *Node) (*util.Value, error)
 
 type Node struct {
+	Parent    *Node         // Parent node
 	Left      *Node         // Left hand side
 	Right     *Node         // Right hand side
 	Text      string        // Text for the comparison
@@ -25,6 +26,7 @@ type NodeType string
 const (
 	NodeElement  = "element" // Select against the named element type
 	NodeFunction = "func"    // Function call
+	NodeAnd      = "and"     // Special function node which ands two results, e.g. "tr td" is 3 nodes: and(tr td)
 )
 
 func (n *Node) Do(ctx context.Context) (*util.Value, error) {
@@ -33,6 +35,14 @@ func (n *Node) Do(ctx context.Context) (*util.Value, error) {
 	}
 
 	return n.Action(ctx, n)
+}
+
+// Root returns the root node in the tree
+func (n *Node) Root() *Node {
+	if n == nil || n.Parent == nil {
+		return n
+	}
+	return n.Parent.Root()
 }
 
 func (n *Node) Write(w io.Writer, i int) {
@@ -52,6 +62,7 @@ func (n *Node) add(b *Node) {
 	if n == b {
 		panic("Cannot add node to itself")
 	}
+
 	switch {
 	case n.Left == nil:
 		n.Left = b
@@ -60,6 +71,8 @@ func (n *Node) add(b *Node) {
 	default:
 		panic("Node full")
 	}
+
+	b.Parent = n
 }
 
 func (n *Node) parse(l *css.Lexer) error {
@@ -70,7 +83,7 @@ func (n *Node) parse(l *css.Lexer) error {
 		case css.ErrorToken:
 			// error or EOF set in l.Err()
 			return l.Err()
-		case css.ColonToken, css.WhitespaceToken:
+
 		// Function call
 		case css.FunctionToken:
 			nn, err := n.parseFunction(l, string(text))
@@ -92,6 +105,25 @@ func (n *Node) parse(l *css.Lexer) error {
 				return err
 			}
 			n.add(nn)
+
+		case css.WhitespaceToken:
+			// Whitespace is an and operation between two rules
+			fmt.Println("ws", n.Type, n.TokenType)
+			root := &Node{Type: NodeAnd, TokenType: css.FunctionToken}
+			root.add(n.Root())
+
+			// Start new run on RHS
+			rhs, err := parseIdent(l)
+			if err != nil {
+				return err
+			}
+			root.add(rhs)
+
+			// Finish off parsing the new RHS
+			return rhs.parse(l)
+
+			// Ignore colons, we use them as delimiters here
+		case css.ColonToken:
 
 		default:
 			//fmt.Printf("unk: %v %q\n", tt, string(text))
