@@ -82,7 +82,7 @@ func (t *Table) writeCell(c *Cell) error {
 		t.w.WriteString("\\textbf{")
 	}
 
-	err := parser.TraverseChildren(c.n, html.TextNode, t.write)
+	err := parser.TraverseChildren(c.n, 0, t.w.WriteHtml)
 	if err != nil {
 		return err
 	}

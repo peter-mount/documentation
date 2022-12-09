@@ -84,7 +84,7 @@ func (l *LaTeX) generateTeX(book *hugo.Book, tex string) error {
 	w := util.NewWriter(f)
 	defer w.Close()
 
-	w.WriteString("\\documentclass[a4paper,10pt,reqno]{book}\n").
+	w.WriteString("\\documentclass[a4paper,10pt,reqno,twoside,onecolumn,final,openright]{book}\n").
 		UsePackage("amsmath,amssymb,amsfonts"). // Typical math packages
 		UsePackage("graphics").                 // Allow graphics
 		UsePackage("color").                    // Coloured text & backgrounds
