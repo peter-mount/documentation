@@ -20,6 +20,10 @@ func TestParseRule(t *testing.T) {
 		// Similarly but with 3
 		// e.g. and(and(tbody td) strong)
 		"tbody td:first-child strong",
+		// element.class selector
+		"table.memory",
+		// .class selector
+		".memory",
 	}
 	for i, rs := range rules {
 		t.Run(fmt.Sprintf("rule%d", i), func(t *testing.T) {

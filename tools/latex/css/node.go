@@ -27,6 +27,7 @@ const (
 	NodeElement  = "element" // Select against the named element type
 	NodeFunction = "func"    // Function call
 	NodeAnd      = "and"     // Special function node which ands two results, e.g. "tr td" is 3 nodes: and(tr td)
+	NodeClass    = "class"   // Class selector
 )
 
 func (n *Node) Do(ctx context.Context) (*util.Value, error) {
@@ -108,7 +109,6 @@ func (n *Node) parse(l *css.Lexer) error {
 
 		case css.WhitespaceToken:
 			// Whitespace is an and operation between two rules
-			fmt.Println("ws", n.Type, n.TokenType)
 			root := &Node{Type: NodeAnd, TokenType: css.FunctionToken}
 			root.add(n.Root())
 
@@ -125,10 +125,35 @@ func (n *Node) parse(l *css.Lexer) error {
 			// Ignore colons, we use them as delimiters here
 		case css.ColonToken:
 
+		case css.DelimToken:
+			// Class delimiter
+			root, err := n.parseClass(l)
+			if err != nil {
+				return err
+			}
+
+			// Finish off by carrying on but this will add to rhs with next tokens
+			return root.parse(l)
+
 		default:
-			//fmt.Printf("unk: %v %q\n", tt, string(text))
+			fmt.Printf("unk: %v %q\n", tt, string(text))
 		}
 	}
+}
+
+func (n *Node) parseClass(l *css.Lexer) (*Node, error) {
+	root := &Node{Type: NodeClass, TokenType: css.DelimToken}
+	root.add(n)
+
+	// Start new run on RHS
+	rhs, err := parseIdent(l)
+	if err != nil {
+		return nil, err
+	}
+
+	// We don't add it but copy its text as that's the class name
+	root.Text = rhs.Text
+	return root, nil
 }
 
 func (n *Node) parseFunction(l *css.Lexer, name string) (*Node, error) {

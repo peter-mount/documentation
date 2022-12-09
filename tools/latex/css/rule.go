@@ -53,14 +53,25 @@ func parseIdent(l *css.Lexer) (*Node, error) {
 		tt, text := l.Next()
 		//fmt.Printf("rp: %v %q\n", tt, string(text))
 		switch tt {
+
 		case css.ErrorToken:
 			// error or EOF set in l.Err()
 			return nil, l.Err()
+
 		case css.IdentToken:
 			n := &Node{Text: string(text), TokenType: tt, Type: NodeElement}
 			return n, nil
+
+		case css.DelimToken:
+			// ".class" create a dummy node
+			n := &Node{Text: "", TokenType: css.IdentToken, Type: NodeElement}
+			return n.parseClass(l)
+
+		case css.WhitespaceToken:
+			// Ignore
+
 		default:
-			//fmt.Printf("unk1: %v %q\n", tt, string(text))
+			return nil, fmt.Errorf("unknown token %v %q", tt, string(text))
 		}
 	}
 }
