@@ -14,26 +14,43 @@ type Table struct {
 	rows      int
 	inTr      bool
 	cellCount int
+	data      [][]*Cell
+	curRow    []*Cell
 }
 
 func (t *Table) Parse(n *html.Node) error {
 	t.n = n
-	return parser.Traverse(n, html.ElementNode, t.parse)
+	err := parser.Traverse(n, html.ElementNode, t.parse)
+	if err != nil {
+		return err
+	}
+	t.fixStructure()
+	return nil
 }
 
 func (t *Table) parse(n *html.Node) error {
-	switch n.DataAtom.String() {
+	nn := n.DataAtom.String()
+	switch nn {
 	case "tr":
 		t.inTr = true
 		t.cellCount = 0
+		t.curRow = nil
 		_ = parser.TraverseChildren(n, 0, t.parse)
 		if t.cellCount > t.maxCols {
 			t.maxCols = t.cellCount
 		}
 		t.inTr = false
 		t.rows++
+		t.data = append(t.data, t.curRow)
 	case "th", "td":
-		t.cellCount += util.GetAttributeIntDefault(n, "colspan", 1)
+		c := &Cell{
+			rowspan: util.GetAttributeIntDefault(n, "rowspan", 1),
+			colspan: util.GetAttributeIntDefault(n, "colspan", 1),
+			n:       n,
+			header:  nn == "th",
+		}
+		t.curRow = append(t.curRow, c)
+		t.cellCount += c.colspan
 	}
 	return nil
 }
@@ -44,9 +61,21 @@ func (t *Table) Write(w *util.Writer) error {
 	w.WriteString("%% Table %d rows %d cols\n", t.rows, t.maxCols).
 		WriteString("\\begin{center}\n\\begin{tabular}{|%s}\n", strings.Repeat("c|", t.maxCols))
 
-	err := parser.TraverseChildren(t.n, 0, t.write)
-	if err != nil {
-		return err
+	for _, row := range t.data {
+		//t.w.WriteString("\\hline\n")
+
+		for i, cell := range row {
+			if i > 0 {
+				t.w.WriteString(" & ")
+			}
+
+			t.writeCell(cell)
+		}
+		t.w.WriteString(" \\\\ [0.5ex]\n")
+
+		//err := parser.TraverseChildren(t.n, 0, t.write)
+		//if err != nil {
+		//  return err
 	}
 
 	w.WriteString("\\hline\n\\end{tabular}\n\\end{center}\n")
