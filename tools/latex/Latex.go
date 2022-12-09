@@ -15,6 +15,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type LaTeX struct {
@@ -83,6 +84,12 @@ func (l *LaTeX) generateTeX(book *hugo.Book, tex string) error {
 	}
 	w := util.NewWriter(f)
 	defer w.Close()
+
+	w.WriteString("%%      Book: %s\n%%     Title: %s\n%% Generated: %s\n",
+		book.ID,
+		book.Title,
+		time.Now().UTC().Format(time.RFC3339),
+	)
 
 	w.WriteString("\\documentclass[a4paper,10pt,reqno,twoside,onecolumn,final,openright]{book}\n").
 		UsePackage("amsmath,amssymb,amsfonts"). // Typical math packages

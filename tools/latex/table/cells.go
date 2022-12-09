@@ -20,6 +20,14 @@ func (t *Table) getRow(r int) []*Cell {
 	return t.data[r]
 }
 
+func colCount(r []*Cell) int {
+	c := 0
+	for _, cell := range r {
+		c = c + cell.colspan
+	}
+	return c
+}
+
 // fixStructure ensures the table is laid out as LaTeX expects by
 // filling in rowspan's correctly
 func (t *Table) fixStructure() {
@@ -30,14 +38,16 @@ func (t *Table) fixStructure() {
 			if cell.rowspan > 1 {
 				for i := 1; i < cell.rowspan; i++ {
 					if (r + i) < len(t.data) {
+						// copy colspan as multirow & multicol needs col passed down
+						nc := &Cell{colspan: cell.colspan}
 						if c == 0 {
-							t.data[r+i] = append([]*Cell{&Cell{}}, t.data[r+i]...)
+							t.data[r+i] = append([]*Cell{nc}, t.data[r+i]...)
 						} else if c < len(t.data[r+i]) {
 							t.data[r+i] = append(t.data[r+i][:c+1], t.data[r+i][c:]...)
-							t.data[r+i][c] = &Cell{}
+							t.data[r+i][c] = nc
 						} else {
 							for c > len(t.data[r+i]) {
-								t.data[r+i] = append(t.data[r+i], &Cell{})
+								t.data[r+i] = append(t.data[r+i], nc)
 							}
 						}
 					}
@@ -45,9 +55,9 @@ func (t *Table) fixStructure() {
 			}
 		}
 
-		// Ensure row is full length
-		for len(t.data[r]) < t.maxCols {
-			t.data[r] = append(t.data[r], &Cell{})
+		// Ensure row is full length, accounting for col-spans by appending empty 1x1 cells
+		for colCount(t.data[r]) < t.maxCols {
+			t.data[r] = append(t.data[r], &Cell{colspan: 1, rowspan: 1})
 		}
 	}
 
@@ -65,30 +75,32 @@ func (t *Table) fixStructure() {
 }
 
 func (t *Table) writeCell(c *Cell) error {
-	// No node then it's an empty cell
-	if c.n == nil {
-		return nil
-	}
-
 	if c.colspan > 1 {
-		t.w.WriteString("\\multicolumn{%d}{|c|}{", c.colspan)
+		align := "c"
+		switch {
+		case c.rowspan > 1:
+			align = "l"
+		}
+		t.w.WriteString("\\multicolumn{%d}{|%s|}{", c.colspan, align)
 	}
 
 	if c.rowspan > 1 {
 		t.w.WriteString("\\multirow{%d}{}{", c.rowspan)
 	}
 
-	if c.header {
-		t.w.WriteString("\\textbf{")
-	}
+	if c.n != nil {
+		if c.header {
+			t.w.WriteString("\\textbf{")
+		}
 
-	err := parser.TraverseChildren(c.n, 0, t.w.WriteHtml)
-	if err != nil {
-		return err
-	}
+		err := parser.TraverseChildren(c.n, 0, t.w.WriteHtml)
+		if err != nil {
+			return err
+		}
 
-	if c.header {
-		t.w.WriteString("}")
+		if c.header {
+			t.w.WriteString("}")
+		}
 	}
 
 	if c.rowspan > 1 {

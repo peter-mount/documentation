@@ -53,7 +53,11 @@ func (t *Table) parse(n *html.Node) error {
 			header:  nn == "th",
 		}
 		t.curRow = append(t.curRow, c)
-		t.cellCount += c.colspan
+		if c.header {
+			t.cellCount += c.colspan
+		} else {
+			t.cellCount++
+		}
 	}
 	return nil
 }
@@ -61,8 +65,8 @@ func (t *Table) parse(n *html.Node) error {
 func (t *Table) Write(w *util.Writer) error {
 	t.w = w
 
-	w.WriteString("\n\\begin{table}{\n").
-		WriteString("%% Table %d rows %d cols\n", t.rows, t.maxCols).
+	w.WriteString("\n%% Table %d rows %d cols\n", t.rows, t.maxCols).
+		WriteString("\\begin{table}{\n").
 		WriteString("\\tiny\n\\begin{tabular}{|%s}\n", strings.Repeat("c|", t.maxCols))
 
 	for _, row := range t.data {
