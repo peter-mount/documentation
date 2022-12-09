@@ -1,7 +1,6 @@
 package css
 
 import (
-	"context"
 	"fmt"
 	"github.com/tdewolff/parse/css"
 	"io"
@@ -13,7 +12,7 @@ type Rule struct {
 	Action RuleAction // Action to perform
 }
 
-type RuleAction func(context.Context, *Rule) error
+type RuleAction func(Context, *Rule) error
 
 func (r *Rule) Write(w io.Writer) {
 	_, _ = fmt.Fprintf(w, "Rule: %d nodes\n", len(r.Nodes))
@@ -59,7 +58,7 @@ func parseIdent(l *css.Lexer) (*Node, error) {
 			return nil, l.Err()
 
 		case css.IdentToken:
-			n := &Node{Text: string(text), TokenType: tt, Type: NodeElement}
+			n := &Node{Text: string(text), TokenType: tt, Type: NodeElement, Action: elementMatcher}
 			return n, nil
 
 		case css.DelimToken:

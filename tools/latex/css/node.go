@@ -1,7 +1,6 @@
 package css
 
 import (
-	"context"
 	"fmt"
 	"github.com/peter-mount/documentation/tools/latex/util"
 	"github.com/tdewolff/parse/css"
@@ -9,7 +8,7 @@ import (
 	"strings"
 )
 
-type NodeAction func(context.Context, *Node) (*util.Value, error)
+type NodeAction func(*Context, *Node) (*util.Value, error)
 
 type Node struct {
 	Parent    *Node         // Parent node
@@ -30,7 +29,7 @@ const (
 	NodeClass    = "class"   // Class selector
 )
 
-func (n *Node) Do(ctx context.Context) (*util.Value, error) {
+func (n *Node) Do(ctx *Context) (*util.Value, error) {
 	if n == nil || n.Action == nil {
 		return nil, nil
 	}

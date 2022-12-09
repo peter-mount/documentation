@@ -8,22 +8,24 @@ import (
 // The types of a Value returned by Type()
 const (
 	// Ignore 0 so use _ then if someone manually creates Value it's an unknown type
-	_          = iota
-	VarNull    // nil
-	VarBool    // bool
-	VarInt     // int
-	VarFloat   // float64
-	VarComplex // complex
-	VarString  // string
+	_            = iota
+	VarNull      // nil
+	VarBool      // bool
+	VarInt       // int
+	VarFloat     // float64
+	VarComplex   // complex
+	VarString    // string
+	VarInterface // interface
 )
 
 type Value struct {
-	varType    int
-	boolVal    bool
-	intVal     int64
-	floatVal   float64
-	complexVal complex128
-	stringVal  string
+	varType      int
+	boolVal      bool
+	intVal       int64
+	floatVal     float64
+	complexVal   complex128
+	stringVal    string
+	interfaceVal interface{}
 }
 
 var nullValue = Value{varType: VarNull}
@@ -338,4 +340,29 @@ func (v *Value) OperationType(b *Value) int {
 		t = VarInt
 	}
 	return t
+}
+
+func InterfaceVal(v interface{}) *Value {
+	return &Value{varType: VarInterface, interfaceVal: v}
+}
+
+func (v *Value) Interface() interface{} {
+	if v == nil {
+		return nil
+	}
+
+	switch v.varType {
+	case VarBool:
+		return v.boolVal
+	case VarInt:
+		return v.intVal
+	case VarFloat:
+		return v.floatVal
+	case VarComplex:
+		return v.complexVal
+	case VarString:
+		return v.stringVal
+	default:
+		return ""
+	}
 }

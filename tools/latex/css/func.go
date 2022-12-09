@@ -1,8 +1,8 @@
 package css
 
 import (
-	"context"
 	"github.com/peter-mount/documentation/tools/latex/util"
+	"golang.org/x/net/html"
 )
 
 var funcMap = map[string]NodeAction{
@@ -11,12 +11,12 @@ var funcMap = map[string]NodeAction{
 	"not":         not,
 }
 
-func nop(_ context.Context, _ *Node) (*util.Value, error) {
+func nop(_ *Context, _ *Node) (*util.Value, error) {
 	return nil, nil
 }
 
 // Negate the result
-func not(ctx context.Context, n *Node) (*util.Value, error) {
+func not(ctx *Context, n *Node) (*util.Value, error) {
 	v, err := n.Left.Do(ctx)
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func not(ctx context.Context, n *Node) (*util.Value, error) {
 	return util.BoolValue(!v.Bool()), nil
 }
 
-func and(ctx context.Context, n *Node) (*util.Value, error) {
+func and(ctx *Context, n *Node) (*util.Value, error) {
 	// Eval lhs
 	ar, err := n.Left.Do(ctx)
 	if err != nil {
@@ -47,10 +47,16 @@ func and(ctx context.Context, n *Node) (*util.Value, error) {
 	return br.AsBool(), nil
 }
 
-func firstChild(_ context.Context, n *Node) (*util.Value, error) {
+func firstChild(_ *Context, n *Node) (*util.Value, error) {
 	return util.BoolValue(false), nil
 }
 
-func lastChild(_ context.Context, n *Node) (*util.Value, error) {
+func lastChild(_ *Context, n *Node) (*util.Value, error) {
 	return util.BoolValue(false), nil
+}
+
+func elementMatcher(ctx *Context, n *Node) (*util.Value, error) {
+	node := ctx.Node
+
+	return util.BoolValue(node != nil && node.Type == html.ElementNode && node.Data == n.Text), nil
 }
