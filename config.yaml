@@ -27,14 +27,15 @@ pdf:
 # CSS stylesheets for LaTeX
 css:
   styles:
-    "memory":
-      - rule: "tr"
-        css:
-          border-bottom: "1px solid lightgrey"
-      - rule: "th:not(:last-child), td:not(:last-child)"
-        css:
-          border-right: "1px solid lightgrey"
-          vertical-align: "top"
-      - rule: "th, td"
-        css:
-          vertical-align: "top"
+    - rule: "table.memory"
+      children:
+        - rule: "tr"
+          css:
+            border-bottom: "1px solid lightgrey"
+        - rule: "th:not(:last-child), td:not(:last-child)"
+          css:
+            border-right: "1px solid lightgrey"
+            vertical-align: "top"
+        - rule: "th, td"
+          css:
+            vertical-align: "top"
