@@ -3,6 +3,7 @@ package css
 import (
 	"github.com/peter-mount/documentation/tools/latex/util"
 	"golang.org/x/net/html"
+	"strings"
 )
 
 var funcMap = map[string]NodeAction{
@@ -59,4 +60,33 @@ func elementMatcher(ctx *Context, n *Node) (*util.Value, error) {
 	node := ctx.Node
 
 	return util.BoolValue(node != nil && node.Type == html.ElementNode && node.Data == n.Text), nil
+}
+
+func delim(ctx *Context, n *Node) (*util.Value, error) {
+	// Eval lhs
+	lhs, err := n.Left.Do(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	// If LHS is false then stop, same as a&&b, b not even if a is false
+	if !lhs.Bool() {
+		return util.False(), nil
+	}
+
+	// Test the class
+	return classMatcher(ctx, n)
+}
+
+func classMatcher(ctx *Context, n *Node) (*util.Value, error) {
+
+	if classes, present := util.GetAttribute(ctx.Node, "class"); present {
+		for _, class := range strings.Split(classes, " ") {
+			if class == n.Text {
+				return util.True(), nil
+			}
+		}
+	}
+
+	return util.False(), nil
 }

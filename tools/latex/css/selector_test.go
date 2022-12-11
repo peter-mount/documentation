@@ -12,7 +12,7 @@ import (
 const (
 	styleCss = "" +
 		"styles:\n" +
-		"  - rule: \"table\"\n" +
+		"  - rule: \"table.memory\"\n" +
 		"    children:\n" +
 		"      - rule: \"tr\"\n" +
 		"        css:\n" +

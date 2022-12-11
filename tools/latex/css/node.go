@@ -130,6 +130,7 @@ func (n *Node) parse(l *css.Lexer) error {
 			if err != nil {
 				return err
 			}
+			root.Action = delim
 
 			// Finish off by carrying on but this will add to rhs with next tokens
 			return root.parse(l)
