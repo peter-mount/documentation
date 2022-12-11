@@ -5,29 +5,28 @@ import (
 	"golang.org/x/net/html"
 )
 
-const (
-	keyDoc  = "doc"
-	keyNode = "node"
-)
-
 func (s *Styles) Search(doc *html.Node) error {
-	ctx := &Context{Doc: doc}
+	return search(&Context{Doc: doc}, doc, s.Styles)
+}
 
+func search(ctx *Context, doc *html.Node, styles []*Style) error {
 	return parser.TraverseChildren(doc, 0, func(node *html.Node) error {
-		ctx.Node = node
+		for _, style := range styles {
+			ctx.Node = node
+			ctx.Reset()
 
-		for _, styles := range s.Styles {
-			for _, style := range styles {
-				ctx.Reset()
+			err := style.search(ctx)
+			if err == nil && ctx.HasMatches() {
+				err = ctx.ForEachMatch(style.Apply)
 
-				err := style.Search(ctx)
-				if err != nil {
-					return err
+				// If we have a match then process any children
+				if err == nil && len(style.Children) > 0 {
+					err = search(ctx, node, style.Children)
 				}
+			}
 
-				if ctx.HasMatches() {
-					err = ctx.ForEachMatch(style.Apply)
-				}
+			if err != nil {
+				return err
 			}
 		}
 
@@ -35,7 +34,7 @@ func (s *Styles) Search(doc *html.Node) error {
 	})
 }
 
-func (s *Style) Search(ctx *Context) error {
+func (s *Style) search(ctx *Context) error {
 	for _, nodes := range s.Rule.Nodes {
 		v, err := nodes.Do(ctx)
 		if err != nil {

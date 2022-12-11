@@ -12,17 +12,18 @@ import (
 const (
 	styleCss = "" +
 		"styles:\n" +
-		"  \"memory\":\n" +
-		"    - rule: \"tr\"\n" +
-		"      css:\n" +
-		"        border-bottom: \"1px solid lightgrey\"\n" +
-		"    - rule: \"th:not(:last-child), td:not(:last-child)\"\n" +
-		"      css:\n" +
-		"        border-right: \"1px solid lightgrey\"\n" +
-		"        vertical-align: \"top\"\n" +
-		"    - rule: \"th, td\"\n" +
-		"      css:\n" +
-		"        vertical-align: \"top\""
+		"  - rule: \"table\"\n" +
+		"    children:\n" +
+		"      - rule: \"tr\"\n" +
+		"        css:\n" +
+		"          border-bottom: \"1px solid lightgrey\"\n" +
+		"      - rule: \"th:not(:last-child), td:not(:last-child)\"\n" +
+		"        css:\n" +
+		"          border-right: \"1px solid lightgrey\"\n" +
+		"          vertical-align: \"top\"\n" +
+		"      - rule: \"th, td\"\n" +
+		"        css:\n" +
+		"          vertical-align: \"top\""
 	testHtml = "<body><table class='memory'>" +
 		"<thead><tr><th>head1</th><th>head2</th></tr></thead>" +
 		"<tbody>" +
@@ -39,15 +40,12 @@ func testStyleSetup() (*Styles, *html.Node, error) {
 		return nil, nil, err
 	}
 
-	for _, s1 := range styles.Styles {
-		for _, s2 := range s1 {
-			r, err := ParseRule(s2.RuleSrc)
-			if err != nil {
-				return nil, nil, err
-			}
-			s2.Rule = r
-		}
+	err = Parse(styles.Styles)
+	if err != nil {
+		return nil, nil, err
 	}
+
+	Write(os.Stdout, styles.Styles)
 
 	doc, err := html.Parse(strings.NewReader(testHtml))
 	if err != nil {

@@ -13,13 +13,14 @@ type Css struct {
 }
 
 type Styles struct {
-	Styles map[string][]*Style `yaml:"styles"`
+	Styles []*Style `yaml:"styles"`
 }
 
 type Style struct {
-	Rule    *Rule             `yaml:"-"`    // The compiled rule
-	RuleSrc string            `yaml:"rule"` // Rule e.g. td:not(:last-child)
-	Css     map[string]string `yaml:"css"`
+	Rule     *Rule             `yaml:"-"`        // The compiled rule
+	RuleSrc  string            `yaml:"rule"`     // Rule e.g. td:not(:last-child)
+	Css      map[string]string `yaml:"css"`      // CSS to apply
+	Children []*Style          `yaml:"children"` // Child rules, processed only if this one matches
 }
 
 func (s *Style) Apply(n *html.Node) error {
@@ -42,25 +43,42 @@ func (s *Style) ApplyCSS(n *html.Node, k, v string) {
 
 	n.Attr = append(n.Attr, html.Attribute{Key: key, Val: v})
 }
-func (c *Css) Start() error {
-	log.Println("Loading LaTeX CSS stylesheets")
-	for k, v := range c.Styles.Styles {
-		log.Println(k)
-		for _, ve := range v {
-			log.Println(ve.RuleSrc, ve.Css)
-			r, err := ParseRule(ve.RuleSrc)
-			if err != nil {
-				return err
-			}
+
+func Parse(s []*Style) error {
+	for _, ve := range s {
+		r, err := ParseRule(ve.RuleSrc)
+		if err == nil {
 			ve.Rule = r
+			if len(ve.Children) > 0 {
+				err = Parse(ve.Children)
+			}
+		}
+		if err != nil {
+			return err
 		}
 	}
 
-	for _, v := range c.Styles.Styles {
-		for _, ve := range v {
-			ve.Rule.Write(os.Stdout)
-		}
+	return nil
+}
+
+func Write(w io.Writer, s []*Style) {
+	for _, ve := range s {
+		ve.Write(w)
 	}
+}
+
+func (s *Style) Write(w io.Writer) {
+	s.Rule.Write(w)
+}
+
+func (c *Css) Start() error {
+	log.Println("Loading LaTeX CSS stylesheets")
+	err := Parse(c.Styles.Styles)
+	if err != nil {
+		return err
+	}
+
+	Write(os.Stdout, c.Styles.Styles)
 
 	return io.EOF
 }
