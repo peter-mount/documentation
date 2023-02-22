@@ -1,0 +1,262 @@
+---
+type: "manual"
+title: "ARM instruction set"
+linkTitle: "Instructions"
+weight: 1
+description: "Overview of the ARM instruction set"
+---
+
+<h2>ARM instruction set</h2>
+
+<!-- ARMv70A and ARMv7-R
+ https://developer.arm.com/documentation/ddi0406/c/Application-Level-Architecture/ARM-Instruction-Set-Encoding/ARM-instruction-set-encoding?lang=en
+-->
+<div class="printPageBreakAvoid">
+    <p>
+        The ARM instruction set consists of 32 bit word-aligned words based on the following format:
+    </p>
+
+    <table class="memoryMap3">
+        <thead>
+        <tr>
+            <th>31</th>
+            <th>30</th>
+            <th>29</th>
+            <th>28</th>
+            <th>27</th>
+            <th>26</th>
+            <th>25</th>
+            <th>24</th>
+            <th>23</th>
+            <th>&hellip;</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="4">cond</td>
+            <td colspan="3">op1</td>
+            <td colspan="5"></td>
+            <td>op2</td>
+            <td colspan="4"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="memoryMap">
+        <thead>
+        <tr>
+            <th>cond</th>
+            <th>op1</th>
+            <th>op2</th>
+            <th>Instruction classes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="6">not 1111</td>
+            <td>00x</td>
+            <td>x</td>
+            <td>Data processing &amp; miscellaneous</td>
+        </tr>
+        <tr>
+            <td>010</td>
+            <td>x</td>
+            <td>Load/Store word and unsigned byte</td>
+        </tr>
+        <tr>
+            <td rowspan="2">011</td>
+            <td>0</td>
+            <td>Load/Store word and unsigned byte</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Media instructions</td>
+        </tr>
+        <tr>
+            <td>10x</td>
+            <td>x</td>
+            <td>Branch &amp; block data transfer</td>
+        </tr>
+        <tr>
+            <td>11x</td>
+            <td>x</td>
+            <td>Coprocessor instructions &amp; Supervisor Call</td>
+        </tr>
+        <tr>
+            <td rowspan="6">1111</td>
+            <td>xxx</td>
+            <td>x</td>
+            <td>
+                Unconditional instructions<br/>
+                Advanced SIMD instructions<br/>
+                Floating Point instructions
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="printPageBreakAvoid">
+    <p>
+        The cond field when it is not set to 1111 represents one of the following conditions:
+    </p>
+    <table class="memoryMap">
+        <thead>
+        <tr>
+            <th rowspan="2">cond</th>
+            <th rowspan="2">Mnemonic</th>
+            <th colspan="2">Meaning</th>
+            <th rowspan="2">Flags</th>
+        </tr>
+        <tr>
+            <th>Integer</th>
+            <th>Floating Point</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0000</td>
+            <td>EQ</td>
+            <td colspan="2">Equal</td>
+            <td>Z = 1</td>
+        </tr>
+        <tr>
+            <td>0001</td>
+            <td>NE</td>
+            <td>Not Equal</td>
+            <td>Not Equal, or unordered</td>
+            <td>Z = 0</td>
+        </tr>
+        <tr>
+            <td>0010</td>
+            <td>CS</td>
+            <td>Carry Set</td>
+            <td>Greater than, equal, or unordered</td>
+            <td>C = 1</td>
+        </tr>
+        <tr>
+            <td>0011</td>
+            <td>CC</td>
+            <td>Carry Clear</td>
+            <td>Less than</td>
+            <td>C = 0</td>
+        </tr>
+        <tr>
+            <td>0100</td>
+            <td>MI</td>
+            <td>Minus, Negative</td>
+            <td>Less than</td>
+            <td>N = 1</td>
+        </tr>
+        <tr>
+            <td>0101</td>
+            <td>PL</td>
+            <td>Plus, Positive</td>
+            <td>Greater than, equal, or unordered</td>
+            <td>N = 0</td>
+        </tr>
+        <tr>
+            <td>0110</td>
+            <td>VS</td>
+            <td>Overflow</td>
+            <td>Unordered</td>
+            <td>V = 1</td>
+        </tr>
+        <tr>
+            <td>0111</td>
+            <td>VC</td>
+            <td>No overflow</td>
+            <td>Not unordered</td>
+            <td>V = 0</td>
+        </tr>
+        <tr>
+            <td>1000</td>
+            <td>HI</td>
+            <td>Unsigned higher</td>
+            <td>Greater than, or unordered</td>
+            <td>C = 1 and z = 0</td>
+        </tr>
+        <tr>
+            <td>1001</td>
+            <td>LS</td>
+            <td>Unsigned lower or same</td>
+            <td>Less than or equal</td>
+            <td>C = 0 or z = 1</td>
+        </tr>
+        <tr>
+            <td>1010</td>
+            <td>GE</td>
+            <td>Signed greater than or equal</td>
+            <td>Greater than or equal</td>
+            <td>N = V</td>
+        </tr>
+        <tr>
+            <td>1011</td>
+            <td>LT</td>
+            <td>Signed less than</td>
+            <td>Less than or unordered</td>
+            <td>N != V</td>
+        </tr>
+        <tr>
+            <td>1100</td>
+            <td>GT</td>
+            <td>Signed greater than</td>
+            <td>Greater than</td>
+            <td>Z = 0 and N = V</td>
+        </tr>
+        <tr>
+            <td>1101</td>
+            <td>LE</td>
+            <td>Signed less than or equal</td>
+            <td>Less than, equal, or unordered</td>
+            <td>Z = 1 or N != V</td>
+        </tr>
+        <tr>
+            <td>1110</td>
+            <td>None or AL</td>
+            <td colspan="2">Always unconditional</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>1111</td>
+            <td colspan="4">See main table above, used for instructions that can only be used unconditionally.</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+        In the above table, unordered means that at least one operand is <code>NaN</code>.
+    </p>
+    <p>
+        Also, assemblers allow the following synonyms:
+    </p>
+    <table class="memoryMap3">
+        <thead>
+        <tr>
+            <th>Mnemonic</th>
+            <th colspan="5">Synonym</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>HS</td>
+            <td>Unsigned higher or same is a synonym for CS</td>
+        </tr>
+        <tr>
+            <td>LO</td>
+            <td>Unsigned lower is a synonym for CC</td>
+        </tr>
+        <tr>
+            <td>AL</td>
+            <td>An optional mnemonic for always, except for IT instructions</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
