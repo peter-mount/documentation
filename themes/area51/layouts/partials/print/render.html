@@ -61,7 +61,7 @@
 {{- if not (.Param "print.disable_toc") -}}
   <div class="printPageBreak">
   <h1 class="title">Table of Contents</h1>
-  <ul class="print-page-link" style="list-style-type:none;padding-inline-start:1em;{{ with .Page.Params.book }}{{ with .tocColumns }}columns:{{.}} auto;{{ end }}{{ end }}">
+  <ul class="print-page-link{{ with .Page.Params.book }}{{ with .tocColumns }} columns-{{.}}{{ end }}{{ end }}">
   {{- template "recurse-toc" (dict "section" .CurrentSection "psid" "") -}}
   </ul>
   </div>

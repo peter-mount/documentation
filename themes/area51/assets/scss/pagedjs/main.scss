@@ -31,12 +31,4 @@
     margin-right: 0.5cm;
   }
 
-  .print-page-link {
-    a::after {
-      //content: target-counter(attr(href url), page);
-      //content: attr(href url);
-      content: leader(dotted) target-counter(attr(href url), page, decimal);
-    }
-  }
-
 }
