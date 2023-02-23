@@ -38,6 +38,7 @@
 
 /* PagedJS integration */
 @import "pagedjs/main";
+@import "pagedjs/booktitle";
 
 @if $td-enable-google-fonts {
     @import url($web-font-path);

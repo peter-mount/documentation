@@ -11,6 +11,21 @@
     }
 }
 
+.printPageBreak {
+    break-before: page;
+    page-break-before: always;
+}
+
+.printPageBreakLeft {
+    break-before: left;
+    page-break-before: left;
+}
+
+.printPageBreakRight {
+    break-before: right;
+    page-break-before: right;
+}
+
 .printPageBreakAvoid {
     break-inside: avoid
 }
@@ -23,4 +38,16 @@
     margin-bottom: 1em;
     overflow: auto;
     white-space: pre;
+}
+
+.copyrightPage {
+    font-size: 70%;
+    h1 {
+        font-size: 140%;
+        font-weight: bold;
+    }
+    h2 {
+        font-size: 100%;
+        font-weight: bold;
+    }
 }

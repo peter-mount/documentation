@@ -2,11 +2,15 @@
 <html lang="{{ .Site.Language.Lang }}" class="no-js">
 <head>
     {{ partial "head.html" . }}
+    <link href="/static/cdn/css/paged.interface.css" rel="stylesheet" type="text/css" />
+    <!--
+    -->
 </head>
-<body class="td-{{ .Kind }}">
+<body class="pagedjs td-{{ .Kind }}">
 <div class="td-main">
     {{ block "main" . }}{{ end }}
 </div>
 {{ partial "scripts.html" . }}
+<script src="/static/cdn/js/paged.polyfill.js"></script>
 </body>
 </html>

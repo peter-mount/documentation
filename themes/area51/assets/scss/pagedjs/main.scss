@@ -32,8 +32,6 @@
   }
 
   .print-page-link {
-    border: 1px dotted green;
-
     a::after {
       //content: target-counter(attr(href url), page);
       //content: attr(href url);
