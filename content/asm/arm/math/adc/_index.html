@@ -1,0 +1,65 @@
+---
+type: "manual"
+title: "ADC (immediate)"
+linkTitle: "ADC"
+description: "Add with carry (immediate)"
+tags:
+- arm instruction
+---
+<p>
+    Add with carry (immediate) adds an immediate value and the carry flag to a source register,
+    writing the result to a destination register.
+</p>
+
+<table class="memoryMap3 small">
+    <thead>
+    <tr>
+        <th>31</th>
+        <th>30</th>
+        <th>29</th>
+        <th>28</th>
+        <th>27</th>
+        <th>26</th>
+        <th>25</th>
+        <th>24</th>
+        <th>23</th>
+        <th>22</th>
+        <th>21</th>
+        <th>20</th>
+        <th>19</th>
+        <th>18</th>
+        <th>17</th>
+        <th>16</th>
+        <th>15</th>
+        <th>14</th>
+        <th>13</th>
+        <th>12</th>
+        <th>11</th>
+        <th>10</th>
+        <th>9</th>
+        <th>8</th>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+<td colspan="5">11110</td>
+        <td>I</td>
+        <td>0</td>
+        <td colspan="4">1010</td>
+        <td>S</td>
+        <td colspan="4">Rn</td>
+        <td>0</td>
+        <td colspan="3">imm3</td>
+        <td colspan="4">Rd</td>
+        <td colspan="8">imm8</td>
+    </tr>
+    </tbody>
+</table>

@@ -18,37 +18,21 @@ description: "Overview of the ARM instruction set"
 
     <table class="memoryMap3">
         <thead>
-        <tr>
-            <th>31</th>
-            <th>30</th>
-            <th>29</th>
-            <th>28</th>
-            <th>27</th>
-            <th>26</th>
-            <th>25</th>
-            <th>24</th>
-            <th>23</th>
-            <th>&hellip;</th>
-            <th>6</th>
-            <th>5</th>
-            <th>4</th>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
-            <th>0</th>
-        </tr>
+        {{< arm/arm-instruction-head >}}
         </thead>
         <tbody>
         <tr>
             <td colspan="4">cond</td>
             <td colspan="3">op1</td>
-            <td colspan="5"></td>
+            <td colspan="20"></td>
             <td>op2</td>
             <td colspan="4"></td>
         </tr>
         </tbody>
     </table>
+</div>
 
+<!--div class="printPageBreakAvoid">
     <table class="memoryMap">
         <thead>
         <tr>
@@ -101,11 +85,11 @@ description: "Overview of the ARM instruction set"
         </tr>
         </tbody>
     </table>
-</div>
+</div-->
 
 <div class="printPageBreakAvoid">
     <p>
-        The cond field when it is not set to 1111 represents one of the following conditions:
+        The cond field in every operation defines the condition for the instruction to be executed:
     </p>
     <table class="memoryMap">
         <thead>
@@ -226,7 +210,9 @@ description: "Overview of the ARM instruction set"
         </tr>
         <tr>
             <td>1111</td>
-            <td colspan="4">See main table above, used for instructions that can only be used unconditionally.</td>
+            <td colspan="4">
+                Unconditional, Advanced SIMD or Floating Point instructions
+            </td>
         </tr>
         </tbody>
     </table>
@@ -259,4 +245,84 @@ description: "Overview of the ARM instruction set"
         </tbody>
     </table>
 
+</div>
+
+<div class="printPageBreakAvoid">
+    <p>
+        The following table describes the formats of the ARM instructions.
+    </p>
+    <table class="arm memoryMap3">
+        <thead>
+        {{< arm/arm-instruction-head >}}
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="15" colspan="4">Cond</td>
+            <td>0</td><td>0</td><td>1</td>
+            <td colspan="4">Opcode</td>
+            <td>S</td>
+            {{< arm/arm-register Rn >}}
+            {{< arm/arm-register Rd >}}
+            {{< arm/arm-register Rs >}}
+            <td>1</td><td>0</td><td>0</td><td>1</td>
+            {{< arm/arm-register Rm >}}
+            <td>Data Processing, PSR Transfer</td>
+        </tr>
+        <tr>
+            <td>0</td><td>0</td><td>0</td>
+            <td>0</td><td>0</td><td>0</td><td>A</td>
+            <td>S</td>
+            {{< arm/arm-register Rd >}}
+            {{< arm/arm-register Rn >}}
+            {{< arm/arm-register Rs >}}
+            <td>1</td><td>0</td><td>0</td><td>1</td>
+            {{< arm/arm-register Rm >}}
+            <td>Multiply</td>
+        </tr>
+        <tr>
+            <td>0</td><td>0</td><td>0</td>
+            <td>0</td><td>1</td><td>U</td><td>A</td>
+            <td>S</td>
+            {{< arm/arm-register RdHi >}}
+            {{< arm/arm-register RdLo >}}
+            {{< arm/arm-register Rn >}}
+            <td>1</td><td>0</td><td>0</td><td>1</td>
+            {{< arm/arm-register Rm >}}
+            <td>Multiply Long</td>
+        </tr>
+        <tr>
+            <td>0</td><td>0</td><td>0</td>
+            <td>1</td><td>0</td><td>B</td><td>0</td>
+            <td>0</td>
+            {{< arm/arm-register Rn >}}
+            {{< arm/arm-register Rd >}}
+            <td>0</td><td>0</td><td>0</td><td>0</td>
+            <td>1</td><td>0</td><td>0</td><td>1</td>
+            {{< arm/arm-register Rm >}}
+            <td>Single Data Swap</td>
+        </tr>
+        <tr>
+            <td>0</td><td>0</td><td>0</td>
+            <td>1</td><td>0</td><td>B</td><td>0</td>
+            <td>0</td>
+            {{< arm/arm-register Rn >}}
+            {{< arm/arm-register Rd >}}
+            <td>0</td><td>0</td><td>0</td><td>0</td>
+            <td>1</td><td>0</td><td>0</td><td>1</td>
+            {{< arm/arm-register Rm >}}
+            <td>Single Data Swap</td>
+        </tr>
+        <tr>
+            <td>0</td><td>0</td><td>0</td>
+            <td>1</td><td>0</td><td>0</td><td>1</td>
+            <td>0</td>
+            <td>1</td><td>1</td><td>1</td><td>1</td>
+            <td>1</td><td>1</td><td>1</td><td>1</td>
+            <td>1</td><td>1</td><td>1</td><td>1</td>
+            <td>0</td><td>0</td><td>0</td><td>1</td>
+            {{< arm/arm-register Rn >}}
+            <td>Branch and Exchange</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
