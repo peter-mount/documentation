@@ -40,6 +40,7 @@ function createIndex(config){
   let indexElementDiv = document.querySelector(config.indexElement);
   let indexUl = document.createElement("ul");
   indexUl.id = "list-index-generated";
+  indexUl.classList.add("list-index-generated");
   indexElementDiv.appendChild(indexUl);
 
 
