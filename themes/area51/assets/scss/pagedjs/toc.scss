@@ -1,12 +1,35 @@
 // Attempt for page number handling
 
-.columns-1 { columns: 1 auto;}
-.columns-2 { columns: 2 auto;}
-.columns-3 { columns: 3 auto;}
-.columns-4 { columns: 4 auto;}
-.columns-5 { columns: 5 auto;}
+@media screen {
+  .columns-1 {
+    columns: 1 auto;
+  }
+  .columns-2 {
+    columns: 2 auto;
+  }
+  .columns-3 {
+    columns: 3 auto;
+  }
+  .columns-4 {
+    columns: 4 auto;
+  }
+  .columns-5 {
+    columns: 5 auto;
+  }
+}
 
 @media print {
+  /* Columns break toc's but as we are using A5 it's pointless so disable it */
+  .columns-1 {
+  }
+  .columns-2 {
+  }
+  .columns-3 {
+  }
+  .columns-4 {
+  }
+  .columns-5 {
+  }
 
   .print-page-link {
 
