@@ -17,16 +17,32 @@
     border-right: 1px dashed grey;
     border-left: 1px dashed grey;
      */
+
+    @bottom-center {
+      content: string(title)
+    }
   }
 
   @page :left {
     margin-left: 0.5cm;
     margin-right: 2.5cm;
+
+    @bottom-left {
+      content: counter(page)
+    }
   }
 
   @page :right {
     margin-left: 2.5cm;
     margin-right: 0.5cm;
+
+    @bottom-right {
+      content: counter(page)
+    }
+  }
+
+  h1 {
+    string-set: title content(text);
   }
 
   // Override bootstrap to make it suitable for printing
@@ -82,3 +98,7 @@
   }
 
 }
+
+@import "booktitle";
+@import "breaks";
+@import "toc";

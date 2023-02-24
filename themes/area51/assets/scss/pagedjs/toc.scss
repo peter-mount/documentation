@@ -33,6 +33,14 @@
 
   .print-page-link {
 
+    ul {
+      list-style-type: none;
+      padding-inline-start: 1em;
+      // Override bootstrap so toc is compact
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
     li {
       list-style: none;
 

@@ -9,7 +9,7 @@
     {{- $subSection = add $subSection 1 -}}
 	{{- partial "print/toc-li.html" (dict "sid" $sid "Page" .) -}}
     {{- if .IsSection -}}
-    <ul style="list-style-type:none;padding-inline-start:1em;">
+    <ul>
         {{- template "recurse-toc" (dict "section" . "psid" (printf "%s." $sid)) -}}
     </ul>
     {{- end -}}
@@ -59,7 +59,7 @@
   {{- end -}}
 
 {{- if not (.Param "print.disable_toc") -}}
-  <div class="printPageBreak">
+  <div class="printPageBreak printPageBreakAvoid">
   <h1 class="title">Table of Contents</h1>
   <ul class="print-page-link{{ with .Page.Params.book }}{{ with .tocColumns }} columns-{{.}}{{ end }}{{ end }}">
   {{- template "recurse-toc" (dict "section" .CurrentSection "psid" "") -}}

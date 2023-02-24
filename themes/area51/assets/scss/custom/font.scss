@@ -11,31 +11,6 @@
     }
 }
 
-.printPageBreak {
-    break-before: page;
-    page-break-before: always;
-}
-
-.printPageBreakLeft {
-    break-before: left;
-    page-break-before: left;
-}
-
-.printPageBreakRight {
-    break-before: right;
-    page-break-before: right;
-}
-
-.printPageBreakAuto {
-    break-inside: auto;
-    page-break-before: auto;
-}
-
-.printPageBreakAvoid {
-    break-inside: avoid;
-    page-break-inside: avoid;
-}
-
 .sourceCode {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
     font-size: 80%;

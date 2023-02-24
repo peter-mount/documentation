@@ -1,6 +1,6 @@
 {{/* Use the title and description of the first page to begin the document */}}
 {{- if isset .Page.Params "book" -}}
-<div class="bookTitle" style="page-break-after: always">
+<div class="bookTitle printPageBreakRight">
     <div class="bookTop">
         <h1>
             {{- if isset .Page.Params.book "title" -}}
