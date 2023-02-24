@@ -21,13 +21,14 @@ api:
       "y": "Undefined except for OSWORD 0x00"
       "c": "Undefined except for OSWORD 0x00"
 ---
+<p>
+    The OSWORD routines are very similar in concept to the OSBYTE routines. The major difference arises in the way
+    of passing parameters. Instead of being passed in the X and Y registers, they are placed in a parameter block,
+    The address of this parameter block is sent to the routine in the X (for the low byte) and Y (for the high byte)
+    registers.
+</p>
+
 <div class="printPageBreakAvoid">
-    <p>
-        The OSWORD routines are very similar in concept to the OSBYTE routines. The major difference arises in the way
-        of passing parameters. Instead of being passed in the X and Y registers, they are placed in a parameter block,
-        The address of this parameter block is sent to the routine in the X (for the low byte) and Y (for the high byte)
-        registers.
-    </p>
     <h3>Entry parameters</h3>
     <table>
         <thead>
@@ -51,7 +52,9 @@ api:
         </tr>
         </tbody>
     </table>
+</div>
 
+<div class="printPageBreak">
     <h2>OSWORD Specification</h2>
     <p>
         Only OSWORD 0x00 returns a result in the Y register and the Carry flag.
@@ -70,18 +73,25 @@ api:
         is when the OSWord is issued from a coprocessor.
     </p>
     <p>
-        Due to a limitation in the host side of the Tube software these values cannot exceed 128 bytes in either direction.
+        Due to a limitation in the host side of the Tube software these values cannot exceed 128 bytes in either
+        direction.
     </p>
     <p>
-        OSWORD calls with numbers &E0 to &FF are "available for use by the user" and are passed directly to USERV (0x0200) on the 6502 I/O processor.
-        This makes them easier to implement as only USERV needs to be hooked into instead of WORDV, and 0xF0/0xF1 is already prepared pointing at the control block.
+        OSWORD calls with numbers &E0 to &FF are "available for use by the user" and are passed directly to USERV
+        (0x0200) on the 6502 I/O processor.
+        This makes them easier to implement as only USERV needs to be hooked into instead of WORDV, and 0xF0/0xF1 is
+        already prepared pointing at the control block.
     </p>
     <p>
         All other unrecognised OSWORD calls are offered to the paged ROMs.
     </p>
     <p>
-        Although not enforced by the API, the convention for high-numbered OSWORD calls is for the control block contents to be:
+        Although not enforced by the API, the convention for high-numbered OSWORD calls is for the control block
+        contents to be:
     </p>
+</div>
+
+<div class="printPageBreakAvoid">
     <table>
         <thead>
         <tr>
@@ -107,23 +117,19 @@ api:
         <tr>
             <td>2</td>
             <td>action</td>
-            <td>set to zero</td>
-            <td></td>
+            <td colspan="2">set to zero</td>
         </tr>
         <tr>
             <td>3</td>
             <td>must be zero</td>
-            <td>result</td>
-            <td></td>
+            <td colspan="2">result</td>
         </tr>
         <tr>
             <td>4&hellip;</td>
             <td>request data</td>
-            <td>result data</td>
-            <td></td>
+            <td colspan="2">result data</td>
         </tr>
         </tbody>
     </table>
-
 
 </div>
