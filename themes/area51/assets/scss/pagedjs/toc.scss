@@ -87,7 +87,8 @@
     // hack for leaders
     overflow-x: hidden;
 
-    li::after {
+    // :not(> h1) as we do not apply this to the h1 header at the start
+    li:not(> h1)::after {
       content: ".............................................." ".............................................." ".............................................." "........";
       float: left;
       width: 0;
@@ -95,19 +96,19 @@
       letter-spacing: 2px;
     }
 
-    li {
+    li:not(> h1) {
       display: flex;
-    }
 
-    a::after {
-      position: absolute;
-      right: 0;
-      background-color: white;
-      padding-left: 6px;
-    }
+      a::after {
+        position: absolute;
+        right: 0;
+        background-color: white;
+        padding-left: 6px;
+      }
 
-    li a {
-      right: 0;
+      li a {
+        right: 0;
+      }
     }
 
   }

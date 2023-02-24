@@ -5,6 +5,8 @@
   // that cuts off some rows so this has to do for now
   table.memory {
     tr {
+      //break-inside: auto !important;
+      //page-break-inside: auto !important;
 
       td:first-child {
         width: 5em !important;
