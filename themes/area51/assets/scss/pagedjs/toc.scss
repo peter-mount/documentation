@@ -38,9 +38,9 @@
     text-decoration: none !important;
   }
 
-  // Don't show table rows where they have been split across pages.
+  // Don't show empty table rows where they have been split across pages.
   // Without this a table shows a double bottom border due to a blank row.
-  tr[data-split-original="true"] {
+  tr[data-split-original="true"]:has(> td:empty) {
     display: none;
   }
 
