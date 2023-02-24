@@ -1,0 +1,49 @@
+@media print {
+
+  // Ensure that memory map's are consistent across page breaks.
+  // This is down to thead not being repeated and the "hack" to implement
+  // that cuts off some rows so this has to do for now
+  table.memory {
+    tr {
+
+      td:first-child {
+        width: 5em !important;
+      }
+
+      td:nth-child(2) {
+        width: 2.5em !important;
+        text-align: right;
+      }
+
+      td:nth-child(3):not(:last-child) {
+        width: 5em !important;
+      }
+
+
+    }
+  }
+
+  // Common to have a sub-table in the description column
+  table.memoryInner {
+    border: 0 !important;
+    margin: 0 !important;
+
+    tr {
+      border: 0 !important;
+
+      td:first-child {
+        width: 2em !important;
+        text-align: center !important;
+      }
+
+      td,
+      td:nth-child(2),
+      td:nth-child(3) {
+        text-align: left !important;
+        border: 0 !important;
+        width: 100% !important;
+      }
+    }
+  }
+
+}
