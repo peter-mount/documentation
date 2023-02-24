@@ -22,7 +22,7 @@ api:
       "c": "Undefined except for OSWORD 0x00"
 ---
 <p>
-    The OSWORD routines are very similar in concept to the OSBYTE routines. The major difference arises in the way
+    The <span class="book-index" data-book-index="OSWORD">OSWORD</span> routines are very similar in concept to the OSBYTE routines. The major difference arises in the way
     of passing parameters. Instead of being passed in the X and Y registers, they are placed in a parameter block,
     The address of this parameter block is sent to the routine in the X (for the low byte) and Y (for the high byte)
     registers.
@@ -55,7 +55,7 @@ api:
 </div>
 
 <div class="printPageBreak">
-    <h2>OSWORD Specification</h2>
+    <h2><span class="book-index" data-book-index="OSWORD Specification">OSWORD Specification</span></h2>
     <p>
         Only OSWORD 0x00 returns a result in the Y register and the Carry flag.
         The registers are preserved for all other calls.
@@ -78,7 +78,7 @@ api:
     </p>
     <p>
         OSWORD calls with numbers &E0 to &FF are "available for use by the user" and are passed directly to USERV
-        (0x0200) on the 6502 I/O processor.
+        (0x0200) on the <span class="book-index" data-book-index="6502 I/O processor">6502 I/O processor</span>.
         This makes them easier to implement as only USERV needs to be hooked into instead of WORDV, and 0xF0/0xF1 is
         already prepared pointing at the control block.
     </p>

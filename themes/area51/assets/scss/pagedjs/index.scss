@@ -1,0 +1,16 @@
+
+.link-page a::after {
+  content: target-counter(attr(href), page);
+}
+
+.link-page::after {
+  content: ", ";
+}
+
+.link-page:last-of-type::after {
+  content: none;
+}
+
+.index-value::after {
+  content: " – ";
+}

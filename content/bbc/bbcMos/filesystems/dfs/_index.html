@@ -14,38 +14,36 @@ categories:
     Each track carries ten 256 byte sectors numbered from 0 to 9.
 </p>
 
-<div class="printPageBreakAvoid">
-    <h3>Sector ID's</h3>
-    <p>
-        Each sector is given an ID at format time; the parameters of the ID, listed below, are used by the DFS and the
-        floppy
-        disc controller to address sectors.
-    </p>
-    <ul>
-        <li>
-            C, the cylinder number ranges from 0 on the outermost track to 39 or 79 on the innermost track.
-        </li>
-        <li>
-            H, the head number = 0.
-            Acorn DFS ignores this after formatting.<br/>
-            Some DFS formatters set it to 1 on the upper surface of the disc (corresponding to drives 2 or 3.)
-        </li>
-        <li>
-            R, the record number runs sequentially from 0 to 9 within each track.<br/>
-            There is a standard track skew of 3;
-            that is, the sectors having R = 0 are the first sector of the first track,
-            the fourth sector of the second track, the seventh of the third, the tenth of the fourth, and so on.
-        </li>
-        <li>
-            N, the record length = 1, showing that the sector length is 27 + 1, or 256 bytes.
-        </li>
-    </ul>
-    <p>
-        All these parameters can potentially take any value between 0 and 255, and so confuse Acorn DFS and some
-        non-standard controllers.
-        Some copy protection schemes make use of this feature.
-    </p>
-</div>
+<h3>Sector ID's</h3>
+<p>
+    Each sector is given an ID at format time; the parameters of the ID, listed below, are used by the DFS and the
+    floppy
+    disc controller to address sectors.
+</p>
+<ul>
+    <li>
+        C, the cylinder number ranges from 0 on the outermost track to 39 or 79 on the innermost track.
+    </li>
+    <li>
+        H, the head number = 0.
+        Acorn DFS ignores this after formatting.<br/>
+        Some DFS formatters set it to 1 on the upper surface of the disc (corresponding to drives 2 or 3.)
+    </li>
+    <li>
+        R, the record number runs sequentially from 0 to 9 within each track.<br/>
+        There is a standard track skew of 3;
+        that is, the sectors having R = 0 are the first sector of the first track,
+        the fourth sector of the second track, the seventh of the third, the tenth of the fourth, and so on.
+    </li>
+    <li>
+        N, the record length = 1, showing that the sector length is 27 + 1, or 256 bytes.
+    </li>
+</ul>
+<p>
+    All these parameters can potentially take any value between 0 and 255, and so confuse Acorn DFS and some
+    non-standard controllers.
+    Some copy protection schemes make use of this feature.
+</p>
 
 <div class="printPageBreakAvoid">
     <h2>Catalog</h2>
@@ -61,225 +59,223 @@ categories:
 
     <h3>Catalog format</h3>
 
-    <p>
-        This is the structure of the catalogue header:
-    </p>
+    <figure>
+        <table class="diskMap">
+            <thead>
+            <tr>
+                <th rowspan="2">Byte</th>
+                <th colspan="8">Track 0 Sector 0</th>
+                <th colspan="8">Track 0 Sector 1</th>
+                <th rowspan="2"></th>
+            </tr>
+            <tr>
+                <th>7</th>
+                <th>6</th>
+                <th>5</th>
+                <th>4</th>
+                <th>3</th>
+                <th>2</th>
+                <th>1</th>
+                <th>0</th>
 
-    <table class="diskMap">
-        <thead>
-        <tr>
-            <th rowspan="2">Byte</th>
-            <th colspan="8">Track 0 Sector 0</th>
-            <th colspan="8">Track 0 Sector 1</th>
-            <th rowspan="2"></th>
-        </tr>
-        <tr>
-            <th>7</th>
-            <th>6</th>
-            <th>5</th>
-            <th>4</th>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
-            <th>0</th>
+                <th>7</th>
+                <th>6</th>
+                <th>5</th>
+                <th>4</th>
+                <th>3</th>
+                <th>2</th>
+                <th>1</th>
+                <th>0</th>
+            </tr>
+            </thead>
+            <tbody>
 
-            <th>7</th>
-            <th>6</th>
-            <th>5</th>
-            <th>4</th>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
-            <th>0</th>
-        </tr>
-        </thead>
-        <tbody>
+            <tr>
+                <td>0</td>
+                <td class="unused brb" rowspan="8"></td>
+                <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or
+                    spaces
+                </td>
+                <td class="unused brb" rowspan="4"></td>
+                <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or
+                    spaces
+                </td>
+                <td class="brb" rowspan="8"></td>
+            </tr>
+            <tr>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td class="grey brb" colspan="5">Number of files</td>
+                <td class="unused brb" colspan="3"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td class="unused brb" colspan="2"></td>
+                <td class="orange brb" colspan="2">Boot Opts</td>
+                <td class="yellow brb" colspan="2">Disk Type</td>
+                <td class="green blr" colspan="2"><small class="left">9</small><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td class="green bb"><small class="left">7</small></td>
+                <td class="green bb" colspan="6">Sectors in volume</td>
+                <td class="green brb"><small class="right">0</small></td>
+            </tr>
 
-        <tr>
-            <td>0</td>
-            <td class="unused brb" rowspan="8"></td>
-            <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or spaces
-            </td>
-            <td class="unused brb" rowspan="4"></td>
-            <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or spaces
-            </td>
-            <td class="brb" rowspan="8"></td>
-        </tr>
-        <tr>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td class="grey brb" colspan="5">Number of files</td>
-            <td class="unused brb" colspan="3"></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td class="unused brb" colspan="2"></td>
-            <td class="orange brb" colspan="2">Boot Opts</td>
-            <td class="yellow brb" colspan="2">Disk Type</td>
-            <td class="green blr" colspan="2"><small class="left">9</small><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Sectors in volume</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
+            <tr>
+                <td class="bt">8</td>
+                <td class="brb" rowspan="7"></td>
+                <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+                <td class="blue"><small class="left">7</small></td>
+                <td class="blue bb" rowspan="2" colspan="6">Load address</td>
+                <td class="blue br"><small class="right">0</small></td>
+                <td class="rotright brb" rowspan="8">Last file</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td class="blue bb"><small class="left">15</small></td>
+                <td class="blue brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td class="orange"><small class="left">7</small></td>
+                <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+                <td class="orange br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td class="orange bb"><small class="left">15</small></td>
+                <td class="orange brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td class="grey"><small class="left">7</small></td>
+                <td class="grey" rowspan="2" colspan="6">File length</td>
+                <td class="grey br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td class="grey bb"><small class="left">15</small></td>
+                <td class="grey brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td class="orange brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Exec
+                </td>
+                <td class="grey brb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                </td>
+                <td class="blue brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Load
+                </td>
+                <td class="green blrt" colspan="2">
+                    <small class="left">9</small>
+                    <small class="right">8</small>
+                </td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td class="grey brb">Lk.</td>
+                <td class="grey brb" colspan="7">Directory</td>
+                <td class="green bb"><small class="left">7</small></td>
+                <td class="green bb" colspan="6">Start sector</td>
+                <td class="green brb"><small class="right">0</small></td>
+            </tr>
 
-        <tr>
-            <td class="bt">8</td>
-            <td class="brb" rowspan="7"></td>
-            <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
-            <td class="blue"><small class="left">7</small></td>
-            <td class="blue bb" rowspan="2" colspan="6">Load address</td>
-            <td class="blue br"><small class="right">0</small></td>
-            <td class="rotright brb" rowspan="8">Last file</td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td class="blue bb"><small class="left">15</small></td>
-            <td class="blue brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td class="orange"><small class="left">7</small></td>
-            <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
-            <td class="orange br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td class="orange bb"><small class="left">15</small></td>
-            <td class="orange brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>12</td>
-            <td class="grey"><small class="left">7</small></td>
-            <td class="grey" rowspan="2" colspan="6">File length</td>
-            <td class="grey br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>13</td>
-            <td class="grey bb"><small class="left">15</small></td>
-            <td class="grey brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>14</td>
-            <td class="orange brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Exec
-            </td>
-            <td class="grey brb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-            </td>
-            <td class="blue brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Load
-            </td>
-            <td class="green blrt" colspan="2">
-                <small class="left">9</small>
-                <small class="right">8</small>
-            </td>
-        </tr>
-        <tr>
-            <td>15</td>
-            <td class="grey brb">Lk.</td>
-            <td class="grey brb" colspan="7">Directory</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Start sector</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
+            <tr>
+                <td class="bt">16</td>
+                <td class="brb" rowspan="7"></td>
+                <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+                <td class="blue"><small class="left">7</small></td>
+                <td class="blue bb" rowspan="2" colspan="6">Load address</td>
+                <td class="blue br"><small class="right">0</small></td>
+                <td class="rotright brb" rowspan="8">Second to last file</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td class="blue bb"><small class="left">15</small></td>
+                <td class="blue brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td class="orange"><small class="left">7</small></td>
+                <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+                <td class="orange br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td class="orange bb"><small class="left">15</small></td>
+                <td class="orange brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td class="grey"><small class="left">7</small></td>
+                <td class="grey" rowspan="2" colspan="6">File length</td>
+                <td class="grey br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td class="grey bb"><small class="left">15</small></td>
+                <td class="grey brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td class="orange brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Exec
+                </td>
+                <td class="grey brb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                </td>
+                <td class="blue brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Load
+                </td>
+                <td class="green blrt" colspan="2">
+                    <small class="left">9</small>
+                    <small class="right">8</small>
+                </td>
+            </tr>
+            <tr>
+                <td class="bb">23</td>
+                <td class="grey brb">Lk.</td>
+                <td class="grey brb" colspan="7">Directory</td>
+                <td class="green bb"><small class="left">7</small></td>
+                <td class="green bb" colspan="6">Start sector</td>
+                <td class="green brb"><small class="right">0</small></td>
+            </tr>
 
-        <tr>
-            <td class="bt">16</td>
-            <td class="brb" rowspan="7"></td>
-            <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
-            <td class="blue"><small class="left">7</small></td>
-            <td class="blue bb" rowspan="2" colspan="6">Load address</td>
-            <td class="blue br"><small class="right">0</small></td>
-            <td class="rotright brb" rowspan="8">Second to last file</td>
-        </tr>
-        <tr>
-            <td>17</td>
-            <td class="blue bb"><small class="left">15</small></td>
-            <td class="blue brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>18</td>
-            <td class="orange"><small class="left">7</small></td>
-            <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
-            <td class="orange br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>19</td>
-            <td class="orange bb"><small class="left">15</small></td>
-            <td class="orange brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>20</td>
-            <td class="grey"><small class="left">7</small></td>
-            <td class="grey" rowspan="2" colspan="6">File length</td>
-            <td class="grey br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>21</td>
-            <td class="grey bb"><small class="left">15</small></td>
-            <td class="grey brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>22</td>
-            <td class="orange brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Exec
-            </td>
-            <td class="grey brb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-            </td>
-            <td class="blue brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Load
-            </td>
-            <td class="green blrt" colspan="2">
-                <small class="left">9</small>
-                <small class="right">8</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="bb">23</td>
-            <td class="grey brb">Lk.</td>
-            <td class="grey brb" colspan="7">Directory</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Start sector</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
+            <tr>
+                <td class="dashleft">&nbsp;</td>
+                <td colspan="16"></td>
+                <td class="dashright">&nbsp;</td>
+            </tr>
 
-        <tr>
-            <td class="dashleft">&nbsp;</td>
-            <td colspan="16"></td>
-            <td class="dashright">&nbsp;</td>
-        </tr>
-
-        </tbody>
-    </table>
-    <p>
-        All unused bits must be kept clear.
-    </p>
+            </tbody>
+        </table>
+        <figcaption>DFS catalogue header format</figcaption>
+    </figure>
 </div>
 
 <div class="printPageBreakAvoid">

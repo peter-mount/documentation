@@ -9,8 +9,26 @@
 <body class="pagedjs td-{{ .Kind }}">
 <div class="td-main">
     {{ block "main" . }}{{ end }}
+
+    <div class="printPageBreakRight">
+        <h1 id="pg-index" pagesection="index">Index</h1>
+        <div id="book-index"></div>
+    </div>
+
 </div>
 {{ partial "scripts.html" . }}
-<script src="/static/cdn/js/paged.polyfill.js"></script>
+<script src="/static/cdn/js/paged.index.js"></script>
+<script async src="/static/cdn/js/paged.polyfill.js"></script>
+<script>
+  window.PagedConfig = {
+    before: function () {
+      createIndex({
+        spanClassIndex: "book-index",
+        indexElement: "#book-index",
+        alphabet: true,
+      });
+    },
+  };
+</script>
 </body>
 </html>
