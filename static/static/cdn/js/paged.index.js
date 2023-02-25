@@ -1,38 +1,40 @@
-function createIndex(config){
+function createIndex(config) {
   let indexElements = document.getElementsByClassName(config.spanClassIndex);
   let arrayIndex = [];
   let num = 0;
 
-  for(let i = 0; i < indexElements.length; ++i){
+  for (let i = 0; i < indexElements.length; ++i) {
     let indexElement = indexElements[i];
 
     // create array with all data-book-index
     let indexKey = indexElement.dataset.bookIndex;
     let indexKeyFirst = indexKey.slice(0, 1);
     let newIndexKey;
-    if(indexKeyFirst == "<"){
-      if(indexKey.slice(0, 3) == "<i>"){
+    if (indexKeyFirst === "<") {
+      if (indexKey.slice(0, 3) === "<i>") {
         newIndexKey = indexKey.replace("<i>", "") + "-iTemp";
-      }else if(indexKey.slice(0, 4) == "<em>"){
+      } else if (indexKey.slice(0, 4) === "<em>") {
         newIndexKey = indexKey.replace("<em>", "") + "-emTemp";
       }
-    }else{
+    } else {
       newIndexKey = indexKey;
     }
 
     arrayIndex.push(newIndexKey);
 
-    // create id for span whithout
+    // create id for span without
     num++;
-    if(indexElement.id == ''){ indexElement.id = 'book-index-' + num; }
+    if (indexElement.id === '') {
+      indexElement.id = 'book-index-' + num;
+    }
   }
 
 
-  // filter array to remove dublicate and sort by alphabetical order
-  let newArrayIndex = arrayIndex.filter(onlyUnique).sort(function(a,b) {
+  // filter array to remove duplicate and sort by alphabetical order
+  let newArrayIndex = arrayIndex.filter(onlyUnique).sort(function (a, b) {
     a = a.toLowerCase();
     b = b.toLowerCase();
-    if( a == b) return 0;
+    if (a === b) return 0;
     return a < b ? -1 : 1;
   });
 
@@ -45,22 +47,23 @@ function createIndex(config){
 
 
   // create <li> element for the index
-  for(var a = 0; a < newArrayIndex.length; a++){
+  let z;
+  for (let a = 0; a < newArrayIndex.length; a++) {
 
-    // create alaphabet
-    if(config.alphabet){
+    // create alphabet
+    if (config.alphabet) {
       z = a - 1;
       let firstLetter = newArrayIndex[a].toUpperCase().slice(0, 1);
-      if(a == 0){
+      if (a === 0) {
         let alphabetLiFirst = document.createElement("li");
         alphabetLiFirst.classList.add("list-alphabet-element");
         alphabetLiFirst.id = "alphabet-element-" + firstLetter;
         alphabetLiFirst.innerHTML = firstLetter;
         indexUl.appendChild(alphabetLiFirst);
       }
-      if(z > 0){
+      if (z > 0) {
         let firstLetterPrevious = newArrayIndex[z].toUpperCase().slice(0, 1);
-        if(firstLetter != firstLetterPrevious){
+        if (firstLetter !== firstLetterPrevious) {
           let alphabetLi = document.createElement("li");
           alphabetLi.classList.add("list-alphabet-element");
           alphabetLi.id = "alphabet-element-" + firstLetter;
@@ -75,11 +78,11 @@ function createIndex(config){
     indexNewLi.classList.add("list-index-element");
 
     let dataIndex;
-    if(newArrayIndex[a].substr(newArrayIndex[a].length - 6) == "-iTemp"){
+    if (newArrayIndex[a].substr(newArrayIndex[a].length - 6) === "-iTemp") {
       dataIndex = "<i>" + newArrayIndex[a].replace("-iTemp", "");
-    }else if(newArrayIndex[a].substr(newArrayIndex[a].length - 7) == "-emTemp"){
+    } else if (newArrayIndex[a].substr(newArrayIndex[a].length - 7) === "-emTemp") {
       dataIndex = "<em>" + newArrayIndex[a].replace("-emTemp", "");
-    }else{
+    } else {
       dataIndex = newArrayIndex[a];
     }
 
@@ -89,7 +92,7 @@ function createIndex(config){
 
   let indexLi = document.getElementById('list-index-generated').getElementsByClassName('list-index-element');
 
-  for(var n = 0; n < indexLi.length; n++){
+  for (let n = 0; n < indexLi.length; n++) {
 
     // find data and add HTML of the list
     let dataIndex = indexLi[n].dataset.listIndex;
@@ -97,8 +100,8 @@ function createIndex(config){
     indexLi[n].innerHTML = '<span class="index-value">' + dataIndex + '</span><span class="links-pages"></span>';
 
     // add span for link page
-    spanIndex.forEach(function(elem) {
-      spanIndexId = elem.id;
+    spanIndex.forEach(function (elem) {
+      let spanIndexId = elem.id;
       let spanPage = document.createElement("span");
       spanPage.classList.add("link-page");
       spanPage.innerHTML = '<a href="#' + spanIndexId + '"></a>';
