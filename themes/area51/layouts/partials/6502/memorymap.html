@@ -55,7 +55,11 @@
         <td>{{.length}}</td>
         {{- end -}}
         {{- if $hasName -}}
-        <td>{{.name}}</td>
+        <td>
+            {{- with .name -}}
+            <span class="book-index" data-book-index="{{.}}">{{.}}</span>
+            {{- end -}}
+        </td>
         {{- end -}}
         {{- if $hasVal -}}
         <td>{{.value}}</td>

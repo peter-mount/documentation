@@ -27,7 +27,11 @@
     <tr>
         <td>{{.int}}</td>
         <td>{{.hex}}</td>
-        <td>{{.title}}</td>
+        <td>
+            {{- with .title -}}
+            <span class="book-index" data-book-index="{{.}}">{{.}}</span>
+            {{- end -}}
+        </td>
         {{- if $hasBBC }}<td>{{ if isset .compatibility "bbc" }}x{{end }}</td>
         <td>{{ if isset .compatibility "master" }}x{{end }}</td>
         <td>{{ if isset .compatibility "electron" }}x{{end }}</td>{{ end -}}

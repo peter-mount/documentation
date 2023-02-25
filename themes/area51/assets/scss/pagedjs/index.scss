@@ -1,6 +1,7 @@
 
 .list-index-generated {
   list-style-type: none;
+  padding-inline-start: 0;
   // Override bootstrap so toc is compact
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -13,7 +14,15 @@
   list-style: none;
 }
 
+.list-index-element {
+  // as alphabet is hidden then no indent
+  padding-inline-start: 0;
+  //padding-inline-start: 0.5rem;
+}
+
 .list-alphabet-element {
+  // Hidden as looks better but otherwise would be bold underlined header
+  display: none;
   font-weight: bold;
   border-bottom: 1px solid grey;
   margin-top: 0.25rem;
@@ -27,10 +36,11 @@
   content: ", ";
 }
 
-.link-page:last-of-type::after {
+.link-page:last-child::after {
   content: none;
 }
 
 .index-value::after {
   content: " – ";
+  //content: ", ";
 }

@@ -9,7 +9,7 @@ categories:
 ---
 <h2>Physical format</h2>
 <p>
-    Acorn DFS is a single sided, single density 40 or 80 track format.
+    <span class="book-index" data-book-index="DFS">Acorn DFS</span> is a single sided, single density 40 or 80 track format.
     A double sided disc can hold two DFS volumes.
     Each track carries ten 256 byte sectors numbered from 0 to 9.
 </p>
@@ -49,7 +49,8 @@ categories:
     <h2>Catalog</h2>
 
     <p>
-        The catalog is located in sectors 0 & 1 on Track 0. It is capable of holding just 31 entries.
+        The <span class="book-index" data-book-index="catalog">catalog</span> is located in sectors 0 & 1 on Track 0.
+        It is capable of holding just 31 entries.
     </p>
 
     <p>
@@ -281,6 +282,7 @@ categories:
 <div class="printPageBreakAvoid">
     <h4>Disc title</h4>
     <p>
+        <span class="book-index" data-book-index="Disc title"></span>
         Up to 12 printable ASCII characters, padded with NULs (&00) or spaces.
         The first eight characters are placed in sector 0 bytes 0 to 7, the last four characters in sector 1 bytes 0 to
         3.
@@ -368,17 +370,23 @@ categories:
         <tr>
             <td>0</td>
             <td>0</td>
-            <td>Acorn DFS or Watford DFS up to 256K</td>
+            <td>
+                Acorn <span class="book-index" data-book-index="DFS">DFS</span>
+                or <span class="book-index" data-book-index="Watford DFS">Watford DFS</span> up to 256K
+            </td>
         </tr>
         <tr>
             <td>0</td>
             <td>1</td>
-            <td>Watford DFS larger than 256K</td>
+            <td><span class="book-index" data-book-index="WDFS">Watford DFS</span> larger than 256K</td>
         </tr>
         <tr>
             <td>1</td>
             <td>0</td>
-            <td>Duggan HDFS, single sided disk</td>
+            <td>
+                <span class="book-index" data-book-index="HDFS"></span>
+                <span class="book-index" data-book-index="Duggan HDFS">Duggan HDFS</span>, single sided disk
+            </td>
         </tr>
         <tr>
             <td>1</td>
@@ -467,6 +475,7 @@ categories:
 <div class="printPageBreakAvoid">
     <h4>Load address</h4>
     <p>
+        <span class="book-index" data-book-index="Load address"></span>
         An 18 bit address in memory where the file should be *LOADed by default.
         The low 8 bits are in sector 1 byte 8;
         the next 8 bits in sector 1 byte 9; the top two bits are in bits 2 and 3 of sector 1 byte 14.
@@ -479,6 +488,7 @@ categories:
 <div class="printPageBreakAvoid">
     <h4>Execution address</h4>
     <p>
+        <span class="book-index" data-book-index="Execution address"></span>
         An 18 bit address in memory to be jumped to when the file is *RUN.
         This need not be within the bounds of the loaded file.
         The low 8 bits are in sector 1 byte 10; the next 8 bits in sector 1 byte 11; the top two bits are
@@ -492,6 +502,7 @@ categories:
 <div class="printPageBreakAvoid">
     <h4>File length</h4>
     <p>
+        <span class="book-index" data-book-index="File length"></span>
         An 18 bit value giving the number of bytes in the file.
     </p>
     <p>
@@ -515,7 +526,10 @@ categories:
 <div class="printPageBreakAvoid">
     <h4>Note on load and execution addresses</h4>
     <p>
-        If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and OSFILE
+        <span class="book-index" data-book-index="Load address"></span>
+        <span class="book-index" data-book-index="Execution address"></span>
+        If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and
+        <span class="book-index" data-book-index="OSFILE">OSFILE</span>
         will return the address ORed with &FFFF0000 in its parameter block.
     </p>
     <p>
@@ -529,12 +543,13 @@ categories:
 <div class="printPageBreakAvoid">
     <h4>Issues with early versions of DFS</h4>
     <p>
-        Some early DFSs allow the user to write disk titles or filenames with bit 7 set.
+        Some early <span class="book-index" data-book-index="DFS">DFS</span>s allow the user to write disk titles or
+        filenames with bit 7 set.
     </p>
     <p>
         This may cause these entries to appear to erroneously have
-        <a href="../hdfs/">HDFS</a> or
-        <a href="../wdfs/">WDFS</a> attributes.
+        <a href="../hdfs/"><span class="book-index" data-book-index="HDFS">HDFS</span></a> or
+        <a href="../wdfs/"><span class="book-index" data-book-index="WDFS">WDFS</span></a> attributes.
     </p>
     <p>
         Most DFSs disallow top-bit set filenames and disk titles.
@@ -544,7 +559,8 @@ categories:
 <div class="printPageBreakAvoid">
     <h2>Identifying and validating a DFS disc image</h2>
     <p>
-        Unlike its successor ADFS, the DFS format contains no self-identification strings or checksums, so recognising a
+        Unlike its successor <span class="book-index" data-book-index="ADFS">ADFS</span>,
+        the <span class="book-index" data-book-index="DFS">DFS</span> format contains no self-identification strings or checksums, so recognising a
         disc or disc image as Acorn DFS is a complex and unreliable process.
     </p>
     <p>
@@ -602,7 +618,7 @@ categories:
     </p>
     <ul>
         <li>The disc size is 400 sectors (40 tracks) or 800 sectors (80 tracks.)</li>
-        <li>There is a file named !BOOT in directory $.</li>
+        <li>There is a file named <span class="book-index" data-book-index="!BOOT">!BOOT</span> in directory $.</li>
         <li>The 16th and 17th bits of the load and execution (exec) addresses are all clear or all set in each file
             entry.
         </li>
