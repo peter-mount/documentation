@@ -23,6 +23,10 @@
   //padding-inline-start: 0.5rem;
 }
 
+.list-index-element:has(> .list-subindex-element) {
+  text-indent: 0.125em;
+}
+
 .list-alphabet-element {
   // Hidden as looks better but otherwise would be bold underlined header
   display: none;

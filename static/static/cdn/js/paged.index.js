@@ -47,6 +47,7 @@ function createIndex(config) {
 
 
   // create <li> element for the index
+  let lastName = ""
   let z;
   for (let a = 0; a < newArrayIndex.length; a++) {
 
@@ -97,7 +98,18 @@ function createIndex(config) {
     // find data and add HTML of the list
     let dataIndex = indexLi[n].dataset.listIndex;
     let spanIndex = document.querySelectorAll("[data-book-index='" + dataIndex + "']");
-    indexLi[n].innerHTML = '<span class="index-value">' + dataIndex + '</span><span class="links-pages"></span>';
+
+    // Auto reduce entries
+    let showLabel = dataIndex
+    let showClass = ""
+    if (lastName !== "" && dataIndex.startsWith(lastName)) {
+      showLabel = dataIndex.slice(lastName.length)
+      showClass = " list-subindex-element"
+    } else {
+      lastName = dataIndex
+    }
+
+    indexLi[n].innerHTML = '<span class="index-value' + showClass + '">' + showLabel + '</span><span class="links-pages"></span>';
 
     // add span for link page
     spanIndex.forEach(function (elem) {
