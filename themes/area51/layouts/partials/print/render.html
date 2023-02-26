@@ -64,6 +64,7 @@
         <ul class="print-page-link{{ with .Page.Params.book }}{{ with .tocColumns }} columns-{{.}}{{ end }}{{ end }}">
             {{- /* <li><h1 class="title">Table of Contents</h1></li> */ -}}
             {{- template "recurse-toc" (dict "section" .CurrentSection "psid" "") -}}
+            <li><a href="#pg-index">Index</a></li>
         </ul>
     </div>
     {{- end -}}
