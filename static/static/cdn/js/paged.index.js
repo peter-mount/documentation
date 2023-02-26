@@ -101,15 +101,14 @@ function createIndex(config) {
 
     // Auto reduce entries
     let showLabel = dataIndex
-    let showClass = ""
     if (lastName !== "" && dataIndex.startsWith(lastName)) {
       showLabel = dataIndex.slice(lastName.length)
-      showClass = " list-subindex-element"
+      indexLi[n].classList.add( "list-subindex-element")
     } else {
-      lastName = dataIndex
+      lastName = dataIndex + " "
     }
 
-    indexLi[n].innerHTML = '<span class="index-value' + showClass + '">' + showLabel + '</span><span class="links-pages"></span>';
+    indexLi[n].innerHTML = '<span class="index-value">' + showLabel + '</span><span class="links-pages"></span>';
 
     // add span for link page
     spanIndex.forEach(function (elem) {
