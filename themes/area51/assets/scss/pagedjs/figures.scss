@@ -19,6 +19,12 @@ figure {
   }
 
   figcaption::before {
-    content: counter(figureNumber) ": "
+    //content: counter(figureNumber) ": "
+    content: "fig-" counter(figureNumber) ": ";
   }
+
+  .list-figref-element::before {
+    content: "fig-" target-counter(attr(data-figref url), figureNumber);
+  }
+
 }

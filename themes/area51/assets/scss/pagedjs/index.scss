@@ -1,11 +1,15 @@
 
-.list-index-generated {
+.list-index-generated,
+.list-index-generated-1col {
   list-style-type: none;
   padding-inline-start: 0;
   // Override bootstrap so toc is compact
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   font-size: 0.8rem;
+}
+
+.list-index-generated {
   columns: 2;
 }
 

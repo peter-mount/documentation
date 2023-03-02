@@ -8,6 +8,11 @@
 </head>
 <body class="pagedjs td-{{ .Kind }}">
 <div class="td-main">
+    <div class="printPageBreakRight">
+        <h1 id="pg-figures" pagesection="figures">Figures</h1>
+        <div id="book-figure"></div>
+    </div>
+
     {{ block "main" . }}{{ end }}
 
     <div class="printPageBreakRight">
@@ -17,11 +22,16 @@
 
 </div>
 {{ partial "scripts.html" . }}
+<script src="/static/cdn/js/paged.figures.js"></script>
 <script src="/static/cdn/js/paged.index.js"></script>
 <script async src="/static/cdn/js/paged.polyfill.js"></script>
 <script>
   window.PagedConfig = {
     before: function () {
+      createFigures({
+        spanClassFigures: "book-figure",
+        figuresElement: "#book-figure",
+      });
       createIndex({
         spanClassIndex: "book-index",
         indexElement: "#book-index",
