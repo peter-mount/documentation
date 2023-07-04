@@ -1,4 +1,3 @@
-// Build properties
 properties([
   buildDiscarder(
     logRotator(
@@ -11,45 +10,177 @@ properties([
   disableConcurrentBuilds(),
   disableResume(),
   pipelineTriggers([
-    cron('H H * * *'),
-    githubPush()
+    cron("H H * * *")
   ])
 ])
-
-// Image name being created
-TAG="documentation:latest"
-
-node( 'documentation' ) {
-
-    stage( 'Prepare' ) {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'peter-ssh', url: 'https://github.com/peter-mount/documentation']]])
-
-        // Form cmd, must be done in a stage as we need the build agent's userId
-        userId = sh returnStdout: true, script: "id -u"
-        cmd="docker run -i --rm -u ${userId.trim()} -v ${env.WORKSPACE}:/work " + TAG + " doctool "
-        sh "echo '${cmd}'"
-    }
-
-//    stage( "vendors" ) {
-//        sh "rm -rf themes/area51/assets/vendor"
-//        sh "mkdir -p themes/area51/assets/vendor"
-//        sh "cd themes/area51/assets/vendor;git clone -b v4.6.1 https://github.com/twbs/bootstrap.git"
-//        sh "cd themes/area51/assets/vendor;git clone https://github.com/FortAwesome/Font-Awesome"
-//    }
-
-    stage( "build" ) {
-        sh "docker-build -t ${TAG} ."
-    }
-
-    stage( "generate") {
-        sh "${cmd} -p"
-    }
-
-    stage( "pdf") {
-        sh "${cmd}"
-    }
-
-    stage( "publish" ) {
-        sh "rsync-web1 public/ /var/www/html"
-    }
+node("go") {
+  stage("Checkout") {
+    checkout scm
+  }
+  stage("Init") {
+    sh 'make clean init test'
+  }
+  stage("aix") {
+    sh 'make -f Makefile.gen aix_ppc64'
+  }
+  stage("darwin") {
+    parallel(
+      amd64: {
+        sh 'make -f Makefile.gen darwin_amd64'
+      },
+      arm64: {
+        sh 'make -f Makefile.gen darwin_arm64'
+      }
+    )
+  }
+  stage("dragonfly") {
+    sh 'make -f Makefile.gen dragonfly_amd64'
+  }
+  stage("freebsd") {
+    parallel(
+      386: {
+        sh 'make -f Makefile.gen freebsd_386'
+      },
+      amd64: {
+        sh 'make -f Makefile.gen freebsd_amd64'
+      },
+      arm6: {
+        sh 'make -f Makefile.gen freebsd_arm6'
+      },
+      arm64: {
+        sh 'make -f Makefile.gen freebsd_arm64'
+      },
+      arm7: {
+        sh 'make -f Makefile.gen freebsd_arm7'
+      },
+      riscv64: {
+        sh 'make -f Makefile.gen freebsd_riscv64'
+      }
+    )
+  }
+  stage("illumos") {
+    sh 'make -f Makefile.gen illumos_amd64'
+  }
+  stage("linux") {
+    parallel(
+      386: {
+        sh 'make -f Makefile.gen linux_386'
+      },
+      amd64: {
+        sh 'make -f Makefile.gen linux_amd64'
+      },
+      arm6: {
+        sh 'make -f Makefile.gen linux_arm6'
+      },
+      arm64: {
+        sh 'make -f Makefile.gen linux_arm64'
+      },
+      arm7: {
+        sh 'make -f Makefile.gen linux_arm7'
+      },
+      loong64: {
+        sh 'make -f Makefile.gen linux_loong64'
+      },
+      mips: {
+        sh 'make -f Makefile.gen linux_mips'
+      },
+      mips64: {
+        sh 'make -f Makefile.gen linux_mips64'
+      },
+      mips64le: {
+        sh 'make -f Makefile.gen linux_mips64le'
+      },
+      mipsle: {
+        sh 'make -f Makefile.gen linux_mipsle'
+      },
+      ppc64: {
+        sh 'make -f Makefile.gen linux_ppc64'
+      },
+      ppc64le: {
+        sh 'make -f Makefile.gen linux_ppc64le'
+      },
+      riscv64: {
+        sh 'make -f Makefile.gen linux_riscv64'
+      },
+      s390x: {
+        sh 'make -f Makefile.gen linux_s390x'
+      }
+    )
+  }
+  stage("netbsd") {
+    parallel(
+      386: {
+        sh 'make -f Makefile.gen netbsd_386'
+      },
+      amd64: {
+        sh 'make -f Makefile.gen netbsd_amd64'
+      },
+      arm6: {
+        sh 'make -f Makefile.gen netbsd_arm6'
+      },
+      arm64: {
+        sh 'make -f Makefile.gen netbsd_arm64'
+      },
+      arm7: {
+        sh 'make -f Makefile.gen netbsd_arm7'
+      }
+    )
+  }
+  stage("openbsd") {
+    parallel(
+      386: {
+        sh 'make -f Makefile.gen openbsd_386'
+      },
+      amd64: {
+        sh 'make -f Makefile.gen openbsd_amd64'
+      },
+      arm6: {
+        sh 'make -f Makefile.gen openbsd_arm6'
+      },
+      arm64: {
+        sh 'make -f Makefile.gen openbsd_arm64'
+      },
+      arm7: {
+        sh 'make -f Makefile.gen openbsd_arm7'
+      }
+    )
+  }
+  stage("plan9") {
+    parallel(
+      386: {
+        sh 'make -f Makefile.gen plan9_386'
+      },
+      amd64: {
+        sh 'make -f Makefile.gen plan9_amd64'
+      },
+      arm6: {
+        sh 'make -f Makefile.gen plan9_arm6'
+      },
+      arm7: {
+        sh 'make -f Makefile.gen plan9_arm7'
+      }
+    )
+  }
+  stage("solaris") {
+    sh 'make -f Makefile.gen solaris_amd64'
+  }
+  stage("windows") {
+    parallel(
+      386: {
+        sh 'make -f Makefile.gen windows_386'
+      },
+      amd64: {
+        sh 'make -f Makefile.gen windows_amd64'
+      },
+      arm6: {
+        sh 'make -f Makefile.gen windows_arm6'
+      },
+      arm64: {
+        sh 'make -f Makefile.gen windows_arm64'
+      },
+      arm7: {
+        sh 'make -f Makefile.gen windows_arm7'
+      }
+    )
+  }
 }
