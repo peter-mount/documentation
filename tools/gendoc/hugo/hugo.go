@@ -3,12 +3,13 @@ package hugo
 import (
 	"context"
 	"github.com/peter-mount/documentation/tools/gendoc"
+	"github.com/peter-mount/go-kernel/v2/log"
 	util2 "github.com/peter-mount/go-kernel/v2/util"
 	"github.com/peter-mount/go-kernel/v2/util/strings"
 	"github.com/peter-mount/go-kernel/v2/util/task"
-	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 // Hugo runs hugo
@@ -19,7 +20,7 @@ type Hugo struct {
 	expired *bool      `kernel:"flag,buildExpired,Build expired pages"`                // true to build expired content, same as --buildExpired for hugo
 	future  *bool      `kernel:"flag,buildFuture,Build future pages"`                  // true to build future content, same as --buildFuture for hugo
 	worker  task.Queue `kernel:"worker"`                                               // Worker queue
-	_       *PostCSS   `kernel:"inject"`                                               // Just a dependency
+	hugoCmd string     // Path to hugo
 }
 
 func (h *Hugo) Start() error {
@@ -28,6 +29,8 @@ func (h *Hugo) Start() error {
 	}
 
 	h.worker.AddPriorityTask(tools.PriorityHugo, h.run)
+
+	h.hugoCmd = filepath.Join(filepath.Dir(os.Args[0]), "hugo")
 
 	return nil
 }
@@ -63,7 +66,7 @@ func (h *Hugo) run(_ context.Context) error {
 	stdout := &util2.LogStream{}
 	defer stdout.Close()
 
-	cmd := exec.Command("hugo", args...)
+	cmd := exec.Command(h.hugoCmd, args...)
 	cmd.Stdout = stdout
 	cmd.Stderr = stdout
 
