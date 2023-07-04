@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/peter-mount/documentation/tools/gendoc/generator/autodoc"
 	"github.com/peter-mount/documentation/tools/gendoc/generator/bbc"
 	"github.com/peter-mount/documentation/tools/gendoc/generator/chip"
@@ -10,11 +11,11 @@ import (
 	"github.com/peter-mount/documentation/tools/gendoc/hugo"
 	"github.com/peter-mount/documentation/tools/gendoc/telstar"
 	"github.com/peter-mount/go-kernel/v2"
-	"log"
+	"os"
 )
 
 func main() {
-	err := kernel.Launch(
+	if err := kernel.Launch(
 		// The various page/file generators. Place these before the core modules
 		&bbc.BBC{},
 		&m6502.M6502{},
@@ -28,8 +29,8 @@ func main() {
 		// For now remove PDF generation, that will become a standalone tool
 		//&pdf.PDF{},
 		//&latex.LaTeX{},
-	)
-	if err != nil {
-		log.Fatal(err)
+	); err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 }
