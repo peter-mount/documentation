@@ -12,6 +12,7 @@ func main() {
 	if err := kernel.Launch(
 		&build.Hugo{},
 		&build.NPM{},
+		&build.Site{},
 		&build.Targets{},
 	); err != nil {
 		fmt.Println(err)
