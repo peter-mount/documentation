@@ -33,3 +33,4 @@ publish-deploy-uat.sh
 /build
 /platforms.md
 /Makefile.gen
+/tmp/

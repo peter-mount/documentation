@@ -10,6 +10,7 @@ import (
 
 func main() {
 	if err := kernel.Launch(
+		&build.Hugo{},
 		&build.Targets{},
 	); err != nil {
 		fmt.Println(err)

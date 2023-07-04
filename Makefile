@@ -23,6 +23,9 @@
 # of the binaries in parallel speeding up the full build.
 #
 
+# Override the default platforms to the ones hugo release under
+PLATFORMS ?= darwin:amd64: darwin:arm64: freebsd:amd64 linux:amd64: linux:arm:7 linux:arm64:
+
 .PHONY: all clean init test build
 
 all: init test build
