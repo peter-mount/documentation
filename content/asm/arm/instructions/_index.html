@@ -6,8 +6,6 @@ weight: 1
 description: "Overview of the ARM instruction set"
 ---
 
-<h2>ARM instruction set</h2>
-
 <!-- ARMv70A and ARMv7-R
  https://developer.arm.com/documentation/ddi0406/c/Application-Level-Architecture/ARM-Instruction-Set-Encoding/ARM-instruction-set-encoding?lang=en
 -->
@@ -16,7 +14,7 @@ description: "Overview of the ARM instruction set"
         The ARM instruction set consists of 32 bit word-aligned words based on the following format:
     </p>
 
-    <table class="memoryMap3">
+    <table class="arm">
         <thead>
         {{< arm/arm-instruction-head >}}
         </thead>
@@ -25,67 +23,13 @@ description: "Overview of the ARM instruction set"
             <td colspan="4">cond</td>
             <td colspan="3">op1</td>
             <td colspan="20"></td>
-            <td>op2</td>
+            <td>op</td>
             <td colspan="4"></td>
+            <td></td>
         </tr>
         </tbody>
     </table>
 </div>
-
-<!--div class="printPageBreakAvoid">
-    <table class="memoryMap">
-        <thead>
-        <tr>
-            <th>cond</th>
-            <th>op1</th>
-            <th>op2</th>
-            <th>Instruction classes</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td rowspan="6">not 1111</td>
-            <td>00x</td>
-            <td>x</td>
-            <td>Data processing &amp; miscellaneous</td>
-        </tr>
-        <tr>
-            <td>010</td>
-            <td>x</td>
-            <td>Load/Store word and unsigned byte</td>
-        </tr>
-        <tr>
-            <td rowspan="2">011</td>
-            <td>0</td>
-            <td>Load/Store word and unsigned byte</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Media instructions</td>
-        </tr>
-        <tr>
-            <td>10x</td>
-            <td>x</td>
-            <td>Branch &amp; block data transfer</td>
-        </tr>
-        <tr>
-            <td>11x</td>
-            <td>x</td>
-            <td>Coprocessor instructions &amp; Supervisor Call</td>
-        </tr>
-        <tr>
-            <td rowspan="6">1111</td>
-            <td>xxx</td>
-            <td>x</td>
-            <td>
-                Unconditional instructions<br/>
-                Advanced SIMD instructions<br/>
-                Floating Point instructions
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div-->
 
 <div class="printPageBreakAvoid">
     <p>
@@ -219,8 +163,11 @@ description: "Overview of the ARM instruction set"
     <p>
         In the above table, unordered means that at least one operand is <code>NaN</code>.
     </p>
+</div>
+
+<div class="printPageBreakAvoid">
     <p>
-        Also, assemblers allow the following synonyms:
+        Assemblers allow the following synonyms:
     </p>
     <table class="memoryMap3">
         <thead>
@@ -251,7 +198,7 @@ description: "Overview of the ARM instruction set"
     <p>
         The following table describes the formats of the ARM instructions.
     </p>
-    <table class="arm memoryMap3">
+    <table class="arm">
         <thead>
         {{< arm/arm-instruction-head >}}
         </thead>
