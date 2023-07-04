@@ -11,11 +11,16 @@ import (
 )
 
 // Hugo extension fetches the version of Hugo required
+//
+// # TODO this only works for linux 64bit
+//
+// it fails with:
+// imports github.com/bep/golibsass/internal/libsass: build constraints exclude all Go files in go/pkg/mod/github.com/bep/golibsass@v1.1.1/internal/libsass
+// when cross compiling
 type Hugo struct {
 	Encoder      *core.Encoder `kernel:"inject"`
 	Build        *core.Build   `kernel:"inject"`
 	HugoRetrieve *bool         `kernel:"flag,retrieve-hugo,retrieve hugo"`
-	HugoInstall  *string       `kernel:"flag,install-hugo,install hugo"`
 }
 
 func (s *Hugo) Start() error {
@@ -23,19 +28,13 @@ func (s *Hugo) Start() error {
 		return s.retrieveHugo()
 	}
 
-	if *s.HugoInstall != "" {
-		return s.installHugo()
-	}
-
 	s.Build.AddExtension(s.extension)
 	return nil
 }
 
 const (
-	hugoRepo    = "https://github.com/gohugoio/hugo"
-	hugoDir     = "tmp/hugo"
-	hugoVersion = "0.108.0"
-	hugoSrcUrl  = "https://github.com/gohugoio/hugo/releases/download/v%s/hugo_extended_%s_Linux-64bit.tar.gz"
+	hugoRepo = "https://github.com/gohugoio/hugo"
+	hugoDir  = "tmp/hugo"
 )
 
 func (s *Hugo) extension(arch arch.Arch, target target.Builder, meta *meta.Meta) {
@@ -47,21 +46,22 @@ func (s *Hugo) extension(arch arch.Arch, target target.Builder, meta *meta.Meta)
 		target.
 			Target(hugoDir).
 			MkDir("tmp").
-			//Echo("Download", url).
+			Echo("GIT", hugoRepo).
 			BuildTool("-retrieve-hugo", "-d", hugoDir)
 	}
 
 	dir := filepath.Join(arch.BaseDir(*s.Encoder.Dest), "bin")
 	targetFile := filepath.Join(dir, "hugo")
-	relTarget, err := filepath.Rel(hugoDir, targetFile)
+	cachedTarget := filepath.Join(arch.BaseDir("tmp"), "hugo")
+	relTarget, err := filepath.Rel(hugoDir, cachedTarget)
 	if err != nil {
 		panic(err)
 	}
 
 	rule := target.
-		Target(targetFile, hugoDir).
+		Target(cachedTarget, hugoDir).
 		MkDir(dir).
-		Echo("GO BUILD", targetFile).
+		Echo("GO BUILD", cachedTarget).
 		Line(`cd %q;\`, hugoDir)
 
 	if arch.GOARM == "" {
@@ -76,10 +76,15 @@ func (s *Hugo) extension(arch arch.Arch, target target.Builder, meta *meta.Meta)
 			arch.GOARM,
 			relTarget)
 	}
+
+	target.
+		Target(targetFile, cachedTarget).
+		MkDir(dir).
+		Echo("INSTALL", targetFile).
+		BuildTool("-copyfile", cachedTarget, "-d", targetFile)
+
 }
 
-// retrieve hugo binaries
-// TODO this only works for linux 64bit
 func (s *Hugo) retrieveHugo() error {
 	_, err := os.Stat(*s.Encoder.Dest)
 	switch {
@@ -93,6 +98,6 @@ func (s *Hugo) retrieveHugo() error {
 }
 
 func (s *Hugo) checkout() error {
-	util.Label("GIT", "CHECKOUT %s", hugoRepo)
+	util.Label("GIT", "CLONE %s", hugoRepo)
 	return util.RunCommand("git", "clone", hugoRepo, *s.Encoder.Dest)
 }
