@@ -8,8 +8,8 @@ import (
 	"github.com/peter-mount/documentation/tools/gendoc/hugo"
 	"github.com/peter-mount/documentation/tools/gendoc/util"
 	"github.com/peter-mount/documentation/tools/gendoc/web"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/task"
-	"log"
 	"strings"
 )
 

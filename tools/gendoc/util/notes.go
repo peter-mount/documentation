@@ -1,8 +1,8 @@
 package util
 
 import (
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util"
-	"log"
 	"sort"
 	"strings"
 )

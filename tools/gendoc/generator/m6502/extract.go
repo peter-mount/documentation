@@ -5,8 +5,8 @@ import (
 	"github.com/peter-mount/documentation/tools/gendoc/generator"
 	"github.com/peter-mount/documentation/tools/gendoc/generator/assembly"
 	"github.com/peter-mount/documentation/tools/gendoc/hugo"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/walk"
-	"log"
 )
 
 func (s *M6502) extractOpcodes(ctx context.Context) error {

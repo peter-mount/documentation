@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/peter-mount/documentation/tools/gendoc/generator"
 	"github.com/peter-mount/documentation/tools/gendoc/hugo"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util"
 	"github.com/peter-mount/go-kernel/v2/util/walk"
-	"log"
 )
 
 func (s *Autodoc) extract(ctx context.Context) error {

@@ -3,11 +3,11 @@ package css
 import (
 	"fmt"
 	"github.com/peter-mount/documentation/tools/gendoc/latex/util"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/tdewolff/parse/css"
 	"golang.org/x/net/html"
 	"gopkg.in/yaml.v2"
 	"io"
-	"log"
 	"os"
 	"strings"
 	"testing"

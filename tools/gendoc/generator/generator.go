@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/peter-mount/documentation/tools/gendoc"
 	"github.com/peter-mount/documentation/tools/gendoc/hugo"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/task"
-	"log"
 )
 
 // Generator is a kernel Service which handles the generation of content based on page metadata.

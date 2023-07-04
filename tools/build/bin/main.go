@@ -11,6 +11,7 @@ import (
 func main() {
 	if err := kernel.Launch(
 		&build.Hugo{},
+		&build.NPM{},
 		&build.Targets{},
 	); err != nil {
 		fmt.Println(err)

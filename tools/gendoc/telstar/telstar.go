@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"github.com/peter-mount/documentation/tools/gendoc/generator"
 	"github.com/peter-mount/documentation/tools/gendoc/telstar/frame"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/task"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 )

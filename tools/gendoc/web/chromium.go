@@ -3,7 +3,7 @@ package web
 import (
 	"context"
 	"github.com/chromedp/chromedp"
-	"log"
+	"github.com/peter-mount/go-kernel/v2/log"
 )
 
 // Chromium embeds a headless chromium browser

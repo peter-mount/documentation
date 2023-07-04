@@ -1,8 +1,8 @@
 package hugo
 
 import (
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/walk"
-	"log"
 	"os"
 	"path"
 	"strings"

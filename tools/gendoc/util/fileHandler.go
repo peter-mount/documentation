@@ -2,9 +2,9 @@ package util
 
 import (
 	"bytes"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 	"path"
 	"time"

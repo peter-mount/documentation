@@ -1,9 +1,9 @@
 package css
 
 import (
+	"github.com/peter-mount/go-kernel/v2/log"
 	"golang.org/x/net/html"
 	"io"
-	"log"
 	"os"
 )
 

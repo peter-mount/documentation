@@ -4,9 +4,9 @@ import (
 	"context"
 	"github.com/peter-mount/documentation/tools/gendoc/generator"
 	"github.com/peter-mount/documentation/tools/gendoc/hugo"
+	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/task"
 	"github.com/peter-mount/go-kernel/v2/util/walk"
-	"log"
 )
 
 // BBC generates the reference pages in the BBC book.
