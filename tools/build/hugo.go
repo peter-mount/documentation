@@ -8,6 +8,7 @@ import (
 	"github.com/peter-mount/go-build/util/meta"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // Hugo extension fetches the version of Hugo required
@@ -99,5 +100,36 @@ func (s *Hugo) retrieveHugo() error {
 
 func (s *Hugo) checkout() error {
 	util.Label("GIT", "CLONE %s", hugoRepo)
-	return util.RunCommand("git", "clone", hugoRepo, *s.Encoder.Dest)
+	err := util.RunCommand("git", "clone", hugoRepo, *s.Encoder.Dest)
+
+	// Logging patches
+	if err == nil {
+		err = s.patch("tmp/hugo/commands/commandeer.go")
+	}
+
+	if err == nil {
+		err = s.patch("tmp/hugo/commands/hugobuilder.go")
+	}
+
+	return err
+}
+
+func (s *Hugo) patch(fileName string) error {
+	util.Label("PATCH", fileName)
+
+	b, err := os.ReadFile(fileName)
+	if err != nil {
+		return err
+	}
+
+	src := string(b)
+
+	// commandeer.go - logs to stderr
+	src = strings.ReplaceAll(src, "Stdout:      r.Out,", "Stdout:      os.Stderr,")
+	src = strings.ReplaceAll(src, "Stderr:      r.Out,", "Stderr:      os.Stderr,")
+
+	// hugobuilder.go change Println from logger to rootCommand's one
+	src = strings.ReplaceAll(src, "c.r.logger.Println(", "c.r.Println(")
+
+	return os.WriteFile(fileName, []byte(src), 0644)
 }

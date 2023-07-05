@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/peter-mount/documentation/tools/gendoc"
 	"github.com/peter-mount/go-kernel/v2/log"
-	util2 "github.com/peter-mount/go-kernel/v2/util"
 	"github.com/peter-mount/go-kernel/v2/util/strings"
 	"github.com/peter-mount/go-kernel/v2/util/task"
 	"os"
@@ -63,12 +62,17 @@ func (h *Hugo) run(_ context.Context) error {
 	args = appendArg(args, *h.expired, "--buildExpired")
 	args = appendArg(args, *h.future, "--buildFuture")
 
-	stdout := &util2.LogStream{}
-	defer stdout.Close()
+	if log.IsVerbose() {
+		//args = append(args, "-v")
+	} else {
+		args = append(args, "--quiet")
+	}
 
 	cmd := exec.Command(h.hugoCmd, args...)
-	cmd.Stdout = stdout
-	cmd.Stderr = stdout
+	if log.IsVerbose() {
+		cmd.Stdout = os.Stdout
+	}
+	cmd.Stderr = os.Stderr
 
 	return cmd.Run()
 }
