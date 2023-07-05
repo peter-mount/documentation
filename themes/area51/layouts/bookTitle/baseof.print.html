@@ -8,20 +8,25 @@
 </head>
 <body class="pagedjs td-{{ .Kind }}">
 <div class="td-main">
+    <!-- pagedjs figures
     <div class="printPageBreakRight">
         <h1 id="pg-figures" pagesection="figures">Figures</h1>
         <div id="book-figure"></div>
     </div>
+    -->
 
     {{ block "main" . }}{{ end }}
 
+    <!-- pagedjs index
     <div class="printPageBreakRight">
         <h1 id="pg-index" pagesection="index">Index</h1>
         <div id="book-index"></div>
     </div>
+    -->
 
 </div>
 {{ partial "scripts.html" . }}
+<!-- pagedjs generator
 <script src="/static/cdn/js/paged.figures.js"></script>
 <script src="/static/cdn/js/paged.index.js"></script>
 <script async src="/static/cdn/js/paged.polyfill.js"></script>
@@ -40,5 +45,6 @@
     },
   };
 </script>
+-->
 </body>
 </html>
