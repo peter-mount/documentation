@@ -9,11 +9,6 @@
 		{{ $context := . }}
 	</header>
 	{{ .Content }}
-	{{ if (.Site.Params.DisqusShortname) }}
-		<br />
-		{{ partial "disqus-comment.html" . }}
-		<br />
-	{{ end }}
 
 	{{ partial "pager.html" . }}
 </div>
