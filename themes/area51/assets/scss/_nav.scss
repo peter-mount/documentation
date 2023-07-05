@@ -2,6 +2,38 @@
 // Main navbar
 //
 
+.simplenav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: $primary !important;
+    min-height: 2rem;
+    margin: 0;
+    z-index: 32;
+
+    a {
+        color: white;
+        font-weight: bold;
+    }
+
+    div {
+        padding-top: 0.25em;
+    }
+
+    div:first-child {
+        float: left;
+        a {
+            padding-left: 0.5em;
+        }
+    }
+    div:not(first-child) {
+        float: right;
+        a {
+            padding-right: 0.5em;
+        }
+    }
+}
+
 .td-navbar-cover {
     background: $primary;
 
@@ -122,12 +154,12 @@
             text-rendering: auto;
             -webkit-font-smoothing: antialiased;
             font-family: "Font Awesome 5 Free";
-            font-weight: 900; 
+            font-weight: 900;
             content: "\f0d9";
             padding-left: 0.5em;
             padding-right: 0.5em;
         }
-    }  
+    }
 }
 
 // Foldable sidebar menu
@@ -136,18 +168,18 @@ nav.foldable-nav {
     &#td-section-nav {
         position: relative;
     }
-    
+
     &#td-section-nav label {
         margin-bottom: 0;
         width: 100%;
     }
-    
+
     .td-sidebar-nav__section, .with-child ul {
         list-style: none;
         padding: 0;
         margin: 0;
     }
-    
+
     .ul-1 > li {
         padding-left: 1.5em;
     }
@@ -165,8 +197,8 @@ nav.foldable-nav {
 
     input[type=checkbox] { display: none; }
 
-    .with-child, .without-child { 
-        position: relative; 
+    .with-child, .without-child {
+        position: relative;
         padding-left: 1.5em;
     }
 
@@ -189,30 +221,30 @@ nav.foldable-nav {
         }
     }
 
-    .ul-1 .with-child > input:checked ~ label:before { 
+    .ul-1 .with-child > input:checked ~ label:before {
         color: $primary;
         transform: rotate(90deg);
-        transition: transform 0.5s; 
+        transition: transform 0.5s;
     }
 
     .with-child ul { margin-top: 0.1em; }
-    
-}    
+
+}
 
 @media (hover: hover) and (pointer: fine) {
-    
+
     nav.foldable-nav {
 
-        .ul-1 .with-child > label:hover:before { 
+        .ul-1 .with-child > label:hover:before {
             color: $primary;
             transform: rotate(30deg);
-            transition: transform 0.5s; 
+            transition: transform 0.5s;
         }
 
-        .ul-1 .with-child > input:checked ~ label:hover:before { 
+        .ul-1 .with-child > input:checked ~ label:hover:before {
             color: $primary;
             transform: rotate(60deg) !important;
-            transition: transform 0.5s; 
+            transition: transform 0.5s;
         }
     }
 }
