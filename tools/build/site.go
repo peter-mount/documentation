@@ -1,7 +1,7 @@
 package build
 
 import (
-	"github.com/peter-mount/documentation/tools/gendoc/hugo"
+	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/go-build/core"
 	"github.com/peter-mount/go-build/util/arch"
 	"github.com/peter-mount/go-build/util/makefile/target"
@@ -31,9 +31,9 @@ func (s *Site) extension(arch arch.Arch, target target.Builder, meta *meta.Meta)
 		target.Link(t)
 	} else {
 		target.Target(siteDir).
-			Echo("GENDOC", siteDir).
+			Echo("GEN SITE", siteDir).
 			Line(strings.Join([]string{
-				filepath.Join(baseDir, "bin", "gendoc"),
+				filepath.Join(baseDir, "bin", "gensite"),
 				// Uncomment for verbosity
 				//"-v"
 			}, " "))

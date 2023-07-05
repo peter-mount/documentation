@@ -1,7 +1,7 @@
 package build
 
 import (
-	"github.com/peter-mount/documentation/tools/gendoc/hugo"
+	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/go-build/core"
 	"github.com/peter-mount/go-build/util/arch"
 	"github.com/peter-mount/go-build/util/makefile/target"
