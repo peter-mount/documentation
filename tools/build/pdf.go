@@ -28,16 +28,15 @@ func (s *PDF) extension(arch arch.Arch, parentTarget target.Builder, meta *meta.
 		return
 	}
 
-	pdfTarget := parentTarget.Target(
-		"pdf",
-		filepath.Join(baseDir, "bin/genpdf"),
-	)
+	genPdfTarget := filepath.Join(baseDir, "bin/genpdf")
+
+	pdfTarget := parentTarget.Target("pdf", genPdfTarget)
 
 	_ = s.BookShelf.
 		Books().
 		ForEach(func(book *hugo.Book) error {
 			bookTarget := filepath.Join(siteDir, "static/book", book.ID+".pdf")
-			pdfTarget.Target(bookTarget, siteDir).
+			pdfTarget.Target(bookTarget, siteDir, genPdfTarget).
 				MkDir(filepath.Dir(bookTarget)).
 				Echo("GEN PDF", bookTarget).
 				Line(strings.Join([]string{

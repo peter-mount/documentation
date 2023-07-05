@@ -30,7 +30,11 @@ func (s *Site) extension(arch arch.Arch, target target.Builder, meta *meta.Meta)
 	if t := target.GetNamedTarget(siteDir); t != nil {
 		target.Link(t)
 	} else {
-		target.Target(siteDir).
+		target.Target(
+			siteDir,
+			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "gensite"),
+			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "hugo"),
+		).
 			Echo("GEN SITE", siteDir).
 			Line(strings.Join([]string{
 				filepath.Join(baseDir, "bin", "gensite"),

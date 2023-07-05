@@ -46,3 +46,9 @@ test: init
 
 build: test
 	@${MAKE} --no-print-directory -f Makefile.gen all
+
+public: test
+	@${MAKE} --no-print-directory -f Makefile.gen public
+
+pdf: test
+	@${MAKE} --no-print-directory -f Makefile.gen pdf
