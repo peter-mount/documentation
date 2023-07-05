@@ -13,6 +13,16 @@ type BookHandler func(*Book) error
 
 type Books []*Book
 
+func (bs Books) Filter(p Predicate) Books {
+	var r Books
+	for _, b := range bs {
+		if p(b) {
+			r = append(r, b)
+		}
+	}
+	return r
+}
+
 func (bs Books) ForEach(f BookHandler) error {
 	for _, b := range bs {
 		err := f(b)
@@ -22,6 +32,8 @@ func (bs Books) ForEach(f BookHandler) error {
 	}
 	return nil
 }
+
+type Predicate func(*Book) bool
 
 // Book defines a book that's rendered as pdf
 type Book struct {
