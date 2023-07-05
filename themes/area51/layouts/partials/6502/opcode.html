@@ -1,4 +1,4 @@
-{{- if isset .Params "flags" }}{{ partial "6502/flags.html" . }}{{end -}}
+{{- if reflect.IsMap .Params.flags }}{{ partial "6502/flags.html" . }}{{end -}}
 {{- if isset .Params "hide_codes" -}}{{- else -}}
 {{- if isset .Params "codes" -}}
 {{- $opcode := $.Params.codes -}}
@@ -199,7 +199,7 @@
                     {{- $opcode := index $values $cellKey -}}
 
                     {{- $col := "" -}}
-                    {{- if ne $opcode "" -}}
+                    {{- if reflect.IsMap $opcode -}}
                         {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
                     {{- end -}}
 
