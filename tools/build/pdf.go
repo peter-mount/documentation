@@ -20,28 +20,33 @@ func (s *PDF) Start() error {
 	return nil
 }
 
-func (s *PDF) extension(arch arch.Arch, target target.Builder, meta *meta.Meta) {
+func (s *PDF) extension(arch arch.Arch, parentTarget target.Builder, meta *meta.Meta) {
 	baseDir := arch.BaseDir(*s.Build.Encoder.Dest)
+
+	if t := parentTarget.GetNamedTarget("pdf"); t != nil {
+		parentTarget.Link(t)
+		return
+	}
+
+	pdfTarget := parentTarget.Target(
+		"pdf",
+		filepath.Join(baseDir, "bin/genpdf"),
+	)
 
 	_ = s.BookShelf.
 		Books().
 		ForEach(func(book *hugo.Book) error {
 			bookTarget := filepath.Join(siteDir, "static/book", book.ID+".pdf")
-			t := target.GetNamedTarget(bookTarget)
-			if t != nil {
-				target.Link(t)
-			} else {
-				target.Target(bookTarget, siteDir).
-					MkDir(filepath.Dir(bookTarget)).
-					Echo("GEN PDF", bookTarget).
-					Line(strings.Join([]string{
-						filepath.Join(baseDir, "bin", "genpdf"),
-						// Uncomment for verbosity
-						//"-v",
-						book.ID,
-						bookTarget,
-					}, " "))
-			}
+			pdfTarget.Target(bookTarget, siteDir).
+				MkDir(filepath.Dir(bookTarget)).
+				Echo("GEN PDF", bookTarget).
+				Line(strings.Join([]string{
+					filepath.Join(baseDir, "bin", "genpdf"),
+					// Uncomment for verbosity
+					//"-v",
+					book.ID,
+					bookTarget,
+				}, " "))
 			return nil
 		})
 }
