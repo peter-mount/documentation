@@ -9,7 +9,7 @@ import (
 	"github.com/peter-mount/documentation/tools/gensite"
 	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/documentation/tools/gensite/util"
-	"github.com/peter-mount/documentation/tools/gensite/web"
+	"github.com/peter-mount/documentation/tools/webserver"
 	"github.com/peter-mount/go-kernel/v2/log"
 	"github.com/peter-mount/go-kernel/v2/util/task"
 	"os"
@@ -18,12 +18,12 @@ import (
 
 // PDF tool that handles the generation of PDF documentation of a "book"
 type PDF struct {
-	config    *Config         `kernel:"config,pdf"` // Config
-	bookShelf *hugo.BookShelf `kernel:"inject"`     // Bookshelf
-	chromium  *web.Chromium   `kernel:"inject"`     // Chromium browser
-	worker    task.Queue      `kernel:"worker"`     // Worker queue
-	webserver *web.Webserver  `kernel:"inject"`     // Webserver
-	_         *hugo.Hugo      `kernel:"inject"`     // access them directly
+	config    *Config              `kernel:"config,pdf"` // Config
+	bookShelf *hugo.BookShelf      `kernel:"inject"`     // Bookshelf
+	chromium  *webserver.Chromium  `kernel:"inject"`     // Chromium browser
+	worker    task.Queue           `kernel:"worker"`     // Worker queue
+	webserver *webserver.Webserver `kernel:"inject"`     // Webserver
+	_         *hugo.Hugo           `kernel:"inject"`     // access them directly
 }
 
 type Config struct {

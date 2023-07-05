@@ -8,7 +8,7 @@ import (
 	"github.com/peter-mount/documentation/tools/gensite/latex/css"
 	"github.com/peter-mount/documentation/tools/gensite/latex/parser"
 	"github.com/peter-mount/documentation/tools/gensite/latex/util"
-	"github.com/peter-mount/documentation/tools/gensite/web"
+	"github.com/peter-mount/documentation/tools/webserver"
 	"github.com/peter-mount/go-kernel/v2/log"
 	util2 "github.com/peter-mount/go-kernel/v2/util"
 	"github.com/peter-mount/go-kernel/v2/util/task"
@@ -20,12 +20,12 @@ import (
 )
 
 type LaTeX struct {
-	bookShelf *hugo.BookShelf `kernel:"inject"` // Bookshelf
-	css       *css.Css        `kernel:"inject"`
-	enable    *bool           `kernel:"flag,latex,enable LaTeX generation"` // Is LaTeX generation enabled
-	worker    task.Queue      `kernel:"worker"`                             // Worker queue
-	webserver *web.Webserver  `kernel:"inject"`                             // Webserver
-	_         *hugo.Hugo      `kernel:"inject"`                             // access them directly
+	bookShelf *hugo.BookShelf      `kernel:"inject"` // Bookshelf
+	css       *css.Css             `kernel:"inject"`
+	enable    *bool                `kernel:"flag,latex,enable LaTeX generation"` // Is LaTeX generation enabled
+	worker    task.Queue           `kernel:"worker"`                             // Worker queue
+	webserver *webserver.Webserver `kernel:"inject"`                             // Webserver
+	_         *hugo.Hugo           `kernel:"inject"`                             // access them directly
 }
 
 func (l *LaTeX) Start() error {

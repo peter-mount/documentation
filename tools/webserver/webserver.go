@@ -1,4 +1,4 @@
-package web
+package webserver
 
 import (
 	"context"
@@ -12,8 +12,9 @@ import (
 // Webserver provides a webserver if required for other tasks.
 // It serves the public directory
 type Webserver struct {
-	config *WebserverConfig `kernel:"config,webserver"`
-	server *http.Server
+	Foreground bool             // If true run in foreground, used by webserver tool
+	config     *WebserverConfig `kernel:"config,webserver"`
+	server     *http.Server
 }
 
 type WebserverConfig struct {
@@ -33,11 +34,15 @@ func (w *Webserver) Start() error {
 		Handler: router,
 	}
 
-	go func() {
-		_ = w.server.ListenAndServe()
-	}()
+	if w.Foreground {
+		return w.server.ListenAndServe()
+	} else {
+		go func() {
+			_ = w.server.ListenAndServe()
+		}()
 
-	return nil
+		return nil
+	}
 }
 
 func (w *Webserver) Stop() {
