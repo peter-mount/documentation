@@ -68,11 +68,13 @@
         {{- if $hasFormat -}}
         {{- with .format -}}
         {{- range . -}}
-        {{- if isset . "span" -}}
+
+        {{- if and (reflect.IsMap .) (isset . "span") -}}
         <td class="text-center" colspan="{{.span}}">{{.label | safeHTML}}</td>
         {{- else -}}
         <td class="text-center">{{. | safeHTML}}</td>
         {{- end -}}
+
         {{- end -}}
         {{- else -}}
         <td colspan="8"></td>
