@@ -32,5 +32,8 @@ func paragraph(n *html.Node, ctx context.Context) error {
 
 // Appends \\ to the end of the current line to indicate a line break
 func lineBreak(_ *html.Node, ctx context.Context) error {
-	return WriteStringLn(ctx, " \\linebreak")
+	if insideTable(ctx) {
+		return WriteStringLn(ctx, `\\`)
+	}
+	return WriteStringLn(ctx, ` \linebreak`)
 }

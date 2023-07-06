@@ -37,7 +37,7 @@ func tableStart(n *html.Node, ctx context.Context) error {
 	_ = f.HandleChildren(n, ctx)
 
 	// If we are nested then add a \\ prefix
-	if ctx.Value(insideTableKey) != nil {
+	if insideTable(ctx) {
 		_ = Write(ctx, '\\', '\\')
 	}
 
@@ -66,6 +66,12 @@ const (
 	insideTableKey = "inside.table"
 )
 
+// returns true if ctx is currently inside a table.
+// This will be specifically true if we are inside a <tr> element.
+func insideTable(ctx context.Context) bool {
+	return ctx.Value(insideTableKey) != nil
+}
+
 func tr(n *html.Node, ctx context.Context) error {
 
 	// Marker to indicate table it is nested
@@ -87,10 +93,12 @@ func tr(n *html.Node, ctx context.Context) error {
 
 				// Look ahead, if a table exists then we need to wrap the cell to allow line break before it.
 				// nonTabularContent is used to set tabularCell so if table is first then it's not tabular
-				// unless there's multiple tables
+				// unless there's multiple tables.
+				//
+				// We also set tabularCell if we have a br element, so it will linebreak correctly
 				tabularCell, nonTabularContent := false, false
 				_ = parser.HandleChildren(func(n *html.Node, ctx context.Context) error {
-					if parser.IsElement(n, "table") {
+					if parser.IsElement(n, "table") || parser.IsElement(n, "br") {
 						tabularCell = nonTabularContent
 					} else {
 						nonTabularContent = true
@@ -105,6 +113,7 @@ func tr(n *html.Node, ctx context.Context) error {
 					err = Writef(ctx, `\multirow{%d}{*}{`, rowSpan)
 				}
 				if err == nil && tabularCell {
+					// Wrap cell content within a tabular block, so we can then use \\ as a line break
 					err = WriteString(ctx, `\begin{tabular}[t]{@{}l@{}}`)
 				}
 
