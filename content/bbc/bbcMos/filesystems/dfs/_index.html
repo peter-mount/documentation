@@ -9,37 +9,39 @@ categories:
 ---
 <h2>Physical format</h2>
 <p>
-Acorn DFS is a single sided, single density 40 or 80 track format.
-A double sided disc can hold two DFS volumes.
-Each track carries ten 256 byte sectors numbered from 0 to 9.
+    <span class="book-index" data-book-index="DFS">Acorn DFS</span> is a single sided, single density 40 or 80 track format.
+    A double sided disc can hold two DFS volumes.
+    Each track carries ten 256 byte sectors numbered from 0 to 9.
 </p>
 
 <h3>Sector ID's</h3>
 <p>
-Each sector is given an ID at format time; the parameters of the ID, listed below, are used by the DFS and the floppy
-disc controller to address sectors.
+    Each sector is given an ID at format time; the parameters of the ID, listed below, are used by the DFS and the
+    floppy
+    disc controller to address sectors.
 </p>
 <ul>
-<li>
-    C, the cylinder number ranges from 0 on the outermost track to 39 or 79 on the innermost track.
-</li>
+    <li>
+        C, the cylinder number ranges from 0 on the outermost track to 39 or 79 on the innermost track.
+    </li>
     <li>
         H, the head number = 0.
         Acorn DFS ignores this after formatting.<br/>
         Some DFS formatters set it to 1 on the upper surface of the disc (corresponding to drives 2 or 3.)
-</li>
+    </li>
     <li>
         R, the record number runs sequentially from 0 to 9 within each track.<br/>
         There is a standard track skew of 3;
         that is, the sectors having R = 0 are the first sector of the first track,
         the fourth sector of the second track, the seventh of the third, the tenth of the fourth, and so on.
-</li>
+    </li>
     <li>
         N, the record length = 1, showing that the sector length is 27 + 1, or 256 bytes.
     </li>
 </ul>
 <p>
-All these parameters can potentially take any value between 0 and 255, and so confuse Acorn DFS and some non-standard controllers.
+    All these parameters can potentially take any value between 0 and 255, and so confuse Acorn DFS and some
+    non-standard controllers.
     Some copy protection schemes make use of this feature.
 </p>
 
@@ -47,7 +49,8 @@ All these parameters can potentially take any value between 0 and 255, and so co
     <h2>Catalog</h2>
 
     <p>
-        The catalog is located in sectors 0 & 1 on Track 0. It is capable of holding just 31 entries.
+        The <span class="book-index" data-book-index="catalog">catalog</span> is located in sectors 0 & 1 on Track 0.
+        It is capable of holding just 31 entries.
     </p>
 
     <p>
@@ -57,228 +60,229 @@ All these parameters can potentially take any value between 0 and 255, and so co
 
     <h3>Catalog format</h3>
 
-    <p>
-        This is the structure of the catalogue header:
-    </p>
+    <figure>
+        <table class="diskMap">
+            <thead>
+            <tr>
+                <th rowspan="2">Byte</th>
+                <th colspan="8">Track 0 Sector 0</th>
+                <th colspan="8">Track 0 Sector 1</th>
+                <th rowspan="2"></th>
+            </tr>
+            <tr>
+                <th>7</th>
+                <th>6</th>
+                <th>5</th>
+                <th>4</th>
+                <th>3</th>
+                <th>2</th>
+                <th>1</th>
+                <th>0</th>
 
-    <table class="diskMap">
-        <thead>
-        <tr>
-            <th rowspan="2">Byte</th>
-            <th colspan="8">Track 0 Sector 0</th>
-            <th colspan="8">Track 0 Sector 1</th>
-            <th rowspan="2"></th>
-        </tr>
-        <tr>
-            <th>7</th>
-            <th>6</th>
-            <th>5</th>
-            <th>4</th>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
-            <th>0</th>
+                <th>7</th>
+                <th>6</th>
+                <th>5</th>
+                <th>4</th>
+                <th>3</th>
+                <th>2</th>
+                <th>1</th>
+                <th>0</th>
+            </tr>
+            </thead>
+            <tbody>
 
-            <th>7</th>
-            <th>6</th>
-            <th>5</th>
-            <th>4</th>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
-            <th>0</th>
-        </tr>
-        </thead>
-        <tbody>
+            <tr>
+                <td>0</td>
+                <td class="unused brb" rowspan="8"></td>
+                <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or
+                    spaces
+                </td>
+                <td class="unused brb" rowspan="4"></td>
+                <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or
+                    spaces
+                </td>
+                <td class="brb" rowspan="8"></td>
+            </tr>
+            <tr>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td class="grey brb" colspan="5">Number of files</td>
+                <td class="unused brb" colspan="3"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td class="unused brb" colspan="2"></td>
+                <td class="orange brb" colspan="2">Boot Opts</td>
+                <td class="yellow brb" colspan="2">Disk Type</td>
+                <td class="green blr" colspan="2"><small class="left">9</small><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td class="green bb"><small class="left">7</small></td>
+                <td class="green bb" colspan="6">Sectors in volume</td>
+                <td class="green brb"><small class="right">0</small></td>
+            </tr>
 
-        <tr>
-            <td>0</td>
-            <td class="unused brb" rowspan="8"></td>
-            <td class="grey brb" colspan="7" rowspan="8">First 8 characters of volume title padded with NULs or spaces</td>
-            <td class="unused brb" rowspan="4"></td>
-            <td class="grey brb" colspan="7" rowspan="4">Last 4 characters of volume title padded with NULs or spaces</td>
-            <td class="brb" rowspan="8"></td>
-        </tr>
-        <tr>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="orange brb" colspan="8">BCD catalogue cycle number</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td class="grey brb" colspan="5">Number of files</td>
-            <td class="unused brb" colspan="3"></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td class="unused brb" colspan="2"></td>
-            <td class="orange brb" colspan="2">Boot Opts</td>
-            <td class="yellow brb" colspan="2">Disk Type</td>
-            <td class="green blr" colspan="2"><small class="left">9</small><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Sectors in volume</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
+            <tr>
+                <td class="bt">8</td>
+                <td class="brb" rowspan="7"></td>
+                <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+                <td class="blue"><small class="left">7</small></td>
+                <td class="blue bb" rowspan="2" colspan="6">Load address</td>
+                <td class="blue br"><small class="right">0</small></td>
+                <td class="rotright brb" rowspan="8">Last file</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td class="blue bb"><small class="left">15</small></td>
+                <td class="blue brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td class="orange"><small class="left">7</small></td>
+                <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+                <td class="orange br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td class="orange bb"><small class="left">15</small></td>
+                <td class="orange brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td class="grey"><small class="left">7</small></td>
+                <td class="grey" rowspan="2" colspan="6">File length</td>
+                <td class="grey br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td class="grey bb"><small class="left">15</small></td>
+                <td class="grey brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td class="orange brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Exec
+                </td>
+                <td class="grey brb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                </td>
+                <td class="blue brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Load
+                </td>
+                <td class="green blrt" colspan="2">
+                    <small class="left">9</small>
+                    <small class="right">8</small>
+                </td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td class="grey brb">Lk.</td>
+                <td class="grey brb" colspan="7">Directory</td>
+                <td class="green bb"><small class="left">7</small></td>
+                <td class="green bb" colspan="6">Start sector</td>
+                <td class="green brb"><small class="right">0</small></td>
+            </tr>
 
-        <tr>
-            <td class="bt">8</td>
-            <td class="brb" rowspan="7"></td>
-            <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
-            <td class="blue"><small class="left">7</small></td>
-            <td class="blue bb" rowspan="2" colspan="6">Load address</td>
-            <td class="blue br"><small class="right">0</small></td>
-            <td class="rotright brb" rowspan="8">Last file</td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td class="blue bb"><small class="left">15</small></td>
-            <td class="blue brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td class="orange"><small class="left">7</small></td>
-            <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
-            <td class="orange br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td class="orange bb"><small class="left">15</small></td>
-            <td class="orange brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>12</td>
-            <td class="grey"><small class="left">7</small></td>
-            <td class="grey" rowspan="2" colspan="6">File length</td>
-            <td class="grey br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>13</td>
-            <td class="grey bb"><small class="left">15</small></td>
-            <td class="grey brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>14</td>
-            <td class="orange brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Exec
-            </td>
-            <td class="grey brb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-            </td>
-            <td class="blue brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Load
-            </td>
-            <td class="green blrt" colspan="2">
-                <small class="left">9</small>
-                <small class="right">8</small>
-            </td>
-        </tr>
-        <tr>
-            <td>15</td>
-            <td class="grey brb">Lk.</td>
-            <td class="grey brb" colspan="7">Directory</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Start sector</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
+            <tr>
+                <td class="bt">16</td>
+                <td class="brb" rowspan="7"></td>
+                <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
+                <td class="blue"><small class="left">7</small></td>
+                <td class="blue bb" rowspan="2" colspan="6">Load address</td>
+                <td class="blue br"><small class="right">0</small></td>
+                <td class="rotright brb" rowspan="8">Second to last file</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td class="blue bb"><small class="left">15</small></td>
+                <td class="blue brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td class="orange"><small class="left">7</small></td>
+                <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
+                <td class="orange br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td class="orange bb"><small class="left">15</small></td>
+                <td class="orange brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td class="grey"><small class="left">7</small></td>
+                <td class="grey" rowspan="2" colspan="6">File length</td>
+                <td class="grey br"><small class="right">0</small></td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td class="grey bb"><small class="left">15</small></td>
+                <td class="grey brb"><small class="right">8</small></td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td class="orange brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Exec
+                </td>
+                <td class="grey brb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                </td>
+                <td class="blue brtb" colspan="2">
+                    <small class="left">17</small>
+                    <small class="right">16</small>
+                    Load
+                </td>
+                <td class="green blrt" colspan="2">
+                    <small class="left">9</small>
+                    <small class="right">8</small>
+                </td>
+            </tr>
+            <tr>
+                <td class="bb">23</td>
+                <td class="grey brb">Lk.</td>
+                <td class="grey brb" colspan="7">Directory</td>
+                <td class="green bb"><small class="left">7</small></td>
+                <td class="green bb" colspan="6">Start sector</td>
+                <td class="green brb"><small class="right">0</small></td>
+            </tr>
 
-        <tr>
-            <td class="bt">16</td>
-            <td class="brb" rowspan="7"></td>
-            <td class="grey brb" rowspan="7" colspan="7">File name padded with spaces</td>
-            <td class="blue"><small class="left">7</small></td>
-            <td class="blue bb" rowspan="2" colspan="6">Load address</td>
-            <td class="blue br"><small class="right">0</small></td>
-            <td class="rotright brb" rowspan="8">Second to last file</td>
-        </tr>
-        <tr>
-            <td>17</td>
-            <td class="blue bb"><small class="left">15</small></td>
-            <td class="blue brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>18</td>
-            <td class="orange"><small class="left">7</small></td>
-            <td class="orange bb" rowspan="2" colspan="6">Execution address</td>
-            <td class="orange br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>19</td>
-            <td class="orange bb"><small class="left">15</small></td>
-            <td class="orange brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>20</td>
-            <td class="grey"><small class="left">7</small></td>
-            <td class="grey" rowspan="2" colspan="6">File length</td>
-            <td class="grey br"><small class="right">0</small></td>
-        </tr>
-        <tr>
-            <td>21</td>
-            <td class="grey bb"><small class="left">15</small></td>
-            <td class="grey brb"><small class="right">8</small></td>
-        </tr>
-        <tr>
-            <td>22</td>
-            <td class="orange brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Exec
-            </td>
-            <td class="grey brb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-            </td>
-            <td class="blue brtb" colspan="2">
-                <small class="left">17</small>
-                <small class="right">16</small>
-                Load
-            </td>
-            <td class="green blrt" colspan="2">
-                <small class="left">9</small>
-                <small class="right">8</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="bb">23</td>
-            <td class="grey brb">Lk.</td>
-            <td class="grey brb" colspan="7">Directory</td>
-            <td class="green bb"><small class="left">7</small></td>
-            <td class="green bb" colspan="6">Start sector</td>
-            <td class="green brb"><small class="right">0</small></td>
-        </tr>
+            <tr>
+                <td class="dashleft">&nbsp;</td>
+                <td colspan="16"></td>
+                <td class="dashright">&nbsp;</td>
+            </tr>
 
-        <tr>
-            <td class="dashleft">&nbsp;</td>
-            <td colspan="16"></td>
-            <td class="dashright">&nbsp;</td>
-        </tr>
-
-        </tbody>
-    </table>
-    <p>
-        All unused bits must be kept clear.
-    </p>
+            </tbody>
+        </table>
+        <figcaption>DFS catalogue header format</figcaption>
+    </figure>
 </div>
 
 <div class="printPageBreakAvoid">
     <h4>Disc title</h4>
     <p>
+        <span class="book-index" data-book-index="Disc title"></span>
         Up to 12 printable ASCII characters, padded with NULs (&00) or spaces.
         The first eight characters are placed in sector 0 bytes 0 to 7, the last four characters in sector 1 bytes 0 to
         3.
@@ -286,110 +290,112 @@ All these parameters can potentially take any value between 0 and 255, and so co
 </div>
 
 <div class="printPageBreakAvoid">
-    <div class="row">
-        <div class="col-6">
-            <h4>Cycle number</h4>
-            <p>
-                A binary-coded decimal (BCD) value where each hex nibble takes a value from 0 to 9.
-                This starts at &00 and is incremented each time the catalogue is rewritten.
-            </p>
-            <p>
-                It provides a simple version control system and allows applications to confirm that their internal copies
-                of the catalogue are up-to-date.
-            </p>
-        </div>
-        <div class="col-6">
-            <h4>Number of files</h4>
-            <p>
-                The number of files counter is stored in sector 1 byte 5 as bits 3&hellip;7.
-            </p>
-            <p>
-                Bits 0&hellip;2 are 0 making the entire byte the offset to the last valid entry in the catalog.
-            </p>
-            <p>
-                There may be up to 31 files on the disc.
-            </p>
-        </div>
-    </div>
+    <h4>Cycle number</h4>
+    <p>
+        A binary-coded decimal (BCD) value where each hex nibble takes a value from 0 to 9.
+        This starts at &00 and is incremented each time the catalogue is rewritten.
+    </p>
+    <p>
+        It provides a simple version control system and allows applications to confirm that their internal copies
+        of the catalogue are up-to-date.
+    </p>
 </div>
 
 <div class="printPageBreakAvoid">
-    <div class="row">
-        <div class="col-6">
-            <h4>Boot option</h4>
-            <p>Selects the action to be taken when the disc is booted. The field uses two bits of byte 6 in sector
-                1:</p>
+    <h4>Number of files</h4>
+    <p>
+        The number of files counter is stored in sector 1 byte 5 as bits 3&hellip;7.
+    </p>
+    <p>
+        Bits 0&hellip;2 are 0 making the entire byte the offset to the last valid entry in the catalog.
+    </p>
+    <p>
+        There may be up to 31 files on the disc.
+    </p>
+</div>
 
-            <table class="memoryMap">
-                <thead>
-                <tr>
-                    <th>Bit 5</th>
-                    <th>Bit 4</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td> No action</td>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td>1</td>
-                    <td><code>*LOAD $.!BOOT</code></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0</td>
-                    <td><code>*RUN $.!BOOT</code></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td><code>*EXEC $.!BOOT</code></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-6">
-            <h4>Disk Type</h4>
-            <p>
-                Unused in standard DFS, these two bits in byte 6 of sector 1 can be used to detect third party versions
-                of DFS:
-            </p>
+<div class="printPageBreakAvoid">
+    <h4>Boot option</h4>
+    <p>
+        Selects the action to be taken when the disc is booted. The field uses two bits of byte 6 in sector 1:
+    </p>
 
-            <table class="memoryMap">
-                <thead>
-                <tr>
-                    <th>Bit 3</th>
-                    <th>Bit 2</th>
-                    <th>File System</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>Acorn DFS or Watford DFS up to 256K</td>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>Watford DFS larger than 256K</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>Duggan HDFS, single sided disk</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>Duggan HDFS, double sided disk</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="memoryMap">
+        <thead>
+        <tr>
+            <th>Bit 5</th>
+            <th>Bit 4</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td> No action</td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>1</td>
+            <td><code>*LOAD $.!BOOT</code></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>0</td>
+            <td><code>*RUN $.!BOOT</code></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td><code>*EXEC $.!BOOT</code></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="printPageBreakAvoid">
+    <h4>Disk Type</h4>
+    <p>
+        Unused in standard DFS, these two bits in byte 6 of sector 1 can be used to detect third party versions
+        of DFS:
+    </p>
+
+    <table class="memoryMap">
+        <thead>
+        <tr>
+            <th>Bit 3</th>
+            <th>Bit 2</th>
+            <th>File System</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>
+                Acorn <span class="book-index" data-book-index="DFS">DFS</span>
+                or <span class="book-index" data-book-index="Watford DFS">Watford DFS</span> up to 256K
+            </td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>1</td>
+            <td><span class="book-index" data-book-index="WDFS">Watford DFS</span> larger than 256K</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>
+                <span class="book-index" data-book-index="HDFS"></span>
+                <span class="book-index" data-book-index="Duggan HDFS">Duggan HDFS</span>, single sided disk
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>Duggan HDFS, double sided disk</td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
 <div class="printPageBreakAvoid">
@@ -419,142 +425,142 @@ All these parameters can potentially take any value between 0 and 255, and so co
         offset by 8.
         So the last file starts at offset 8, second to last at 16 & so on.
     </p>
+</div>
 
-    <div class="row">
-        <div class="col-6">
-            <h4>File name</h4>
-            <p>
-                One to seven valid file name characters stored in sector 0 bytes 8 to 14.
-            </p>
-            <p>
-                Valid characters are the printable ASCII characters between &20 and &7E inclusive, except . : " # * and
-                space.
-            </p>
-            <p>
-                The field is padded with spaces.
-            </p>
-            <p>
-                Bit 7 should always be clear but are used for other file systems as extra storage,
-                either adding a bit to another field such as <a href="../wdfs/">WDFS</a>
-                or file permissions as in <a href="../hdfs/">HDFS</a>.
-            </p>
-            <p>
-                When opening a file the DFS searches for it by name.
-            </p>
+<div class="printPageBreakAvoid">
+    <h4>File name</h4>
+    <p>
+        One to seven valid file name characters stored in sector 0 bytes 8 to 14.
+    </p>
+    <p>
+        Valid characters are the printable ASCII characters between &20 and &7E inclusive, except . : " # * and
+        space.
+    </p>
+    <p>
+        The field is padded with spaces.
+    </p>
+    <p>
+        Bit 7 should always be clear but are used for other file systems as extra storage,
+        either adding a bit to another field such as <a href="../wdfs/">WDFS</a>
+        or file permissions as in <a href="../hdfs/">HDFS</a>.
+    </p>
+    <p>
+        When opening a file the DFS searches for it by name.
+    </p>
+</div>
 
-        </div>
-        <div class="col-6">
+<div class="printPageBreakAvoid">
+    <h4>Directory</h4>
+    <p>
+        One valid file name character stored in the low 7 bits of sector 0 byte 15 Identifies the directory
+        (namespace) to which the file belongs.
+    </p>
+    <p>
+        DFS directories are like those in ADFS, DOS or Linux except they cannot nest (they are all root
+        directories) and they share the volume catalogue.
+    </p>
+    <p>
+        The combination of file name and directory must be unique in the volume.
+    </p>
+</div>
 
-            <h4>Directory</h4>
-            <p>
-                One valid file name character stored in the low 7 bits of sector 0 byte 15 Identifies the directory
-                (namespace) to which the file belongs.
-            </p>
-            <p>
-                DFS directories are like those in ADFS, DOS or Linux except they cannot nest (they are all root
-                directories) and they share the volume catalogue.
-            </p>
-            <p>
-                The combination of file name and directory must be unique in the volume.
-            </p>
+<div class="printPageBreakAvoid">
+    <h4>Locked Attribute</h4>
+    <p>
+        If the top bit of the directory is set, then the file is locked and may not be altered or
+        deleted.
+    </p>
+</div>
 
-            <h4>Locked Attribute</h4>
-            <p>If the top bit of the directory is set, then the file is locked and may not be altered or
-                deleted.</p>
-        </div>
-    </div>
+<div class="printPageBreakAvoid">
+    <h4>Load address</h4>
+    <p>
+        <span class="book-index" data-book-index="Load address"></span>
+        An 18 bit address in memory where the file should be *LOADed by default.
+        The low 8 bits are in sector 1 byte 8;
+        the next 8 bits in sector 1 byte 9; the top two bits are in bits 2 and 3 of sector 1 byte 14.
+    </p>
+    <p>
+        If the file is not meant for *LOADing (e.g. a sequential file or text) all 18 bits should be set.
+    </p>
+</div>
 
-    <div class="row">
-        <div class="col-6">
-            <h4>Load address</h4>
-            <p>
-                An 18 bit address in memory where the file should be *LOADed by default.
-                The low 8 bits are in sector 1 byte 8;
-                the next 8 bits in sector 1 byte 9; the top two bits are in bits 2 and 3 of sector 1 byte 14.
-            </p>
-            <p>
-                If the file is not meant for *LOADing (e.g. a sequential file or text) all 18 bits should be set.
-            </p>
-        </div>
-        <div class="col-6">
+<div class="printPageBreakAvoid">
+    <h4>Execution address</h4>
+    <p>
+        <span class="book-index" data-book-index="Execution address"></span>
+        An 18 bit address in memory to be jumped to when the file is *RUN.
+        This need not be within the bounds of the loaded file.
+        The low 8 bits are in sector 1 byte 10; the next 8 bits in sector 1 byte 11; the top two bits are
+        in bits 6 and 7 of sector 1 byte 14.
+    </p>
+    <p>
+        If the file is a sequential file or text then all 18 bits should be set.
+    </p>
+</div>
 
-            <h4>Execution address</h4>
-            <p>
-                An 18 bit address in memory to be jumped to when the file is *RUN.
-                This need not be within the bounds of the loaded file.
-                The low 8 bits are in sector 1 byte 10; the next 8 bits in sector 1 byte 11; the top two bits are
-                in bits 6 and 7 of sector 1 byte 14.
-            </p>
-            <p>
-                If the file is a sequential file or text then all 18 bits should be set.
-            </p>
-        </div>
-    </div>
+<div class="printPageBreakAvoid">
+    <h4>File length</h4>
+    <p>
+        <span class="book-index" data-book-index="File length"></span>
+        An 18 bit value giving the number of bytes in the file.
+    </p>
+    <p>
+        The low 8 bits are in sector 1 byte 12; the next 8 bits
+        in sector 1 byte 13; the top two bits are in bits 4 and 5 of sector 1 byte 14.
+    </p>
+</div>
 
-    <div class="row">
-        <div class="col-6">
-            <h4>File length</h4>
-            <p>
-                An 18 bit value giving the number of bytes in the file.
-            </p>
-            <p>
-                The low 8 bits are in sector 1 byte 12; the next 8 bits
-                in sector 1 byte 13; the top two bits are in bits 4 and 5 of sector 1 byte 14.
-            </p>
+<div class="printPageBreakAvoid">
+    <h4>Start sector</h4>
+    <p>
+        The 10 bit logical block address of the first sector that contains the file.
+        The low 8 bits are in sector 1 byte 15; the top two bits are in bits 0 and 1 of sector 1 byte 14.
+        The cylinder and record numbers are the result and remainder, respectively, when the LBA is divided by 10.
+    </p>
+    <p>
+        A start sector of 0 or 1 is invalid as the file would overlap the catalogue.
+    </p>
+</div>
 
-        </div>
-        <div class="col-6">
+<div class="printPageBreakAvoid">
+    <h4>Note on load and execution addresses</h4>
+    <p>
+        <span class="book-index" data-book-index="Load address"></span>
+        <span class="book-index" data-book-index="Execution address"></span>
+        If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and
+        <span class="book-index" data-book-index="OSFILE">OSFILE</span>
+        will return the address ORed with &FFFF0000 in its parameter block.
+    </p>
+    <p>
+        Otherwise it is an address in second processor memory and OSFILE will return the address as is.
+    </p>
+    <p>
+        In practice the bits are sometimes found clear when they should be set.
+    </p>
+</div>
 
-            <h4>Start sector</h4>
-            <p>
-                The 10 bit logical block address of the first sector that contains the file.
-                The low 8 bits are in sector 1 byte 15; the top two bits are in bits 0 and 1 of sector 1 byte 14.
-                The cylinder and record numbers are the result and remainder, respectively, when the LBA is divided by 10.
-            </p>
-            <p>
-                A start sector of 0 or 1 is invalid as the file would overlap the catalogue.
-            </p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-
-            <h4>Note on load and execution addresses</h4>
-            <p>
-                If bits 16 and 17 of the address are both set, the address refers to I/O processor memory and OSFILE
-                will return the address ORed with &FFFF0000 in its parameter block.
-            </p>
-            <p>
-                Otherwise it is an address in second processor memory and OSFILE will return the address as is.
-            </p>
-            <p>
-                In practice the bits are sometimes found clear when they should be set.
-            </p>
-
-        </div>
-        <div class="col-6">
-
-            <h4>Issues with early versions of DFS</h4>
-            <p>
-                Some early DFSs allow the user to write disk titles or filenames with bit 7 set.
-            </p>
-            <p>
-                This may cause these entries to appear to erroneously have
-                <a href="../hdfs/">HDFS</a> or
-                <a href="../wdfs/">WDFS</a> attributes.
-            </p>
-            <p>
-                Most DFSs disallow top-bit set filenames and disk titles.
-            </p>
-        </div>
-    </div>
+<div class="printPageBreakAvoid">
+    <h4>Issues with early versions of DFS</h4>
+    <p>
+        Some early <span class="book-index" data-book-index="DFS">DFS</span>s allow the user to write disk titles or
+        filenames with bit 7 set.
+    </p>
+    <p>
+        This may cause these entries to appear to erroneously have
+        <a href="../hdfs/"><span class="book-index" data-book-index="HDFS">HDFS</span></a> or
+        <a href="../wdfs/"><span class="book-index" data-book-index="WDFS">WDFS</span></a> attributes.
+    </p>
+    <p>
+        Most DFSs disallow top-bit set filenames and disk titles.
+    </p>
 </div>
 
 <div class="printPageBreakAvoid">
     <h2>Identifying and validating a DFS disc image</h2>
     <p>
-        Unlike its successor ADFS, the DFS format contains no self-identification strings or checksums, so recognising a
+        Unlike its successor <span class="book-index" data-book-index="ADFS">ADFS</span>,
+        the <span class="book-index" data-book-index="DFS">DFS</span> format contains no self-identification strings or checksums, so recognising a
         disc or disc image as Acorn DFS is a complex and unreliable process.
     </p>
     <p>
@@ -566,7 +572,9 @@ All these parameters can potentially take any value between 0 and 255, and so co
         Often the task is to identify which format variant a disc or image contains. This is more a matter of finding
         valid catalogues in the appropriate locations.
     </p>
+</div>
 
+<div class="printPageBreakAvoid">
     <h3>To check that a pair of sectors contains a valid standard DFS catalogue</h3>
     <ul>
         <li>Firstly confirm that all bits marked white or cream in the above diagram are zeroes; if not, the catalogue
@@ -610,7 +618,7 @@ All these parameters can potentially take any value between 0 and 255, and so co
     </p>
     <ul>
         <li>The disc size is 400 sectors (40 tracks) or 800 sectors (80 tracks.)</li>
-        <li>There is a file named !BOOT in directory $.</li>
+        <li>There is a file named <span class="book-index" data-book-index="!BOOT">!BOOT</span> in directory $.</li>
         <li>The 16th and 17th bits of the load and execution (exec) addresses are all clear or all set in each file
             entry.
         </li>

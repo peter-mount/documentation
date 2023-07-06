@@ -1,0 +1,49 @@
+// Handles our standard book title
+
+.bookTitle {
+  .bookTop {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    border-bottom: .25em solid black;
+    vertical-align: bottom;
+    height: 6em;
+
+    h1 {
+      font-weight: bolder;
+    }
+  }
+
+  .bookImage {
+    //height: 75em;
+    //position: relative;
+
+    img {
+      position: absolute;
+      margin: 0;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .bookFooter {
+    position: absolute;
+    // -4em so it's closer to the bottom of the page
+    bottom: -4em;
+    left: 0;
+    right: 0;
+    margin-top: 2em;
+    border-top: .25em solid black;
+    vertical-align: top;
+    height: 6em;
+
+    p:first-child {
+      float: right;
+    }
+
+    p:first-child,
+    p:nth-child(1) {
+      font-weight: bolder;font-height: 2em;
+    }
+  }
+}

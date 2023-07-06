@@ -1,0 +1,116 @@
+// Attempt for page number handling
+
+@media screen {
+  .columns-1 {
+    columns: 1 auto;
+  }
+  .columns-2 {
+    columns: 2 auto;
+  }
+  .columns-3 {
+    columns: 3 auto;
+  }
+  .columns-4 {
+    columns: 4 auto;
+  }
+  .columns-5 {
+    columns: 5 auto;
+  }
+}
+
+@media print {
+  /* Columns break toc's but as we are using A5 it's pointless so disable it */
+  .columns-1 {
+  }
+  .columns-2 {
+  }
+  .columns-3 {
+  }
+  .columns-4 {
+  }
+  .columns-5 {
+  }
+
+  // In print don't show links as links.
+  // They are however still clickable within a PDF
+  a, a:hover, a:visited, a:active {
+    color: black !important;
+    text-decoration: none !important;
+  }
+
+  // Don't show empty table rows where they have been split across pages.
+  // Without this a table shows a double bottom border due to a blank row.
+  tr[data-split-original="true"]:has(> td:empty) {
+    display: none;
+  }
+
+  .print-page-link {
+
+    ul {
+      list-style-type: none;
+      padding-inline-start: 1em;
+      // Override bootstrap so toc is compact
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    li {
+      list-style: none;
+
+      // from docsy
+      //list-style-type: none;
+      padding-inline-start: 1em;
+    }
+
+    // Top level is in bold
+    li {
+      font-weight: bold;
+    }
+
+    // Second level is normal
+    ul > li {
+      font-weight: normal;
+    }
+
+    // Hide third level
+    ul > ul {
+      //display: none;
+    }
+
+    a::after {
+      //content: " ...";
+      //content: leader(dotted) target-counter(attr(href url), page, decimal);
+      content: " " target-counter(attr(href url), page, decimal);
+      float: right;
+    }
+
+    // hack for leaders
+    overflow-x: hidden;
+
+    // :not(> h1) as we do not apply this to the h1 header at the start
+    li:not(> h1)::after {
+      content: ".............................................." ".............................................." ".............................................." "........";
+      float: left;
+      width: 0;
+      padding-left: 5px;
+      letter-spacing: 2px;
+    }
+
+    li:not(> h1) {
+      display: flex;
+
+      a::after {
+        position: absolute;
+        right: 0;
+        background-color: white;
+        padding-left: 6px;
+      }
+
+      li a {
+        right: 0;
+      }
+    }
+
+  }
+
+}

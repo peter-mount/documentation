@@ -13,86 +13,95 @@
 {{- with .format}}{{$hasFormat =1}}{{end -}}
 {{- with .default}}{{$hasDefaultVal =1}}{{end -}}
 {{- end -}}
-<div class="printPageBreakAvoid">
-    <table class="memory">
-        <thead>
-        <tr>
-            {{- if $hasAddr -}}<th>Address</th>{{- end -}}
-            {{- if $hasLen -}}
-            <th>Len</th>
-            {{- end -}}
-            {{- if $hasName -}}
-            <th>Name</th>
-            {{- end -}}
-            {{- if $hasVal -}}
-            <th>Value</th>
-            {{- end -}}
-            {{- if $hasFormat -}}
-            <th>Bit 7</th>
-            <th>Bit 6</th>
-            <th>Bit 5</th>
-            <th>Bit 4</th>
-            <th>Bit 3</th>
-            <th>Bit 2</th>
-            <th>Bit 1</th>
-            <th>Bit 0</th>
-            {{- end -}}
-            <th>Description</th>
-            {{- if $hasDefaultVal -}}
-            <th>Default</th>
-            {{- end -}}
-        </tr>
-        </thead>
-        <tbody>
-        {{- range $.Params.memorymap -}}
-        <tr>
-            {{- if $hasAddr -}}
-            <td {{- if isset . "offset"}} class="offset"{{end}}>{{.address}}</td>
-            {{- end -}}
-            {{- if $hasLen -}}
-            <td>{{.length}}</td>
-            {{- end -}}
-            {{- if $hasName -}}
-            <td>{{.name}}</td>
-            {{- end -}}
-            {{- if $hasVal -}}
-            <td>{{.value}}</td>
-            {{- end -}}
-
-            {{- if $hasFormat -}}
-            {{- with .format -}}
-            {{- range . -}}
-            {{- if isset . "span" -}}
-            <td class="text-center" colspan="{{.span}}">{{.label | safeHTML}}</td>
-            {{- else -}}
-            <td class="text-center">{{. | safeHTML}}</td>
-            {{- end -}}
-            {{- end -}}
-            {{- else -}}
-            <td colspan="8"></td>
-            {{- end -}}
-            {{- end -}}
-
-            <td>
-                {{- .desc | safeHTML -}}
-                {{- with .note}}<div class="note">{{.}}</div>{{end -}}
-                {{- with .val -}}
-                <table>
-                    {{- range $key, $val := . -}}
-                    <tr>
-                        <td>{{$key}}</td>
-                        <td>{{$val}}</td>
-                    </tr>
-                    {{- end -}}
-                </table>
-                {{- end -}}
-            </td>
-            {{- if $hasDefaultVal -}}
-            <td>{{.default}}</td>
-            {{- end -}}
-        </tr>
+<table class="memory">
+    <thead>
+    <tr>
+        {{- if $hasAddr -}}
+        <th>Address</th>
         {{- end -}}
-        </tbody>
-    </table>
-</div>
+        {{- if $hasLen -}}
+        <th>Len</th>
+        {{- end -}}
+        {{- if $hasName -}}
+        <th>Name</th>
+        {{- end -}}
+        {{- if $hasVal -}}
+        <th>Value</th>
+        {{- end -}}
+        {{- if $hasFormat -}}
+        <th>Bit 7</th>
+        <th>Bit 6</th>
+        <th>Bit 5</th>
+        <th>Bit 4</th>
+        <th>Bit 3</th>
+        <th>Bit 2</th>
+        <th>Bit 1</th>
+        <th>Bit 0</th>
+        {{- end -}}
+        <th>Description</th>
+        {{- if $hasDefaultVal -}}
+        <th>Default</th>
+        {{- end -}}
+    </tr>
+    </thead>
+    <tbody>
+    {{- range $.Params.memorymap -}}
+    <tr>
+        {{- if $hasAddr -}}
+        <td {{- if isset .
+        "offset"}} class="offset"{{end}}>{{.address}}</td>
+        {{- end -}}
+        {{- if $hasLen -}}
+        <td>{{.length}}</td>
+        {{- end -}}
+        {{- if $hasName -}}
+        <td>
+            {{- with .name -}}
+            <span class="book-index" data-book-index="{{.}}">{{.}}</span>
+            {{- end -}}
+        </td>
+        {{- end -}}
+        {{- if $hasVal -}}
+        <td>{{.value}}</td>
+        {{- end -}}
+
+        {{- if $hasFormat -}}
+        {{- with .format -}}
+        {{- range . -}}
+
+        {{- if and (reflect.IsMap .) (isset . "span") -}}
+        <td class="text-center" colspan="{{.span}}">{{.label | safeHTML}}</td>
+        {{- else -}}
+        <td class="text-center">{{. | safeHTML}}</td>
+        {{- end -}}
+
+        {{- end -}}
+        {{- else -}}
+        <td colspan="8"></td>
+        {{- end -}}
+        {{- end -}}
+
+        <td>
+            {{- .desc | safeHTML -}}
+            {{- with .note}}
+            <div class="note">{{.}}</div>
+            {{end -}}
+            {{- with .val -}}
+            <table class="memoryInner">
+                {{- range $key, $val := . -}}
+                <tr>
+                    <td>{{$key}}</td>
+                    <td>{{$val}}</td>
+                </tr>
+                {{- end -}}
+            </table>
+            {{- end -}}
+        </td>
+        {{- if $hasDefaultVal -}}
+        <td>{{.default}}</td>
+        {{- end -}}
+    </tr>
+    {{- end -}}
+    </tbody>
+</table>
 {{- end -}}

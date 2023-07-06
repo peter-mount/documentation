@@ -1,8 +1,8 @@
 {{/* Use the title and description of the first page to begin the document */}}
 {{- if isset .Page.Params "book" -}}
-<div style="page-break-after: always">
-    <div style="margin-top:2em;margin-bottom: 2em;border-bottom: .25em solid black;vertical-align: bottom;height: 6em;">
-        <h1 style="font-weight: bolder;">
+<div class="bookTitle printPageBreakRight">
+    <div class="bookTop">
+        <h1>
             {{- if isset .Page.Params.book "title" -}}
             {{ .Page.Params.book.title }}
             {{- else -}}
@@ -12,16 +12,16 @@
         <p>{{ with .Page.Params.book.subTitle }}{{ . }}{{ end }}
         </p>
     </div>
-    <div style="height:75em;position:relative;">
-        <img style="position: absolute;margin:0;left:50%;top:50%;transform: translate(-50%,-50%);" src="
+    <div class="bookImage">
+        <img src="
         {{- if isset  .Page.Params.book "image" -}}
         {{- .Page.Params.book.image }}{{ else -}}
         {{- end }}">
     </div>
-    <div style="margin-top: 2em;margin-bottom: 2em;border-top: .25em solid black;vertical-align: top;height: 6em;">
-        <p style="float:right;font-weight: bolder;font-height: 2em;">{{ with .Page.Params.book.copyright }}{{ . }}{{ end }}</p>
-        <p style="font-weight: bolder;font-height: 2em;">{{ with .Page.Params.book.author }}{{ . }}{{ end }}</p>
-        <p>{{ with .Page.Params.book.subAuthor }}{{ . }}{{ end }}</p>
+    <div class="bookFooter">
+        <p>{{ with .Page.Params.book.copyright }}{{ . }}{{ end }}</p>
+        <p>{{ with .Page.Params.book.author }}{{ . }}{{ end }}</p>
+        {{ with .Page.Params.book.subAuthor }}<p>{{ . }}</p>{{ end -}}
     </div>
 </div>
 {{- else -}}

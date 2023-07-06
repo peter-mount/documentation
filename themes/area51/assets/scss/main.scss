@@ -31,20 +31,32 @@
 @import "custom/chip";
 @import "custom/font";
 @import "custom/table";
+@import "custom/arm";
 @import "custom/asm";
 @import "custom/alert";
 @import "custom/list";
 @import "custom/fields";
+
+/* PagedJS integration */
+@import "pagedjs/main";
 
 @if $td-enable-google-fonts {
     @import url($web-font-path);
 }
 
 footer {
-    min-height: 150px;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    min-height: 2rem;
+    width: 100%;
+
+    div {
+        float: left;
+    }
 
     @include media-breakpoint-down(md) {
-        min-height: 200px;
+        min-height: 30px;
     }
 }
 

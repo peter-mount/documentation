@@ -15,7 +15,11 @@
     <tbody>
     {{- range $.Params.api -}}
     <tr>
-        <td>{{.name}}</td>
+        <td>
+            {{- with .name -}}
+            <span class="book-index" data-book-index="{{.}}">{{.}}</span>
+            {{- end -}}
+        </td>
         <td>{{.addr}}</td>
         {{- if $hasIndirect}}<td>{{.indirect}}</td>{{end -}}
         <td>{{.title}}</td>

@@ -4,7 +4,8 @@
 .td-sidebar-nav {
     padding-right: 0.5rem;
     margin-right: -15px;
-    margin-left: -15px;
+    margin-left: -30px;
+    line-height: 1.25rem;
 
     @include media-breakpoint-up(md) {
         @supports (position: sticky) {
@@ -114,7 +115,7 @@
     }
 
 
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
 
     &__toggle {
         line-height: 1;
@@ -134,7 +135,7 @@
         @include media-breakpoint-up(md) {
             @supports (position: sticky) {
                 position: sticky;
-                top: 4rem;
+                top: 3rem;
                 z-index: 10;
                 height: calc(100vh - 6rem);
             }

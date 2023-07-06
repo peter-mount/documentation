@@ -1,4 +1,4 @@
-{{- if isset .Params "flags" }}{{ partial "6502/flags.html" . }}{{end -}}
+{{- if reflect.IsMap .Params.flags }}{{ partial "6502/flags.html" . }}{{end -}}
 {{- if isset .Params "hide_codes" -}}{{- else -}}
 {{- if isset .Params "codes" -}}
 {{- $opcode := $.Params.codes -}}
@@ -39,6 +39,7 @@
         </tr>
         </thead>
         <tbody>
+        {{ $.Scratch.Set "lastop" "" }}
         {{- range $.Params.codes -}}
         {{- if isset $.Params "op" }}{{ $.Scratch.Set "op" $.Params.op }}{{end -}}
         {{- if isset . "op" }}{{ $.Scratch.Set "op" .op }}{{end -}}
@@ -50,7 +51,15 @@
             {{- if isset $.Params "dest" }}
             <td>{{.dest}}</td>
             {{end -}}
-            <td>{{ partial "6502/instruction.html" (dict "op" $op "mode" .addressing "val" "addr") }}</td>
+            <td>
+                {{- /* only create 1 index entry per opcode */ -}}
+                {{- if ne ($.Scratch.Get "lastop") $op -}}
+                {{- $.Scratch.Set "lastop" $op -}}
+                <span class="book-index" data-book-index="{{$op}}"></span>
+                {{- end -}}
+
+                {{ partial "6502/instruction.html" (dict "op" $op "mode" .addressing "val" "addr") }}
+            </td>
             {{- if isset $.Params "alt" }}
             <td>{{.alt}}</td>
             {{end -}}
@@ -190,7 +199,7 @@
                     {{- $opcode := index $values $cellKey -}}
 
                     {{- $col := "" -}}
-                    {{- if ne $opcode "" -}}
+                    {{- if reflect.IsMap $opcode -}}
                         {{- if isset $opcode "colour" }}{{$col = $opcode.colour}}{{end -}}
                     {{- end -}}
 

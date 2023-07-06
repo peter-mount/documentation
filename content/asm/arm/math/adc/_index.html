@@ -1,0 +1,32 @@
+---
+type: "manual"
+title: "ADC (immediate)"
+linkTitle: "ADC"
+description: "Add with carry (immediate)"
+tags:
+- arm instruction
+---
+<p>
+    Add with carry (immediate) adds an immediate value and the carry flag to a source register,
+    writing the result to a destination register.
+</p>
+
+<table class="memoryMap3 arm">
+    <thead>
+    {{< arm/arm-instruction-head >}}
+    </thead>
+    <tbody>
+    <tr>
+<td colspan="5">11110</td>
+        <td>I</td>
+        <td>0</td>
+        <td colspan="4">1010</td>
+        <td>S</td>
+        <td colspan="4">Rn</td>
+        <td>0</td>
+        <td colspan="3">imm3</td>
+        <td colspan="4">Rd</td>
+        <td colspan="8">imm8</td>
+    </tr>
+    </tbody>
+</table>

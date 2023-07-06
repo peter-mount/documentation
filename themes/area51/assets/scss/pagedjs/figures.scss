@@ -1,0 +1,30 @@
+// figures
+
+figure {
+  margin: 0 0 1rem;
+
+  figcaption {
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+}
+
+@media print {
+  body {
+    counter-reset: figureNumber;
+  }
+
+  figcaption {
+    counter-increment: figureNumber;
+  }
+
+  figcaption::before {
+    //content: counter(figureNumber) ": "
+    content: "fig-" counter(figureNumber) ": ";
+  }
+
+  .list-figref-element::before {
+    content: "fig-" target-counter(attr(data-figref url), figureNumber);
+  }
+
+}

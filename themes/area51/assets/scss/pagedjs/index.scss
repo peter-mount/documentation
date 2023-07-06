@@ -1,0 +1,58 @@
+
+.list-index-generated,
+.list-index-generated-1col {
+  list-style-type: none;
+  padding-inline-start: 0;
+  // Override bootstrap so toc is compact
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  font-size: 0.8rem;
+}
+
+.list-index-generated {
+  columns: 2;
+}
+
+.list-alphabet-element,
+.list-index-element {
+  list-style: none;
+}
+
+.list-index-element {
+  // Indent secondary lines
+  text-indent: -2em;
+  margin-left: 2em;
+  // as alphabet is hidden then no indent
+  padding-inline-start: 0;
+  //padding-inline-start: 0.5rem;
+}
+
+.list-subindex-element {
+  text-indent: 0.125em !important;
+  margin-left: 1em;
+}
+
+.list-alphabet-element {
+  // Hidden as looks better but otherwise would be bold underlined header
+  display: none;
+  font-weight: bold;
+  border-bottom: 1px solid grey;
+  margin-top: 0.25rem;
+}
+
+.link-page a::after {
+  content: target-counter(attr(href url), page);
+}
+
+.link-page::after {
+  content: ", ";
+}
+
+.link-page:last-child::after {
+  content: none;
+}
+
+.index-value::after {
+  content: " – ";
+  //content: ", ";
+}

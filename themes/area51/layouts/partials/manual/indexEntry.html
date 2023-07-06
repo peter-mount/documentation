@@ -1,0 +1,11 @@
+{{- if isset .entry "title" -}}
+{{- if isset .entry "index" -}}
+{{- if eq .entry.index "-"}}
+{{- .entry.title -}}
+{{- else -}}
+<span class="book-index" data-book-index="{{.prefix}} {{.entry.index}}"><span class="book-index" data-book-index="{{.entry.index}}">{{.entry.title}}</span></span>
+{{- end -}}
+{{- else -}}
+<span class="book-index" data-book-index="{{.prefix}} {{.entry.title}}"><span class="book-index" data-book-index="{{.entry.title}}">{{.entry.title}}</span></span>
+{{- end -}}
+{{- end -}}

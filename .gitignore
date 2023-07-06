@@ -28,3 +28,9 @@ publish-deploy-uat.sh
 
 
 3d
+/dist/
+/builds/
+/build
+/platforms.md
+/Makefile.gen
+/tmp/

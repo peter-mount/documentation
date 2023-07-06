@@ -1,0 +1,21 @@
+
+{{- /* If a page break between sections is required and param nopagebreak is present set to auto not always. */ -}}
+{{- /* This allows us to merge subpages to save blank space */ -}}
+{{- /* Original code: $break := cond .DoPageBreak "page-break-before: always" "" */ -}}
+
+{{ $break := "" -}}
+{{ if .DoPageBreak -}}
+{{ if isset .Page.Params "nopagebreak" }}{{ $break = " printPageBreakAuto"}}{{else}}{{ $break = " printPageBreak" -}}
+{{end -}}
+{{ end -}}
+<div class="td-content-new{{ $break }}">
+	<h1 id="pg-{{ .Page.File.UniqueID }}" pagesection="{{.PageNum}}">{{ .Page.Title }}</h1>
+    {{ with .Page.Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
+    {{- partial "bbc/api.html" .Page -}}
+    {{- partial "bbc/osbyte.html" .Page -}}
+    {{- partial "bbc/osword.html" .Page -}}
+    {{- partial "6502/memorymap.html" .Page -}}
+	{{ .Page.Content }}
+    {{- partial "6502/opcode.html" .Page -}}
+    {{- partial "6502/hexMap.html" .Page -}}
+</div>

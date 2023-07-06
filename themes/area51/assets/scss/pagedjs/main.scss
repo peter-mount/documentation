@@ -1,0 +1,107 @@
+// Attempt for page number handling
+
+@media print {
+
+  html {
+    // Enforce 10pt font for the book, this becomes 1rem
+    font-size: 10pt;
+  }
+
+  @page {
+    size: A5 portrait;
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+    /* uncomment to include a visualisation of the available area on the page
+    border-top: 1px dashed red;
+    border-bottom: 1px dashed red;
+    border-right: 1px dashed grey;
+    border-left: 1px dashed grey;
+     */
+
+    @bottom-center {
+      content: string(title)
+    }
+  }
+
+  @page :left {
+    margin-left: 0.5cm;
+    margin-right: 2.5cm;
+
+    @bottom-left {
+      content: counter(page)
+    }
+  }
+
+  @page :right {
+    margin-left: 2.5cm;
+    margin-right: 0.5cm;
+
+    @bottom-right {
+      content: counter(page)
+    }
+  }
+
+  h1 {
+    string-set: title content(text);
+  }
+
+  // Override bootstrap to make it suitable for printing
+  body.pagedjs,
+  .container {
+    // This overrides bootstrap so an A4 page actually fits an A4 page.
+    // Without this:
+    // body causes the page to be reduced by ~79%
+    // .container expands beyond the page width
+    min-width: auto !important;
+  }
+
+  h1, .h1 {
+    font-size: 2em !important;
+  }
+  h2, .h2 {
+    font-size: 1.5em !important;
+  }
+  h3, .h3 {
+    font-size: 1.17em !important;
+  }
+  h4, .h4 {
+    font-size: 1.33em !important;
+  }
+  h5, .h5 {
+    font-size: 0.83em !important;
+  }
+  h6, .h6 {
+    font-size: 0.67em !important;
+  }
+
+  h1, .h1,
+  h2, .h2,
+  h3, .h3,
+  h4, .h4,
+  h5, .h5,
+  h6, .h6 {
+    line-height: initial !important;
+  }
+
+  p, ol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .sourceCode {
+    font-family: Courier New, monospace !important;
+    font-size: 0.8rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    overflow: hidden !important;
+    white-space: pre !important;
+  }
+
+}
+
+@import "booktitle";
+@import "breaks";
+@import "figures";
+@import "index";
+@import "tables";
+@import "toc";
