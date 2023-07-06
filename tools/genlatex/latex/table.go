@@ -36,7 +36,17 @@ func tableStart(n *html.Node, ctx context.Context) error {
 	}
 	_ = f.HandleChildren(n, ctx)
 
-	return Writef(ctx, "\n\\begin{tabular}{%s}\n", strings.Repeat("l", cols))
+	// If we are nested then add a \\ prefix
+	if ctx.Value(insideTableKey) != nil {
+		_ = Write(ctx, '\\', '\\')
+	}
+
+	// Note: @{} either side of the col specifiers tells LaTeX not to add inter-column spacing
+	// before and after the first & last columns respectively. Without that it would be
+	// wasted space on the page.
+	//
+	// [t] means vertical align cells to the top. Defaults to c otherwise, other option is b
+	return Writef(ctx, "\\begin{tabular}[t]{@{} %s @{}}\n", strings.Repeat("l", cols))
 }
 
 func tableEnd1(n *html.Node, ctx context.Context) error {
@@ -51,7 +61,16 @@ func tableCaption(n *html.Node, ctx context.Context) error {
 	return handleChildren(n, ctx)
 }
 
+const (
+	// Marker to indicate table it is nested
+	insideTableKey = "inside.table"
+)
+
 func tr(n *html.Node, ctx context.Context) error {
+
+	// Marker to indicate table it is nested
+	ctx = context.WithValue(ctx, insideTableKey, true)
+
 	cell := 1
 	err := parser.HandleChildren(func(n *html.Node, ctx context.Context) (err error) {
 		if n.Type == html.ElementNode {
@@ -66,16 +85,35 @@ func tr(n *html.Node, ctx context.Context) error {
 				rowSpan, _ := parser.GetAttrInt(n, "rowspan", 1)
 				multiCol, multiRow := colSpan > 1 || align != "", rowSpan > 1
 
+				// Look ahead, if a table exists then we need to wrap the cell to allow line break before it.
+				// nonTabularContent is used to set tabularCell so if table is first then it's not tabular
+				// unless there's multiple tables
+				tabularCell, nonTabularContent := false, false
+				_ = parser.HandleChildren(func(n *html.Node, ctx context.Context) error {
+					if parser.IsElement(n, "table") {
+						tabularCell = nonTabularContent
+					} else {
+						nonTabularContent = true
+					}
+					return nil
+				}, n, ctx)
+
 				if err == nil && multiCol {
 					err = Writef(ctx, `\multicolumn{%d}{%s}{`, colSpan, align)
 				}
-
 				if err == nil && multiRow {
 					err = Writef(ctx, `\multirow{%d}{*}{`, rowSpan)
+				}
+				if err == nil && tabularCell {
+					err = WriteString(ctx, `\begin{tabular}[t]{@{}l@{}}`)
 				}
 
 				if err == nil {
 					err = handleChildren(n, ctx)
+				}
+
+				if err == nil && tabularCell {
+					err = WriteString(ctx, `\end{tabular}`)
 				}
 				if err == nil && multiRow {
 					err = Write(ctx, '}')

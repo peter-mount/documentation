@@ -42,6 +42,20 @@ func HasClass(n *html.Node, name string) bool {
 	return false
 }
 
+func HasClasses(n *html.Node, required ...string) bool {
+	classes := GetClass(n)
+	if len(classes) > 0 {
+		for _, r := range required {
+			for _, e := range classes {
+				if e == r {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}
+
 func GetClass(n *html.Node) []string {
 	if n.Type == html.ElementNode {
 		a := GetAttr(n, "class")

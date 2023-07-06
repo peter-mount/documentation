@@ -74,11 +74,15 @@ func (a Handler) Type(t string) Handler {
 		return nil
 	}
 	return func(n *html.Node, ctx context.Context) error {
-		if n.Type == html.ElementNode && n.Data == t {
+		if IsElement(n, t) {
 			return a(n, ctx)
 		}
 		return nil
 	}
+}
+
+func IsElement(n *html.Node, t string) bool {
+	return n.Type == html.ElementNode && n.Data == t
 }
 
 // HasClass returns a Handler that will call this handler only
