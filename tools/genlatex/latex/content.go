@@ -15,6 +15,8 @@ func div(n *html.Node, ctx context.Context) error {
 func text(n *html.Node, ctx context.Context) error {
 	s := strings.TrimSpace(n.Data)
 	if s != "" {
+		s = strings.ReplaceAll(s, "&", "\\&")
+
 		return WriteString(ctx, s)
 	}
 	return nil
@@ -30,5 +32,5 @@ func paragraph(n *html.Node, ctx context.Context) error {
 
 // Appends \\ to the end of the current line to indicate a line break
 func lineBreak(_ *html.Node, ctx context.Context) error {
-	return WriteStringLn(ctx, " \\\n")
+	return WriteStringLn(ctx, " \\linebreak\n")
 }

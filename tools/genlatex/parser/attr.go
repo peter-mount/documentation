@@ -2,6 +2,7 @@ package parser
 
 import (
 	"golang.org/x/net/html"
+	"strconv"
 	"strings"
 )
 
@@ -15,18 +16,38 @@ func GetAttr(n *html.Node, name string) string {
 	return ""
 }
 
+func GetAttrInt(n *html.Node, name string, def int) (int, bool) {
+	a := GetAttr(n, name)
+	if a != "" {
+		i, err := strconv.Atoi(a)
+		if err == nil {
+			return i, true
+		}
+	}
+
+	return def, false
+}
+
 // HasClass returns true if a html.Node has a class attribute and it has
 // the specified class name declared within it.
 func HasClass(n *html.Node, name string) bool {
-	if n.Type == html.ElementNode {
-		a := GetAttr(n, "class")
-		if a != "" {
-			for _, e := range strings.Split(a, " ") {
-				if e == name {
-					return true
-				}
+	classes := GetClass(n)
+	if len(classes) > 0 {
+		for _, e := range classes {
+			if e == name {
+				return true
 			}
 		}
 	}
 	return false
+}
+
+func GetClass(n *html.Node) []string {
+	if n.Type == html.ElementNode {
+		a := GetAttr(n, "class")
+		if a != "" {
+			return strings.Split(a, " ")
+		}
+	}
+	return nil
 }

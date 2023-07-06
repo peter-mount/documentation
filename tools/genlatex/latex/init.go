@@ -19,6 +19,8 @@ func New() parser.Handler {
 
 	content.
 		Text(text).
+		// anchor is ignored, just parse it's content
+		Handle("a", handleChildren).
 		Handle("br", lineBreak).
 		Handle("div", div).
 		Handle("p", paragraph).
@@ -40,20 +42,30 @@ func New() parser.Handler {
 		Handle("table", parser.Of(
 			tableStart,
 			parser.New().
-				Handle("thead", thead).
-				Handle("tbody", tbody).
+				Handle("thead", handleChildren).
+				Handle("tbody", handleChildren).
 				Handle("tr", tr).
-				Handle("th", parser.Of(thStart, content.Handler().HandleChildren, thEnd)).
-				Handle("td", parser.Of(tdStart, content.Handler().HandleChildren, tdEnd)).
-				Handler(),
+				// FIXME Text & Default need to be within tr only
+				// but until I figure a way to handle "&" separators with Scanner this will have to do
+				Text(text).
+				Default(content.Handler()).
+				Handler().
+				HandleChildren,
 			tableEnd1,
-			content.Handler().Type("caption").HandleChildren,
+			parser.Of(tableCaption).Type("caption").HandleChildren,
 			tableEnd2))
 
 	// Final Handler
 	return parser.Of(
 		beginDocument,
-		content.Handler().FindByClass("td-content", "td-content-new"),
+		parser.New().
+			Handle("div",
+				content.Handler().
+					HasClasses("td-content", "td-content-new").
+					HandleChildren).
+			Default(handleChildren).
+			Handler().
+			FindByClass("td-main", "td-main-new"),
 		endDocument)
 }
 

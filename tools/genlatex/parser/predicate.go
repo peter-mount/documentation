@@ -2,7 +2,6 @@ package parser
 
 import (
 	"golang.org/x/net/html"
-	"strings"
 )
 
 type Predicate func(*html.Node) bool
@@ -51,15 +50,17 @@ func (a Predicate) Not() Predicate {
 }
 
 func (a Predicate) HasClass(classes ...string) Predicate {
+	if len(classes) == 0 {
+		return False
+	}
+
 	return a.Or(func(n *html.Node) bool {
-		if n.Type == html.ElementNode {
-			attr := GetAttr(n, "class")
-			if attr != "" {
-				for _, c := range classes {
-					for _, e := range strings.Split(attr, " ") {
-						if e == c {
-							return true
-						}
+		nodeClasses := GetClass(n)
+		if len(nodeClasses) > 0 {
+			for _, c := range classes {
+				for _, e := range nodeClasses {
+					if e == c {
+						return true
 					}
 				}
 			}
