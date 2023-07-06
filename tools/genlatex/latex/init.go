@@ -42,7 +42,7 @@ func New() parser.Handler {
 		Handle("table", parser.Of(
 			tableStart,
 			parser.New().
-				Handle("thead", handleChildren).
+				Handle("thead", tableHead).
 				Handle("tbody", handleChildren).
 				Handle("tr", tr).
 				// FIXME Text & Default need to be within tr only

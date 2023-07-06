@@ -41,35 +41,55 @@ func tableStart(n *html.Node, ctx context.Context) error {
 		_ = Write(ctx, '\\', '\\')
 	}
 
+	// Needed to save state otherwise headers spanning pages will break subsequent
+	// tables
+	_ = WriteStringLn(ctx, `\begingroup`)
+
 	// Note: @{} either side of the col specifiers tells LaTeX not to add inter-column spacing
 	// before and after the first & last columns respectively. Without that it would be
 	// wasted space on the page.
 	//
 	// [t] means vertical align cells to the top. Defaults to c otherwise, other option is b
-	return Writef(ctx, "\\begin{tabular}[t]{@{} %s @{}}\n", strings.Repeat("l", cols))
+	return Writef(ctx, "\\begin{%s}[t]{@{} %s @{}}\n", tableType(ctx), strings.Repeat("l", cols))
+}
+
+func tableType(ctx context.Context) string {
+	if insideTable(ctx) {
+		return "tabular"
+	}
+	return "longtable"
 }
 
 func tableEnd1(n *html.Node, ctx context.Context) error {
-	return WriteString(ctx, "\\end{tabular}\n")
+	return Writef(ctx, "\\end{%s}\n", tableType(ctx))
 }
 
 func tableEnd2(n *html.Node, ctx context.Context) error {
-	return nil //WriteString(ctx, "end{table}\n")
+	return WriteStringLn(ctx, `\endgroup`)
 }
 
 func tableCaption(n *html.Node, ctx context.Context) error {
 	return handleChildren(n, ctx)
 }
 
+func tableHead(n *html.Node, ctx context.Context) error {
+	// Mark we are inside thead, so we can handle headers spanning pages
+	return handleChildren(n, context.WithValue(ctx, insideTableHeaderKey, true))
+}
+
 const (
 	// Marker to indicate table it is nested
-	insideTableKey = "inside.table"
+	insideTableKey       = "inside.table"
+	insideTableHeaderKey = "inside.table.header"
 )
 
 // returns true if ctx is currently inside a table.
-// This will be specifically true if we are inside a <tr> element.
 func insideTable(ctx context.Context) bool {
 	return ctx.Value(insideTableKey) != nil
+}
+
+func insideTableHeader(ctx context.Context) bool {
+	return ctx.Value(insideTableHeaderKey) != nil
 }
 
 func tr(n *html.Node, ctx context.Context) error {
@@ -137,9 +157,21 @@ func tr(n *html.Node, ctx context.Context) error {
 		}
 		return
 	}, n, ctx)
+
+	//if err == nil && insideTableHeader(ctx) {
+	//	// This at the end of each header row, so we repeat headers when the
+	//	// table spans multiple pages
+	//	err = WriteStringLn(ctx, `\endhead`)
+	//}
+
 	if err == nil {
 		err = WriteStringLn(ctx, `\\`)
 	}
+
+	if err == nil && insideTableHeader(ctx) {
+		err = WriteStringLn(ctx, `\endhead`)
+	}
+
 	return err
 }
 

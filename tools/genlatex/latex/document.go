@@ -15,6 +15,7 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 \documentclass{textbook}
 \usepackage{multirow}
 \usepackage{array}
+\usepackage{longtable}
 
 \lang      {english}
 \title     {Showcasing The Textbook Class}
