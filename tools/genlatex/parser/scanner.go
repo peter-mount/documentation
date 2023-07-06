@@ -42,7 +42,7 @@ func (s *Scanner) Handle(n *html.Node, ctx context.Context) error {
 
 	case html.ElementNode:
 		// Do not handle non-printable elements
-		if !HasClass(n, "d-print-none") {
+		if !HasClasses(n, "d-print-none") {
 			h, exists := s.handlers[n.Data]
 			if !exists {
 				h = s.defaultHandler

@@ -53,7 +53,9 @@ func New() parser.Handler {
 				HandleChildren,
 			tableEnd1,
 			parser.Of(tableCaption).Type("caption").HandleChildren,
-			tableEnd2))
+			tableEnd2)).
+		// These elements are ignored
+		Handle("bookMeta", nil)
 
 	// Final Handler
 	return parser.Of(

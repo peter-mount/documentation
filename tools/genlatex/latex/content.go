@@ -2,24 +2,24 @@ package latex
 
 import (
 	"context"
-	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 	"strings"
 )
 
 func div(n *html.Node, ctx context.Context) error {
-	_ = Comment(ctx, "div class=%q", parser.GetAttr(n, "class"))
 	return handleChildren(n, ctx)
 }
 
 func text(n *html.Node, ctx context.Context) error {
 	s := strings.TrimSpace(n.Data)
 	if s != "" {
-		s = strings.ReplaceAll(s, "&", "\\&")
-
-		return WriteString(ctx, s)
+		return WriteString(ctx, escapeText(s))
 	}
 	return nil
+}
+
+func escapeText(s string) string {
+	return strings.ReplaceAll(s, "&", "\\&")
 }
 
 func paragraph(n *html.Node, ctx context.Context) error {

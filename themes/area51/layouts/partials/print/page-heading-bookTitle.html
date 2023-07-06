@@ -1,29 +1,27 @@
 {{/* Use the title and description of the first page to begin the document */}}
 {{- if isset .Page.Params "book" -}}
-<div class="bookTitle printPageBreakRight">
-    <div class="bookTop">
-        <h1>
-            {{- if isset .Page.Params.book "title" -}}
-            {{ .Page.Params.book.title }}
-            {{- else -}}
-            {{ .Page.Params.title }}
-            {{- end -}}
-        </h1>
-        <p>{{ with .Page.Params.book.subTitle }}{{ . }}{{ end }}
-        </p>
-    </div>
-    <div class="bookImage">
-        <img src="
-        {{- if isset  .Page.Params.book "image" -}}
-        {{- .Page.Params.book.image }}{{ else -}}
-        {{- end }}">
-    </div>
-    <div class="bookFooter">
-        <p>{{ with .Page.Params.book.copyright }}{{ . }}{{ end }}</p>
-        <p>{{ with .Page.Params.book.author }}{{ . }}{{ end }}</p>
-        {{ with .Page.Params.book.subAuthor }}<p>{{ . }}</p>{{ end -}}
-    </div>
-</div>
+<bookMeta id="bookMeta">
+    <title>
+        {{- if isset .Page.Params.book "title" -}}
+        {{ .Page.Params.book.title }}
+        {{- else -}}
+        {{ .Page.Params.title }}
+        {{- end -}}
+    </title>
+    {{with .Page.Params.book.subTitle }}<subtitle>{{ . }}</subtitle>{{ end }}
+    {{ with .Page.Params.book.author }}<author>{{ . }}</author>{{ end }}
+    {{ with .Page.Params.book.subAuthor }}<subAuthor>{{ . }}</subAuthor>{{ end }}
+    {{/* if isset  .Page.Params.book "image" }}<cover>{{.Page.Params.book.image}}</cover>{{ end */}}
+    {{ with .Page.Params.book.copyright }}<license>{{ . }}</license>{{ end }}
+
+    {{ with .Page.Params.book.isbn }}<isbn>{{ . }}</isbn>{{ end }}
+    {{ with .Page.Params.book.publisher }}<publisher>{{ . }}</publisher>{{ end }}
+    {{ with .Page.Params.book.edition }}<edition>{{ . }}</edition>{{ end }}
+    {{ with .Page.Params.book.dedicate }}<dedicate>{{ . }}</dedicate>{{ end }}
+    {{ with .Page.Params.book.thank }}<thank>{{ . }}</thank>{{ end }}
+    {{ with .Page.Params.book.keywords }}<keywords>{{ . }}</keywords>{{ end }}
+</bookMeta>
+
 {{- else -}}
 
 <h1 class="title">{{ .Title }}</h1>
