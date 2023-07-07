@@ -2,7 +2,6 @@ package latex
 
 import (
 	"context"
-	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 	"strings"
 )
@@ -32,13 +31,5 @@ func lineBreak(_ *html.Node, ctx context.Context) error {
 	if insideTable(ctx) {
 		return WriteStringLn(ctx, `\\`)
 	}
-	return WriteStringLn(ctx, ` \linebreak`)
-}
-
-func ul(n *html.Node, ctx context.Context) error {
-	if parser.HasClass(n, "print-page-link") {
-		return WriteStringLn(ctx, `\toc`)
-	}
-
-	return handleChildren(n, ctx)
+	return WriteStringLn(ctx, `\hfill \break`)
 }
