@@ -1,13 +1,19 @@
 package latex
 
-import "strings"
+import (
+	"regexp"
+	"strings"
+)
 
 var (
-	escapeFrom []string
-	escapeTo   []string
+	escapeFrom       []string
+	escapeTo         []string
+	removeWhitespace *regexp.Regexp
 )
 
 func init() {
+	removeWhitespace = regexp.MustCompile(`\s+`)
+
 	initEscape := func(from, to string) {
 		escapeFrom = append(escapeFrom, from)
 		escapeTo = append(escapeTo, to)
@@ -25,6 +31,8 @@ func init() {
 	initEscape(`{`, `\{`)
 	initEscape(`}`, `\}`)
 	initEscape(`\`, `\textbackslash{}`)
+
+	initEscape(`$`, `\$`)
 
 	// ~ is either \~{} or 	extasciitilde{}
 	// Must be before &nbsp;
@@ -80,7 +88,6 @@ func init() {
 
 	// general symbols
 	initEscape(`%`, `\%`)
-	initEscape(`$`, `\$`)
 	initEscape(`_`, `\_`)
 	initEscape(`#`, `\#`)
 	initEscape(`&`, `\&`)
@@ -91,10 +98,14 @@ func init() {
 	initEscape(`†`, `\dag{}`)
 }
 
-// EscapeText takes a string and converts it to LaTeX
+// EscapeText takes a string and converts it to LaTeX.
+// This will remove all duplicated whitespace and trim the result
 func EscapeText(s string) string {
+	s = removeWhitespace.ReplaceAllString(s, " ")
+
 	for i, v := range escapeFrom {
 		s = strings.ReplaceAll(s, v, escapeTo[i])
 	}
-	return s
+
+	return strings.TrimSpace(s)
 }

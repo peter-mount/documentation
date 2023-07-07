@@ -43,7 +43,8 @@ func New() parser.Handler {
 		Handle("h3", heading).
 		Handle("h4", heading).
 		Handle("h5", heading).
-		Handle("li", handleChildren).
+		Handle("li", li).
+		Handle("ol", ol).
 		Handle("p", paragraph).
 		Handle("pre", handleChildren).
 		Handle("table", parser.Of(

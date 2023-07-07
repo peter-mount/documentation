@@ -43,7 +43,7 @@ func tableStart(n *html.Node, ctx context.Context) error {
 
 	// Needed to save state otherwise headers spanning pages will break subsequent
 	// tables
-	_ = WriteStringLn(ctx, `\begingroup`)
+	_ = WriteStringLn(ctx, `\begingroup{}`)
 
 	// Note: @{} either side of the col specifiers tells LaTeX not to add inter-column spacing
 	// before and after the first & last columns respectively. Without that it would be
@@ -65,7 +65,7 @@ func tableEnd1(n *html.Node, ctx context.Context) error {
 }
 
 func tableEnd2(n *html.Node, ctx context.Context) error {
-	return WriteStringLn(ctx, `\endgroup`)
+	return WriteStringLn(ctx, `\endgroup{}`)
 }
 
 func tableCaption(n *html.Node, ctx context.Context) error {
