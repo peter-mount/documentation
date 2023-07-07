@@ -2,11 +2,16 @@ package latex
 
 import (
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 	"strings"
 )
 
 func div(n *html.Node, ctx context.Context) error {
+	if parser.HasClass(n, "lead") {
+		return environment("huge", n, ctx)
+	}
+
 	return handleChildren(n, ctx)
 }
 

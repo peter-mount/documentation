@@ -11,22 +11,11 @@ func ul(n *html.Node, ctx context.Context) error {
 		return WriteStringLn(ctx, `\toc`)
 	}
 
-	return list("itemize", n, ctx)
+	return environment("itemize", n, ctx)
 }
 
 func ol(n *html.Node, ctx context.Context) error {
-	return list("enumerate", n, ctx)
-}
-
-func list(t string, n *html.Node, ctx context.Context) error {
-	err := Writef(ctx, "\n\\begingroup{}\\begin{%s}", t)
-	if err == nil {
-		err = handleChildren(n, ctx)
-	}
-	if err == nil {
-		err = Writef(ctx, "\n\\end{%s}\\endgroup{}\n", t)
-	}
-	return err
+	return environment("enumerate", n, ctx)
 }
 
 func li(n *html.Node, ctx context.Context) error {
