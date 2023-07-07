@@ -16,8 +16,8 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{longtable}
-\lang      {english}
-`)
+
+\lang      {english}`)
 
 	// Look for bookMeta "object"
 	meta := parser.FindById(n, "bookMeta")
@@ -27,16 +27,22 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 				key := n.Data
 				value := parser.GetText(n)
 				switch key {
+
+				// These append "*" and wrap with () but do not escape
 				case "cover":
 					key = key + "*"
-					// don't escape the text
 					value = "{" + value + "}"
 
+				// Don't escape the text or change key
 				case "dedicate", "edition", "license":
-					// Don't escape the text or change key
 
+				// Wrap with {} but do not escape and do not change key
+				case "isbn":
+					value = "{" + value + "}"
+
+				// Default wrap {} and escape the value
 				default:
-					value = "{" + escapeText(value) + "}"
+					value = "{" + EscapeText(value) + "}"
 				}
 				return Writef(ctx, "\\%s %s\n", key, value)
 			}
@@ -44,9 +50,13 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 		}, meta, ctx)
 	}
 
-	return WriteStringLn(ctx, `\begin{document}`)
+	return WriteStringLn(ctx, `
+\begin{document}
+`)
 }
 
 func endDocument(n *html.Node, ctx context.Context) error {
-	return WriteStringLn(ctx, `\end{document}`)
+	return WriteStringLn(ctx, `
+\end{document}
+`)
 }

@@ -17,8 +17,20 @@ func headingStart(n *html.Node, ctx context.Context) error {
 	case hType == "h1" && parser.HasClass(n, "title"):
 		err = WriteString(ctx, `\h*`)
 
+	case hType == "h1":
+		err = WriteString(ctx, `\h`)
+
 	case hType == "h2":
 		err = WriteString(ctx, `\hh`)
+
+	case hType == "h3":
+		err = WriteString(ctx, `\hhh`)
+
+	case hType == "h4":
+		err = WriteString(ctx, `\hhh`)
+
+	case hType == "h5":
+		err = WriteString(ctx, `\hhh`)
 
 		// Default numbered heading
 	default:

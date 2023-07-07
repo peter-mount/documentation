@@ -22,8 +22,12 @@ func New() parser.Handler {
 		// anchor is ignored, just parse it's content
 		Handle("a", handleChildren).
 		Handle("br", lineBreak).
+		Handle("code", handleChildren).
 		Handle("div", div).
-		Handle("p", paragraph).
+		Handle("dd", handleChildren).
+		Handle("dl", handleChildren).
+		Handle("dt", handleChildren).
+		Handle("em", handleChildren).
 		Handle("figure", parser.Of(
 			figureStart,
 			parser.New().
@@ -39,21 +43,28 @@ func New() parser.Handler {
 		Handle("h3", heading).
 		Handle("h4", heading).
 		Handle("h5", heading).
+		Handle("li", handleChildren).
+		Handle("p", paragraph).
+		Handle("pre", handleChildren).
 		Handle("table", parser.Of(
 			tableStart,
 			parser.New().
 				Handle("thead", tableHead).
 				Handle("tbody", handleChildren).
-				Handle("tr", tr).
-				// FIXME Text & Default need to be within tr only
-				// but until I figure a way to handle "&" separators with Scanner this will have to do
-				Text(text).
-				Default(content.Handler()).
+				// tr is a wrapper around a scanner
+				// This is to ignore anything inside table not inside
+				// a th or td
+				Handle("tr", tr(content.Handler())).
 				Handler().
 				HandleChildren,
 			tableEnd1,
 			parser.Of(tableCaption).Type("caption").HandleChildren,
 			tableEnd2)).
+		Handle("small", handleChildren).
+		Handle("span", handleChildren).
+		Handle("strong", handleChildren).
+		Handle("sup", handleChildren).
+		Handle("ul", ul).
 		// These elements are ignored
 		Handle("bookMeta", nil)
 

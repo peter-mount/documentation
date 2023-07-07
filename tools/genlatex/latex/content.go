@@ -2,6 +2,7 @@ package latex
 
 import (
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 	"strings"
 )
@@ -13,13 +14,9 @@ func div(n *html.Node, ctx context.Context) error {
 func text(n *html.Node, ctx context.Context) error {
 	s := strings.TrimSpace(n.Data)
 	if s != "" {
-		return WriteString(ctx, escapeText(s))
+		return WriteString(ctx, EscapeText(s))
 	}
 	return nil
-}
-
-func escapeText(s string) string {
-	return strings.ReplaceAll(s, "&", "\\&")
 }
 
 func paragraph(n *html.Node, ctx context.Context) error {
@@ -36,4 +33,12 @@ func lineBreak(_ *html.Node, ctx context.Context) error {
 		return WriteStringLn(ctx, `\\`)
 	}
 	return WriteStringLn(ctx, ` \linebreak`)
+}
+
+func ul(n *html.Node, ctx context.Context) error {
+	if parser.HasClass(n, "print-page-link") {
+		return WriteStringLn(ctx, `\toc`)
+	}
+
+	return handleChildren(n, ctx)
 }

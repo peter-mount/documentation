@@ -45,6 +45,7 @@ func (s *Scanner) Handle(n *html.Node, ctx context.Context) error {
 		if !HasClasses(n, "d-print-none") {
 			h, exists := s.handlers[n.Data]
 			if !exists {
+				//fmt.Printf("default %q %v\n", n.Data, exists)
 				h = s.defaultHandler
 			}
 			return h.Do(n, ctx)
