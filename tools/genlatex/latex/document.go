@@ -16,6 +16,7 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{longtable}
+\usepackage{listings}
 
 \lang      {english}`)
 
@@ -51,6 +52,14 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 	}
 
 	return WriteStringLn(ctx, `
+
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	xleftmargin=\parindent,
+	frame=L,
+	breaklines=true,
+}
+
 \begin{document}
 `)
 }

@@ -12,7 +12,7 @@ weight: 90
 <p>
     This is taken verbatim from the original documentation:
 </p>
-{{< highlight basic "linenos=inline" >}}
+    <div class="sourceCode">
 REM Network functions
 REM (C)2010 SPROW
 :
@@ -62,11 +62,6 @@ A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
 IFwordblk?3<>0 THEN=-1
 =wordblk!4
 :
-{{< / highlight >}}
-</div>
-
-<div style="page-break-inside: avoid">
-{{< highlight basic "linenos=inline,linenostart=50" >}}
 DEFFNaccept(handle%,addr%,addrlenblk%)Network programmer's API
 wordblk?0=16:REM Parameters in
 wordblk?1=8:REM Parameters out
@@ -135,5 +130,5 @@ wordblk?3=0:REM No error on entry
 wordblk!4=handle%
 A%=192:X%=wordblk:Y%=wordblk DIV256:CALL&FFF1
 ENDPROC
-{{< / highlight >}}
+    </div>
 </div>

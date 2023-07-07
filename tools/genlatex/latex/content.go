@@ -8,11 +8,16 @@ import (
 )
 
 func div(n *html.Node, ctx context.Context) error {
-	if parser.HasClass(n, "lead") {
+	switch {
+	case parser.HasClass(n, "lead"):
 		return environment("huge", n, ctx)
-	}
 
-	return handleChildren(n, ctx)
+	case parser.HasClass(n, "sourceCode"):
+		return sourceCode(n, ctx)
+
+	default:
+		return handleChildren(n, ctx)
+	}
 }
 
 func text(n *html.Node, ctx context.Context) error {
