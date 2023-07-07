@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/peter-mount/documentation/tools/genlatex/latex"
-	"github.com/peter-mount/documentation/tools/genlatex/parser"
+	"github.com/peter-mount/go-build/version"
 	"github.com/peter-mount/go-kernel/v2/log"
 	"golang.org/x/net/html"
 	"net/http"
@@ -14,18 +14,29 @@ import (
 )
 
 type LaTeX struct {
-	Output  *string        `kernel:"flag,o,output filename"`
-	handler parser.Handler // Handler to call
+	Output     *string `kernel:"flag,o,output filename"`
+	Stylesheet *string `kernel:"flag,style,Stylesheet"`
 }
 
 func (s *LaTeX) Start() error {
+	log.Println(version.Version)
+
 	args := flag.Args()
 	if len(args) != 1 || *s.Output == "" {
 		return fmt.Errorf("syntax: %s -o output url", os.Args[0])
 	}
 	page := args[0]
 
-	s.handler = latex.New()
+	var stylesheet string
+	if *s.Stylesheet != "" {
+		stylesheet = *s.Stylesheet
+	} else {
+		stylesheet = filepath.Join(filepath.Dir(os.Args[0]), "lib/latex/stylesheet.yml")
+	}
+	converter, err := latex.New(stylesheet)
+	if err != nil {
+		return err
+	}
 
 	log.Printf("Parsing %s\n", page)
 
@@ -58,5 +69,5 @@ func (s *LaTeX) Start() error {
 		return err
 	}
 
-	return s.handler.Do(doc, ctx)
+	return converter.Handler().Do(doc, ctx)
 }

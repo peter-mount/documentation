@@ -1,0 +1,6 @@
+# stylesheet for the BBC Book
+
+table:
+  "memoryMap":
+    columnSpec:
+      - fontSize: "\footnotesize"

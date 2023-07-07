@@ -5,22 +5,22 @@ import (
 	"golang.org/x/net/html"
 )
 
-func figureStart(n *html.Node, ctx context.Context) error {
+func (c *Converter) figureStart(n *html.Node, ctx context.Context) error {
 	// FIXME these are temp holders until I find out how LaTeX handles figures
 	return nil //WriteString(ctx, "\\begin{figureOuter}\n\\begin{figureInner}\n")
 }
 
-func figureEnd1(n *html.Node, ctx context.Context) error {
+func (c *Converter) figureEnd1(n *html.Node, ctx context.Context) error {
 	// FIXME these are temp holders until I find out how LaTeX handles figures
 	return nil //WriteString(ctx, "\\end{figureInner}\n")
 }
 
-func figureEnd2(n *html.Node, ctx context.Context) error {
+func (c *Converter) figureEnd2(n *html.Node, ctx context.Context) error {
 	// FIXME these are temp holders until I find out how LaTeX handles figures
 	return nil //WriteString(ctx, "\\end{figureOuter}\n")
 }
 
-func figureCaptionStart(n *html.Node, ctx context.Context) error {
+func (c *Converter) figureCaptionStart(n *html.Node, ctx context.Context) error {
 	// FIXME these are temp holders until I find out how LaTeX handles figures
 	//err := WriteString(ctx, "\\figure-caption{\n")
 	//if err == nil {
@@ -29,7 +29,7 @@ func figureCaptionStart(n *html.Node, ctx context.Context) error {
 	return err
 }
 
-func figureCaptionEnd(n *html.Node, ctx context.Context) error {
+func (c *Converter) figureCaptionEnd(n *html.Node, ctx context.Context) error {
 	// FIXME these are temp holders until I find out how LaTeX handles figures
 	return nil //WriteString(ctx, "}\n")
 }

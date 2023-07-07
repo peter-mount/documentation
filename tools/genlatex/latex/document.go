@@ -6,11 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func head(n *html.Node, ctx context.Context) error {
-	return nil
-}
-
-func beginDocument(n *html.Node, ctx context.Context) error {
+func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 	_ = WriteStringLn(ctx,
 		`\documentclass{textbook}
 \usepackage{multirow}
@@ -64,7 +60,7 @@ func beginDocument(n *html.Node, ctx context.Context) error {
 `)
 }
 
-func endDocument(n *html.Node, ctx context.Context) error {
+func (c *Converter) endDocument(n *html.Node, ctx context.Context) error {
 	return WriteStringLn(ctx, `
 \end{document}
 `)

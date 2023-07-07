@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func sourceCode(n *html.Node, ctx context.Context) error {
+func (c *Converter) sourceCode(n *html.Node, ctx context.Context) error {
 	err := WriteString(ctx, "\n\\begin{lstlisting}\n")
 
 	if err == nil {

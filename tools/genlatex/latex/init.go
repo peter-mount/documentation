@@ -4,74 +4,92 @@ import (
 	"context"
 	"fmt"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
+	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
+	"gopkg.in/yaml.v2"
 	"io"
+	"os"
 	"unsafe"
 )
 
-func New() parser.Handler {
+type Converter struct {
+	handler    parser.Handler
+	stylesheet *stylesheet.Stylesheet
+}
+
+func (c *Converter) Handler() parser.Handler {
+	return c.handler
+}
+
+func (c *Converter) Stylesheet() *stylesheet.Stylesheet {
+	return c.stylesheet
+}
+
+func New(config string) (*Converter, error) {
+	c := &Converter{}
+
+	// load stylesheet
+	b, err := os.ReadFile(config)
+	if err != nil {
+		return nil, err
+	}
+	c.stylesheet = &stylesheet.Stylesheet{}
+	err = yaml.Unmarshal(b, &c.stylesheet)
+	if err != nil {
+		return nil, err
+	}
+
+	// Ensure it's fully configured
+	c.stylesheet.Init()
 
 	// Handle normal html content
 	content := parser.New()
 
 	// This handler is used by multiple elements
-	heading := parser.Of(headingStart, content.Handler().HandleChildren, headingEnd)
+	heading := parser.Of(c.headingStart, content.Handler().HandleChildren, c.headingEnd)
 
 	content.
-		Text(text).
+		Text(c.text).
 		// anchor is ignored, just parse it's content
 		Handle("a", handleChildren).
-		Handle("br", lineBreak).
+		Handle("br", c.lineBreak).
 		Handle("code", handleChildren).
-		Handle("div", div).
+		Handle("div", c.div).
 		Handle("dd", handleChildren).
 		Handle("dl", handleChildren).
 		Handle("dt", handleChildren).
 		Handle("em", handleChildren).
 		Handle("figure", parser.Of(
-			figureStart,
+			c.figureStart,
 			parser.New().
-				Handle("figcaption", parser.Of(figureCaptionStart, content.Handler().HandleChildren, figureCaptionEnd)).
+				Handle("figcaption", parser.Of(c.figureCaptionStart, content.Handler().HandleChildren, c.figureCaptionEnd)).
 				Default(content.Handler()).
 				Handler().
 				HandleChildren,
-			figureEnd1,
+			c.figureEnd1,
 			//contentHandler.Type("figcaption").HandleChildren,
-			figureEnd2)).
+			c.figureEnd2)).
 		Handle("h1", heading).
 		Handle("h2", heading).
 		Handle("h3", heading).
 		Handle("h4", heading).
 		Handle("h5", heading).
-		Handle("li", li).
-		Handle("ol", ol).
-		Handle("p", paragraph).
+		Handle("li", c.li).
+		Handle("ol", c.ol).
+		Handle("p", c.paragraph).
 		Handle("pre", handleChildren).
-		Handle("table", parser.Of(
-			tableStart,
-			parser.New().
-				Handle("thead", tableHead).
-				Handle("tbody", handleChildren).
-				// tr is a wrapper around a scanner
-				// This is to ignore anything inside table not inside
-				// a th or td
-				Handle("tr", tr(content.Handler())).
-				Handler().
-				HandleChildren,
-			tableEnd1,
-			parser.Of(tableCaption).Type("caption").HandleChildren,
-			tableEnd2)).
+		Handle("table", c.table).
 		Handle("small", handleChildren).
 		Handle("span", handleChildren).
 		Handle("strong", handleChildren).
 		Handle("sup", handleChildren).
-		Handle("ul", ul).
+		Handle("ul", c.ul).
 		// These elements are ignored
 		Handle("bookMeta", nil)
 
 	// Final Handler
-	return parser.Of(
-		beginDocument,
+	c.handler = parser.Of(
+		c.beginDocument,
 		parser.New().
 			Handle("div",
 				content.Handler().
@@ -80,7 +98,9 @@ func New() parser.Handler {
 			Default(handleChildren).
 			Handler().
 			FindByClass("td-main", "td-main-new"),
-		endDocument)
+		c.endDocument)
+
+	return c, nil
 }
 
 func WithContext(w io.Writer, ctx context.Context) context.Context {

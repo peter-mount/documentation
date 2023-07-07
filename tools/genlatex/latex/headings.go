@@ -7,7 +7,7 @@ import (
 )
 
 // heading handles headings h1 h2 etc. based on class type
-func headingStart(n *html.Node, ctx context.Context) error {
+func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 	var err error
 
 	hType := n.Data
@@ -44,6 +44,6 @@ func headingStart(n *html.Node, ctx context.Context) error {
 	return err
 }
 
-func headingEnd(n *html.Node, ctx context.Context) error {
+func (c *Converter) headingEnd(n *html.Node, ctx context.Context) error {
 	return Write(ctx, '}', '\n')
 }
