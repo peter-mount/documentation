@@ -1,6 +1,31 @@
 # stylesheet for the BBC Book
 
+documentClass: textbook
+usePackage:
+  - multirow
+  - array
+  - longtable
+  - listings
+
+styles:
+  # offset used to align an address to the right.
+  # e.g. in BBC MOS Page 0, addresses are left aligned except for 0070 which is right as it's nested within the
+  # previous address 0000
+  offset:
+    align: "r"
+
 table:
   "memoryMap":
+    verticalAlign: "t"
     columnSpec:
-      - fontSize: "\footnotesize"
+        # First column is removed as it's the page navigation on the site
+      - hidden: true
+        # Address
+      - fontSize: \footnotesize
+        colType: p
+        colWidth: 0.1
+        colUnit: \linewidth
+      - fontSize: \footnotesize
+        colType: p
+        colWidth: 0.15
+        colUnit: \linewidth

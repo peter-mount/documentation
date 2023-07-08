@@ -54,8 +54,10 @@ func (t *Table) init() {
 
 	// Ensure we have default's for each field
 	for _, cs := range t.ColumnSpec {
-		cs.FontSize = DefString(cs.FontSize, "\\normalsize")
-		cs.ColType = DefString(cs.ColType, "c")
+		if !cs.Hidden {
+			cs.FontSize = DefString(cs.FontSize, "\\normalsize")
+			cs.ColType = DefString(cs.ColType, "c")
+		}
 	}
 }
 
@@ -63,20 +65,30 @@ func (t *Table) init() {
 // If n < 0 then 0 is used.
 // If n is beyond the number of specified columns then the last one is returned.
 func (t *Table) GetColumn(n int) *ColumnSpec {
-	l := len(t.ColumnSpec) - 1
 	if n < 0 {
 		n = 0
 	}
+
+	l := len(t.ColumnSpec) - 1
 	if n > l {
 		n = l
 	}
+
 	return t.ColumnSpec[n]
 }
 
 func (t *Table) GetColumnWidth(col, span int) float64 {
 	width := 0.0
-	for i := 0; i < span; i++ {
-		width = width + t.GetColumn(col+i).ColWidth
+	for ; span > 0; col++ {
+		cd := t.GetColumn(col)
+		if !cd.Hidden {
+			// If column is not hidden then include it and move to next one
+			width = width + cd.ColWidth
+			span--
+		} else if col >= (len(t.ColumnSpec) - 1) {
+			// If last column is hidden then stop here
+			return width
+		}
 	}
 	return width
 }

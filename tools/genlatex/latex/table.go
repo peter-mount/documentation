@@ -126,20 +126,34 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 	// The table definition
 	table := stylesheet.TableFromContext(ctx)
 
-	cell := 1
+	cell := 0
+	firstCell := true
 	err := parser.HandleChildren(func(n *html.Node, ctx context.Context) (err error) {
 		if n.Type == html.ElementNode {
 			switch n.Data {
 			case "th", "td":
-				if cell > 1 {
+
+				cellDef := table.GetColumn(cell)
+				if cellDef.Hidden {
+					cell++
+					return
+				}
+
+				// Handle cell separator
+				if firstCell {
+					firstCell = false
+				} else {
 					err = WriteString(ctx, " & ")
 				}
 
 				style := c.Stylesheet().GetStyle(n)
-				align := style.Align
+
 				colSpan, _ := parser.GetAttrInt(n, "colspan", 1)
+				width := stylesheet.FloatToString(
+					table.GetColumnWidth(cell, colSpan),
+					table.GetColumn(cell).ColUnit)
 				rowSpan, _ := parser.GetAttrInt(n, "rowspan", 1)
-				multiCol, multiRow := colSpan > 1 || align != "", rowSpan > 1
+				multiCol, multiRow := colSpan > 1, rowSpan > 1
 
 				// Look ahead, if a table exists then we need to wrap the cell to allow line break before it.
 				// nonTabularContent is used to set tabularCell so if table is first then it's not tabular
@@ -159,26 +173,20 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					return nil
 				}, n, ctx)
 
-				if multiRow || multiCol {
-					width := stylesheet.FloatToString(
-						table.GetColumnWidth(cell, colSpan),
-						table.GetColumn(cell).ColUnit)
-
-					if err == nil && multiCol {
-						err = Writef(ctx,
-							`\multicolumn{%d}{%s}{`,
-							colSpan,
-							// Without this we get Package array Error: Empty preamble: `l' used.
-							stylesheet.DefString(width, "l"),
-						)
-					}
-					if err == nil && multiRow {
-						err = Writef(ctx, `\multirow{%d}{%s}{`,
-							rowSpan,
-							// width or "*" for contents natural width
-							stylesheet.DefString(width, "*"),
-						)
-					}
+				if err == nil && multiCol {
+					err = Writef(ctx,
+						`\multicolumn{%d}{%s}{`,
+						colSpan,
+						// Without this we get Package array Error: Empty preamble: `l' used.
+						stylesheet.DefString(width, "l"),
+					)
+				}
+				if err == nil && multiRow {
+					err = Writef(ctx, `\multirow{%d}{%s}{`,
+						rowSpan,
+						// width or "*" for contents natural width
+						stylesheet.DefString(width, "*"),
+					)
 				}
 
 				if err == nil && tabularCell {
@@ -207,6 +215,7 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				}
 
 				// Increment cell number
+				// FIXME this might not account for intermediate hidden columns
 				cell = cell + colSpan
 			default:
 			}
