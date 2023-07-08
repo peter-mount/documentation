@@ -113,11 +113,19 @@ func Writer(ctx context.Context) io.Writer {
 }
 
 func Write(ctx context.Context, b ...byte) error {
+	if len(b) == 0 {
+		return nil
+	}
+
 	_, err := Writer(ctx).Write(b)
 	return err
 }
 
 func WriteString(ctx context.Context, s string) error {
+	if s == "" {
+		return nil
+	}
+
 	b := unsafe.Slice(unsafe.StringData(s), len(s))
 	return Write(ctx, b...)
 }

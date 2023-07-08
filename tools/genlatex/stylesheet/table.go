@@ -9,8 +9,10 @@ import (
 )
 
 type Table struct {
-	ColumnSpec []*ColumnSpec `yaml:"columnSpec"`
-	Style      `yaml:",inline"`
+	ColumnSpec   []*ColumnSpec `yaml:"columnSpec"`   // ColumnSpec's for each column
+	HeaderPrefix string        `yaml:"HeaderPrefix"` // Content before a thead
+	HeaderSuffix string        `yaml:"headerSuffix"` // Content after a thead
+	Style        `yaml:",inline"`
 }
 
 type ColumnSpec struct {
@@ -54,7 +56,10 @@ func (t *Table) init() {
 
 	// Ensure we have default's for each field
 	for _, cs := range t.ColumnSpec {
-		if !cs.Hidden {
+		if cs.Hidden {
+			// custom type to hide a column
+			cs.ColType = "H"
+		} else {
 			cs.FontSize = DefString(cs.FontSize, "\\normalsize")
 			cs.ColType = DefString(cs.ColType, "c")
 		}
@@ -125,7 +130,13 @@ func (t *Table) GetColDefs(cols int) string {
 	}
 	var defs []string
 	for col := 0; col < cols; col++ {
-		defs = append(defs, t.GetColumnDef(col, 1))
+		var def string
+		if t.GetColumn(col).Hidden {
+			def = "H"
+		} else {
+			def = t.GetColumnDef(col, 1)
+		}
+		defs = append(defs, def)
 	}
 	return strings.TrimSpace(strings.Join(defs, " "))
 }

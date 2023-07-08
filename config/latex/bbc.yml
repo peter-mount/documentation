@@ -17,15 +17,16 @@ styles:
 table:
   "memoryMap":
     verticalAlign: "t"
+    headerSuffix: \hline
     columnSpec:
         # First column is removed as it's the page navigation on the site
       - hidden: true
         # Address
       - fontSize: \footnotesize
         colType: p
-        colWidth: 0.1
+        colWidth: 0.08
         colUnit: \linewidth
       - fontSize: \footnotesize
         colType: p
-        colWidth: 0.15
+        colWidth: 0.3
         colUnit: \linewidth

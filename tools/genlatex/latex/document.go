@@ -17,7 +17,11 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 		_ = Writef(ctx, "\\usepackage{%s}\n", p)
 	}
 
-	_ = WriteStringLn(ctx, "\n\\lang      {english}")
+	_ = WriteString(ctx, `
+\usepackage{array}
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\lang      {english}
+`)
 
 	// Look for bookMeta "object"
 	meta := parser.FindById(n, "bookMeta")
