@@ -6,7 +6,6 @@ usePackage:
   - array
   - longtable
   - listings
-  - array
 
 preamble:
   # Define new column type H which hides the entire column

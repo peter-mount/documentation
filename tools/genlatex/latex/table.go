@@ -5,7 +5,6 @@ import (
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
-	"math"
 	"strings"
 )
 
@@ -38,85 +37,6 @@ func getTableColCount(n *html.Node, ctx context.Context) int {
 	}
 	_ = f.HandleChildren(n, ctx)
 	return cols
-}
-
-// tableState used to keep track of which columns are in use
-type tableState struct {
-	// Number of columns
-	cols int
-	// Column inactive state - set if a column is in a rowspan
-	// 0 means it's active and expects a value.
-	// Hidden columns get this set to MaxInt
-	colRowSpan []int
-	// Column definition cache
-	colDefs []*stylesheet.ColumnSpec
-}
-
-func newTableState(cols int, table *stylesheet.Table, ctx context.Context) context.Context {
-	ts := &tableState{
-		cols:    cols,
-		colDefs: table.ColumnSpec,
-	}
-	ts.reset()
-	return context.WithValue(ctx, tableStateKey, ts)
-}
-
-func tableStateFromContext(ctx context.Context) *tableState {
-	v := ctx.Value(tableStateKey)
-	if v != nil {
-		return v.(*tableState)
-	}
-	return nil
-}
-
-// reset() called at end of thead and tbody
-func (ts *tableState) reset() {
-	// init colRowSpan so hidden columns are ignored, all others are initially 0
-	for col := 0; col < ts.cols; col++ {
-		rowSpan := 0
-		if ts.getCol(col).Hidden {
-			rowSpan = math.MaxInt
-		}
-		ts.colRowSpan = append(ts.colRowSpan, rowSpan)
-	}
-}
-
-func (ts *tableState) getCol(col int) *stylesheet.ColumnSpec {
-	l := len(ts.colDefs)
-	if col >= l {
-		col = l - 1
-	}
-	return ts.colDefs[col]
-}
-
-// adjustCellNumber increments cell if it's on a column that's part of a row span
-func (ts *tableState) adjustCellNumber(col int) int {
-	for ; col < ts.cols; col++ {
-		if ts.colRowSpan[col] > 0 {
-			ts.colRowSpan[col]--
-		}
-	}
-	return col
-}
-
-// incrementCellNumber adds colSpan to cell accounting for any hidden Columns
-func (ts *tableState) incrementCellNumber(col, colSpan int) int {
-	for ; colSpan > 0; colSpan-- {
-		// If hidden then skip this column
-		//for col < ts.cols && ts.getCol(col).Hidden {
-		//	col++
-		//}
-
-		// Increment col
-		col++
-	}
-	return col
-}
-
-// setRowSpan marks a column has a row span
-func (ts *tableState) setRowSpan(col, rowSpan int) {
-	// -1 because we are already in this column
-	ts.colRowSpan[col] = rowSpan - 1
 }
 
 func (c *Converter) table(n *html.Node, ctx context.Context) error {
@@ -233,6 +153,14 @@ func insideTableHeader(ctx context.Context) bool {
 	return ctx.Value(insideTableHeaderKey) != nil
 }
 
+func cellDelimiter(firstCell bool, ctx context.Context) (bool, error) {
+	if firstCell {
+		return false, nil
+	} else {
+		return false, WriteString(ctx, " & ")
+	}
+}
+
 func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 
 	// The table definition
@@ -252,13 +180,12 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				multiCol, multiRow := colSpan > 1, rowSpan > 1
 
 				// Adjust cell to skip columns within a row span
-
-				// Handle cell separator
-				if firstCell {
-					firstCell = false
-				} else {
-					err = WriteString(ctx, " & ")
+				for (cell+1) < ts.cols && ts.decRowSpan(cell) {
+					firstCell, err = cellDelimiter(firstCell, ctx)
+					cell++
 				}
+				// Handle cell separator
+				firstCell, err = cellDelimiter(firstCell, ctx)
 
 				// Look ahead, if a table exists then we need to wrap the cell to allow line break before it.
 				// nonTabularContent is used to set tabularCell so if table is first then it's not tabular
@@ -287,6 +214,8 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					)
 				}
 				if err == nil && multiRow {
+					ts.setRowSpan(cell, rowSpan)
+
 					err = Writef(ctx, `\multirow{%d}{%s}{`,
 						rowSpan,
 						// width or "*" for contents natural width

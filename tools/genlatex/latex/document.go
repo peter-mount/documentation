@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
+	"strings"
 	"time"
 )
 
@@ -14,9 +15,7 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 
 	_ = Writef(ctx, "\\documentclass{%s}\n", s.DocumentClass)
 
-	for _, p := range s.UsePackage {
-		_ = Writef(ctx, "\\usepackage{%s}\n", p)
-	}
+	_ = Writef(ctx, "\\usepackage{%s}\n", strings.TrimSpace(strings.Join(s.UsePackage, ", ")))
 
 	for _, p := range s.Preamble {
 		_ = WriteStringLn(ctx, p)
