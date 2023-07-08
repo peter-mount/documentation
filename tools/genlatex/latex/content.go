@@ -3,6 +3,7 @@ package latex
 import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
+	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
 	"strings"
 )
@@ -38,7 +39,7 @@ func (c *Converter) paragraph(n *html.Node, ctx context.Context) error {
 
 // Appends \\ to the end of the current line to indicate a line break
 func (c *Converter) lineBreak(_ *html.Node, ctx context.Context) error {
-	if insideTable(ctx) {
+	if stylesheet.TableFromContext(ctx) != nil {
 		return WriteStringLn(ctx, `\\`)
 	}
 	return WriteStringLn(ctx, `\hfill \break`)

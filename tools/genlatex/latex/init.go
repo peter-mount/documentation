@@ -62,7 +62,8 @@ func New(config string) (*Converter, error) {
 		Handle("figure", parser.Of(
 			c.figureStart,
 			parser.New().
-				Handle("figcaption", parser.Of(c.figureCaptionStart, content.Handler().HandleChildren, c.figureCaptionEnd)).
+				Handle("figcaption", nil).
+				//Handle("figcaption", parser.Of(c.figureCaptionStart, content.Handler().HandleChildren, c.figureCaptionEnd)).
 				Default(content.Handler()).
 				Handler().
 				HandleChildren,

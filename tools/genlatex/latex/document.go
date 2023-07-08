@@ -4,17 +4,20 @@ import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
+	"time"
 )
 
 func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
-	_ = WriteStringLn(ctx,
-		`\documentclass{textbook}
-\usepackage{multirow}
-\usepackage{array}
-\usepackage{longtable}
-\usepackage{listings}
+	s := c.Stylesheet()
 
-\lang      {english}`)
+	_ = Writef(ctx, "%% Generated %s\n", time.Now().Format(time.RFC3339))
+
+	_ = Writef(ctx, "\\documentclass{%s}\n", s.DocumentClass)
+	for _, p := range s.UsePackage {
+		_ = Writef(ctx, "\\usepackage{%s}\n", p)
+	}
+
+	_ = WriteStringLn(ctx, "\n\\lang      {english}")
 
 	// Look for bookMeta "object"
 	meta := parser.FindById(n, "bookMeta")

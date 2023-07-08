@@ -7,12 +7,12 @@ import (
 )
 
 func group(f parser.Handler, n *html.Node, ctx context.Context) error {
-	err := WriteString(ctx, "\n\\begingroup{}\n")
+	err := WriteString(ctx, "\n\\begingroup\n")
 	if err == nil {
 		err = f(n, ctx)
 	}
 	if err == nil {
-		err = WriteString(ctx, "\n\\endgroup{}\n")
+		err = WriteString(ctx, "\n\\endgroup\n")
 	}
 	return err
 }

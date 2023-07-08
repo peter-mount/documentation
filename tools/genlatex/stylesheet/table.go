@@ -4,17 +4,22 @@ import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
+	"strconv"
 	"strings"
 )
 
 type Table struct {
-	ColumnSpec    []*ColumnSpec `yaml:"columnSpec"`
-	VerticalAlign string        `yaml:"verticalAlign"` // Vertical Align, default c, can be t or b
+	ColumnSpec []*ColumnSpec `yaml:"columnSpec"`
+	Style      `yaml:",inline"`
 }
 
 type ColumnSpec struct {
-	FontSize   string `yaml:"fontSize"`   // LaTeX font size, e.g. \normalsize \footnotesize
-	Definition string `yaml:"definition"` // LaTeX definition for column, e.g. l, r, c, p{width}
+	Hidden   bool    `yaml:"hidden"`             // If true the entire column is removed from output
+	FontSize string  `yaml:"fontSize"`           // LaTeX font size, e.g. \normalsize \footnotesize
+	ColType  string  `yaml:"colType"`            // LaTeX definition for column, e.g. l, r, c, p{width}
+	ColWidth float64 `yaml:"colWidth,omitempty"` // Width of column
+	ColUnit  string  `yaml:"colUnit,omitempty"`  // Unit for width
+	Style    `yaml:",inline"`
 }
 
 // GetTable gets the Table for this specific node.
@@ -45,12 +50,12 @@ func (t *Table) init() {
 		t.ColumnSpec = append(t.ColumnSpec, &ColumnSpec{})
 	}
 
-	t.VerticalAlign = defString(t.VerticalAlign, "c")
+	t.VerticalAlign = DefString(t.VerticalAlign, "c")
 
 	// Ensure we have default's for each field
 	for _, cs := range t.ColumnSpec {
-		cs.FontSize = defString(cs.FontSize, "\\normalsize")
-		cs.Definition = defString(cs.Definition, "c")
+		cs.FontSize = DefString(cs.FontSize, "\\normalsize")
+		cs.ColType = DefString(cs.ColType, "c")
 	}
 }
 
@@ -68,13 +73,47 @@ func (t *Table) GetColumn(n int) *ColumnSpec {
 	return t.ColumnSpec[n]
 }
 
+func (t *Table) GetColumnWidth(col, span int) float64 {
+	width := 0.0
+	for i := 0; i < span; i++ {
+		width = width + t.GetColumn(col+i).ColWidth
+	}
+	return width
+}
+
+func (t *Table) GetColumnDef(col, span int) string {
+	cDef := t.GetColumn(col)
+	unit := cDef.ColUnit
+	def := cDef.ColType
+
+	width := FloatToString(t.GetColumnWidth(col, span), unit)
+	if width != "" {
+		return def + "{" + width + "}"
+	}
+
+	return def
+}
+
+// FloatToString converts float64 to string but removes unnecessary trailing 0's
+func FloatToString(f float64, u string) string {
+	if f <= 0.0001 {
+		return ""
+	}
+
+	s := strconv.FormatFloat(f, 'f', -1, 64)
+	if !strings.HasSuffix(s, ".0") {
+		s = strings.TrimRight(s, "0")
+	}
+	return s + u
+}
+
 func (t *Table) GetColDefs(cols int) string {
 	if cols < 1 {
 		cols = 1
 	}
 	var defs []string
 	for col := 0; col < cols; col++ {
-		defs = append(defs, t.GetColumn(col).Definition)
+		defs = append(defs, t.GetColumnDef(col, 1))
 	}
 	return strings.TrimSpace(strings.Join(defs, " "))
 }

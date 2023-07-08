@@ -3,6 +3,7 @@ package latex
 import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
+	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
 	"strings"
 )
@@ -40,7 +41,7 @@ func getTableColCount(n *html.Node, ctx context.Context) int {
 
 func (c *Converter) table(n *html.Node, ctx context.Context) error {
 	// If we are nested then add a \\ prefix
-	if insideTable(ctx) {
+	if stylesheet.TableFromContext(ctx) != nil {
 		_ = Write(ctx, ' ', '\\', '\\', '\n')
 	}
 
@@ -52,13 +53,14 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 
 	// if nested then tabular otherwise the outer table is a longtable
 	tType := "longtable"
-	if insideTable(ctx) {
+	if stylesheet.TableFromContext(ctx) != nil {
 		tType = "tabular"
 	}
 
 	// how many columns are we?
 	cols := getTableColCount(n, ctx)
 
+	style := c.Stylesheet().GetStyle(n)
 	table := c.Stylesheet().GetTable(n)
 	ctx = table.WithContext(ctx)
 
@@ -70,7 +72,10 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 	err := Writef(ctx,
 		"\\begin{%s}[%s]{@{} %s @{}}\n",
 		tType,
-		table.VerticalAlign,
+		stylesheet.DefStrings(
+			style.VerticalAlign,
+			table.VerticalAlign,
+		),
 		table.GetColDefs(cols),
 	)
 
@@ -79,8 +84,9 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 		f = func(n *html.Node, ctx context.Context) error {
 			if n.Type == html.ElementNode {
 				switch n.Data {
+				// thead is the same as tbody just we set a flag for handling multi-page tables
 				case "thead":
-					return c.tableHead(n, ctx)
+					return parser.HandleChildren(f, n, context.WithValue(ctx, insideTableHeaderKey, true))
 
 				case "tbody":
 					return parser.HandleChildren(f, n, ctx)
@@ -106,21 +112,10 @@ func (c *Converter) tableCaption(n *html.Node, ctx context.Context) error {
 	return handleChildren(n, ctx)
 }
 
-func (c *Converter) tableHead(n *html.Node, ctx context.Context) error {
-	// Mark we are inside thead, so we can handle headers spanning pages
-	return handleChildren(n, context.WithValue(ctx, insideTableHeaderKey, true))
-}
-
 const (
-	// Marker to indicate table it is nested
-	insideTableKey       = "inside.table"
+	// Marker to indicate we are inside the header
 	insideTableHeaderKey = "inside.table.header"
 )
-
-// returns true if ctx is currently inside a table.
-func insideTable(ctx context.Context) bool {
-	return ctx.Value(insideTableKey) != nil
-}
 
 func insideTableHeader(ctx context.Context) bool {
 	return ctx.Value(insideTableHeaderKey) != nil
@@ -128,8 +123,8 @@ func insideTableHeader(ctx context.Context) bool {
 
 func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 
-	// Marker to indicate table it is nested
-	ctx = context.WithValue(ctx, insideTableKey, true)
+	// The table definition
+	table := stylesheet.TableFromContext(ctx)
 
 	cell := 1
 	err := parser.HandleChildren(func(n *html.Node, ctx context.Context) (err error) {
@@ -140,7 +135,8 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					err = WriteString(ctx, " & ")
 				}
 
-				align := getAlign(n)
+				style := c.Stylesheet().GetStyle(n)
+				align := style.Align
 				colSpan, _ := parser.GetAttrInt(n, "colspan", 1)
 				rowSpan, _ := parser.GetAttrInt(n, "rowspan", 1)
 				multiCol, multiRow := colSpan > 1 || align != "", rowSpan > 1
@@ -163,19 +159,37 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					return nil
 				}, n, ctx)
 
-				if err == nil && multiCol {
-					// Without this we get Package array Error: Empty preamble: `l' used.
-					if align == "" {
-						align = "l"
+				if multiRow || multiCol {
+					width := stylesheet.FloatToString(
+						table.GetColumnWidth(cell, colSpan),
+						table.GetColumn(cell).ColUnit)
+
+					if err == nil && multiCol {
+						err = Writef(ctx,
+							`\multicolumn{%d}{%s}{`,
+							colSpan,
+							// Without this we get Package array Error: Empty preamble: `l' used.
+							stylesheet.DefString(width, "l"),
+						)
 					}
-					err = Writef(ctx, `\multicolumn{%d}{%s}{`, colSpan, align)
+					if err == nil && multiRow {
+						err = Writef(ctx, `\multirow{%d}{%s}{`,
+							rowSpan,
+							// width or "*" for contents natural width
+							stylesheet.DefString(width, "*"),
+						)
+					}
 				}
-				if err == nil && multiRow {
-					err = Writef(ctx, `\multirow{%d}{*}{`, rowSpan)
-				}
+
 				if err == nil && tabularCell {
 					// Wrap cell content within a tabular block, so we can then use \\ as a line break
-					err = WriteString(ctx, `\begin{tabular}[t]{@{}l@{}}`)
+					err = Writef(ctx,
+						`\begin{tabular}[%s]{@{}l@{}}`,
+						stylesheet.DefStrings(
+							style.VerticalAlign,
+							table.GetColumn(cell).VerticalAlign,
+							table.VerticalAlign),
+					)
 				}
 
 				if err == nil {
@@ -192,7 +206,8 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					err = Write(ctx, '}')
 				}
 
-				cell++
+				// Increment cell number
+				cell = cell + colSpan
 			default:
 			}
 		}
@@ -214,14 +229,4 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 	}
 
 	return err
-}
-
-func getAlign(n *html.Node) string {
-	for _, class := range parser.GetClass(n) {
-		switch class {
-		case "offset":
-			return "r"
-		}
-	}
-	return ""
 }
