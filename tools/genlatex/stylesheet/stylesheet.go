@@ -3,11 +3,12 @@ package stylesheet
 // Stylesheet is read from yaml and defines how certain html elements
 // are handled based on the declared classes
 type Stylesheet struct {
-	DocumentClass string            `yaml:"documentClass"`
-	UsePackage    []string          `yaml:"usePackage"`
-	Styles        map[string]Style  `yaml:"styles"` // Generic styles
-	Table         map[string]*Table `yaml:"table"`  // Table definitions
-	defaultTable  *Table            `yaml:"-"`      // default table
+	DocumentClass string            `yaml:"documentClass"` // Main document class
+	UsePackage    []string          `yaml:"usePackage"`    // packages to use
+	Preamble      []string          `yaml:"preamble"`      // Preamble just after UsePackage
+	Styles        map[string]Style  `yaml:"styles"`        // Generic styles
+	Table         map[string]*Table `yaml:"table"`         // Table definitions
+	defaultTable  *Table            `yaml:"-"`             // default table
 }
 
 // Init initialises the Stylesheet with defaults

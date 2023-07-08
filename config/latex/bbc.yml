@@ -6,6 +6,21 @@ usePackage:
   - array
   - longtable
   - listings
+  - array
+
+preamble:
+  # Define new column type H which hides the entire column
+  # see https://texblog.org/2014/10/24/removinghiding-a-column-in-a-latex-table/
+  - \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+  # Document language
+  - \lang {english}
+  # List styling
+  - \lstset{
+      basicstyle=\footnotesize\ttfamily,
+      xleftmargin=\parindent,
+      frame=L,
+      breaklines=true,
+    }
 
 styles:
   # offset used to align an address to the right.
@@ -20,7 +35,10 @@ table:
     headerSuffix: \hline
     columnSpec:
         # First column is removed as it's the page navigation on the site
-      - hidden: true
+      - #hidden: true
+        colType: p
+        colWidth: 0.08
+        colUnit: \linewidth
         # Address
       - fontSize: \footnotesize
         colType: p
@@ -28,5 +46,5 @@ table:
         colUnit: \linewidth
       - fontSize: \footnotesize
         colType: p
-        colWidth: 0.3
+        colWidth: 0.2666
         colUnit: \linewidth

@@ -13,15 +13,14 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 	_ = Writef(ctx, "%% Generated %s\n", time.Now().Format(time.RFC3339))
 
 	_ = Writef(ctx, "\\documentclass{%s}\n", s.DocumentClass)
+
 	for _, p := range s.UsePackage {
 		_ = Writef(ctx, "\\usepackage{%s}\n", p)
 	}
 
-	_ = WriteString(ctx, `
-\usepackage{array}
-\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
-\lang      {english}
-`)
+	for _, p := range s.Preamble {
+		_ = WriteStringLn(ctx, p)
+	}
 
 	// Look for bookMeta "object"
 	meta := parser.FindById(n, "bookMeta")
@@ -54,21 +53,9 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 		}, meta, ctx)
 	}
 
-	return WriteStringLn(ctx, `
-
-\lstset{
-	basicstyle=\footnotesize\ttfamily,
-	xleftmargin=\parindent,
-	frame=L,
-	breaklines=true,
-}
-
-\begin{document}
-`)
+	return WriteStringLn(ctx, `\begin{document}`)
 }
 
 func (c *Converter) endDocument(n *html.Node, ctx context.Context) error {
-	return WriteStringLn(ctx, `
-\end{document}
-`)
+	return WriteStringLn(ctx, "\n\\end{document}")
 }
