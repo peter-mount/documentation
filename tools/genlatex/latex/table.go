@@ -179,9 +179,12 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				rowSpan, _ := parser.GetAttrInt(n, "rowspan", 1)
 				multiCol, multiRow := colSpan > 1, rowSpan > 1
 
-				// Adjust cell to skip columns within a row span
+				// Adjust cell to skip columns within a row span.
+				// If the column is not hidden then ensure we have a delimiter
 				for (cell+1) < ts.cols && ts.decRowSpan(cell) {
-					firstCell, err = cellDelimiter(firstCell, ctx)
+					if !ts.getCol(cell).Hidden {
+						firstCell, err = cellDelimiter(firstCell, ctx)
+					}
 					cell++
 				}
 				// Handle cell separator

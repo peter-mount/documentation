@@ -34,10 +34,7 @@ table:
     headerSuffix: \hline
     columnSpec:
         # First column is removed as it's the page navigation on the site
-      - #hidden: true
-        colType: p
-        colWidth: 0.08
-        colUnit: \linewidth
+      - hidden: true
         # Address
       - fontSize: \footnotesize
         colType: p
@@ -45,5 +42,5 @@ table:
         colUnit: \linewidth
       - fontSize: \footnotesize
         colType: p
-        colWidth: 0.2666
+        colWidth: 0.3
         colUnit: \linewidth
