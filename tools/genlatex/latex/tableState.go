@@ -3,7 +3,6 @@ package latex
 import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
-	"math"
 )
 
 // tableState used to keep track of which columns are in use
@@ -35,15 +34,10 @@ func tableStateFromContext(ctx context.Context) *tableState {
 	return nil
 }
 
-// reset() called at end of thead and tbody
 func (ts *tableState) reset() {
-	// init colRowSpan so hidden columns are ignored, all others are initially 0
+	ts.fixRowSpan(ts.cols - 1)
 	for col := 0; col < ts.cols; col++ {
-		rowSpan := 0
-		if ts.getCol(col).Hidden {
-			rowSpan = math.MaxInt
-		}
-		ts.colRowSpan = append(ts.colRowSpan, rowSpan)
+		ts.colRowSpan[col] = 0
 	}
 }
 
@@ -68,11 +62,6 @@ func (ts *tableState) adjustCellNumber(col int) int {
 // incrementCellNumber adds colSpan to cell accounting for any hidden Columns
 func (ts *tableState) incrementCellNumber(col, colSpan int) int {
 	for ; colSpan > 0; colSpan-- {
-		// If hidden then skip this column
-		//for col < ts.cols && ts.getCol(col).Hidden {
-		//	col++
-		//}
-
 		// Increment col
 		col++
 	}
@@ -94,11 +83,31 @@ func (ts *tableState) setRowSpan(col, rowSpan int) {
 	ts.colRowSpan[col] = rowSpan - 1
 }
 
+// decRowSpan will, if a cell is part of a rowspan, decrement the columns rowSpan counter by 1.
+// The return bool will be true if the column is still in this state after the decrement.
 func (ts *tableState) decRowSpan(col int) bool {
 	ts.fixRowSpan(col)
-	r := ts.colRowSpan[col] > 0
-	if r {
+	if ts.colRowSpan[col] > 0 {
 		ts.colRowSpan[col] = ts.colRowSpan[col] - 1
+		return true
 	}
-	return r
+	return false
+}
+
+// addEmptyCells ensures we have the correct & delimiters for the current cell,
+// be it missing in the html table row (e.g. rowspan) or the html table row is shorter than the table
+//
+// firstCell is true for the first cell in the LaTeX table row, false for all others.
+func (ts *tableState) addEmptyCells(cell int, firstCell bool, ctx context.Context) (int, bool, error) {
+	var err error
+	// Adjust cell to skip columns within a row span.
+	// If the column is not hidden then ensure we have a delimiter
+	for (cell+1) < ts.cols && ts.decRowSpan(cell) {
+		firstCell, err = cellDelimiter(firstCell, ctx)
+		if err != nil {
+			return 0, false, err
+		}
+		cell++
+	}
+	return cell, firstCell, nil
 }

@@ -2,6 +2,7 @@ package latex
 
 import (
 	"context"
+	"fmt"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
@@ -179,15 +180,8 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				rowSpan, _ := parser.GetAttrInt(n, "rowspan", 1)
 				multiCol, multiRow := colSpan > 1, rowSpan > 1
 
-				// Adjust cell to skip columns within a row span.
-				// If the column is not hidden then ensure we have a delimiter
-				for (cell+1) < ts.cols && ts.decRowSpan(cell) {
-					if !ts.getCol(cell).Hidden {
-						firstCell, err = cellDelimiter(firstCell, ctx)
-					}
-					cell++
-				}
-				// Handle cell separator
+				// Handle cell separators
+				cell, firstCell, err = ts.addEmptyCells(cell, firstCell, ctx)
 				firstCell, err = cellDelimiter(firstCell, ctx)
 
 				// Look ahead, if a table exists then we need to wrap the cell to allow line break before it.
@@ -208,51 +202,81 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					return nil
 				}, n, ctx)
 
-				if err == nil && multiCol {
-					err = Writef(ctx,
-						`\multicolumn{%d}{%s}{`,
-						colSpan,
-						// Without this we get Package array Error: Empty preamble: `l' used.
-						stylesheet.DefString(table.GetColumnDef(cell, colSpan), "l"),
-					)
-				}
-				if err == nil && multiRow {
-					ts.setRowSpan(cell, rowSpan)
+				// content to add before and after a cell's content has been completed
+				cellPrefix, cellSuffix := "", ""
 
-					err = Writef(ctx, `\multirow{%d}{%s}{`,
-						rowSpan,
-						// width or "*" for contents natural width
-						stylesheet.DefString(
-							stylesheet.FloatToString(
-								table.GetColumnWidth(cell, colSpan),
-								table.GetColumn(cell).ColUnit),
-							"*"),
-					)
+				// Handle the 4 kinds of cell, single (do nothing), multiCol, multiRow and both multi Row & Col
+				if err == nil {
+					switch {
+					case multiCol && multiRow:
+						ts.setRowSpan(cell, rowSpan)
+
+						cellPrefix = fmt.Sprintf(
+							`\multicolumn{%d}{%s}{\multirow{%d}{%s}{`,
+							colSpan,
+							// For now these are all top-left
+							"tl",
+							rowSpan,
+							// width or "*" for contents natural width
+							stylesheet.DefString(
+								stylesheet.FloatToString(
+									table.GetColumnWidth(cell, colSpan),
+									table.GetColumn(cell).ColUnit),
+								"*"),
+						)
+
+						cellSuffix = "}}"
+
+					case multiCol:
+						cellPrefix = fmt.Sprintf(
+							`\multicolumn{%d}{%s}{`,
+							colSpan,
+							// Without this we get Package array Error: Empty preamble: `l' used.
+							stylesheet.DefString(table.GetColumnDef(cell, colSpan), "l"),
+						)
+
+						cellSuffix = "}"
+
+					case multiRow:
+						ts.setRowSpan(cell, rowSpan)
+
+						cellPrefix = fmt.Sprintf(
+							`\multirow{%d}{%s}{`,
+							rowSpan,
+							// width or "*" for contents natural width
+							stylesheet.DefString(
+								stylesheet.FloatToString(
+									table.GetColumnWidth(cell, colSpan),
+									table.GetColumn(cell).ColUnit),
+								"*"),
+						)
+
+						cellSuffix = "}"
+					}
 				}
 
 				if err == nil && tabularCell {
 					// Wrap cell content within a tabular block, so we can then use \\ as a line break
-					err = Writef(ctx,
+					cellPrefix = cellPrefix + fmt.Sprintf(
 						`\begin{tabular}[%s]{@{}l@{}}`,
 						stylesheet.DefStrings(
 							style.VerticalAlign,
 							table.GetColumn(cell).VerticalAlign,
 							table.VerticalAlign),
 					)
+					cellSuffix = `\end{tabular}` + cellSuffix
+				}
+
+				if err == nil && cellPrefix != "" {
+					err = WriteString(ctx, cellPrefix)
 				}
 
 				if err == nil {
 					err = handleChildren(n, ctx)
 				}
 
-				if err == nil && tabularCell {
-					err = WriteString(ctx, `\end{tabular}`)
-				}
-				if err == nil && multiRow {
-					err = Write(ctx, '}')
-				}
-				if err == nil && multiCol {
-					err = Write(ctx, '}')
+				if err == nil && cellSuffix != "" {
+					err = WriteString(ctx, cellSuffix)
 				}
 
 				// Increment cell number
@@ -262,6 +286,12 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 		}
 		return
 	}, n, ctx)
+
+	if err == nil {
+		// Ensure we have enough cell entries in this row
+		// for when the html table is short of cells
+		_, _, err = ts.addEmptyCells(cell, firstCell, ctx)
+	}
 
 	// End table row marker
 	if err == nil {
