@@ -128,15 +128,14 @@ func (t *Table) GetColDefs(cols int) string {
 	if cols < 1 {
 		cols = 1
 	}
+
 	var defs []string
-	for col := 0; col < cols; col++ {
-		var def string
-		if t.GetColumn(col).Hidden {
-			def = "H"
-		} else {
-			def = t.GetColumnDef(col, 1)
+	// Note we want cols entries in defs, not col here because
+	// we need to skip hidden columns
+	for col := 0; len(defs) < cols; col++ {
+		if !t.GetColumn(col).Hidden {
+			defs = append(defs, t.GetColumnDef(col, 1))
 		}
-		defs = append(defs, def)
 	}
 	return strings.TrimSpace(strings.Join(defs, " "))
 }

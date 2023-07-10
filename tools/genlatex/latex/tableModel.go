@@ -12,6 +12,23 @@ type Table struct {
 	Rows  []*TableRow       // Table rows
 }
 
+func (t *Table) Finalise() {
+	// Delete hidden columns - must be in reverse order
+	// otherwise you can end up deleting the wrong columns
+	for col := len(t.Table.ColumnSpec) - 1; col >= 0; col-- {
+		cs := t.Table.ColumnSpec[col]
+		if cs.Hidden {
+			t.DeleteColumn(col)
+		}
+	}
+}
+
+func (t *Table) DeleteColumn(col int) {
+	for _, r := range t.Rows {
+		r.DeleteColumn(col)
+	}
+}
+
 func (t *Table) String() string {
 	// Work out max number of columns
 	numCols := 0
@@ -59,6 +76,18 @@ func (t *Table) SetCell(r, c int, cell *TableCell) {
 
 type TableRow struct {
 	Cells []*TableCell
+}
+
+func (t *TableRow) DeleteColumn(col int) {
+	switch {
+	case col == 0:
+		t.Cells = t.Cells[1:]
+	case col == len(t.Cells)-1:
+		t.Cells = t.Cells[:col]
+	default:
+		a := append([]*TableCell{}, t.Cells[:col]...)
+		t.Cells = append(a, t.Cells[col+1:]...)
+	}
 }
 
 func (t *TableRow) Append(s []string) []string {

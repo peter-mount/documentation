@@ -71,26 +71,6 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 	// Initialise table state
 	ctx = newTableState(tType, cols, table, ctx)
 
-	// Note: @{} either side of the col specifiers tells LaTeX not to add inter-column spacing
-	// before and after the first & last columns respectively. Without that it would be
-	// wasted space on the page.
-	//
-	// [t] means vertical align cells to the top. Defaults to c otherwise, other option is b
-	//err := Writef(ctx,
-	//	"\\begin{%s}{%s}\n",
-	//	//"\\begin{%s}[%s]{%s}\n",
-	//	tType,
-	//	// label, captions etc
-	//	//"",
-	//	fmt.Sprintf("@{} %s @{}", table.GetColDefs(cols)),
-	//	//strings.Join([]string{
-	//	//	"width=\\linewidth",
-	//	//	fmt.Sprintf("colSpec={@{} %s @{}}", table.GetColDefs(cols)),
-	//	//	"rowhead=1",
-	//	//}, ", "),
-	//)
-
-	//if err == nil {
 	var f parser.Handler
 	f = func(n *html.Node, ctx context.Context) error {
 		if n.Type == html.ElementNode {
@@ -109,11 +89,12 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 		return f.HandleChildren(n, ctx)
 	}
 	err := f.HandleChildren(n, ctx)
-	//}
 
 	if err == nil {
-		//err = Writef(ctx, "\\end{%s}\n", tType)
-		err = WriteString(ctx, tableStateFromContext(ctx).table.String())
+		ts := tableStateFromContext(ctx)
+		table := ts.table
+		table.Finalise()
+		err = WriteString(ctx, table.String())
 	}
 
 	return err
@@ -215,23 +196,31 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				}
 				ts.table.SetCell(row, col, tableCell)
 
+				var buf bytes.Buffer
+				cellCtx := WithContext(&buf, ctx)
+
 				if err == nil && tabularCell {
 					// Wrap col content within a tabular block, so we can then use \\ as a line break
-					/*cellPrefix = cellPrefix + fmt.Sprintf(
-						`\begin{tabular}[%s]{@{}l@{}}`,
+					err = Writef(cellCtx,
+						`\begin{tabular}[%s]{@{}%s@{}}`,
+						"t",
 						stylesheet.DefStrings(
-							style.VerticalAlign,
-							table.GetColumn(col).VerticalAlign,
-							table.VerticalAlign),
+							ts.table.Table.GetColumnDef(col, colSpan),
+							"l",
+						),
 					)
-					cellSuffix = `\end{tabular}` + cellSuffix*/
 				}
 
 				if err == nil {
-					var buf bytes.Buffer
-					err = handleChildren(n, WithContext(&buf, ctx))
-					tableCell.Text = buf.String()
+					err = handleChildren(n, cellCtx)
 				}
+
+				if err == nil && tabularCell {
+					// Wrap col content within a tabular block, so we can then use \\ as a line break
+					err = WriteString(cellCtx, `\end{tabular}`)
+				}
+
+				tableCell.Text = buf.String()
 
 				// Increment col number
 				for i := 0; i < colSpan; i++ {

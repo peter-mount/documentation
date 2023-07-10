@@ -34,7 +34,7 @@ table:
     headerSuffix: \hline
     columnSpec:
         # First column is removed as it's the page navigation on the site
-      - #hidden: true
+      - hidden: true
         colType: p
         colWidth: 1.25
         colUnit: cm
