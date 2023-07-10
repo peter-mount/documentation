@@ -208,7 +208,7 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				if err == nil && tabularCell {
 					// Wrap col content within a tabular block, so we can then use \\ as a line break
 					err = Writef(cellCtx,
-						`\begin{tabular}[%s]{@{}%s@{}}`,
+						`\begin{tblr}[%s]{@{}%s@{}}`,
 						"t",
 						stylesheet.DefStrings(
 							ts.table.Table.GetColumnDef(col, colSpan),
@@ -223,7 +223,7 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 
 				if err == nil && tabularCell {
 					// Wrap col content within a tabular block, so we can then use \\ as a line break
-					err = WriteString(cellCtx, `\end{tabular}`)
+					err = WriteString(cellCtx, `\end{tblr}`)
 				}
 
 				tableCell.Text = buf.String()

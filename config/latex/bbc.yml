@@ -29,6 +29,7 @@ styles:
     align: "r"
 
 table:
+  # The main memory map of the BBC Micro family
   "memoryMap":
     fontSize: \footnotesize
     verticalAlign: "t"
@@ -53,4 +54,51 @@ table:
       - colRight: "|"
         colType: p
         colWidth: 7
+        colUnit: cm
+  # Memory map of an individual page - 3 column version
+  "memory":
+    fontSize: \footnotesize
+    verticalAlign: "t"
+    columnSpec:
+        # Address
+      - colType: p
+        colWidth: 1.25
+        colUnit: cm
+        # Len
+      - colType: p
+        colWidth: 0.75
+        colUnit: cm
+        # Description
+      - colType: p
+        colWidth: 14
+        colUnit: cm
+  # Memory map of an individual page - 3 column version
+  "memory4col":
+    fontSize: \footnotesize
+    verticalAlign: "t"
+    columnSpec:
+      # Address
+      - colType: p
+        colWidth: 1.25
+        colUnit: cm
+        # Len
+      - colType: p
+        colWidth: 0.75
+        colUnit: cm
+        # Name
+      - colType: p
+        colWidth: 2
+        colUnit: cm
+        # Description
+      - colType: p
+        colWidth: 12
+        colUnit: cm
+  # sub table inside memory description column
+  "memoryInner":
+    columnSpec:
+      - colType: p
+        colWidth: 1
+        colUnit: cm
+      - colType: p
+        colWidth: 10
         colUnit: cm

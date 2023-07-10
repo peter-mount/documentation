@@ -13,7 +13,7 @@
 {{- with .format}}{{$hasFormat =1}}{{end -}}
 {{- with .default}}{{$hasDefaultVal =1}}{{end -}}
 {{- end -}}
-<table class="memory">
+<table class="{{if $hasName}}memory4col {{end}}memory">
     <thead>
     <tr>
         {{- if $hasAddr -}}
