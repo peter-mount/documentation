@@ -68,6 +68,12 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 	table := c.Stylesheet().GetTable(n)
 	ctx = table.WithContext(ctx)
 
+	if table.FontSize != "" {
+		if err := WriteString(ctx, table.FontSize); err != nil {
+			return err
+		}
+	}
+
 	// Initialise table state
 	ctx = newTableState(tType, cols, table, ctx)
 

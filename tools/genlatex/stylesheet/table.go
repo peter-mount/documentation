@@ -17,10 +17,11 @@ type Table struct {
 
 type ColumnSpec struct {
 	Hidden   bool    `yaml:"hidden"`             // If true the entire column is removed from output
-	FontSize string  `yaml:"fontSize"`           // LaTeX font size, e.g. \normalsize \footnotesize
 	ColType  string  `yaml:"colType"`            // LaTeX definition for column, e.g. l, r, c, p{width}
 	ColWidth float64 `yaml:"colWidth,omitempty"` // Width of column
 	ColUnit  string  `yaml:"colUnit,omitempty"`  // Unit for width
+	ColLeft  string  `yaml:"colLeft,omitempty"`  // If set prefix to coldef, e.g. "|"
+	ColRight string  `yaml:"colRight,omitempty"` // If set prefix to coldef, e.g. "|"
 	Style    `yaml:",inline"`
 }
 
@@ -134,7 +135,8 @@ func (t *Table) GetColDefs(cols int) string {
 	// we need to skip hidden columns
 	for col := 0; len(defs) < cols; col++ {
 		if !t.GetColumn(col).Hidden {
-			defs = append(defs, t.GetColumnDef(col, 1))
+			cd := t.GetColumn(col)
+			defs = append(defs, cd.ColLeft+t.GetColumnDef(col, 1)+cd.ColRight)
 		}
 	}
 	return strings.TrimSpace(strings.Join(defs, " "))

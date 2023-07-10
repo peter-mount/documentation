@@ -6,6 +6,7 @@ import (
 )
 
 type Style struct {
+	FontSize      string `yaml:"fontSize"`      // LaTeX font size, e.g. \normalsize \footnotesize
 	Align         string `yaml:"align"`         // Alignment of cell default c
 	VerticalAlign string `yaml:"verticalAlign"` // Vertical Align, can be t, c or b
 }

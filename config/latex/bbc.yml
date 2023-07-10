@@ -30,28 +30,27 @@ styles:
 
 table:
   "memoryMap":
+    fontSize: \footnotesize
     verticalAlign: "t"
     headerSuffix: \hline
     columnSpec:
         # First column is removed as it's the page navigation on the site
       - hidden: true
-        colType: p
-        colWidth: 1.25
-        colUnit: cm
         # Address
-      - fontSize: \footnotesize
+      - colLeft: "|"
+        colRight: "|"
         colType: p
         colWidth: 1.25
         colUnit: cm
-      - fontSize: \footnotesize
+      - colRight: "|"
         colType: p
         colWidth: 4
         colUnit: cm
-      - fontSize: \footnotesize
+      - colRight: "|"
         colType: p
         colWidth: 4
         colUnit: cm
-      - fontSize: \footnotesize
+      - colRight: "|"
         colType: p
         colWidth: 7
         colUnit: cm
