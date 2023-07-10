@@ -2,9 +2,9 @@
 
 documentClass: textbook
 usePackage:
-  - multirow
-  - array
-  - longtable
+  - array,multirow
+  - tabularray
+  #- longtable
   - listings
 
 preamble:
@@ -34,13 +34,24 @@ table:
     headerSuffix: \hline
     columnSpec:
         # First column is removed as it's the page navigation on the site
-      - hidden: true
+      - #hidden: true
+        colType: p
+        colWidth: 1.25
+        colUnit: cm
         # Address
       - fontSize: \footnotesize
         colType: p
-        colWidth: 0.08
-        colUnit: \linewidth
+        colWidth: 1.25
+        colUnit: cm
       - fontSize: \footnotesize
         colType: p
-        colWidth: 0.3
-        colUnit: \linewidth
+        colWidth: 4
+        colUnit: cm
+      - fontSize: \footnotesize
+        colType: p
+        colWidth: 4
+        colUnit: cm
+      - fontSize: \footnotesize
+        colType: p
+        colWidth: 7
+        colUnit: cm

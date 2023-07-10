@@ -1,8 +1,8 @@
 package latex
 
 import (
+	"bytes"
 	"context"
-	"fmt"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
@@ -53,9 +53,9 @@ func (c *Converter) table(n *html.Node, ctx context.Context) error {
 func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 
 	// if nested then tabular otherwise the outer table is a longtable
-	tType := "longtable"
+	tType := "longtblr"
 	if stylesheet.TableFromContext(ctx) != nil {
-		tType = "tabular"
+		tType = "tblr"
 
 		// Reset header flag incase we are also in the thead section of the parent
 		ctx = context.WithValue(ctx, insideTableHeaderKey, nil)
@@ -64,51 +64,56 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 	// how many columns are we?
 	cols := getTableColCount(n, ctx)
 
-	style := c.Stylesheet().GetStyle(n)
+	//style := c.Stylesheet().GetStyle(n)
 	table := c.Stylesheet().GetTable(n)
 	ctx = table.WithContext(ctx)
 
 	// Initialise table state
-	ctx = newTableState(cols, table, ctx)
+	ctx = newTableState(tType, cols, table, ctx)
 
 	// Note: @{} either side of the col specifiers tells LaTeX not to add inter-column spacing
 	// before and after the first & last columns respectively. Without that it would be
 	// wasted space on the page.
 	//
 	// [t] means vertical align cells to the top. Defaults to c otherwise, other option is b
-	err := Writef(ctx,
-		"\\begin{%s}[%s]{@{} %s @{}}\n",
-		tType,
-		stylesheet.DefStrings(
-			style.VerticalAlign,
-			table.VerticalAlign,
-		),
-		table.GetColDefs(cols),
-	)
+	//err := Writef(ctx,
+	//	"\\begin{%s}{%s}\n",
+	//	//"\\begin{%s}[%s]{%s}\n",
+	//	tType,
+	//	// label, captions etc
+	//	//"",
+	//	fmt.Sprintf("@{} %s @{}", table.GetColDefs(cols)),
+	//	//strings.Join([]string{
+	//	//	"width=\\linewidth",
+	//	//	fmt.Sprintf("colSpec={@{} %s @{}}", table.GetColDefs(cols)),
+	//	//	"rowhead=1",
+	//	//}, ", "),
+	//)
 
-	if err == nil {
-		var f parser.Handler
-		f = func(n *html.Node, ctx context.Context) error {
-			if n.Type == html.ElementNode {
-				switch n.Data {
-				case "thead":
-					return c.tableHeader(f, n, ctx)
+	//if err == nil {
+	var f parser.Handler
+	f = func(n *html.Node, ctx context.Context) error {
+		if n.Type == html.ElementNode {
+			switch n.Data {
+			case "thead":
+				return c.tableHeader(f, n, ctx)
 
-				case "tbody":
-					return parser.HandleChildren(f, n, ctx)
+			case "tbody":
+				return parser.HandleChildren(f, n, ctx)
 
-				case "tr":
-					return c.tr(n, ctx)
+			case "tr":
+				return c.tr(n, ctx)
 
-				}
 			}
-			return f.HandleChildren(n, ctx)
 		}
-		err = f.HandleChildren(n, ctx)
+		return f.HandleChildren(n, ctx)
 	}
+	err := f.HandleChildren(n, ctx)
+	//}
 
 	if err == nil {
-		err = Writef(ctx, "\\end{%s}\n", tType)
+		//err = Writef(ctx, "\\end{%s}\n", tType)
+		err = WriteString(ctx, tableStateFromContext(ctx).table.String())
 	}
 
 	return err
@@ -118,23 +123,23 @@ func (c *Converter) tableHeader(f parser.Handler, n *html.Node, ctx context.Cont
 	// Mark we are in a header
 	ctx = context.WithValue(ctx, insideTableHeaderKey, true)
 
-	table := stylesheet.TableFromContext(ctx)
+	//table := stylesheet.TableFromContext(ctx)
 	var err error
 
-	if table.HeaderPrefix != "" {
-		err = WriteStringLn(ctx, table.HeaderPrefix)
-	}
+	//if table.HeaderPrefix != "" {
+	//	err = WriteStringLn(ctx, table.HeaderPrefix)
+	//}
 
 	if err == nil {
 		err = parser.HandleChildren(f, n, ctx)
 	}
 
-	if err == nil && table.HeaderSuffix != "" {
-		err = WriteStringLn(ctx, table.HeaderSuffix)
-	}
+	//if err == nil && table.HeaderSuffix != "" {
+	//	err = WriteStringLn(ctx, table.HeaderSuffix)
+	//}
 
 	if err == nil {
-		err = WriteStringLn(ctx, `\endhead`)
+		//err = WriteStringLn(ctx, `\endhead`)
 	}
 
 	return err
@@ -165,26 +170,28 @@ func cellDelimiter(firstCell bool, ctx context.Context) (bool, error) {
 func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 
 	// The table definition
-	table := stylesheet.TableFromContext(ctx)
+	//table := stylesheet.TableFromContext(ctx)
 	ts := tableStateFromContext(ctx)
 
-	cell := 0
-	firstCell := true
+	// append to the last row in the model
+	row := ts.table.RowCount()
+	col := 0
+
 	err := parser.HandleChildren(func(n *html.Node, ctx context.Context) (err error) {
 		if n.Type == html.ElementNode {
 			switch n.Data {
 			case "th", "td":
 
-				style := c.Stylesheet().GetStyle(n)
+				// Skip columns that are row-spanning
+				for ts.decRowSpan(col) {
+					col++
+				}
+
+				//style := c.Stylesheet().GetStyle(n)
 				colSpan, _ := parser.GetAttrInt(n, "colspan", 1)
 				rowSpan, _ := parser.GetAttrInt(n, "rowspan", 1)
-				multiCol, multiRow := colSpan > 1, rowSpan > 1
 
-				// Handle cell separators
-				cell, firstCell, err = ts.addEmptyCells(cell, firstCell, ctx)
-				firstCell, err = cellDelimiter(firstCell, ctx)
-
-				// Look ahead, if a table exists then we need to wrap the cell to allow line break before it.
+				// Look ahead, if a table exists then we need to wrap the col to allow line break before it.
 				// nonTabularContent is used to set tabularCell so if table is first then it's not tabular
 				// unless there's multiple tables.
 				//
@@ -202,101 +209,43 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 					return nil
 				}, n, ctx)
 
-				// content to add before and after a cell's content has been completed
-				cellPrefix, cellSuffix := "", ""
-
-				// Handle the 4 kinds of cell, single (do nothing), multiCol, multiRow and both multi Row & Col
-				if err == nil {
-					switch {
-					case multiCol && multiRow:
-						ts.setRowSpan(cell, rowSpan)
-
-						cellPrefix = fmt.Sprintf(
-							`\multicolumn{%d}{%s}{\multirow{%d}{%s}{`,
-							colSpan,
-							// For now these are all top-left
-							"tl",
-							rowSpan,
-							// width or "*" for contents natural width
-							stylesheet.DefString(
-								stylesheet.FloatToString(
-									table.GetColumnWidth(cell, colSpan),
-									table.GetColumn(cell).ColUnit),
-								"*"),
-						)
-
-						cellSuffix = "}}"
-
-					case multiCol:
-						cellPrefix = fmt.Sprintf(
-							`\multicolumn{%d}{%s}{`,
-							colSpan,
-							// Without this we get Package array Error: Empty preamble: `l' used.
-							stylesheet.DefString(table.GetColumnDef(cell, colSpan), "l"),
-						)
-
-						cellSuffix = "}"
-
-					case multiRow:
-						ts.setRowSpan(cell, rowSpan)
-
-						cellPrefix = fmt.Sprintf(
-							`\multirow{%d}{%s}{`,
-							rowSpan,
-							// width or "*" for contents natural width
-							stylesheet.DefString(
-								stylesheet.FloatToString(
-									table.GetColumnWidth(cell, colSpan),
-									table.GetColumn(cell).ColUnit),
-								"*"),
-						)
-
-						cellSuffix = "}"
-					}
+				tableCell := &TableCell{
+					ColSpan: colSpan,
+					RowSpan: rowSpan,
 				}
+				ts.table.SetCell(row, col, tableCell)
 
 				if err == nil && tabularCell {
-					// Wrap cell content within a tabular block, so we can then use \\ as a line break
-					cellPrefix = cellPrefix + fmt.Sprintf(
+					// Wrap col content within a tabular block, so we can then use \\ as a line break
+					/*cellPrefix = cellPrefix + fmt.Sprintf(
 						`\begin{tabular}[%s]{@{}l@{}}`,
 						stylesheet.DefStrings(
 							style.VerticalAlign,
-							table.GetColumn(cell).VerticalAlign,
+							table.GetColumn(col).VerticalAlign,
 							table.VerticalAlign),
 					)
-					cellSuffix = `\end{tabular}` + cellSuffix
-				}
-
-				if err == nil && cellPrefix != "" {
-					err = WriteString(ctx, cellPrefix)
+					cellSuffix = `\end{tabular}` + cellSuffix*/
 				}
 
 				if err == nil {
-					err = handleChildren(n, ctx)
+					var buf bytes.Buffer
+					err = handleChildren(n, WithContext(&buf, ctx))
+					tableCell.Text = buf.String()
 				}
 
-				if err == nil && cellSuffix != "" {
-					err = WriteString(ctx, cellSuffix)
+				// Increment col number
+				for i := 0; i < colSpan; i++ {
+					ts.setRowSpan(col, rowSpan)
+					col++
 				}
-
-				// Increment cell number
-				cell = ts.incrementCellNumber(cell, colSpan)
 			default:
 			}
 		}
 		return
 	}, n, ctx)
 
-	if err == nil {
-		// Ensure we have enough cell entries in this row
-		// for when the html table is short of cells
-		_, _, err = ts.addEmptyCells(cell, firstCell, ctx)
-	}
-
-	// End table row marker
-	if err == nil {
-		err = WriteStringLn(ctx, ` \\`)
-	}
+	// Clean up the row
+	ts.finishRow(col)
 
 	return err
 }

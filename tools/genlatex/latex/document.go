@@ -15,7 +15,9 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 
 	_ = Writef(ctx, "\\documentclass{%s}\n", s.DocumentClass)
 
-	_ = Writef(ctx, "\\usepackage{%s}\n", strings.TrimSpace(strings.Join(s.UsePackage, ", ")))
+	for _, p := range s.UsePackage {
+		_ = Writef(ctx, "\\usepackage{%s}\n", strings.TrimSpace(p))
+	}
 
 	for _, p := range s.Preamble {
 		_ = WriteStringLn(ctx, p)
