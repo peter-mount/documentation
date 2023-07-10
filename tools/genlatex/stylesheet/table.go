@@ -118,7 +118,7 @@ func FloatToString(f float64, u string) string {
 	}
 
 	s := strconv.FormatFloat(f, 'f', -1, 64)
-	if !strings.HasSuffix(s, ".0") {
+	if strings.Contains(s, ".") && !strings.HasSuffix(s, ".0") {
 		s = strings.TrimRight(s, "0")
 	}
 	return s + u
