@@ -2,7 +2,9 @@ package parser
 
 import (
 	"context"
+	"fmt"
 	"golang.org/x/net/html"
+	"io"
 )
 
 type Scanner struct {
@@ -42,6 +44,11 @@ func (s *Scanner) Handle(n *html.Node, ctx context.Context) error {
 
 	case html.ElementNode:
 		// Do not handle non-printable elements
+		if HasClass(n, "book-index") {
+			if err := s.indexEntry(n, ctx); err != nil {
+				return nil
+			}
+		}
 		if !HasClasses(n, "d-print-none") {
 			h, exists := s.handlers[n.Data]
 			if !exists {
@@ -62,4 +69,14 @@ func (s *Scanner) Handle(n *html.Node, ctx context.Context) error {
 	}
 
 	return nil
+}
+
+func (s *Scanner) indexEntry(n *html.Node, ctx context.Context) error {
+	a := GetAttr(n, "data-book-index")
+	if a == "" {
+		return nil
+	}
+	w := ctx.Value("writer").(io.Writer)
+	_, err := w.Write([]byte(fmt.Sprintf(`\index{%s}`, a)))
+	return err
 }
