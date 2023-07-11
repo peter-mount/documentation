@@ -104,26 +104,27 @@ table:
         colUnit: cm
   # BBC Paged Rom Table
   "bbcPagedRomTable":
+    fontSize: \footnotesize
     columnSpec:
         # Rom number, first decimal second hex
       - colType: p
-        colWidth: 1
+        colWidth: 0.25
         colUnit: cm
       - colType: p
-        colWidth: 1
+        colWidth: 0.25
         colUnit: cm
       - colType: p
-        colWidth: 2.8
+        colWidth: 3
         colUnit: cm
       - colType: p
-        colWidth: 2.8
+        colWidth: 3
         colUnit: cm
       - colType: p
-        colWidth: 2.8
+        colWidth: 3
         colUnit: cm
       - colType: p
-        colWidth: 2.8
+        colWidth: 3
         colUnit: cm
       - colType: p
-        colWidth: 2.8
+        colWidth: 3
         colUnit: cm
