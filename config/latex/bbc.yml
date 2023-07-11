@@ -107,24 +107,12 @@ table:
     fontSize: \footnotesize
     columnSpec:
         # Rom number, first decimal second hex
-      - colType: p
+      - repeat: 2
+        colType: p
         colWidth: 0.25
         colUnit: cm
-      - colType: p
-        colWidth: 0.25
-        colUnit: cm
-      - colType: p
-        colWidth: 3
-        colUnit: cm
-      - colType: p
-        colWidth: 3
-        colUnit: cm
-      - colType: p
-        colWidth: 3
-        colUnit: cm
-      - colType: p
-        colWidth: 3
-        colUnit: cm
-      - colType: p
+        # 5 Columns for each major machine version
+      - repeat: 5
+        colType: p
         colWidth: 3
         colUnit: cm

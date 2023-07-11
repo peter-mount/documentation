@@ -16,6 +16,7 @@ type Table struct {
 }
 
 type ColumnSpec struct {
+	Repeat   int     `yaml:"repeat,omitempty"`   // If >1 then this entry will repeat
 	Hidden   bool    `yaml:"hidden"`             // If true the entire column is removed from output
 	ColType  string  `yaml:"colType"`            // LaTeX definition for column, e.g. l, r, c, p{width}
 	ColWidth float64 `yaml:"colWidth,omitempty"` // Width of column
@@ -54,6 +55,19 @@ func (t *Table) init() {
 	}
 
 	t.VerticalAlign = DefString(t.VerticalAlign, "c")
+
+	// Handle repeats simply by creating a new slice and adding them based
+	// on their repeat counter
+	var specs []*ColumnSpec
+	for _, cs := range t.ColumnSpec {
+		if cs.Repeat < 1 {
+			cs.Repeat = 1
+		}
+		for i := 0; i < cs.Repeat; i++ {
+			specs = append(specs, cs)
+		}
+	}
+	t.ColumnSpec = specs
 
 	// Ensure we have default's for each field
 	for _, cs := range t.ColumnSpec {

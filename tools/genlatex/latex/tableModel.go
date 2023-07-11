@@ -7,9 +7,10 @@ import (
 )
 
 type Table struct {
-	Type  string            // Type, e.g. "longtblr" or "tblr"
-	Table *stylesheet.Table // Stylesheet
-	Rows  []*TableRow       // Table rows
+	Type    string            // Type, e.g. "longtblr" or "tblr"
+	Table   *stylesheet.Table // Stylesheet
+	Rows    []*TableRow       // Table rows
+	Caption string            // Table caption, if any
 }
 
 func (t *Table) Finalise() {
