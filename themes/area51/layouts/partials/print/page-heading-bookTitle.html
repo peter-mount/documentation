@@ -1,6 +1,8 @@
 {{/* Use the title and description of the first page to begin the document */}}
 {{- if isset .Page.Params "book" -}}
 <bookMeta id="bookMeta">
+    {{with .Page.Params.book.titlehead }}<titlehead>{{ . }}</titlehead>{{ end }}
+    {{with .Page.Params.book.subject }}<subject>{{ . }}</subject>{{ end }}
     <title>
         {{- if isset .Page.Params.book "title" -}}
         {{ .Page.Params.book.title }}
@@ -10,16 +12,9 @@
     </title>
     {{with .Page.Params.book.subTitle }}<subtitle>{{ . }}</subtitle>{{ end }}
     {{ with .Page.Params.book.author }}<author>{{ . }}</author>{{ end }}
-    {{ with .Page.Params.book.subAuthor }}<subAuthor>{{ . }}</subAuthor>{{ end }}
-    {{/* if isset  .Page.Params.book "image" }}<cover>{{.Page.Params.book.image}}</cover>{{ end */}}
-    {{ with .Page.Params.book.copyright }}<license>{{ . }}</license>{{ end }}
-
-    {{ with .Page.Params.book.isbn }}<isbn>{{ . }}</isbn>{{ end }}
-    {{ with .Page.Params.book.publisher }}<publisher>{{ . }}</publisher>{{ end }}
-    {{ with .Page.Params.book.edition }}<edition>{{ . }}</edition>{{ end }}
-    {{ with .Page.Params.book.dedicate }}<dedicate>{{ . }}</dedicate>{{ end }}
-    {{ with .Page.Params.book.thank }}<thank>{{ . }}</thank>{{ end }}
-    {{ with .Page.Params.book.keywords }}<keywords>{{ . }}</keywords>{{ end }}
+    {{ with .Page.Params.book.date }}<date>{{ . }}</date>{{ end }}
+    {{ with .Page.Params.book.publishers }}<publishers>{{ . }}</publishers>{{ end }}
+    {{ with .Page.Params.book.copyright }}<copyright>{{ . }}</copyright>{{ end }}
 </bookMeta>
 
 {{- else -}}

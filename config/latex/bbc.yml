@@ -7,19 +7,19 @@ usePackage:
   #- longtable
   - listings
 
-preamble:
-  # Define new column type H which hides the entire column
-  # see https://texblog.org/2014/10/24/removinghiding-a-column-in-a-latex-table/
-  - \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
-  # Document language
-  - \lang {english}
-  # List styling
-  - \lstset{
-      basicstyle=\footnotesize\ttfamily,
-      xleftmargin=\parindent,
-      frame=L,
-      breaklines=true,
-    }
+#preamble:
+#  # Define new column type H which hides the entire column
+#  # see https://texblog.org/2014/10/24/removinghiding-a-column-in-a-latex-table/
+#  - \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+#  # Document language
+#  - \lang {english}
+#  # List styling
+#  - \lstset{
+#      basicstyle=\footnotesize\ttfamily,
+#      xleftmargin=\parindent,
+#      frame=L,
+#      breaklines=true,
+#    }
 
 styles:
   # offset used to align an address to the right.
@@ -109,10 +109,14 @@ table:
         # Rom number, first decimal second hex
       - repeat: 2
         colType: p
-        colWidth: 0.25
+        colWidth: 0.5
         colUnit: cm
         # 5 Columns for each major machine version
-      - repeat: 5
+      - repeat: 3
         colType: p
-        colWidth: 3
+        colWidth: 2.8
+        colUnit: cm
+      - repeat: 2
+        colType: p
+        colWidth: 3.2
         colUnit: cm

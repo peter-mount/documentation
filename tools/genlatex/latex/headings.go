@@ -15,26 +15,24 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 	switch {
 	// title is for a non-numbered heading?
 	case hType == "h1" && parser.HasClass(n, "title"):
-		err = WriteString(ctx, `\h*`)
+		err = WriteString(ctx, `\chapter`)
 
 	case hType == "h1":
-		err = WriteString(ctx, `\h`)
+		err = WriteString(ctx, `\section`)
 
 	case hType == "h2":
-		err = WriteString(ctx, `\hh`)
+		err = WriteString(ctx, `\subsection`)
 
 	case hType == "h3":
-		err = WriteString(ctx, `\hhh`)
+		err = WriteString(ctx, `\subsubsection`)
 
-	case hType == "h4":
-		err = WriteString(ctx, `\hhh`)
-
-	case hType == "h5":
-		err = WriteString(ctx, `\hhh`)
+	case hType == "h4",
+		hType == "h5":
+		err = WriteString(ctx, `\paragraph`)
 
 		// Default numbered heading
 	default:
-		err = WriteString(ctx, `\h`)
+		err = WriteString(ctx, `\section`)
 	}
 
 	if err == nil {
