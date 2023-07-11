@@ -13,136 +13,134 @@ categories:
     The following table shows the layout of the Paged Roms on a Standard Machines
 </p>
 
-<figure class="book-figure">
-    <table class="bbcPagedRomTable">
-        <thead>
-        <tr>
-            <th colspan="2">Rom #</th>
-            <th>BBC A &amp; B</th>
-            <th>BBC B+</th>
-            <th>Master 128</th>
-            <th>Master Compact</th>
-            <th>Acorn Electron</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>15</td>
-            <td>F</td>
-            <td>IC101 AUX ROM, usually<br/>Basic or Basic II</td>
-            <td rowspan="2">IC71 BASIC II<br/>or Sideways RAM<br/>(B+ 128K only)</td>
-            <td>Terminal</td>
-            <td>Utilities</td>
-            <td rowspan="4">External ROM<br/><em>+1, Slogger etc</em></td>
-        </tr>
-        <tr>
-            <td>14</td>
-            <td>E</td>
-            <td>IC100 AUX ROM<br/>usually empty</td>
-            <td>View</td>
-            <td>BASIC IV</td>
-        </tr>
-        <tr>
-            <td>13</td>
-            <td>D</td>
-            <td>IC88 "Disk &amp Net ROM"<br/>typically empty</td>
-            <td rowspan="2">Sideways RAM<br/>(B+ 128K only)</td>
-            <td>ADFS</td>
-            <td>ADFS 2.10</td>
-        </tr>
-        <tr>
-            <td>12</td>
-            <td>C</td>
-            <td>IC52 BASIC ROM<br/>typically containing DFS</td>
-            <td>Basic</td>
-            <td>System top 16k</td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td>B</td>
-            <td>Mapped to slot 0xF</td>
-            <td rowspan="2">IC68 DFS 2.26<br/>+ SRAM 1.05</td>
-            <td>Edit</td>
-            <td>System 2nd 16k</td>
-            <td rowspan="2">IC 2 BASIC II</td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>A</td>
-            <td>Mapped to slot 0xE</td>
-            <td>Viewsheet</td>
-            <td>System 3rd 16k</td>
-        </tr>
-        <tr>
-            <td colspan="2">9</td>
-            <td>Mapped to slot 0xD</td>
-            <td>IC62 RAM</td>
-            <td>DFS</td>
-            <td>System 4th 16k</td>
-            <td rowspan="2">Keyboard is<br/>mapped here</td>
-        </tr>
-        <tr>
-            <td colspan="2">8</td>
-            <td>Mapped to slot 0xC</td>
-            <td>IC62 RAM</td>
-            <td>IC27 Internal Socket</td>
-            <td>IC29</td>
-        </tr>
-        <tr>
-            <td colspan="2">7</td>
-            <td>Mapped to slot 0xF</td>
-            <td>IC57 RAM</td>
-            <td>RAM or IC37</td>
-            <td>RAM</td>
-            <td rowspan="8">External ROM<br/>Internal rom must be disabled<br/>use *FX142,n to select</td>
-        </tr>
-        <tr>
-            <td colspan="2">6</td>
-            <td>Mapped to slot 0xE</td>
-            <td>IC57 RAM</td>
-            <td>RAM or IC37</td>
-            <td>RAM</td>
-        </tr>
-        <tr>
-            <td colspan="2">5</td>
-            <td>Mapped to slot 0xD</td>
-            <td>IC44 RAM</td>
-            <td>RAM or IC41</td>
-            <td>RAM</td>
-        </tr>
-        <tr>
-            <td colspan="2">4</td>
-            <td>Mapped to slot 0xC</td>
-            <td>IC44 RAM</td>
-            <td>RAM or IC41</td>
-            <td>RAM</td>
-        </tr>
-        <tr>
-            <td colspan="2">3</td>
-            <td>Mapped to slot 0xF</td>
-            <td>IC35 RAM</td>
-            <td rowspan="2">SK4 Front<br/>Cartridge slot</td>
-            <td>IC17</td>
-        </tr>
-        <tr>
-            <td colspan="2">2</td>
-            <td>Mapped to slot 0xE</td>
-            <td>IC35 RAM</td>
-            <td>IC23</td>
-        </tr>
-        <tr>
-            <td colspan="2">1</td>
-            <td>Mapped to slot 0xD</td>
-            <td rowspan="2">Sideways RAM (B+128K only) or<br/> BASIC II (alternate location)</td>
-            <td rowspan="2">SK3 Rear<br/>Cartridge slot</td>
-            <td>IC38 or expansion port</td>
-        </tr>
-        <tr>
-            <td colspan="2">0</td>
-            <td>Mapped to slot 0xC</td>
-            <td>IC38 or expansion port</td>
-        </tr>
-        </tbody>
-    </table>
-    <figcaption>The Paged Roms on standard machines</figcaption>
-</figure>
+<table class="bbcPagedRomTable">
+    <caption>The Paged Roms on standard machines</caption>
+    <thead>
+    <tr>
+        <th colspan="2">Rom #</th>
+        <th>BBC A &amp; B</th>
+        <th>BBC B+</th>
+        <th>Master 128</th>
+        <th>Master Compact</th>
+        <th>Acorn Electron</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>15</td>
+        <td>F</td>
+        <td>IC101 AUX ROM, usually<br/>Basic or Basic II</td>
+        <td rowspan="2">IC71 BASIC II<br/>or Sideways RAM<br/>(B+ 128K only)</td>
+        <td>Terminal</td>
+        <td>Utilities</td>
+        <td rowspan="4">External ROM<br/><em>+1, Slogger etc</em></td>
+    </tr>
+    <tr>
+        <td>14</td>
+        <td>E</td>
+        <td>IC100 AUX ROM<br/>usually empty</td>
+        <td>View</td>
+        <td>BASIC IV</td>
+    </tr>
+    <tr>
+        <td>13</td>
+        <td>D</td>
+        <td>IC88 "Disk &amp Net ROM"<br/>typically empty</td>
+        <td rowspan="2">Sideways RAM<br/>(B+ 128K only)</td>
+        <td>ADFS</td>
+        <td>ADFS 2.10</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>C</td>
+        <td>IC52 BASIC ROM<br/>typically containing DFS</td>
+        <td>Basic</td>
+        <td>System top 16k</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>B</td>
+        <td>Mapped to slot 0xF</td>
+        <td rowspan="2">IC68 DFS 2.26<br/>+ SRAM 1.05</td>
+        <td>Edit</td>
+        <td>System 2nd 16k</td>
+        <td rowspan="2">IC 2 BASIC II</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>A</td>
+        <td>Mapped to slot 0xE</td>
+        <td>Viewsheet</td>
+        <td>System 3rd 16k</td>
+    </tr>
+    <tr>
+        <td colspan="2">9</td>
+        <td>Mapped to slot 0xD</td>
+        <td>IC62 RAM</td>
+        <td>DFS</td>
+        <td>System 4th 16k</td>
+        <td rowspan="2">Keyboard is<br/>mapped here</td>
+    </tr>
+    <tr>
+        <td colspan="2">8</td>
+        <td>Mapped to slot 0xC</td>
+        <td>IC62 RAM</td>
+        <td>IC27 Internal Socket</td>
+        <td>IC29</td>
+    </tr>
+    <tr>
+        <td colspan="2">7</td>
+        <td>Mapped to slot 0xF</td>
+        <td>IC57 RAM</td>
+        <td>RAM or IC37</td>
+        <td>RAM</td>
+        <td rowspan="8">External ROM<br/>Internal rom must be disabled<br/>use *FX142,n to select</td>
+    </tr>
+    <tr>
+        <td colspan="2">6</td>
+        <td>Mapped to slot 0xE</td>
+        <td>IC57 RAM</td>
+        <td>RAM or IC37</td>
+        <td>RAM</td>
+    </tr>
+    <tr>
+        <td colspan="2">5</td>
+        <td>Mapped to slot 0xD</td>
+        <td>IC44 RAM</td>
+        <td>RAM or IC41</td>
+        <td>RAM</td>
+    </tr>
+    <tr>
+        <td colspan="2">4</td>
+        <td>Mapped to slot 0xC</td>
+        <td>IC44 RAM</td>
+        <td>RAM or IC41</td>
+        <td>RAM</td>
+    </tr>
+    <tr>
+        <td colspan="2">3</td>
+        <td>Mapped to slot 0xF</td>
+        <td>IC35 RAM</td>
+        <td rowspan="2">SK4 Front<br/>Cartridge slot</td>
+        <td>IC17</td>
+    </tr>
+    <tr>
+        <td colspan="2">2</td>
+        <td>Mapped to slot 0xE</td>
+        <td>IC35 RAM</td>
+        <td>IC23</td>
+    </tr>
+    <tr>
+        <td colspan="2">1</td>
+        <td>Mapped to slot 0xD</td>
+        <td rowspan="2">Sideways RAM (B+128K only) or<br/> BASIC II (alternate location)</td>
+        <td rowspan="2">SK3 Rear<br/>Cartridge slot</td>
+        <td>IC38 or expansion port</td>
+    </tr>
+    <tr>
+        <td colspan="2">0</td>
+        <td>Mapped to slot 0xC</td>
+        <td>IC38 or expansion port</td>
+    </tr>
+    </tbody>
+</table>

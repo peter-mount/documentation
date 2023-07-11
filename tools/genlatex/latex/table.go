@@ -76,6 +76,7 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 
 	// Initialise table state
 	ctx = newTableState(tType, cols, table, ctx)
+	model := tableStateFromContext(ctx).table
 
 	var f parser.Handler
 	f = func(n *html.Node, ctx context.Context) error {
@@ -90,6 +91,12 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 			case "tr":
 				return c.tr(n, ctx)
 
+			case "caption":
+				caption, err := handleChildrenString(n, ctx)
+				if err != nil {
+					return err
+				}
+				model.Caption = caption
 			}
 		}
 		return f.HandleChildren(n, ctx)
@@ -97,10 +104,8 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 	err := f.HandleChildren(n, ctx)
 
 	if err == nil {
-		ts := tableStateFromContext(ctx)
-		table := ts.table
-		table.Finalise()
-		err = WriteString(ctx, table.String())
+		model.Finalise()
+		err = WriteString(ctx, model.String())
 	}
 
 	return err

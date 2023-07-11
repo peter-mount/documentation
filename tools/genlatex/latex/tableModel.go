@@ -45,13 +45,23 @@ func (t *Table) String() string {
 		r.fixCells(numCols - 1)
 	}
 
+	var p []string
+	if t.Caption != "" {
+		p = append(p, "caption={", t.Caption, "},")
+	}
+
 	// Generate the table
 	var s []string
 
-	s = append(s, fmt.Sprintf(
-		"\\begin{%s}{%s}\n",
-		t.Type,
-		fmt.Sprintf("@{} %s @{}", t.Table.GetColDefs(numCols))))
+	s = append(s, "\\begin{", t.Type, "}")
+
+	if len(p) > 0 {
+		s = append(s, "[")
+		s = append(s, p...)
+		s = append(s, "]")
+	}
+
+	s = append(s, "{@{} ", t.Table.GetColDefs(numCols), " @{}}")
 
 	for _, r := range t.Rows {
 		s = r.Append(s)

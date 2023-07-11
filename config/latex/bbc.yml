@@ -97,7 +97,7 @@ table:
   "memoryInner":
     columnSpec:
       - colType: p
-        colWidth: 1
+        colWidth: 0.75
         colUnit: cm
       - colType: p
         colWidth: 10

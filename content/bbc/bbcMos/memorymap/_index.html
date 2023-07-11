@@ -14,170 +14,168 @@ no_list: true
         The following table shows the memory map for the BBC Micro & BBC Master microcomputers.
     </p>
 
-    <figure>
-        <table class="memoryMap">
-            <thead>
-            <tr>
-                <th>Docs</th>
-                <th>Address</th>
-                <th colspan="2">All machines</th>
-                <th>BBC Master 128</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td rowspan="2"><a href="00/">Page 00</a></td>
-                <td>0000</td>
-                <td colspan="2">Current Language Zero Page</td>
-                <td rowspan="19">Master maps main ram even in shadow mode</td>
-            </tr>
-            <tr>
-                <td>0090</td>
-                <td colspan="2">Operating System Zero Page</td>
-            </tr>
-            <tr>
-                <td>x</td>
-                <td>0100</td>
-                <td colspan="2">Processor Stack</td>
-            </tr>
-            <tr>
-                <td><a href="02/">Page 02</a></td>
-                <td>0200</td>
-                <td rowspan="2" colspan="2">Operating System Workspace</td>
-            </tr>
-            <tr>
-                <td><a href="03/">Page 03</a></td>
-                <td>0300</td>
-            </tr>
-            <tr>
-                <td rowspan="4">x</td>
-                <td>0400</td>
-                <td rowspan="4" colspan="2">Current Language Workspace</td>
-            </tr>
-            <tr>
-                <td>0500</td>
-            </tr>
-            <tr>
-                <td>0600</td>
-            </tr>
-            <tr>
-                <td>0700</td>
-            </tr>
-            <tr>
-                <td rowspan="8"><a href="08/">Page 08-0D</a></td>
-                <td>0800</td>
-                <td colspan="2">Sound & Printer Buffer</td>
-            </tr>
-            <tr>
-                <td>0900</td>
-                <td colspan="2">RS423, Speech & Tape output Buffer</td>
-            </tr>
-            <tr>
-                <td>0A00</td>
-                <td colspan="2">RS423 & Tape input Buffer</td>
-            </tr>
-            <tr>
-                <td>0B00</td>
-                <td colspan="2">Function Keys</td>
-            </tr>
-            <tr>
-                <td>0C00</td>
-                <td colspan="2">User defined graphics</td>
-            </tr>
-            <tr>
-                <td>0D00</td>
-                <td colspan="2">NMI routines (Disk/Econet)</td>
-            </tr>
-            <tr>
-                <td>0D9F</td>
-                <td colspan="2">Expander vector set</td>
-            </tr>
-            <tr>
-                <td>0DF0</td>
-                <td colspan="2">Paged ROM workspace storage locations</td>
-            </tr>
-            <tr>
-                <td><a href="0e/">Page 0E-18</a></td>
-                <td>0E00</td>
-                <td rowspan="6">USER workspace</td>
-                <td>DFS workspace (not Master)</td>
-            </tr>
-            <tr>
-                <td rowspan="6">x</td>
-                <td>1900</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>3000</td>
-                <td>Screen (Mode 0, 1, 2)</td>
-                <td rowspan="5">
-                    USER workspace with shadow Mode 128&hellip;134<br/>
-                    Screen memory is in shadow ram at same addresses as on normal machines
-                </td>
-            </tr>
-            <tr>
-                <td>4000</td>
-                <td>Screen (Mode 3)</td>
-            </tr>
-            <tr>
-                <td>5800</td>
-                <td>Screen (Mode 4, 5)</td>
-            </tr>
-            <tr>
-                <td>6000</td>
-                <td>Screen (Mode 6)</td>
-            </tr>
-            <tr>
-                <td>7B00</td>
-                <td colspan="2">Screen (Mode 7)</td>
-            </tr>
-            <tr>
-                <td><a href="pagedrom/">Paged Rom</a></td>
-                <td>8000</td>
-                <td colspan="2">Paged Roms</td>
-                <td>Private Ram</td>
-            </tr>
-            <tr>
-                <td rowspan="9"></td>
-                <td>C000</td>
-                <td colspan="2" rowspan="5">OS ROM</td>
-                <td>Paged rom workspace</td>
-            </tr>
-            <tr>
-                <td>DC00</td>
-                <td>MOS CLI Buffer</td>
-            </tr>
-            <tr>
-                <td>DD00</td>
-                <td>*MOVE workspace</td>
-            </tr>
-            <tr>
-                <td>DF00</td>
-                <td>MOS private workspace</td>
-            </tr>
-            <tr>
-                <td>E000</td>
-                <td>OS ROM</td>
-            </tr>
-            <tr>
-                <td>FC00</td>
-                <td colspan="3">FRED 1MHz bus</td>
-            </tr>
-            <tr>
-                <td>FD00</td>
-                <td colspan="3">JIM 1MHz bus</td>
-            </tr>
-            <tr>
-                <td>FE00</td>
-                <td colspan="3">SHIELA I/O Memory</td>
-            </tr>
-            <tr>
-                <td>FF00</td>
-                <td colspan="3">OS ROM Vectors</td>
-            </tr>
-            </tbody>
-        </table>
-        <figcaption>The Memory Map of the BBC Micro</figcaption>
-    </figure>
+    <table class="memoryMap">
+        <caption>The Memory Map of the BBC Micro</caption>
+        <thead>
+        <tr>
+            <th>Docs</th>
+            <th>Address</th>
+            <th colspan="2">All machines</th>
+            <th>BBC Master 128</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="2"><a href="00/">Page 00</a></td>
+            <td>0000</td>
+            <td colspan="2">Current Language Zero Page</td>
+            <td rowspan="19">Master maps main ram even in shadow mode</td>
+        </tr>
+        <tr>
+            <td>0090</td>
+            <td colspan="2">Operating System Zero Page</td>
+        </tr>
+        <tr>
+            <td>x</td>
+            <td>0100</td>
+            <td colspan="2">Processor Stack</td>
+        </tr>
+        <tr>
+            <td><a href="02/">Page 02</a></td>
+            <td>0200</td>
+            <td rowspan="2" colspan="2">Operating System Workspace</td>
+        </tr>
+        <tr>
+            <td><a href="03/">Page 03</a></td>
+            <td>0300</td>
+        </tr>
+        <tr>
+            <td rowspan="4">x</td>
+            <td>0400</td>
+            <td rowspan="4" colspan="2">Current Language Workspace</td>
+        </tr>
+        <tr>
+            <td>0500</td>
+        </tr>
+        <tr>
+            <td>0600</td>
+        </tr>
+        <tr>
+            <td>0700</td>
+        </tr>
+        <tr>
+            <td rowspan="8"><a href="08/">Page 08-0D</a></td>
+            <td>0800</td>
+            <td colspan="2">Sound & Printer Buffer</td>
+        </tr>
+        <tr>
+            <td>0900</td>
+            <td colspan="2">RS423, Speech & Tape output Buffer</td>
+        </tr>
+        <tr>
+            <td>0A00</td>
+            <td colspan="2">RS423 & Tape input Buffer</td>
+        </tr>
+        <tr>
+            <td>0B00</td>
+            <td colspan="2">Function Keys</td>
+        </tr>
+        <tr>
+            <td>0C00</td>
+            <td colspan="2">User defined graphics</td>
+        </tr>
+        <tr>
+            <td>0D00</td>
+            <td colspan="2">NMI routines (Disk/Econet)</td>
+        </tr>
+        <tr>
+            <td>0D9F</td>
+            <td colspan="2">Expander vector set</td>
+        </tr>
+        <tr>
+            <td>0DF0</td>
+            <td colspan="2">Paged ROM workspace storage locations</td>
+        </tr>
+        <tr>
+            <td><a href="0e/">Page 0E-18</a></td>
+            <td>0E00</td>
+            <td rowspan="6">USER workspace</td>
+            <td>DFS workspace (not Master)</td>
+        </tr>
+        <tr>
+            <td rowspan="6">x</td>
+            <td>1900</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3000</td>
+            <td>Screen (Mode 0, 1, 2)</td>
+            <td rowspan="5">
+                USER workspace with shadow Mode 128&hellip;134<br/>
+                Screen memory is in shadow ram at same addresses as on normal machines
+            </td>
+        </tr>
+        <tr>
+            <td>4000</td>
+            <td>Screen (Mode 3)</td>
+        </tr>
+        <tr>
+            <td>5800</td>
+            <td>Screen (Mode 4, 5)</td>
+        </tr>
+        <tr>
+            <td>6000</td>
+            <td>Screen (Mode 6)</td>
+        </tr>
+        <tr>
+            <td>7B00</td>
+            <td colspan="2">Screen (Mode 7)</td>
+        </tr>
+        <tr>
+            <td><a href="pagedrom/">Paged Rom</a></td>
+            <td>8000</td>
+            <td colspan="2">Paged Roms</td>
+            <td>Private Ram</td>
+        </tr>
+        <tr>
+            <td rowspan="9"></td>
+            <td>C000</td>
+            <td colspan="2" rowspan="5">OS ROM</td>
+            <td>Paged rom workspace</td>
+        </tr>
+        <tr>
+            <td>DC00</td>
+            <td>MOS CLI Buffer</td>
+        </tr>
+        <tr>
+            <td>DD00</td>
+            <td>*MOVE workspace</td>
+        </tr>
+        <tr>
+            <td>DF00</td>
+            <td>MOS private workspace</td>
+        </tr>
+        <tr>
+            <td>E000</td>
+            <td>OS ROM</td>
+        </tr>
+        <tr>
+            <td>FC00</td>
+            <td colspan="3">FRED 1MHz bus</td>
+        </tr>
+        <tr>
+            <td>FD00</td>
+            <td colspan="3">JIM 1MHz bus</td>
+        </tr>
+        <tr>
+            <td>FE00</td>
+            <td colspan="3">SHIELA I/O Memory</td>
+        </tr>
+        <tr>
+            <td>FF00</td>
+            <td colspan="3">OS ROM Vectors</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 

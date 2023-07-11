@@ -1,6 +1,7 @@
 package latex
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
@@ -144,6 +145,17 @@ func Comment(ctx context.Context, f string, a ...any) error {
 
 func handleChildren(n *html.Node, ctx context.Context) error {
 	return parser.HandleChildren(parser.ScannerFromContext(ctx).Handle, n, ctx)
+}
+
+// handleChildrenString is the same as handleChildren except it returns the
+// content as a string rather than write it to the stream.
+func handleChildrenString(n *html.Node, ctx context.Context) (string, error) {
+	var buf bytes.Buffer
+	err := handleChildren(n, WithContext(&buf, ctx))
+	if err != nil {
+		return "", err
+	}
+	return buf.String(), nil
 }
 
 func handleBracedChildren(n *html.Node, ctx context.Context) error {
