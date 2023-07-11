@@ -102,3 +102,28 @@ table:
       - colType: p
         colWidth: 10
         colUnit: cm
+  # BBC Paged Rom Table
+  "bbcPagedRomTable":
+    columnSpec:
+        # Rom number, first decimal second hex
+      - colType: p
+        colWidth: 1
+        colUnit: cm
+      - colType: p
+        colWidth: 1
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
