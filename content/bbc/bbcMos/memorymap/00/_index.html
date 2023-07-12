@@ -15,6 +15,7 @@ memorymap:
     offset: "0x70"
     length: 32
     desc: "Guaranteed unused with BASIC"
+    sidenote: "BBC Basic reserves 0x0070&hellip;0x008F for user programs. User code should not use addresses outside that range unless they have replaced BASIC."
 
   - address: "0090"
     length: 16
@@ -166,7 +167,7 @@ memorymap:
   On the BBC Micro addresses 0x0000&hellip;0x008F are reserved for the current language.
   The table above lists the known BASIC II memory map for those addresses.
 </p>
-<p>
+<p class="d-print-none">
   BBC Basic reserves 0x0070&hellip;0x008F for user programs.
   User code should not use addresses outside that range unless they have replaced BASIC.
 </p>

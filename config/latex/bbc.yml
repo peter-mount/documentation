@@ -120,3 +120,34 @@ table:
         colType: p
         colWidth: 3.2
         colUnit: cm
+  # bbc/master-rom-list shortcode
+  "bbcMasterRomList":
+    fontSize: \footnotesize
+    columnSpec:
+      # Rom number, first decimal second hex
+      - repeat: 2
+        colType: p
+        colWidth: 0.5
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - colType: p
+        colWidth: 3
+        colUnit: cm
+  # default configuration
+  "bbcDefaultConfiguration":
+    fontSize: \footnotesize
+    columnSpec:
+        # Configuration
+      - colType: p
+        colWidth: 3
+        colUnit: cm
+        # Default value
+      - colType: p
+        colWidth: 2
+        colUnit: cm
+        # Description
+      - colType: p
+        colWidth: 4
+        colUnit: cm

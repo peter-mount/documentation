@@ -84,6 +84,7 @@
 
         <td>
             {{- .desc | safeHTML -}}
+            {{- with .sidenote}}<div class="marginNote">{{.}}</div>{{end -}}
             {{- with .note}}
             <div class="note">{{.}}</div>
             {{end -}}

@@ -1,89 +1,84 @@
 ---
 type: "manual"
-title: "Configuration of the Master Series"
+titleClass: chapter
+title: "Configuration of the BBC Master Series"
 linkTitle: "Configuration"
 description: "Configuration guidelines for the Master Series"
 weight: 60
 categories:
   - bbc
 ---
-<div class="printPageBreakAvoid">
-    <div class="marginNote alert-info">
-        This section is taken from Support Group Application Note No. 203, Issue 1
-        dated 27th February 1992
-    </div>
-    <p>
-        After the Master series have had either their batteries or EEPROM replaced it will normally be necessary to
-        perform some sort of re-configuration.
-        This document describes all the configuration options available and what the default settings are when the
-        computer is supplied by Acorn.
-    </p>
-    <p class="marginNote">
-        This only applies to the BBC Master 128, 512, ET and Compact models.
-    </p>
-    <h2>*CONFIGURE</h2>
-    <span class="book-index" data-book-index="*CONFIGURE"></span>
-    <span class="book-index" data-book-index="*CONF."></span>
-    <p>
-        On the master series, the configuration is managed with the <code>*CONFIGURE</code> command.
-        This takes one or two parameters, the setting to set and an optional value for that setting.
-    </p>
-    <p class="marginNote">
-        Like other commands it can be shortened as <code>*CONF.</code>
-    </p>
-    <p class="marginNote">
-        <em>Note the . at the end is required when using the shortened version.</em>
-    </p>
-
-    <h2>General Information</h2>
-    <p>
-        The <code>*CONFIGURE</code> commands must always be followed by a CTRL BREAK to initialise the settings in the
-        machine.
-    </p>
-    <p>
-        It is possible to use Edit supplied with the BBC Master to created a standard file which contains all the
-        <code>*CONFIGURE</code> options which could be used to re configure the machine in one go by using the
-        <code>*EXEC</code> command.
-    </p>
-    <p class="marginNote">
-        The Master Compact EEPROM has a limited life of 10,000 write operations. The chip is easily replaced
-        when this limit is reached.
-    </p>
-    <p>
-        If ROMs appear in the ROM table as being unplugged it is possible to re - insert then using the command
-        <code>*INSERT</code> followed by the ROM Socket number eg. <code>*INSERT 13</code>
-    </p>
+<div class="marginNote alert-info">
+    This section is taken from Support Group Application Note No. 203, Issue 1
+    dated 27th February 1992
 </div>
+<p>
+    After the Master series have had either their batteries or EEPROM replaced it will normally be necessary to
+    perform some sort of re-configuration.
+    This document describes all the configuration options available and what the default settings are when the
+    computer is supplied by Acorn.
+</p>
+<p class="marginNote">
+    This only applies to the BBC Master 128, 512, ET and Compact models.
+</p>
+<h2 class="section">*CONFIGURE</h2>
+<span class="book-index" data-book-index="*CONFIGURE"></span>
+<span class="book-index" data-book-index="*CONF."></span>
+<p class="marginNote">
+    Like other commands it can be shortened as <code>*CONF.</code>
+</p>
+<p class="marginNote">
+    <em>Note the . at the end is required when using the shortened version.</em>
+</p>
+<p>
+    On the master series, the configuration is managed with the <code>*CONFIGURE</code> command.
+    This takes one or two parameters, the setting to set and an optional value for that setting.
+</p>
 
-<div class="printPageBreakAvoid">
-    <h2>Default configuration</h2>
-    <table class="memoryMap3">
-        <caption>Default configuration for the BBC Master</caption>
-        <thead>
-            <tr>
-            <th>Configuration</th>
-            <th>Default value</th>
-            <th colspan="6">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr><td>BAUD</td><td>4</td><td>1200</td><tr>
-            <tr><td>BOOT/NOBOOT</td><td>NOBOOT</td><td>Do not boot on power up</td><tr>
-            <tr><td>CAPS/NOCAPS</td><td>CAPS</td><td>Caps lock on</td><tr>
-            <tr><td>DATA</td><td>4</td><td>8N2</td><tr>
-            <tr><td>DELAY</td><td>30</td><td>0.30s</td><tr>
-            <tr><td>DIR/NODIR</td><td>NODIR</td><td>Do not initialise directory</td><tr>
-            <tr><td>FDRIVE</td><td>0</td><td>6ms, ADFS precompensation enabled</td><tr>
-            <tr><td>FILE</td><td>13</td><td>ADFS</em></td><tr>
-            <tr><td>HARD/FLOPPY</td><td>FLOPPY</td><td>Default to floppy disk</td><tr>
-            <tr><td>IGNORE</td><td>0</td><td>No ignore character</td><tr>
-            <tr><td>INTUBE/EXTUBE</td><td>INTUBE</td><td>Internal Tube Interface</td><tr>
-            <tr><td>LANG</td><td>12</td><td>BASIC</td><tr>
-            <tr><td>Printer</td><td>0</td><td>Sink</td><tr>
-            <tr><td>QUIET/LOUD</td><td>QUIET</td><td></td><tr>
-            <tr><td>MODE</td><td>7</td><td>Teletext Mode 7</td><tr>
-            <tr><td>REPEAT</td><td>8</td><td>0.08s</td><tr>
-            <tr><td>SCROLL/NOSCROLL</td><td>SCROLL</td><td></td><tr>
-        </tbody>
-    </table>
-</div>
+<p>
+    The <code>*CONFIGURE</code> commands must always be followed by a CTRL BREAK to initialise the settings in the
+    machine.
+</p>
+<p class="marginNote">
+    The Master Compact EEPROM has a limited life of 10,000 write operations. The chip is easily replaced
+    when this limit is reached.
+</p>
+<p>
+    It is possible to use Edit supplied with the BBC Master to create a standard file which contains all the
+    <code>*CONFIGURE</code> options which could be used to re-configure the machine in one go by using the
+    <code>*EXEC</code> command.
+</p>
+<p>
+    If ROMs appear in the ROM table as being unplugged it is possible to re-insert then using the command
+    <code>*INSERT</code> followed by the ROM Socket number eg. <code>*INSERT 13</code>
+</p>
+
+<table class="bbcDefaultConfiguration memoryMap3">
+    <caption>Default configuration for the BBC Master</caption>
+    <thead>
+        <tr>
+        <th>Configuration</th>
+        <th>Default value</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr><td>BAUD</td><td>4</td><td>1200</td><tr>
+        <tr><td>BOOT/NOBOOT</td><td>NOBOOT</td><td>Do not boot on power up</td><tr>
+        <tr><td>CAPS/NOCAPS</td><td>CAPS</td><td>Caps lock on</td><tr>
+        <tr><td>DATA</td><td>4</td><td>8N2</td><tr>
+        <tr><td>DELAY</td><td>30</td><td>0.30s</td><tr>
+        <tr><td>DIR/NODIR</td><td>NODIR</td><td>Do not initialise directory</td><tr>
+        <tr><td>FDRIVE</td><td>0</td><td>6ms, ADFS precompensation enabled</td><tr>
+        <tr><td>FILE</td><td>13</td><td>ADFS</em></td><tr>
+        <tr><td>HARD/FLOPPY</td><td>FLOPPY</td><td>Default to floppy disk</td><tr>
+        <tr><td>IGNORE</td><td>0</td><td>No ignore character</td><tr>
+        <tr><td>INTUBE/EXTUBE</td><td>INTUBE</td><td>Internal Tube Interface</td><tr>
+        <tr><td>LANG</td><td>12</td><td>BASIC</td><tr>
+        <tr><td>Printer</td><td>0</td><td>Sink</td><tr>
+        <tr><td>QUIET/LOUD</td><td>QUIET</td><td></td><tr>
+        <tr><td>MODE</td><td>7</td><td>Teletext Mode 7</td><tr>
+        <tr><td>REPEAT</td><td>8</td><td>0.08s</td><tr>
+        <tr><td>SCROLL/NOSCROLL</td><td>SCROLL</td><td></td><tr>
+    </tbody>
+</table>

@@ -19,9 +19,9 @@
 
 {{- else -}}
 
-<h1 class="title">{{ .Title }}</h1>
+<h1 class="{{with .Page.Params.titleClass}}{{.}}{{else}}title{{end}}">{{ .Title }}</h1>
 {{- with .Page.Params.description -}}
-<div class="lead">{{ . | markdownify }}</div>
+<div class="d-print-none lead">{{ . | markdownify }}</div>
 {{- end -}}
 
 {{- end -}}

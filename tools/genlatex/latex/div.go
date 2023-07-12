@@ -8,6 +8,9 @@ import (
 
 func (c *Converter) div(n *html.Node, ctx context.Context) error {
 	switch {
+	case parser.HasClass(n, "printPageBreakAvoid"):
+		return environment("samepage", n, ctx)
+
 	case parser.HasClass(n, "lead"):
 		return environment("huge", n, ctx)
 
