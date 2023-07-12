@@ -8,19 +8,6 @@ import (
 	"strings"
 )
 
-func (c *Converter) div(n *html.Node, ctx context.Context) error {
-	switch {
-	case parser.HasClass(n, "lead"):
-		return environment("huge", n, ctx)
-
-	case parser.HasClass(n, "sourceCode"):
-		return c.sourceCode(n, ctx)
-
-	default:
-		return handleChildren(n, ctx)
-	}
-}
-
 func (c *Converter) text(n *html.Node, ctx context.Context) error {
 	s := strings.TrimSpace(n.Data)
 	if s != "" {
@@ -30,6 +17,11 @@ func (c *Converter) text(n *html.Node, ctx context.Context) error {
 }
 
 func (c *Converter) paragraph(n *html.Node, ctx context.Context) error {
+	// Paragraphs can also be marginNotes
+	if parser.HasClass(n, "marginNote") {
+		return c.marginNote(n, ctx)
+	}
+
 	err := handleChildren(n, ctx)
 	if err == nil {
 		err = WriteStringLn(ctx, "\n")
@@ -43,4 +35,14 @@ func (c *Converter) lineBreak(_ *html.Node, ctx context.Context) error {
 		return WriteStringLn(ctx, `\\`)
 	}
 	return WriteStringLn(ctx, `\hfill \break`)
+}
+
+// code handles the em html element
+func (c *Converter) em(n *html.Node, ctx context.Context) error {
+	return handleSimpleCommand(`\textsl`, n, ctx)
+}
+
+// code handles the em html element
+func (c *Converter) strong(n *html.Node, ctx context.Context) error {
+	return handleSimpleCommand(`\textbf`, n, ctx)
 }

@@ -54,12 +54,12 @@ func New(config string) (*Converter, error) {
 		// anchor is ignored, just parse it's content
 		Handle("a", handleChildren).
 		Handle("br", c.lineBreak).
-		Handle("code", handleChildren).
+		Handle("code", c.code).
 		Handle("div", c.div).
 		Handle("dd", handleChildren).
 		Handle("dl", handleChildren).
 		Handle("dt", handleChildren).
-		Handle("em", handleChildren).
+		Handle("em", c.em).
 		Handle("figure", parser.Of(
 			c.figureStart,
 			parser.New().
@@ -84,7 +84,7 @@ func New(config string) (*Converter, error) {
 		Handle("small", handleChildren).
 		Handle("span", handleChildren).
 		Handle("strong", handleChildren).
-		Handle("sup", handleChildren).
+		Handle("sup", c.strong).
 		Handle("ul", c.ul).
 		// These elements are ignored
 		Handle("bookMeta", nil)
@@ -173,5 +173,13 @@ func handleWrapped(s, e byte, n *html.Node, ctx context.Context) error {
 		err = Write(ctx, e)
 	}
 
+	return err
+}
+
+func handleSimpleCommand(c string, n *html.Node, ctx context.Context) error {
+	err := WriteString(ctx, c)
+	if err == nil {
+		err = handleBracedChildren(n, ctx)
+	}
 	return err
 }

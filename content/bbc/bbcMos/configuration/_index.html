@@ -8,7 +8,7 @@ categories:
   - bbc
 ---
 <div class="printPageBreakAvoid">
-    <div class="alert-info">
+    <div class="marginNote alert-info">
         This section is taken from Support Group Application Note No. 203, Issue 1
         dated 27th February 1992
     </div>
@@ -18,7 +18,7 @@ categories:
         This document describes all the configuration options available and what the default settings are when the
         computer is supplied by Acorn.
     </p>
-    <p>
+    <p class="marginNote">
         This only applies to the BBC Master 128, 512, ET and Compact models.
     </p>
     <h2>*CONFIGURE</h2>
@@ -28,9 +28,10 @@ categories:
         On the master series, the configuration is managed with the <code>*CONFIGURE</code> command.
         This takes one or two parameters, the setting to set and an optional value for that setting.
     </p>
-    <p>
+    <p class="marginNote">
         Like other commands it can be shortened as <code>*CONF.</code>
-        <br/>
+    </p>
+    <p class="marginNote">
         <em>Note the . at the end is required when using the shortened version.</em>
     </p>
 
@@ -44,7 +45,7 @@ categories:
         <code>*CONFIGURE</code> options which could be used to re configure the machine in one go by using the
         <code>*EXEC</code> command.
     </p>
-    <p>
+    <p class="marginNote">
         The Master Compact EEPROM has a limited life of 10,000 write operations. The chip is easily replaced
         when this limit is reached.
     </p>
@@ -56,35 +57,33 @@ categories:
 
 <div class="printPageBreakAvoid">
     <h2>Default configuration</h2>
-    <figure class="book-figure">
-        <table class="memoryMap3">
-            <thead>
-                <tr>
-                <th>Configuration</th>
-                <th>Default value</th>
-                <th colspan="6">Description</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr><td>BAUD</td><td>4</td><td>1200</td><tr>
-                <tr><td>BOOT/NOBOOT</td><td>NOBOOT</td><td>Do not boot on power up</td><tr>
-                <tr><td>CAPS/NOCAPS</td><td>CAPS</td><td>Caps lock on</td><tr>
-                <tr><td>DATA</td><td>4</td><td>8N2</td><tr>
-                <tr><td>DELAY</td><td>30</td><td>0.30s</td><tr>
-                <tr><td>DIR/NODIR</td><td>NODIR</td><td>Do not initialise directory</td><tr>
-                <tr><td>FDRIVE</td><td>0</td><td>6ms, ADFS precompensation enabled</td><tr>
-                <tr><td>FILE</td><td>13</td><td>ADFS</em></td><tr>
-                <tr><td>HARD/FLOPPY</td><td>FLOPPY</td><td>Default to floppy disk</td><tr>
-                <tr><td>IGNORE</td><td>0</td><td>No ignore character</td><tr>
-                <tr><td>INTUBE/EXTUBE</td><td>INTUBE</td><td>Internal Tube Interface</td><tr>
-                <tr><td>LANG</td><td>12</td><td>BASIC</td><tr>
-                <tr><td>Printer</td><td>0</td><td>Sink</td><tr>
-                <tr><td>QUIET/LOUD</td><td>QUIET</td><td></td><tr>
-                <tr><td>MODE</td><td>7</td><td>Teletext Mode 7</td><tr>
-                <tr><td>REPEAT</td><td>8</td><td>0.08s</td><tr>
-                <tr><td>SCROLL/NOSCROLL</td><td>SCROLL</td><td></td><tr>
-            </tbody>
-        </table>
-        <figcaption>Default configuration for the BBC Master</figcaption>
-    </figure>
+    <table class="memoryMap3">
+        <caption>Default configuration for the BBC Master</caption>
+        <thead>
+            <tr>
+            <th>Configuration</th>
+            <th>Default value</th>
+            <th colspan="6">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr><td>BAUD</td><td>4</td><td>1200</td><tr>
+            <tr><td>BOOT/NOBOOT</td><td>NOBOOT</td><td>Do not boot on power up</td><tr>
+            <tr><td>CAPS/NOCAPS</td><td>CAPS</td><td>Caps lock on</td><tr>
+            <tr><td>DATA</td><td>4</td><td>8N2</td><tr>
+            <tr><td>DELAY</td><td>30</td><td>0.30s</td><tr>
+            <tr><td>DIR/NODIR</td><td>NODIR</td><td>Do not initialise directory</td><tr>
+            <tr><td>FDRIVE</td><td>0</td><td>6ms, ADFS precompensation enabled</td><tr>
+            <tr><td>FILE</td><td>13</td><td>ADFS</em></td><tr>
+            <tr><td>HARD/FLOPPY</td><td>FLOPPY</td><td>Default to floppy disk</td><tr>
+            <tr><td>IGNORE</td><td>0</td><td>No ignore character</td><tr>
+            <tr><td>INTUBE/EXTUBE</td><td>INTUBE</td><td>Internal Tube Interface</td><tr>
+            <tr><td>LANG</td><td>12</td><td>BASIC</td><tr>
+            <tr><td>Printer</td><td>0</td><td>Sink</td><tr>
+            <tr><td>QUIET/LOUD</td><td>QUIET</td><td></td><tr>
+            <tr><td>MODE</td><td>7</td><td>Teletext Mode 7</td><tr>
+            <tr><td>REPEAT</td><td>8</td><td>0.08s</td><tr>
+            <tr><td>SCROLL/NOSCROLL</td><td>SCROLL</td><td></td><tr>
+        </tbody>
+    </table>
 </div>

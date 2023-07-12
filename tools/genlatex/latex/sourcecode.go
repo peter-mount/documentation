@@ -6,6 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// sourceCode handles code listings
 func (c *Converter) sourceCode(n *html.Node, ctx context.Context) error {
 	err := WriteString(ctx, "\n\\begin{lstlisting}\n")
 
@@ -20,6 +21,18 @@ func (c *Converter) sourceCode(n *html.Node, ctx context.Context) error {
 
 	if err == nil {
 		err = WriteString(ctx, "\n\\end{lstlisting}\n")
+	}
+	return err
+}
+
+// code handles the code html element
+func (c *Converter) code(n *html.Node, ctx context.Context) error {
+	err := Write(ctx, '~')
+	if err == nil {
+		err = handleSimpleCommand(`\texttt`, n, ctx)
+	}
+	if err == nil {
+		err = Write(ctx, '~')
 	}
 	return err
 }
