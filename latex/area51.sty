@@ -1,0 +1,151 @@
+\ProvidesPackage{area51}
+% Declare area51
+\DefineFamily{area51}
+% Required Packages
+\RequirePackage{multido}
+\RequirePackage{setspace}
+\RequirePackage{xcolor}
+\RequirePackage{transparent}
+
+% simple forLoop using multido https://stackoverflow.com/a/27339164
+\newcommand{\forLoop}[4][1]{\multido{\i=#2+#1}{#3}{#4}}
+
+%--------------------------------------------------------------------------------------------------
+% cfbox which allows a coloured border around a box to be drawn based on which border
+% we want
+% see https://tex.stackexchange.com/a/55534
+\newcommand\cfbox[3][lbrt]{%
+    \begingroup
+    \leavevmode
+    \setbox\@tempboxa\hbox{%
+        \color@begingroup
+        \kern\fboxsep{#3}\kern\fboxsep
+        \color@endgroup
+    }%
+    \@tempdima\fboxrule
+    \advance\@tempdima\fboxsep
+    \advance\@tempdima\dp\@tempboxa
+    \hbox{%
+        \hskip-.5\fboxrule
+        \lower\@tempdima\hbox{%
+            \vbox{%
+                \in@{t}{#1}\ifin@{\color{#2}\hrule\@height\fboxrule}\fi
+                \hbox{%
+                    \in@{l}{#1}\ifin@{\color{#2}\vrule\@width\fboxrule}\else{\hskip\fboxrule}\fi
+                    \vbox{\vskip\fboxsep\box\@tempboxa\vskip\fboxsep}%
+                    \in@{r}{#1}\ifin@{\color{#2}\vrule\@width\fboxrule}\else{\hskip\fboxrule}\fi
+                }%
+                \in@{b}{#1}\ifin@{\color{#2}\hrule\@height\fboxrule}\fi
+            }%
+        }%
+        \hskip-.5\fboxrule
+    }%
+    \endgroup
+}
+
+%--------------------------------------------------------------------------------------------------
+\newcommand\hexmapside{l}%
+\newcommand\hexmapborders{tlrb}%
+
+\newcommand\hexmap[2]{%
+    \begingroup%
+    \in@{l}{#1}\ifin@{%
+        \renewcommand{\hexmapside}{l}%
+        \renewcommand{\hexmapborders}{rb}%
+        {#2}%
+    }\fi%
+    \in@{r}{#1}\ifin@{%
+        \renewcommand{\hexmapside}{r}%
+        \renewcommand{\hexmapborders}{lb}%
+        {#2}%
+    }\fi%
+    \endgroup%
+    \linebreak\relax%
+}
+
+%--------------------------------------------------------------------------------------------------
+% hexmaprow{l}{rowId}{content} for row with rowId in left column
+% hexmaprow{r}{rowId}{content} for row with rowId in right column
+%
+% Here we generate the row then reduce the height by 0.5\fboxsep to remove the separation
+% between each line. This seems to work
+\newcommand\hexmapcellwidth{1.1cm}
+\newcommand\hexmapheaderwidth{0.5cm}
+\newcommand\hexmaprow[2]{%
+    \begingroup%
+    \sbox{0}{%
+        \expandafter\in@\expandafter{\hexmapside}{l}\ifin@{%
+                \cfbox[r]{black}{\vbox to \hexmapcellwidth {\vfil\hbox to \hexmapheaderwidth {\hfil{#1}}\vfil}}%
+        }\fi%
+        {#2}%
+        \expandafter\in@\expandafter{\hexmapside}{r}\ifin@{%
+            \cfbox[l]{black}{\vbox to \hexmapcellwidth {\vfil\hbox to \hexmapheaderwidth {{#1}\hfil}\vfil}}%
+        }\fi%
+    }%
+    \ht0=\dimexpr \hexmapcellwidth + 0.5\fboxsep + \fboxrule\relax%
+    %\ht0=\dimexpr \ht0 - .5\fboxsep\relax%
+    \usebox{0}%
+    \endgroup%
+}
+
+\newcounter{hexmapcolnumber}
+\newcommand\hexmapheadercell[1]{\cfbox[b]{black}{\vbox to \hexmapheaderwidth {\vfil\hbox to \hexmapcellwidth {\hfil {#1} \hfil}\vfil}}}
+\newcommand\hexmapheader[2] {
+    \begingroup%
+    \sbox{0}{%
+        \expandafter\in@\expandafter{\hexmapside}{l}\ifin@{%
+            \cfbox[]{black}{\vbox to \hexmapheaderwidth {\vfil\hbox to \hexmapheaderwidth {~}\vfil}}%
+        }\fi%
+        \forLoop{#1}{#2}{\hexmapheadercell{\i}}%
+        \expandafter\in@\expandafter{\hexmapside}{r}\ifin@{%
+            \cfbox[]{black}{\vbox to \hexmapheaderwidth {\vfil\hbox to \hexmapheaderwidth {~}\vfil}}%
+        }\fi%
+    }%
+    \ht0=\dimexpr \hexmapcellwidth + 0.5\fboxsep + \fboxrule\relax%
+    \usebox{0}%
+    \endgroup%
+}
+
+%--------------------------------------------------------------------------------------------------
+% font for opcodecell - tends to be 6pt to fit z80 instructions or 32 bit opcodes
+\makeatletter
+\newcommand\opcodecellfont{\@setfontsize\opcodecellfont\@vipt\@viipt}
+\makeatother
+
+%--------------------------------------------------------------------------------------------------
+% opcodecell to define a specific cell with an opcode
+%
+%   +-----------------+
+%   |     opcode      |
+%   | size      cycle |
+%   |      hex        |
+%   +-----------------+
+%
+% \opcodecell{opcode}{opcodeHex}{SizeBytes}{CycleCount}
+%
+
+\newcommand\opcodecell[4]{%
+    \begingroup%
+    \expandafter\cfbox\expandafter[\hexmapborders]{black}{%
+        \vbox to \hexmapcellwidth {%
+            \hbox to \hexmapcellwidth {\opcodecellfont\hfil{#1}\hfil}
+            \hbox to \hexmapcellwidth {\opcodecellfont{#3}\hfil{#4}}
+            \hbox to \hexmapcellwidth {\opcodecellfont\hfil{#2}\hfil}%
+        }%
+    }%
+    \endgroup%
+}
+
+%--------------------------------------------------------------------------------------------------
+
+\newcommand\opcodesimplecell[1]{%
+    \begingroup%
+    \expandafter\cfbox\expandafter[\hexmapborders]{black}{%
+        \vbox to \hexmapcellwidth {%
+            \hbox to \hexmapcellwidth {#1}%
+        }%
+    }%
+    \endgroup%
+}
+
+%--------------------------------------------------------------------------------------------------
