@@ -21,6 +21,9 @@ func (c *Converter) paragraph(n *html.Node, ctx context.Context) error {
 	if parser.HasClass(n, "marginNote") {
 		return c.marginNote(n, ctx)
 	}
+	if parser.HasClass(n, "sideNote") {
+		return c.sideNote(n, ctx)
+	}
 
 	err := handleChildren(n, ctx)
 	if err == nil {

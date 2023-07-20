@@ -20,6 +20,9 @@ func (c *Converter) div(n *html.Node, ctx context.Context) error {
 	case parser.HasClass(n, "marginNote"):
 		return c.marginNote(n, ctx)
 
+	case parser.HasClass(n, "sideNote"):
+		return c.sideNote(n, ctx)
+
 	default:
 		return handleChildren(n, ctx)
 	}
@@ -28,6 +31,16 @@ func (c *Converter) div(n *html.Node, ctx context.Context) error {
 func (c *Converter) marginNote(n *html.Node, ctx context.Context) error {
 	// \marginnote[offset]{text}
 	err := WriteString(ctx, `\marginnote`)
+	// TODO add optional [offset[ as an optional attribute
+	if err == nil {
+		err = handleBracedChildren(n, ctx)
+	}
+	return nil
+}
+
+func (c *Converter) sideNote(n *html.Node, ctx context.Context) error {
+	// \sidenote[offset]{text}
+	err := WriteString(ctx, `\sidenote`)
 	// TODO add optional [offset[ as an optional attribute
 	if err == nil {
 		err = handleBracedChildren(n, ctx)
