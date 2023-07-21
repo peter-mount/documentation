@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "EOR - Exclusive OR"
+titleClass: subsection
 linkTitle: "Exclusive OR"
 weight: 3
 description: "Exclusive-OR Accumulator with Memory"
@@ -211,10 +212,16 @@ notes:
   - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
   - "Add 1 cycle if adding index crosses a page boundary"
 ---
+<div class="marginNote">
+  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
+</div>
 <p>
   EOR performs a bitwise logical Exclusive-OR of the value in the accumulator with that of the memory location with the result stored
   in the accumulator.
 </p>
+<div class="marginNote">
+  For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
+</div>
 <p>
   The result will be each bit in the accumulator will be set ONLY if that same bit in the original accumulator
   value and the memory differ. If the bits were the same then the resultant bit will be 0.
@@ -226,12 +233,6 @@ notes:
   <tr><th>0</th><td>0</td><td>1</td></tr>
   <tr><th>1</th><td>1</td><td>0</td></tr>
 </table>
-<p>
-  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
-</p>
-<p>
-  For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
-</p>
 <p>
   Second it performs a logical AND of the memory and the accumulator.
   If the result is zero the z flag is set.

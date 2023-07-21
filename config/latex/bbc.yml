@@ -151,3 +151,32 @@ table:
       - colType: p
         colWidth: 4
         colUnit: cm
+  # 6502 instruction table
+  "m6502opcode":
+    fontSize: \footnotesize
+    columnSpec:
+        # Syntax
+      - colType: p
+        colWidth: 1.75
+        colUnit: cm
+        # Opcode
+      - colType: p
+        colWidth: 1.25
+        colUnit: cm
+        # 6502, 65c02, 65816
+      - colType: p
+        colWidth: 0.5
+        colUnit: cm
+        repeat: 3
+        # byte size
+      - colType: p
+        colWidth: 0.5
+        colUnit: cm
+        # cycles
+      - colType: p
+        colWidth: 1
+        colUnit: cm
+        # Address mode
+      - colType: p
+        colWidth: 2
+        colUnit: cm

@@ -1,6 +1,7 @@
 ---
 type: "manual"
-title: "BIT"
+title: "Test memory bits"
+titleClass: subsection
 linkTitle: "BIT"
 weight: 3
 description: "Test Memory Bits against Accumulator"
@@ -93,16 +94,16 @@ notes:
   Bit is a dual-purpose instruction which performs operations against the accumulator and memory.
   It is usually used immediately preceding a conditional branch instruction
 </p>
+<div class="marginNote">
+  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
+</div>
 <p>
   First it set's the n flag to reflect the value of the high bit of the data in memory
   and the v flag to the next-to-highest bit of that data.
 </p>
-<p>
-  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
-</p>
-<p>
+<div class="marginNote">
   For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
-</p>
+</div>
 <p>
   Second it performs a logical AND of the memory and the accumulator.
   If the result is zero the z flag is set.

@@ -1,6 +1,7 @@
 ---
 type: "manual"
-title: "Jump to location"
+title: "Unconditional Jump"
+titleClass: subsection
 linkTitle: "Jump"
 weight: 3
 description: "Transfer control to the address specified by the operand field."
@@ -101,23 +102,26 @@ notes:
 </p>
 
 <div class="printPageBreakAvoid">
-  <h2>JMP - Jump to location</h2>
+  <h2 class="subsubsection">JMP - Jump to location</h2>
   <p>
     The program counter is loaded with the target address. If a long JMP is executed the bank is loaded from the third
     byte of the address.
   </p>
-  <p>
+  <div class="marginNote">
     Some assemblers accept <strong>JML</strong> as an alternate mnemonic for <strong>JMP long</strong>.
-  </p>
+  </div>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BRA - Branch Always</h2>
+  <h2 class="subsubsection">BRA - Branch Always</h2>
   <p>
     A branch is always taken, no test is performed. It is equivalent to a JMP instruction, except that as it
     uses a signed displacement it is only 2 bytes in length instead of 3 for JMP.
     In addition, because it uses displacements, code using BRA is relocatable.
   </p>
+  <div class="marginNote">
+    BRA was introduced with the 65C02 processor.
+  </div>
   <p>
     The 1-byte signed displacement in the second byte of the instruction is sign-extended to 16-bits
     and added to the Program Counter.
@@ -126,26 +130,23 @@ notes:
   <p>
     The allowable range of the displacement is -128 to +127 from the instruction immediately following the branch.
   </p>
-  <p>
-    BRA was introduced with the 65C02 processor.
-  </p>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BRL - Branch Always Long</h2>
+  <h2 class="subsubsection">BRL - Branch Always Long</h2>
   <p>
     A branch is always taken, no test is performed. It is equivalent to a BRA instruction, except that
     BRL is a 3 byte instruction. The two bytes after the opcode form a 16-bit signed displacement
     from the Program Counter.
   </p>
+  <div class="marginNote">
+    BRL was introduced with the 65802 processor.
+  </div>
   <p>
     The allowable range of the displacement is anywhere within the current 64K program bank.
   </p>
   <p>
     The advantage of BRL is that it makes code relocatable,
     although it is 1 cycle slower than the absolute JMP instruction.
-  </p>
-  <p>
-    BRL was introduced with the 65802 processor.
   </p>
 </div>

@@ -1,6 +1,7 @@
 ---
 type: "manual"
-title: "TRB & TSB"
+title: "Test and alter memory"
+titleClass: subsection
 linkTitle: "TRB, TSB"
 weight: 3
 description: "Test & Set/Reset Memory Bits against Accumulator"
@@ -68,11 +69,17 @@ notes:
     2: "65816: Add 1 cycle if low byte of Direct Page register is not 0"
 ---
 <div class="printPageBreakAvoid">
-  <h2>TRB - Test & Reset memory against Accumulator</h2>
+  <h2 class="subsubsection">TRB - Test & Reset memory against Accumulator</h2>
+  <div class="marginNote">
+    For 8-bit processors or when m=1, the values in the accumulator & memory are 8-bit.
+  </div>
   <p>
     TRB logically AND's the <em>complement</em> of the accumulator with the data at an address and stores the result in
     that address.
   </p>
+  <div class="marginNote">
+    For 16-bit processors, when m=0, the values in the accumulator & memory are 16-bit.
+  </div>
   <p>
     This has the effect of clearing each memory bit which is set in the accumulator, leaving the other bits unchanged.
   </p>
@@ -82,16 +89,10 @@ notes:
     accumulator (not it's compliment) is zero.
   </p>
 
-  <p>
-    For 8-bit processors or when m=1, the values in the accumulator & memory are 8-bit.
-  </p>
-  <p>
-    For 16-bit processors, when m=0, the values in the accumulator & memory are 16-bit.
-  </p>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>TSB - Test & Set memory against Accumulator</h2>
+  <h2 class="subsubsection">TSB - Test & Set memory against Accumulator</h2>
   <p>
     TSB is identical to TRB except it sets the bits defined in the Accumulator not reset them.
   </p>

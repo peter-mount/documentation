@@ -1,6 +1,7 @@
 ---
 type: "manual"
-title: "Branch"
+title: "Conditional Branch"
+titleClass: subsection
 linkTitle: "Conditional Branch"
 weight: 3
 description: "Perform a test & branch based on that test"
@@ -154,10 +155,14 @@ notes:
   The allowable range of the displacement is -128 to +127 from the instruction immediately following the branch.
 </p>
 <div class="printPageBreakAvoid">
-  <h2>BCC - Branch if Carry Clear</h2>
+  <h2 class="subsubsection">BCC - Branch if Carry Clear</h2>
   <p>
     BCC tests the Carry flag and branches if it is clear.
   </p>
+  <div class="marginNote">
+    Some assemblers accept <strong>BLT</strong> <em>(Branch if Less Than)</em> as an alternate mnemonic for
+    <strong>BCC</strong>.
+  </div>
   <p>
     It can be used in several ways:
   </p>
@@ -165,18 +170,18 @@ notes:
     <li>Test the result of a shift into the carry</li>
     <li>Determine if the result of a comparison is <em>less than</em></li>
   </ul>
-  <p>
-    Some assemblers accept <strong>BLT</strong> <em>(Branch if Less Than)</em> as an alternate mnemonic for
-    <strong>BCC</strong>.
-  </p>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BCS - Branch if Carry Set</h2>
+  <h2 class="subsubsection">BCS - Branch if Carry Set</h2>
 
   <p>
     BCS tests the Carry flag and branches if it is set.
   </p>
+  <div class="marginNote">
+    Some assemblers accept <strong>BGE</strong> <em>(Branch if Greater Than or Equal)</em> as an alternate mnemonic for
+    <strong>BCS</strong>.
+  </div>
   <p>
     It can be used in several ways:
   </p>
@@ -184,14 +189,10 @@ notes:
     <li>Test the result of a shift into the carry</li>
     <li>Determine if the result of a comparison is <em>greater than or equal</em></li>
   </ul>
-  <p>
-    Some assemblers accept <strong>BGE</strong> <em>(Branch if Greater Than or Equal)</em> as an alternate mnemonic for
-    <strong>BCS</strong>.
-  </p>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BEQ - Branch if Equal</h2>
+  <h2 class="subsubsection">BEQ - Branch if Equal</h2>
   <p>
     BEQ tests the Zero flag and branches if it is set.
   </p>
@@ -207,7 +208,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BNE - Branch if Not Equal</h2>
+  <h2 class="subsubsection">BNE - Branch if Not Equal</h2>
   <p>
     BNE tests the Zero flag and branches if it is clear.
   </p>
@@ -223,7 +224,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BMI - Branch if Minus</h2>
+  <h2 class="subsubsection">BMI - Branch if Minus</h2>
   <p>
     BMI tests the Negative flag and branches if it is set.
     The high bit of the value most recently affected will set the N flag.
@@ -238,7 +239,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BPL - Branch if Positive</h2>
+  <h2 class="subsubsection">BPL - Branch if Positive</h2>
   <p>
     BPL tests the Negative flag and branches if it is clear.
     The high bit of the value most recently affected will set the N flag.
@@ -252,7 +253,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BVC - Branch if Overflow Clear</h2>
+  <h2 class="subsubsection">BVC - Branch if Overflow Clear</h2>
   <p>
     BVC tests the Overflow flag and branches if it is clear.
   </p>
@@ -275,7 +276,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>BVS - Branch if Overflow Set</h2>
+  <h2 class="subsubsection">BVS - Branch if Overflow Set</h2>
   <p>
     BVS tests the Overflow flag and branches if it is set.
     It has the same limitations as the BVC instruction.

@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "Increment"
+titleClass: subsection
 linkTitle: "Increment"
 weight: 3
 description: "Increment by one a register or a memory location"
@@ -112,6 +113,9 @@ notes:
 <p>
     The increment instructions add one to either a register or a memory location.
 </p>
+<div class="marginNote">
+  For all processors, the increment is an 8-bit operation unless m=0 on the 65816 in which case the increment is 16-bit.
+</div>
 <p>
   Unlike adding 1 with ADC, these instructions does not use the Carry flag in any way.
   You can test for wraparound only by testing after every increment to see if the result
@@ -120,26 +124,23 @@ notes:
 <p>
   The d flag does not affect these instructions. The increment is always in binary mode.
 </p>
-<p>
-  For all processors, the increment is an 8-bit operation unless m=0 on the 65816 in which case the increment is 16-bit.
-</p>
 
 <div class="printPageBreakAvoid">
-  <h2>INC - Increment</h2>
+  <h2 class="subsubsection">INC - Increment</h2>
   <p>
     Increment by 1 the contents of the memory location or accumulator.
   </p>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>INX - Increment Index Register X</h2>
+  <h2 class="subsubsection">INX - Increment Index Register X</h2>
   <p>
     Increment by 1 the X index register.
   </p>
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>INY - Increment Index Register Y</h2>
+  <h2 class="subsubsection">INY - Increment Index Register Y</h2>
   <p>
     Increment by 1 the Y index register.
   </p>

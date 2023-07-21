@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "Rotate Bits"
+titleClass: subsection
 linkTitle: "Rotate Bits"
 weight: 3
 description: "Test Memory Bits against Accumulator"
@@ -300,20 +301,20 @@ notes:
     2: "65816: Add 1 cycle if low byte of Direct Page register is not 0"
     3: "65C02: Subtract 1 cycle if no page boundary is crossed"
 ---
+<div class="marginNote">
+  On all processors the data shifted is 8 bits.
+</div>
 <p>
   The rotate instructions shifts the contents of the accumulator or memory location one bit either to the left or right.
 </p>
+
+<div class="marginNote">
+  On the 65816 with m=0, the data shifted is 16 bits.
+</div>
 <p>
   The ROL & ROR instructions will shift in the carry flag into the value.
   The ASL & LSR instructions shift in 0.
   The carry flag is set to the bit that was shifted out of the value.
-</p>
-
-<p>
-  On all processors the data shifted is 8 bits.
-</p>
-<p>
-  On the 65816 with m=0, the data shifted is 16 bits.
 </p>
 
 <table>
@@ -391,7 +392,7 @@ notes:
 </table>
 
 <div class="printPageBreakAvoid">
-  <h2>ASL - Shift Memory or Accumulator Left</h2>
+  <h2 class="subsubsection">ASL - Shift Memory or Accumulator Left</h2>
   <p>
     Shift the value left one bit.
     The left most bit is transferred into the carry flag.
@@ -401,7 +402,7 @@ notes:
     The arithmetic result of the operation is an unsigned multiplication by two.
   </p>
 
-  <h2>LSR - Logical Shift Memory or Accumulator Right</h2>
+  <h2 class="subsubsection">LSR - Logical Shift Memory or Accumulator Right</h2>
   <p>
     Shift the value right one bit.
     The right most bit is transferred into the carry flag.
@@ -413,7 +414,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>ROL - Rotate Memory or Accumulator Left</h2>
+  <h2 class="subsubsection">ROL - Rotate Memory or Accumulator Left</h2>
   <p>
     Shift the value left one bit.
     The right most bit is set to the initial value of the carry flag.
@@ -422,7 +423,7 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>ROR - Rotate Memory or Accumulator Right</h2>
+  <h2 class="subsubsection">ROR - Rotate Memory or Accumulator Right</h2>
   <p>
     Shift the value right one bit.
     The left most bit is set to the initial value of the carry flag.
@@ -431,38 +432,36 @@ notes:
 </div>
 
 <div class="printPageBreakAvoid">
-  <h2>Multi-word shifts</h2>
-  <p>
-    These instructions can be combined to handle multiple word values:
-  </p>
-  <h3>Multi-word shift left</h3>
+  <h2 class="subsubsection">Multi-word shift left</h2>
   <p>
     To shift left multiple words, use ASL for the first operation then ROL for the subsequent words.
   </p>
-  {{< highlight go "linenos=inline" >}}
+  <div class="marginNote">
+    For higher precision start the ASL on the lowest byte and use ROL for each higher order byte
+    in sequence until you hit the highest order byte.
+  </div>
+  <div class="sourceCode">
   ; Shift 16-bit value at &70 left 1 bit.
   ; This is effectively a multiplication by 2
   ASL &70 ; Shift left low-order byte
   ROL &71 ; Shift left high-order byte
   ; Carry will be set if we overflowed
-  {{< / highlight >}}
-  <p>
-    For higher precision simply add an additional ROL for the next order byte.
-  </p>
+  </div>
 
-  <h3>Multi-word shift right</h3>
+  <h2 class="subsubsection">Multi-word shift right</h2>
   <p>
     To shift right multiple words, use LSR for the first operation then ROR for the subsequent words.
     Unlike shifting left, here we have to start with the high-order byte first.
   </p>
-  {{< highlight go "linenos=inline" >}}
+  <div class="marginNote">
+    For higher precision just start the LSR on the highest order byte & use ROR for each lower order
+    in sequence until you get to the lowest byte.
+  </div>
+  <div class="sourceCode">
   ; Shift 16-bit value at &70 right 1 bit.
   ; This is effectively a division by 2
   LSR &71 ; Shift right high-order byte
   ROR &70 ; Shift right low-order byte
   ; Carry will have the remainder
-  {{< / highlight >}}
-  <p>
-    For higher precision just start the LSR on the higher order byte & use ROL for each lower order.
-  </p>
+  </div>
 </div>
