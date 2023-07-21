@@ -90,14 +90,11 @@ type TableRow struct {
 }
 
 func (t *TableRow) DeleteColumn(col int) {
-	switch {
-	case col == 0:
-		t.Cells = t.Cells[1:]
-	case col == len(t.Cells)-1:
-		t.Cells = t.Cells[:col]
-	default:
-		a := append([]*TableCell{}, t.Cells[:col]...)
-		t.Cells = append(a, t.Cells[col+1:]...)
+	if col < len(t.Cells) {
+		a := make([]*TableCell, 0)
+		a = append(a, t.Cells[:col]...)
+		a = append(a, t.Cells[col+1:]...)
+		t.Cells = a
 	}
 }
 
