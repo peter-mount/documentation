@@ -49,3 +49,8 @@ func (c *Converter) em(n *html.Node, ctx context.Context) error {
 func (c *Converter) strong(n *html.Node, ctx context.Context) error {
 	return handleSimpleCommand(`\textbf`, n, ctx)
 }
+
+// code handles the em html element
+func (c *Converter) sup(n *html.Node, ctx context.Context) error {
+	return handleSimpleCommand(`\textsuperscript`, n, ctx)
+}

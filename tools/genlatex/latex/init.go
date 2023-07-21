@@ -83,8 +83,8 @@ func New(config string) (*Converter, error) {
 		Handle("table", c.table).
 		Handle("small", handleChildren).
 		Handle("span", handleChildren).
-		Handle("strong", handleChildren).
-		Handle("sup", c.strong).
+		Handle("strong", c.strong).
+		Handle("sup", c.sup).
 		Handle("ul", c.ul).
 		// These elements are ignored
 		Handle("bookMeta", nil)
