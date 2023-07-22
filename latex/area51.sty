@@ -6,6 +6,7 @@
 \RequirePackage{setspace}
 \RequirePackage{xcolor}
 \RequirePackage{transparent}
+\RequirePackage[many]{tcolorbox}
 
 % simple forLoop using multido https://stackoverflow.com/a/27339164
 \newcommand{\forLoop}[4][1]{\multido{\i=#2+#1}{#3}{#4}}
@@ -41,6 +42,15 @@
         \hskip-.5\fboxrule
     }%
     \endgroup
+}
+
+% dimcfbox[borders]{colour}{width}{height}{text}
+\newcommand\dimcfbox[5][lbrt]{%
+    \cfbox[#1]{#2}{%
+        \vbox to #4 {%
+            \hbox to #3 {#5}%
+        }%
+    }%
 }
 
 %--------------------------------------------------------------------------------------------------
@@ -147,5 +157,57 @@
     }%
     \endgroup%
 }
+
+%--------------------------------------------------------------------------------------------------
+% Processor flags
+\newcommand\processorFlagHeight{0.3cm}
+\newcommand\processorFlagWidth{0.25cm}
+\newcommand\processorFlagLabelWidth{1cm}
+
+\newcommand\processorFlags[1]{
+    \begingroup
+    \normalsize{#1}
+    \endgroup
+}
+
+\newcommand\processorFlagRow[1]{%
+    \begingroup%
+    \sbox{0}{#1}%
+    \ht0=\dimexpr \processorFlagHeight + 0.5\fboxsep + \fboxrule\relax%
+    \usebox{0}%
+    \endgroup%
+    \\\relax
+}
+
+\newtcbox{\processorFlag}{blank, boxsep=0mm,
+    clip upper, minipage,
+    width=0.4cm, height=0.4cm,nobeforeafter,
+    halign=center, valign=center,
+    borderline={0.4pt}{0pt}{blue!20!white},
+}
+
+\newtcbox{\processorFlagHeader}{blank, boxsep=0mm,
+    clip upper, minipage,
+    width=1cm, height=0.4cm,nobeforeafter,
+    halign=right, valign=center, right*=2pt,
+}
+
+\newtcbox{\processorFlagLabel}{blank, boxsep=0mm,
+    clip upper, minipage,
+    halign=right, valign=center, right*=2pt,
+    fontupper=\small,
+    width=1cm, height=0.4cm,nobeforeafter,
+}
+
+\newtcbox{\processorFlagDef}{blank, boxsep=0mm,
+    clip upper, minipage,
+    halign=left, valign=center,
+    fontupper=\small,
+    width=8cm, height=0.4cm,nobeforeafter,
+}
+
+%\newcommand\processorFlag[1]{\dimcfbox[trb]{black}{\processorFlagWidth}{\processorFlagHeight}{#1}}
+%\newcommand\processorFlagHeader[1]{\dimcfbox[tblr]{black}{\processorFlagLabelWidth}{\processorFlagHeight}{\hfil{#1}~}}
+%\newcommand\processorFlagLabel[1]{\dimcfbox[]{black}{\processorFlagLabelWidth}{\processorFlagHeight}{\hfil{#1}~}}
 
 %--------------------------------------------------------------------------------------------------

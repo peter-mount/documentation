@@ -2,6 +2,7 @@ package latex
 
 import (
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 	"strings"
@@ -11,9 +12,9 @@ import (
 func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 	s := c.Stylesheet()
 
-	_ = Writef(ctx, "%% Generated %s\n", time.Now().Format(time.RFC3339))
+	_ = util.Writef(ctx, "%% Generated %s\n", time.Now().Format(time.RFC3339))
 
-	_ = WriteString(ctx, `\documentclass[
+	_ = util.WriteString(ctx, `\documentclass[
     a4paper, % Page size
     fontsize=10pt, % Base font size
     twoside=true, % Use different layouts for even and odd pages (in particular, if twoside=true, the margin column will be always on the outside)
@@ -34,10 +35,11 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 `)
 
 	for _, p := range s.UsePackage {
-		_ = Writef(ctx, "\\usepackage{%s}\n", strings.TrimSpace(p))
+		_ = util.Writef(ctx, "\\usepackage{%s}\n", strings.TrimSpace(p))
 	}
 
-	_ = WriteString(ctx, `
+	_ = util.WriteString(ctx, `
+\usepackage{area51}
 
 % Load the bibliography package
 \usepackage{kaobiblio}
@@ -66,10 +68,10 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 `)
 
 	for _, p := range s.Preamble {
-		_ = WriteStringLn(ctx, p)
+		_ = util.WriteStringLn(ctx, p)
 	}
 
-	_ = WriteStringLn(ctx, `\begin{document}`)
+	_ = util.WriteStringLn(ctx, `\begin{document}`)
 
 	info := make(map[string]string)
 
@@ -103,11 +105,11 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 
 	for _, k := range []string{"titlehead", "subject", "title", "subtitle", "author", "date", "publishers"} {
 		if v, ok := info[k]; ok {
-			_ = Writef(ctx, "\\%s%s\n", k, v)
+			_ = util.Writef(ctx, "\\%s%s\n", k, v)
 		}
 	}
 
-	_ = WriteString(ctx, `\frontmatter
+	_ = util.WriteString(ctx, `\frontmatter
 
 \makeatletter
 \uppertitleback{\@titlehead} % Header
@@ -116,7 +118,7 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 `)
 
 	if copyright, ok := info["copyright"]; ok {
-		_ = Writef(ctx, `
+		_ = util.Writef(ctx, `
 	\textbf{Copyright}\\
 	This book is copyright %s.
 	\medskip
@@ -124,7 +126,7 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 `, copyright)
 	}
 
-	_ = WriteString(ctx, `
+	_ = util.WriteString(ctx, `
 	\textbf{Colophon} \\
 	This document was typeset with the help of \href{https://www.latex-project.org/}{\LaTeX} using the \href{https://github.com/fmarotta/kaobook/}{kaobook} class.
 	
@@ -144,7 +146,7 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 
 	// Dedication page here
 
-	_ = WriteString(ctx, `
+	_ = util.WriteString(ctx, `
 
 % Note that \maketitle outputs the pages before here
 
@@ -193,7 +195,7 @@ func (c *Converter) beginDocument(n *html.Node, ctx context.Context) error {
 
 func (c *Converter) endDocument(n *html.Node, ctx context.Context) error {
 
-	_ = WriteString(ctx, `
+	_ = util.WriteString(ctx, `
 
 %----------------------------------------------------------------------------------------
 

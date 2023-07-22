@@ -161,7 +161,7 @@ table:
         colUnit: cm
         # Opcode
       - colType: p
-        colWidth: 1.25
+        colWidth: 0.75
         colUnit: cm
         # 6502, 65c02, 65816
       - colType: p
@@ -174,9 +174,10 @@ table:
         colUnit: cm
         # cycles
       - colType: p
-        colWidth: 1
+        colWidth: 0.5
         colUnit: cm
         # Address mode
+      - hidden: true
       - colType: p
         colWidth: 2
         colUnit: cm

@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/peter-mount/documentation/tools/genlatex/latex"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/go-build/version"
 	"github.com/peter-mount/go-kernel/v2/log"
 	"golang.org/x/net/html"
@@ -48,7 +49,7 @@ func (s *LaTeX) Start() error {
 
 	ctx := context.Background()
 	if *s.Output == "-" {
-		ctx = latex.WithContext(os.Stdout, ctx)
+		ctx = util.WithContext(os.Stdout, ctx)
 	} else {
 		log.Println("Creating", *s.Output)
 		err = os.MkdirAll(filepath.Dir(*s.Output), 0755)
@@ -61,7 +62,7 @@ func (s *LaTeX) Start() error {
 			return err
 		}
 		defer f.Close()
-		ctx = latex.WithContext(f, ctx)
+		ctx = util.WithContext(f, ctx)
 	}
 
 	doc, err := html.Parse(resp.Body)

@@ -6,7 +6,7 @@ import (
 )
 
 func FindNode(n *html.Node, p Predicate) *html.Node {
-	if p(n) {
+	if n == nil || p(n) {
 		return n
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
@@ -27,6 +27,12 @@ func FindById(n *html.Node, id string) *html.Node {
 	})
 }
 
+func FindElement(n *html.Node, id string) *html.Node {
+	return FindNode(n, func(n *html.Node) bool {
+		return n.Type == html.ElementNode && n.Data == id
+	})
+}
+
 func GetText(n *html.Node) string {
 	var s []string
 	s = getText(s, n)
@@ -34,12 +40,14 @@ func GetText(n *html.Node) string {
 }
 
 func getText(s []string, n *html.Node) []string {
-	switch n.Type {
-	case html.TextNode:
-		s = append(s, n.Data)
-	case html.ElementNode:
-		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			s = getText(s, c)
+	if n != nil {
+		switch n.Type {
+		case html.TextNode:
+			s = append(s, n.Data)
+		case html.ElementNode:
+			for c := n.FirstChild; c != nil; c = c.NextSibling {
+				s = getText(s, c)
+			}
 		}
 	}
 	return s

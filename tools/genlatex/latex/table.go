@@ -3,6 +3,8 @@ package latex
 import (
 	"bytes"
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/custom"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
@@ -43,11 +45,15 @@ func getTableColCount(n *html.Node, ctx context.Context) int {
 func (c *Converter) table(n *html.Node, ctx context.Context) error {
 	// If we are nested then add a \\ prefix
 	if stylesheet.TableFromContext(ctx) != nil {
-		_ = Write(ctx, ' ', '\\', '\\', '\n')
+		_ = util.Write(ctx, ' ', '\\', '\\', '\n')
+	}
+
+	if parser.HasClass(n, "processorFlags") {
+		return custom.ProcessorFlags(n, ctx)
 	}
 
 	// Needed to save state otherwise headers spanning pages will break subsequent tables
-	return group(c.tableImpl, n, ctx)
+	return util.Group(c.tableImpl, n, ctx)
 }
 
 func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
@@ -69,7 +75,7 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 	ctx = table.WithContext(ctx)
 
 	if table.FontSize != "" {
-		if err := WriteString(ctx, table.FontSize); err != nil {
+		if err := util.WriteString(ctx, table.FontSize); err != nil {
 			return err
 		}
 	}
@@ -92,7 +98,7 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 				return c.tr(n, ctx)
 
 			case "caption":
-				caption, err := handleChildrenString(n, ctx)
+				caption, err := util.HandleChildrenString(n, ctx)
 				if err != nil {
 					return err
 				}
@@ -105,7 +111,7 @@ func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {
 
 	if err == nil {
 		model.Finalise()
-		err = WriteString(ctx, model.String())
+		err = util.WriteString(ctx, model.String())
 	}
 
 	return err
@@ -138,7 +144,7 @@ func (c *Converter) tableHeader(f parser.Handler, n *html.Node, ctx context.Cont
 }
 
 func (c *Converter) tableCaption(n *html.Node, ctx context.Context) error {
-	return nil // TODO handleChildren(n, ctx)
+	return nil // TODO HandleChildren(n, ctx)
 }
 
 const (
@@ -155,7 +161,7 @@ func cellDelimiter(firstCell bool, ctx context.Context) (bool, error) {
 	if firstCell {
 		return false, nil
 	} else {
-		return false, WriteString(ctx, " & ")
+		return false, util.WriteString(ctx, " & ")
 	}
 }
 
@@ -208,11 +214,11 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				ts.table.SetCell(row, col, tableCell)
 
 				var buf bytes.Buffer
-				cellCtx := WithContext(&buf, ctx)
+				cellCtx := util.WithContext(&buf, ctx)
 
 				if err == nil && tabularCell {
 					// Wrap col content within a tabular block, so we can then use \\ as a line break
-					err = Writef(cellCtx,
+					err = util.Writef(cellCtx,
 						`\begin{tblr}[%s]{@{}%s@{}}`,
 						"t",
 						stylesheet.DefStrings(
@@ -223,12 +229,12 @@ func (c *Converter) tr(n *html.Node, ctx context.Context) error {
 				}
 
 				if err == nil {
-					err = handleChildren(n, cellCtx)
+					err = util.HandleChildren(n, cellCtx)
 				}
 
 				if err == nil && tabularCell {
 					// Wrap col content within a tabular block, so we can then use \\ as a line break
-					err = WriteString(cellCtx, `\end{tblr}`)
+					err = util.WriteString(cellCtx, `\end{tblr}`)
 				}
 
 				tableCell.Text = buf.String()

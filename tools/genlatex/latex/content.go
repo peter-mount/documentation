@@ -2,6 +2,7 @@ package latex
 
 import (
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
@@ -11,7 +12,7 @@ import (
 func (c *Converter) text(n *html.Node, ctx context.Context) error {
 	s := strings.TrimSpace(n.Data)
 	if s != "" {
-		return WriteString(ctx, EscapeText(s))
+		return util.WriteString(ctx, EscapeText(s))
 	}
 	return nil
 }
@@ -25,9 +26,9 @@ func (c *Converter) paragraph(n *html.Node, ctx context.Context) error {
 		return c.sideNote(n, ctx)
 	}
 
-	err := handleChildren(n, ctx)
+	err := util.HandleChildren(n, ctx)
 	if err == nil {
-		err = WriteStringLn(ctx, "\n")
+		err = util.WriteStringLn(ctx, "\n")
 	}
 	return err
 }
@@ -35,22 +36,22 @@ func (c *Converter) paragraph(n *html.Node, ctx context.Context) error {
 // Appends \\ to the end of the current line to indicate a line break
 func (c *Converter) lineBreak(_ *html.Node, ctx context.Context) error {
 	if stylesheet.TableFromContext(ctx) != nil {
-		return WriteStringLn(ctx, `\\`)
+		return util.WriteStringLn(ctx, `\\`)
 	}
-	return WriteStringLn(ctx, `\hfill \break`)
+	return util.WriteStringLn(ctx, `\hfill \break`)
 }
 
 // code handles the em html element
 func (c *Converter) em(n *html.Node, ctx context.Context) error {
-	return handleSimpleCommand(`\textsl`, n, ctx)
+	return util.HandleSimpleCommand(`\textsl`, n, ctx)
 }
 
 // code handles the em html element
 func (c *Converter) strong(n *html.Node, ctx context.Context) error {
-	return handleSimpleCommand(`\textbf`, n, ctx)
+	return util.HandleSimpleCommand(`\textbf`, n, ctx)
 }
 
 // code handles the em html element
 func (c *Converter) sup(n *html.Node, ctx context.Context) error {
-	return handleSimpleCommand(`\textsuperscript`, n, ctx)
+	return util.HandleSimpleCommand(`\textsuperscript`, n, ctx)
 }

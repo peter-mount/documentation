@@ -2,6 +2,7 @@ package latex
 
 import (
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 )
@@ -9,10 +10,10 @@ import (
 func (c *Converter) div(n *html.Node, ctx context.Context) error {
 	switch {
 	case parser.HasClass(n, "printPageBreakAvoid"):
-		return environment("samepage", n, ctx)
+		return util.Environment("samepage", n, ctx)
 
 	case parser.HasClass(n, "lead"):
-		return environment("huge", n, ctx)
+		return util.Environment("huge", n, ctx)
 
 	case parser.HasClass(n, "sourceCode"):
 		return c.sourceCode(n, ctx)
@@ -24,26 +25,26 @@ func (c *Converter) div(n *html.Node, ctx context.Context) error {
 		return c.sideNote(n, ctx)
 
 	default:
-		return handleChildren(n, ctx)
+		return util.HandleChildren(n, ctx)
 	}
 }
 
 func (c *Converter) marginNote(n *html.Node, ctx context.Context) error {
 	// \marginnote[offset]{text}
-	err := WriteString(ctx, `\marginnote`)
+	err := util.WriteString(ctx, `\marginnote`)
 	// TODO add optional [offset[ as an optional attribute
 	if err == nil {
-		err = handleBracedChildren(n, ctx)
+		err = util.HandleBracedChildren(n, ctx)
 	}
 	return nil
 }
 
 func (c *Converter) sideNote(n *html.Node, ctx context.Context) error {
 	// \sidenote[offset]{text}
-	err := WriteString(ctx, `\sidenote`)
+	err := util.WriteString(ctx, `\sidenote`)
 	// TODO add optional [offset[ as an optional attribute
 	if err == nil {
-		err = handleBracedChildren(n, ctx)
+		err = util.HandleBracedChildren(n, ctx)
 	}
 	return nil
 }

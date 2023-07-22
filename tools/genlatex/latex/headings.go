@@ -2,6 +2,7 @@ package latex
 
 import (
 	"context"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"golang.org/x/net/html"
 )
@@ -57,15 +58,15 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 	default:
 		style = StyleSection
 	}
-	err = WriteString(ctx, style)
+	err = util.WriteString(ctx, style)
 
 	if err == nil {
-		err = Write(ctx, '{')
+		err = util.Write(ctx, '{')
 	}
 
 	return err
 }
 
 func (c *Converter) headingEnd(n *html.Node, ctx context.Context) error {
-	return Write(ctx, '}', '\n')
+	return util.Write(ctx, '}', '\n')
 }

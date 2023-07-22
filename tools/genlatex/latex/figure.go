@@ -24,7 +24,7 @@ func (c *Converter) figureCaptionStart(n *html.Node, ctx context.Context) error 
 	// FIXME these are temp holders until I find out how LaTeX handles figures
 	//err := WriteString(ctx, "\\figure-caption{\n")
 	//if err == nil {
-	//err := handleChildren(n, ctx)
+	//err := HandleChildren(n, ctx)
 	//}
 	//return err
 	return nil

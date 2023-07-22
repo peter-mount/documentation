@@ -1,16 +1,11 @@
 package latex
 
 import (
-	"bytes"
-	"context"
-	"fmt"
+	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
-	"golang.org/x/net/html"
 	"gopkg.in/yaml.v2"
-	"io"
 	"os"
-	"unsafe"
 )
 
 type Converter struct {
@@ -52,13 +47,13 @@ func New(config string) (*Converter, error) {
 	content.
 		Text(c.text).
 		// anchor is ignored, just parse it's content
-		Handle("a", handleChildren).
+		Handle("a", util.HandleChildren).
 		Handle("br", c.lineBreak).
 		Handle("code", c.code).
 		Handle("div", c.div).
-		Handle("dd", handleChildren).
-		Handle("dl", handleChildren).
-		Handle("dt", handleChildren).
+		Handle("dd", util.HandleChildren).
+		Handle("dl", util.HandleChildren).
+		Handle("dt", util.HandleChildren).
 		Handle("em", c.em).
 		Handle("figure", parser.Of(
 			c.figureStart,
@@ -79,10 +74,10 @@ func New(config string) (*Converter, error) {
 		Handle("li", c.li).
 		Handle("ol", c.ol).
 		Handle("p", c.paragraph).
-		Handle("pre", handleChildren).
+		Handle("pre", util.HandleChildren).
 		Handle("table", c.table).
-		Handle("small", handleChildren).
-		Handle("span", handleChildren).
+		Handle("small", util.HandleChildren).
+		Handle("span", util.HandleChildren).
 		Handle("strong", c.strong).
 		Handle("sup", c.sup).
 		Handle("ul", c.ul).
@@ -97,89 +92,10 @@ func New(config string) (*Converter, error) {
 				content.Handler().
 					HasClasses("td-content", "td-content-new").
 					HandleChildren).
-			Default(handleChildren).
+			Default(util.HandleChildren).
 			Handler().
 			FindByClass("td-main", "td-main-new"),
 		c.endDocument)
 
 	return c, nil
-}
-
-func WithContext(w io.Writer, ctx context.Context) context.Context {
-	return context.WithValue(ctx, "writer", w)
-}
-
-func Writer(ctx context.Context) io.Writer {
-	return ctx.Value("writer").(io.Writer)
-}
-
-func Write(ctx context.Context, b ...byte) error {
-	if len(b) == 0 {
-		return nil
-	}
-
-	_, err := Writer(ctx).Write(b)
-	return err
-}
-
-func WriteString(ctx context.Context, s string) error {
-	if s == "" {
-		return nil
-	}
-
-	b := unsafe.Slice(unsafe.StringData(s), len(s))
-	return Write(ctx, b...)
-}
-
-func Writef(ctx context.Context, f string, a ...any) error {
-	return WriteString(ctx, fmt.Sprintf(f, a...))
-}
-
-func WriteStringLn(ctx context.Context, s string) error {
-	return WriteString(ctx, s+"\n")
-}
-
-func Comment(ctx context.Context, f string, a ...any) error {
-	return Writef(ctx, "%% "+f+"\n", a...)
-}
-
-func handleChildren(n *html.Node, ctx context.Context) error {
-	return parser.HandleChildren(parser.ScannerFromContext(ctx).Handle, n, ctx)
-}
-
-// handleChildrenString is the same as handleChildren except it returns the
-// content as a string rather than write it to the stream.
-func handleChildrenString(n *html.Node, ctx context.Context) (string, error) {
-	var buf bytes.Buffer
-	err := handleChildren(n, WithContext(&buf, ctx))
-	if err != nil {
-		return "", err
-	}
-	return buf.String(), nil
-}
-
-func handleBracedChildren(n *html.Node, ctx context.Context) error {
-	return handleWrapped('{', '}', n, ctx)
-}
-
-func handleWrapped(s, e byte, n *html.Node, ctx context.Context) error {
-	err := Write(ctx, s)
-
-	if err == nil {
-		err = handleChildren(n, ctx)
-	}
-
-	if err == nil {
-		err = Write(ctx, e)
-	}
-
-	return err
-}
-
-func handleSimpleCommand(c string, n *html.Node, ctx context.Context) error {
-	err := WriteString(ctx, c)
-	if err == nil {
-		err = handleBracedChildren(n, ctx)
-	}
-	return err
 }

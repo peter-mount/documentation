@@ -7,6 +7,16 @@
 <div class="printPageBreakAvoid">
     <h5>Instructions</h5>
     {{- end -}}
+
+    {{- if isset $.Params "notes" -}}
+    {{- range $n, $e := $.Params.notes }}
+    <div class="marginNote">
+        <strong>{{$n}}</strong>
+        {{ $e -}}
+    </div>
+    {{ end -}}
+    {{ end -}}
+
     <table class="m6502opcode table table-striped table-hover table-sm table-borderless">
         <thead>
         <tr>
@@ -236,15 +246,4 @@
 </div>
 {{- end -}}
 {{- end -}}
-{{- end -}}
-
-{{- if isset $.Params "notes" -}}
-<div class="printPageBreakAvoid">
-    <h3>Notes:</h3>
-    <ol>
-        {{- range $.Params.notes }}
-        <li>{{.}}</li>
-        {{end -}}
-    </ol>
-</div>
 {{- end -}}
