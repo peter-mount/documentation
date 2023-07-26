@@ -8,11 +8,15 @@ import (
 )
 
 const (
-	StyleChapter       = `\chapter`
-	StyleSection       = `\section`
-	StyleSubSection    = `\subsection`
-	StyleSubSubSection = `\subsubsection`
-	StyleParagraph     = `\paragraph`
+	StyleChapter             = `\chapter`
+	StyleSection             = `\section`
+	StyleSectionPaged        = `\sectionpaged`
+	StyleSectionPagedLeft    = `\sectionpagedleft`
+	StyleSubSection          = `\subsection`
+	StyleSubSectionPaged     = `\subsectionpaged`
+	StyleSubSectionPagedLeft = `\subsectionpagedleft`
+	StyleSubSubSection       = `\subsubsection`
+	StyleParagraph           = `\paragraph`
 )
 
 // heading handles headings h1 h2 etc. based on class type
@@ -33,8 +37,20 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 	case parser.HasClass(n, "section"):
 		style = StyleSection
 
+	case parser.HasClass(n, "sectionpaged"):
+		style = StyleSectionPaged
+
+	case parser.HasClass(n, "sectionpagedleft"):
+		style = StyleSectionPagedLeft
+
 	case parser.HasClass(n, "subsection"):
 		style = StyleSubSection
+
+	case parser.HasClass(n, "subsectionpaged"):
+		style = StyleSubSectionPaged
+
+	case parser.HasClass(n, "subsectionpagedleft"):
+		style = StyleSubSectionPagedLeft
 
 	case parser.HasClass(n, "subsubsection"):
 		style = StyleSubSubSection

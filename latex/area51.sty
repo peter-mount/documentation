@@ -65,14 +65,8 @@
         halign=center, valign=top,
         halign lower=center, valign lower=bottom,
     }%
-    \in@{l}{#1}\ifin@{%
-        \renewcommand{\hexmapside}{l}%
-        {#2}%
-    }\fi%
-    \in@{r}{#1}\ifin@{%
-        \renewcommand{\hexmapside}{r}%
-        {#2}%
-    }\fi%
+    \in@{l}{#1}\ifin@{\renewcommand{\hexmapside}{l}{#2}}\fi%
+    \in@{r}{#1}\ifin@{\renewcommand{\hexmapside}{r}{#2}}\fi%
     \endgroup%
     \linebreak\relax%
 }
@@ -218,8 +212,10 @@
     width=8cm, height=0.4cm,nobeforeafter,
 }
 
-%\newcommand\processorFlag[1]{\dimcfbox[trb]{black}{\processorFlagWidth}{\processorFlagHeight}{#1}}
-%\newcommand\processorFlagHeader[1]{\dimcfbox[tblr]{black}{\processorFlagLabelWidth}{\processorFlagHeight}{\hfil{#1}~}}
-%\newcommand\processorFlagLabel[1]{\dimcfbox[]{black}{\processorFlagLabelWidth}{\processorFlagHeight}{\hfil{#1}~}}
-
 %--------------------------------------------------------------------------------------------------
+\newcommand*\cleartoleftpage{%
+    \clearpage
+    \ifodd\value{page}\hbox{}\newpage\fi
+}
+
+\newcommand{\subsectionpaged}[1]{\clearpage\subsection{#1}}

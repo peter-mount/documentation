@@ -1,7 +1,7 @@
 ---
 type: "manual"
 title: "ADC Add With Carry"
-titleClass: subsection
+titleClass: subsectionpaged
 linkTitle: "Addition"
 weight: 3
 description: "Add With Carry"
@@ -230,14 +230,14 @@ notes:
   - "Add 1 cycle if adding index crosses a page boundary"
   - "65C02: Add 1 cycle if d=1"
 ---
-<div class="marginNote">
-  On all processors, the data added from memory is 8-bit.
-</div>
 <p>
   Adds the data in the operand with the contents of the accumulator.
   Add 1 to the result if the carry flag is set.
   Store the final result in the accumulator.
 </p>
+<div class="marginNote">
+  On all processors, the data added from memory is 8-bit.
+</div>
 <div class="marginNote">
   For 16-bit processors with the m flag is clear then the data added is 16-bit
   with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
