@@ -93,7 +93,7 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 
 func (c *Converter) headingEnd(n *html.Node, ctx context.Context) error {
 	if parser.HasClasses(n, "subsubsectionbreak", "paragraphbreak") {
-		return util.WriteStringLn(ctx, `}\\~\\[-0.5\baselineskip]`)
+		return util.WriteStringLn(ctx, `}\\~\\[-\baselineskip]`)
 	}
 	return util.Write(ctx, '}', '\n')
 }
