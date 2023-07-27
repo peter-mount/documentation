@@ -4,11 +4,12 @@ import (
 	"context"
 	"github.com/peter-mount/documentation/tools/genlatex/latex/util"
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
+	util2 "github.com/peter-mount/documentation/tools/gensite/latex/util"
 	"golang.org/x/net/html"
 )
 
 func OpcodeTable6502(n *html.Node, ctx context.Context) error {
-	err := util.WriteString(ctx, "\n\n\\asmOpcodes{%\n")
+	err := util.WriteString(ctx, "\n\\asmOpcodes{")
 	if err == nil {
 		err = opcodeTableBody(n, ctx)
 	}
@@ -24,7 +25,7 @@ func opcodeTableBody(n *html.Node, ctx context.Context) error {
 		if c.Type == html.ElementNode {
 			switch c.Data {
 			case "thead":
-				if err := util.WriteString(ctx, "\\asmOpcodeHeader{}%\n"); err != nil {
+				if err := util.WriteString(ctx, "\\asmOpcodeHeader{}"); err != nil {
 					return err
 				}
 				// Embed any tableAlign marginNote
@@ -73,8 +74,22 @@ func opcodeTableCell(td *html.Node, ctx context.Context) error {
 	case parser.HasClass(td, "opcodeDef"):
 		return util.HandleSimpleCommand(`\asmOpcodeSyntax`, td, ctx)
 
-	case parser.HasClasses(td, "opcodeHex", "opcodeBytes", "opcodeCycles"):
+	case parser.HasClass(td, "opcodeHex"):
 		return util.HandleSimpleCommand(`\asmOpcodeCell`, td, ctx)
+
+	case parser.HasClasses(td, "opcodeBytes", "opcodeCycles"):
+		var left, right string
+		for c := td.FirstChild; c != nil; c = c.NextSibling {
+			switch c.Type {
+			case html.TextNode:
+				left = c.Data
+			case html.ElementNode:
+				if c.Data == "sup" {
+					right = parser.GetText(c)
+				}
+			}
+		}
+		return util.Writef(ctx, `\asmOpcodeWithNote{%s}{%s}`, util2.EscapeText(left), util2.EscapeText(right))
 
 	case parser.HasClass(td, "processorSupported"):
 		return util.WriteString(ctx, `\asmOpcodeSupported`)

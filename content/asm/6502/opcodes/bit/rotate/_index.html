@@ -391,77 +391,69 @@ notes:
   </tr>
 </table>
 
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">ASL - Shift Memory or Accumulator Left</h2>
-  <p>
-    Shift the value left one bit.
-    The left most bit is transferred into the carry flag.
-    The right most bit is cleared.
-  </p>
-  <p>
-    The arithmetic result of the operation is an unsigned multiplication by two.
-  </p>
+<h2 class="subsubsection">ASL - Shift Memory or Accumulator Left</h2>
+<p>
+  Shift the value left one bit.
+  The left most bit is transferred into the carry flag.
+  The right most bit is cleared.
+</p>
+<p>
+  The arithmetic result of the operation is an unsigned multiplication by two.
+</p>
 
-  <h2 class="subsubsection">LSR - Logical Shift Memory or Accumulator Right</h2>
-  <p>
-    Shift the value right one bit.
-    The right most bit is transferred into the carry flag.
-    The left most bit is cleared.
-  </p>
-  <p>
-    The arithmetic result of the operation is an unsigned division by two.
-  </p>
+<h2 class="subsubsection">LSR - Logical Shift Memory or Accumulator Right</h2>
+<p>
+  Shift the value right one bit.
+  The right most bit is transferred into the carry flag.
+  The left most bit is cleared.
+</p>
+<p>
+  The arithmetic result of the operation is an unsigned division by two.
+</p>
+
+<h2 class="subsubsection">ROL - Rotate Memory or Accumulator Left</h2>
+<p>
+  Shift the value left one bit.
+  The right most bit is set to the initial value of the carry flag.
+  The left most bit is transferred into the carry flag.
+</p>
+
+<h2 class="subsubsection">ROR - Rotate Memory or Accumulator Right</h2>
+<p>
+  Shift the value right one bit.
+  The left most bit is set to the initial value of the carry flag.
+  The right most bit is transferred into the carry flag.
+</p>
+
+<h2 class="subsubsection">Multi-word shift left</h2>
+<p>
+  To shift left multiple words, use ASL for the first operation then ROL for the subsequent words.
+</p>
+<div class="marginNote">
+  For higher precision start the ASL on the lowest byte and use ROL for each higher order byte
+  in sequence until you hit the highest order byte.
+</div>
+<div class="sourceCode">
+; Shift 16-bit value at &70 left 1 bit.
+; This is effectively a multiplication by 2
+ASL &70 ; Shift left low-order byte
+ROL &71 ; Shift left high-order byte
+; Carry will be set if we overflowed
 </div>
 
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">ROL - Rotate Memory or Accumulator Left</h2>
-  <p>
-    Shift the value left one bit.
-    The right most bit is set to the initial value of the carry flag.
-    The left most bit is transferred into the carry flag.
-  </p>
+<h2 class="subsubsection">Multi-word shift right</h2>
+<p>
+  To shift right multiple words, use LSR for the first operation then ROR for the subsequent words.
+  Unlike shifting left, here we have to start with the high-order byte first.
+</p>
+<div class="marginNote">
+  For higher precision just start the LSR on the highest order byte & use ROR for each lower order
+  in sequence until you get to the lowest byte.
 </div>
-
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">ROR - Rotate Memory or Accumulator Right</h2>
-  <p>
-    Shift the value right one bit.
-    The left most bit is set to the initial value of the carry flag.
-    The right most bit is transferred into the carry flag.
-  </p>
-</div>
-
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">Multi-word shift left</h2>
-  <p>
-    To shift left multiple words, use ASL for the first operation then ROL for the subsequent words.
-  </p>
-  <div class="marginNote">
-    For higher precision start the ASL on the lowest byte and use ROL for each higher order byte
-    in sequence until you hit the highest order byte.
-  </div>
-  <div class="sourceCode">
-  ; Shift 16-bit value at &70 left 1 bit.
-  ; This is effectively a multiplication by 2
-  ASL &70 ; Shift left low-order byte
-  ROL &71 ; Shift left high-order byte
-  ; Carry will be set if we overflowed
-  </div>
-
-  <h2 class="subsubsection">Multi-word shift right</h2>
-  <p>
-    To shift right multiple words, use LSR for the first operation then ROR for the subsequent words.
-    Unlike shifting left, here we have to start with the high-order byte first.
-  </p>
-  <div class="marginNote">
-    For higher precision just start the LSR on the highest order byte & use ROR for each lower order
-    in sequence until you get to the lowest byte.
-  </div>
-  <div class="sourceCode">
-  ; Shift 16-bit value at &70 right 1 bit.
-  ; This is effectively a division by 2
-  LSR &71 ; Shift right high-order byte
-  ROR &70 ; Shift right low-order byte
-  ; Carry will have the remainder
-  </div>
+<div class="sourceCode">
+; Shift 16-bit value at &70 right 1 bit.
+; This is effectively a division by 2
+LSR &71 ; Shift right high-order byte
+ROR &70 ; Shift right low-order byte
+; Carry will have the remainder
 </div>

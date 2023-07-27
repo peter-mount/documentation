@@ -117,7 +117,7 @@ notes:
   For all processors, the decrement is an 8-bit operation unless m=0 on the 65816 in which case the decrement is 16-bit.
 </div>
 <p>
-  Unlike subtracting 1 with ADC, these instructions does not use the Carry flag in any way.
+  Unlike subtracting 1 with SBC, these instructions does not use the Carry flag in any way.
   You can test for wraparound only by testing after every decrement to see if the result
   is zero or negative.
 </p>
@@ -125,23 +125,17 @@ notes:
   The d flag does not affect these instructions. The decrement is always in binary mode.
 </p>
 
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">DEC - Decrement</h2>
-  <p>
-    Decrement by 1 the contents of the memory location or accumulator.
-  </p>
-</div>
+<h2 class="subsubsection">DEC - Decrement</h2>
+<p>
+  Decrement by 1 the contents of the memory location or accumulator.
+</p>
 
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">DEX - Decrement Index Register X</h2>
-  <p>
-    Decrement by 1 the X index register.
-  </p>
-</div>
+<h2 class="subsubsection">DEX - Decrement Index Register X</h2>
+<p>
+  Decrement by 1 the X index register.
+</p>
 
-<div class="printPageBreakAvoid">
-  <h2 class="subsubsection">DEY - Decrement Index Register Y</h2>
-  <p>
-    Decrement by 1 the Y index register.
-  </p>
-</div>
+<h2 class="subsubsection">DEY - Decrement Index Register Y</h2>
+<p>
+  Decrement by 1 the Y index register.
+</p>

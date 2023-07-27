@@ -10,7 +10,7 @@ import (
 // ProcessorFlags handles the processorFlags table which is not a true table
 func ProcessorFlags(n *html.Node, ctx context.Context) error {
 
-	err := util.WriteString(ctx, "\n\n\\processorFlags{%\n")
+	err := util.WriteString(ctx, "\n\\processorFlags{")
 	if err == nil {
 		err = processorFlagsBody(n, ctx)
 	}
