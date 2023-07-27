@@ -47,7 +47,8 @@ func (s *LaTeX) Start() error {
 	}
 	defer resp.Body.Close()
 
-	ctx := context.Background()
+	ctx := util.NewBuffers(context.Background())
+
 	if *s.Output == "-" {
 		ctx = util.WithContext(os.Stdout, ctx)
 	} else {

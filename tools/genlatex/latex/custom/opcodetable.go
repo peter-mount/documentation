@@ -13,7 +13,7 @@ func OpcodeTable6502(n *html.Node, ctx context.Context) error {
 		err = opcodeTableBody(n, ctx)
 	}
 	if err == nil {
-		err = util.WriteString(ctx, "}\n")
+		err = util.WriteString(ctx, "}")
 	}
 	return err
 }
@@ -26,6 +26,13 @@ func opcodeTableBody(n *html.Node, ctx context.Context) error {
 			case "thead":
 				if err := util.WriteString(ctx, "\\asmOpcodeHeader{}%\n"); err != nil {
 					return err
+				}
+				// Embed any tableAlign marginNote
+				notes := util.BuffersFromContext(ctx).GetBytes("marginNote")
+				if notes != nil {
+					if err := util.Write(ctx, notes...); err != nil {
+						return err
+					}
 				}
 
 			case "tbody":

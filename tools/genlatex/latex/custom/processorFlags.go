@@ -15,7 +15,7 @@ func ProcessorFlags(n *html.Node, ctx context.Context) error {
 		err = processorFlagsBody(n, ctx)
 	}
 	if err == nil {
-		err = util.WriteString(ctx, "}\n")
+		err = util.WriteString(ctx, "}")
 	}
 	return err
 }
