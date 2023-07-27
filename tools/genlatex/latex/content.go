@@ -48,7 +48,7 @@ func (c *Converter) em(n *html.Node, ctx context.Context) error {
 
 // code handles the em html element
 func (c *Converter) strong(n *html.Node, ctx context.Context) error {
-	return util.HandleSimpleCommand(`\textbf`, n, ctx)
+	return util.HandleSimpleCommandSpace(`\textbf`, n, ctx)
 }
 
 // code handles the em html element

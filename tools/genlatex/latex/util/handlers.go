@@ -56,3 +56,12 @@ func HandleSimpleCommand(c string, n *html.Node, ctx context.Context) error {
 	}
 	return err
 }
+
+// HandleSimpleCommandSpace is the same as HandleSimpleCommand but appends a space to the output
+func HandleSimpleCommandSpace(c string, n *html.Node, ctx context.Context) error {
+	err := HandleSimpleCommand(c, n, ctx)
+	if err == nil {
+		err = Write(ctx, ' ')
+	}
+	return err
+}
