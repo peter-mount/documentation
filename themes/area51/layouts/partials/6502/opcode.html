@@ -1,3 +1,9 @@
+{{- define "opcodeProcessorSupported" -}}
+{{- if . }}<td class="processorSupported">x</td>
+{{- else }}<td class="processorUnsupported"></td>
+{{- end -}}
+{{- end -}}
+
 {{- if reflect.IsMap .Params.flags }}{{ partial "6502/flags.html" . }}{{end -}}
 {{- if isset .Params "hide_codes" -}}{{- else -}}
 {{- if isset .Params "codes" -}}
@@ -5,7 +11,7 @@
 {{- if isset .Params "code_axis" | not -}}
 {{- if isset .Params "notitle" | not -}}
 <div class="printPageBreakAvoid">
-    <h5>Instructions</h5>
+    <h5 class="paragraphbreak">Instructions</h5>
     {{- end -}}
 
     {{- if isset $.Params "notes" -}}
@@ -56,12 +62,12 @@
         {{- $op := $.Scratch.Get "op" -}}
         <tr>
             {{- if isset $.Params "src" }}
-            <td>{{.src}}</td>
+            <td class="opcodeSrc">{{.src}}</td>
             {{end -}}
             {{- if isset $.Params "dest" }}
-            <td>{{.dest}}</td>
+            <td class="opcodedest">{{.dest}}</td>
             {{end -}}
-            <td>
+            <td class="opcodeDef">
                 {{- /* only create 1 index entry per opcode */ -}}
                 {{- if ne ($.Scratch.Get "lastop") $op -}}
                 {{- $.Scratch.Set "lastop" $op -}}
@@ -71,17 +77,17 @@
                 {{ partial "6502/instruction.html" (dict "op" $op "mode" .addressing "val" "addr") }}
             </td>
             {{- if isset $.Params "alt" }}
-            <td>{{.alt}}</td>
+            <td class="opcodeAlt">{{.alt}}</td>
             {{end -}}
-            <td>{{.code}}</td>
-            <td>{{ if isset .compatibility "6502" }}x{{end }}</td>
-            <td>{{ if isset .compatibility "65c02" }}x{{end }}</td>
-            <td>{{ if isset .compatibility "65816" }}x{{end }}</td>
-            <td>{{ partial "6502/notablevalue.html" .bytes }}</td>
-            <td>{{ partial "6502/notablevalue.html" .cycles }}</td>
-            <td>{{ partial "6502/addressmode.html" .addressing }}</td>
+            <td class="opcodeHex">{{.code}}</td>
+            {{- template "opcodeProcessorSupported" (isset .compatibility "6502") -}}
+            {{- template "opcodeProcessorSupported" (isset .compatibility "65c02") -}}
+            {{- template "opcodeProcessorSupported" (isset .compatibility "65816") -}}
+            <td class="opcodeBytes">{{ partial "6502/notablevalue.html" .bytes }}</td>
+            <td class="opcodeCycles">{{ partial "6502/notablevalue.html" .cycles }}</td>
+            <td class="opcodeAddressing">{{ partial "6502/addressmode.html" .addressing }}</td>
             {{- if isset $.Params "altright" }}
-            <td>{{.altright}}</td>
+            <td class="opcodeAltRight">{{.altright}}</td>
             {{end -}}
         </tr>
         {{- end -}}

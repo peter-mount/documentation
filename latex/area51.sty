@@ -12,6 +12,11 @@
 \newcommand{\forLoop}[4][1]{\multido{\i=#2+#1}{#3}{#4}}
 
 %--------------------------------------------------------------------------------------------------
+\RequirePackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+%--------------------------------------------------------------------------------------------------
 % cfbox which allows a coloured border around a box to be drawn based on which border
 % we want
 % see https://tex.stackexchange.com/a/55534
@@ -113,7 +118,10 @@
 %--------------------------------------------------------------------------------------------------
 % font for opcodecell - tends to be 6pt to fit z80 instructions or 32 bit opcodes
 \makeatletter
+% 6 point font
 \newcommand\opcodecellfont{\@setfontsize\opcodecellfont\@vipt\@viipt}
+% 9 point font
+\newcommand\opcodedeffont{\@setfontsize\opcodedeffont\@ixpt\@xpt}
 \makeatother
 
 %--------------------------------------------------------------------------------------------------
@@ -213,19 +221,87 @@
 }
 
 %--------------------------------------------------------------------------------------------------
-\newcommand*\cleartoleftpage{%
-    \clearpage
-    \ifodd\value{page}\hbox{}\newpage\fi
-}
+% Page breaks
+%
+% \cleartoleftpage ensures that the next page used is the left hand side.
+% Use this if you need content to span both pages, e.g. hexmap
+\newcommand*\cleartoleftpage{\clearpage\ifodd\value{page}\hbox{}\newpage\fi}
 
+% Extends \section to start either the next page, next left or next right page
 \newcommand{\sectionpaged}[1]{\clearpage\section{#1}}
 
 \newcommand{\sectionpagedleft}[1]{\cleartoleftpage\section{#1}}
 
 \newcommand{\sectionpagedright}[1]{\cleardoublepage\section{#1}}
 
+% Extends \subsection to start either the next page, next left or next right page
 \newcommand{\subsectionpaged}[1]{\clearpage\subsection{#1}}
 
 \newcommand{\subsectionpagedleft}[1]{\cleartoleftpage\subsection{#1}}
 
 \newcommand{\subsectionpagedright}[1]{\cleardoublepage\subsection{#1}}
+
+%--------------------------------------------------------------------------------------------------
+% used when converting the partials/6502/opcode.html table
+\newcommand{\asmOpcodes}[1]{%
+    \begingroup
+    \opcodedeffont{
+        \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1cm, height=9pt,nobeforeafter,
+        halign=center, valign=top,
+        halign lower=center, valign lower=bottom,
+        }
+        {#1}
+    }
+    \endgroup
+}
+
+\newcommand{\asmOpcodeRow}[1]{%
+    \begingroup%
+    \sbox{0}{#1}%
+    %\ht0=\dimexpr \baselineskip - 2pt - 0pt\relax%
+    \usebox{0}%
+    \\[-2pt]\relax%
+    \endgroup%
+}
+
+\newcommand{\asmOpcodeRawCell}[2]{%
+    \begin{tcolorbox}[
+        blank, boxsep=0mm,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        nobeforafter, valign=center,
+        #1
+    ]{#2}\end{tcolorbox}%
+}
+
+\newcommand{\asmOpcodeSyntax}[1]{\asmOpcodeRawCell{width=20mm, halign=left}{#1}}
+
+\newcommand{\asmOpcodeCell}[2][1]{\asmOpcodeRawCell{width=10mm*(#1), halign=center}{#2}}
+
+% Override these to change the style of supported/unsupported opcodes
+\newcommand{\asmOpcodeSupported}{\asmOpcodeCell{\cmark}}
+\newcommand{\asmOpcodeUnsupported}{\asmOpcodeCell{~}}
+
+\newcommand{\asmOpcodeHeader}{%
+    \asmOpcodeRow{%
+        \asmOpcodeSyntax{~}%
+        \asmOpcodeCell{Opcode}%
+        \asmOpcodeCell[3]{Available on:}%
+        \asmOpcodeCell{\# of}%
+        \asmOpcodeCell{\# of}%
+    }
+    \asmOpcodeRow{%
+        \asmOpcodeSyntax{Syntax}%
+        \asmOpcodeCell{(\textit{hex})}%
+        \asmOpcodeCell{6502}%
+        \asmOpcodeCell{65C02}%
+        \asmOpcodeCell{65816}%
+        \asmOpcodeCell{bytes}%
+        \asmOpcodeCell{cycles}%
+    }
+}
+
+%--------------------------------------------------------------------------------------------------

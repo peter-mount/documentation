@@ -48,12 +48,17 @@ func (c *Converter) table(n *html.Node, ctx context.Context) error {
 		_ = util.Write(ctx, ' ', '\\', '\\', '\n')
 	}
 
-	if parser.HasClass(n, "processorFlags") {
-		return custom.ProcessorFlags(n, ctx)
-	}
+	switch {
+	case parser.HasClass(n, "m6502opcode"):
+		return custom.OpcodeTable6502(n, ctx)
 
-	// Needed to save state otherwise headers spanning pages will break subsequent tables
-	return util.Group(c.tableImpl, n, ctx)
+	case parser.HasClass(n, "processorFlags"):
+		return custom.ProcessorFlags(n, ctx)
+
+	default:
+		// Needed to save state otherwise headers spanning pages will break subsequent tables
+		return util.Group(c.tableImpl, n, ctx)
+	}
 }
 
 func (c *Converter) tableImpl(n *html.Node, ctx context.Context) error {

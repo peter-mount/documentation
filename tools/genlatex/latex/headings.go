@@ -60,10 +60,10 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 	case parser.HasClass(n, "subsectionpagedright"):
 		style = StyleSubSectionPagedRight
 
-	case parser.HasClass(n, "subsubsection"):
+	case parser.HasClasses(n, "subsubsection", "subsubsectionbreak"):
 		style = StyleSubSubSection
 
-	case parser.HasClass(n, "paragraph"):
+	case parser.HasClasses(n, "paragraph", "paragraphbreak"):
 		style = StyleParagraph
 
 	case hType == "h1":
@@ -92,5 +92,8 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 }
 
 func (c *Converter) headingEnd(n *html.Node, ctx context.Context) error {
+	if parser.HasClasses(n, "subsubsectionbreak", "paragraphbreak") {
+		return util.WriteStringLn(ctx, `}\\~\\[-0.5\baselineskip]`)
+	}
 	return util.Write(ctx, '}', '\n')
 }
