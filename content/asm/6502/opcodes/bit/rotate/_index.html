@@ -301,13 +301,12 @@ notes:
     - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
     - "65C02: Subtract 1 cycle if no page boundary is crossed"
 ---
-<div class="marginNote">
-  On all processors the data shifted is 8 bits.
-</div>
 <p>
   The rotate instructions shifts the contents of the accumulator or memory location one bit either to the left or right.
 </p>
-
+<div class="marginNote">
+  On all processors the data shifted is 8 bits.
+</div>
 <div class="marginNote">
   On the 65816 with m=0, the data shifted is 16 bits.
 </div>
@@ -425,10 +424,15 @@ notes:
   The right most bit is transferred into the carry flag.
 </p>
 
-<h2 class="subsubsection">Multi-word shift left</h2>
+<h2 class="subsubsectionpaged">Multi-word shift left</h2>
 <p>
   To shift left multiple words, use ASL for the first operation then ROL for the subsequent words.
 </p>
+<!--p>
+  This will then shift a 0 into the first byte and then the bit originally in the highest bit into
+  the next word via the Carry flag.
+</p-->
+
 <div class="marginNote">
   For higher precision start the ASL on the lowest byte and use ROL for each higher order byte
   in sequence until you hit the highest order byte.
@@ -446,14 +450,14 @@ ROL &71 ; Shift left high-order byte
   To shift right multiple words, use LSR for the first operation then ROR for the subsequent words.
   Unlike shifting left, here we have to start with the high-order byte first.
 </p>
-<div class="marginNote">
-  For higher precision just start the LSR on the highest order byte & use ROR for each lower order
-  in sequence until you get to the lowest byte.
-</div>
 <div class="sourceCode">
 ; Shift 16-bit value at &70 right 1 bit.
 ; This is effectively a division by 2
 LSR &71 ; Shift right high-order byte
 ROR &70 ; Shift right low-order byte
 ; Carry will have the remainder
+</div>
+<div class="marginNote">
+  For higher precision just start the LSR on the highest order byte & use ROR for each lower order
+  in sequence until you get to the lowest byte.
 </div>

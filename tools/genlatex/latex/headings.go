@@ -18,6 +18,9 @@ const (
 	StyleSubSectionPagedLeft  = `\subsectionpagedleft`
 	StyleSubSectionPagedRight = `\subsectionpagedright`
 	StyleSubSubSection        = `\subsubsection`
+	StyleSubSubSectionPaged   = `\subsubsectionpaged`
+	StyleSubSubSectionLeft    = `\subsubsectionleft`
+	StyleSubSubSectionRight   = `\subsubsectionright`
 	StyleParagraph            = `\paragraph`
 )
 
@@ -62,6 +65,15 @@ func (c *Converter) headingStart(n *html.Node, ctx context.Context) error {
 
 	case parser.HasClasses(n, "subsubsection", "subsubsectionbreak"):
 		style = StyleSubSubSection
+
+	case parser.HasClass(n, "subsubsectionpaged"):
+		style = StyleSubSubSectionPaged
+
+	case parser.HasClass(n, "subsubsectionleft"):
+		style = StyleSubSubSectionLeft
+
+	case parser.HasClass(n, "subsubsectionright"):
+		style = StyleSubSubSectionRight
 
 	case parser.HasClasses(n, "paragraph", "paragraphbreak"):
 		style = StyleParagraph
