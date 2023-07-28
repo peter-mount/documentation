@@ -71,6 +71,7 @@ func New(config string) (*Converter, error) {
 		Handle("h3", heading).
 		Handle("h4", heading).
 		Handle("h5", heading).
+		Handle("i", c.idiomatic).
 		Handle("li", c.li).
 		Handle("ol", c.ol).
 		Handle("p", c.paragraph).

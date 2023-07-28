@@ -43,7 +43,7 @@ func (c *Converter) lineBreak(_ *html.Node, ctx context.Context) error {
 
 // code handles the em html element
 func (c *Converter) em(n *html.Node, ctx context.Context) error {
-	return util.HandleSimpleCommand(`\textsl`, n, ctx)
+	return util.HandleSimpleCommand(`\textit`, n, ctx)
 }
 
 // code handles the em html element
