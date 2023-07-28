@@ -344,6 +344,35 @@
         }%
     }%
     \endgroup
-    \\
 }
+
+%--------------------------------------------------------------------------------------------------
+% \bitOpTable{title}{rows...}
+% \bitOpTableRow{Operation}{Opcode}{~}{7}{6}{5}{4}{3}{2}{1}{0}{~}
+
+\newcommand{\bitOpTable}[2]{%
+    \begingroup
+    \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1.25cm, height=10pt,nobeforeafter,
+        halign=center, valign=top,
+    }
+    \textbf{#1}\\~\\\relax%
+    \small{#2}%
+    \endgroup
+}
+
+\newcommand{\bitOpTableRow}[3]{%
+    \asmOpcodeRawCell{width=3.25cm,halign=left}{#1}%
+    \asmOpcodeRawCell{width=1.5cm,halign=center}{#2}%
+    {#3}\\[-3pt]\relax
+}
+
+\newcommand{\bitOpTableCell}[2][]{\asmOpcodeRawCell{width=0.5cm,halign=center,#1}{#2}}
+\newcommand{\bitOpTableCellA}[1]{\bitOpTableCell[borderline north={0.4pt}{0pt}{black},borderline west={0.4pt}{0pt}{black},borderline south={0.4pt}{0pt}{black}]{#1}}
+\newcommand{\bitOpTableCellB}[1]{\bitOpTableCell[borderline={0.4pt}{0pt}{black}]{#1}}
+\newcommand{\bitOpTableCellC}[1]{\bitOpTableCell[borderline west={0.4pt}{0pt}{black},borderline south={0.4pt}{0pt}{black}]{#1}}
+\newcommand{\bitOpTableCellD}[1]{\bitOpTableCell[borderline east={0.4pt}{0pt}{black},borderline west={0.4pt}{0pt}{black},borderline south={0.4pt}{0pt}{black}]{#1}}
+
 %--------------------------------------------------------------------------------------------------

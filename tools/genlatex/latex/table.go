@@ -49,6 +49,9 @@ func (c *Converter) table(n *html.Node, ctx context.Context) error {
 	}
 
 	switch {
+	case parser.HasClass(n, "bitOpTable"):
+		return custom.BitOpTable(n, ctx)
+
 	case parser.HasClass(n, "m6502opcode"):
 		return custom.OpcodeTable6502(n, ctx)
 
