@@ -212,13 +212,13 @@ notes:
   - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
   - "Add 1 cycle if adding index crosses a page boundary"
 ---
-<div class="marginNote">
-  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
-</div>
 <p>
   EOR performs a bitwise logical Exclusive-OR of the value in the accumulator with that of the memory location with the result stored
   in the accumulator.
 </p>
+<div class="marginNote">
+  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
+</div>
 <div class="marginNote">
   For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
 </div>
@@ -226,13 +226,6 @@ notes:
   The result will be each bit in the accumulator will be set ONLY if that same bit in the original accumulator
   value and the memory differ. If the bits were the same then the resultant bit will be 0.
 </p>
-<table>
-  <caption>Exclusive OR truth table</caption>
-  <tr><th colspan="2"></th><th colspan="2">Second Operand</th></tr>
-    <tr><th rowspan="3" style="writing-mode: vertical-lr;">First Operand</th><th></th><th>0</th><th>1</th></tr>
-  <tr><th>0</th><td>0</td><td>1</td></tr>
-  <tr><th>1</th><td>1</td><td>0</td></tr>
-</table>
 <p>
   Second it performs a logical AND of the memory and the accumulator.
   If the result is zero the z flag is set.
@@ -240,3 +233,10 @@ notes:
 <p>
   In both operations, the contents of the accumulator and memory are not modified.
 </p>
+<table class="truthTable marginNote">
+  <caption class="truthTableCaption">EOR truth table</caption>
+  <tr><th colspan="2"></th><th colspan="2">Second Operand</th></tr>
+  <tr><th rowspan="3" style="writing-mode: vertical-lr;">First Operand</th><th></th><th>0</th><th>1</th></tr>
+  <tr><th>0</th><td class="truthTable00">0</td><td class="truthTable01">1</td></tr>
+  <tr><th>1</th><td class="truthTable10">1</td><td class="truthTable11">0</td></tr>
+</table>

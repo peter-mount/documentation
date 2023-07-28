@@ -55,6 +55,9 @@ func (c *Converter) table(n *html.Node, ctx context.Context) error {
 	case parser.HasClass(n, "processorFlags"):
 		return custom.ProcessorFlags(n, ctx)
 
+	case parser.HasClass(n, "truthTable"):
+		return custom.TruthTable(n, ctx)
+
 	default:
 		// Needed to save state otherwise headers spanning pages will break subsequent tables
 		return util.Group(c.tableImpl, n, ctx)

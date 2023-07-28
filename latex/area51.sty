@@ -308,3 +308,30 @@
 }
 
 %--------------------------------------------------------------------------------------------------
+% truthTable{caption}{00}{01}{10}{11}
+\newcommand{\truthTableCell}[2][]{\asmOpcodeRawCell{width=14pt,height=14pt,#1}{#2}}
+
+\newcommand{\truthTable}[5]{%
+    \begingroup
+    \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1.25cm, height=10pt,nobeforeafter,
+        halign=center, valign=top,
+    }
+    \textbf{#1}\\\relax%
+    \asmOpcodeRawCell{width=10pt,height=52pt}{\rotatebox{90}{\hbox to 52pt{First\hfil}}}%
+    \hbox to 42pt{
+        \vbox to 52pt {
+            \asmOpcodeRawCell{width=42pt,height=14pt,halign=right}{Second}\\[-2.1pt]\relax%
+            \truthTableCell{~}\truthTableCell{0}\truthTableCell{1}\\[-1.8pt]\relax%
+            \truthTableCell{0}%
+            \truthTableCell[borderline north={0.4pt}{0pt}{black},borderline west={0.4pt}{0pt}{black}]{#2}%
+            \truthTableCell[borderline north={0.4pt}{0pt}{black}]{#3}\\[-1.8pt]\relax%
+            \truthTableCell{1}\truthTableCell[borderline west={0.4pt}{0pt}{black}]{#4}\truthTableCell{#5}%
+        }%
+    }%
+    \endgroup
+    \\
+}
+%--------------------------------------------------------------------------------------------------

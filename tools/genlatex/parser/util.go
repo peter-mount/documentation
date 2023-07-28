@@ -52,3 +52,11 @@ func getText(s []string, n *html.Node) []string {
 	}
 	return s
 }
+
+func GetTextByClass(n *html.Node, class, def string) string {
+	c := FindByClass(n, class)
+	if c == nil {
+		return def
+	}
+	return GetText(c)
+}
