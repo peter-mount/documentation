@@ -220,9 +220,11 @@ notes:
 <p>
   BMI tests the Negative flag and branches if it is set.
   The high bit of the value most recently affected will set the N flag.
+</p>
+<div class="marginNote">
   On 8-bit operations this is bit 7.
   On 16-bit operations (65816 only) this is bit 15.
-</p>
+</div>
 <p>
   This is normally used to determine if a two's-complement value is negative but can also be used
   in a loop to determine if zero has been passed when looping down through zero
@@ -233,9 +235,11 @@ notes:
 <p>
   BPL tests the Negative flag and branches if it is clear.
   The high bit of the value most recently affected will set the N flag.
+</p>
+<div class="marginNote">
   On 8-bit operations this is bit 7.
   On 16-bit operations (65816 only) this is bit 15.
-</p>
+</div>
 <p>
   This is normally used to determine if a two's-complement value is positive
   or if the high bit of the value is clear.
