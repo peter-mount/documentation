@@ -25,5 +25,5 @@ func (c *Converter) idiomatic(n *html.Node, ctx context.Context) error {
 	}
 
 	// Default to the original purpose of <i> - italic
-	return util.HandleSimpleCommandSpace(`\textit`, n, ctx)
+	return util.HandleSimpleCommand(`\textit`, n, ctx)
 }
