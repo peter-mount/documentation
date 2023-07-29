@@ -34,7 +34,7 @@ func init() {
 
 	initEscape(`$`, `\$`)
 
-	// ~ is either \~{} or 	extasciitilde{}
+	// ~ is either \~{} or textasciitilde{}
 	// Must be before &nbsp;
 	initEscape(`~`, `\textasciitilde{}`)
 
@@ -99,7 +99,7 @@ func init() {
 }
 
 // EscapeText takes a string and converts it to LaTeX.
-// This will remove all duplicated whitespace and trim the result
+// This will remove all duplicated whitespace
 func EscapeText(s string) string {
 	s = removeWhitespace.ReplaceAllString(s, " ")
 
@@ -107,5 +107,5 @@ func EscapeText(s string) string {
 		s = strings.ReplaceAll(s, v, escapeTo[i])
 	}
 
-	return strings.TrimSpace(s)
+	return s
 }

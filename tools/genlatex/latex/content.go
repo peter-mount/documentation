@@ -6,11 +6,11 @@ import (
 	"github.com/peter-mount/documentation/tools/genlatex/parser"
 	"github.com/peter-mount/documentation/tools/genlatex/stylesheet"
 	"golang.org/x/net/html"
-	"strings"
 )
 
 func (c *Converter) text(n *html.Node, ctx context.Context) error {
-	s := strings.TrimSpace(n.Data)
+	s := n.Data
+	//s := strings.TrimSpace(n.Data)
 	if s != "" {
 		return util.WriteString(ctx, EscapeText(s))
 	}
