@@ -1,7 +1,7 @@
 ---
 type: "manual"
 title: "XCE"
-titleClass: subsection
+titleClass: subsectionpaged
 linkTitle: "Emulation Mode"
 weight: 3
 description: "Exchange Carry & Emulation Bits"
@@ -25,14 +25,14 @@ codes:
 <p>
   This instruction is the only means to shift a 65802 or 65812 processor between 6502 emulation mode and full 16-bit native mode.
 </p>
-<h2>Switch to native 16-bit mode</h2>
+<h3>Switch to native 16-bit mode</h3>
 <p>To switch into native mode, clear the carry bit then invoke XCE</p>
-{{< highlight go "linenos=inline" >}}
+<div class="sourceCode">
 .goNative
     CLC      ; Clear Carry to indicate native mode
-    XCE      ; Processor will be in 16-bit native mode once this completes
-    RTS      ; Carry will now set if we were originally in emulation or clear if already native.
-{{< / highlight >}}
+    XCE      ; Processor will be in 16-bit mode upon completion
+    RTS
+</div>
 <p>
   Once XCE has completed and the processor is in native mode, the following would have occurred.
 </p>
@@ -42,14 +42,14 @@ codes:
   <li>Both x & m are set to 1</li>
 </ul>
 
-<h2>Switch to 6502 emulation mode</h2>
+<h3>Switch to 6502 emulation mode</h3>
 <p>To switch into 6502 emulation mode, set the carry bit then invoke XCE</p>
-{{< highlight go "linenos=inline" >}}
+<div class="sourceCode">
 .goEmulation
     SEC      ; Set Carry to indicate native mode
-    XCE      ; Processor will be in 16-bit native mode once this completes
-    RTS      ; Carry will now set if we were already in emulation or clear if we were originally native.
-{{< / highlight >}}
+    XCE      ; Processor will be in emulation mode upon completion
+    RTS
+</div>
 <p>
   Once XCE has completed and the processor is in 6502 emulation mode, the following would have occurred.
 </p>

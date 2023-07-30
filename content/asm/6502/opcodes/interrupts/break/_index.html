@@ -55,7 +55,7 @@ notes:
   It's up to the interrupt handler pointed to by (&FFFE) to test the b flag to determine if the interrupt was from
   a software (BRK) rather than a hardware (IRQ) interrupt.
 </p>
-{{< highlight go "linenos=inline" >}}
+<div class="sourceCode">
 .handler PLA       ; copy status from stack
          PHA       ; but don't remove it else RTI will break
 
@@ -67,7 +67,7 @@ notes:
 
 .isBrk             ; break handler here
          RTI       ; exit BRK handler
-{{< / highlight >}}
+</div>
 
 <h3>65802/65816 Native Mode (e=0)</h3>
 <p>
