@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://area51.dev/sitemap.xml
+
+User-agent: GPTBot
+Disallow: /
