@@ -49,12 +49,12 @@ func (b *BBC) extract(ctx context.Context) error {
 	log.Println("Scanning BBC API")
 
 	return walk.NewPathWalker().
-		IsFile().
-		PathNotContain("/reference/").
-		PathHasSuffix(".html").
 		Then(hugo.FrontMatterActionOf().
 			OtherExists("osbyte", b.extractOsbyte).
 			OtherExists("osword", b.extractOsword).
 			Walk(ctx)).
+		PathNotContain("/reference/").
+		PathHasSuffix(".html").
+		IsFile().
 		Walk(book.ContentPath())
 }
