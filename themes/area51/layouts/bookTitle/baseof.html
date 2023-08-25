@@ -12,7 +12,6 @@
         <div class="row flex-xl-nowrap">
           <main class="col-12 col-md-12 col-xl-12 pl-md-5" role="main">
             {{ partial "version-banner.html" . }}
-            {{ if not .Site.Params.ui.breadcrumb_disable }}{{ partial "breadcrumb.html" . }}{{ end }}
             {{ block "main" . }}{{ end }}
             {{ partial "page-meta-links.html" . }}
           </main>

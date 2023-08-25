@@ -26,11 +26,12 @@
 
     main {
         @include media-breakpoint-up(md) {
-            padding-top: 2rem;
+            padding-top: 4rem;
             padding-left: 0.5rem !important;
         }
 
-
+/*
         padding-bottom: 2rem;
+*/
     }
 }
