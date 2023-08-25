@@ -11,7 +11,7 @@
     main {
         > section:first-of-type {
             @include media-breakpoint-up(md) {
-                padding-top: 8rem;
+                /*padding-top: 8rem;*/
             }
         }
 
