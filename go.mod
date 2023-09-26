@@ -7,12 +7,12 @@ require (
 	github.com/chromedp/cdproto v0.0.0-20220515234810-83d799542a04
 	github.com/chromedp/chromedp v0.8.2
 	github.com/gorilla/mux v1.7.2
-	github.com/microcosm-cc/bluemonday v1.0.24
-	github.com/peter-mount/go-build v0.0.0-20230705121448-6d1eeac1f57b
+	github.com/microcosm-cc/bluemonday v1.0.25
+	github.com/peter-mount/go-build v0.0.0-20230901134424-72658295ac41
 	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20230622193345-c3b500bdaa5b
 	github.com/tdewolff/parse v2.3.4+incompatible
 	github.com/xuri/excelize/v2 v2.4.1
-	golang.org/x/net v0.10.0
+	golang.org/x/net v0.12.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -30,7 +30,7 @@ require (
 	github.com/richardlehane/msoleps v1.0.1 // indirect
 	github.com/tdewolff/test v1.0.9 // indirect
 	github.com/xuri/efp v0.0.0-20210322160811-ab561f5b45e3 // indirect
-	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/crypto v0.11.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 )
