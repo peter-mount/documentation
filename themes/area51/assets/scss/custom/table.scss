@@ -151,6 +151,38 @@ table.memoryMap {
     }
 }
 
+table.m6502opcode {
+    .opcodeSrc, .opcodedest, .opcodeAlt {
+        width: 10em;
+    }
+    .opcodeDef {
+        width: 10em;
+    }
+    .opcodeHex {
+        width: 4em;
+        text-align: center;
+    }
+    .processorUnsupported3 {
+        width: 12em;
+        text-align: center;
+    }
+    .processorSupported, .processorUnsupported {
+        width: 4em;
+    }
+    .opcodeBytes {
+        width: 4em;
+    }
+    .opcodeCycles {
+        width: 6em;
+    }
+    .opcodeAddressing {
+        width: 30em;
+    }
+    .opcodeAltRight {
+        width: 30em;
+    }
+}
+
 /* hexGrid didn't fit correctly, turned out to be margins but this
    is here in case we need to reduce the font again */
 

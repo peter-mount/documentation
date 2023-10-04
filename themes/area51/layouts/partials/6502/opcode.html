@@ -19,35 +19,35 @@
 {{ end -}}
 {{ end -}}
 
-<table class="m6502opcode table table-striped table-hover table-sm table-borderless">
+<table class="m6502opcode">
     <thead>
     <tr>
         {{- if isset .Params "src" -}}
-        <th scope="col" rowspan="2">{{.Params.src}}</th>
+        <th class="opcodeSrc" rowspan="2">{{.Params.src}}</th>
         {{- end -}}
         {{- if isset .Params "dest" -}}
-        <th scope="col" rowspan="2">{{.Params.dest}}</th>
+        <th class="opcodedest" rowspan="2">{{.Params.dest}}</th>
         {{- end -}}
-        <th scope="col" rowspan="2">Syntax</th>
+        <th class="opcodeDef" rowspan="2">Syntax</th>
         {{- if isset .Params "alt" -}}
-        <th scope="col" rowspan="2">{{.Params.alt}}</th>
+        <th class="opcodeAlt" rowspan="2">{{.Params.alt}}</th>
         {{- end -}}
-        <th scope="col">Opcode</th>
-        <th scope="col" colspan="3">Available on:</th>
-        <th scope="col"># of</th>
-        <th scope="col"># of</th>
-        <th scope="col" rowspan="2">Addressing Mode</th>
+        <th class="opcodeHex">Opcode</th>
+        <th class="processorUnsupported3" colspan="3">Available on:</th>
+        <th class="opcodeBytes"># of</th>
+        <th class="opcodeCycles"># of</th>
+        <th class="opcodeAddressing" rowspan="2">Addressing Mode</th>
         {{- if isset .Params "altright" -}}
-        <th scope="col" rowspan="2">{{.Params.altright}}</th>
+        <th class="opcodeAltRight" rowspan="2">{{.Params.altright}}</th>
         {{- end -}}
     </tr>
     <tr>
-        <th><em>(hex)</em></th>
-        <th>6502</th>
-        <th>65C02</th>
-        <th>65816</th>
-        <th>bytes</th>
-        <th>cycles</th>
+        <th class="opcodeHex"><em>(hex)</em></th>
+        <th class="processorUnsupported">6502</th>
+        <th class="processorUnsupported">65C02</th>
+        <th class="processorUnsupported">65816</th>
+        <th class="opcodeBytes">bytes</th>
+        <th class="opcodeCycles">cycles</th>
     </tr>
     </thead>
     <tbody>
