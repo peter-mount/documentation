@@ -12,7 +12,7 @@ require (
 	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20230622193345-c3b500bdaa5b
 	github.com/tdewolff/parse v2.3.4+incompatible
 	github.com/xuri/excelize/v2 v2.4.1
-	golang.org/x/net v0.12.0
+	golang.org/x/net v0.17.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -30,7 +30,7 @@ require (
 	github.com/richardlehane/msoleps v1.0.1 // indirect
 	github.com/tdewolff/test v1.0.9 // indirect
 	github.com/xuri/efp v0.0.0-20210322160811-ab561f5b45e3 // indirect
-	golang.org/x/crypto v0.11.0 // indirect
-	golang.org/x/sys v0.10.0 // indirect
-	golang.org/x/text v0.11.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 )
