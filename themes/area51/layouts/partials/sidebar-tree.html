@@ -1,5 +1,3 @@
-{{ if false -}}
-
 {{/* We cache this partial for bigger sites and set the active class client side. */}}
 {{ $sidebarCacheLimit := cond (isset .Site.Params.ui "sidebar_cache_limit") .Site.Params.ui.sidebar_cache_limit 2000 }}
 {{ $shouldDelayActive := ge (len .Site.Pages) $sidebarCacheLimit }}
@@ -19,12 +17,7 @@
     </ul>
   </nav>
 </div>
-
-{{- end }}
-
 {{ define "section-tree-nav-section" }}
-{{- if false -}}
-
   {{ $s := .section }}
   {{ $p := .page }}
   {{ $shouldDelayActive := .shouldDelayActive }}
@@ -60,5 +53,3 @@
     {{ end }}
   </li>
 {{ end }}
-
-{{- end }}
