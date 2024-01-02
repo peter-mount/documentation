@@ -163,7 +163,7 @@ enable = false
 
 [params.katex]
 # enable/disable KaTeX support
-enable = false
+enable = true
 # Element(s) scanned by auto render extension. Default: document.body
 html_dom_element = "document.body"
 
