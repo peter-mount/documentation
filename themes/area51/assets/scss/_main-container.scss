@@ -34,8 +34,10 @@
         padding-bottom: 2rem;
 */
       @media (min-width: 768px) {
+        position: relative;
         padding-left: calc(0.5em + 25%) !important;
         max-width: 100% !important;
+        min-width: 100% !important;
         z-index: 1;
       }
     }

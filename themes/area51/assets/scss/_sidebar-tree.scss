@@ -114,6 +114,8 @@
         background-color: $td-sidebar-bg-color;
         padding-right: 1rem;
         border-right: 1px solid $td-sidebar-border-color;
+        z-index: 9;
+        min-height: 100%;
     }
 
 
