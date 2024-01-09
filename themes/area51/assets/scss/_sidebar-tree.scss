@@ -118,6 +118,16 @@
         min-height: 100%;
     }
 
+  @include media-breakpoint-up(xl) {
+    position: fixed;
+    padding-top: 4rem;
+    background-color: $td-sidebar-bg-color;
+    padding-right: 1rem;
+    border-right: 1px solid $td-sidebar-border-color;
+    z-index: 9;
+    min-height: 100%;
+    max-width: 14em;
+  }
 
     padding-bottom: 2rem;
 
