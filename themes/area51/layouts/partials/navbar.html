@@ -1,4 +1,5 @@
 {{ $cover := .HasShortcode "blocks/cover" }}
+<div class="simplenav-outer">
 <nav class="simplenav">
 	<div>
 		<a href="{{ .Site.Home.RelPermalink }}">
@@ -7,10 +8,11 @@
 	</div>
 	<div>
 		<a href="/about/">About</a>
-		<a href="/docs/">Documentation</a>
 		<a href="/community/">Community</a>
 	</div>
 </nav>
+{{ partial "breadcrumb.html" . }}
+</div>
 {{/*
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark {{ if $cover}} td-navbar-cover {{ end }}flex-column flex-md-row td-navbar">
         <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">

@@ -1,0 +1,378 @@
+\ProvidesPackage{area51}
+% Declare area51
+\DefineFamily{area51}
+% Required Packages
+\RequirePackage{multido}
+\RequirePackage{setspace}
+\RequirePackage{xcolor}
+\RequirePackage{transparent}
+\RequirePackage[many]{tcolorbox}
+
+% simple forLoop using multido https://stackoverflow.com/a/27339164
+\newcommand{\forLoop}[4][1]{\multido{\i=#2+#1}{#3}{#4}}
+
+%--------------------------------------------------------------------------------------------------
+% pifont Postscript fonts
+\RequirePackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+%--------------------------------------------------------------------------------------------------
+% fontawesome font
+\RequirePackage{fontawesome}
+
+%--------------------------------------------------------------------------------------------------
+% cfbox which allows a coloured border around a box to be drawn based on which border
+% we want
+% see https://tex.stackexchange.com/a/55534
+\newcommand\cfbox[3][lbrt]{%
+    \begingroup
+    \leavevmode
+    \setbox\@tempboxa\hbox{%
+        \color@begingroup
+        \kern\fboxsep{#3}\kern\fboxsep
+        \color@endgroup
+    }%
+    \@tempdima\fboxrule
+    \advance\@tempdima\fboxsep
+    \advance\@tempdima\dp\@tempboxa
+    \hbox{%
+        \hskip-.5\fboxrule
+        \lower\@tempdima\hbox{%
+            \vbox{%
+                \in@{t}{#1}\ifin@{\color{#2}\hrule\@height\fboxrule}\fi
+                \hbox{%
+                    \in@{l}{#1}\ifin@{\color{#2}\vrule\@width\fboxrule}\else{\hskip\fboxrule}\fi
+                    \vbox{\vskip\fboxsep\box\@tempboxa\vskip\fboxsep}%
+                    \in@{r}{#1}\ifin@{\color{#2}\vrule\@width\fboxrule}\else{\hskip\fboxrule}\fi
+                }%
+                \in@{b}{#1}\ifin@{\color{#2}\hrule\@height\fboxrule}\fi
+            }%
+        }%
+        \hskip-.5\fboxrule
+    }%
+    \endgroup
+}
+
+% dimcfbox[borders]{colour}{width}{height}{text}
+\newcommand\dimcfbox[5][lbrt]{%
+    \cfbox[#1]{#2}{%
+        \vbox to #4 {%
+            \hbox to #3 {#5}%
+        }%
+    }%
+}
+
+%--------------------------------------------------------------------------------------------------
+\newcommand\hexmapside{l}%
+
+\newcommand\hexmap[2]{%
+    \begingroup%
+    \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1.25cm, height=1.25cm,nobeforeafter,
+        halign=center, valign=top,
+        halign lower=center, valign lower=bottom,
+    }%
+    \in@{l}{#1}\ifin@{\renewcommand{\hexmapside}{l}{#2}}\fi%
+    \in@{r}{#1}\ifin@{\renewcommand{\hexmapside}{r}{#2}}\fi%
+    \endgroup%
+    \linebreak\relax%
+}
+
+%--------------------------------------------------------------------------------------------------
+% hexmaprow{l}{rowId}{content} for row with rowId in left column
+% hexmaprow{r}{rowId}{content} for row with rowId in right column
+%
+% Here we generate the row then reduce the height by 0.5\fboxsep to remove the separation
+% between each line. This seems to work
+%\newcommand\hexmapcellwidth{1.1cm}
+%\newcommand\hexmapheaderwidth{0.5cm}
+\newcommand\hexmaprow[2]{%
+    \expandafter\in@\expandafter{\hexmapside}{l}\ifin@{%
+            \begin{tcolorbox}[width=0.5cm,valign=center,borderline east={0.4pt}{0pt}{blue}]{#1}\end{tcolorbox}%
+    }\fi%
+    {#2}%
+    \expandafter\in@\expandafter{\hexmapside}{r}\ifin@{%
+        \begin{tcolorbox}[width=0.5cm,valign=center,borderline west={0.4pt}{0pt}{blue}]{#1}\end{tcolorbox}%
+    }\fi%
+    \\[-0.5mm]\relax%
+}
+
+\newcommand\hexmapheadercell[1]{%
+    \begin{tcolorbox}[height=0.5cm,valign=center,borderline south={0.4pt}{0pt}{blue}]{#1}\end{tcolorbox}%
+}
+\newcommand\hexmapheader[2] {
+    \begingroup%
+    \sbox{0}{%
+        \expandafter\in@\expandafter{\hexmapside}{l}\ifin@{%
+            \begin{tcolorbox}[width=0.5cm,height=0.5cm,valign=center]{~}\end{tcolorbox}%
+        }\fi%
+        \forLoop{#1}{#2}{\hexmapheadercell{\i}}%
+        \expandafter\in@\expandafter{\hexmapside}{r}\ifin@{%
+            \begin{tcolorbox}[width=0.5cm,height=0.5cm,valign=center]{~}\end{tcolorbox}%
+        }\fi%
+    }%
+    \ht0=\dimexpr \hexmapcellwidth + 0.5\fboxsep + \fboxrule\relax%
+    \usebox{0}%
+    \endgroup%
+    \\[-0.5mm]\relax%
+}
+
+%--------------------------------------------------------------------------------------------------
+% font for opcodecell - tends to be 6pt to fit z80 instructions or 32 bit opcodes
+\makeatletter
+% 6 point font
+\newcommand\opcodecellfont{\@setfontsize\opcodecellfont\@vipt\@viipt}
+% 9 point font
+\newcommand\opcodedeffont{\@setfontsize\opcodedeffont\@ixpt\@xpt}
+\makeatother
+
+%--------------------------------------------------------------------------------------------------
+% opcodecell to define a specific cell with an opcode
+%
+%   +-----------------+
+%   |     opcode      |
+%   | size      cycle |
+%   |      hex        |
+%   +-----------------+
+%
+% \opcodecell{opcode}{opcodeHex}{SizeBytes}{CycleCount}
+%
+\newcommand\opcodecellInner[4]{
+    \begingroup\opcodecellfont%
+    \vbox to 11mm {{#1}\vfil\hbox to 11mm{{#3}\hfil{#4}}\vfil{#2}}%
+    \endgroup%
+}
+
+\makeatletter
+
+\newcommand\opcodecell[4]{%
+    \expandafter\in@\expandafter{\hexmapside}{l}\ifin@{%
+        \begin{tcolorbox}[
+            nobeforeafter,
+            borderline south={0.4pt}{0pt}{blue},
+            borderline east={0.4pt}{0pt}{blue},
+        ]\opcodecellInner{#1}{#2}{#3}{#4}\end{tcolorbox}%
+    }\fi
+    \expandafter\in@\expandafter{\hexmapside}{r}\ifin@{%
+        \begin{tcolorbox}[
+            nobeforeafter,
+            borderline south={0.4pt}{0pt}{blue},
+            borderline west={0.4pt}{0pt}{blue},
+        ]\opcodecellInner{#1}{#2}{#3}{#4}\end{tcolorbox}%
+    }\fi
+}
+\makeatother
+%--------------------------------------------------------------------------------------------------
+
+\newcommand\opcodesimplecell[1]{%
+    \begingroup%
+    \expandafter\cfbox\expandafter[\hexmapborders]{black}{%
+        \vbox to \hexmapcellwidth {%
+            \hbox to \hexmapcellwidth {#1}%
+        }%
+    }%
+    \endgroup%
+}
+
+%--------------------------------------------------------------------------------------------------
+% Processor flags
+\newcommand\processorFlagHeight{0.3cm}
+\newcommand\processorFlagWidth{0.25cm}
+\newcommand\processorFlagLabelWidth{1cm}
+
+\newcommand\processorFlags[1]{
+    \begingroup
+    \normalsize{#1}
+    \endgroup
+}
+
+\newcommand\processorFlagRow[1]{%
+    \begingroup%
+    \sbox{0}{#1}%
+    \ht0=\dimexpr \processorFlagHeight + 0.5\fboxsep + \fboxrule\relax%
+    \usebox{0}%
+    \endgroup%
+    \\\relax
+}
+
+\newtcbox{\processorFlag}{blank, boxsep=0mm,
+    clip upper, minipage,
+    width=0.4cm, height=0.4cm,nobeforeafter,
+    halign=center, valign=center,
+    borderline={0.4pt}{0pt}{blue!20!white},
+}
+
+\newtcbox{\processorFlagHeader}{blank, boxsep=0mm,
+    clip upper, minipage,
+    width=1cm, height=0.4cm,nobeforeafter,
+    halign=right, valign=center, right*=2pt,
+}
+
+\newtcbox{\processorFlagLabel}{blank, boxsep=0mm,
+    clip upper, minipage,
+    halign=right, valign=center, right*=2pt,
+    fontupper=\small,
+    width=1cm, height=0.4cm,nobeforeafter,
+}
+
+\newtcbox{\processorFlagDef}{blank, boxsep=0mm,
+    clip upper, minipage,
+    halign=left, valign=center,
+    fontupper=\small,
+    width=8cm, height=0.4cm,nobeforeafter,
+}
+
+%--------------------------------------------------------------------------------------------------
+% Page breaks
+%
+% \cleartoleftpage ensures that the next page used is the left hand side.
+% Use this if you need content to span both pages, e.g. hexmap
+\newcommand*\cleartoleftpage{\clearpage\ifodd\value{page}\hbox{}\newpage\fi}
+
+% Extends \section to start either the next page, next left or next right page
+\newcommand{\sectionpaged}[1]{\clearpage\section{#1}}
+
+\newcommand{\sectionpagedleft}[1]{\cleartoleftpage\section{#1}}
+
+\newcommand{\sectionpagedright}[1]{\cleardoublepage\section{#1}}
+
+% Extends \subsection to start either the next page, next left or next right page
+\newcommand{\subsectionpaged}[1]{\clearpage\subsection{#1}}
+
+\newcommand{\subsectionpagedleft}[1]{\cleartoleftpage\subsection{#1}}
+
+\newcommand{\subsectionpagedright}[1]{\cleardoublepage\subsection{#1}}
+
+% Extends \subsection to start either the next page, next left or next right page
+\newcommand{\subsubsectionpaged}[1]{\clearpage\subsubsection{#1}}
+
+\newcommand{\subsubsectionpagedleft}[1]{\cleartoleftpage\subsubsection{#1}}
+
+\newcommand{\subsubsectionpagedright}[1]{\cleardoublepage\subsubsection{#1}}
+
+%--------------------------------------------------------------------------------------------------
+% used when converting the partials/6502/opcode.html table
+\newcommand{\asmOpcodes}[1]{%
+    \begingroup
+    \opcodedeffont{
+        \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1cm, height=9pt,nobeforeafter,
+        halign=center, valign=top,
+        halign lower=center, valign lower=bottom,
+        }
+        {#1}
+    }
+    \endgroup
+}
+
+\newcommand{\asmOpcodeRow}[1]{%
+    \begingroup%
+    \sbox{0}{#1}%
+    %\ht0=\dimexpr \baselineskip - 2pt - 0pt\relax%
+    \usebox{0}%
+    \\[-2pt]\relax%
+    \endgroup%
+}
+
+\newcommand{\asmOpcodeRawCell}[2]{%
+    \begin{tcolorbox}[
+        blank, boxsep=0mm,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        nobeforafter, valign=center,
+        #1
+    ]{#2}\end{tcolorbox}%
+}
+
+\newcommand{\asmOpcodeSyntax}[1]{\asmOpcodeRawCell{width=20mm, halign=left}{#1}}
+
+\newcommand{\asmOpcodeCell}[2][1]{\asmOpcodeRawCell{width=12.5mm*(#1), halign=center}{#2}}
+\newcommand{\asmOpcodeWithNote}[2]{%
+    \asmOpcodeRawCell{width=3mm, halign=right}{#1}%
+    \asmOpcodeRawCell{width=12.5mm, halign=left}{~\textsuperscript{#2}}%
+}
+% Override these to change the style of supported/unsupported opcodes
+\newcommand{\asmOpcodeSupported}{\asmOpcodeCell{\cmark}}
+\newcommand{\asmOpcodeUnsupported}{\asmOpcodeCell{~}}
+
+\newcommand{\asmOpcodeHeader}{%
+    \asmOpcodeRow{%
+        \asmOpcodeSyntax{~}%
+        \asmOpcodeCell{Opcode}%
+        \asmOpcodeCell[3]{Available on:}%
+        \asmOpcodeRawCell{width=15.5mm, halign=left}{\# of}%
+        \asmOpcodeRawCell{width=15.5mm, halign=left}{\# of}%
+    }
+    \asmOpcodeRow{%
+        \asmOpcodeSyntax{Syntax}%
+        \asmOpcodeCell{(\textit{hex})}%
+        \asmOpcodeCell{6502}%
+        \asmOpcodeCell{65C02}%
+        \asmOpcodeCell{65816}%
+        \asmOpcodeRawCell{width=15.5mm, halign=left}{bytes}%
+        \asmOpcodeRawCell{width=15.5mm, halign=left}{cycles}%
+    }
+}
+
+%--------------------------------------------------------------------------------------------------
+% truthTable{caption}{00}{01}{10}{11}
+\newcommand{\truthTableCell}[2][]{\asmOpcodeRawCell{width=14pt,height=14pt,#1}{#2}}
+
+\newcommand{\truthTable}[5]{%
+    \begingroup
+    \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1.25cm, height=10pt,nobeforeafter,
+        halign=center, valign=top,
+    }
+    \textbf{#1}\\\relax%
+    \asmOpcodeRawCell{width=10pt,height=52pt}{\rotatebox{90}{\hbox to 52pt{First\hfil}}}%
+    \hbox to 42pt{
+        \vbox to 52pt {
+            \asmOpcodeRawCell{width=42pt,height=14pt,halign=right}{Second}\\[-2.1pt]\relax%
+            \truthTableCell{~}\truthTableCell{0}\truthTableCell{1}\\[-1.8pt]\relax%
+            \truthTableCell{0}%
+            \truthTableCell[borderline north={0.4pt}{0pt}{black},borderline west={0.4pt}{0pt}{black}]{#2}%
+            \truthTableCell[borderline north={0.4pt}{0pt}{black}]{#3}\\[-1.8pt]\relax%
+            \truthTableCell{1}\truthTableCell[borderline west={0.4pt}{0pt}{black}]{#4}\truthTableCell{#5}%
+        }%
+    }%
+    \endgroup
+}
+
+%--------------------------------------------------------------------------------------------------
+% \bitOpTable{title}{rows...}
+% \bitOpTableRow{Operation}{Opcode}{~}{7}{6}{5}{4}{3}{2}{1}{0}{~}
+
+\newcommand{\bitOpTable}[2]{%
+    \begingroup
+    \tcbset{blank, boxsep=2pt,
+        clip upper,
+        left=0mm, top=0mm, bottom=0mm, right=0mm,
+        width=1.25cm, height=10pt,nobeforeafter,
+        halign=center, valign=top,
+    }
+    \textbf{#1}\\~\\\relax%
+    \small{#2}%
+    \endgroup
+}
+
+\newcommand{\bitOpTableRow}[3]{%
+    \asmOpcodeRawCell{width=3.25cm,halign=left}{#1}%
+    \asmOpcodeRawCell{width=1.5cm,halign=center}{#2}%
+    {#3}\\[-3pt]\relax
+}
+
+\newcommand{\bitOpTableCell}[2][]{\asmOpcodeRawCell{width=0.5cm,halign=center,#1}{#2}}
+\newcommand{\bitOpTableCellA}[1]{\bitOpTableCell[borderline north={0.4pt}{0pt}{black},borderline west={0.4pt}{0pt}{black},borderline south={0.4pt}{0pt}{black}]{#1}}
+\newcommand{\bitOpTableCellB}[1]{\bitOpTableCell[borderline={0.4pt}{0pt}{black}]{#1}}
+\newcommand{\bitOpTableCellC}[1]{\bitOpTableCell[borderline west={0.4pt}{0pt}{black},borderline south={0.4pt}{0pt}{black}]{#1}}
+\newcommand{\bitOpTableCellD}[1]{\bitOpTableCell[borderline east={0.4pt}{0pt}{black},borderline west={0.4pt}{0pt}{black},borderline south={0.4pt}{0pt}{black}]{#1}}
+
+%--------------------------------------------------------------------------------------------------

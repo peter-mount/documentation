@@ -1,7 +1,14 @@
 // Breadcrumb
 
 .breadcrumb {
-	background: none;
-	padding-left: 0;
+	background: white;
+	padding-left: 0.5em;
 	padding-top: 0;
+	padding-bottom: 0;
+	border-bottom: 1px solid grey;
+	border-radius: 0;
+}
+
+.breadcrumb li.active a {
+    color: black;
 }

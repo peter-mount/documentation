@@ -1,6 +1,6 @@
 {{ define "main" }}
 <div class="td-content-new">
-    <h1>{{ .Title }}</h1>
+    <h1 {{with .Params.titleClass}} class="{{.}}"{{end}}>{{ .Title }}</h1>
     {{ with .Params.description }}
     <div class="lead">{{ . | markdownify }}</div>
     {{ end }}

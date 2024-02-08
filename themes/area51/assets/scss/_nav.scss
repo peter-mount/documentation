@@ -2,14 +2,19 @@
 // Main navbar
 //
 
-.simplenav {
+.simplenav-outer {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 32;
+    min-height: 2rem;
+    margin: 0;
+}
+
+.simplenav {
     background: $primary !important;
     min-height: 2rem;
     margin: 0;
-    z-index: 32;
 
     a {
         color: white;

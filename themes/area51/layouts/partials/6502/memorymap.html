@@ -13,7 +13,8 @@
 {{- with .format}}{{$hasFormat =1}}{{end -}}
 {{- with .default}}{{$hasDefaultVal =1}}{{end -}}
 {{- end -}}
-<table class="memory">
+<table class="{{if $hasName}}memory4col {{end}}memory">
+    {{- with $.Params.memorymapcaption}}<caption>{{.}}</caption>{{end -}}
     <thead>
     <tr>
         {{- if $hasAddr -}}
@@ -82,6 +83,7 @@
         {{- end -}}
 
         <td>
+            {{- with .sidenote}}<div class="sideNote">{{.}}</div>{{end -}}
             {{- .desc | safeHTML -}}
             {{- with .note}}
             <div class="note">{{.}}</div>

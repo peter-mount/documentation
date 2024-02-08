@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "Compare Index Register"
+titleClass: subsectionpaged
 linkTitle: "Compare Index Register"
 weight: 3
 description: "Compare Index Register with Memory"
@@ -112,13 +113,14 @@ notes:
   setting the n, z & c flags based on the result.
   The register & Memory are unaffected by this operation.
 </p>
+<div class="marginNote">
+  On all processors, the data added from memory is 8-bit.
+</div>
 <p>
   The primary use of the CPX or CPY instructions is to test the value of the index register against loop boundaries.
 </p>
 
-<h3>Data size</h3>
-<p>
-  On all processors, the data added from memory is 8-bit.
-  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
+<div class="marginNote">
+  For 16-bit processors with the m flag is clear then the data added is 16-bit
   with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
-</p>
+</div>

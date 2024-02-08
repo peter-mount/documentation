@@ -103,17 +103,31 @@
         color: $td-sidebar-tree-root-color;
         border-bottom: 1px $td-sidebar-tree-root-color solid;
         margin-bottom: 1rem;
+        padding-left: 0.5em !important;
     }
 }
 
 .td-sidebar {
     @include media-breakpoint-up(md) {
-        padding-top: 2rem;
+        position: fixed;
+        padding-top: 4rem;
         background-color: $td-sidebar-bg-color;
         padding-right: 1rem;
         border-right: 1px solid $td-sidebar-border-color;
+        z-index: 9;
+        min-height: 100%;
     }
 
+  @include media-breakpoint-up(xl) {
+    position: fixed;
+    padding-top: 4rem;
+    background-color: $td-sidebar-bg-color;
+    padding-right: 1rem;
+    border-right: 1px solid $td-sidebar-border-color;
+    z-index: 9;
+    min-height: 100%;
+    max-width: 14em;
+  }
 
     padding-bottom: 2rem;
 
@@ -137,7 +151,9 @@
                 position: sticky;
                 top: 3rem;
                 z-index: 10;
-                height: calc(100vh - 6rem);
+                height: calc(100vh - 15rem);
+                overflow-y: auto;
+                overflow-x: hidden;
             }
         }
 

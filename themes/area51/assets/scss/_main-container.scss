@@ -11,7 +11,7 @@
     main {
         > section:first-of-type {
             @include media-breakpoint-up(md) {
-                padding-top: 8rem;
+                /*padding-top: 8rem;*/
             }
         }
 
@@ -26,11 +26,39 @@
 
     main {
         @include media-breakpoint-up(md) {
-            padding-top: 2rem;
-            padding-left: 0.5rem !important;
-        }
+            padding-top: 4rem;
+            //padding-left: 0.5rem !important;
+          }
 
-
+/*
         padding-bottom: 2rem;
+*/
+
+      @media (max-width: 768px) {
+        position: relative;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin-bottom: 3em;
+        z-index: 1;
+      }
+
+      @media (min-width: 768px) {
+        position: relative;
+        padding-left: calc(0.5em + 25%) !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin-bottom: 3em;
+        z-index: 1;
+      }
+
+      @media (min-width: 1200px) {
+        position: relative;
+        padding-left: 16rem !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin-bottom: 3em;
+        z-index: 1;
+      }
+
     }
 }

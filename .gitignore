@@ -34,3 +34,4 @@ publish-deploy-uat.sh
 /platforms.md
 /Makefile.gen
 /tmp/
+/latex/tests/

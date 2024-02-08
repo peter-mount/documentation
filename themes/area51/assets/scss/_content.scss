@@ -82,10 +82,12 @@
 }
 
 .td-content-new {
+/* removed 2023/8/25 as breaking printers
     position: fixed;
     top: 3.5rem;
     bottom: 2.5rem;
     left: 20%;
     right: 0;
     overflow: auto;
+    */
 }

@@ -1,13 +1,13 @@
 module github.com/peter-mount/documentation
 
-go 1.19
+go 1.20
 
 require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/chromedp/cdproto v0.0.0-20220515234810-83d799542a04
 	github.com/chromedp/chromedp v0.8.2
 	github.com/gorilla/mux v1.8.1
-	github.com/microcosm-cc/bluemonday v1.0.24
+	github.com/microcosm-cc/bluemonday v1.0.25
 	github.com/peter-mount/go-build v0.0.0-20240208185506-976dd78b5a76
 	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20231109105549-8a9638d5ef94
 	github.com/tdewolff/parse v2.3.4+incompatible

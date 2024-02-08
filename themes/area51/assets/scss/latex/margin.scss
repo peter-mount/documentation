@@ -1,0 +1,17 @@
+// LaTeX margins as viewed in html
+
+.marginNote {
+    float: right;
+    clear: right;
+    margin-top: 0.125em;
+    margin-bottom: 0.125em;
+    margin-left: 0.25em;
+    margin-right: 0.125em;
+    max-width: 15em;
+    width: 15em;
+    font-size: .8rem;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0 0 0 4px;
+    padding-left: 0.25em;
+}

@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "AND"
+titleClass: subsection
 linkTitle: "AND"
 weight: 3
 description: "And Accumulator with Memory"
@@ -211,26 +212,20 @@ notes:
   - "65816: Add 1 cycle if low byte of Direct Page register is not 0"
   - "Add 1 cycle if adding index crosses a page boundary"
 ---
+<table class="truthTable marginNote">
+  <caption class="truthTableCaption">AND truth table</caption>
+  <tr><th colspan="2"></th><th colspan="2">Second Operand</th></tr>
+    <tr><th rowspan="3" style="writing-mode: vertical-lr;">First Operand</th><th></th><th>0</th><th>1</th></tr>
+  <tr><th>0</th><td class="truthTable00">0</td><td class="truthTable01">0</td></tr>
+  <tr><th>1</th><td class="truthTable10">0</td><td class="truthTable11">1</td></tr>
+</table>
 <p>
   AND performs a logical And of the value in the accumulator with that of the memory location with the result stored
   in the accumulator.
 </p>
 <p>
-  The result will be each bit in the accumulator will be set ONLY if that same bit was set in the original accumulator
-  value and the memory. If the bits were different then the resultant bit will be 0.
-</p>
-<table>
-  <caption>AND truth table</caption>
-  <tr><th colspan="2"></th><th colspan="2">Second Operand</th></tr>
-    <tr><th rowspan="3" style="writing-mode: vertical-lr;">First Operand</th><th></th><th>0</th><th>1</th></tr>
-  <tr><th>0</th><td>0</td><td>0</td></tr>
-  <tr><th>1</th><td>0</td><td>1</td></tr>
-</table>
-<p>
-  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
-</p>
-<p>
-  For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
+    The result will be each bit in the accumulator will be set ONLY if that same bit was set in the original accumulator
+    value and the memory. If the bits were different then the resultant bit will be 0.
 </p>
 <p>
   Second it performs a logical AND of the memory and the accumulator.
@@ -239,3 +234,9 @@ notes:
 <p>
   In both operations, the contents of the accumulator and memory are not modified.
 </p>
+<div class="marginNote">
+  For 8-bit processors n has the value of bit 7 and v the value of bit 6 of the memory location.
+</div>
+<div class="marginNote">
+  For 16-bit processors, when m=0, n has the value of bit 15 and v the value of bit 14 of the memory location.
+</div>

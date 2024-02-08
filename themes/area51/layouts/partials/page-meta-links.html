@@ -7,7 +7,7 @@
   {{ $gh_subdir := ($.Param "github_subdir") }}
   {{ $gh_project_repo := ($.Param "github_project_repo") }}
   {{ $gh_branch := (default "master" ($.Param "github_branch")) }}
-  <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+  <span>
   {{ if $gh_url }}
      <a href="{{ $gh_url }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
   {{ else if $gh_repo }}
@@ -25,8 +25,8 @@
     {{ $newPageURL := printf "%s/new/%s?%s"  $gh_repo $gh_repo_path $newPageQS }}
 {{/*
     <a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
-    <a href="{{ $newPageURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_create_child_page" }}</a> */}}
-    <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> Create issue</a>
+    <a href="{{ $newPageURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_create_child_page" }}</a>
+    <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> Create issue</a> */}}
     {{/* if $gh_project_repo }}
       {{ $project_issueURL := printf "%s/issues/new" $gh_project_repo }}
       <a href="{{ $project_issueURL }}" target="_blank"><i class="fas fa-tasks fa-fw"></i> {{ T "post_create_project_issue" }}</a>
@@ -36,5 +36,5 @@
   {{ with .CurrentSection.AlternativeOutputFormats.Get "print" }}
     <a id="print" href="{{ .Permalink | safeURL }}"><i class="fa fa-print fa-fw"></i> Print entire section</a>
   {{ end }}
-  </div>
+  </span>
 {{ end }}

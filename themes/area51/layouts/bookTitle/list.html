@@ -2,7 +2,7 @@
 <div class="td-content">
     <h1>{{ .Title }}</h1>
     {{ with .Params.description }}
-    <div class="lead">{{ . | markdownify }}</div>
+    <div class="d-print-none lead">{{ . | markdownify }}</div>
     {{ end }}
     <header class="article-meta">
         {{ $context := . }}

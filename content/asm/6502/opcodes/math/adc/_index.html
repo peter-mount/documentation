@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "ADC Add With Carry"
+titleClass: subsection
 linkTitle: "Addition"
 weight: 3
 description: "Add With Carry"
@@ -229,25 +230,25 @@ notes:
   - "Add 1 cycle if adding index crosses a page boundary"
   - "65C02: Add 1 cycle if d=1"
 ---
-
 <p>
   Adds the data in the operand with the contents of the accumulator.
   Add 1 to the result if the carry flag is set.
   Store the final result in the accumulator.
 </p>
-<h3>Binary/Decimal mode</h3>
+<div class="marginNote">
+  On all processors, the data added from memory is 8-bit.
+</div>
+<div class="marginNote">
+  For 16-bit processors with the m flag is clear then the data added is 16-bit
+  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
+</div>
+<h3 class="paragraph">Binary/Decimal mode</h3>
 <p>
   If the d flag is clear then binary addition is performed.
   If the d flag set then Binary Coded Decimal (BCD) addition is performed.
 </p>
-<h3>Data size</h3>
-<p>
-  On all processors, the data added from memory is 8-bit.
-  However, for 16-bit processors with the m flag is clear then the data added is 16-bit
-  with the low-order 8-bits at the effective address and the high-order 8-bits at the effective address plus one.
-</p>
 
-<h3>Multi-precision arithmetic</h3>
+<h3 class="paragraph">Multi-precision arithmetic</h3>
 <p>
   In multi-precision (multi-word) arithmetic, the carry flag should be cleared before the low-order words are added.
   The addition will generate a new carry flag value based on that addition which will then be passed on to the next word.
@@ -255,7 +256,10 @@ notes:
 <p>
   For example, to add 1 to a 16-bit value at &70 on 8-bit processors:
 </p>
-{{< highlight go "linenos=inline" >}}
+<div class="marginNote">
+  For larger values simply repeat lines 5 to 7 for each additional byte.
+</div>
+<div class="sourceCode">
   CLC      ; Clear carry before first addition
   LDA &70  ; Add 1 to low-order byte
   ADC #1
@@ -263,4 +267,4 @@ notes:
   LDA &71  ; Add 0 to high order byte
   ADC #0   ; This will add 1 if carry was set
   STA &71  ; in the low-order byte
-{{< / highlight >}}
+</div>

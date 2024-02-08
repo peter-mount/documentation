@@ -1,0 +1,183 @@
+# stylesheet for the BBC Book
+
+documentClass: textbook
+usePackage:
+  - array,multirow
+  - tabularray
+  #- longtable
+  - listings
+
+#preamble:
+#  # Define new column type H which hides the entire column
+#  # see https://texblog.org/2014/10/24/removinghiding-a-column-in-a-latex-table/
+#  - \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+#  # Document language
+#  - \lang {english}
+#  # List styling
+#  - \lstset{
+#      basicstyle=\footnotesize\ttfamily,
+#      xleftmargin=\parindent,
+#      frame=L,
+#      breaklines=true,
+#    }
+
+styles:
+  # offset used to align an address to the right.
+  # e.g. in BBC MOS Page 0, addresses are left aligned except for 0070 which is right as it's nested within the
+  # previous address 0000
+  offset:
+    align: "r"
+
+table:
+  # The main memory map of the BBC Micro family
+  "memoryMap":
+    fontSize: \footnotesize
+    verticalAlign: "t"
+    headerSuffix: \hline
+    columnSpec:
+        # First column is removed as it's the page navigation on the site
+      - hidden: true
+        # Address
+      - colLeft: "|"
+        colRight: "|"
+        colType: p
+        colWidth: 1.25
+        colUnit: cm
+      - colRight: "|"
+        colType: p
+        colWidth: 4
+        colUnit: cm
+      - colRight: "|"
+        colType: p
+        colWidth: 4
+        colUnit: cm
+      - colRight: "|"
+        colType: p
+        colWidth: 7
+        colUnit: cm
+  # Memory map of an individual page - 3 column version
+  "memory":
+    fontSize: \footnotesize
+    verticalAlign: "t"
+    columnSpec:
+        # Address
+      - colType: p
+        colWidth: 1.25
+        colUnit: cm
+        # Len
+      - colType: p
+        colWidth: 0.75
+        colUnit: cm
+        # Description
+      - colType: p
+        colWidth: 14
+        colUnit: cm
+  # Memory map of an individual page - 3 column version
+  "memory4col":
+    fontSize: \footnotesize
+    verticalAlign: "t"
+    columnSpec:
+      # Address
+      - colType: p
+        colWidth: 1.25
+        colUnit: cm
+        # Len
+      - colType: p
+        colWidth: 0.75
+        colUnit: cm
+        # Name
+      - colType: p
+        colWidth: 2
+        colUnit: cm
+        # Description
+      - colType: p
+        colWidth: 12
+        colUnit: cm
+  # sub table inside memory description column
+  "memoryInner":
+    columnSpec:
+      - colType: p
+        colWidth: 0.75
+        colUnit: cm
+      - colType: p
+        colWidth: 10
+        colUnit: cm
+  # BBC Paged Rom Table
+  "bbcPagedRomTable":
+    fontSize: \footnotesize
+    columnSpec:
+        # Rom number, first decimal second hex
+      - repeat: 2
+        colType: p
+        colWidth: 0.5
+        colUnit: cm
+        # 5 Columns for each major machine version
+      - repeat: 3
+        colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - repeat: 2
+        colType: p
+        colWidth: 3.2
+        colUnit: cm
+  # bbc/master-rom-list shortcode
+  "bbcMasterRomList":
+    fontSize: \footnotesize
+    columnSpec:
+      # Rom number, first decimal second hex
+      - repeat: 2
+        colType: p
+        colWidth: 0.5
+        colUnit: cm
+      - colType: p
+        colWidth: 2.8
+        colUnit: cm
+      - colType: p
+        colWidth: 3
+        colUnit: cm
+  # default configuration
+  "bbcDefaultConfiguration":
+    fontSize: \footnotesize
+    columnSpec:
+        # Configuration
+      - colType: p
+        colWidth: 3
+        colUnit: cm
+        # Default value
+      - colType: p
+        colWidth: 2
+        colUnit: cm
+        # Description
+      - colType: p
+        colWidth: 4
+        colUnit: cm
+  # 6502 instruction table
+  "m6502opcode":
+    fontSize: \footnotesize
+    columnSpec:
+        # Syntax
+      - colType: p
+        colWidth: 1.75
+        colUnit: cm
+        # Opcode
+      - colType: p
+        colWidth: 0.75
+        colUnit: cm
+        # 6502, 65c02, 65816
+      - colType: p
+        colWidth: 0.5
+        colUnit: cm
+        repeat: 3
+        # byte size
+      - colType: p
+        colWidth: 0.5
+        colUnit: cm
+        # cycles
+      - colType: p
+        colWidth: 0.5
+        colUnit: cm
+        # Address mode
+      - hidden: true
+      - colType: p
+        colWidth: 2
+        colUnit: cm

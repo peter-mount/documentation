@@ -8,8 +8,8 @@
 {{ if isset .Page.Params "nopagebreak" }}{{ $break = " printPageBreakAuto"}}{{else}}{{ $break = " printPageBreak" -}}
 {{end -}}
 {{ end -}}
-<div class="td-content-new{{ $break }}">
-	<h1 id="pg-{{ .Page.File.UniqueID }}" pagesection="{{.PageNum}}">{{ .Page.Title }}</h1>
+<div class="td-content-new{{/* $break */}}">
+	<h1 id="pg-{{ .Page.File.UniqueID }}" pagesection="{{.PageNum}}" {{with .Page.Params.titleClass}}class="{{.}}"{{end}}>{{ .Page.Title }}</h1>
     {{ with .Page.Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
     {{- partial "bbc/api.html" .Page -}}
     {{- partial "bbc/osbyte.html" .Page -}}

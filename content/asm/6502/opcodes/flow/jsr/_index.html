@@ -1,6 +1,7 @@
 ---
 type: "manual"
 title: "Subroutines"
+titleClass: subsectionpaged
 linkTitle: "Subroutines"
 weight: 3
 description: "Calling subroutines"
@@ -79,49 +80,40 @@ codes:
   For Interrupt routines there's the RTI instruction. That instruction is on the Interrupt page.
 </p>
 
-<div class="printPageBreakAvoid">
-  <h2 id="JSR">JSR - Jump to Subroutine</h2>
-  <p>
-    Transfer control to a subroutine, pushing the return address onto the stack.
-    The 16-bit address placed on the stack is the address of the 3rd byte of the instruction, not the address of the
-    next instruction.
-  </p>
-  <p>
-    Subroutines called by JSR must return using the RTS instruction.
-  </p>
-  <p>
-    Some assemblers recognise JSR as an alternate to the 65816 JSL instruction where if the address is greater than
-    &FFFF
-    then the 24 bit JSL instruction is used instead.
-  </p>
+<h2 class="subsubsection" id="JSR">JSR - Jump to Subroutine</h2>
+<p>
+  Transfer control to a subroutine, pushing the return address onto the stack.
+  The 16-bit address placed on the stack is the address of the 3rd byte of the instruction, not the address of the
+  next instruction.
+</p>
+<div class="marginNote">
+  Some assemblers recognise JSR as an alternate to the 65816 JSL instruction where if the address is greater than
+  &FFFF then the 24 bit JSL instruction is used instead.
 </div>
+<p>
+  Subroutines called by JSR must return using the RTS instruction.
+</p>
 
-<div class="printPageBreakAvoid">
-  <h2 id="RTS">RTS - Return from Subroutine</h2>
-  <p>
-    Returns from a subroutine called by JSR.
-    It pulls the 16-bit program counter from the stack, incrementing it by one so that the next instruction is the one
-    immediately after the calling JSR instruction.
-  </p>
-</div>
+<h2 class="subsubsection" id="RTS">RTS - Return from Subroutine</h2>
+<p>
+  Returns from a subroutine called by JSR.
+  It pulls the 16-bit program counter from the stack, incrementing it by one so that the next instruction is the one
+  immediately after the calling JSR instruction.
+</p>
 
-<div class="printPageBreakAvoid">
-  <h2 id="JSL">JSL - Jump to Subroutine Long</h2>
-  <p>
-    Transfer control to a subroutine, pushing the return address onto the stack.
-    The 24-bit address placed on the stack is the address of the 4th byte of the instruction, not the address of the
-    next instruction.
-  </p>
-  <p>
-    Subroutines called by JSL must return using the RTL instruction.
-  </p>
-</div>
+<h2 class="subsubsection" id="JSL">JSL - Jump to Subroutine Long</h2>
+<p>
+  Transfer control to a subroutine, pushing the return address onto the stack.
+  The 24-bit address placed on the stack is the address of the 4th byte of the instruction, not the address of the
+  next instruction.
+</p>
+<p>
+  Subroutines called by JSL must return using the RTL instruction.
+</p>
 
-<div class="printPageBreakAvoid">
-  <h2 id="RTL">RTL - Return from Subroutine Long</h2>
-  <p>
-    Returns from a subroutine called by JSL.
-    It pulls the 24-bit program counter from the stack, incrementing it by one so that the next instruction is the one
-    immediately after the calling JSL instruction.
-  </p>
-</div>
+<h2 class="subsubsection" id="RTL">RTL - Return from Subroutine Long</h2>
+<p>
+  Returns from a subroutine called by JSL.
+  It pulls the 24-bit program counter from the stack, incrementing it by one so that the next instruction is the one
+  immediately after the calling JSL instruction.
+</p>

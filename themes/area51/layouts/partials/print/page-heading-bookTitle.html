@@ -1,34 +1,27 @@
 {{/* Use the title and description of the first page to begin the document */}}
 {{- if isset .Page.Params "book" -}}
-<div class="bookTitle printPageBreakRight">
-    <div class="bookTop">
-        <h1>
-            {{- if isset .Page.Params.book "title" -}}
-            {{ .Page.Params.book.title }}
-            {{- else -}}
-            {{ .Page.Params.title }}
-            {{- end -}}
-        </h1>
-        <p>{{ with .Page.Params.book.subTitle }}{{ . }}{{ end }}
-        </p>
-    </div>
-    <div class="bookImage">
-        <img src="
-        {{- if isset  .Page.Params.book "image" -}}
-        {{- .Page.Params.book.image }}{{ else -}}
-        {{- end }}">
-    </div>
-    <div class="bookFooter">
-        <p>{{ with .Page.Params.book.copyright }}{{ . }}{{ end }}</p>
-        <p>{{ with .Page.Params.book.author }}{{ . }}{{ end }}</p>
-        {{ with .Page.Params.book.subAuthor }}<p>{{ . }}</p>{{ end -}}
-    </div>
-</div>
+<bookMeta id="bookMeta">
+    {{with .Page.Params.book.titlehead }}<titlehead>{{ . }}</titlehead>{{ end }}
+    {{with .Page.Params.book.subject }}<subject>{{ . }}</subject>{{ end }}
+    <title>
+        {{- if isset .Page.Params.book "title" -}}
+        {{ .Page.Params.book.title }}
+        {{- else -}}
+        {{ .Page.Params.title }}
+        {{- end -}}
+    </title>
+    {{with .Page.Params.book.subTitle }}<subtitle>{{ . }}</subtitle>{{ end }}
+    {{ with .Page.Params.book.author }}<author>{{ . }}</author>{{ end }}
+    {{ with .Page.Params.book.date }}<date>{{ . }}</date>{{ end }}
+    {{ with .Page.Params.book.publishers }}<publishers>{{ . }}</publishers>{{ end }}
+    {{ with .Page.Params.book.copyright }}<copyright>{{ . }}</copyright>{{ end }}
+</bookMeta>
+
 {{- else -}}
 
-<h1 class="title">{{ .Title }}</h1>
+<h1 class="{{with .Page.Params.titleClass}}{{.}}{{else}}title{{end}}">{{ .Title }}</h1>
 {{- with .Page.Params.description -}}
-<div class="lead">{{ . | markdownify }}</div>
+<div class="d-print-none lead">{{ . | markdownify }}</div>
 {{- end -}}
 
 {{- end -}}

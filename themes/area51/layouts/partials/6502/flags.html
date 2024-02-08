@@ -22,8 +22,8 @@
 {{- if isset $m "c" }}{{ $s.Set "0" "c" }}{{end -}}
 {{- end -}}
 
-<div class="printPageBreakAvoid mt-1 mb-3">
-    <h5>Flags&nbsp;Affected</h5>
+<div class="mt-1 mb-3">
+    <h5 class="paragraphbreak">Flags&nbsp;Affected</h5>
     <table class="processorFlags">
         <tbody>
         {{- if eq 0 ($s.Values | len) -}}
