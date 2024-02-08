@@ -3,11 +3,10 @@ package build
 import (
 	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/go-build/core"
-	"github.com/peter-mount/go-build/util/arch"
+	"github.com/peter-mount/go-build/util/jenkinsfile"
+	"github.com/peter-mount/go-build/util/makefile"
 	"github.com/peter-mount/go-build/util/makefile/target"
 	"github.com/peter-mount/go-build/util/meta"
-	"path/filepath"
-	"strings"
 )
 
 type Site struct {
@@ -16,7 +15,8 @@ type Site struct {
 }
 
 func (s *Site) Start() error {
-	s.Build.AddExtension(s.extension)
+	s.Build.Makefile(50, s.documentation)
+	s.Build.Jenkins(50, s.jenkins)
 	return nil
 }
 
@@ -24,23 +24,18 @@ const (
 	siteDir = "public"
 )
 
-func (s *Site) extension(arch arch.Arch, target target.Builder, meta *meta.Meta) {
-	baseDir := arch.BaseDir(*s.Build.Encoder.Dest)
+func (s *Site) documentation(root makefile.Builder, target target.Builder, meta *meta.Meta) {
+	genSite := s.Build.Tool("gensite")
 
-	if t := target.GetNamedTarget(siteDir); t != nil {
-		target.Link(t)
-	} else {
-		target.Target(
-			siteDir,
-			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "gensite"),
-			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "hugo"),
-		).
-			Echo("GEN SITE", siteDir).
-			Line(strings.Join([]string{
-				filepath.Join(baseDir, "bin", "gensite"),
-				// Uncomment for verbosity
-				//"-v"
-			}, " "))
-	}
+	root.Rule(siteDir).
+		Mkdir(siteDir)
 
+	root.Rule("site", genSite, siteDir).
+		Echo("GEN SITE", siteDir).
+		Line(genSite + " -v")
+}
+
+func (s *Site) jenkins(builder, node jenkinsfile.Builder) {
+	node.Stage("Site").
+		Sh("make -f Makefile.gen site")
 }

@@ -3,7 +3,8 @@ package build
 import (
 	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/go-build/core"
-	"github.com/peter-mount/go-build/util/arch"
+	"github.com/peter-mount/go-build/util/jenkinsfile"
+	"github.com/peter-mount/go-build/util/makefile"
 	"github.com/peter-mount/go-build/util/makefile/target"
 	"github.com/peter-mount/go-build/util/meta"
 	"path/filepath"
@@ -16,31 +17,29 @@ type PDF struct {
 }
 
 func (s *PDF) Start() error {
-	s.Build.AddExtension(s.extension)
+	s.Build.Makefile(100, s.documentation)
+	s.Build.Jenkins(100, s.jenkins)
 	return nil
 }
 
-func (s *PDF) extension(arch arch.Arch, parentTarget target.Builder, meta *meta.Meta) {
-	baseDir := arch.BaseDir(*s.Build.Encoder.Dest)
+func (s *PDF) documentation(root makefile.Builder, parentTarget target.Builder, _ *meta.Meta) {
+	genPdf := s.Build.Tool("genpdf")
 
-	if t := parentTarget.GetNamedTarget("pdf"); t != nil {
-		parentTarget.Link(t)
-		return
-	}
+	// Common dependencies for all pdf's
+	pdfDependencies := []string{siteDir, genPdf}
 
-	genPdfTarget := filepath.Join(baseDir, "bin/genpdf")
-
-	pdfTarget := parentTarget.Target("pdf", genPdfTarget)
+	var targets []string
 
 	_ = s.BookShelf.
 		Books().
 		ForEach(func(book *hugo.Book) error {
 			bookTarget := filepath.Join(siteDir, "static/book", book.ID+".pdf")
-			pdfTarget.Target(bookTarget, siteDir, genPdfTarget).
-				MkDir(filepath.Dir(bookTarget)).
+			targets = append(targets, bookTarget)
+			root.Rule(bookTarget, pdfDependencies...).
+				Mkdir(filepath.Dir(bookTarget)).
 				Echo("GEN PDF", bookTarget).
 				Line(strings.Join([]string{
-					filepath.Join(baseDir, "bin", "genpdf"),
+					genPdf,
 					// Uncomment for verbosity
 					//"-v",
 					book.ID,
@@ -48,4 +47,15 @@ func (s *PDF) extension(arch arch.Arch, parentTarget target.Builder, meta *meta.
 				}, " "))
 			return nil
 		})
+
+	// Now create a rule for those targets
+	root.Phony("pdf")
+	root.Rule("pdf", s.Build.Tool("genpdf"), "site").
+		AddDependency(targets...)
+}
+
+func (s *PDF) jenkins(builder, node jenkinsfile.Builder) {
+	node.Stage("PDF").
+		Sh("make -f Makefile.gen pdf").
+		ArchiveArtifacts("public/static/book/*.pdf")
 }
