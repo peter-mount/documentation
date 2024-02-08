@@ -6,13 +6,13 @@ require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/chromedp/cdproto v0.0.0-20220515234810-83d799542a04
 	github.com/chromedp/chromedp v0.8.2
-	github.com/gorilla/mux v1.7.2
+	github.com/gorilla/mux v1.8.1
 	github.com/microcosm-cc/bluemonday v1.0.25
-	github.com/peter-mount/go-build v0.0.0-20230901134424-72658295ac41
-	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20230622193345-c3b500bdaa5b
+	github.com/peter-mount/go-build v0.0.0-20240208081017-15b7e1dc49fd
+	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20231109105549-8a9638d5ef94
 	github.com/tdewolff/parse v2.3.4+incompatible
 	github.com/xuri/excelize/v2 v2.4.1
-	golang.org/x/net v0.17.0
+	golang.org/x/net v0.18.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -30,7 +30,7 @@ require (
 	github.com/richardlehane/msoleps v1.0.1 // indirect
 	github.com/tdewolff/test v1.0.9 // indirect
 	github.com/xuri/efp v0.0.0-20210322160811-ab561f5b45e3 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
+	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 )
