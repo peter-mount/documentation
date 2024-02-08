@@ -3,6 +3,8 @@ package build
 import (
 	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/go-build/core"
+	"github.com/peter-mount/go-build/util/jenkinsfile"
+	"github.com/peter-mount/go-build/util/makefile"
 	"github.com/peter-mount/go-build/util/makefile/target"
 	"github.com/peter-mount/go-build/util/meta"
 )
@@ -13,7 +15,8 @@ type Site struct {
 }
 
 func (s *Site) Start() error {
-	s.Build.Documentation(s.documentation)
+	s.Build.Makefile(s.documentation)
+	s.Build.Jenkins(s.jenkins)
 	return nil
 }
 
@@ -21,16 +24,18 @@ const (
 	siteDir = "public"
 )
 
-func (s *Site) documentation(target target.Builder, meta *meta.Meta) {
-	if t := target.GetNamedTarget(siteDir); t != nil {
-		target.Link(t)
-		return
-	}
-
+func (s *Site) documentation(root makefile.Builder, target target.Builder, meta *meta.Meta) {
 	genSite := s.Build.Tool("gensite")
 
-	target.Target(siteDir, genSite).
-		Echo("GEN SITE", siteDir).
-		Line(genSite)
+	root.Rule(siteDir).
+		Mkdir(siteDir)
 
+	root.Rule("site", genSite, siteDir).
+		Echo("GEN SITE", siteDir).
+		Line(genSite + " -v")
+}
+
+func (s *Site) jenkins(builder, node jenkinsfile.Builder) {
+	node.Stage("Site").
+		Sh("make -f Makefile.gen site")
 }

@@ -46,8 +46,8 @@ build: test
 tools: test
 	@${MAKE} --no-print-directory -f Makefile.gen linux_amd64_tools
 
-public: test
-	@${MAKE} --no-print-directory -f Makefile.gen public
+site: test
+	@${MAKE} --no-print-directory -f Makefile.gen site
 
 pdf: test
 	@${MAKE} --no-print-directory -f Makefile.gen pdf

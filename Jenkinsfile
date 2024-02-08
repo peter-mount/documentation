@@ -26,4 +26,10 @@ node("go-arm64") {
   stage("Build") {
     sh 'make -f Makefile.gen all'
   }
+  stage("PDF") {
+    sh 'make -f Makefile.gen pdf'
+  }
+  stage("Site") {
+    sh 'make -f Makefile.gen site'
+  }
 }
