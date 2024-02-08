@@ -15,8 +15,8 @@ type Site struct {
 }
 
 func (s *Site) Start() error {
-	s.Build.Makefile(s.documentation)
-	s.Build.Jenkins(s.jenkins)
+	s.Build.Makefile(50, s.documentation)
+	s.Build.Jenkins(50, s.jenkins)
 	return nil
 }
 

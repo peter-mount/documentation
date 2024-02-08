@@ -17,8 +17,8 @@ type PDF struct {
 }
 
 func (s *PDF) Start() error {
-	s.Build.Makefile(s.documentation)
-	s.Build.Jenkins(s.jenkins)
+	s.Build.Makefile(100, s.documentation)
+	s.Build.Jenkins(100, s.jenkins)
 	return nil
 }
 
@@ -50,7 +50,7 @@ func (s *PDF) documentation(root makefile.Builder, parentTarget target.Builder, 
 
 	// Now create a rule for those targets
 	root.Phony("pdf")
-	root.Rule("pdf", s.Build.Tool("genpdf")).
+	root.Rule("pdf", s.Build.Tool("genpdf"), "site").
 		AddDependency(targets...)
 }
 

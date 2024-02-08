@@ -26,10 +26,11 @@ node("go-arm64") {
   stage("Build") {
     sh 'make -f Makefile.gen all'
   }
-  stage("PDF") {
-    sh 'make -f Makefile.gen pdf'
-  }
   stage("Site") {
     sh 'make -f Makefile.gen site'
+  }
+  stage("PDF") {
+    sh 'make -f Makefile.gen pdf'
+    archiveArtifacts artifacts: 'public/static/book/*.pdf'
   }
 }
