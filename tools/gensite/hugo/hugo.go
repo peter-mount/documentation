@@ -8,7 +8,6 @@ import (
 	"github.com/peter-mount/go-kernel/v2/util/task"
 	"os"
 	"os/exec"
-	"path/filepath"
 )
 
 // Hugo runs hugo
@@ -18,8 +17,8 @@ type Hugo struct {
 	draft   *bool      `kernel:"flag,buildDrafts,Build draft pages"`                   // true to build drafts, same as --buildDrafts for hugo
 	expired *bool      `kernel:"flag,buildExpired,Build expired pages"`                // true to build expired content, same as --buildExpired for hugo
 	future  *bool      `kernel:"flag,buildFuture,Build future pages"`                  // true to build future content, same as --buildFuture for hugo
-	worker  task.Queue `kernel:"worker"`                                               // Worker queue
-	hugoCmd string     // Path to hugo
+	hugoCmd *string    `kernel:"flag,hugo,Hugo binary to use,hugo"`
+	worker  task.Queue `kernel:"worker"` // Worker queue
 }
 
 func (h *Hugo) Start() error {
@@ -28,8 +27,6 @@ func (h *Hugo) Start() error {
 	}
 
 	h.worker.AddPriorityTask(tools.PriorityHugo, h.run)
-
-	h.hugoCmd = filepath.Join(filepath.Dir(os.Args[0]), "hugo")
 
 	return nil
 }
@@ -68,7 +65,7 @@ func (h *Hugo) run(_ context.Context) error {
 		args = append(args, "--quiet")
 	}
 
-	cmd := exec.Command(h.hugoCmd, args...)
+	cmd := exec.Command(*h.hugoCmd, args...)
 	if log.IsVerbose() {
 		cmd.Stdout = os.Stdout
 	}

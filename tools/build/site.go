@@ -3,11 +3,8 @@ package build
 import (
 	"github.com/peter-mount/documentation/tools/gensite/hugo"
 	"github.com/peter-mount/go-build/core"
-	"github.com/peter-mount/go-build/util/arch"
 	"github.com/peter-mount/go-build/util/makefile/target"
 	"github.com/peter-mount/go-build/util/meta"
-	"path/filepath"
-	"strings"
 )
 
 type Site struct {
@@ -16,7 +13,7 @@ type Site struct {
 }
 
 func (s *Site) Start() error {
-	s.Build.AddExtension(s.extension)
+	s.Build.Documentation(s.documentation)
 	return nil
 }
 
@@ -24,23 +21,16 @@ const (
 	siteDir = "public"
 )
 
-func (s *Site) extension(arch arch.Arch, target target.Builder, meta *meta.Meta) {
-	baseDir := arch.BaseDir(*s.Build.Encoder.Dest)
-
+func (s *Site) documentation(target target.Builder, meta *meta.Meta) {
 	if t := target.GetNamedTarget(siteDir); t != nil {
 		target.Link(t)
-	} else {
-		target.Target(
-			siteDir,
-			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "gensite"),
-			//filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "hugo"),
-		).
-			Echo("GEN SITE", siteDir).
-			Line(strings.Join([]string{
-				filepath.Join(baseDir, "bin", "gensite"),
-				// Uncomment for verbosity
-				//"-v"
-			}, " "))
+		return
 	}
+
+	genSite := s.Build.Tool("gensite")
+
+	target.Target(siteDir, genSite).
+		Echo("GEN SITE", siteDir).
+		Line(genSite)
 
 }

@@ -20,7 +20,7 @@ const (
 	npmDir = "node_modules"
 )
 
-func (s *NPM) extension(arch arch.Arch, target target.Builder, meta *meta.Meta) {
+func (s *NPM) extension(_ arch.Arch, target target.Builder, meta *meta.Meta) {
 	if t := target.GetNamedTarget(npmDir); t != nil {
 		target.Link(t)
 	} else {
