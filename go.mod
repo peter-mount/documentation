@@ -8,7 +8,7 @@ require (
 	github.com/chromedp/chromedp v0.8.2
 	github.com/gorilla/mux v1.8.1
 	github.com/microcosm-cc/bluemonday v1.0.25
-	github.com/peter-mount/go-build v0.0.0-20240208095726-df6baf82b21f
+	github.com/peter-mount/go-build v0.0.0-20240208102608-40eddcb9547e
 	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20231109105549-8a9638d5ef94
 	github.com/tdewolff/parse v2.3.4+incompatible
 	github.com/xuri/excelize/v2 v2.4.1
