@@ -33,7 +33,7 @@ func (s *Site) extension(arch arch.Arch, target target.Builder, meta *meta.Meta)
 		target.Target(
 			siteDir,
 			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "gensite"),
-			filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "hugo"),
+			//filepath.Join(arch.BaseDir(*s.Build.Encoder.Dest), "bin", "hugo"),
 		).
 			Echo("GEN SITE", siteDir).
 			Line(strings.Join([]string{
