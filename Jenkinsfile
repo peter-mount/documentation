@@ -24,6 +24,6 @@ node("go-arm64") {
     sh 'make test'
   }
   stage("Build") {
-    sh 'make -f Makefile.gen linux_amd64'
+    sh 'make -f Makefile.gen all'
   }
 }
