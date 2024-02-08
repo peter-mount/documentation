@@ -1,7 +1,0 @@
-# Replace built in block list
-replace: true
-
-# permit builds ONLY on these platforms
-permit:
-  - os: linux
-    arch: amd64

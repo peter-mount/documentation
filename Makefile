@@ -23,10 +23,6 @@
 # of the binaries in parallel speeding up the full build.
 #
 
-# Override the default platforms to the ones hugo release under
-# Because of a cross-compilation issue with hugo, limit it to just amd64
-PLATFORMS ?= linux:amd64:
-
 .PHONY: all clean init test build
 
 all: init test build
@@ -36,7 +32,7 @@ init:
 	@echo "GO MOD   download";go mod download
 	@echo "GENERATE build";\
 	CGO_ENABLED=0 go build -o build tools/build/bin/main.go
-	@./build -build Makefile.gen -build-platform "$(PLATFORMS)" -d builds -dist dist -block blocklist.yaml -build-node go-arm64
+	@./build -build Makefile.gen -build-platform "$(PLATFORMS)" -d builds -dist dist -build-local -build-node go-arm64
 
 clean: init
 	@${MAKE} --no-print-directory -f Makefile.gen clean
