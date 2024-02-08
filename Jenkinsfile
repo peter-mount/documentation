@@ -13,7 +13,7 @@ properties([
     cron("H H * * *")
   ])
 ])
-node("go") {
+node("go-arm64") {
   stage("Checkout") {
     checkout scm
   }
