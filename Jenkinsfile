@@ -18,9 +18,12 @@ node("go-arm64") {
     checkout scm
   }
   stage("Init") {
-    sh 'make clean init test'
+    sh 'make clean init'
   }
-  stage("linux_amd64") {
+  stage("Test") {
+    sh 'make test'
+  }
+  stage("Build") {
     sh 'make -f Makefile.gen linux_amd64'
   }
 }
