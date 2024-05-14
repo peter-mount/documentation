@@ -147,21 +147,29 @@ func (a TableHandler) AsExcel(p ExcelProvider) TableHandler {
 
 func SetCellStyle(f *excelize.File, id *int, sheet string, c1, r1, c2, r2 int, bold, header bool) {
 	if *id == 0 {
-		s := `{"font":{`
-
-		if bold {
-			s = s + `"bold":true,`
+		s := &excelize.Style{
+			Font: &excelize.Font{
+				Bold:   bold,
+				Color:  "0000",
+				Family: "Courier",
+				Size:   10,
+			},
 		}
-
-		s = s + `"color":"000000",`
-		s = s + `"family":"Courier","size":10}`
 
 		if header {
-			s = s + `,"border":[{"type":"bottom","color":"000000","style":1}]`
-			s = s + `,"fill":{"type":"pattern","color":["aaaaaa"],"pattern":1}`
+			s.Border = []excelize.Border{
+				{
+					Type:  "bottom",
+					Color: "000000",
+					Style: 1,
+				},
+			}
+			s.Fill = excelize.Fill{
+				Type:    "pattern",
+				Pattern: 1,
+				Color:   []string{"aaaaaa"},
+			}
 		}
-
-		s = s + `}`
 
 		*id, _ = f.NewStyle(s)
 	}

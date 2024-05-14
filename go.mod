@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/microcosm-cc/bluemonday v1.0.26
 	github.com/peter-mount/go-build v0.0.0-20240208185506-976dd78b5a76
-	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20231109105549-8a9638d5ef94
+	github.com/peter-mount/go-kernel/v2 v2.0.3-0.20240119080616-ca3b1f9a9ce3
 	github.com/tdewolff/parse v2.3.4+incompatible
 	github.com/xuri/excelize/v2 v2.8.0
 	golang.org/x/net v0.21.0
