@@ -114,7 +114,7 @@ func (i *Instructions) Extract(defaultOp string, n *util.Notes, e1 interface{}) 
 			Op:            util2.DecodeString(e["op"], defaultOp),
 			Addressing:    util2.DecodeString(e["addressing"], ""),
 			Format:        util2.DecodeString(e["format"], ""),
-			Compatibility: util2.NewSortedMap[string]().Decode(e["compatibility"]),
+			Compatibility: util2.NewSortedMap[bool]().Decode(e["compatibility"]),
 			Colour:        util2.DecodeString(e["colour"], ""),
 		}
 
