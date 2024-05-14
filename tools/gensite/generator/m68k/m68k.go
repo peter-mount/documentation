@@ -10,16 +10,16 @@ import (
 )
 
 type M68k struct {
-	generator    *generator.Generator `kernel:"inject"` // Generator
-	excel        *generator.Excel     `kernel:"inject"` // Excel
-	autodoc      *autodoc.Autodoc     `kernel:"inject"` // ResourceManager
-	extracted    util.Set             // Set of book ID's so that we run once per book
-	instructions util.Map             // Map of extracted data
+	generator    *generator.Generator             `kernel:"inject"` // Generator
+	excel        *generator.Excel                 `kernel:"inject"` // Excel
+	autodoc      *autodoc.Autodoc                 `kernel:"inject"` // ResourceManager
+	extracted    util.Set[string]                 // Set of book ID's so that we run once per book
+	instructions util.Map[*assembly.Instructions] // Map of extracted data
 }
 
 func (s *M68k) Start() error {
-	s.extracted = util.NewHashSet()
-	s.instructions = util.NewSyncMap()
+	s.extracted = util.NewHashSet[string]()
+	s.instructions = util.NewSyncMap[*assembly.Instructions]()
 
 	s.generator.
 		Register("68kOperationIndex",
@@ -32,5 +32,5 @@ func (s *M68k) Start() error {
 }
 
 func (s *M68k) Instructions(b *hugo.Book) *assembly.Instructions {
-	return s.instructions.ComputeIfAbsent(b.ID, assembly.ComputeNewInstructions).(*assembly.Instructions)
+	return s.instructions.ComputeIfAbsent(b.ID, assembly.ComputeNewInstructions)
 }

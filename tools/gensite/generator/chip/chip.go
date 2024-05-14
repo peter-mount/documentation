@@ -20,7 +20,7 @@ type Chip struct {
 	worker    task.Queue           `kernel:"worker"` // Worker queue
 	excel     *generator.Excel     `kernel:"inject"` // Excel
 	chips     *Category            // Map of named chip definitions
-	extracted util.Set             // Set of book ID's so that we run once per book
+	extracted util.Set[string]     // Set of book ID's so that we run once per book
 }
 
 // DefinitionHandler is called when generating the shortcode for this Definition
@@ -68,7 +68,7 @@ func (d *Definition) Path(dir string) string {
 
 func (c *Chip) Start() error {
 	c.chips = NewCategory()
-	c.extracted = util.NewHashSet()
+	c.extracted = util.NewHashSet[string]()
 
 	c.generator.
 		Register("chipDefinitions",

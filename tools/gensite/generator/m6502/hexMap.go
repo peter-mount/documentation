@@ -106,9 +106,9 @@ func (hg *HexGrid) Cell(code string) *HexCell {
 	return hg.resolve(strings.ReplaceAll(code, "nn", "")).cell(code)
 }
 
-func (hg *HexGrid) OpcodeFrom(i util2.Iterator) *HexGrid {
+func (hg *HexGrid) OpcodeFrom(i util2.Iterator[*assembly.Opcode]) *HexGrid {
 	for i.HasNext() {
-		o := i.Next().(*assembly.Opcode)
+		o := i.Next()
 		if o != nil {
 			hg.Cell(o.Code).
 				fromOpcodeIgnoreExtension(o)

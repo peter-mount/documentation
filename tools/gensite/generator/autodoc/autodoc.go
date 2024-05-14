@@ -12,13 +12,13 @@ import (
 type Autodoc struct {
 	generator       *generator.Generator     `kernel:"inject"` // Generator
 	resourceManager *autodoc.ResourceManager `kernel:"inject"` // ResourceManager
-	extracted       util.Set                 // Set of book ID's so that we run once per book
+	extracted       util.Set[string]         // Set of book ID's so that we run once per book
 	headers         map[string]*Headers      // Headers per book
 	apis            map[string]*Api          // Apis per book
 }
 
 func (s *Autodoc) Start() error {
-	s.extracted = util.NewHashSet()
+	s.extracted = util.NewHashSet[string]()
 	s.headers = make(map[string]*Headers)
 	s.apis = make(map[string]*Api)
 

@@ -19,7 +19,7 @@ type IndexGenerator struct {
 	Body      func(slice strings.StringSlice, rowCount int, entry interface{}) strings.StringSlice
 }
 
-func (i *IndexGenerator) WriteFile(book *hugo.Book, iterator util2.Iterator) error {
+func (i *IndexGenerator) WriteFile(book *hugo.Book, iterator util2.Iterator[*Opcode]) error {
 	return util.ReferenceFileBuilder(
 		i.Title,
 		i.Desc,

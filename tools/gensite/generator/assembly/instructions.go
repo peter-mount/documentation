@@ -30,7 +30,7 @@ func NewInstructions() *Instructions {
 	}
 }
 
-func ComputeNewInstructions(_ string) interface{} {
+func ComputeNewInstructions(_ string) *Instructions {
 	return NewInstructions()
 }
 
@@ -45,7 +45,7 @@ func (i *Instructions) Sort(comparator func(a *Opcode, b *Opcode) bool) *Instruc
 	return i
 }
 
-func (i *Instructions) Iterator() util2.Iterator {
+func (i *Instructions) Iterator() util2.Iterator[*Opcode] {
 	return &iterator{
 		src: i.opCodes,
 		i:   0,
@@ -62,23 +62,23 @@ func (i *iterator) HasNext() bool {
 	return i.i < i.l
 }
 
-func (i *iterator) Next() interface{} {
+func (i *iterator) Next() *Opcode {
 	v := i.src[i.i]
 	i.i++
 	return v
 }
 
-func (i *iterator) ForEach(f func(interface{})) {
+func (i *iterator) ForEach(f func(*Opcode)) {
 	for _, v := range i.src {
 		f(v)
 	}
 }
 
-func (i *iterator) ForEachAsync(f func(interface{})) {
+func (i *iterator) ForEachAsync(f func(*Opcode)) {
 	i.ForEach(f)
 }
 
-func (i *iterator) ForEachFailFast(f func(interface{}) error) error {
+func (i *iterator) ForEachFailFast(f func(*Opcode) error) error {
 	for _, v := range i.src {
 		err := f(v)
 		if err != nil {
@@ -88,12 +88,12 @@ func (i *iterator) ForEachFailFast(f func(interface{}) error) error {
 	return nil
 }
 
-func (i *iterator) Iterator() util2.Iterator {
+func (i *iterator) Iterator() util2.Iterator[*Opcode] {
 	// Just return ourselves
 	return i
 }
 
-func (i *iterator) ReverseIterator() util2.Iterator {
+func (i *iterator) ReverseIterator() util2.Iterator[*Opcode] {
 	// Just return ourselves
 	return i
 }
@@ -114,7 +114,7 @@ func (i *Instructions) Extract(defaultOp string, n *util.Notes, e1 interface{}) 
 			Op:            util2.DecodeString(e["op"], defaultOp),
 			Addressing:    util2.DecodeString(e["addressing"], ""),
 			Format:        util2.DecodeString(e["format"], ""),
-			Compatibility: util2.NewSortedMap().Decode(e["compatibility"]),
+			Compatibility: util2.NewSortedMap[string]().Decode(e["compatibility"]),
 			Colour:        util2.DecodeString(e["colour"], ""),
 		}
 
